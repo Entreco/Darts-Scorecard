@@ -16,7 +16,7 @@ cache:
 env:
  global:
  - ANDROID_API=26
- - EMULATOR_API=21
+ - EMULATOR_API=26
  - ANDROID_BUILD_TOOLS=26.0.2
  - ADB_INSTALL_TIMEOUT=5 # minutes
  - secure: "m0ERLB3Kl3EPmXJuNp/camC6Cuo8KyrhY9L6BoLI/0FnBy5shj5xFs0I9uvY1I9vPeMQhde7OgBmJJ/H7lfNmpimqa98lgMul6253oH986IbgiEBbiCd9fyLTgQg+WSeaPwlmj/OZ3mtp04HqHeVKSh6q0zgVPCDV2P06RiOjq9TLtnerqYipRDjvyBOfZ3h5gHO4nms69T9H4L1R1QFJdcYDLXEajepg6CQfq0wb5sSa/HIE/ZKFNa7duWPXjkdSh3sRx8s7PqQSh4TkOAZmydatzLSdC43Vu5DXMQLFmhVNO5fHIdoDDlLPgsOCdFH7kOtIwVu0F6XqJEHKTHZrEMldfaHYXhsQSuOLjEGkFnSMl8mhbChOlk+3KGNM+L7qwDUpu0DpGxtZT0LNvUfQ5pKbmKiGNsdzk5zJEjraawh10gpPVCptoyZM0+uP7UgLwttotb0EYCrpilfDDyfVUjh5GXv43KPrbDNRFwytX1pmbszbyxkrdRBRPQgmAsejFJYwMiQxPiZ3Zr4k0/UnrnaXEyBvwZeiZ9/cB3lf0xRxLrLjlqGLWgKtenFb5ZaEbIs0Z8D8+04eojaJE5qvUtAwwtdHzrphNy8cZrTfOfRvfcI3+c3m6M9oyo8k5lRR9wz5kKGDO8orsdblKxZ+0163rlCMrsTPbO5jImSjCY="
@@ -50,18 +50,18 @@ before_install:
 - ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
 #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
 
-#before_script:
-#- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-#- emulator -avd test -no-skin -no-audio -no-window &
-#- android-wait-for-emulator
-#- adb shell input keyevent 82 &
+before_script:
+- echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 
 script:
 - "./gradlew clean build check -PdisablePreDex --stacktrace"
 
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME
-- cd android/DartsScorecard/app/build/outputs/apk/
+- cd app/build/outputs/apk/
 - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/android/DartsScorecard/scripts/dsc_keystore -storepass $storepass -keypass $keypass app-release-unsigned.apk Entreco
 
 # Verification
