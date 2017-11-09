@@ -33,7 +33,9 @@ android:
   - android-sdk-license-.+
   - google-gdk-license-.+
 before_install:
-- openssl aes-256-cbc -K $encrypted_c5c67234e863_key -iv $encrypted_c5c67234e863_iv -in android/DartsScorecard/scripts/dsc_keystore.enc -out android/DartsScorecard/scripts/dsc_keystore -d
+- openssl aes-256-cbc -K $encrypted_c5c67234e863_key -iv $encrypted_c5c67234e863_iv
+  -in android/DartsScorecard/scripts/dsc_keystore.enc -out android/DartsScorecard/scripts/dsc_keystore
+  -d
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
@@ -45,11 +47,12 @@ script:
 before_deploy:
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME
 - cd app/build/outputs/apk/release
-- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 app-release-unsigned.apk DscExample.apk
-- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --out DscExample.apk DscExample.apk
+- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 app-release-unsigned.apk
+  DscExample.apk
+- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
+  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --out
+  DscExample.apk DscExample.apk
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify DscExample.apk
-
-
 deploy:
   provider: releases
   file: DscExample.apk
@@ -58,5 +61,5 @@ deploy:
     repo: Entreco/Darts-Scorecard
     tags: true
     jdk: oraclejdk8
-  api_key:
-    secure: MD2h06/RX9x/soDP8QjXLSOT9r2TNDiPpfTnd40+ZoQU8/+9dz2Y9IWqlzlZbnB65xQ926pD3k2yioJ4ixzIwgL6EBhAooDlb5cp5dhJysxGADqzUnWd2AJIfQRzgvpZjn8ITMKbf9z0ofymWyQ3fVOennOxi7tNUdwITgQ3rA5XgXcpCM/YklOn8+tJLD3tGHJvSBY4mJsVqaDVQeyA2o9nG9q3j5jOUImzd2WYp4EYZEuWEliDkis+ZmYQu6W5Pm3kRnCPVwDVqvY4ASFD02Sj6nmgj4yXjoRe488sybzLZ58B4W6l0oEYWYpKM5RnG/8cEUbSLxkwJaYGF1bhba7aM4cGmVkVZ538iReka+8jGVC9m64ypaN8GE4qKJzxSB2XtrcFA8s+nkCDPjjnqk9qgBU4Gt92c2zoPTulk5SgkibhpH1FguPB+JS2SMcp4yFH0qAlF+mMJY/kYyAYh9fjztMVRIeiSvhIKIm2RNBTzzFRvFHiPv+J5S+Z54QZu9nJ63jpSkay5l5VfXejcV1RiqwJAHgnybaN/3rSQCeXQTd17xRw3JCfRohNUYH2EOwVJd9+rdqkAzAct5hbagGRW1AbKu079UmARDOJlAu4mlGjKp//OYqeX6QFfidXhPwG+kbUm5d6COXW52eARlD/V8rIwIrBQ9G4so37OHE=
+  api_key: 
+  - secure: O5B5QCxto7jDDnAvpEGzuEilRN8CeUSsiWK8JroTha/Enk9sPT9wtfo3LqJjvG6Fon85fLTOVhPx81b4tpM3826TbxJ4fVu0SVcmAYiVzPrQ1ZU8YMipylF4R6xjVhty83dZjCWqI0F/SNqRBoxaDPMseKv1fIS8K05V6vUu0OKuqtgCfqTSmO0knOh4wOmAreSx74JMO0krUnE5QcZAjPX+TMBxxLmmpMBjbhfTR4dio8+CkR/BTEhiqwRobZ5X69aQBxetfYikckJA+H7adkp23XBBbpcrHKzOlxDGHZAd81gOxyu2TpIbLJjbexvoNHH/G3JJ1+44tLrZMmoY8Ual4qOxggkld3zIbm5KbYWvfarZNuYxwRNz9c4VlACV18wLLHNFaG3n09SBQEvninrrog6TuMbeg/aQzMa5zotjWSfig/AYWLgR/H2YWGPJ+r/GFCnVQ9CLn4ltvENOUhThZ+N6/GwkU1vaT/sKhhMCQUDVDaM1p1VUVcZSeycHYxOeHZ89KH+L9jW1XM7y/7ihqc2CmhaSs3yBUFBmmCySrw430C8iWE8ii9kdVpqKnaMMAdwVrYMlTxebsU7TzSwqqAJGin/HQCceAHYy/yGXPs1FTah96MrmirKCqQvkTcZ6g+LtqidZuM0pp+yOvrix98VeQ6wxosJr53pUVrM=
