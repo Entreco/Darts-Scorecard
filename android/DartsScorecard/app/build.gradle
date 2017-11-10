@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+
+def vcode = (int)(((new Date().getTime()/1000) - 1510351372) / 10)
 
 android {
     compileSdkVersion 26
@@ -10,7 +10,7 @@ android {
         applicationId "nl.entreco.dartsscorecard"
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 2
+        versionCode vcode
         versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
