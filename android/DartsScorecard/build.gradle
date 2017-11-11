@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
 
     apply from: 'scripts/dependencies.gradle'
@@ -16,6 +15,10 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
+//plugins {
+//    id 'com.palantir.git-version' version '0.9.1'
+//}
 
 apply from: 'scripts/dependencies.gradle'
 

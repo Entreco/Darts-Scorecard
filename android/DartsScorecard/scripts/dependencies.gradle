@@ -2,7 +2,29 @@
 /*
 * Gets the version name from the latest Git tag
 */
-def getVersionName = { ->
+def getGitTag = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe'
+            standardOutput = stdout
+        }
+        return "v" + stdout.toString().trim()
+    } catch (Throwable ignore){
+        return "local"
+    }
+}
+
+def getGitCommit = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--always'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def getBranchName = { ->
     def stdout = new ByteArrayOutputStream()
     exec {
         commandLine 'git', 'describe', '--always'
@@ -26,7 +48,7 @@ ext {
     androidTargetSdkVersion = 26
 
     versionCode = getVersionCode()
-    versionName = getVersionName()
+    versionName = "${getGitTag()}-R-${getGitCommit()}"
 
     dependencies = [
             support = '27.0.0',
