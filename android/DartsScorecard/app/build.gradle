@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../scripts/versioning.gradle'
 
 android {
     def config = rootProject.extensions.getByName("ext")
@@ -41,8 +42,4 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
 }
 
-task remco {
-    doLast {
-        println android.defaultConfig.versionName
-    }
-}
+
