@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../scripts/versioning.gradle'
 
@@ -32,11 +33,20 @@ android {
         htmlOutput file("lint-report.html")
         abortOnError false
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+
+    implementation project(":domain")
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    kapt 'com.android.databinding:compiler:3.0.0'
+
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     testImplementation "junit:junit:$junit"
