@@ -1,8 +1,5 @@
 package nl.entreco.domain
 
-/**
- * Created by Entreco on 11/11/2017.
- */
 data class Score(var score: Int = 501, val leg: Int = 0, val set: Int = 0, private val startScore: Int = 501, private val numLegs: Int = 3, private val numSets: Int = 1){
 
     operator fun minusAssign(turn: Turn) {

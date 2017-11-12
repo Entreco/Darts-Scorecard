@@ -8,7 +8,7 @@ class Game(startScore: Int = 501, numPlayers: Int = 2) {
     var state = "game on"
     var scores  = arbiter.getScores()
         get() = arbiter.getScores()
-    
+
     fun start() {
         state = "player 1 to throw first"
     }

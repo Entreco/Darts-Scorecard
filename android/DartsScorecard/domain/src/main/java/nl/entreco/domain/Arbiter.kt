@@ -44,6 +44,10 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
         return scores
     }
 
+    fun getLegs() : List<Array<Score>>{
+        return legs
+    }
+
     override fun toString(): String {
         val builder = StringBuilder().append("${scores[0]}")
         scores.drop(1).forEach {  builder.append("\n$it") }
