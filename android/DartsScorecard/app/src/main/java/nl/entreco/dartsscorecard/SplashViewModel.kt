@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard
 import android.databinding.ObservableField
 import nl.entreco.domain.Game
 import nl.entreco.domain.Turn
+import java.util.*
 
 /**
  * Created by Entreco on 11/11/2017.
@@ -14,11 +15,13 @@ class SplashViewModel {
     val game : ObservableField<String> = ObservableField(summary.toString())
 
     fun submitRandom(){
-        val turn = Turn(20, 20, 20)
+        val turn = Turn(rand(), rand(), rand())
         g.handle(turn)
-        summary.append(g.score).newline().append(g.state).newline()
+        summary.append(g.scores).newline().append(g.state).newline()
         game.set(summary.toString())
     }
+
+    private fun rand(): Int = Random().nextInt(20) * Random().nextInt(3)
 
     fun StringBuilder.newline() : StringBuilder {
         return append("\n")

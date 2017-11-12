@@ -18,7 +18,9 @@ abstract class BaseGameTest(val subject: Game = Game()) {
     }
 
     protected fun assertScore(score1: Int, score2: Int, leg: Int = 0) {
-        Assert.assertEquals("$score1, $score2 (leg:$leg)", subject.score)
+        Assert.assertEquals(score1, subject.scores[0].score)
+        Assert.assertEquals(score2, subject.scores[1].score)
+        Assert.assertEquals(leg, subject.scores[0].leg + subject.scores[1].leg)
     }
 
     protected fun sixty() = Turn(20, 20, 20)

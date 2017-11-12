@@ -9,7 +9,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash)
-        binding.viewModel = SplashViewModel()
+        DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash).viewModel = SplashViewModel()
     }
 }
