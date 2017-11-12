@@ -1,8 +1,5 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply from: '../scripts/versioning.gradle'
 
 android {
     def config = rootProject.extensions.getByName("ext")
@@ -10,51 +7,32 @@ android {
     buildToolsVersion config.androidBuildToolsVersion
 
     defaultConfig {
-        applicationId "nl.entreco.dartsscorecard"
         minSdkVersion config.androidMinSdkVersion
         targetSdkVersion config.androidTargetSdkVersion
         versionCode config.versionCode
         versionName config.versionName
 
-        resValue "string", "version", "${config.versionName}"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
+
     buildTypes {
         debug {
             testCoverageEnabled true
         }
         release {
-            shrinkResources true
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    lintOptions {
-        htmlReport true
-        htmlOutput file("lint-report.html")
-        abortOnError false
-    }
-
-    dataBinding {
-        enabled = true
     }
 }
 
 dependencies {
-
-    implementation project(":domain")
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    kapt 'com.android.databinding:compiler:3.0.0'
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
     implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support.constraint:constraint-layout:$constraint"
     testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
 }
-
-

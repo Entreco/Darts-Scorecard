@@ -1,0 +1,32 @@
+android.applicationVariants.all { variant ->
+    def appName = "Dsc"
+    variant.outputs.all { output ->
+        outputFileName = "${appName}-${variant.versionName}.apk"
+    }
+}
+
+task showVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
+
+task showApiVersion {
+    doLast {
+        def config = rootProject.extensions.getByName("ext")
+        println config.androidTargetSdkVersion
+    }
+}
+
+task showBuildToolsVersion {
+    doLast {
+        def config = rootProject.extensions.getByName("ext")
+        println config.androidBuildToolsVersion
+    }
+}
+
+task showAppName {
+    doLast {
+        println android.applicationVariants[0].outputs[0].outputFileName
+    }
+}

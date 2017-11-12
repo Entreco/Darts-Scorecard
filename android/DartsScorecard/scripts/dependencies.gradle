@@ -1,0 +1,62 @@
+ext.gitTag = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--tags'
+            standardOutput = stdout
+        }
+        return "v" + stdout.toString().trim()
+    } catch (Throwable ignore){
+        return "local"
+    }
+}
+
+ext.gitCommit = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--always'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+ext.branchName = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim().take(1)
+}
+
+ext.versionCode = { ->
+    return (int)(((new Date().getTime()/1000) - 1510351372) / 10)
+}
+
+ext.versionName = { ->
+    return "${gitTag()}-${branchName()}-${gitCommit()}"
+}
+
+
+ext {
+
+    kotlinVersion = '1.1.51'
+    gradleVersion = '3.0.0'
+
+    androidBuildToolsVersion = '26.0.2'
+    androidCompileSdkVersion = 26
+    androidMinSdkVersion = 23
+    androidTargetSdkVersion = 26
+
+    versionCode = versionCode()
+    versionName = versionName()
+
+    dependencies = [
+            support = '26.0.2',
+            constraint = '1.0.2',
+            junit = '4.12',
+            mockito = '2.12.0',
+            espressoCore = '3.0.1',
+            espressoRunner = '1.0.1'
+    ]
+}
