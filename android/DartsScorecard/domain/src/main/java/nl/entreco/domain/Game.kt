@@ -14,8 +14,13 @@ class Game(startScore: Int = 501, numPlayers: Int = 2) {
     }
 
     fun handle(turn: Turn) {
-        currentPlayer = arbiter.handle(turn, currentPlayer)
-        state = "player ${currentPlayer + 1} to throw"
+        if(GAME_FINISHED != state) {
+            currentPlayer = arbiter.handle(turn, currentPlayer)
+            if (currentPlayer < 0) state = GAME_FINISHED
+            else state = "player ${currentPlayer + 1} to throw"
+        }
     }
+
+    private val GAME_FINISHED = "game finished"
 
 }

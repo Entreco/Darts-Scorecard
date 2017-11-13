@@ -14,5 +14,4 @@ class ArbiterTest {
 
         assertEquals(0, subject.getLegs().size)
     }
-
 }

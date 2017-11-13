@@ -11,6 +11,7 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
     fun handle(turn: Turn, currentPlayer: Int) : Int {
         applyScore(currentPlayer, turn)
 
+        if(gameShotAndTheMatch(currentPlayer)) return -1
         if (requiresNewSet(currentPlayer)) return playerForNewSet()
         else if (requiresNewLeg(currentPlayer)) return playerForNewLeg()
 
@@ -21,6 +22,15 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
 
     private fun playerForNewLeg() = legs.size % numPlayers
     private fun playerForNewSet() = sets.size % numPlayers
+
+    private fun gameShotAndTheMatch(currentPlayer: Int): Boolean {
+        if(matchFinished(currentPlayer)){
+            legs.add(scores)
+            sets.add(legs)
+            return true
+        }
+        return false
+    }
 
     private fun requiresNewLeg(currentPlayer: Int): Boolean {
         if (legFinished(currentPlayer)) {
@@ -57,6 +67,7 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
 
     private fun legFinished(currentPlayer: Int) = scores[currentPlayer].legFinished()
     private fun setFinished(currentPlayer: Int) = scores[currentPlayer].setFinished()
+    private fun matchFinished(currentPlayer: Int) = scores[currentPlayer].matchFinished()
 
 
     fun getScores() : Array<Score> {

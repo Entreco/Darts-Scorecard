@@ -72,7 +72,7 @@ class GameTest : BaseGameTest() {
     }
 
     @Test
-    fun `it should subtract darts thrown from score3 multple`() {
+    fun `it should subtract darts thrown from score3 multiple`() {
         givenGameStarted()
         whenDartsThrown(sixty(), sixty(), sixty(), sixty(), sixty(), sixty())
 
