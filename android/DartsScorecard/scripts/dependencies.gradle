@@ -44,10 +44,10 @@ ext {
     gradleVersion = '3.0.0'
     gmsVersion = '3.1.0'
 
-    androidBuildToolsVersion = '27.0.1'
+    androidBuildToolsVersion = '26.0.2'
     androidCompileSdkVersion = 26
     androidMinSdkVersion = 23
-    androidTargetSdkVersion = 27
+    androidTargetSdkVersion = 26
 
     versionCode = versionCode()
     versionName = versionName()
