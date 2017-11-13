@@ -5,7 +5,7 @@ import org.junit.Assert
 /**
  * Created by Entreco on 11/11/2017.
  */
-abstract class BaseGameTest(val subject: Game = Game()) {
+abstract class BaseGameTest(val subject: Game = Game(GameSettings())) {
 
     protected fun whenDartsThrown(vararg turns: Turn) {
         for(turn in turns) {

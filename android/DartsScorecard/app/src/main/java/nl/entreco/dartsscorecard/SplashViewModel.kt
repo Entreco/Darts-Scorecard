@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard
 
 import android.databinding.ObservableField
 import nl.entreco.domain.Game
+import nl.entreco.domain.GameSettings
 import nl.entreco.domain.Score
 import nl.entreco.domain.Turn
 import java.util.*
@@ -11,7 +12,7 @@ import java.util.*
  */
 class SplashViewModel {
 
-    private val g : Game = Game().apply { start() }
+    private val g : Game = Game(GameSettings()).apply { start() }
     private val summary: StringBuilder = StringBuilder(g.state).newline()
     val history: ObservableField<String> = ObservableField(summary.toString())
     val score: ObservableField<String> = ObservableField()

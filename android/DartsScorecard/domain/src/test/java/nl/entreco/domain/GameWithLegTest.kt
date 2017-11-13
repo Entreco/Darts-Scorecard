@@ -3,7 +3,7 @@ package nl.entreco.domain
 import org.junit.Assert.*
 import org.junit.Test
 
-class GameWithLegTest : BaseGameTest(Game(201)) {
+class GameWithLegTest : BaseGameTest(Game(GameSettings(startScore = 201))) {
 
     @Test
     fun `it should print correct start score`() {
