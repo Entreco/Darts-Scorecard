@@ -52,6 +52,7 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "com.google.firebase:firebase-core:$firebase"
     testImplementation "junit:junit:$junit"
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
