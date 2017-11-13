@@ -1,17 +1,17 @@
 package nl.entreco.domain
 
-class Arbiter(startScore: Score, private val numPlayers: Int) {
+class Arbiter(initial: Score, private val numPlayers: Int) {
 
-    private var scores = initForStart(startScore)
+    private var scores = initForStart(initial)
 
     private var legs = mutableListOf<Array<Score>>()
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    fun handle(turn: Turn, currentPlayer: Int) : Int {
+    fun handle(turn: Turn, currentPlayer: Int): Int {
         applyScore(currentPlayer, turn)
 
-        if(gameShotAndTheMatch(currentPlayer)) return -1
+        if (gameShotAndTheMatch(currentPlayer)) return -1
         if (requiresNewSet(currentPlayer)) return playerForNewSet()
         else if (requiresNewLeg(currentPlayer)) return playerForNewLeg()
 
@@ -24,9 +24,10 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
     private fun playerForNewSet() = sets.size % numPlayers
 
     private fun gameShotAndTheMatch(currentPlayer: Int): Boolean {
-        if(matchFinished(currentPlayer)){
+        if (matchFinished(currentPlayer)) {
             legs.add(scores)
             sets.add(legs)
+            initForNewMatch()
             return true
         }
         return false
@@ -42,7 +43,7 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
     }
 
     private fun requiresNewSet(currentPlayer: Int): Boolean {
-        if(setFinished(currentPlayer)){
+        if (setFinished(currentPlayer)) {
             legs.add(scores)
             sets.add(legs)
             initForNewSet()
@@ -57,8 +58,12 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
         scores.forEachIndexed { index, score -> scores[index] = score.rollLeg() }
     }
 
-    private fun initForNewSet(){
+    private fun initForNewSet() {
         scores.forEachIndexed { index, score -> scores[index] = score.rollSet() }
+    }
+
+    private fun initForNewMatch() {
+        initForNewSet()
     }
 
     private fun applyScore(currentPlayer: Int, turn: Turn) {
@@ -69,18 +74,21 @@ class Arbiter(startScore: Score, private val numPlayers: Int) {
     private fun setFinished(currentPlayer: Int) = scores[currentPlayer].setFinished()
     private fun matchFinished(currentPlayer: Int) = scores[currentPlayer].matchFinished()
 
-
-    fun getScores() : Array<Score> {
+    fun getScores(): Array<Score> {
         return scores
     }
 
-    fun getLegs() : MutableList<Array<Score>> {
+    fun getLegs(): MutableList<Array<Score>> {
         return legs
+    }
+
+    fun getSets(): MutableList<MutableList<Array<Score>>> {
+        return sets
     }
 
     override fun toString(): String {
         val builder = StringBuilder().append("${scores[0]}")
-        scores.drop(1).forEach {  builder.append("\n$it") }
+        scores.drop(1).forEach { builder.append("\n$it") }
         return builder.toString()
     }
 }
