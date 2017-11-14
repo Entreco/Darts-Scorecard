@@ -14,10 +14,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class Play01ActivityTest {
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
+    fun `it should have correct package name`() {
         val appContext = InstrumentationRegistry.getTargetContext()
         assertEquals("nl.entreco.dartsscorecard", appContext.packageName)
     }

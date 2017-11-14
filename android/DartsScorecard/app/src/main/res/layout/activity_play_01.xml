@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="nl.entreco.dartsscorecard.SplashViewModel" />
+            type="nl.entreco.dartsscorecard.Play01ViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="nl.entreco.dartsscorecard.SplashActivity">
+        tools:context="nl.entreco.dartsscorecard.Play01Activity">
 
         <TextView
             android:id="@+id/textView2"

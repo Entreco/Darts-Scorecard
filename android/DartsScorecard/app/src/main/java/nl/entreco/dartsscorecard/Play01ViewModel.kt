@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Created by Entreco on 11/11/2017.
  */
-class SplashViewModel {
+class Play01ViewModel {
 
     private val g : Game = Game(GameSettings()).apply { start() }
     private val summary: StringBuilder = StringBuilder(g.state).newline()

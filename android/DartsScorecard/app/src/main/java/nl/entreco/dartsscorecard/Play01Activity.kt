@@ -6,13 +6,13 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.dartsscorecard.databinding.ActivitySplashBinding
 
-class SplashActivity : AppCompatActivity() {
+class Play01Activity : AppCompatActivity() {
 
     lateinit var analytics : FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_splash).viewModel = SplashViewModel()
+        DataBindingUtil.setContentView<ActivitySplashBinding>(this, R.layout.activity_play_01).viewModel = Play01ViewModel()
         analytics = FirebaseAnalytics.getInstance(this)
         logDebugEvent()
     }
