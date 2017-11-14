@@ -5,20 +5,28 @@ android.applicationVariants.all { variant ->
     }
 }
 
-task showVersionName << {
-    println android.defaultConfig.versionName
+task showVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
 }
 
-task showApiVersion << {
-    def config = rootProject.extensions.getByName("ext")
-    println config.androidTargetSdkVersion
+task showApiVersion {
+    doLast {
+        def config = rootProject.extensions.getByName("ext")
+        println config.androidTargetSdkVersion
+    }
 }
 
-task showBuildToolsVersion << {
-    def config = rootProject.extensions.getByName("ext")
-    println config.androidBuildToolsVersion
+task showBuildToolsVersion {
+    doLast {
+        def config = rootProject.extensions.getByName("ext")
+        println config.androidBuildToolsVersion
+    }
 }
 
-task showAppName << {
-    println android.applicationVariants[0].outputs[0].outputFileName
+task showAppName {
+    doLast {
+        println android.applicationVariants[0].outputs[0].outputFileName
+    }
 }
