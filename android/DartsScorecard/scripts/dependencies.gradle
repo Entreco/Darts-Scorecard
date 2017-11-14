@@ -54,10 +54,12 @@ ext {
 
     dependencies = [
             support = '26.0.2',
+            daggerVersion = '2.13',
             constraint = '1.0.2',
             firebase = '11.6.0',
             junit = '4.12',
             mockito = '2.12.0',
+            mockitoKotlin = '1.5.0',
             espressoCore = '3.0.1',
             espressoRunner = '1.0.1'
     ]

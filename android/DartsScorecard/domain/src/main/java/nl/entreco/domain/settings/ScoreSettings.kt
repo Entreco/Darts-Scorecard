@@ -1,4 +1,4 @@
-package nl.entreco.domain
+package nl.entreco.domain.settings
 
 /**
  * Created by Entreco on 13/11/2017.

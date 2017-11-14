@@ -1,11 +1,15 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
+import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.play.Game
+import nl.entreco.domain.play.Score
+import nl.entreco.domain.play.Turn
 import org.junit.Assert
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-abstract class BaseGameTest(val subject: Game = Game(GameSettings())) {
+abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), 2))) {
 
     protected fun whenDartsThrown(vararg turns: Turn) {
         for(turn in turns) {

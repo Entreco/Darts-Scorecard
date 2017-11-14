@@ -1,4 +1,6 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
+
+import nl.entreco.domain.settings.ScoreSettings
 
 data class Score(var score: Int = 501, val leg: Int = 0, val set: Int = 0, private val settings: ScoreSettings = ScoreSettings()) {
 

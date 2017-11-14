@@ -1,24 +1,31 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableField
-import nl.entreco.domain.Game
-import nl.entreco.domain.GameSettings
-import nl.entreco.domain.Score
-import nl.entreco.domain.Turn
+import android.support.annotation.VisibleForTesting
+import nl.entreco.domain.play.CreateGameUsecase
+import nl.entreco.domain.play.Game
+import nl.entreco.domain.play.Score
+import nl.entreco.domain.play.Turn
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel {
+class Play01ViewModel @Inject constructor(createGameUsecase: CreateGameUsecase) {
 
-    private val g : Game = Game(GameSettings()).apply { start() }
+    private var g : Game = createGameUsecase.start()
     private val summary: StringBuilder = StringBuilder(g.state).newline()
     val history: ObservableField<String> = ObservableField(summary.toString())
     val score: ObservableField<String> = ObservableField()
 
     fun submitRandom(){
         val turn = Turn(rand(), rand(), rand())
+        handleTurn(turn)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun handleTurn(turn : Turn){
         g.handle(turn)
 
         score.set(format(g.scores))
@@ -30,7 +37,8 @@ class Play01ViewModel {
         history.set(summary.toString())
     }
 
-    private fun format(scores: Array<Score>): String {
+    @VisibleForTesting
+    fun format(scores: Array<Score>): String {
         return StringBuilder().apply {
             scores.forEach {
                 append(it).newline()

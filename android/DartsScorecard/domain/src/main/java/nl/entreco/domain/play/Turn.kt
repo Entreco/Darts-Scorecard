@@ -1,4 +1,4 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
 data class Turn (val d1: Int, val d2: Int, val d3: Int){
     private val sum = d1 + d2 + d3

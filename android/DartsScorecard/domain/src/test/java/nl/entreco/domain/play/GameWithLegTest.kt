@@ -1,9 +1,10 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
+import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.*
 import org.junit.Test
 
-class GameWithLegTest : BaseGameTest(Game(GameSettings(startScore = 201))) {
+class GameWithLegTest : BaseGameTest(Game(Arbiter(Score(201, settings = ScoreSettings(201)), 2))) {
 
     @Test
     fun `it should print correct start score`() {

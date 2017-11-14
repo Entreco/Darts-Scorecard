@@ -1,5 +1,8 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
+import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.play.Score
+import nl.entreco.domain.play.Turn
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,7 +13,7 @@ class ArbiterTest {
 
     @Test
     fun `it should not start new leg if zero is scored`() {
-        subject.handle(Turn(0,0,0), 0)
+        subject.handle(Turn(0, 0, 0), 0)
 
         assertEquals(0, subject.getLegs().size)
     }

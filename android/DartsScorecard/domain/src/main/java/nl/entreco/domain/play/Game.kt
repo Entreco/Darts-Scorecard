@@ -1,10 +1,9 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
-class Game(settings: GameSettings) {
+class Game(val arbiter: Arbiter) {
 
     private var currentPlayer = 0
 
-    val arbiter = Arbiter(settings.initial, settings.numPlayers)
     var state = "game on"
     var scores = arbiter.getScores()
         get() = arbiter.getScores()

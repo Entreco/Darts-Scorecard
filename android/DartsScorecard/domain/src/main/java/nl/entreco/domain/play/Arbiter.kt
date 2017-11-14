@@ -1,4 +1,4 @@
-package nl.entreco.domain
+package nl.entreco.domain.play
 
 class Arbiter(initial: Score, private val numPlayers: Int) {
 
