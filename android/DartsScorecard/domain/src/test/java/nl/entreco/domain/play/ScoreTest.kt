@@ -1,6 +1,5 @@
 package nl.entreco.domain.play
 
-import nl.entreco.domain.play.Score
 import org.junit.Assert.*
 import org.junit.Test
 

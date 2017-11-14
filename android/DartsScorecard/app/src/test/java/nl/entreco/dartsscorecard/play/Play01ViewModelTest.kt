@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations
  */
 class Play01ViewModelTest {
 
-    lateinit var subject : Play01ViewModel
+    private lateinit var subject : Play01ViewModel
 
     @Before
     fun setUp() {

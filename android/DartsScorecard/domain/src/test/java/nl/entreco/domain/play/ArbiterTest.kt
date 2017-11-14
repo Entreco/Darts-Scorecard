@@ -1,11 +1,7 @@
 package nl.entreco.domain.play
 
-import nl.entreco.domain.play.Arbiter
-import nl.entreco.domain.play.Score
-import nl.entreco.domain.play.Turn
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class ArbiterTest {
 

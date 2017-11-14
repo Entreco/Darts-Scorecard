@@ -8,7 +8,7 @@ import dagger.Provides
  * Created by Entreco on 14/11/2017.
  */
 @Module
-class ViewModelModule(val activity: Activity) {
+class ViewModelModule(private val activity: Activity) {
     @Provides
     fun context() = activity
 }

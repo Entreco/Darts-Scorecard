@@ -11,8 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
-    lateinit var subject : CreateGameUsecase
-    val arbiter = Arbiter(Score(), 2)
+    private lateinit var subject : CreateGameUsecase
+    private val arbiter = Arbiter(Score(), 2)
 
     @Test
     fun `it should create a game and start it`() {
