@@ -16,6 +16,8 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
+        resConfigs "en", "nl"
+
         resValue "string", "version", "${config.versionName}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -45,15 +47,21 @@ android {
 dependencies {
 
     implementation project(":domain")
+    implementation project(":data")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    kapt 'com.android.databinding:compiler:3.0.0'
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.android.databinding:compiler:$gradleVersion"
 
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "com.google.firebase:firebase-core:$firebase"
+
     testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
 }
