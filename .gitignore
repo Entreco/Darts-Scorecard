@@ -57,3 +57,5 @@ freeline_project_description.json
 android/DartsScorecard/\.idea/
 
 android/DartsScorecard/scripts/dsc_keystore
+
+android/DartsScorecard/app/lint-report\.html

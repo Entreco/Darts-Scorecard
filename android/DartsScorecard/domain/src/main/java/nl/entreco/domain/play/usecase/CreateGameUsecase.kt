@@ -10,6 +10,6 @@ import javax.inject.Inject
  */
 open class CreateGameUsecase @Inject constructor(private val arbiter: Arbiter, private val gameRepository: GameRepository) {
     open fun start() : Game {
-        return gameRepository.new(arbiter)
+        return gameRepository.new(arbiter).apply { start() }
     }
 }

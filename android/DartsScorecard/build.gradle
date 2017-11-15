@@ -18,6 +18,7 @@ buildscript {
 }
 
 apply from: 'scripts/dependencies.gradle'
+apply from: 'scripts/tasks.gradle'
 
 allprojects {
     repositories {

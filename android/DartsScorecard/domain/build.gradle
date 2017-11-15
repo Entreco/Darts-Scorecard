@@ -11,10 +11,10 @@ configurations.all {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 }

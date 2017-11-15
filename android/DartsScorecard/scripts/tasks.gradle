@@ -1,0 +1,9 @@
+task checkDebug(type: GradleBuild) {
+    group "Dsc"
+    tasks = ['app:testDebugUnitTest', 'data:testDebugUnitTest', 'domain:test', 'lintDebug']
+}
+
+task checkRelease(type: GradleBuild) {
+    group "Dsc"
+    tasks = ['app:testReleaseUnitTest', 'data:testReleaseUnitTest', 'domain:test', 'lintRelease']
+}

@@ -1,11 +1,14 @@
 package nl.entreco.domain.play.usecase
 
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.usecase.CreateGameUsecase
-import org.junit.Assert.assertEquals
+import nl.entreco.domain.play.repository.GameRepository
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -16,15 +19,28 @@ class CreateGameUsecaseTest {
 
     private lateinit var subject : CreateGameUsecase
     private val arbiter = Arbiter(Score(), 2)
+    private val game = Game(arbiter)
+
+    @Mock lateinit var mockGameRepository : GameRepository
 
     @Test
     fun `it should create a game and start it`() {
-        givenNewGame()
-        assertEquals("player 1 to throw first", subject.start().state)
+        givenCreateGameUsecase()
+        whenStartIsCalled()
+        thenGameIsStarted()
     }
 
-    private fun givenNewGame() {
-        subject = CreateGameUsecase(arbiter)
+    private fun givenCreateGameUsecase() {
+        whenever(mockGameRepository.new(arbiter)).then{ game }
+        subject = CreateGameUsecase(arbiter, mockGameRepository)
+    }
+
+    private fun whenStartIsCalled() {
+        subject.start()
+    }
+
+    private fun thenGameIsStarted() {
+        verify(mockGameRepository).new(arbiter)
     }
 
 }

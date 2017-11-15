@@ -9,6 +9,6 @@ import nl.entreco.domain.play.repository.GameRepository
  */
 class LocalGameRepository : GameRepository {
     override fun new(arbiter: Arbiter) : Game {
-        return Game(arbiter).apply { start() }
+        return Game(arbiter)
     }
 }
