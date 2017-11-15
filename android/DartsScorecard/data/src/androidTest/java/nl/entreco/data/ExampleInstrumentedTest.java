@@ -1,4 +1,4 @@
-package nl.entreco.domain;
+package nl.entreco.data;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("nl.entreco.domain.test", appContext.getPackageName());
+        assertEquals("nl.entreco.data.test", appContext.getPackageName());
     }
 }

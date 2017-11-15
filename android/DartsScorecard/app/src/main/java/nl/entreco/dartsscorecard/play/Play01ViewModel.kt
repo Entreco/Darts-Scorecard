@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.play
 import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
 import nl.entreco.dartsscorecard.analytics.Analytics
-import nl.entreco.domain.play.CreateGameUsecase
-import nl.entreco.domain.play.Game
-import nl.entreco.domain.play.Score
-import nl.entreco.domain.play.Turn
+import nl.entreco.domain.play.usecase.CreateGameUsecase
+import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import java.util.*
 import javax.inject.Inject
 

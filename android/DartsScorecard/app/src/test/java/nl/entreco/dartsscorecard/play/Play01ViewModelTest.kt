@@ -1,10 +1,10 @@
 package nl.entreco.dartsscorecard.play
 
 import nl.entreco.dartsscorecard.analytics.Analytics
-import nl.entreco.domain.play.Arbiter
-import nl.entreco.domain.play.CreateGameUsecase
-import nl.entreco.domain.play.Score
-import nl.entreco.domain.play.Turn
+import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.domain.play.usecase.CreateGameUsecase
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before

@@ -7,8 +7,8 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
-import nl.entreco.domain.play.Arbiter
-import nl.entreco.domain.play.Score
+import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.domain.play.model.Score
 import javax.inject.Inject
 
 class Play01Activity : ViewModelActivity() {

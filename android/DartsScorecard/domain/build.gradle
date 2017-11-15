@@ -1,42 +1,20 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
 
-android {
-    def config = rootProject.extensions.getByName("ext")
-    compileSdkVersion config.androidCompileSdkVersion
-    buildToolsVersion config.androidBuildToolsVersion
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-    defaultConfig {
-        minSdkVersion config.androidMinSdkVersion
-        targetSdkVersion config.androidTargetSdkVersion
-        versionCode config.versionCode
-        versionName config.versionName
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    implementation "com.android.support:appcompat-v7:$support"
     implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
-
-    androidTestImplementation "com.android.support.test:runner:$espressoRunner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
 }

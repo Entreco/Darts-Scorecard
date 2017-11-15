@@ -1,4 +1,4 @@
-package nl.entreco.domain.play
+package nl.entreco.domain.play.model
 
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.*
