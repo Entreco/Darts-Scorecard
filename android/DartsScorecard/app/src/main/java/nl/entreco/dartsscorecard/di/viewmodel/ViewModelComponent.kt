@@ -9,9 +9,10 @@ import javax.inject.Singleton
 /**
  * Created by Entreco on 14/11/2017.
  */
-@Singleton
 @Subcomponent(modules = arrayOf(ViewModelModule::class))
 interface ViewModelComponent {
     fun inject(activity: Activity)
+
+    // Where can this be used
     fun plus(module: Play01Module) : Play01Component
 }

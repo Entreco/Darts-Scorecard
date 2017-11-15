@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
+import nl.entreco.dartsscorecard.analytics.Analytics
 import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.CreateGameUsecase
 import nl.entreco.domain.play.Score
@@ -8,6 +9,7 @@ import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 /**
@@ -16,6 +18,7 @@ import org.mockito.MockitoAnnotations
 class Play01ViewModelTest {
 
     private lateinit var subject : Play01ViewModel
+    @Mock lateinit var mockAnalytics: Analytics
 
     @Before
     fun setUp() {
@@ -44,7 +47,7 @@ class Play01ViewModelTest {
     }
 
     private fun givenGameStartedWithInitialScore(score: Score) {
-        subject = Play01ViewModel(CreateGameUsecase(Arbiter(score, 2)))
+        subject = Play01ViewModel(CreateGameUsecase(Arbiter(score, 2)), mockAnalytics)
     }
 
     private fun whenTurnSubmitted(vararg turns : Turn) {

@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
+import nl.entreco.dartsscorecard.analytics.Analytics
 import nl.entreco.domain.play.CreateGameUsecase
 import nl.entreco.domain.play.Game
 import nl.entreco.domain.play.Score
@@ -12,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(createGameUsecase: CreateGameUsecase) {
+class Play01ViewModel @Inject constructor(createGameUsecase: CreateGameUsecase, private val analytics: Analytics) {
 
     private var g : Game = createGameUsecase.start()
     private val summary: StringBuilder = StringBuilder(g.state).newline()
@@ -22,6 +23,7 @@ class Play01ViewModel @Inject constructor(createGameUsecase: CreateGameUsecase) 
     fun submitRandom(){
         val turn = Turn(rand(), rand(), rand())
         handleTurn(turn)
+        analytics.track("PlayViewModel1")
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

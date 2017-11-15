@@ -8,6 +8,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 /**
  * Created by Entreco on 14/11/2017.
  */
+@ApplicationScope
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
     fun inject(app: App)

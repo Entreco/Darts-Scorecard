@@ -1,7 +1,9 @@
 package nl.entreco.dartsscorecard
 
 import android.app.Activity
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 
 /**
@@ -12,5 +14,12 @@ abstract class ViewModelActivity : AppCompatActivity() {
     val Activity.app: App
         get() = application as App
 
-    protected val viewmodelComponent by lazy { app.appComponent.plus(ViewModelModule(this)) }
+    private val viewmodelComponent by lazy { app.appComponent.plus(ViewModelModule(this)) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        inject(viewmodelComponent)
+        super.onCreate(savedInstanceState)
+    }
+
+    abstract fun inject(component: ViewModelComponent)
 }
