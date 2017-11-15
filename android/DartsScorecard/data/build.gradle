@@ -13,6 +13,8 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
+        resConfigs "en", "nl"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

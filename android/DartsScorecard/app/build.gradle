@@ -16,6 +16,8 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
+        resConfigs "en", "nl"
+
         resValue "string", "version", "${config.versionName}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

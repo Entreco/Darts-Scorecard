@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.model
 
-class Game(val arbiter: Arbiter) {
+data class Game(val arbiter: Arbiter) {
 
     private var currentPlayer = 0
 
