@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.analytics
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
@@ -8,11 +9,12 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 15/11/2017.
  */
-class FirebaseAnalytics @Inject constructor(context: Context): Analytics {
+class FirebaseAnalytics @Inject constructor(context: Context) : Analytics {
 
-    private val fb = FirebaseAnalytics.getInstance(context)
+    private val fb by lazy { FirebaseAnalytics.getInstance(context) }
 
-    override fun track(event: String) {
-        Log.d("FirebaseAnalytics", "track: $event fb: $fb")
+    override fun trackAchievement(id: String) {
+        Log.d("FirebaseAnalytics", "trackAchievement: $id")
+        fb.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, Bundle().apply { putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID, id) })
     }
 }
