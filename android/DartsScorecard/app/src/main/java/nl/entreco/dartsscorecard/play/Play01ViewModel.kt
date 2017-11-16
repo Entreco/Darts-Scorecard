@@ -17,21 +17,21 @@ import javax.inject.Inject
 class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase, private val analytics: Analytics) : BaseViewModel() {
 
     // Lazy to keep state
-    private val g : Game by lazy { createGameUseCase.start() }
+    private val g: Game by lazy { createGameUseCase.start() }
     private val summary: StringBuilder by lazy { StringBuilder(g.state).newline() }
 
     // Fields for UI updates
     val history: ObservableField<String> = ObservableField(summary.toString())
     val score: ObservableField<String> = ObservableField()
 
-    fun submitRandom(){
+    fun submitRandom() {
         val turn = Turn(rand(), rand(), rand())
         handleTurn(turn)
-        analytics.track("PlayViewModel1")
+        analytics.trackAchievement("scored: $turn")
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun handleTurn(turn : Turn){
+    fun handleTurn(turn: Turn) {
         g.handle(turn)
 
         score.set(format(g.scores))
@@ -54,7 +54,7 @@ class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase, 
 
     private fun rand(): Int = Random().nextInt(20) * Random().nextInt(3)
 
-    private fun StringBuilder.newline() : StringBuilder {
+    private fun StringBuilder.newline(): StringBuilder {
         return append("\n")
     }
 }
