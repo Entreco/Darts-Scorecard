@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LocalGameRepositoryTest {
 
-    @InjectMocks lateinit var subject : LocalGameRepository
+    @InjectMocks private lateinit var subject : LocalGameRepository
     private val mockArbiter = Arbiter(Score(), 2)
 
     @Test

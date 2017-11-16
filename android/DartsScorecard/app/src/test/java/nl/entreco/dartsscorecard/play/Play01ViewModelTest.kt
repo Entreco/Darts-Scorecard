@@ -21,8 +21,8 @@ import org.mockito.MockitoAnnotations
 class Play01ViewModelTest {
 
     private lateinit var subject : Play01ViewModel
-    @Mock lateinit var mockAnalytics: Analytics
-    @Mock lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockAnalytics: Analytics
+    @Mock private lateinit var mockGameRepository: GameRepository
 
     @Before
     fun setUp() {
