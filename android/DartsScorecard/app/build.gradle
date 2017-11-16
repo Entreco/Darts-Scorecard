@@ -56,6 +56,7 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "android.arch.lifecycle:extensions:$architectureComponents"
     implementation "com.google.firebase:firebase-core:$firebase"
 
     testImplementation "junit:junit:$junit"
