@@ -3,20 +3,24 @@ package nl.entreco.dartsscorecard.play
 import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
 import nl.entreco.dartsscorecard.analytics.Analytics
-import nl.entreco.domain.play.usecase.CreateGameUsecase
+import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.usecase.CreateGameUsecase
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(createGameUsecase: CreateGameUsecase, private val analytics: Analytics) {
+class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase, private val analytics: Analytics) : BaseViewModel() {
 
-    private var g : Game = createGameUsecase.start()
-    private val summary: StringBuilder = StringBuilder(g.state).newline()
+    // Lazy to keep state
+    private val g : Game by lazy { createGameUseCase.start() }
+    private val summary: StringBuilder by lazy { StringBuilder(g.state).newline() }
+
+    // Fields for UI updates
     val history: ObservableField<String> = ObservableField(summary.toString())
     val score: ObservableField<String> = ObservableField()
 

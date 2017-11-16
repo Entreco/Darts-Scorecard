@@ -53,9 +53,10 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            support = '26.0.2',
+            support = '27.0.1',
             daggerVersion = '2.13',
             constraint = '1.0.2',
+            architectureComponents = '1.0.0',
             firebase = '11.6.0',
             junit = '4.12',
             mockito = '2.12.0',

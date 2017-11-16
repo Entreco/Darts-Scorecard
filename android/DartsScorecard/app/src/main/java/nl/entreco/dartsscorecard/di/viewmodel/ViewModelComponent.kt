@@ -4,7 +4,6 @@ import android.app.Activity
 import dagger.Subcomponent
 import nl.entreco.dartsscorecard.play.Play01Component
 import nl.entreco.dartsscorecard.play.Play01Module
-import javax.inject.Singleton
 
 /**
  * Created by Entreco on 14/11/2017.
