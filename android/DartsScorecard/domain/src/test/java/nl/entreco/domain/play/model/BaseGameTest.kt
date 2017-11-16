@@ -1,9 +1,5 @@
 package nl.entreco.domain.play.model
 
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
 import org.junit.Assert
 
 /**

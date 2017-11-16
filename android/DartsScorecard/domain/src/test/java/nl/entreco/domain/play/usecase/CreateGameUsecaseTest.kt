@@ -21,7 +21,7 @@ class CreateGameUsecaseTest {
     private val arbiter = Arbiter(Score(), 2)
     private val game = Game(arbiter)
 
-    @Mock lateinit var mockGameRepository : GameRepository
+    @Mock private lateinit var mockGameRepository : GameRepository
 
     @Test
     fun `it should create a game and start it`() {
