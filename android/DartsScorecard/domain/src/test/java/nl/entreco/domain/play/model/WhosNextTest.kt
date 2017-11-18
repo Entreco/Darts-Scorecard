@@ -75,8 +75,8 @@ class WhosNextTest{
         assertEquals(player2, subject.nextLeg())
         assertEquals(player4, subject.nextLeg())
         assertEquals(player1, subject.nextLeg())
-        assertEquals(player2, subject.nextSet())
-        assertEquals(player4, subject.nextLeg())
+        assertEquals(player3, subject.nextSet())
+        assertEquals(player5, subject.nextLeg())
         assertEquals(player1, subject.nextLeg())
         assertEquals(player4, subject.nextSet())
     }
