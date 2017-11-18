@@ -12,8 +12,8 @@ class Team(vararg val players: Player = emptyArray()){
 
     fun next(currentLeg: Int = 0, currentSet: Int = 0) : Player {
         when {
-            isNewLeg(currentLeg) -> newLeg()
             isNewSet(currentSet) -> newSet()
+            isNewLeg(currentLeg) -> newLeg()
             else -> newTurn()
         }
         return players[(turns + offset) % players.size]
