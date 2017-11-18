@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="nameText" format="color"/>
+    <attr name="scoreText" format="color"/>
+    <attr name="ptsText" format="color"/>
+    <attr name="grad_score_header_start" format="color"/>
+    <attr name="grad_score_header_stop" format="color"/>
+    <attr name="grad_score_name_start" format="color"/>
+    <attr name="grad_score_name_stop" format="color"/>
+    <attr name="grad_score_start" format="color"/>
+    <attr name="grad_score_stop" format="color"/>
+    <attr name="grad_score_pts_start" format="color"/>
+    <attr name="grad_score_pts_stop" format="color"/>
+    <attr name="header_text_color" format="color"/>
+</resources>

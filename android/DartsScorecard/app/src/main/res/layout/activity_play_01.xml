@@ -15,6 +15,8 @@
         android:layout_height="match_parent"
         tools:context="nl.entreco.dartsscorecard.play.Play01Activity">
 
+        <include layout="@layout/play_01_score" android:id="@+id/scoreview" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -47,7 +49,7 @@
             android:text="@{viewModel.score}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreview"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="Score" />

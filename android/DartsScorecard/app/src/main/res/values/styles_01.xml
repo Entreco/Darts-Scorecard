@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <style name="Score">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="Score.Name">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:gravity">start</item>
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:textColor">?attr/nameText</item>
+    </style>
+
+    <style name="Score.Leg">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/score</item>
+        <item name="android:textColor">?attr/scoreText</item>
+    </style>
+
+    <style name="Score.Set">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/score</item>
+        <item name="android:textColor">?attr/scoreText</item>
+    </style>
+
+    <style name="Score.Pts">
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:gravity">end</item>
+        <item name="android:background">@drawable/score_pts</item>
+        <item name="android:textColor">?attr/ptsText</item>
+    </style>
+
+</resources>
