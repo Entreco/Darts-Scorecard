@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="300"
-                android:text="First to 3"/>
+                android:text="@{@string/first_to(viewModel.numSets)}"/>
             <TextView
                 android:textSize="12sp"
                 android:textColor="?attr/header_text_color"
@@ -62,19 +69,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="42"
-                android:text="0"/>
+                android:text="@{viewModel.leg1}"/>
             <TextView
                 style="@style/Score.Set"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="42"
-                android:text="0"/>
+                android:text="@{viewModel.set1}"/>
             <TextView
                 style="@style/Score.Pts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
-                android:text="501"/>
+                android:text="@{viewModel.score1}"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/team2"
@@ -93,19 +100,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="42"
-                android:text="11"/>
+                android:text="@{viewModel.leg2}"/>
             <TextView
                 style="@style/Score.Set"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="42"
-                android:text="11"/>
+                android:text="@{viewModel.set2}"/>
             <TextView
                 style="@style/Score.Pts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
-                android:text="1001"/>
+                android:text="@{viewModel.score2}"/>
         </LinearLayout>
         <LinearLayout
             android:padding="@dimen/xsmall"

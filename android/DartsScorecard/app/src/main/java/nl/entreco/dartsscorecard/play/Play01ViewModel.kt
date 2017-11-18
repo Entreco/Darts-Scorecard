@@ -2,57 +2,50 @@ package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
-import nl.entreco.dartsscorecard.analytics.Analytics
+import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.play.input.InputListener
+import nl.entreco.dartsscorecard.play.score.ScoreKeeper
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.usecase.CreateGameUsecase
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase, private val analytics: Analytics) : BaseViewModel() {
+class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
 
     // Lazy to keep state
-    private val g: Game by lazy { createGameUseCase.start() }
-    private val summary: StringBuilder by lazy { StringBuilder(g.state).newline() }
+    private val game: Game by lazy { createGameUseCase.start() }
+    private val summary: StringBuilder by lazy { StringBuilder(game.state).newline() }
+
+    var scoreKeeper : ScoreKeeper? = null
 
     // Fields for UI updates
     val history: ObservableField<String> = ObservableField(summary.toString())
-    val score: ObservableField<String> = ObservableField()
 
-    fun submitRandom() {
-        val turn = Turn(rand(), rand(), rand())
+    override fun onDartThrown(score: Int) {
+        Log.d("NICE", "dart:$score")
+    }
+
+    override fun onTurnSubmitted(turn: Turn) {
         handleTurn(turn)
-        analytics.trackAchievement("scored: $turn")
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun handleTurn(turn: Turn) {
-        g.handle(turn)
+        game.handle(turn)
 
-        score.set(format(g.scores))
+        scoreKeeper?.onScoreChanged(game.scores)
 
         summary.insert(0, "\n")
         summary.insert(0, "throw:$turn")
         summary.insert(0, "\n\n")
-        summary.insert(0, g.state)
+        summary.insert(0, game.state)
         history.set(summary.toString())
     }
-
-    @VisibleForTesting
-    fun format(scores: Array<Score>): String {
-        return StringBuilder().apply {
-            scores.forEach {
-                append(it).newline()
-            }
-        }.toString()
-    }
-
-    private fun rand(): Int = Random().nextInt(20) * Random().nextInt(3)
 
     private fun StringBuilder.newline(): StringBuilder {
         return append("\n")

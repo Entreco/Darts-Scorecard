@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.model
 
-class Arbiter(initial: Score, private val numPlayers: Int) {
+class Arbiter(private val initial: Score, private val numPlayers: Int) {
 
     private var scores = initForStart(initial)
 
@@ -90,5 +90,9 @@ class Arbiter(initial: Score, private val numPlayers: Int) {
         val builder = StringBuilder().append("${scores[0]}")
         scores.drop(1).forEach { builder.append("\n$it") }
         return builder.toString()
+    }
+
+    fun numberOfSets(): Int {
+        return initial.leg
     }
 }

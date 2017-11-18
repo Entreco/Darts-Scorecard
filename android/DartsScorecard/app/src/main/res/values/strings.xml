@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Darts Scorecard</string>
+    <string name="first_to">First to %1$s</string>
 </resources>

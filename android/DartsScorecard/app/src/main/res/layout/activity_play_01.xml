@@ -4,9 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.Play01ViewModel" />
+
+        <variable
+            name="scoreViewModel"
+            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+
+        <variable
+            name="inputViewModel"
+            type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -15,7 +24,10 @@
         android:layout_height="match_parent"
         tools:context="nl.entreco.dartsscorecard.play.Play01Activity">
 
-        <include layout="@layout/play_01_score" android:id="@+id/scoreview" />
+        <include
+            android:id="@+id/scoreview"
+            layout="@layout/play_01_score"
+            app:viewModel="@{scoreViewModel}" />
 
         <TextView
             android:id="@+id/textView2"
@@ -26,33 +38,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <Button
-            android:id="@+id/button"
+        <include
+            android:id="@+id/scoreInput"
+            layout="@layout/play_01_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.submitRandom()}"
-            android:text="Button"
             app:layout_constraintBottom_toTopOf="@id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@{viewModel.score}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scoreview"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Score" />
+            app:viewModel="@{inputViewModel}"
+            app:listener="@{viewModel}"/>
 
         <TextView
             android:id="@+id/history"
@@ -63,10 +58,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@{viewModel.history}"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/scoreInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/score" />
+            app:layout_constraintTop_toBottomOf="@+id/scoreview" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
