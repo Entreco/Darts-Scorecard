@@ -1,8 +1,30 @@
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+android {
+    def config = rootProject.extensions.getByName("ext")
+    compileSdkVersion config.androidCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion config.androidMinSdkVersion
+        targetSdkVersion config.androidTargetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
+
+        resConfigs "en", "nl"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 configurations.all {
     resolutionStrategy {
