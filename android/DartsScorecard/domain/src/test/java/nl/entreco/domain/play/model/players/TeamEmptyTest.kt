@@ -1,8 +1,6 @@
 package nl.entreco.domain.play.model.players
 
-import nl.entreco.domain.play.model.players.NoPlayer
-import nl.entreco.domain.play.model.players.Team
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 /**
@@ -16,11 +14,6 @@ class TeamEmptyTest {
 
     @Test
     fun `it should have non null currentPlayer initially`() {
-        assertNotNull(Team().currentPlayer)
-    }
-
-    @Test
-    fun `it should have NoPlayer initially`() {
-        assertTrue(Team().currentPlayer is NoPlayer)
+        assertNotNull(Team())
     }
 }
