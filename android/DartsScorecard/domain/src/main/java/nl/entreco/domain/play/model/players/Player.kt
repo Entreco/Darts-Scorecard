@@ -1,7 +1,5 @@
 package nl.entreco.domain.play.model.players
 
-import nl.entreco.domain.play.model.PlayerPrefs
-
 /**
  * Created by Entreco on 18/11/2017.
  */

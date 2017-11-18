@@ -3,24 +3,36 @@ package nl.entreco.domain.play.model.players
 /**
  * Created by Entreco on 18/11/2017.
  */
-class Team(val players: List<Player> = emptyList()){
-    private var current = 0
-    var currentPlayer : Player = NoPlayer()
-        get() = if(players.isEmpty()) NoPlayer() else players[current % players.size]
+class Team(vararg val players: Player = emptyArray()){
+    private var START_TURN = -1
+    private var turns = START_TURN
+    private var offset = 0
+    private var lastLeg = 0
+    private var lastSet = 0
 
-    fun next(): Player {
-        current++
-        return currentPlayer
+    fun next(currentLeg: Int = 0, currentSet: Int = 0) : Player {
+        when {
+            isNewLeg(currentLeg) -> newLeg()
+            isNewSet(currentSet) -> newSet()
+            else -> newTurn()
+        }
+        return players[(turns + offset) % players.size]
     }
 
-    override fun toString(): String {
-        return StringBuilder(firstOrNo().name).apply {
-            players.drop(1).forEach { append(" & ").append(it.name) }
-        }.toString()
+    private fun isNewLeg(currentLeg: Int) = lastLeg != currentLeg
+    private fun isNewSet(currentSet: Int) = lastSet != currentSet
+
+    private fun newTurn() {
+        turns++
     }
 
-    private fun firstOrNo(): Player {
-        if(players.isEmpty()) return NoPlayer()
-        else return players[current]
+    private fun newSet() {
+        turns = START_TURN
+        offset++
+    }
+
+    private fun newLeg() {
+        turns = START_TURN
+        offset++
     }
 }
