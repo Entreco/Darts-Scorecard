@@ -60,7 +60,7 @@ deploy:
   provider: releases
   file: 
   - _${APP_NAME}
-  - $TRAVIS_BUILD_DIR/android/DartsScorecard/app/build/outputs/apk/mapping/release/mapping.txt
+  - $TRAVIS_BUILD_DIR/android/DartsScorecard/app/build/outputs/mapping/release/mapping.txt
   api_key: $apikey
   skip_cleanup: true
   overwrite: true
