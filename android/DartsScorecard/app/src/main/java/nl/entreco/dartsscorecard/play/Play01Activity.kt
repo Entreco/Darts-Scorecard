@@ -16,6 +16,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        theme.applyStyle(R.style.Pdc, true)
         super.onCreate(savedInstanceState)
 
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
