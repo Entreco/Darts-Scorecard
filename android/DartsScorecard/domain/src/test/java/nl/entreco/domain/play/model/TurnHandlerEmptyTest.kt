@@ -7,15 +7,15 @@ import org.junit.Test
 /**
  * Created by Entreco on 18/11/2017.
  */
-class WhosNextEmptyTest {
+class TurnHandlerEmptyTest {
 
     @Test
     fun `it should return NoPlayer initially`() {
-        assertEquals(NoPlayer().toString(), WhosNext().toString())
+        assertEquals(NoPlayer().toString(), TurnHandler().toString())
     }
 
     @Test
     fun `it should return NoPlayer after starting with no teams`() {
-        assertEquals(NoPlayer().toString(), WhosNext().start().toString())
+        assertEquals(NoPlayer().toString(), TurnHandler().start().toString())
     }
 }

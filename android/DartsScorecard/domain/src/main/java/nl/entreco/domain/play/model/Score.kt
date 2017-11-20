@@ -24,7 +24,7 @@ data class Score(var score: Int = 501, val leg: Int = 0, val set: Int = 0, priva
         return "$score | $leg | $set"
     }
 
-    fun matchFinished(): Boolean = setFinished() && set >= settings.numSets
+    fun matchFinished(): Boolean = setFinished() && set >= settings.numSets - 1
     fun setFinished(): Boolean = legFinished() && leg >= settings.numLegs - 1
     fun legFinished(): Boolean = score <= 0
 }

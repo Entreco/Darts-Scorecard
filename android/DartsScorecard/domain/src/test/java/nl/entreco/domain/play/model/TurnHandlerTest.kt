@@ -8,7 +8,7 @@ import org.junit.Test
 /**
  * Created by Entreco on 18/11/2017.
  */
-class WhosNextTest{
+class TurnHandlerTest {
 
     private val player1 = Player("1")
     private val player2 = Player("2")
@@ -16,7 +16,7 @@ class WhosNextTest{
     private val player4 = Player("4")
     private val player5 = Player("5")
 
-    private var subject = WhosNext(Team(player1), Team(player2, player3), Team(player4, player5))
+    private var subject = TurnHandler(Team(player1), Team(player2, player3), Team(player4, player5))
 
     @Test
     fun `player1 should start`() {

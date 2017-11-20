@@ -2,8 +2,7 @@ package nl.entreco.domain.play.model
 
 data class Game(val arbiter: Arbiter) {
 
-    private var currentPlayer = 0
-
+    var next: Next? = null
     var state = "game on"
     var scores = arbiter.getScores()
         get() = arbiter.getScores()
@@ -14,12 +13,11 @@ data class Game(val arbiter: Arbiter) {
 
     fun handle(turn: Turn) {
         if (GAME_FINISHED != state) {
-            currentPlayer = arbiter.handle(turn, currentPlayer)
-            state = if (currentPlayer < 0) GAME_FINISHED
-            else "player ${currentPlayer + 1} to throw"
+            next = arbiter.handle(turn, next)
+            state = if (next == null) GAME_FINISHED
+            else "player ${next?.player} to throw"
         }
     }
 
     private val GAME_FINISHED = "game finished"
-
 }

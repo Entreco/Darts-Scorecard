@@ -7,7 +7,7 @@ import nl.entreco.domain.play.model.players.Team
 /**
  * Created by Entreco on 18/11/2017.
  */
-class WhosNext(vararg val teams: Team = emptyArray()) {
+class TurnHandler(val teams: Array<Team> = emptyArray()) {
 
     private var turns = -1
     private var legs = 0
@@ -18,34 +18,35 @@ class WhosNext(vararg val teams: Team = emptyArray()) {
 
     private fun team() = teams[(turns + legs + sets) % teams.size]
 
-    fun start(): Player {
+    private fun teamIndex() = teams.indexOf(team())
+
+    fun start(): Next {
         turns = 0
         legs = 0
         sets = 0
-        return currentPlayer
+        return Next(team(),0, currentPlayer)
     }
 
-    fun next(): Player {
+    fun next(): Next {
         if (turns < 0) throw IllegalStateException("not started")
         turns++
-        return currentPlayer
+        return Next(team(), teamIndex(), currentPlayer)
     }
 
     override fun toString(): String {
         return currentPlayer.toString()
     }
 
-    fun nextLeg(): Player {
+    fun nextLeg(): Next {
         turns = 0
         legs++
-        return currentPlayer
+        return Next(team(), teamIndex(), currentPlayer)
     }
 
-    fun nextSet(): Player {
+    fun nextSet(): Next {
         turns = 0
         legs = 0
         sets++
-        return currentPlayer
+        return Next(team(), teamIndex(), currentPlayer)
     }
-
 }

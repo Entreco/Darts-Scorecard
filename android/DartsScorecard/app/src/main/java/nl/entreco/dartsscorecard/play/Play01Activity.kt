@@ -7,20 +7,22 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
 
 class Play01Activity : ViewModelActivity() {
 
-    private val numPlayers = 2
     private val settings = ScoreSettings()
+    private val play01Module by lazy { Play01Module(settings, arrayOf(Team(Player("remco")), Team(Player("co")))) }
     private val viewModel : Play01ViewModel by viewModelProvider {
-        component.plus(Play01Module(2, settings)).viewModel()
+        component.plus(play01Module).viewModel()
     }
     private val scoreViewModel : ScoreViewModel by viewModelProvider {
-        component.plus(Play01Module(numPlayers, settings)).scoreViewModel()
+        component.plus(play01Module).scoreViewModel()
     }
     private val inputViewModel : InputViewModel by viewModelProvider {
-        component.plus(Play01Module(numPlayers, settings)).inputViewModel()
+        component.plus(play01Module).inputViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class Play01Activity : ViewModelActivity() {
         binding.scoreViewModel = scoreViewModel
         binding.inputViewModel = inputViewModel
 
-        viewModel.scoreKeeper = scoreViewModel
+        viewModel.addScoreListener(scoreViewModel)
+        viewModel.addPlayerListener(inputViewModel)
     }
 }

@@ -1,12 +1,11 @@
 package nl.entreco.dartsscorecard.play
 
-import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
 import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.input.InputListener
-import nl.entreco.dartsscorecard.play.score.ScoreKeeper
 import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.usecase.CreateGameUsecase
@@ -19,12 +18,8 @@ class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase) 
 
     // Lazy to keep state
     private val game: Game by lazy { createGameUseCase.start() }
-    private val summary: StringBuilder by lazy { StringBuilder(game.state).newline() }
-
-    var scoreKeeper : ScoreKeeper? = null
-
-    // Fields for UI updates
-    val history: ObservableField<String> = ObservableField(summary.toString())
+    private val playerListeners = mutableListOf<PlayerListener>()
+    private val scoreListeners = mutableListOf<ScoreListener>()
 
     override fun onDartThrown(score: Int) {
         Log.d("NICE", "dart:$score")
@@ -38,16 +33,37 @@ class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase) 
     fun handleTurn(turn: Turn) {
         game.handle(turn)
 
-        scoreKeeper?.onScoreChanged(game.scores)
+        val next = game.next!!
 
-        summary.insert(0, "\n")
-        summary.insert(0, "throw:$turn")
-        summary.insert(0, "\n\n")
-        summary.insert(0, game.state)
-        history.set(summary.toString())
+        notifyScoreListeners(game.scores, next)
+        notifyPlayerListeners(next)
     }
 
-    private fun StringBuilder.newline(): StringBuilder {
-        return append("\n")
+    fun addScoreListener(scoreListener: ScoreListener) {
+        synchronized(scoreListeners) {
+            if (!scoreListeners.contains(scoreListener)) {
+                scoreListeners.add(scoreListener)
+            }
+        }
+    }
+
+    fun addPlayerListener(playerListener: PlayerListener) {
+        synchronized(playerListeners) {
+            if (!playerListeners.contains(playerListener)) {
+                playerListeners.add(playerListener)
+            }
+        }
+    }
+
+    private fun notifyScoreListeners(scores : Array<Score>, next: Next) {
+        synchronized(scoreListeners) {
+            scoreListeners.forEach { it.onScoreChange(scores, next) }
+        }
+    }
+
+    private fun notifyPlayerListeners(next: Next) {
+        synchronized(playerListeners) {
+            playerListeners.forEach { it.onNext(next) }
+        }
     }
 }
