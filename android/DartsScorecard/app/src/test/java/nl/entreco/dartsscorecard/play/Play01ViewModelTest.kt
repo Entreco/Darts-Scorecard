@@ -4,6 +4,8 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.play.model.*
+import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import nl.entreco.domain.settings.ScoreSettings
@@ -54,7 +56,7 @@ class Play01ViewModelTest {
     }
 
     private fun givenGameStartedWithInitialScore(score: Score) {
-        val arbiter = mock<Arbiter>()
+        val arbiter = Arbiter(score, TurnHandler(arrayOf(Team(Player("1")), Team(Player("2")))))
         whenever(mockGameRepository.new(arbiter)).then { Game(arbiter).apply { start() } }
         subject = Play01ViewModel(CreateGameUsecase(arbiter, mockGameRepository))
     }

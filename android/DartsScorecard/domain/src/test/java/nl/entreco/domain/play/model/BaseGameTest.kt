@@ -1,11 +1,12 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.TestProvider
 import org.junit.Assert
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), 2))) {
+abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), TestProvider().turnHandler()))) {
 
     protected fun whenDartsThrown(vararg turns: Turn) {
         for(turn in turns) {

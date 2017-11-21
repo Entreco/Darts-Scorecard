@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
 
 class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
@@ -10,15 +11,15 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    init {
-        turnHandler.start()
+    fun start() : Next {
+        return turnHandler.start()
     }
 
-    fun handle(turn: Turn, next: Next?): Next? {
-        val teamIndex = if(next == null) 0 else teamIndexOfNext(turnHandler.teams, next)
+    fun handle(turn: Turn, next: Next): Next {
+        val teamIndex = teamIndexOfNext(turnHandler.teams, next)
         applyScore(teamIndex, turn)
 
-        if (gameShotAndTheMatch(teamIndex)) return null
+        if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player)
         if (requiresNewSet(teamIndex)) return playerForNewSet()
         else if (requiresNewLeg(teamIndex)) return playerForNewLeg()
 

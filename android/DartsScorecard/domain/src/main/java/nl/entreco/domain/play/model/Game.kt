@@ -1,21 +1,24 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.model.players.State
+
 data class Game(val arbiter: Arbiter) {
 
-    var next: Next? = null
+    lateinit var next: Next
     var state = "game on"
     var scores = arbiter.getScores()
         get() = arbiter.getScores()
 
     fun start() {
-        state = "player 1 to throw first"
+        next = arbiter.start()
+        state = "${next.player} to throw first"
     }
 
     fun handle(turn: Turn) {
         if (GAME_FINISHED != state) {
             next = arbiter.handle(turn, next)
-            state = if (next == null) GAME_FINISHED
-            else "player ${next?.player} to throw"
+            state = if (next.state == State.MATCH) GAME_FINISHED
+            else "player ${next.player} to throw"
         }
     }
 

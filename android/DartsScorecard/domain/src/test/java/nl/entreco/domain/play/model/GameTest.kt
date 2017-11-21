@@ -20,7 +20,7 @@ class GameTest : BaseGameTest() {
     fun `it should set state to Leg when starting`() {
         givenGameStarted()
 
-        assertEquals("player 1 to throw first", subject.state)
+        assertEquals("1 to throw first", subject.state)
     }
 
     @Test
