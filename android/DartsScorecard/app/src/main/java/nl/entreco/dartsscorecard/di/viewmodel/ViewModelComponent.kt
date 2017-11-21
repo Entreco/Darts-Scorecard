@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.di.viewmodel
 
 import android.app.Activity
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.base.Styler
 import nl.entreco.dartsscorecard.play.Play01Component
 import nl.entreco.dartsscorecard.play.Play01Module
 

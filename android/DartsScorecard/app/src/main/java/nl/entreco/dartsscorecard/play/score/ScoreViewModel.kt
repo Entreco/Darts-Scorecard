@@ -30,7 +30,7 @@ class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettin
 
     override fun onScoreChange(scores: Array<Score>, next: Next) {
         Log.d("NoNICE", "1:$scores n:$next")
-        for(index in 0 until scores.size){
+        for (index in 0 until scores.size) {
             this.scores[index] = scores[index]
         }
 

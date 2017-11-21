@@ -33,7 +33,7 @@ class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase) 
     fun handleTurn(turn: Turn) {
         game.handle(turn)
 
-        val next = game.next!!
+        val next = game.next
 
         notifyScoreListeners(game.scores, next)
         notifyPlayerListeners(next)
