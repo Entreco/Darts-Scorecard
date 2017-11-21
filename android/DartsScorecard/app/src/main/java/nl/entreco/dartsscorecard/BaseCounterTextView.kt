@@ -14,6 +14,9 @@ abstract class BaseCounterTextView : AppCompatTextView {
     val speed : Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
+    @Volatile private var stopped = false
+
+    private val numberFormat : NumberFormat by lazy { NumberFormat.getInstance() }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -29,7 +32,8 @@ abstract class BaseCounterTextView : AppCompatTextView {
     }
 
     fun stopTick(){
-
+        stopped = true
+        display(mTarget)
     }
 
     private fun proceedTowardsTarget(increase: Boolean) {
@@ -64,17 +68,20 @@ abstract class BaseCounterTextView : AppCompatTextView {
             }
         }
 
-        postDelayed({ tick() }, speed)
+        if(!stopped) {
+            postDelayed({ tick() }, speed)
+        }
     }
 
     private fun display(current: Long) {
-        text = NumberFormat.getInstance().format(current)
+        text = numberFormat.format(current)
     }
 
     fun setTarget(target: Long) {
         if (mTarget != target) {
             mTarget = target
         }
+        stopped = false
         tick()
     }
 }
