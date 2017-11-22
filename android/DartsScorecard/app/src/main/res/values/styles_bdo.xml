@@ -5,14 +5,16 @@
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>
+        <item name="scoreBorderColor">#00ffffff</item>
+        <item name="scoreBorderAlpha">0.2</item>
         <item name="grad_score_header_start">#FFD71B</item>
-        <item name="grad_score_header_stop">#FEFF5D</item>
+        <item name="grad_score_header_stop">#FCC804</item>
         <item name="grad_score_name_start">#312F30</item>
         <item name="grad_score_name_stop">#010000</item>
         <item name="grad_score_start">#312F30</item>
         <item name="grad_score_stop">#010000</item>
         <item name="grad_score_pts_start">#FFD71B</item>
-        <item name="grad_score_pts_stop">#FEFF5D</item>
+        <item name="grad_score_pts_stop">#FCC804</item>
         <item name="header_text_color">@color/black</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>

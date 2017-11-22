@@ -19,47 +19,41 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/score_header"
             android:orientation="horizontal"
-            android:padding="@dimen/xsmall">
+            android:padding="@dimen/xsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                style="@style/Score.Hdr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="300"
-                android:text="@{@string/first_to(viewModel.numSets)}"
-                android:textColor="?attr/header_text_color"
-                android:textSize="12sp" />
+                android:layout_weight="@dimen/score_name_w"
+                android:text="@{@string/first_to(viewModel.numSets)}" />
 
             <TextView
+                style="@style/Score.Hdr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="42"
+                android:layout_weight="@dimen/score_leg_w"
                 android:gravity="center"
-                android:text="LEG"
-                android:textColor="?attr/header_text_color"
-                android:textSize="12sp" />
+                android:text="LEG" />
 
             <TextView
+                style="@style/Score.Hdr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="42"
+                android:layout_weight="@dimen/score_set_w"
                 android:gravity="center"
-                android:text="SET"
-                android:textColor="?attr/header_text_color"
-                android:textSize="12sp" />
+                android:text="SET" />
 
             <TextView
+                style="@style/Score.Hdr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="end"
-                android:text="PTS"
-                android:textColor="?attr/header_text_color"
-                android:textSize="12sp" />
+                android:layout_weight="@dimen/score_pts_w" />
         </LinearLayout>
 
         <!-- TeamScoreView container -->
@@ -68,31 +62,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header"
-            app:teams="@{viewModel.teams}"
             app:scoreSettings="@{viewModel.scoreSettings}"
-            app:scores="@{viewModel.scores}"/>
+            app:scores="@{viewModel.scores}"
+            app:teams="@{viewModel.teams}" />
 
         <!-- Footer -->
         <LinearLayout
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/teamContainer"
             android:background="@drawable/score_header"
             android:orientation="horizontal"
-            android:padding="@dimen/xsmall">
+            android:padding="@dimen/xsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/teamContainer">
 
             <TextView
+                style="@style/Score.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PDC World Cup - semi finals"
-                android:textColor="?attr/header_text_color"
-                android:textSize="12sp" />
+                android:text="PDC World Cup - semi finals" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
