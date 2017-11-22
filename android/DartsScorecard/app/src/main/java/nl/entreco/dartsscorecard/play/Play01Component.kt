@@ -12,6 +12,4 @@ import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 @Subcomponent(modules = arrayOf(Play01Module::class))
 interface Play01Component {
     fun viewModel(): Play01ViewModel
-    fun scoreViewModel(): ScoreViewModel
-    fun inputViewModel(): InputViewModel
 }

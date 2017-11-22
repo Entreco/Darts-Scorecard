@@ -9,17 +9,9 @@
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.Play01ViewModel" />
 
-        <variable
-            name="scoreViewModel"
-            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
-
-        <variable
-            name="inputViewModel"
-            type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="nl.entreco.dartsscorecard.play.Play01Activity">
@@ -27,7 +19,7 @@
         <include
             android:id="@+id/scoreview"
             layout="@layout/play_01_score"
-            app:viewModel="@{scoreViewModel}" />
+            app:viewModel="@{viewModel.scoreViewModel}" />
 
         <TextView
             android:id="@+id/version"
@@ -46,7 +38,7 @@
             app:layout_constraintBottom_toTopOf="@id/version"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:viewModel="@{inputViewModel}"
+            app:viewModel="@{viewModel.inputViewModel}"
             app:listener="@{viewModel}"/>
 
     </android.support.constraint.ConstraintLayout>

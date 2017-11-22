@@ -13,5 +13,7 @@
     <attr name="grad_score_stop" format="color"/>
     <attr name="grad_score_pts_start" format="color"/>
     <attr name="grad_score_pts_stop" format="color"/>
+    <attr name="grad_score_hint_start" format="color"/>
+    <attr name="grad_score_hint_stop" format="color"/>
     <attr name="header_text_color" format="color"/>
 </resources>

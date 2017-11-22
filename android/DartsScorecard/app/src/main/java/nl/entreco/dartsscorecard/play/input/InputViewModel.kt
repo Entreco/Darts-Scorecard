@@ -14,20 +14,38 @@ import javax.inject.Inject
  */
 class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener{
 
+    var count = 0
+    var dart1 : Int = -1
+    var dart2 : Int = -1
+    var dart3 : Int = -1
+
     fun submitRandom(listener: InputListener) {
-        val dart1 = rand()
-        val dart2 = rand()
-        val dart3 = rand()
-        val turn = Turn(dart1, dart2, dart3)
 
+        when {
+            firstDart() -> {
+                dart1 = rand()
+                listener.onDartThrown(dart1)
+            }
+            secondDart() -> {
+                dart2 = rand()
+                listener.onDartThrown(dart2)
+            }
+            else -> {
+                dart3 = rand()
 
-        listener.onDartThrown(dart1)
-        listener.onDartThrown(dart2)
-        listener.onDartThrown(dart3)
-        listener.onTurnSubmitted(turn)
+                val turn = Turn(dart1, dart2, dart3)
+                listener.onDartThrown(dart3)
+                listener.onTurnSubmitted(turn)
 
-        analytics.trackAchievement("scored: $turn")
+                analytics.trackAchievement("scored: $turn")
+            }
+        }
+        count++
     }
+
+    private fun secondDart() = count % 3 == 1
+
+    private fun firstDart() = count % 3 == 0
 
     private fun rand(): Int = Random().nextInt(20) * (Random().nextInt(2) + 1)
 
