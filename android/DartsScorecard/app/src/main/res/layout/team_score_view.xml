@@ -57,7 +57,7 @@
 
         <nl.entreco.dartsscorecard.CounterTextView
             style="@style/Score.Hint"
-            android:layout_width="wrap_content"
+            android:layout_width="28dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             app:current="@{viewModel.scored}"

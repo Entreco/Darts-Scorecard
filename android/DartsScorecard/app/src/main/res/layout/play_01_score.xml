@@ -60,11 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="40dp"
-            tools:listitem="@layout/team_score_view"
-            app:layout_constraintTop_toBottomOf="@id/header"
             app:adapter="@{viewModel.adapter}"
+            app:layout_constraintTop_toBottomOf="@id/header"
             app:scoreSettings="@{viewModel.scoreSettings}"
-            app:teams="@{viewModel.teams}" />
+            app:teams="@{viewModel.teams}"
+            tools:listitem="@layout/team_score_view" />
 
         <!-- Footer -->
         <LinearLayout
@@ -75,26 +75,13 @@
             android:orientation="horizontal"
             android:padding="@dimen/xsmall"
             app:layout_constraintTop_toBottomOf="@id/teamContainer">
+
             <TextView
                 style="@style/Score.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PDC World Cup - semi finals" />
         </LinearLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="20dp"
-            android:layout_height="0dp"
-            android:background="#ff6600"
-            app:layout_constraintBottom_toBottomOf="@id/teamContainer"
-            app:layout_constraintTop_toTopOf="@id/teamContainer">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:src="@android:drawable/ic_delete" />
-
-        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -3,6 +3,8 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.dartsscorecard.play.input.InputViewModel
+import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
@@ -21,6 +23,8 @@ class Play01ViewModelTest {
 
     private lateinit var subject: Play01ViewModel
     @Mock private lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockScoreViewModel: ScoreViewModel
+    @Mock private lateinit var mockInputViewModel: InputViewModel
 
     @Before
     fun setUp() {
@@ -58,7 +62,7 @@ class Play01ViewModelTest {
     private fun givenGameStartedWithInitialScore(score: Score) {
         val arbiter = Arbiter(score, TurnHandler(arrayOf(Team(Player("1")), Team(Player("2")))))
         whenever(mockGameRepository.new(arbiter)).then { Game(arbiter).apply { start() } }
-        subject = Play01ViewModel(CreateGameUsecase(arbiter, mockGameRepository))
+        subject = Play01ViewModel(mockScoreViewModel, mockInputViewModel, CreateGameUsecase(arbiter, mockGameRepository))
     }
 
     private fun whenTurnSubmitted(vararg turns: Turn) {

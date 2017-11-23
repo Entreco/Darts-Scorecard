@@ -25,6 +25,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
 
     init {
         addScoreListener(scoreViewModel)
+        addPlayerListener(scoreViewModel)
         addPlayerListener(inputViewModel)
     }
 

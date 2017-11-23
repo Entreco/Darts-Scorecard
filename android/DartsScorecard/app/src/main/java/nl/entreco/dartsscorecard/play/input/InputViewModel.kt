@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play.input
 
-import android.os.SystemClock
 import nl.entreco.dartsscorecard.analytics.Analytics
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
@@ -12,12 +11,12 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener{
+open class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener {
 
     var count = 0
-    var dart1 : Int = -1
-    var dart2 : Int = -1
-    var dart3 : Int = -1
+    private var dart1: Int = -1
+    private var dart2: Int = -1
+    private var dart3: Int = -1
 
     fun submitRandom(listener: InputListener) {
 

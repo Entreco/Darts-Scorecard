@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.score
 import android.databinding.*
 import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.dartsscorecard.play.ScoreListener
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
@@ -13,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: TeamScoreAdapter) : BaseViewModel(), ScoreListener {
+open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: TeamScoreAdapter) : BaseViewModel(), ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(scoreSettings.numSets)
 
@@ -25,5 +26,9 @@ class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettin
     override fun onDartThrown(dart: Int, next: Next) {
         Log.d("NoNICE", "onDartThrown: $dart from:${next.player}")
         adapter.teamAtIndexThrew(next.teamIndex, dart)
+    }
+
+    override fun onNext(next: Next) {
+        Log.d("NoNICE", "onNext: ${next.player}")
     }
 }

@@ -37,9 +37,9 @@ class ScoreBindings {
         fun showCurrent(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
             if(score <= 0) {
-                view.animate().translationX(200f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(50).start()
+                view.animate().translationX(200f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
             } else {
-                view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(50).start()
+                view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
             }
         }
     }

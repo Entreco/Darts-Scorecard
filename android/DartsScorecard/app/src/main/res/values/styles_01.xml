@@ -44,7 +44,7 @@
     </style>
 
     <style name="Score.Hint">
-        <item name="android:padding">0dp</item>
+        <item name="android:padding">@dimen/xsmall</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">10sp</item>
         <item name="android:background">@drawable/score_hint</item>
