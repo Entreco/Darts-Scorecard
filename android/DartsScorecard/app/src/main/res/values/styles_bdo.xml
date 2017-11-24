@@ -5,7 +5,6 @@
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>
-        <item name="color180">#760A10</item>
         <item name="scoreBorderColor">#00ffffff</item>
         <item name="scoreBorderAlpha">0.2</item>
         <item name="grad_score_header_start">#FFD71B</item>
