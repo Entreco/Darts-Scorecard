@@ -6,6 +6,7 @@ import android.databinding.ObservableInt
 import android.os.Handler
 import android.util.Log
 import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import java.util.concurrent.Future
@@ -30,14 +31,15 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val finishCa
         calculateFinish(input, player)
     }
 
-    fun threw(dart: Int) {
-        scored.set(scored.get() + dart)
+    fun threw(turn: Turn, player: Player) {
+        scored.set(turn.total())
+        calculateFinish(this.score.get(), player)
     }
 
-    private fun calculateFinish(input: Score, player: Player) {
+    private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         val cancelled = finishFuture?.cancel(true)
         Log.d("NoNice", "calculateFinish cancelled:$cancelled")
-        finishFuture = finishCalculator.calculate(input, player.prefs.favoriteDouble, { finish.set(it) })
+        finishFuture = finishCalculator.calculate(input, turn, player.prefs.favoriteDouble, { finish.set(it) })
     }
 
     private fun removeScoredBadgeAfter(duration: Long) {

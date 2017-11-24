@@ -35,7 +35,7 @@ class Play01ViewModelTest {
     fun `it should show correct score when initial turn submitted`() {
         givenScoreListener()
         givenGameStartedWithInitialScore(Score())
-        whenTurnSubmitted(Turn(20, 20, 20))
+        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20))
         verifyScores(arrayOf(Score(441), Score(501)))
     }
 
@@ -48,14 +48,14 @@ class Play01ViewModelTest {
     @Test
     fun `it should show correct score when second turn submitted`() {
         givenGameStartedWithInitialScore(Score())
-        whenTurnSubmitted(Turn(20, 20, 20), Turn(60, 60, 60))
+        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20), Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20))
         verifyScores(arrayOf(Score(441), Score(321)))
     }
 
     @Test
     fun `it should show correct score when leg is finished`() {
         givenGameStartedWithInitialScore(Score(61, 0, 0, settings = ScoreSettings(61, 2, 2)))
-        whenTurnSubmitted(Turn(1, 20, 40))
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
         verifyScores(arrayOf(Score(61, 1, 0), Score(61, 0, 0)))
     }
 

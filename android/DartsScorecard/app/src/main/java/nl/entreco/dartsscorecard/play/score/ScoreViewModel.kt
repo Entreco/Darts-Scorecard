@@ -7,6 +7,7 @@ import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.dartsscorecard.play.ScoreListener
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
@@ -23,9 +24,9 @@ open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreS
         scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, next.player); }
     }
 
-    override fun onDartThrown(dart: Int, next: Next) {
-        Log.d("NoNICE", "onDartThrown: $dart from:${next.player}")
-        adapter.teamAtIndexThrew(next.teamIndex, dart)
+    override fun onDartThrown(turn: Turn, next: Next) {
+        Log.d("NoNICE", "onDartThrown: ${turn.last()} from:${next.player}")
+        adapter.teamAtIndexThrew(next.teamIndex, turn, next.player)
     }
 
     override fun onNext(next: Next) {

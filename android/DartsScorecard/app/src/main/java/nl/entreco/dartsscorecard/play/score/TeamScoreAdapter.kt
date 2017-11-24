@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
 import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import javax.inject.Inject
 
@@ -41,8 +42,8 @@ class TeamScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreVie
         notifyItemChanged(position)
     }
 
-    fun teamAtIndexThrew(position: Int, dart: Int) {
-        items[position].threw(dart)
+    fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
+        items[position].threw(turn, player)
         notifyItemChanged(position)
     }
 

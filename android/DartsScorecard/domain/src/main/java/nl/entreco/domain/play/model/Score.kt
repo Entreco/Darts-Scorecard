@@ -5,7 +5,7 @@ import nl.entreco.domain.settings.ScoreSettings
 data class Score(var score: Int = 501, val leg: Int = 0, val set: Int = 0, private val settings: ScoreSettings = ScoreSettings()) {
 
     operator fun minusAssign(turn: Turn) {
-        this.score -= turn.d1 + turn.d2 + turn.d3
+        this.score -= turn.d1.value() + turn.d2.value() + turn.d3.value()
     }
 
     fun rollLeg(): Score {

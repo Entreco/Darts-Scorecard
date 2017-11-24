@@ -30,9 +30,9 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         addPlayerListener(inputViewModel)
     }
 
-    override fun onDartThrown(score: Int) {
-        Log.d("NICE", "dart:$score")
-        notifyScoreListeners(score, game.next)
+    override fun onDartThrown(turn: Turn) {
+        Log.d("NICE", "dart:${turn.last()}")
+        notifyScoreListeners(turn, game.next)
     }
 
     override fun onTurnSubmitted(turn: Turn) {
@@ -71,9 +71,9 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    private fun notifyScoreListeners(dart: Int, current: Next) {
+    private fun notifyScoreListeners(turn: Turn, current: Next) {
         synchronized(scoreListeners) {
-            scoreListeners.forEach { it.onDartThrown(dart, current) }
+            scoreListeners.forEach { it.onDartThrown(turn, current) }
         }
     }
 

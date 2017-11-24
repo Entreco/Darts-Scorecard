@@ -24,6 +24,6 @@ abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), TestProvid
         Assert.assertEquals(leg, subject.scores[0].leg + subject.scores[1].leg)
     }
 
-    protected fun sixty() = Turn(20, 20, 20)
-    protected fun oneEighty() = Turn(60, 60, 60)
+    protected fun sixty() = Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20)
+    protected fun oneEighty() = Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20)
 }

@@ -22,7 +22,7 @@ class ArbiterTest {
 
     @Test
     fun `it should not start new leg if zero is scored`() {
-        subject.handle(Turn(0, 0, 0), next)
+        subject.handle(Turn(Dart.ZERO, Dart.ZERO, Dart.ZERO), next)
 
         assertEquals(0, subject.getLegs().size)
     }
@@ -62,6 +62,6 @@ class ArbiterTest {
     }
 
     private fun givenLegFinished() {
-        subject.handle(Turn(501, 0, 0), next)
+        subject.handle(Turn(Dart.TEST_501, Dart.ZERO, Dart.ZERO), next)
     }
 }
