@@ -8,11 +8,7 @@
                 android:startColor="?attr/grad_score_header_start" />
         </shape>
     </item>
-    <item>
-        <nine-patch
-            android:alpha="?attr/scoreBorderAlpha"
-            android:src="@drawable/highlight" />
-    </item>
+    <item android:drawable="@drawable/highlight" />
     <item>
         <shape>
             <stroke

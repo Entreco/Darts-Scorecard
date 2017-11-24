@@ -12,6 +12,7 @@ import nl.entreco.domain.play.model.players.Team
  */
 class TeamScoreViewModel(val team: Team, sc: Score) {
 
+    val finish = ObservableField<String>("T20")
     val started = ObservableBoolean(false)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(sc)

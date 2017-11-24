@@ -55,6 +55,13 @@
                 tools:text="501" />
         </LinearLayout>
 
+        <TextView
+            style="@style/Score.Pts"
+            android:layout_width="108dp"
+            android:layout_height="match_parent"
+            app:finish="@{viewModel.finish}"
+            tools:text="T20 17 D17" />
+
         <nl.entreco.dartsscorecard.CounterTextView
             style="@style/Score.Hint"
             android:layout_width="28dp"

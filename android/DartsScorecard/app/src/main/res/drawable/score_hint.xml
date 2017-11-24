@@ -8,4 +8,5 @@
                 android:startColor="?attr/grad_score_hint_start" />
         </shape>
     </item>
+    <item android:drawable="@drawable/highlight" />
 </layer-list>

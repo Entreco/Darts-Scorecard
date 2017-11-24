@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.TextView
 import nl.entreco.dartsscorecard.CounterTextView
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
@@ -37,6 +38,17 @@ class ScoreBindings {
         fun showCurrent(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
             if(score <= 0) {
+                view.animate().translationX(200f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
+            } else {
+                view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("finish")
+        fun showFinish(view: TextView, finish: String) {
+            view.text = finish
+            if(finish.isEmpty()) {
                 view.animate().translationX(200f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
             } else {
                 view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
