@@ -32,11 +32,18 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
             else -> {
                 dart3 = rand()
 
-                val turn = Turn(dart1, dart2, dart3)
-                listener.onDartThrown(dart3)
-                listener.onTurnSubmitted(turn)
+                if(Random().nextBoolean()) {
+                    val turn = Turn(dart1, dart2, dart3)
+                    listener.onDartThrown(dart3)
+                    listener.onTurnSubmitted(turn)
+                    analytics.trackAchievement("scored: $turn")
+                } else {
+                    val turn = Turn(60, 60, 60)
+                    listener.onDartThrown(60)
+                    listener.onTurnSubmitted(turn)
+                    analytics.trackAchievement("scored: $turn")
+                }
 
-                analytics.trackAchievement("scored: $turn")
             }
         }
         count++

@@ -56,17 +56,23 @@
         </LinearLayout>
 
         <TextView
-            style="@style/Score.Pts"
-            android:layout_width="108dp"
+            style="@style/Score.Hint"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="end"
+            android:paddingEnd="@dimen/def"
+            android:paddingStart="@dimen/def"
             app:finish="@{viewModel.finish}"
             tools:text="T20 17 D17" />
 
-        <nl.entreco.dartsscorecard.CounterTextView
+        <TextView
             style="@style/Score.Hint"
-            android:layout_width="28dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
+            android:gravity="start"
+            android:paddingEnd="@dimen/def"
+            android:paddingStart="@dimen/def"
             app:current="@{viewModel.scored}"
             tools:text="180" />
     </FrameLayout>

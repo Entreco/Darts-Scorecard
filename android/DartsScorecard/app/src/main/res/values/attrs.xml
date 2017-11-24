@@ -3,6 +3,7 @@
     <attr name="nameText" format="color"/>
     <attr name="scoreText" format="color"/>
     <attr name="ptsText" format="color"/>
+    <attr name="color180" format="color"/>
     <attr name="scoreBorderColor" format="color"/>
     <attr name="scoreBorderAlpha" format="float"/>
     <attr name="grad_score_header_start" format="color"/>
