@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.play.score
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
-import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import java.util.concurrent.ExecutorService
@@ -48,7 +47,13 @@ open class FinishCalculator @Inject constructor() {
         if (score == turn.total() && turn.last().isDouble()) return turn.asFinish()
         if (turn.dartsLeft() == 0) return notPossible
 
+
+        // TODO: Try Doubles + BULL
+        // TODO: If fails, add 1 dart for all singles, triples
+
+        // TODO: Recurse;)
+
         // All Doubles, + 1 BULL, All Singles, S.BULL, All Tripples
-        return calculateInBack(score, turn.copy(Dart.DOUBLE_1), favDouble)
+        return notPossible
     }
 }
