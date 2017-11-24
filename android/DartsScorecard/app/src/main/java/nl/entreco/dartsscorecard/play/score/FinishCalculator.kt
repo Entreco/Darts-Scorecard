@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.os.SystemClock
 import android.support.annotation.WorkerThread
 import nl.entreco.domain.play.model.Score
 import java.util.concurrent.ExecutorService
@@ -11,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 24/11/2017.
  */
-class FinishCalculator @Inject constructor() {
+open class FinishCalculator @Inject constructor() {
 
     private val bg: ExecutorService = Executors.newSingleThreadExecutor()
 
