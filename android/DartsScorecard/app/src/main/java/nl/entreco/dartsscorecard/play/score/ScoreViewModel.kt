@@ -20,7 +20,7 @@ open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreS
 
     override fun onScoreChange(scores: Array<Score>, next: Next) {
         Log.d("NoNICE", "1:$scores n:$next")
-        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score); }
+        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, next.player); }
     }
 
     override fun onDartThrown(dart: Int, next: Next) {

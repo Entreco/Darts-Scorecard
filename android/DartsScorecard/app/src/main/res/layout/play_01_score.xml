@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+
+        <variable
+            name="finishCalculator"
+            type="nl.entreco.dartsscorecard.play.score.FinishCalculator" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -61,6 +65,7 @@
             android:layout_height="wrap_content"
             android:maxHeight="40dp"
             app:adapter="@{viewModel.adapter}"
+            app:finishCalculator="@{finishCalculator}"
             app:layout_constraintTop_toBottomOf="@id/header"
             app:scoreSettings="@{viewModel.scoreSettings}"
             app:teams="@{viewModel.teams}"

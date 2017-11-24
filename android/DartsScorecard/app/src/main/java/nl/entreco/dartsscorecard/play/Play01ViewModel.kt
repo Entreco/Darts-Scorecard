@@ -5,6 +5,7 @@ import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.input.InputListener
 import nl.entreco.dartsscorecard.play.input.InputViewModel
+import nl.entreco.dartsscorecard.play.score.FinishCalculator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Next
@@ -16,7 +17,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
+class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, val finishCalculator: FinishCalculator, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
 
     // Lazy to keep state
     private val game: Game by lazy { createGameUseCase.start() }

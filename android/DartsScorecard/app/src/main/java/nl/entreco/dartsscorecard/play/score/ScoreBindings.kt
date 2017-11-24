@@ -26,15 +26,15 @@ import android.util.TypedValue
 class ScoreBindings {
     companion object {
         @JvmStatic
-        @BindingAdapter("adapter", "teams", "scoreSettings", requireAll = true)
-        fun addTeams(recyclerView: RecyclerView, adapter: TeamScoreAdapter, teams: Array<Team>, scoreSettings: ScoreSettings) {
+        @BindingAdapter("adapter", "teams", "scoreSettings", "finishCalculator", requireAll = true)
+        fun addTeams(recyclerView: RecyclerView, adapter: TeamScoreAdapter, teams: Array<Team>, scoreSettings: ScoreSettings, finishCalculator : FinishCalculator) {
             recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
             recyclerView.itemAnimator = null
             recyclerView.adapter = adapter
             adapter.clear()
 
             for (team in teams) {
-                adapter.addItem(TeamScoreViewModel(team, scoreSettings.score()))
+                adapter.addItem(TeamScoreViewModel(team, scoreSettings.score(), finishCalculator))
             }
         }
 
