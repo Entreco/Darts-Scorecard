@@ -31,6 +31,10 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         addPlayerListener(inputViewModel)
     }
 
+    fun resume() {
+        notifyNextPlayer(game.next)
+    }
+
     override fun onDartThrown(turn: Turn, by: Player) {
         Log.d("NICE", "scored:${turn.last()} by:$by")
         notifyDartThrown(turn, by)

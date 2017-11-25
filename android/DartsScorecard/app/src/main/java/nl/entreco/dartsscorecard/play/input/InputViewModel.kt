@@ -1,14 +1,13 @@
 package nl.entreco.dartsscorecard.play.input
 
+import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.analytics.Analytics
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.State
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -16,6 +15,7 @@ import javax.inject.Inject
  */
 open class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener {
 
+    val toggle = ObservableBoolean(false)
     var count = 0
     private var turn = Turn()
     private var nextUp : Next? = null
@@ -24,6 +24,20 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
         if(nextUp == null || nextUp?.state == State.MATCH) return
 
+        if(toggle.get()){
+            submitSingles(listener)
+        } else {
+            submitAll(listener)
+        }
+    }
+
+    private fun submitAll(listener: InputListener) {
+        val turn = Turn(Dart.random(), Dart.random(), Dart.random())
+        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
+        analytics.trackAchievement("scored: $turn")
+    }
+
+    private fun submitSingles(listener: InputListener) {
         when {
             firstDart() -> {
                 turn += Dart.random()
@@ -44,6 +58,8 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         }
         count++
     }
+
+
 
     private fun secondDart() = count % 3 == 1
 

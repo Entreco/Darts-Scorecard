@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Darts Scorecard</string>
     <string name="first_to">First to %1$s</string>
+    <string name="individual">Submit Individual Darts</string>
+    <string name="all">Submit full score</string>
+    <string name="random">Random</string>
 </resources>

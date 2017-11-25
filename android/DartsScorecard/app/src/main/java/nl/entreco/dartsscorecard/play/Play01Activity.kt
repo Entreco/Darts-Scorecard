@@ -26,6 +26,11 @@ class Play01Activity : ViewModelActivity() {
         binding.viewModel = viewModel
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.resume()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.play, menu)
         return super.onCreateOptionsMenu(menu)
