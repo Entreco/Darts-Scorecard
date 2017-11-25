@@ -39,7 +39,7 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
     fun threw(turn: Turn, player: Player) {
         if(team.contains(player)) {
             scored.set(turn.total())
-            calculateFinish(this.score.get(), player)
+            calculateFinish(this.score.get(), player, turn)
         }
     }
 
