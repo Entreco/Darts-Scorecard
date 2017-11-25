@@ -50,13 +50,13 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         game.handle(turn)
 
         val next = game.next
-        Log.d("NICE", "next:$next")
 
         notifyScoreChanged(game.scores, by)
         notifyNextPlayer(next)
     }
 
-    private fun addScoreListener(scoreListener: ScoreListener) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
                 scoreListeners.add(scoreListener)

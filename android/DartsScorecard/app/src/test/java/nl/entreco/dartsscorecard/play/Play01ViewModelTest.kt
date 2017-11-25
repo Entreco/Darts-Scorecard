@@ -67,7 +67,7 @@ class Play01ViewModelTest {
 
     private fun whenTurnSubmitted(vararg turns: Turn) {
         for (turn in turns) {
-            subject.handleTurn(turn)
+            subject.handleTurn(turn, Player(""))
         }
     }
 
