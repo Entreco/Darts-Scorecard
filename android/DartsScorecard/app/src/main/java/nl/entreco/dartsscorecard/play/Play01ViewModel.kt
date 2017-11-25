@@ -1,60 +1,92 @@
 package nl.entreco.dartsscorecard.play
 
-import android.databinding.ObservableField
 import android.support.annotation.VisibleForTesting
-import nl.entreco.dartsscorecard.analytics.Analytics
+import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.play.input.InputListener
+import nl.entreco.dartsscorecard.play.input.InputViewModel
+import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.CreateGameUsecase
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(createGameUseCase: CreateGameUsecase, private val analytics: Analytics) : BaseViewModel() {
+class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, val getFinishUsecase: GetFinishUsecase, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
 
     // Lazy to keep state
-    private val g: Game by lazy { createGameUseCase.start() }
-    private val summary: StringBuilder by lazy { StringBuilder(g.state).newline() }
+    private val game: Game by lazy { createGameUseCase.start() }
+    private val playerListeners = mutableListOf<PlayerListener>()
+    private val scoreListeners = mutableListOf<ScoreListener>()
 
-    // Fields for UI updates
-    val history: ObservableField<String> = ObservableField(summary.toString())
-    val score: ObservableField<String> = ObservableField()
-
-    fun submitRandom() {
-        val turn = Turn(rand(), rand(), rand())
-        handleTurn(turn)
-        analytics.trackAchievement("scored: $turn")
+    init {
+        addScoreListener(scoreViewModel)
+        addPlayerListener(scoreViewModel)
+        addPlayerListener(inputViewModel)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun handleTurn(turn: Turn) {
-        g.handle(turn)
-
-        score.set(format(g.scores))
-
-        summary.insert(0, "\n")
-        summary.insert(0, "throw:$turn")
-        summary.insert(0, "\n\n")
-        summary.insert(0, g.state)
-        history.set(summary.toString())
+    fun resume() {
+        notifyNextPlayer(game.next)
     }
 
-    @VisibleForTesting
-    fun format(scores: Array<Score>): String {
-        return StringBuilder().apply {
-            scores.forEach {
-                append(it).newline()
+    override fun onDartThrown(turn: Turn, by: Player) {
+        Log.d("NICE", "scored:${turn.last()} by:$by")
+        notifyDartThrown(turn, by)
+    }
+
+    override fun onTurnSubmitted(turn: Turn, by: Player) {
+        Log.d("NICE", "turn:$turn by:$by")
+        handleTurn(turn, by)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun handleTurn(turn: Turn, by: Player) {
+        game.handle(turn)
+
+        val next = game.next
+
+        notifyScoreChanged(game.scores, by)
+        notifyNextPlayer(next)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun addScoreListener(scoreListener: ScoreListener) {
+        synchronized(scoreListeners) {
+            if (!scoreListeners.contains(scoreListener)) {
+                scoreListeners.add(scoreListener)
             }
-        }.toString()
+        }
     }
 
-    private fun rand(): Int = Random().nextInt(20) * Random().nextInt(3)
+    private fun addPlayerListener(playerListener: PlayerListener) {
+        synchronized(playerListeners) {
+            if (!playerListeners.contains(playerListener)) {
+                playerListeners.add(playerListener)
+            }
+        }
+    }
 
-    private fun StringBuilder.newline(): StringBuilder {
-        return append("\n")
+    private fun notifyScoreChanged(scores : Array<Score>, by: Player) {
+        synchronized(scoreListeners) {
+            scoreListeners.forEach { it.onScoreChange(scores, by) }
+        }
+    }
+
+    private fun notifyDartThrown(turn: Turn, by: Player) {
+        synchronized(scoreListeners) {
+            scoreListeners.forEach { it.onDartThrown(turn, by) }
+        }
+    }
+
+    private fun notifyNextPlayer(next: Next) {
+        synchronized(playerListeners) {
+            playerListeners.forEach { it.onNext(next) }
+        }
     }
 }

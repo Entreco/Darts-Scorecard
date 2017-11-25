@@ -77,12 +77,9 @@ class ScoreTest{
 
         assertFalse(Score(0, 0, 1).matchFinished())
         assertFalse(Score(0, 1, 1).matchFinished())
-        assertFalse(Score(0, 3, 1).matchFinished())
-        assertFalse(Score(0, 100, 1).matchFinished())
 
         assertFalse(Score(0, 0, 2).matchFinished())
         assertFalse(Score(0, 1, 2).matchFinished())
-
         assertFalse(Score(1, 2, 2).matchFinished())
         assertFalse(Score(1, 3, 2).matchFinished())
         assertFalse(Score(1, 100, 2).matchFinished())
@@ -91,7 +88,9 @@ class ScoreTest{
     @Test
     fun `it should know when a match is finished`() {
         assertTrue(Score(0, 2, 2).matchFinished())
+        assertTrue(Score(0, 3, 1).matchFinished())
         assertTrue(Score(0, 3, 2).matchFinished())
         assertTrue(Score(0, 100, 2).matchFinished())
+        assertTrue(Score(0, 100, 1).matchFinished())
     }
 }

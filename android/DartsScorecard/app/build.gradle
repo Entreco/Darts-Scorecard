@@ -55,6 +55,7 @@ dependencies {
     kapt "com.android.databinding:compiler:$gradleVersion"
 
     implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.android.support:design:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "android.arch.lifecycle:extensions:$architectureComponents"
     implementation "com.google.firebase:firebase-core:$firebase"
