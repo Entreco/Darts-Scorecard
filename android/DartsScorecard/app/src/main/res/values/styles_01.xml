@@ -38,7 +38,7 @@
 
     <style name="Score.Pts">
         <item name="android:padding">@dimen/xsmall</item>
-        <item name="android:gravity">start</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/score_pts</item>
         <item name="android:textColor">?attr/ptsText</item>
     </style>
@@ -47,7 +47,7 @@
         <item name="android:padding">@dimen/xsmall</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/score_hint</item>
-        <item name="android:textColor">?attr/ptsText</item>
+        <item name="android:textColor">?attr/scoreText</item>
     </style>
 
 </resources>

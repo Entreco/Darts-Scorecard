@@ -46,4 +46,8 @@ class Team(vararg val players: Player = emptyArray()) {
         return if (players.isEmpty()) NoPlayer()
         else players[0]
     }
+
+    fun contains(player: Player): Boolean {
+        return players.contains(player)
+    }
 }

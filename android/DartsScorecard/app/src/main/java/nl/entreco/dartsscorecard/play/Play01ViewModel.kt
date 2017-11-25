@@ -5,19 +5,20 @@ import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.input.InputListener
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.dartsscorecard.play.score.FinishCalculator
+import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, val finishCalculator: FinishCalculator, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
+class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, val getFinishUsecase: GetFinishUsecase, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
 
     // Lazy to keep state
     private val game: Game by lazy { createGameUseCase.start() }
@@ -30,26 +31,28 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         addPlayerListener(inputViewModel)
     }
 
-    override fun onDartThrown(turn: Turn) {
-        Log.d("NICE", "dart:${turn.last()}")
-        notifyScoreListeners(turn, game.next)
+    override fun onDartThrown(turn: Turn, by: Player) {
+        Log.d("NICE", "scored:${turn.last()} by:$by")
+        notifyDartThrown(turn, by)
     }
 
-    override fun onTurnSubmitted(turn: Turn) {
-        handleTurn(turn)
+    override fun onTurnSubmitted(turn: Turn, by: Player) {
+        Log.d("NICE", "turn:$turn by:$by")
+        handleTurn(turn, by)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun handleTurn(turn: Turn) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun handleTurn(turn: Turn, by: Player) {
         game.handle(turn)
 
         val next = game.next
+        Log.d("NICE", "next:$next")
 
-        notifyScoreListeners(game.scores, next)
-        notifyPlayerListeners(next)
+        notifyScoreChanged(game.scores, by)
+        notifyNextPlayer(next)
     }
 
-    fun addScoreListener(scoreListener: ScoreListener) {
+    private fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
                 scoreListeners.add(scoreListener)
@@ -57,7 +60,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    fun addPlayerListener(playerListener: PlayerListener) {
+    private fun addPlayerListener(playerListener: PlayerListener) {
         synchronized(playerListeners) {
             if (!playerListeners.contains(playerListener)) {
                 playerListeners.add(playerListener)
@@ -65,19 +68,19 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    private fun notifyScoreListeners(scores : Array<Score>, next: Next) {
+    private fun notifyScoreChanged(scores : Array<Score>, by: Player) {
         synchronized(scoreListeners) {
-            scoreListeners.forEach { it.onScoreChange(scores, next) }
+            scoreListeners.forEach { it.onScoreChange(scores, by) }
         }
     }
 
-    private fun notifyScoreListeners(turn: Turn, current: Next) {
+    private fun notifyDartThrown(turn: Turn, by: Player) {
         synchronized(scoreListeners) {
-            scoreListeners.forEach { it.onDartThrown(turn, current) }
+            scoreListeners.forEach { it.onDartThrown(turn, by) }
         }
     }
 
-    private fun notifyPlayerListeners(next: Next) {
+    private fun notifyNextPlayer(next: Next) {
         synchronized(playerListeners) {
             playerListeners.forEach { it.onNext(next) }
         }

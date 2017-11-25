@@ -10,8 +10,8 @@
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
         <variable
-            name="finishCalculator"
-            type="nl.entreco.dartsscorecard.play.score.FinishCalculator" />
+            name="getFinishUsecase"
+            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:maxHeight="40dp"
             app:adapter="@{viewModel.adapter}"
-            app:finishCalculator="@{finishCalculator}"
+            app:getFinishUsecase="@{getFinishUsecase}"
             app:layout_constraintTop_toBottomOf="@id/header"
             app:scoreSettings="@{viewModel.scoreSettings}"
             app:teams="@{viewModel.teams}"

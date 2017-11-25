@@ -6,6 +6,8 @@ import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.model.players.NoPlayer
+import nl.entreco.domain.play.model.players.State
 import java.util.*
 import javax.inject.Inject
 
@@ -16,23 +18,25 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
     var count = 0
     private var turn = Turn()
+    private var nextUp : Next? = null
 
     fun submitRandom(listener: InputListener) {
+
+        if(nextUp == null || nextUp?.state == State.MATCH) return
 
         when {
             firstDart() -> {
                 turn += Dart.random()
-                listener.onDartThrown(turn.copy())
+                listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
             secondDart() -> {
                 turn += Dart.random()
-                listener.onDartThrown(turn.copy())
+                listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
             else -> {
                 turn += Dart.random()
-
-                listener.onDartThrown(turn.copy())
-                listener.onTurnSubmitted(turn.copy())
+                listener.onDartThrown(turn.copy(), nextUp?.player!!)
+                listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
                 analytics.trackAchievement("scored: $turn")
 
                 turn = Turn()
@@ -46,6 +50,6 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     private fun firstDart() = count % 3 == 0
 
     override fun onNext(next: Next) {
-        // Update Toolbar / Preferences for Team (or Player)
+        nextUp = next
     }
 }

@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.score
+package nl.entreco.domain.play.usecase
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 24/11/2017.
  */
-open class FinishCalculator @Inject constructor() {
+open class GetFinishUsecase @Inject constructor() {
 
     private val bg: ExecutorService = Executors.newSingleThreadExecutor()
 

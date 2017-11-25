@@ -19,7 +19,7 @@
         <include
             android:id="@+id/scoreview"
             layout="@layout/play_01_score"
-            app:finishCalculator="@{viewModel.finishCalculator}"
+            app:getFinishUsecase="@{viewModel.getFinishUsecase}"
             app:viewModel="@{viewModel.scoreViewModel}" />
 
         <TextView

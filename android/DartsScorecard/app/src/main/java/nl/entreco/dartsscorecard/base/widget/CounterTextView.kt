@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,6 @@ import android.util.AttributeSet
  */
 class CounterTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseCounterTextView(context, attrs, defStyleAttr){
+) : BaseCounterTextView(context, attrs, defStyleAttr) {
 
 }

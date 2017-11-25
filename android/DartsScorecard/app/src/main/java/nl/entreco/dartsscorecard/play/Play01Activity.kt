@@ -7,9 +7,6 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
-import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.dartsscorecard.play.score.TeamScoreAdapter
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
@@ -18,7 +15,7 @@ class Play01Activity : ViewModelActivity() {
 
     private val settings = ScoreSettings()
     private val play01Module by lazy { Play01Module(settings, arrayOf(Team(Player("remco")), Team(Player("co")))) }
-    private val viewModel : Play01ViewModel by viewModelProvider {
+    private val viewModel: Play01ViewModel by viewModelProvider {
         component.plus(play01Module).viewModel()
     }
 
@@ -35,7 +32,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.menu_play_settings -> swapStyle()
         }
         return super.onOptionsItemSelected(item)

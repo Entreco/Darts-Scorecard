@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
+import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
@@ -14,7 +15,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
+class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
@@ -37,8 +38,8 @@ class TeamScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreVie
         notifyItemInserted(items.size - 1)
     }
 
-    fun teamAtIndexScored(position: Int, score: Score, player: Player) {
-        items[position].scored(score, player)
+    fun teamAtIndexScored(position: Int, score: Score, by: Player) {
+        items[position].scored(score, by)
         notifyItemChanged(position)
     }
 
@@ -51,5 +52,11 @@ class TeamScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreVie
         val count = itemCount
         items.clear()
         notifyItemRangeRemoved(0, count)
+    }
+
+    fun teamAtIndexTurnUpdate(position: Int, next: Next) {
+        if(position < 0 || position >= itemCount) return
+        items[position].turnUpdate(next)
+        notifyItemChanged(position)
     }
 }

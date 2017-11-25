@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.dartsscorecard.play.score.FinishCalculator
+import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
@@ -24,7 +24,7 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockGameRepository: GameRepository
     @Mock private lateinit var mockScoreViewModel: ScoreViewModel
     @Mock private lateinit var mockInputViewModel: InputViewModel
-    @Mock private lateinit var mockFinishCalculator: FinishCalculator
+    @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
 
     @Before
     fun setUp() {
@@ -62,7 +62,7 @@ class Play01ViewModelTest {
     private fun givenGameStartedWithInitialScore(score: Score) {
         val arbiter = Arbiter(score, TurnHandler(arrayOf(Team(Player("1")), Team(Player("2")))))
         whenever(mockGameRepository.new(arbiter)).then { Game(arbiter).apply { start() } }
-        subject = Play01ViewModel(mockScoreViewModel, mockInputViewModel, mockFinishCalculator, CreateGameUsecase(arbiter, mockGameRepository))
+        subject = Play01ViewModel(mockScoreViewModel, mockInputViewModel, mockGetFinishUsecase, CreateGameUsecase(arbiter, mockGameRepository))
     }
 
     private fun whenTurnSubmitted(vararg turns: Turn) {

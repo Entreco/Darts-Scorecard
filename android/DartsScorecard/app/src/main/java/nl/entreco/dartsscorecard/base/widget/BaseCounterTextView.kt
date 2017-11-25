@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
