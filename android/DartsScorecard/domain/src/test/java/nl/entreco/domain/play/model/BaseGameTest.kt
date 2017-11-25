@@ -1,11 +1,12 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.TestProvider
 import org.junit.Assert
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), 2))) {
+abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), TestProvider().turnHandler()))) {
 
     protected fun whenDartsThrown(vararg turns: Turn) {
         for(turn in turns) {
@@ -23,6 +24,6 @@ abstract class BaseGameTest(val subject: Game = Game(Arbiter(Score(), 2))) {
         Assert.assertEquals(leg, subject.scores[0].leg + subject.scores[1].leg)
     }
 
-    protected fun sixty() = Turn(20, 20, 20)
-    protected fun oneEighty() = Turn(60, 60, 60)
+    protected fun sixty() = Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20)
+    protected fun oneEighty() = Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20)
 }

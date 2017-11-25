@@ -1,126 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+
+        <variable
+            name="getFinishUsecase"
+            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <!-- Header -->
         <LinearLayout
-            android:background="@drawable/score_header"
-            android:padding="@dimen/xsmall"
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:textSize="12sp"
-                android:textColor="?attr/header_text_color"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="300"
-                android:text="First to 3"/>
-            <TextView
-                android:textSize="12sp"
-                android:textColor="?attr/header_text_color"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="LEG"/>
-            <TextView
-                android:textSize="12sp"
-                android:textColor="?attr/header_text_color"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="SET"/>
-            <TextView
-                android:textSize="12sp"
-                android:textColor="?attr/header_text_color"
-                android:gravity="end"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="PTS"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/team1"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                style="@style/Score.Name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="300"
-                android:drawableEnd="@drawable/starter"
-                android:text="PLAYER1"/>
-            <TextView
-                style="@style/Score.Leg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="0"/>
-            <TextView
-                style="@style/Score.Set"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="0"/>
-            <TextView
-                style="@style/Score.Pts"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="501"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/team2"
-            app:layout_constraintTop_toBottomOf="@+id/team1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                style="@style/Score.Name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="300"
-                android:text="TEAM2"/>
-            <TextView
-                style="@style/Score.Leg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="11"/>
-            <TextView
-                style="@style/Score.Set"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="42"
-                android:text="11"/>
-            <TextView
-                style="@style/Score.Pts"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:text="1001"/>
-        </LinearLayout>
-        <LinearLayout
-            android:padding="@dimen/xsmall"
             android:background="@drawable/score_header"
-            android:id="@+id/footer"
-            app:layout_constraintTop_toBottomOf="@+id/team2"
+            android:orientation="horizontal"
+            android:padding="@dimen/xsmall">
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_name_w"
+                android:text="@{@string/first_to(viewModel.numSets)}" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_leg_w"
+                android:gravity="center"
+                android:text="LEG" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_set_w"
+                android:gravity="center"
+                android:text="SET" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_pts_w" />
+        </LinearLayout>
+
+        <!-- TeamScoreView's -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/teamContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:maxHeight="40dp"
+            app:adapter="@{viewModel.adapter}"
+            app:getFinishUsecase="@{getFinishUsecase}"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:scoreSettings="@{viewModel.scoreSettings}"
+            app:teams="@{viewModel.teams}"
+            tools:listitem="@layout/team_score_view" />
+
+        <!-- Footer -->
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_header"
+            android:orientation="horizontal"
+            android:padding="@dimen/xsmall"
+            app:layout_constraintTop_toBottomOf="@id/teamContainer">
+
             <TextView
-                android:textSize="12sp"
-                android:textColor="?attr/header_text_color"
+                style="@style/Score.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PDC World Cup - semi finals"/>
+                android:text="PDC World Cup - semi finals" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

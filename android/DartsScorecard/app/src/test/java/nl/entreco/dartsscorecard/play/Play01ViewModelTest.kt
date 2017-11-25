@@ -1,15 +1,15 @@
 package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.dartsscorecard.analytics.Analytics
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.usecase.CreateGameUsecase
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
+import nl.entreco.dartsscorecard.play.input.InputViewModel
+import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.model.*
+import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
+import nl.entreco.domain.play.usecase.CreateGameUsecase
 import nl.entreco.domain.settings.ScoreSettings
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -20,9 +20,11 @@ import org.mockito.MockitoAnnotations
  */
 class Play01ViewModelTest {
 
-    private lateinit var subject : Play01ViewModel
-    @Mock private lateinit var mockAnalytics: Analytics
+    private lateinit var subject: Play01ViewModel
     @Mock private lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockScoreViewModel: ScoreViewModel
+    @Mock private lateinit var mockInputViewModel: InputViewModel
+    @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
 
     @Before
     fun setUp() {
@@ -31,38 +33,45 @@ class Play01ViewModelTest {
 
     @Test
     fun `it should show correct score when initial turn submitted`() {
+        givenScoreListener()
         givenGameStartedWithInitialScore(Score())
-        whenTurnSubmitted(Turn(20, 20, 20))
+        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20))
         verifyScores(arrayOf(Score(441), Score(501)))
+    }
+
+    private fun givenScoreListener(vararg listeners: ScoreListener) {
+        for (listener in listeners) {
+            subject.addScoreListener(listener)
+        }
     }
 
     @Test
     fun `it should show correct score when second turn submitted`() {
         givenGameStartedWithInitialScore(Score())
-        whenTurnSubmitted(Turn(20, 20, 20), Turn(60, 60, 60))
+        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20), Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20))
         verifyScores(arrayOf(Score(441), Score(321)))
     }
 
     @Test
     fun `it should show correct score when leg is finished`() {
         givenGameStartedWithInitialScore(Score(61, 0, 0, settings = ScoreSettings(61, 2, 2)))
-        whenTurnSubmitted(Turn(1, 20, 40))
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
         verifyScores(arrayOf(Score(61, 1, 0), Score(61, 0, 0)))
     }
 
     private fun givenGameStartedWithInitialScore(score: Score) {
-        val arbiter = Arbiter(score, 2)
+        val arbiter = Arbiter(score, TurnHandler(arrayOf(Team(Player("1")), Team(Player("2")))))
         whenever(mockGameRepository.new(arbiter)).then { Game(arbiter).apply { start() } }
-        subject = Play01ViewModel(CreateGameUsecase(arbiter, mockGameRepository), mockAnalytics)
+        subject = Play01ViewModel(mockScoreViewModel, mockInputViewModel, mockGetFinishUsecase, CreateGameUsecase(arbiter, mockGameRepository))
     }
 
-    private fun whenTurnSubmitted(vararg turns : Turn) {
-        for(turn in turns) {
-            subject.handleTurn(turn)
+    private fun whenTurnSubmitted(vararg turns: Turn) {
+        for (turn in turns) {
+            subject.handleTurn(turn, Player(""))
         }
     }
 
     private fun verifyScores(scores: Array<Score>) {
-        assertEquals(subject.format(scores),  subject.score.get())
+
     }
 }
