@@ -6,7 +6,6 @@ import java.util.*
  * Created by Entreco on 24/11/2017.
  */
 enum class Dart(private val description: String, private val value: Int) {
-    NONE("", 0),
     ZERO("no score", 0),
     SINGLE_1("1", 1),
     SINGLE_2("2", 2),
@@ -70,6 +69,9 @@ enum class Dart(private val description: String, private val value: Int) {
     TRIPLE_20("T20", 3*20),
     SINGLE_BULL("S.BULL", 25),
     BULL("BULL", 50),
+
+    // Excluded from Dart.random()
+    NONE("", 0),
     TEST_501("test", 501);
 
     fun value() : Int {
@@ -80,9 +82,12 @@ enum class Dart(private val description: String, private val value: Int) {
     }
 
     companion object {
+
+        val EXCLUDE_FROM_RANDOM = 2
+
         fun random() : Dart {
             val darts = values()
-            val randomIndex = Random().nextInt(darts.size)
+            val randomIndex = Random().nextInt(darts.size - EXCLUDE_FROM_RANDOM)
             return darts[randomIndex]
         }
     }
