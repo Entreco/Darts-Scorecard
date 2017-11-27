@@ -8,7 +8,7 @@ import nl.entreco.domain.play.model.players.Team
 /**
  * Created by Entreco on 18/11/2017.
  */
-class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int) {
+class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int = 0) {
 
     private var turns = -1
     private var legs = 0

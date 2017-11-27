@@ -39,8 +39,6 @@ open class GetFinishUsecase @Inject constructor() {
         if (target <= 1) return notPossible
         if (impossible.contains(target)) return notPossible
 
-        Log.d("FINISH", "score:$score, turn:$turn, desired:$target")
-
         // Now, hardcode some values that do not need favourite Double, since
         // it can only be done in 1 way
         if (require(target, turn, 170, 3)) return "T20 T20 BULL"
