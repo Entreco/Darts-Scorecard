@@ -4,4 +4,5 @@
     <string name="individual">Submit Individual Darts</string>
     <string name="all">Submit full score</string>
     <string name="random">Random</string>
+    <string name="next">%1$s, to throw next</string>
 </resources>

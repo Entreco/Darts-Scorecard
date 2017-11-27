@@ -1,12 +1,15 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import nl.entreco.domain.Analytics
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.model.players.NoPlayer
+import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import javax.inject.Inject
 
@@ -17,6 +20,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
     val toggle = ObservableBoolean(false)
     var count = 0
+    val current = ObservableField<Player>(NoPlayer())
     private var turn = Turn()
     private var nextUp : Next? = null
 
@@ -67,5 +71,6 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
     override fun onNext(next: Next) {
         nextUp = next
+        current.set(next.player)
     }
 }

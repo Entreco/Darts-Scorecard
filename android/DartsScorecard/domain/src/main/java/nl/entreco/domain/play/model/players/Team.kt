@@ -4,6 +4,8 @@ package nl.entreco.domain.play.model.players
  * Created by Entreco on 18/11/2017.
  */
 class Team(vararg val players: Player = emptyArray()) {
+    constructor(playerName: String) : this(Player(playerName))
+
     private var START_TURN = -1
     private var turns = START_TURN
     private var offset = 0

@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.score
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -19,8 +20,12 @@ class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : Rec
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
+    class LazyInflater(context: Context) {
+        val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TeamScoreView {
-        val inflater = LayoutInflater.from(parent?.context)
+        val inflater = LazyInflater(parent?.context!!).inflater
         val binding = DataBindingUtil.inflate<TeamScoreViewBinding>(inflater, R.layout.team_score_view, parent, false)
         return TeamScoreView(binding)
     }
