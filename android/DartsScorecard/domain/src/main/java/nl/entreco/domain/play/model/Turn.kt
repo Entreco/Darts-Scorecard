@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.model
 
-data class Turn (val d1: Dart = Dart.NONE, val d2: Dart = Dart.NONE, val d3: Dart = Dart.NONE){
+data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart.NONE, internal val d3: Dart = Dart.NONE){
     private val sum = d1.value() + d2.value() + d3.value()
 
     override fun toString(): String {
@@ -9,6 +9,7 @@ data class Turn (val d1: Dart = Dart.NONE, val d2: Dart = Dart.NONE, val d3: Dar
 
     operator fun plus(other: Dart) : Turn {
         return when {
+            other == Dart.NONE -> throw IllegalStateException("Darts.NONE is reserved for initialization -> use Darts.ZERO for 'no score'")
             d1 == Dart.NONE -> Turn(other)
             d2 == Dart.NONE -> Turn(d1, other)
             d3 == Dart.NONE -> Turn(d1, d2, other)
