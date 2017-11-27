@@ -70,5 +70,4 @@ class TurnTest {
     fun `it IS allowed to add ZERO to a turn`() {
         assertEquals(0, (Turn() + Dart.ZERO).total())
     }
-
 }

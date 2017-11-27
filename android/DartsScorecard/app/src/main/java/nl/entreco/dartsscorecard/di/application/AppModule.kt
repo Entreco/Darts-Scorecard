@@ -3,8 +3,8 @@ package nl.entreco.dartsscorecard.di.application
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.App
-import nl.entreco.dartsscorecard.CoolLogger
-import nl.entreco.dartsscorecard.analytics.Analytics
+import nl.entreco.dartsscorecard.DscLogger
+import nl.entreco.domain.Analytics
 import nl.entreco.dartsscorecard.analytics.FirebaseAnalytics
 import nl.entreco.domain.Logger
 
@@ -26,6 +26,6 @@ class AppModule(val app: App) {
 
     @Provides
     fun provideLogger(): Logger {
-        return CoolLogger("Dsc")
+        return DscLogger("Dsc")
     }
 }

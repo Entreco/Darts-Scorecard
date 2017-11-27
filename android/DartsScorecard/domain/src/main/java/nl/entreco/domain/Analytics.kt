@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.analytics
+package nl.entreco.domain
 
 /**
  * Created by Entreco on 15/11/2017.

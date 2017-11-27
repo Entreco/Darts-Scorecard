@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.ObservableBoolean
-import nl.entreco.dartsscorecard.analytics.Analytics
+import nl.entreco.domain.Analytics
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.play.model.Dart

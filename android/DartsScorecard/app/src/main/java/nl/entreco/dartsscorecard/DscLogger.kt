@@ -6,7 +6,7 @@ import nl.entreco.domain.Logger
 /**
  * Created by Entreco on 27/11/2017.
  */
-internal class CoolLogger(private val tag : String) : Logger() {
+internal class DscLogger(private val tag : String) : Logger() {
 
     companion object {
         var ENABLED = BuildConfig.DEBUG
