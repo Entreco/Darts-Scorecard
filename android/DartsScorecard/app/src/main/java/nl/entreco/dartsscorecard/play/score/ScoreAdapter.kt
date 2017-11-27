@@ -15,7 +15,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
+class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : RecyclerView.Adapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
@@ -58,5 +58,9 @@ class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>()
         if(position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
         notifyItemChanged(position)
+    }
+
+    fun ready() {
+        onReady.onReady()
     }
 }

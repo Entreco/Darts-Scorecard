@@ -8,7 +8,7 @@ import nl.entreco.domain.play.model.players.Team
 /**
  * Created by Entreco on 18/11/2017.
  */
-class TurnHandler(val teams: Array<Team>) {
+class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int) {
 
     private var turns = -1
     private var legs = 0
@@ -17,7 +17,7 @@ class TurnHandler(val teams: Array<Team>) {
     private var currentPlayer: Player = NoPlayer()
         get() = if (teams.isEmpty() || turns < 0) NoPlayer() else team().next(legs, sets)
 
-    private fun team() = teams[(turns + legs + sets) % teams.size]
+    private fun team() = teams[(teamStartIndex + turns + legs + sets) % teams.size]
 
     private fun teamIndex() = teams.indexOf(team())
 
@@ -25,7 +25,7 @@ class TurnHandler(val teams: Array<Team>) {
         turns = 0
         legs = 0
         sets = 0
-        return Next(State.START, team(),0, currentPlayer)
+        return Next(State.START, team(),teamStartIndex, currentPlayer)
     }
 
     fun next(): Next {

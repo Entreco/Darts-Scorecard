@@ -21,9 +21,9 @@ class ScoreBindings {
             recyclerView.adapter = adapter
             adapter.clear()
 
-            for (team in teams) {
-                adapter.addItem(TeamScoreViewModel(team, scoreSettings.score(), getFinishUsecase))
-            }
+            teams.forEachIndexed { index, team ->  adapter.addItem(TeamScoreViewModel(team, scoreSettings.score(), getFinishUsecase, scoreSettings.teamStartIndex == index))}
+
+            adapter.ready()
         }
     }
 }

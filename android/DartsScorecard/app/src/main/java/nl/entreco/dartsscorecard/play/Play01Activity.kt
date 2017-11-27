@@ -7,14 +7,14 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.play.score.ReadyListener
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
 
-class Play01Activity : ViewModelActivity() {
+class Play01Activity : ViewModelActivity(), ReadyListener {
 
-    private val settings = ScoreSettings()
-    private val play01Module by lazy { Play01Module(settings, arrayOf(Team(Player("remco")), Team(Player("co")))) }
+    private val play01Module by lazy { Play01Module(ScoreSettings(teamStartIndex = 1), arrayOf(Team(Player("remco")), Team(Player("co"))), this) }
     private val viewModel: Play01ViewModel by viewModelProvider {
         component.plus(play01Module).viewModel()
     }
@@ -26,9 +26,8 @@ class Play01Activity : ViewModelActivity() {
         binding.viewModel = viewModel
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.resume()
+    override fun onReady() {
+        viewModel.onReady()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
