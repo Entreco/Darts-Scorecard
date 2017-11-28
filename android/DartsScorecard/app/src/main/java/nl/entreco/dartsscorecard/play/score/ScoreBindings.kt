@@ -23,7 +23,7 @@ class ScoreBindings {
 
             teams.forEachIndexed { index, team ->  adapter.addItem(TeamScoreViewModel(team, scoreSettings.score(), getFinishUsecase, scoreSettings.teamStartIndex == index))}
 
-            adapter.ready()
+            adapter.onTeamsReady()
         }
     }
 }

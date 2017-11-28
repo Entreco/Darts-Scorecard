@@ -10,7 +10,7 @@ internal class DscLogger(private val tag : String) : Logger() {
 
     companion object {
         var ENABLED = BuildConfig.DEBUG
-        var SEPERATOR = ", "
+        var SEPARATOR = ", "
         fun setEnabled(enable : Boolean){
             ENABLED = enable
         }
@@ -89,6 +89,6 @@ internal class DscLogger(private val tag : String) : Logger() {
     }
 
     private fun withArgs(message: String, args: Array<out String>): String {
-        return StringBuilder(message).append(SEPERATOR).apply { args.take(args.size - 1).forEach { append(it).append(SEPERATOR) }.apply { append(args.last()) } }.toString()
+        return StringBuilder(message).append(SEPARATOR).apply { args.take(args.size - 1).forEach { append(it).append(SEPARATOR) }.apply { append(args.last()) } }.toString()
     }
 }

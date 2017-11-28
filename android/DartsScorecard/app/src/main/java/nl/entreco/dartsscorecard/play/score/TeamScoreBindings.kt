@@ -1,17 +1,17 @@
 package nl.entreco.dartsscorecard.play.score
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.databinding.BindingAdapter
+import android.graphics.Color
 import android.support.annotation.ColorInt
+import android.support.v4.graphics.ColorUtils
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
-import android.support.v4.graphics.ColorUtils
-import android.animation.ValueAnimator
-import android.graphics.Color
 
 /**
  * Created by Entreco on 25/11/2017.
@@ -64,8 +64,8 @@ class TeamScoreBindings {
         fun showFinishWithAlpha(view: TextView, finish: String, isCurrentTeam: Boolean) {
             view.text = finish
             if (finish.isEmpty()) {
-                view.animate().
-                        translationX(-200F)
+                view.animate()
+                        .translationX(-200F)
                         .setInterpolator(AccelerateDecelerateInterpolator())
                         .setDuration(DEFAULT_ANIMATION_TIME).start()
             } else {
@@ -75,8 +75,8 @@ class TeamScoreBindings {
                         .setDuration(DEFAULT_ANIMATION_TIME).start()
 
                 val startColor = colorToHex(view.currentTextColor)
-                val endColor = if(isCurrentTeam) "#FFFFFFFF" else "#aaFFFFFF"
-                if(startColor != endColor) {
+                val endColor = if (isCurrentTeam) "#FFFFFFFF" else "#aaFFFFFF"
+                if (startColor != endColor) {
                     val valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(DEFAULT_ANIMATION_TIME)
                     valueAnimator.addUpdateListener {
                         val fractionAnim = it.animatedValue as Float

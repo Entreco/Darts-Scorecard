@@ -16,13 +16,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : RecyclerView.Adapter<TeamScoreView>() {
+open class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : RecyclerView.Adapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
-
-    class LazyInflater(context: Context) {
-        val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TeamScoreView {
         val inflater = LazyInflater(parent?.context!!).inflater
@@ -38,34 +34,38 @@ class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : Rec
         return items.size
     }
 
-    fun addItem(teamScoreViewModel: TeamScoreViewModel) {
+    open fun addItem(teamScoreViewModel: TeamScoreViewModel) {
         items.add(teamScoreViewModel)
         notifyItemInserted(items.size - 1)
     }
 
-    fun teamAtIndexScored(position: Int, score: Score, by: Player) {
+    open fun teamAtIndexScored(position: Int, score: Score, by: Player) {
         items[position].scored(score, by)
         notifyItemChanged(position)
     }
 
-    fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
+    open fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
         items[position].threw(turn, player)
         notifyItemChanged(position)
     }
 
-    fun clear() {
+    open fun clear() {
         val count = itemCount
         items.clear()
         notifyItemRangeRemoved(0, count)
     }
 
-    fun teamAtIndexTurnUpdate(position: Int, next: Next) {
-        if(position < 0 || position >= itemCount) return
+    open fun teamAtIndexTurnUpdate(position: Int, next: Next) {
+        if (position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
         notifyItemChanged(position)
     }
 
-    fun ready() {
+    open fun onTeamsReady() {
         onReady.onReady()
+    }
+
+    private class LazyInflater(context: Context) {
+        val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
     }
 }
