@@ -63,6 +63,7 @@
             android:paddingEnd="@dimen/def"
             android:paddingStart="@dimen/def"
             app:finish="@{viewModel.finish}"
+            app:finishAlpha="@{viewModel.currentTeam}"
             tools:text="T20 17 D17" />
 
         <nl.entreco.dartsscorecard.base.widget.CounterTextView
