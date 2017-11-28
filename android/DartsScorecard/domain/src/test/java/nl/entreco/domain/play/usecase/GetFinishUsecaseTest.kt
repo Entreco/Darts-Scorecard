@@ -1,16 +1,22 @@
-package nl.entreco.dartsscorecard.play.score
+package nl.entreco.domain.play.usecase
 
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.usecase.GetFinishUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by Entreco on 24/11/2017.
  */
+@RunWith(MockitoJUnitRunner::class)
 class GetFinishUsecaseTest {
 
-    private val subject = GetFinishUsecase()
+    @Mock private lateinit var mockLogger: Logger
+    @InjectMocks lateinit var subject : GetFinishUsecase
 
     @Test
     fun `it should return empty for scores higher than 170`() {

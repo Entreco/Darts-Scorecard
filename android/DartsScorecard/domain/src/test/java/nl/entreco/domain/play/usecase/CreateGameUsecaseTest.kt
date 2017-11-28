@@ -23,7 +23,7 @@ class CreateGameUsecaseTest {
 
     private lateinit var subject : CreateGameUsecase
 
-    private var mockTurnHandler : TurnHandler = TurnHandler(arrayOf(Team(Player("1")), Team(Player("2"))))
+    private var mockTurnHandler : TurnHandler = TurnHandler(arrayOf(Team(Player("1")), Team(Player("2"))), 0)
     private var arbiter = Arbiter(Score(), mockTurnHandler)
     private var game = Game(arbiter)
 
