@@ -10,8 +10,8 @@ import java.text.NumberFormat
  * Created by Entreco on 20/11/2017.
  */
 abstract class BaseCounterTextView : AppCompatTextView {
-    val STEP_10 = 10
-    val speed : Long = 10
+    private val STEP_10 = 10
+    private val speed : Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
     @Volatile private var stopped = false
@@ -22,7 +22,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun tick() {
+    private fun tick() {
         if (mCurrent != mTarget) {
             proceedTowardsTarget(mCurrent < mTarget)
         } else {
@@ -31,7 +31,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
         display(mCurrent)
     }
 
-    fun stopTick(){
+    private fun stopTick(){
         stopped = true
         display(mTarget)
     }

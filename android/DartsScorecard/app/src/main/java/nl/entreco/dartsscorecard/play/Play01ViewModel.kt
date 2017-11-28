@@ -31,8 +31,9 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         addPlayerListener(inputViewModel)
     }
 
-    fun resume() {
+    fun onReady() {
         notifyNextPlayer(game.next)
+        notifyScoreChanged(game.scores, game.next.player)
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {

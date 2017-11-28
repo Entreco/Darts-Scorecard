@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="bdo_yellow_light">#FFD71B</color>
+    <color name="bdo_yellow_dark">#FCC804</color>
+    <color name="bdo_gray_light">#312F30</color>
+    <color name="bdo_gray_dark">#010000</color>
+    <color name="bdo_red_light">#B40000</color>
+    <color name="bdo_red_dark">#760A10</color>
+
     <style name="Bdo" parent="AppTheme">
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>
         <item name="scoreBorderColor">#00ffffff</item>
         <item name="scoreBorderAlpha">0.2</item>
-        <item name="grad_score_header_start">#FFD71B</item>
-        <item name="grad_score_header_stop">#FCC804</item>
-        <item name="grad_score_name_start">#312F30</item>
-        <item name="grad_score_name_stop">#010000</item>
-        <item name="grad_score_start">#312F30</item>
-        <item name="grad_score_stop">#010000</item>
-        <item name="grad_score_pts_start">#FFD71B</item>
-        <item name="grad_score_pts_stop">#FCC804</item>
-        <item name="grad_score_hint_start">#760A10</item>
-        <item name="grad_score_hint_stop">#B40000</item>
+        <item name="grad_score_header_start">@color/bdo_yellow_light</item>
+        <item name="grad_score_header_stop">@color/bdo_yellow_dark</item>
+        <item name="grad_score_name_start">@color/bdo_gray_light</item>
+        <item name="grad_score_name_stop">@color/bdo_gray_dark</item>
+        <item name="grad_score_start">@color/bdo_gray_light</item>
+        <item name="grad_score_stop">@color/bdo_gray_dark</item>
+        <item name="grad_score_pts_start">@color/bdo_yellow_light</item>
+        <item name="grad_score_pts_stop">@color/bdo_yellow_dark</item>
+        <item name="grad_score_hint_start">@color/bdo_red_dark</item>
+        <item name="grad_score_hint_stop">@color/bdo_red_light</item>
+        <item name="grad_current_start">@color/bdo_red_light</item>
+        <item name="grad_current_stop">@color/bdo_red_dark</item>
         <item name="header_text_color">@color/black</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>

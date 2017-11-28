@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
 import android.util.Log
+import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
@@ -17,17 +18,19 @@ import java.util.concurrent.Future
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase) {
+class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, starter : Boolean) : BaseViewModel() {
 
     val finish = ObservableField<String>("")
-    val started = ObservableBoolean(false)
+    val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
+    val currentTeam = ObservableBoolean()
     private val handler = Handler()
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
         updateLegStarter(next)
+        updateCurrentTeam(next)
     }
 
     fun scored(input: Score, by: Player) {
@@ -41,6 +44,10 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
             scored.set(turn.total())
             calculateFinish(this.score.get(), player, turn)
         }
+    }
+
+    private fun updateCurrentTeam(next: Next){
+        currentTeam.set(team.contains(next.player))
     }
 
     private fun updateLegStarter(next: Next) {

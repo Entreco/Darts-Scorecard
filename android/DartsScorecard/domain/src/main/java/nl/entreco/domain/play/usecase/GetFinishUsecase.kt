@@ -3,6 +3,7 @@ package nl.entreco.domain.play.usecase
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
 import android.util.Log
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import java.util.concurrent.ExecutorService
@@ -13,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 24/11/2017.
  */
-open class GetFinishUsecase @Inject constructor() {
+open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
 
     private val bg: ExecutorService = Executors.newSingleThreadExecutor()
 
@@ -34,12 +35,12 @@ open class GetFinishUsecase @Inject constructor() {
         // Calculate desired target
         val target = score - turn.total()
 
+        logger.d("Hoi", "wooot", "woot2")
+
         // First, handle the obvious cases before we go into recursion ;)
         if (target > 170) return notPossible
         if (target <= 1) return notPossible
         if (impossible.contains(target)) return notPossible
-
-        Log.d("FINISH", "score:$score, turn:$turn, desired:$target")
 
         // Now, hardcode some values that do not need favourite Double, since
         // it can only be done in 1 way
