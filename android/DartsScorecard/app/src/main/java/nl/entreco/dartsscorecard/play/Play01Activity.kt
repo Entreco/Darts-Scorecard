@@ -14,7 +14,7 @@ import nl.entreco.domain.settings.ScoreSettings
 
 class Play01Activity : ViewModelActivity(), ReadyListener {
 
-    private val play01Module by lazy { Play01Module(ScoreSettings(teamStartIndex = 1), arrayOf(Team(Player("remco")), Team(Player("co"))), this) }
+    private val play01Module by lazy { Play01Module(ScoreSettings(teamStartIndex = 1), arrayOf(Team(Player("remco"), Player("sibbel")), Team("Boeffie"), Team(Player("eva"), Player("guusje"), Player("Beer"))), this) }
     private val viewModel: Play01ViewModel by viewModelProvider {
         component.plus(play01Module).viewModel()
     }
