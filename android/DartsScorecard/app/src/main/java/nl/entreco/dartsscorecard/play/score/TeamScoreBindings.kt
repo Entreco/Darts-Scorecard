@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter
 import android.support.annotation.ColorInt
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
@@ -22,8 +23,8 @@ class TeamScoreBindings {
         }
 
         @JvmStatic
-        @BindingAdapter("current")
-        fun showCurrent(view: CounterTextView, score: Int) {
+        @BindingAdapter("currentPlayer")
+        fun showCurrentScore(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
             if (score <= 0) {
                 view.animate().translationX(200F).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
@@ -35,6 +36,13 @@ class TeamScoreBindings {
                     view.setTextColor(fromAttr(view.context, R.attr.scoreText))
                 }
             }
+        }
+
+        @JvmStatic
+        @BindingAdapter("currentTeam")
+        fun showCurrentTeam(view: ImageView, isCurrentTeam: Boolean) {
+            val w = if(view.width.toFloat() <= 0.0f) 200f else view.width.toFloat()
+            view.animate().translationX(if(isCurrentTeam) 0f else w).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(150).start()
         }
 
         @ColorInt

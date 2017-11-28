@@ -18,17 +18,19 @@ import java.util.concurrent.Future
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, private val starter : Boolean) : BaseViewModel() {
+class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, starter : Boolean) : BaseViewModel() {
 
     val finish = ObservableField<String>("")
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
+    val currentTeam = ObservableBoolean()
     private val handler = Handler()
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
         updateLegStarter(next)
+        updateCurrentTeam(next)
     }
 
     fun scored(input: Score, by: Player) {
@@ -42,6 +44,10 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
             scored.set(turn.total())
             calculateFinish(this.score.get(), player, turn)
         }
+    }
+
+    private fun updateCurrentTeam(next: Next){
+        currentTeam.set(team.contains(next.player))
     }
 
     private fun updateLegStarter(next: Next) {

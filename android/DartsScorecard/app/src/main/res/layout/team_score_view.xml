@@ -73,7 +73,15 @@
             android:gravity="start"
             android:paddingEnd="@dimen/def"
             android:paddingStart="@dimen/def"
-            app:current="@{viewModel.scored}"
+            app:currentPlayer="@{viewModel.scored}"
             tools:text="180" />
+
+        <ImageView
+            android:layout_gravity="end|center_vertical"
+            android:layout_width="6dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_current_team"
+            app:currentTeam="@{viewModel.currentTeam}"/>
+
     </FrameLayout>
 </layout>
