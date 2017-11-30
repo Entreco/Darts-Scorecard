@@ -11,11 +11,13 @@
     <color name="pdc_black_dark">#010000</color>
 
     <style name="Pdc" parent="AppTheme">
+        <item name="colorAccent">@color/pdc_red_dark</item>
         <item name="nameText">@color/black</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/white</item>
         <item name="scoreBorderColor">#333333</item>
         <item name="scoreBorderAlpha">.2</item>
+        <item name="inputToggle">@color/pdc_red_dark</item>
         <item name="grad_score_header_start">@color/pdc_black_light</item>
         <item name="grad_score_header_stop">@color/pdc_black_dark</item>
         <item name="grad_score_name_start">@color/pdc_white_light</item>

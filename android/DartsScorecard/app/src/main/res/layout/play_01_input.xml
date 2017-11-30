@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,32 +14,158 @@
             type="nl.entreco.dartsscorecard.play.input.InputListener" />
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/def">
+        android:orientation="vertical">
 
-        <TextView
+        <!-- Top Bar -->
+        <RelativeLayout
+            android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{@string/next(viewModel.current)}"/>
+            android:background="@drawable/score_header"
+            android:padding="@dimen/def">
 
-        <Button
-            android:id="@+id/scoreInput"
-            android:layout_width="wrap_content"
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/input_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:checked="@={viewModel.toggle}" />
+
+            <TextView
+                android:id="@+id/input_label"
+                style="@style/Input.Mini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/input_toggle"
+                android:layout_alignStart="@id/input_toggle"
+                android:gravity="center"
+                android:paddingTop="6dp"
+                android:text="@string/single_mode" />
+
+            <EditText
+                android:id="@+id/input_score"
+                style="@style/Input.Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@drawable/ic_escape"
+                android:gravity="center"
+                android:text="180" />
+
+            <TextView
+                android:id="@+id/input_next"
+                style="@style/Input.Next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/input_label"
+                android:layout_toStartOf="@id/input_score"
+                android:gravity="start"
+                android:paddingStart="12dp"
+                android:text="@{viewModel.current.name}"
+                tools:text="boeffie" />
+
+            <TextView
+                android:id="@+id/input_sub"
+                style="@style/Input.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/input_score"
+                android:layout_below="@id/input_next"
+                android:layout_toEndOf="@id/input_label"
+                android:layout_toStartOf="@id/input_score"
+                android:gravity="start|bottom"
+                android:paddingStart="12dp"
+                android:text="@string/next"
+                tools:text="boeffie" />
+
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="@{() -> viewModel.submitRandom(listener)}"
-            android:text="@string/random" />
+            android:background="#131313"
+            android:columnCount="4"
+            android:rowCount="4"
+            app:layout_constraintTop_toBottomOf="@id/topbar">
 
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:checked="@={viewModel.toggle}"
-            android:textOff="@string/all"
-            android:textOn="@string/individual" />
-    </LinearLayout>
+            <TextView
+                style="@style/Input.Number"
+                android:text="1" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="2" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="3" />
+
+            <TextView
+                android:layout_width="@dimen/input_side_bar"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="some" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="4" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="5" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="6" />
+
+            <TextView
+                android:layout_width="@dimen/input_side_bar"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="some" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="7" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="8" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="9" />
+
+            <TextView
+                android:layout_width="@dimen/input_side_bar"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="some" />
+
+            <TextView
+                style="@style/Input.Number.Accent"
+                android:text="_" />
+
+            <TextView
+                style="@style/Input.Number"
+                android:text="0" />
+
+            <TextView
+                style="@style/Input.Number.Accent"
+                android:text="*" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{() -> viewModel.submitRandom(listener)}"
+                android:src="@drawable/ic_dart"
+                app:fabSize="normal" />
+        </GridLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>

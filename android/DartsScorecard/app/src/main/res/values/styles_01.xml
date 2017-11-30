@@ -50,4 +50,49 @@
         <item name="android:textColor">?attr/scoreText</item>
     </style>
 
+
+    <style name="Input">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    <style name="Input.Mini">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">?attr/inputToggle</item>
+    </style>
+
+    <style name="Input.Next">
+        <item name="android:textColor">?attr/ptsText</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+    <style name="Input.Sub">
+        <item name="android:textColor">?attr/inputToggle</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Input.Number">
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Input.Number.Accent">
+        <item name="android:textColor">#666666</item>
+    </style>
+
+    <style name="Input.Score">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:paddingTop">@dimen/xsmall</item>
+        <item name="android:paddingBottom">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:paddingEnd">@dimen/def</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:background">@drawable/score_entry</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:textColor">?attr/inputToggle</item>
+    </style>
+
 </resources>

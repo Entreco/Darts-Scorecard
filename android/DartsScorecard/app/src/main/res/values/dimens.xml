@@ -7,4 +7,6 @@
     <dimen name="score_leg_w">42</dimen>
     <dimen name="score_set_w">42</dimen>
     <dimen name="score_pts_w">50</dimen>
+
+    <dimen name="input_side_bar">80dp</dimen>
 </resources>

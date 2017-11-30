@@ -22,25 +22,26 @@
             app:getFinishUsecase="@{viewModel.getFinishUsecase}"
             app:viewModel="@{viewModel.scoreViewModel}" />
 
-        <TextView
-            android:id="@+id/version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/version"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
         <include
             android:id="@+id/scoreInput"
             layout="@layout/play_01_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/version"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:viewModel="@{viewModel.inputViewModel}"
             app:listener="@{viewModel}"/>
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/version"
+            app:layout_constraintTop_toBottomOf="@id/scoreview"
+            app:layout_constraintBottom_toTopOf="@id/scoreInput"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

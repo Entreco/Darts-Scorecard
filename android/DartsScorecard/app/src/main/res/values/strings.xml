@@ -5,4 +5,5 @@
     <string name="all">Submit full score</string>
     <string name="random">Random</string>
     <string name="next">%1$s, to throw next</string>
+    <string name="single_mode">Single</string>
 </resources>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Text Colors -->
     <attr name="nameText" format="color"/>
     <attr name="scoreText" format="color"/>
     <attr name="ptsText" format="color"/>
+    <attr name="header_text_color" format="color"/>
+
+    <!-- Score View -->
     <attr name="scoreBorderColor" format="color"/>
     <attr name="scoreBorderAlpha" format="float"/>
     <attr name="grad_score_header_start" format="color"/>
@@ -17,5 +22,7 @@
     <attr name="grad_score_hint_stop" format="color"/>
     <attr name="grad_current_start" format="color"/>
     <attr name="grad_current_stop" format="color"/>
-    <attr name="header_text_color" format="color"/>
+
+    <!-- Input View -->
+    <attr name="inputToggle" format="color"/>
 </resources>

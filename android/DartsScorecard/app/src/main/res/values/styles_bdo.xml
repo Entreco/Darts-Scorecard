@@ -2,6 +2,7 @@
 <resources>
 
     <color name="bdo_yellow_light">#FFD71B</color>
+    <color name="bdo_yellow_accent">#BC9910</color>
     <color name="bdo_yellow_dark">#FCC804</color>
     <color name="bdo_gray_light">#312F30</color>
     <color name="bdo_gray_dark">#010000</color>
@@ -9,11 +10,13 @@
     <color name="bdo_red_dark">#760A10</color>
 
     <style name="Bdo" parent="AppTheme">
+        <item name="colorAccent">@color/bdo_yellow_light</item>
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>
         <item name="scoreBorderColor">#00ffffff</item>
         <item name="scoreBorderAlpha">0.2</item>
+        <item name="inputToggle">@color/bdo_yellow_accent</item>
         <item name="grad_score_header_start">@color/bdo_yellow_light</item>
         <item name="grad_score_header_stop">@color/bdo_yellow_dark</item>
         <item name="grad_score_name_start">@color/bdo_gray_light</item>
