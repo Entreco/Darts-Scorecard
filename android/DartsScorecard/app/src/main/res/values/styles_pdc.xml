@@ -11,7 +11,7 @@
     <color name="pdc_black_dark">#010000</color>
 
     <style name="Pdc" parent="AppTheme">
-        <item name="colorAccent">@color/pdc_red_dark</item>
+        <item name="colorAccent">@color/pdc_green_light</item>
         <item name="nameText">@color/black</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/white</item>

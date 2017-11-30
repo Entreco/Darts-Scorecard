@@ -10,7 +10,7 @@
     <color name="bdo_red_dark">#760A10</color>
 
     <style name="Bdo" parent="AppTheme">
-        <item name="colorAccent">@color/bdo_yellow_light</item>
+        <item name="colorAccent">@color/bdo_red_dark</item>
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>

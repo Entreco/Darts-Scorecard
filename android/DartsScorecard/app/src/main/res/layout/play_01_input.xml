@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -31,8 +32,8 @@
                 android:id="@+id/input_toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/input_label"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp"
                 android:checked="@={viewModel.toggle}" />
 
             <TextView
@@ -43,18 +44,28 @@
                 android:layout_alignEnd="@id/input_toggle"
                 android:layout_alignStart="@id/input_toggle"
                 android:gravity="center"
-                android:paddingTop="6dp"
-                android:text="@string/single_mode" />
+                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}" />
 
-            <EditText
+            <ImageButton
+                android:id="@+id/input_escape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/input_toggle"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:onClick="@{() -> viewModel.back()}"
+                android:src="@drawable/ic_escape" />
+
+            <TextView
                 android:id="@+id/input_score"
                 style="@style/Input.Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:drawableEnd="@drawable/ic_escape"
+                android:layout_alignBottom="@id/input_toggle"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@id/input_escape"
                 android:gravity="center"
-                android:text="180" />
+                android:text="@{viewModel.scoredTxt}" />
 
             <TextView
                 android:id="@+id/input_next"
@@ -73,7 +84,7 @@
                 style="@style/Input.Sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_score"
+                android:layout_alignBottom="@id/input_toggle"
                 android:layout_below="@id/input_next"
                 android:layout_toEndOf="@id/input_label"
                 android:layout_toStartOf="@id/input_score"
@@ -85,23 +96,26 @@
         </RelativeLayout>
 
         <GridLayout
+            app:layout_constraintTop_toBottomOf="@id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#131313"
             android:columnCount="4"
-            android:rowCount="4"
-            app:layout_constraintTop_toBottomOf="@id/topbar">
+            android:rowCount="4">
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(1)}"
                 android:text="1" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(2)}"
                 android:text="2" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(3)}"
                 android:text="3" />
 
             <TextView
@@ -110,16 +124,19 @@
                 android:gravity="center"
                 android:text="some" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(4)}"
                 android:text="4" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(5)}"
                 android:text="5" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(6)}"
                 android:text="6" />
 
             <TextView
@@ -128,16 +145,19 @@
                 android:gravity="center"
                 android:text="some" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(7)}"
                 android:text="7" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(8)}"
                 android:text="8" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(9)}"
                 android:text="9" />
 
             <TextView
@@ -146,26 +166,36 @@
                 android:gravity="center"
                 android:text="some" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number.Accent"
                 android:text="_" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(0)}"
                 android:text="0" />
 
-            <TextView
+            <Button
                 style="@style/Input.Number.Accent"
                 android:text="*" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TextView
+                android:layout_width="@dimen/input_side_bar"
                 android:layout_gravity="center"
-                android:onClick="@{() -> viewModel.submitRandom(listener)}"
-                android:src="@drawable/ic_dart"
-                app:fabSize="normal" />
+                android:gravity="center"
+                android:text="some" />
         </GridLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewModel.submitRandom(listener)}"
+            android:src="@drawable/ic_dart"
+            fab:fabSize="normal"
+            fab:layout_constraintBottom_toBottomOf="parent"
+            fab:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

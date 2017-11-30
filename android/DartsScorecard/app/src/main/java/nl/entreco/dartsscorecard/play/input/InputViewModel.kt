@@ -19,10 +19,19 @@ import javax.inject.Inject
 open class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener {
 
     val toggle = ObservableBoolean(false)
-    var count = 0
     val current = ObservableField<Player>(NoPlayer())
+    val scoredTxt = ObservableField<String>("")
+    var count = 0
     private var turn = Turn()
     private var nextUp : Next? = null
+
+    fun entered(score: Int){
+        scoredTxt.set(scoredTxt.get().plus(score.toString()))
+    }
+
+    fun back(){
+        scoredTxt.set(scoredTxt.get().dropLast(1))
+    }
 
     fun submitRandom(listener: InputListener) {
 
@@ -37,25 +46,25 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
     private fun submitAll(listener: InputListener) {
         val turn = Turn(Dart.random(), Dart.random(), Dart.random())
-        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
-        analytics.trackAchievement("scored: $turn")
+        submit(turn, listener)
     }
 
     private fun submitSingles(listener: InputListener) {
         when {
             firstDart() -> {
                 turn += Dart.random()
+                scoredTxt.set(turn.total().toString())
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
             secondDart() -> {
                 turn += Dart.random()
+                scoredTxt.set(turn.total().toString())
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
             else -> {
                 turn += Dart.random()
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
-                listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
-                analytics.trackAchievement("scored: $turn")
+                submit(turn.copy(), listener)
 
                 turn = Turn()
             }
@@ -63,13 +72,18 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         count++
     }
 
-
+    private fun submit(turn: Turn, listener: InputListener){
+        scoredTxt.set(turn.total().toString())
+        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
+        analytics.trackAchievement("scored: $turn")
+    }
 
     private fun secondDart() = count % 3 == 1
 
     private fun firstDart() = count % 3 == 0
 
     override fun onNext(next: Next) {
+        scoredTxt.set("")
         nextUp = next
         current.set(next.player)
     }
