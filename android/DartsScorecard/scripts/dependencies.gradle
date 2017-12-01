@@ -6,7 +6,7 @@ ext.gitTag = { ->
             standardOutput = stdout
         }
         return "v" + stdout.toString().trim()
-    } catch (Throwable ignore){
+    } catch (Throwable ignore) {
         return "local"
     }
 }
@@ -30,7 +30,7 @@ ext.branchName = { ->
 }
 
 ext.versionCode = { ->
-    return (int)(((new Date().getTime()/1000) - 1510351372) / 10)
+    return (int) (((new Date().getTime() / 1000) - 1510351372) / 10)
 }
 
 ext.versionName = { ->
@@ -57,7 +57,7 @@ ext {
             daggerVersion = '2.13',
             constraint = '1.0.2',
             architectureComponents = '1.0.0',
-            firebase = '11.6.0',
+            firebase = '11.6.2',
             junit = '4.12',
             mockito = '2.12.0',
             mockitoKotlin = '1.5.0',

@@ -103,4 +103,41 @@
         <item name="android:textColor">?attr/ptsText</item>
     </style>
 
+    <!-- Main Start -->
+    <style name="Main">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Main.Score">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:background">@drawable/score_header</item>
+        <item name="android:paddingEnd">@dimen/def</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="Main.Player">
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="Main.Value">
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Main.Stat">
+        <item name="android:background">@drawable/score_pts</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:textColor">?attr/ptsText</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
