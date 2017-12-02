@@ -60,7 +60,8 @@
 
     <style name="Input.Mini">
         <item name="android:textSize">10sp</item>
-        <item name="android:textColor">?attr/ptsText</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:padding">@dimen/def</item>
     </style>
 
     <style name="Input.Next">
@@ -114,6 +115,7 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Main.Score">
         <item name="android:padding">@dimen/xsmall</item>
         <item name="android:background">@drawable/score_header</item>
@@ -122,6 +124,7 @@
         <item name="android:textColor">?attr/ptsText</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="Main.Player">
         <item name="android:background">@drawable/score_name</item>
         <item name="android:padding">@dimen/xsmall</item>
@@ -130,6 +133,7 @@
         <item name="android:textColor">?attr/nameText</item>
         <item name="android:textSize">20sp</item>
     </style>
+
     <style name="Main.Value">
         <item name="android:background">@drawable/score_name</item>
         <item name="android:padding">@dimen/xsmall</item>

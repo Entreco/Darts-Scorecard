@@ -6,19 +6,12 @@
         android:id="@+id/mainSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/def"
+        android:layout_marginEnd="@dimen/def"
+        android:layout_marginStart="@dimen/def"
         android:alpha="0"
         android:background="@drawable/stats_bg"
         android:orientation="vertical"
         tools:alpha="1">
-
-        <TextView
-            style="@style/Main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/stats_title"
-            android:textColor="?attr/ptsText"
-            android:text="2016 world championship" />
 
         <TextView
             style="@style/Main"
@@ -57,8 +50,8 @@
             <TextView
                 style="@style/Main.Player"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center|end"
                 android:text="G.Anderson" />
 
@@ -71,8 +64,8 @@
             <TextView
                 style="@style/Main.Player"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Chisnall" />
         </LinearLayout>
@@ -172,8 +165,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:text="180s" />
+                android:text="180s"
+                android:textAllCaps="false" />
 
             <TextView
                 style="@style/Main.Value"
@@ -261,17 +254,17 @@
         </LinearLayout>
 
         <TextView
-            style="@style/Input.Mini"
             android:id="@+id/version"
+            style="@style/Input.Mini"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/def"
-            android:text="@string/version"
-            android:textColor="#aaffffff"
             android:shadowColor="#ffffff"
             android:shadowDx="1.0"
-            android:shadowDy="1.0"/>
+            android:shadowDy="1.0"
+            android:text="@string/version"
+            android:textColor="#aaffffff" />
 
     </LinearLayout>
 </layout>

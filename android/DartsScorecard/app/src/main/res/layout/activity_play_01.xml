@@ -8,6 +8,10 @@
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.Play01ViewModel" />
 
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.play.main.Play01Animator" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -18,21 +22,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/curtains"/>
+            android:src="@drawable/curtains" />
 
-        <include layout="@layout/play_01_main" android:id="@+id/includeMain" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/includeScore"
-            layout="@layout/play_01_score"
-            app:getFinishUsecase="@{viewModel.getFinishUsecase}"
-            app:viewModel="@{viewModel.scoreViewModel}" />
+            <include
+                android:id="@+id/includeMain"
+                layout="@layout/play_01_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/includeScore" />
+
+            <include
+                android:id="@+id/includeScore"
+                layout="@layout/play_01_score"
+                app:getFinishUsecase="@{viewModel.getFinishUsecase}"
+                app:viewModel="@{viewModel.scoreViewModel}" />
+        </RelativeLayout>
 
         <include
             android:id="@+id/includeInput"
             layout="@layout/play_01_input"
-            app:viewModel="@{viewModel.inputViewModel}"
-            app:listener="@{viewModel}"/>
+            app:listener="@{viewModel}"
+            app:viewModel="@{viewModel.inputViewModel}" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
