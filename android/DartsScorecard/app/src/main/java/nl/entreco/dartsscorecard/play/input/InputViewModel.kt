@@ -23,6 +23,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
+    val nextDescription = ObservableField<String>("")
     var count = 0
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -88,7 +89,12 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     override fun onNext(next: Next) {
         clearScoreInput()
         nextUp = next
+        nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
+    }
+
+    private fun descriptionFromNext(next: Next): String? {
+        return next.state.name
     }
 
     private fun clearScoreInput() {
