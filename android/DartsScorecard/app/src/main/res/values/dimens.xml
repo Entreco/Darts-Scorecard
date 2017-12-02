@@ -2,6 +2,7 @@
 <resources>
     <dimen name="xsmall">2dp</dimen>
     <dimen name="def">8dp</dimen>
+    <dimen name="large">16dp</dimen>
 
     <dimen name="score_name_w">300</dimen>
     <dimen name="score_leg_w">42</dimen>

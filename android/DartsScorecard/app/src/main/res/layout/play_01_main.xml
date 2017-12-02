@@ -6,8 +6,6 @@
         android:id="@+id/mainSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/def"
-        android:layout_marginStart="@dimen/def"
         android:alpha="0"
         android:background="@drawable/stats_bg"
         android:orientation="vertical"

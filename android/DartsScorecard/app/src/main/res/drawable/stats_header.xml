@@ -16,4 +16,5 @@
                 android:color="@color/black" />
         </shape>
     </item>
+    <item android:drawable="@drawable/highlight" />
 </layer-list>

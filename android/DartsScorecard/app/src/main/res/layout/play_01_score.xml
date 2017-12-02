@@ -77,7 +77,7 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/score_header"
+            android:background="@drawable/score_footer"
             android:orientation="horizontal"
             android:padding="@dimen/xsmall"
             app:layout_constraintTop_toBottomOf="@id/teamContainer">

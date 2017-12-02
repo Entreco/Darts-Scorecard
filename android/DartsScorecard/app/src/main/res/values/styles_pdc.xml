@@ -5,8 +5,8 @@
     <color name="pdc_green_dark">#0F5700</color>
     <color name="pdc_red_light">#B40000</color>
     <color name="pdc_red_dark">#760A10</color>
-    <color name="pdc_white_light">#F4F4F4</color>
-    <color name="pdc_white_dark">#C3C3C3</color>
+    <color name="pdc_white_light">#C3C3C3</color>
+    <color name="pdc_white_dark">#A0A0A0</color>
     <color name="pdc_black_light">#312F30</color>
     <color name="pdc_black_dark">#010000</color>
 
