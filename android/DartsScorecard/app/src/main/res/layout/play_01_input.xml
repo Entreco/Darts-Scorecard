@@ -60,7 +60,7 @@
                 android:onClick="@{() -> viewModel.back()}"
                 android:src="@drawable/ic_escape" />
 
-            <TextView
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 android:id="@+id/input_score"
                 style="@style/Input.Score"
                 android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@id/input_escape"
                 android:gravity="center"
-                android:text="@{viewModel.scoredTxt}" />
+                app:scoreInput="@{viewModel.scoredTxt}" />
 
             <TextView
                 android:id="@+id/input_next"
@@ -174,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.submitRandom(listener)}"
+            android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/input_keys"
             android:src="@drawable/ic_dart"

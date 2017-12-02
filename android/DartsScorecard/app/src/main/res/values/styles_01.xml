@@ -90,6 +90,7 @@
 
     <style name="Input.Number.Accent">
         <item name="android:textColor">?attr/grad_score_pts_start</item>
+        <item name="android:gravity">center|bottom</item>
     </style>
 
     <style name="Input.Score">
@@ -118,11 +119,14 @@
         <item name="android:background">@drawable/score_header</item>
         <item name="android:paddingEnd">@dimen/def</item>
         <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:textColor">?attr/ptsText</item>
         <item name="android:textSize">20sp</item>
     </style>
     <style name="Main.Player">
         <item name="android:background">@drawable/score_name</item>
         <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:paddingEnd">@dimen/def</item>
         <item name="android:textColor">?attr/nameText</item>
         <item name="android:textSize">20sp</item>
     </style>

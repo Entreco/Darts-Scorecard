@@ -6,6 +6,7 @@ import android.support.design.widget.BottomSheetBehavior
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
@@ -45,8 +46,17 @@ class Play01Activity : ViewModelActivity(), ReadyListener {
                 scoreSheet.animate().alpha(slideOffset).setDuration(0).start()
 
                 // Fade In MainSheet
-                mainSheet.animate().alpha(1 -slideOffset).setDuration(0).start()
-                mainSheet.animate().translationY((slideOffset) * -(mainSheet.height)).setDuration(0).start()
+                mainSheet.animate().alpha(1 - Math.sqrt(slideOffset.toDouble()).toFloat()).setDuration(0).start()
+                mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
+
+                // Fly In stats
+                binding.includeMain.stat1.animate().translationY(-100 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat2.animate().translationY(-200 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat3.animate().translationY(-300 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat4.animate().translationY(-400 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat5.animate().translationY(-500 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat6.animate().translationY(-600 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
+                binding.includeMain.stat7.animate().translationY(-700 * slideOffset).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {}

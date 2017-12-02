@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/stats_title"
+            android:textColor="?attr/ptsText"
             android:text="2016 world championship" />
 
         <TextView
@@ -27,7 +28,6 @@
             android:layout_marginStart="20dp"
             android:background="@drawable/stats_header"
             android:text="Statistics"
-            android:textColor="?attr/ptsText"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -78,6 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/stat1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -103,6 +104,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/stat2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -128,6 +130,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/stat3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -152,8 +155,8 @@
                 android:text="14" />
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/stat4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -179,8 +182,8 @@
                 android:text="9" />
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/stat5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -196,7 +199,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="HIGHEST OUT+" />
+                android:text="HIGHEST OUT" />
 
             <TextView
                 style="@style/Main.Value"
@@ -205,8 +208,8 @@
                 android:text="139" />
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/stat6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -231,8 +234,8 @@
                 android:text="33%" />
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/stat7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
