@@ -49,7 +49,7 @@ class ScoreEstimator {
             16 -> Turn(Dart.DOUBLE_8)
             15 -> Turn(Dart.SINGLE_15)
             14 -> Turn(Dart.DOUBLE_7)
-            13 -> Turn(Dart.SINGLE_12)
+            13 -> Turn(Dart.SINGLE_13)
             12 -> Turn(Dart.DOUBLE_6)
             11 -> Turn(Dart.SINGLE_11)
             10 -> Turn(Dart.DOUBLE_5)
@@ -77,43 +77,43 @@ class ScoreEstimator {
             164 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_18, Dart.BULL) // "T20 T18 BULL")
             161 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_17, Dart.BULL) // "T20 T17 BULL")
             160 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_20) // "T20 T20 D20")
-            158 -> Turn() // "T20 T20 D19")
-            157 -> Turn() // "T20 T19 D20")
-            156 -> Turn() // "T20 T20 D18")
-            155 -> Turn() // "T20 T19 D19")
-            154 -> Turn() // "T20 T18 D20")
-            153 -> Turn() // "T20 T19 D18")
-            152 -> Turn() // "T20 T20 D16")
-            151 -> Turn() // "T20 T17 D20")
-            150 -> Turn() // "T20 T18 D18")
-            149 -> Turn() // "T20 T19 D16")
-            148 -> Turn() // "T20 T16 D20")
-            147 -> Turn() // "T19 T18 D18")
-            146 -> Turn() // "T20 T18 D16")
-            145 -> Turn() // "T20 T15 D20")
-            144 -> Turn() // "T20 T20 D12")
-            143 -> Turn() // "T20 T17 D16")
-            142 -> Turn() // "T20 T14 D20")
-            141 -> Turn() // "T20 T19 D12")
+            158 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_19) // "T20 T20 D19")
+            157 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_20) // "T20 T19 D20")
+            156 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_18) // "T20 T20 D18")
+            155 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_19) // "T20 T19 D19")
+            154 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_18, Dart.DOUBLE_20) // "T20 T18 D20")
+            153 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_18) // "T20 T19 D18")
+            152 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_16) // "T20 T20 D16")
+            151 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_17, Dart.DOUBLE_20) // "T20 T17 D20")
+            150 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_18, Dart.DOUBLE_18) // "T20 T18 D18")
+            149 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_16) // "T20 T19 D16")
+            148 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_16, Dart.DOUBLE_20) // "T20 T16 D20")
+            147 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_18, Dart.DOUBLE_18) // "T19 T18 D18")
+            146 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_18, Dart.DOUBLE_16) // "T20 T18 D16")
+            145 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_15, Dart.DOUBLE_20) // "T20 T15 D20")
+            144 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_12) // "T20 T20 D12")
+            143 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_17, Dart.DOUBLE_16) // "T20 T17 D16")
+            142 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_14, Dart.DOUBLE_20) // "T20 T14 D20")
+            141 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_12) // "T20 T19 D12")
             140 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_16, Dart.DOUBLE_16) // "T20 T16 D16")
-            139 -> Turn() // "T19 T14 D20")
-            138 -> Turn() // "T20 T18 D12")
-            137 -> Turn() // "T19 T16 D16")
-            136 -> Turn() // "T20 T20 D8")
-            135 -> Turn() // "T20 T17 D12")
-            134 -> Turn() // "T20 T14 D16")
-            133 -> Turn() // "T20 T19 D8")
-            132 -> Turn() // "T20 T16 D12")
-            131 -> Turn() // "T20 T13 D16")
-            130 -> Turn() // "T20 20 BULL")
-            129 -> Turn() // "T19 T16 D12")
-            128 -> Turn() // "T18 T14 D16")
-            127 -> Turn() // "T20 T17 D8")
-            126 -> Turn() // "T19 T19 D6")
-            125 -> Turn() // "S.BULL T20 D20")
-            124 -> Turn() // "T20 T16 D8")
-            123 -> Turn() // "T19 T16 D9")
-            122 -> Turn() // "T18 T20 D4")
+            139 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_14, Dart.DOUBLE_20) // "T19 T14 D20")
+            138 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_18, Dart.DOUBLE_12) // "T20 T18 D12")
+            137 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_16, Dart.DOUBLE_16) // "T19 T16 D16")
+            136 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.DOUBLE_8) // "T20 T20 D8")
+            135 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_17, Dart.DOUBLE_12) // "T20 T17 D12")
+            134 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_14, Dart.DOUBLE_16) // "T20 T14 D16")
+            133 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_8) // "T20 T19 D8")
+            132 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_16, Dart.DOUBLE_12) // "T20 T16 D12")
+            131 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_13, Dart.DOUBLE_16) // "T20 T13 D16")
+            130 -> Turn(Dart.TRIPLE_20, Dart.SINGLE_20, Dart.BULL) // "T20 20 BULL")
+            129 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_16, Dart.DOUBLE_12) // "T19 T16 D12")
+            128 -> Turn(Dart.TRIPLE_18, Dart.TRIPLE_14, Dart.DOUBLE_16) // "T18 T14 D16")
+            127 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_17, Dart.DOUBLE_8) // "T20 T17 D8")
+            126 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_19, Dart.DOUBLE_6) // "T19 T19 D6")
+            125 -> Turn(Dart.SINGLE_BULL, Dart.TRIPLE_20, Dart.DOUBLE_20) // "S.BULL T20 D20")
+            124 -> Turn(Dart.TRIPLE_20, Dart.TRIPLE_16, Dart.DOUBLE_8) // "T20 T16 D8")
+            123 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_16, Dart.DOUBLE_9) // "T19 T16 D9")
+            122 -> Turn(Dart.TRIPLE_18, Dart.TRIPLE_20, Dart.DOUBLE_4) // "T18 T20 D4")
             121 -> Turn(Dart.TRIPLE_17, Dart.TRIPLE_10, Dart.DOUBLE_20) // "T17 T10 D20")
             120 -> Turn(Dart.TRIPLE_20, Dart.SINGLE_20, Dart.DOUBLE_20) // "T20 20 D20")
             119 -> Turn(Dart.TRIPLE_19, Dart.TRIPLE_10, Dart.DOUBLE_16) // "T19 T10 D16")
@@ -137,7 +137,7 @@ class ScoreEstimator {
             101 -> Turn(Dart.TRIPLE_20, Dart.SINGLE_1, Dart.DOUBLE_20) // "T20 1 D20")
             100 -> Turn(Dart.TRIPLE_20, Dart.DOUBLE_20) // "T20 D20")
             99 -> Turn(Dart.TRIPLE_19, Dart.SINGLE_10, Dart.DOUBLE_16) //"T19 10 D16"
-            98 -> Turn(Dart.TRIPLE_19, Dart.DOUBLE_19) //"T19 D19"
+            98 -> Turn(Dart.TRIPLE_20, Dart.DOUBLE_19) //"T20 D19"
             97 -> Turn(Dart.TRIPLE_19, Dart.DOUBLE_20) //"T19 D20"
             96 -> Turn(Dart.TRIPLE_20, Dart.DOUBLE_18) //"T20 D18"
             95 -> Turn(Dart.TRIPLE_19, Dart.DOUBLE_19) //"T19 D19"
@@ -179,11 +179,11 @@ class ScoreEstimator {
             59 -> Turn(Dart.SINGLE_19, Dart.DOUBLE_20) //"19 D20"
             58 -> Turn(Dart.SINGLE_18, Dart.DOUBLE_20) //"18 D20"
             57 -> Turn(Dart.SINGLE_17, Dart.DOUBLE_20) //"17 D20"
-            56 -> Turn(Dart.SINGLE_16, Dart.DOUBLE_4) //"T16 D4"
+            56 -> Turn(Dart.TRIPLE_16, Dart.DOUBLE_4) //"T16 D4"
             55 -> Turn(Dart.SINGLE_15, Dart.DOUBLE_20) //"15 D20"
             54 -> Turn(Dart.SINGLE_14, Dart.DOUBLE_20) //"14 D20"
             53 -> Turn(Dart.SINGLE_13, Dart.DOUBLE_20) //"13 D20"
-            52 -> Turn(Dart.SINGLE_12, Dart.DOUBLE_8) //"T12 D8"
+            52 -> Turn(Dart.TRIPLE_12, Dart.DOUBLE_8) //"T12 D8"
             51 -> Turn(Dart.SINGLE_11, Dart.DOUBLE_20) //"11 D20"
             50 -> Turn(Dart.BULL) //"BULL" // Special case
             49 -> Turn(Dart.SINGLE_9, Dart.DOUBLE_20) //"9 D20"
@@ -198,7 +198,7 @@ class ScoreEstimator {
             40 -> Turn(Dart.DOUBLE_20) //"D20"
             39 -> Turn(Dart.SINGLE_7, Dart.DOUBLE_16) //"7 D16"
             38 -> Turn(Dart.DOUBLE_19) //"D19"
-            37 -> Turn(Dart.SINGLE_5) //"5 D16"
+            37 -> Turn(Dart.SINGLE_5, Dart.DOUBLE_16) //"5 D16"
             36 -> Turn(Dart.DOUBLE_18) //"D18"
             35 -> Turn(Dart.SINGLE_3, Dart.DOUBLE_16) //"3 D16"
             34 -> Turn(Dart.DOUBLE_17) //"D17"
