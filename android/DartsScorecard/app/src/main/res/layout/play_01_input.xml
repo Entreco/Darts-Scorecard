@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="40dp"
+        app:behavior_peekHeight="48dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <!-- Turn Bar -->
@@ -32,7 +32,7 @@
             android:background="@drawable/score_header">
 
             <ImageView
-                android:layout_width="16dp"
+                android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
                 android:rotation="180"
                 android:layout_alignTop="@id/input_escape"
@@ -40,13 +40,12 @@
                 android:src="@drawable/ic_current_team"/>
 
             <ImageButton
+                style="@style/Input.Back"
                 android:id="@+id/input_escape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:background="@null"
-                android:onClick="@{() -> viewModel.back()}"
-                android:src="@drawable/ic_escape" />
+                android:onClick="@{() -> viewModel.back()}" />
 
             <TextView
                 android:id="@+id/input_score"
@@ -54,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_alignBottom="@id/input_escape"
                 android:layout_toStartOf="@id/input_escape"
                 app:scoreInput="@{viewModel.scoredTxt}" />
 
@@ -189,6 +189,7 @@
             android:layout_margin="16dp"
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:src="@drawable/ic_dart"
+            fab:useCompatPadding="true"
             fab:fabSize="normal" />
 
     </RelativeLayout>

@@ -31,19 +31,19 @@
                 tools:text="@string/app_name" />
 
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
-                style="@style/Score.Leg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="@dimen/score_leg_w"
-                app:score="@{viewModel.score.leg}"
-                tools:text="1" />
-
-            <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 style="@style/Score.Set"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="@dimen/score_set_w"
+                android:layout_weight="@dimen/score_leg_w"
                 app:score="@{viewModel.score.set}"
+                tools:text="1" />
+
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                style="@style/Score.Leg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_set_w"
+                app:score="@{viewModel.score.leg}"
                 tools:text="2" />
 
             <nl.entreco.dartsscorecard.base.widget.CounterTextView

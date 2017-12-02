@@ -2,7 +2,9 @@ package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import android.widget.TextView
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.Analytics
@@ -23,7 +25,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
-    val nextDescription = ObservableField<String>("")
+    val nextDescription = ObservableInt(R.string.empty)
     var count = 0
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -79,6 +81,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     }
 
     private fun submit(turn: Turn, listener: InputListener) {
+        count = 0
         scoredTxt.set(turn.total().toString())
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
         analytics.trackAchievement("scored: $turn")
@@ -93,8 +96,14 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         current.set(next.player)
     }
 
-    private fun descriptionFromNext(next: Next): String? {
-        return next.state.name
+    private fun descriptionFromNext(next: Next): Int {
+        return when(next.state) {
+            State.START -> R.string.game_on
+            State.LEG -> R.string.to_throw_first
+            State.SET -> R.string.to_throw_first
+            State.MATCH -> R.string.game_shot_and_match
+            else -> R.string.to_throw
+        }
     }
 
     private fun clearScoreInput() {

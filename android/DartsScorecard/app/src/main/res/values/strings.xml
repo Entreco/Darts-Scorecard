@@ -4,7 +4,17 @@
     <string name="individual">Submit Individual Darts</string>
     <string name="all">Submit full score</string>
     <string name="random">Random</string>
-    <string name="next">%1$s, to throw next</string>
+    <string name="set">Set</string>
+    <string name="leg">Leg</string>
+
+
+    <string name="empty"></string>
+    <string name="to_throw">to throw</string>
+    <string name="to_throw_first">to throw first</string>
+    <string name="game_on">Game on</string>
+    <string name="game_shot_and_match">Game shot, and the match</string>
+
+
     <string name="single_mode">Single</string>
     <string name="all_mode">All</string>
 </resources>

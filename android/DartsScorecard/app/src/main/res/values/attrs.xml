@@ -9,7 +9,9 @@
 
     <!-- Score View -->
     <attr name="scoreBorderColor" format="color"/>
+    <attr name="highlightColor" format="color"/>
     <attr name="scoreBorderAlpha" format="float"/>
+    <attr name="statBorderColor" format="float"/>
     <attr name="grad_score_header_start" format="color"/>
     <attr name="grad_score_header_stop" format="color"/>
     <attr name="grad_score_name_start" format="color"/>

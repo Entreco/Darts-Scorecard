@@ -2,17 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/mainSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:alpha="0"
         android:background="@drawable/stats_bg"
-        android:orientation="vertical"
         tools:alpha="1">
 
         <TextView
             style="@style/Main"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -21,26 +21,34 @@
             android:text="Statistics"
             android:textSize="14sp" />
 
+        <!-- Players -->
         <LinearLayout
+            android:id="@+id/players"
+            android:layout_below="@id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="20dp">
 
             <ImageView
+                android:id="@+id/player1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ic_player1" />
 
             <ImageView
+                android:id="@+id/player2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ic_player2" />
         </LinearLayout>
 
+        <!-- Results -->
         <LinearLayout
+            android:id="@+id/results"
+            android:layout_below="@id/players"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -68,8 +76,10 @@
                 android:text="Chisnall" />
         </LinearLayout>
 
+        <!-- Stats -->
         <LinearLayout
-            android:id="@+id/stat1"
+            android:layout_below="@id/stat6"
+            android:id="@+id/stat7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -78,24 +88,25 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="99.15" />
+                android:text="8" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="AVERAGE" />
+                android:text="BREAKS MADE" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="96.04" />
+                android:text="5" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat2"
+            android:layout_below="@id/stat5"
+            android:id="@+id/stat6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -104,24 +115,25 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="35" />
+                android:text="39%" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="100+" />
+                android:text="DOUBLE SUCCESS" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="27" />
+                android:text="33%" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat3"
+            android:layout_below="@id/stat4"
+            android:id="@+id/stat5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -130,23 +142,24 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="19" />
+                android:text="170" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="140+" />
+                android:text="HIGHEST OUT" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="14" />
+                android:text="139" />
         </LinearLayout>
 
         <LinearLayout
+            android:layout_below="@id/stat3"
             android:id="@+id/stat4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,7 +187,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat5"
+            android:layout_below="@id/stat2"
+            android:id="@+id/stat3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -183,24 +197,25 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="170" />
+                android:text="19" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="HIGHEST OUT" />
+                android:text="140+" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="139" />
+                android:text="14" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat6"
+            android:layout_below="@id/stat1"
+            android:id="@+id/stat2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -209,24 +224,25 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="39%" />
+                android:text="35" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="DOUBLE SUCCESS" />
+                android:text="100+" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="33%" />
+                android:text="27" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat7"
+            android:layout_below="@id/results"
+            android:id="@+id/stat1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -235,20 +251,20 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="8" />
+                android:text="99.15" />
 
             <TextView
                 style="@style/Main.Stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="BREAKS MADE" />
+                android:text="AVERAGE" />
 
             <TextView
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="5" />
+                android:text="96.04" />
         </LinearLayout>
 
         <TextView
@@ -256,6 +272,7 @@
             style="@style/Input.Mini"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat7"
             android:gravity="center"
             android:padding="@dimen/def"
             android:shadowColor="#ffffff"
@@ -264,5 +281,5 @@
             android:text="@string/version"
             android:textColor="#aaffffff" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

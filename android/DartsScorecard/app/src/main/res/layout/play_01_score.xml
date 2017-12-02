@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_leg_w"
                 android:gravity="center"
-                android:text="LEG" />
+                android:text="@string/set" />
 
             <TextView
                 style="@style/Score.Hdr"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_set_w"
                 android:gravity="center"
-                android:text="SET" />
+                android:text="@string/leg" />
 
             <TextView
                 style="@style/Score.Hdr"
