@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="164dp"
+    android:height="164dp"
+    android:viewportHeight="164.0"
+    android:viewportWidth="164.0">
+    <group
+        android:name="all"
+        android:pivotX="82"
+        android:pivotY="82"
+        android:rotation="0">
+        <group
+            android:name="dart2"
+            android:pivotX="82"
+            android:pivotY="82">
+            <path
+                android:name="path2"
+                android:fillColor="?attr/scoreText"
+                android:fillType="evenOdd"
+                android:pathData="M34.58,86.24C33.82,86.73 32.97,87.03 32.1,87.14C33.29,89.45 35.23,91.36 37.9,92.85C43.33,93.35 48.53,93.52 53.51,93.36C53.36,93.62 53.2,93.89 53.04,94.15C75.69,90.6 91.16,89.26 109.66,87.62C115.57,93.55 139.31,104.45 147.79,98.68C153.47,94.82 154.82,89.72 151.82,83.4C152.62,83.31 153.42,83.21 154.23,83.12C157.57,81.56 156.83,78.49 153.07,78.73C152.93,78.74 152.67,78.74 152.31,78.72C155.23,75.11 154.12,70.7 148.98,65.52C140.84,57.32 126.12,64.72 110.04,74.67C89.4,72.48 66.86,69.92 55.99,68.36C55.78,68.15 55.57,67.94 55.35,67.74C50.43,67.66 45.03,67.91 39.15,68.49C35.74,70.07 33.36,72.19 32,74.84C32.93,74.95 33.84,75.27 34.65,75.8L9.79,78.48C8.77,78.59 8,79.45 8,80.47L8,80.93C8,81.93 8.74,82.78 9.73,82.91L34.58,86.24Z"
+                android:strokeColor="#00000000"
+                android:strokeWidth="1" />
+        </group>
+    </group>
+</vector>

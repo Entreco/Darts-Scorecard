@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.BindingAdapter
-import android.graphics.drawable.AnimatedVectorDrawable
 import android.support.design.widget.FloatingActionButton
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import nl.entreco.domain.play.model.Turn
@@ -33,9 +33,38 @@ class InputBindings {
 
         @JvmStatic
         @BindingAdapter("fabAnimation")
-        fun fabAnimation(view: FloatingActionButton, turn: Turn) {
-            if(view.drawable is AnimatedVectorDrawable){
+        fun fabAnimation(view: FloatingActionButton, turn: Turn?) {
+            if (turn != null) {
 
+                val dartsLeft = turn.dartsLeft()
+                Log.d("WOW", "dartsLeft:$dartsLeft")
+                when (dartsLeft) {
+                    3 -> {
+                        view.isActivated = true
+                        view.isSelected = false
+                        view.isEnabled = true
+                    }
+                    2 -> {
+                        view.isActivated = false
+                        view.isSelected = true
+                        view.isEnabled = true
+                    }
+                    1 -> {
+                        view.isActivated = false
+                        view.isSelected = false
+                        view.isEnabled = true
+                    }
+                    else -> {
+                        view.isSelected = false
+                        view.isActivated = false
+                        view.isEnabled = false
+                    }
+                }
+            } else {
+                Log.d("WOW", "dartsLeft:null -> reset")
+                view.isActivated = true
+                view.isSelected = true
+                view.isEnabled = true
             }
         }
     }

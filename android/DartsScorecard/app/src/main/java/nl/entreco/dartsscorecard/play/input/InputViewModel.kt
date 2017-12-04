@@ -3,11 +3,15 @@ package nl.entreco.dartsscorecard.play.input
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.os.Handler
+import android.os.SystemClock
+import android.util.Log
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.Analytics
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.ScoreEstimator
@@ -20,12 +24,13 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-open class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener {
+open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
+    val darts = ObservableField<Turn>()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -50,6 +55,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         val estimatedTurn = estimator.guess(scored, toggle.get())
         if (toggle.get()) {
             submitDart(estimatedTurn.first(), listener)
+            this.scoredTxt.set(turn.total().toString())
         } else {
             submit(estimatedTurn, listener)
         }
@@ -59,22 +65,20 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
     private fun parseScore(input: TextView): Int {
         return try {
-            input.toString().toInt()
+            input.text.toString().toInt()
         } catch (err: Exception) {
+            logger.w("Unable to parse text from Score Input: ${input.text}")
             0
         }
     }
 
     private fun submitDart(dart: Dart, listener: InputListener) {
         turn += dart
+        darts.set(turn)
+        listener.onDartThrown(turn.copy(), nextUp?.player!!)
+
         when {
-            lastDart() -> {
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
-                submit(turn.copy(), listener)
-            }
-            else -> {
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
-            }
+            lastDart() -> { submit(turn.copy(), listener) }
         }
     }
 
@@ -83,7 +87,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
 
         this.scoredTxt.set(turn.total().toString())
         this.analytics.trackAchievement("scored: $turn")
-        this.turn = Turn()
+        this.darts.set(turn)
     }
 
     private fun clearScoreInput() {
@@ -97,6 +101,13 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         nextUp = next
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
+
+        Handler().postDelayed({
+            Log.d("WOW", "reset darts left")
+            turn = Turn()
+            darts.set(turn)
+        }, 500)
+
     }
 
     private fun descriptionFromNext(next: Next): Int {

@@ -189,8 +189,9 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
-            android:src="@drawable/ic_dart"
-            app:fabAnimation="@{viewModel.turn}"
+            android:scaleType="fitCenter"
+            android:src="@drawable/darts"
+            app:fabAnimation="@{viewModel.darts}"
             fab:useCompatPadding="true"
             fab:fabSize="normal" />
 
