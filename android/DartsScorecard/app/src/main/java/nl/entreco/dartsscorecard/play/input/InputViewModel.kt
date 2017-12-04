@@ -26,13 +26,16 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
-    var count = 0
+
     private val estimator = ScoreEstimator()
     private var turn = Turn()
     private var nextUp: Next? = null
 
     fun entered(score: Int) {
-        scoredTxt.set(scoredTxt.get().plus(score.toString()))
+        val oldValue = scoredTxt.get()
+        if(oldValue.length < 3) {
+            scoredTxt.set(oldValue.plus(score.toString()))
+        }
     }
 
     fun back() {
@@ -54,40 +57,40 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         clearScoreInput()
     }
 
-    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
-
     private fun parseScore(input: TextView): Int {
         return try {
-            input.text.toString().toInt()
+            input.toString().toInt()
         } catch (err: Exception) {
             0
         }
     }
 
     private fun submitDart(dart: Dart, listener: InputListener) {
+        turn += dart
         when {
             lastDart() -> {
-                turn += dart
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
                 submit(turn.copy(), listener)
-                turn = Turn()
             }
             else -> {
-                turn += dart
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
         }
-        count++
     }
 
     private fun submit(turn: Turn, listener: InputListener) {
-        count = 0
-        scoredTxt.set(turn.total().toString())
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
-        analytics.trackAchievement("scored: $turn")
+
+        this.scoredTxt.set(turn.total().toString())
+        this.analytics.trackAchievement("scored: $turn")
+        this.turn = Turn()
     }
 
-    private fun lastDart() = count % 3 == 2
+    private fun clearScoreInput() {
+        scoredTxt.set("")
+    }
+
+    private fun lastDart() = turn.dartsLeft() <= 0
 
     override fun onNext(next: Next) {
         clearScoreInput()
@@ -97,7 +100,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     }
 
     private fun descriptionFromNext(next: Next): Int {
-        return when(next.state) {
+        return when (next.state) {
             State.START -> R.string.game_on
             State.LEG -> R.string.to_throw_first
             State.SET -> R.string.to_throw_first
@@ -106,7 +109,5 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         }
     }
 
-    private fun clearScoreInput() {
-        scoredTxt.set("")
-    }
+    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
 }
