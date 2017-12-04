@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <item
+        android:id="@+id/start"
+        android:drawable="@drawable/throw_start"
+        android:state_activated="true"
+        android:state_enabled="true"
+        android:state_selected="true" />
+
     <item
         android:id="@+id/dartsLeft_3"
         android:drawable="@drawable/ic_darts_3"
@@ -24,7 +32,7 @@
 
     <item
         android:id="@+id/dartsLeft_0"
-        android:drawable="@drawable/ic_darts_thrown" />
+        android:drawable="@drawable/ic_darts_0" />
 
     <transition
         android:drawable="@drawable/throw_first"
