@@ -15,6 +15,7 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/scoreSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -41,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_leg_w"
                 android:gravity="center"
-                android:text="LEG" />
+                android:text="@string/set" />
 
             <TextView
                 style="@style/Score.Hdr"
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_set_w"
                 android:gravity="center"
-                android:text="SET" />
+                android:text="@string/leg" />
 
             <TextView
                 style="@style/Score.Hdr"
@@ -76,7 +77,7 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/score_header"
+            android:background="@drawable/score_footer"
             android:orientation="horizontal"
             android:padding="@dimen/xsmall"
             app:layout_constraintTop_toBottomOf="@id/teamContainer">

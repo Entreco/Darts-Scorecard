@@ -7,6 +7,7 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ReadyListener
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
@@ -24,6 +25,7 @@ class Play01Activity : ViewModelActivity(), ReadyListener {
 
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
+        binding.animator = Play01Animator(binding)
     }
 
     override fun onReady() {

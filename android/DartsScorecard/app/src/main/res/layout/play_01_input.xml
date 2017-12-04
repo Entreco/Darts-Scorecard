@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -15,92 +15,79 @@
             type="nl.entreco.dartsscorecard.play.input.InputListener" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/inputSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="48dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-        <!-- Top Bar -->
+        <!-- Turn Bar -->
         <RelativeLayout
-            android:id="@+id/topbar"
+            android:id="@+id/input_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/score_header"
-            android:padding="@dimen/def">
+            android:background="@drawable/score_header">
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/input_toggle"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/input_label"
-                android:layout_gravity="center"
-                android:checked="@={viewModel.toggle}" />
-
-            <TextView
-                android:id="@+id/input_label"
-                style="@style/Input.Mini"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/input_toggle"
-                android:layout_alignStart="@id/input_toggle"
-                android:gravity="center"
-                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}" />
+                android:rotation="180"
+                android:layout_alignTop="@id/input_escape"
+                android:layout_alignBottom="@id/input_escape"
+                android:src="@drawable/ic_current_team"/>
 
             <ImageButton
+                style="@style/Input.Back"
                 android:id="@+id/input_escape"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_toggle"
                 android:layout_alignParentEnd="true"
-                android:background="@null"
-                android:onClick="@{() -> viewModel.back()}"
-                android:src="@drawable/ic_escape" />
+                android:onClick="@{() -> viewModel.back()}" />
 
             <TextView
                 android:id="@+id/input_score"
                 style="@style/Input.Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_toggle"
                 android:layout_alignParentTop="true"
+                android:layout_alignBottom="@id/input_escape"
                 android:layout_toStartOf="@id/input_escape"
-                android:gravity="center"
-                android:text="@{viewModel.scoredTxt}" />
+                app:scoreInput="@{viewModel.scoredTxt}" />
 
             <TextView
                 android:id="@+id/input_next"
                 style="@style/Input.Next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/input_label"
+                android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/input_score"
-                android:gravity="start"
-                android:paddingStart="12dp"
-                android:text="@{viewModel.current.name}"
-                tools:text="boeffie" />
+                android:text="@{viewModel.current.name}" />
 
             <TextView
                 android:id="@+id/input_sub"
                 style="@style/Input.Sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_toggle"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/input_next"
-                android:layout_toEndOf="@id/input_label"
                 android:layout_toStartOf="@id/input_score"
-                android:gravity="start|bottom"
-                android:paddingStart="12dp"
-                android:text="@string/next"
-                tools:text="boeffie" />
+                android:text="@{viewModel.nextDescription}" />
 
         </RelativeLayout>
 
+        <!-- Key Pad -->
         <GridLayout
-            app:layout_constraintTop_toBottomOf="@id/topbar"
-            android:layout_width="match_parent"
+            android:id="@+id/input_keys"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#131313"
-            android:columnCount="4"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/input_top"
+            android:layout_toStartOf="@+id/fab"
+            android:background="@color/neutral_black"
+            android:columnCount="3"
             android:rowCount="4">
 
             <Button
@@ -118,12 +105,6 @@
                 android:onClick="@{() -> viewModel.entered(3)}"
                 android:text="3" />
 
-            <TextView
-                android:layout_width="@dimen/input_side_bar"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="some" />
-
             <Button
                 style="@style/Input.Number"
                 android:onClick="@{() -> viewModel.entered(4)}"
@@ -138,12 +119,6 @@
                 style="@style/Input.Number"
                 android:onClick="@{() -> viewModel.entered(6)}"
                 android:text="6" />
-
-            <TextView
-                android:layout_width="@dimen/input_side_bar"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="some" />
 
             <Button
                 style="@style/Input.Number"
@@ -160,12 +135,6 @@
                 android:onClick="@{() -> viewModel.entered(9)}"
                 android:text="9" />
 
-            <TextView
-                android:layout_width="@dimen/input_side_bar"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="some" />
-
             <Button
                 style="@style/Input.Number.Accent"
                 android:text="_" />
@@ -179,23 +148,49 @@
                 style="@style/Input.Number.Accent"
                 android:text="*" />
 
-            <TextView
-                android:layout_width="@dimen/input_side_bar"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="some" />
         </GridLayout>
 
-        <android.support.design.widget.FloatingActionButton
+        <!-- Options Pane -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/input_keys"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_below="@id/input_top"
+            android:orientation="vertical"
+            android:background="@drawable/panel">
+
+            <TextView
+                android:id="@+id/input_label"
+                style="@style/Input.Mini"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}"
+                tools:text="hoi" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/input_toggle"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.toggle}"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.submitRandom(listener)}"
+            android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:src="@drawable/ic_dart"
-            fab:fabSize="normal"
-            fab:layout_constraintBottom_toBottomOf="parent"
-            fab:layout_constraintEnd_toEndOf="parent" />
+            fab:useCompatPadding="true"
+            fab:fabSize="normal" />
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 </layout>

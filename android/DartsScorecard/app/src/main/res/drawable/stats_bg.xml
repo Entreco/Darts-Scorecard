@@ -4,8 +4,9 @@
         <shape>
             <gradient
                 android:angle="-90"
-                android:endColor="?attr/grad_score_name_stop"
-                android:startColor="?attr/grad_score_name_start" />
+                android:endColor="#ab000000"
+                android:startColor="#66000000" />
+            <corners android:bottomLeftRadius="20dp" android:bottomRightRadius="20dp" />
         </shape>
     </item>
     <item android:drawable="@drawable/highlight" />

@@ -2,11 +2,15 @@ package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import nl.entreco.domain.Analytics
+import android.databinding.ObservableInt
+import android.widget.TextView
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
+import nl.entreco.domain.play.model.ScoreEstimator
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
@@ -21,70 +25,88 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
+    val nextDescription = ObservableInt(R.string.empty)
     var count = 0
+    private val estimator = ScoreEstimator()
     private var turn = Turn()
-    private var nextUp : Next? = null
+    private var nextUp: Next? = null
 
-    fun entered(score: Int){
+    fun entered(score: Int) {
         scoredTxt.set(scoredTxt.get().plus(score.toString()))
     }
 
-    fun back(){
+    fun back() {
         scoredTxt.set(scoredTxt.get().dropLast(1))
     }
 
-    fun submitRandom(listener: InputListener) {
+    fun tryToSubmit(input: TextView, listener: InputListener) {
+        val scored = parseScore(input)
+        if (gameIsFinished()) return
 
-        if(nextUp == null || nextUp?.state == State.MATCH) return
-
-        if(toggle.get()){
-            submitSingles(listener)
+        // Estimate Darts thrown
+        val estimatedTurn = estimator.guess(scored, toggle.get())
+        if (toggle.get()) {
+            submitDart(estimatedTurn.first(), listener)
         } else {
-            submitAll(listener)
+            submit(estimatedTurn, listener)
+        }
+
+        clearScoreInput()
+    }
+
+    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
+
+    private fun parseScore(input: TextView): Int {
+        return try {
+            input.text.toString().toInt()
+        } catch (err: Exception) {
+            0
         }
     }
 
-    private fun submitAll(listener: InputListener) {
-        val turn = Turn(Dart.random(), Dart.random(), Dart.random())
-        submit(turn, listener)
-    }
-
-    private fun submitSingles(listener: InputListener) {
+    private fun submitDart(dart: Dart, listener: InputListener) {
         when {
-            firstDart() -> {
-                turn += Dart.random()
-                scoredTxt.set(turn.total().toString())
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
-            }
-            secondDart() -> {
-                turn += Dart.random()
-                scoredTxt.set(turn.total().toString())
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
-            }
-            else -> {
-                turn += Dart.random()
+            lastDart() -> {
+                turn += dart
                 listener.onDartThrown(turn.copy(), nextUp?.player!!)
                 submit(turn.copy(), listener)
-
                 turn = Turn()
+            }
+            else -> {
+                turn += dart
+                listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
         }
         count++
     }
 
-    private fun submit(turn: Turn, listener: InputListener){
+    private fun submit(turn: Turn, listener: InputListener) {
+        count = 0
         scoredTxt.set(turn.total().toString())
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
         analytics.trackAchievement("scored: $turn")
     }
 
-    private fun secondDart() = count % 3 == 1
-
-    private fun firstDart() = count % 3 == 0
+    private fun lastDart() = count % 3 == 2
 
     override fun onNext(next: Next) {
-        scoredTxt.set("")
+        clearScoreInput()
         nextUp = next
+        nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
+    }
+
+    private fun descriptionFromNext(next: Next): Int {
+        return when(next.state) {
+            State.START -> R.string.game_on
+            State.LEG -> R.string.to_throw_first
+            State.SET -> R.string.to_throw_first
+            State.MATCH -> R.string.game_shot_and_match
+            else -> R.string.to_throw
+        }
+    }
+
+    private fun clearScoreInput() {
+        scoredTxt.set("")
     }
 }
