@@ -32,12 +32,23 @@
             android:background="@drawable/score_header">
 
             <ImageView
+                android:id="@+id/input_arrow"
                 android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
                 android:rotation="180"
                 android:layout_alignTop="@id/input_escape"
                 android:layout_alignBottom="@id/input_escape"
-                android:src="@drawable/ic_current_team"/>
+                android:src="@drawable/ic_current_team" />
+
+            <TextView
+                style="@style/Input.Score.No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/input_score"
+                android:layout_alignTop="@id/input_arrow"
+                android:layout_alignBottom="@id/input_arrow"
+                app:special="@{viewModel.special}"/>
 
             <ImageButton
                 style="@style/Input.Back"

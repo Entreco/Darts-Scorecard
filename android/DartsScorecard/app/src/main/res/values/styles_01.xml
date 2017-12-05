@@ -113,6 +113,12 @@
         <item name="android:gravity">end</item>
         <item name="android:textColor">?attr/ptsText</item>
     </style>
+    <style name="Input.Score.No">
+        <item name="android:translationX">-2000dp</item>
+        <item name="android:background">@drawable/score_hint</item>
+        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:gravity">end|center</item>
+    </style>
 
     <!-- Main Start -->
     <style name="Main">

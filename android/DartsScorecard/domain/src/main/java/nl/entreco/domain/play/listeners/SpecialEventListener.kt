@@ -1,11 +1,11 @@
 package nl.entreco.domain.play.listeners
 
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.OneEightyEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.model.Next
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 
 /**
@@ -21,11 +21,10 @@ interface SpecialEventListener<in T : SpecialEvent> {
     }
 
     fun handleNoScore(turn: Turn) {
-        if (turn.total() == 0) {
-            try {
-                val event = NoScoreEvent() as T
-                handle(event)
-            } catch (ignore : ClassCastException){}
+        try {
+            val event = NoScoreEvent(turn.total() == 0) as T
+            handle(event)
+        } catch (ignore: ClassCastException) {
         }
     }
 
@@ -34,7 +33,8 @@ interface SpecialEventListener<in T : SpecialEvent> {
             try {
                 val event = OneEightyEvent() as T
                 handle(event)
-            } catch (ignore : ClassCastException){}
+            } catch (ignore: ClassCastException) {
+            }
         }
     }
 }

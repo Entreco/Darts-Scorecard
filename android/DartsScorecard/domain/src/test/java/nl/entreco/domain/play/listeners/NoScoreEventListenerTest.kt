@@ -43,7 +43,7 @@ class NoScoreEventListenerTest : SpecialEventListenerTest() {
         private val team = Team(player)
 
         override fun handle(event: NoScoreEvent) {
-            check.set(true)
+            check.set(event.noScore)
         }
 
         fun onScored(turn: Turn) {

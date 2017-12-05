@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.input
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.os.Handler
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
@@ -16,6 +17,8 @@ import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.ScoreEstimator
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
+import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.listeners.events.ThrownEvent
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -30,7 +33,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
-    val darts = ObservableField<Turn>()
+    val special = ObservableField<NoScoreEvent?>()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -38,6 +41,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
     override fun handle(event: NoScoreEvent) {
         logger.i("YoYoYo", "noScore")
+        special.set(if(event.noScore) event else null)
     }
 
     fun entered(score: Int) {
@@ -78,7 +82,6 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
     private fun submitDart(dart: Dart, listener: InputListener) {
         turn += dart
-        darts.set(turn)
         listener.onDartThrown(turn.copy(), nextUp?.player!!)
 
         when {
@@ -93,7 +96,6 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
         this.scoredTxt.set(turn.total().toString())
         this.analytics.trackAchievement("scored: $turn")
-        this.darts.set(turn)
     }
 
     private fun clearScoreInput() {
@@ -108,7 +110,6 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
         turn = Turn()
-        darts.set(turn)
     }
 
     private fun descriptionFromNext(next: Next): Int {

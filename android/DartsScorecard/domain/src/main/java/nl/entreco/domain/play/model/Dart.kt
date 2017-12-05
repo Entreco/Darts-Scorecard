@@ -6,7 +6,7 @@ import java.util.*
  * Created by Entreco on 24/11/2017.
  */
 enum class Dart(private val description: String, private val value: Int) {
-    ZERO("no score", 0),
+    ZERO("", 0),
     SINGLE_1("1", 1),
     SINGLE_2("2", 2),
     SINGLE_3("3", 3),
