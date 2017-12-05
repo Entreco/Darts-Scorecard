@@ -12,7 +12,7 @@
 
         <variable
             name="listener"
-            type="nl.entreco.dartsscorecard.play.input.InputListener" />
+            type="nl.entreco.domain.play.listeners.InputListener" />
     </data>
 
     <RelativeLayout

@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play
+package nl.entreco.domain.play.listeners
 
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn

@@ -15,7 +15,7 @@ class GameWithLegTest : BaseGameTest(Game(Arbiter(Score(201, settings = ScoreSet
     @Test
     fun `it should restart when player 1 finished`() {
         givenGameStarted()
-        whenDartsThrown(oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.TRIPLE_20, Dart.ZERO))
+        whenDartsThrown(oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.DOUBLE_10))
 
         assertScore(201, 201, 1)
         assertEquals("player 2 to throw", subject.state)
@@ -24,7 +24,7 @@ class GameWithLegTest : BaseGameTest(Game(Arbiter(Score(201, settings = ScoreSet
     @Test
     fun `it should restart when player 2 finishes`() {
         givenGameStarted()
-        whenDartsThrown(sixty(), oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.ZERO))
+        whenDartsThrown(sixty(), oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.DOUBLE_10))
 
         assertScore(201, 201, 1)
         assertEquals("player 2 to throw", subject.state)

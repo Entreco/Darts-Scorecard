@@ -6,13 +6,16 @@ import android.databinding.ObservableInt
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.PlayerListener
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
+import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.ScoreEstimator
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -21,7 +24,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener {
+open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, SpecialEventListener<NoScoreEvent> {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
@@ -32,6 +35,10 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
     private var nextUp: Next? = null
+
+    override fun handle(event: NoScoreEvent) {
+        logger.i("YoYoYo", "noScore")
+    }
 
     fun entered(score: Int) {
         val oldValue = scoredTxt.get()

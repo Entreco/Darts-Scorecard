@@ -72,7 +72,8 @@ enum class Dart(private val description: String, private val value: Int) {
 
     // Excluded from Dart.random()
     NONE("", 0),
-    TEST_501("test_501", 501);
+    TEST_501("test_501", 501),
+    TEST_D250("Dtest_250", 2*250);
 
     fun value() : Int {
         return value
@@ -83,7 +84,7 @@ enum class Dart(private val description: String, private val value: Int) {
 
     companion object {
 
-        val EXCLUDE_FROM_RANDOM = 2
+        val EXCLUDE_FROM_RANDOM = 3
 
         fun random() : Dart {
             val darts = values()
