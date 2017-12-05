@@ -11,13 +11,15 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    fun start() : Next {
+    fun start(): Next {
         return turnHandler.start()
     }
 
     fun handle(turn: Turn, next: Next): Next {
         val teamIndex = teamIndexOfNext(turnHandler.teams, next)
-        applyScore(teamIndex, turn)
+        if (!applyScore(teamIndex, turn)) {
+            return next
+        }
 
         if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player)
         if (requiresNewSet(teamIndex)) return playerForNewSet()
@@ -76,8 +78,20 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
         initForNewSet()
     }
 
-    private fun applyScore(currentPlayer: Int, turn: Turn) {
-        scores[currentPlayer] -= turn
+    private fun applyScore(currentPlayer: Int, turn: Turn): Boolean {
+        val current = scores[currentPlayer].score
+        val remainder = current - turn.total()
+        return when {
+            remainder > 1 -> {
+                scores[currentPlayer] -= turn
+                true
+            }
+            remainder == 0 && turn.lastIsDouble() -> {
+                scores[currentPlayer] -= turn
+                true
+            }
+            else -> false
+        }
     }
 
     private fun legFinished(currentPlayer: Int) = scores[currentPlayer].legFinished()

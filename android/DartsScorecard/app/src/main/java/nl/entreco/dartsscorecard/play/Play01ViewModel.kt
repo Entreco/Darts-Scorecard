@@ -5,7 +5,6 @@ import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.input.InputListener
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Next
@@ -13,6 +12,7 @@ import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.CreateGameUsecase
+import nl.entreco.domain.play.usecase.GetFinishUsecase
 import javax.inject.Inject
 
 /**
@@ -73,7 +73,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    private fun notifyScoreChanged(scores : Array<Score>, by: Player) {
+    private fun notifyScoreChanged(scores: Array<Score>, by: Player) {
         synchronized(scoreListeners) {
             scoreListeners.forEach { it.onScoreChange(scores, by) }
         }

@@ -72,7 +72,7 @@ enum class Dart(private val description: String, private val value: Int) {
 
     // Excluded from Dart.random()
     NONE("", 0),
-    TEST_501("test", 501);
+    TEST_501("test_501", 501);
 
     fun value() : Int {
         return value
