@@ -3,11 +3,14 @@ package nl.entreco.dartsscorecard.play.input
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.os.Handler
+import android.util.Log
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.domain.Analytics
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.ScoreEstimator
@@ -20,19 +23,23 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-open class InputViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), PlayerListener {
+open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
-    var count = 0
+    val darts = ObservableField<Turn>()
+
     private val estimator = ScoreEstimator()
     private var turn = Turn()
     private var nextUp: Next? = null
 
     fun entered(score: Int) {
-        scoredTxt.set(scoredTxt.get().plus(score.toString()))
+        val oldValue = scoredTxt.get()
+        if (oldValue.length < 3) {
+            scoredTxt.set(oldValue.plus(score.toString()))
+        }
     }
 
     fun back() {
@@ -47,6 +54,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         val estimatedTurn = estimator.guess(scored, toggle.get())
         if (toggle.get()) {
             submitDart(estimatedTurn.first(), listener)
+            this.scoredTxt.set(turn.total().toString())
         } else {
             submit(estimatedTurn, listener)
         }
@@ -54,50 +62,52 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         clearScoreInput()
     }
 
-    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
-
     private fun parseScore(input: TextView): Int {
         return try {
             input.text.toString().toInt()
         } catch (err: Exception) {
+            logger.w("Unable to parse text from Score Input: ${input.text}")
             0
         }
     }
 
     private fun submitDart(dart: Dart, listener: InputListener) {
+        turn += dart
+        darts.set(turn)
+        listener.onDartThrown(turn.copy(), nextUp?.player!!)
+
         when {
             lastDart() -> {
-                turn += dart
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
                 submit(turn.copy(), listener)
-                turn = Turn()
-            }
-            else -> {
-                turn += dart
-                listener.onDartThrown(turn.copy(), nextUp?.player!!)
             }
         }
-        count++
     }
 
     private fun submit(turn: Turn, listener: InputListener) {
-        count = 0
-        scoredTxt.set(turn.total().toString())
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
-        analytics.trackAchievement("scored: $turn")
+
+        this.scoredTxt.set(turn.total().toString())
+        this.analytics.trackAchievement("scored: $turn")
+        this.darts.set(turn)
     }
 
-    private fun lastDart() = count % 3 == 2
+    private fun clearScoreInput() {
+        scoredTxt.set("")
+    }
+
+    private fun lastDart() = turn.dartsLeft() <= 0
 
     override fun onNext(next: Next) {
         clearScoreInput()
         nextUp = next
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
+        turn = Turn()
+        darts.set(turn)
     }
 
     private fun descriptionFromNext(next: Next): Int {
-        return when(next.state) {
+        return when (next.state) {
             State.START -> R.string.game_on
             State.LEG -> R.string.to_throw_first
             State.SET -> R.string.to_throw_first
@@ -106,7 +116,5 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics) 
         }
     }
 
-    private fun clearScoreInput() {
-        scoredTxt.set("")
-    }
+    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
 }

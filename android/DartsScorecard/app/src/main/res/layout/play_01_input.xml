@@ -45,7 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:onClick="@{() -> viewModel.back()}" />
+                android:onClick="@{() -> viewModel.back()}"
+                app:backAnimation="@{viewModel.scoredTxt}"/>
 
             <TextView
                 android:id="@+id/input_score"
@@ -188,7 +189,8 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
-            android:src="@drawable/ic_dart"
+            android:scaleType="fitXY"
+            android:src="@drawable/darts"
             fab:useCompatPadding="true"
             fab:fabSize="normal" />
 

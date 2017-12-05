@@ -72,8 +72,8 @@ class ScoreEstimatorTest{
         assertEquals(0, actual.total())
     }
 
-    private fun verifyScore(scored: Int, actual: Turn, minimumNumberOfDartsLeft: Int) {
+    private fun verifyScore(scored: Int, actual: Turn, left: Int) {
         assertEquals(scored, actual.total())
-        assertTrue(actual.dartsLeft() >= minimumNumberOfDartsLeft)
+        assertEquals("scored: $scored", left, actual.dartsLeft())
     }
 }
