@@ -30,42 +30,5 @@ class InputBindings {
                 view.animate().scaleX(1f).scaleY(1f).setDuration(DEFAULT_ANIMATION_TIME).start()
             }
         }
-
-        @JvmStatic
-        @BindingAdapter("fabAnimation")
-        fun fabAnimation(view: FloatingActionButton, turn: Turn?) {
-            if (turn != null) {
-
-                val dartsLeft = turn.dartsLeft()
-                Log.d("WOW", "dartsLeft:$dartsLeft")
-                when (dartsLeft) {
-                    3 -> {
-                        view.isActivated = true
-                        view.isSelected = false
-                        view.isEnabled = true
-                    }
-                    2 -> {
-                        view.isActivated = false
-                        view.isSelected = true
-                        view.isEnabled = true
-                    }
-                    1 -> {
-                        view.isActivated = false
-                        view.isSelected = false
-                        view.isEnabled = true
-                    }
-                    else -> {
-                        view.isSelected = false
-                        view.isActivated = false
-                        view.isEnabled = false
-                    }
-                }
-            } else {
-                Log.d("WOW", "dartsLeft:null -> reset")
-                view.isActivated = true
-                view.isSelected = true
-                view.isEnabled = true
-            }
-        }
     }
 }

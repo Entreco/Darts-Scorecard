@@ -1,57 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
-        android:id="@+id/start"
-        android:drawable="@drawable/throw_start"
-        android:state_activated="true"
-        android:state_enabled="true"
-        android:state_selected="true" />
-
-    <item
-        android:id="@+id/dartsLeft_3"
-        android:drawable="@drawable/ic_darts_3"
-        android:state_activated="true"
-        android:state_enabled="true"
-        android:state_selected="false" />
-
-    <item
-        android:id="@+id/dartsLeft_2"
-        android:drawable="@drawable/ic_darts_2"
-        android:state_activated="false"
-        android:state_enabled="true"
-        android:state_selected="true" />
+        android:id="@+id/dartsLeft_0"
+        android:state_pressed="true"
+        android:drawable="@drawable/dart_throw" />
 
     <item
         android:id="@+id/dartsLeft_1"
-        android:drawable="@drawable/ic_darts_1"
-        android:state_activated="false"
-        android:state_enabled="true"
-        android:state_selected="false" />
-
-    <item
-        android:id="@+id/dartsLeft_0"
-        android:drawable="@drawable/ic_darts_0" />
+        android:drawable="@drawable/ic_darts_3" />
 
     <transition
-        android:drawable="@drawable/throw_first"
-        android:fromId="@id/dartsLeft_3"
-        android:toId="@id/dartsLeft_2" />
-
-    <transition
-        android:drawable="@drawable/throw_second"
-        android:fromId="@id/dartsLeft_2"
-        android:toId="@id/dartsLeft_1" />
-
-    <transition
-        android:drawable="@drawable/throw_third"
         android:fromId="@id/dartsLeft_1"
-        android:toId="@id/dartsLeft_0" />
+        android:toId="@id/dartsLeft_0"
+        android:drawable="@drawable/dart_throw" />
 
     <transition
-        android:drawable="@drawable/throw_start"
         android:fromId="@id/dartsLeft_0"
-        android:toId="@id/dartsLeft_3" />
+        android:toId="@id/dartsLeft_1"
+        android:drawable="@drawable/dart_fade" />
 
 </animated-selector>

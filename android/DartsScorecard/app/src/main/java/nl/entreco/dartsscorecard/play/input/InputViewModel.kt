@@ -4,7 +4,6 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
-import android.os.SystemClock
 import android.util.Log
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
@@ -38,7 +37,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
     fun entered(score: Int) {
         val oldValue = scoredTxt.get()
-        if(oldValue.length < 3) {
+        if (oldValue.length < 3) {
             scoredTxt.set(oldValue.plus(score.toString()))
         }
     }
@@ -78,7 +77,9 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         listener.onDartThrown(turn.copy(), nextUp?.player!!)
 
         when {
-            lastDart() -> { submit(turn.copy(), listener) }
+            lastDart() -> {
+                submit(turn.copy(), listener)
+            }
         }
     }
 
@@ -101,13 +102,8 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         nextUp = next
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
-
-        Handler().postDelayed({
-            Log.d("WOW", "reset darts left")
-            turn = Turn()
-            darts.set(turn)
-        }, 500)
-
+        turn = Turn()
+        darts.set(turn)
     }
 
     private fun descriptionFromNext(next: Next): Int {

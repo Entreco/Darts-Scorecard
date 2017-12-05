@@ -191,7 +191,6 @@
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:scaleType="fitXY"
             android:src="@drawable/darts"
-            app:fabAnimation="@{viewModel.darts}"
             fab:useCompatPadding="true"
             fab:fabSize="normal" />
 
