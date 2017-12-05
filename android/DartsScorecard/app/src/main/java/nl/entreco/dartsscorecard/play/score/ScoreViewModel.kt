@@ -1,7 +1,6 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.databinding.*
-import android.util.Log
+import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.PlayerListener
 import nl.entreco.dartsscorecard.play.ScoreListener

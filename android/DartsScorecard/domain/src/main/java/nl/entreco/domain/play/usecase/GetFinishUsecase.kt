@@ -2,7 +2,6 @@ package nl.entreco.domain.play.usecase
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
-import android.util.Log
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn

@@ -1,11 +1,8 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.BindingAdapter
-import android.support.design.widget.FloatingActionButton
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import nl.entreco.domain.play.model.Turn
 
 /**
  * Created by Entreco on 02/12/2017.
