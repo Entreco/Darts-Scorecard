@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="134dp"
+    android:height="134dp"
+    android:viewportHeight="134.0"
+    android:viewportWidth="134.0">
+
+    <group
+        android:name="all"
+        android:pivotX="72"
+        android:pivotY="72"
+        android:rotation="60">
+        <group android:name="dart1">
+            <path
+                android:name="path1"
+                android:fillColor="?attr/scoreText"
+                android:fillType="evenOdd"
+                android:pathData="M96.12,69.16L38.86,71.75L37.39,73.04L22.81,73.04L18.69,68.81L3.89,68.81L0.28,67.39L3.89,66.04L18.69,66.04L22.81,61.81L37.39,61.81L38.86,63.1L95.66,65.67C96.97,64.29 99.3,61.82 103.44,57.39C109.43,50.98 124.61,45.25 131.21,56.01C132.98,58.9 132.04,62.61 128.39,67.15L133.83,67.39L133.83,67.45L128.77,67.68C132.1,72 132.92,75.55 131.21,78.33C124.61,89.09 109.43,83.36 103.44,76.95C99.75,73 97.49,70.61 96.12,69.16Z"
+                android:strokeColor="#00000000"
+                android:strokeWidth="1" />
+        </group>
+    </group>
+</vector>

@@ -6,7 +6,7 @@
                 android:angle="-90"
                 android:endColor="?attr/grad_score_header_stop"
                 android:startColor="?attr/grad_score_header_start" />
-            <corners android:topLeftRadius="@dimen/def" android:topRightRadius="@dimen/def" />
+            <corners android:bottomLeftRadius="@dimen/def" android:bottomRightRadius="@dimen/def" />
         </shape>
     </item>
     <item android:drawable="@drawable/highlight" />
