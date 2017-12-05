@@ -204,7 +204,6 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
         if (require(target, turn, 17, 1)) return "9 D4"
         if (require(target, turn, 16, 1)) return "D8"
         if (require(target, turn, 15, 1)) return "7 D4"
-
         if (require(target, turn, 14, 1)) return "D7"
         if (require(target, turn, 13, 2)) return "5 D4"
         if (require(target, turn, 12, 1)) return "D6"

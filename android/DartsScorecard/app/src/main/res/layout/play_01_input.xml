@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,32 +15,184 @@
             type="nl.entreco.dartsscorecard.play.input.InputListener" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/inputSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/def">
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="48dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-        <TextView
+        <!-- Turn Bar -->
+        <RelativeLayout
+            android:id="@+id/input_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{@string/next(viewModel.current)}"/>
+            android:background="@drawable/score_header">
 
-        <Button
-            android:id="@+id/scoreInput"
+            <ImageView
+                android:layout_width="@dimen/large"
+                android:layout_height="wrap_content"
+                android:rotation="180"
+                android:layout_alignTop="@id/input_escape"
+                android:layout_alignBottom="@id/input_escape"
+                android:src="@drawable/ic_current_team"/>
+
+            <ImageButton
+                style="@style/Input.Back"
+                android:id="@+id/input_escape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:onClick="@{() -> viewModel.back()}"
+                app:backAnimation="@{viewModel.scoredTxt}"/>
+
+            <TextView
+                android:id="@+id/input_score"
+                style="@style/Input.Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@id/input_escape"
+                android:layout_toStartOf="@id/input_escape"
+                app:scoreInput="@{viewModel.scoredTxt}" />
+
+            <TextView
+                android:id="@+id/input_next"
+                style="@style/Input.Next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/input_score"
+                android:text="@{viewModel.current.name}" />
+
+            <TextView
+                android:id="@+id/input_sub"
+                style="@style/Input.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/input_next"
+                android:layout_toStartOf="@id/input_score"
+                android:text="@{viewModel.nextDescription}" />
+
+        </RelativeLayout>
+
+        <!-- Key Pad -->
+        <GridLayout
+            android:id="@+id/input_keys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="@{() -> viewModel.submitRandom(listener)}"
-            android:text="@string/random" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/input_top"
+            android:layout_toStartOf="@+id/fab"
+            android:background="@color/neutral_black"
+            android:columnCount="3"
+            android:rowCount="4">
 
-        <android.support.v7.widget.SwitchCompat
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(1)}"
+                android:text="1" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(2)}"
+                android:text="2" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(3)}"
+                android:text="3" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(4)}"
+                android:text="4" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(5)}"
+                android:text="5" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(6)}"
+                android:text="6" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(7)}"
+                android:text="7" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(8)}"
+                android:text="8" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(9)}"
+                android:text="9" />
+
+            <Button
+                style="@style/Input.Number.Accent"
+                android:text="_" />
+
+            <Button
+                style="@style/Input.Number"
+                android:onClick="@{() -> viewModel.entered(0)}"
+                android:text="0" />
+
+            <Button
+                style="@style/Input.Number.Accent"
+                android:text="*" />
+
+        </GridLayout>
+
+        <!-- Options Pane -->
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/input_keys"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_below="@id/input_top"
+            android:orientation="vertical"
+            android:background="@drawable/panel">
+
+            <TextView
+                android:id="@+id/input_label"
+                style="@style/Input.Mini"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}"
+                tools:text="hoi" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/input_toggle"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.toggle}"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:checked="@={viewModel.toggle}"
-            android:textOff="@string/all"
-            android:textOn="@string/individual" />
-    </LinearLayout>
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
+            android:scaleType="fitXY"
+            android:src="@drawable/darts"
+            fab:useCompatPadding="true"
+            fab:fabSize="normal" />
+
+    </RelativeLayout>
 </layout>

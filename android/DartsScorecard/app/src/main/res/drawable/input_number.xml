@@ -9,4 +9,8 @@
         </shape>
     </item>
     <item android:drawable="@drawable/highlight" />
+    <item>
+        <ripple
+            android:color="?attr/grad_score_name_start" />
+    </item>
 </layer-list>

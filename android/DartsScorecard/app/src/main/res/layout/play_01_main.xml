@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/mainSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:background="@drawable/stats_bg"
+        tools:alpha="1">
+
+        <TextView
+            style="@style/Main"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/stats_header"
+            android:text="Statistics"
+            android:textSize="14sp" />
+
+        <!-- Players -->
+        <LinearLayout
+            android:id="@+id/players"
+            android:layout_below="@id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:id="@+id/player1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_player1" />
+
+            <ImageView
+                android:id="@+id/player2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_player2" />
+        </LinearLayout>
+
+        <!-- Results -->
+        <LinearLayout
+            android:id="@+id/results"
+            android:layout_below="@id/players"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Player"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:text="G.Anderson" />
+
+            <TextView
+                style="@style/Main.Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4-1" />
+
+            <TextView
+                style="@style/Main.Player"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:text="Chisnall" />
+        </LinearLayout>
+
+        <!-- Stats -->
+        <LinearLayout
+            android:layout_below="@id/stat6"
+            android:id="@+id/stat7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="8" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BREAKS MADE" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/stat5"
+            android:id="@+id/stat6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="39%" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DOUBLE SUCCESS" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="33%" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/stat4"
+            android:id="@+id/stat5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="170" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="HIGHEST OUT" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="139" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/stat3"
+            android:id="@+id/stat4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="8" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="180s"
+                android:textAllCaps="false" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="9" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/stat2"
+            android:id="@+id/stat3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="19" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="140+" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/stat1"
+            android:id="@+id/stat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="35" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="100+" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="27" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/results"
+            android:id="@+id/stat1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="99.15" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AVERAGE" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="96.04" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/version"
+            style="@style/Input.Mini"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stat7"
+            android:gravity="center"
+            android:padding="@dimen/def"
+            android:shadowColor="#ffffff"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:text="@string/version"
+            android:textColor="#aaffffff" />
+
+    </RelativeLayout>
+</layout>
