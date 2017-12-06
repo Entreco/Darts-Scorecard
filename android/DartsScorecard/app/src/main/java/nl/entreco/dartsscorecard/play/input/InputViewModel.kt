@@ -12,6 +12,7 @@ import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.InputListener
+import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.ScoreEstimator
@@ -27,21 +28,24 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, SpecialEventListener<NoScoreEvent> {
+open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
-    val special = ObservableField<NoScoreEvent?>()
+    val special = ObservableField<SpecialEvent?>()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
     private var nextUp: Next? = null
 
-    override fun handle(event: NoScoreEvent) {
-        logger.i("YoYoYo", "noScore")
+    override fun onNoScoreEvent(event: NoScoreEvent) {
         special.set(if(event.noScore) event else null)
+    }
+
+    override fun onBustEvent(event: BustEvent) {
+        special.set(event)
     }
 
     fun entered(score: Int) {

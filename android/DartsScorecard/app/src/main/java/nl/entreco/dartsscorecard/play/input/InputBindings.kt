@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
+import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
 import nl.entreco.domain.play.listeners.events.ThrownEvent
@@ -41,6 +42,7 @@ class InputBindings {
                 when(event) {
                     is NoScoreEvent -> handleNoScore(view)
                     is ThrownEvent -> handleThrown(view, event.describe)
+                    is BustEvent -> handleBust(view)
                 }
             }
         }
@@ -61,7 +63,14 @@ class InputBindings {
         private fun handleNoScore(view: TextView) {
             view.setText( R.string.no_score )
             view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
-                clear(view, 750)
+                clear(view, 500)
+            }).start()
+        }
+
+        private fun handleBust(view: TextView) {
+            view.setText( R.string.bust )
+            view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
+                clear(view, 500)
             }).start()
         }
     }

@@ -33,7 +33,6 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         addScoreListener(scoreViewModel)
         addPlayerListener(scoreViewModel)
         addPlayerListener(inputViewModel)
-        addSpecialEventListener(scoreViewModel)
         addSpecialEventListener(inputViewModel)
     }
 
