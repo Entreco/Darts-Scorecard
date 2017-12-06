@@ -102,63 +102,75 @@
             android:columnCount="3"
             android:rowCount="4">
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(1)}"
-                android:text="1" />
+                app:num="1"
+                app:hint="ABC"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(2)}"
-                android:text="2" />
+                app:num="2"
+                app:hint="DEF"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(3)}"
-                android:text="3" />
+                app:num="3"
+                app:hint="GHI"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(4)}"
-                android:text="4" />
+                app:num="4"
+                app:hint="JKL"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(5)}"
-                android:text="5" />
+                app:num="5"
+                app:hint="MNO"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(6)}"
-                android:text="6" />
+                app:num="6"
+                app:hint="PQ"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(7)}"
-                android:text="7" />
+                app:num="7"
+                app:hint="RST"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(8)}"
-                android:text="8" />
+                app:num="8"
+                app:hint="UWV"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(9)}"
-                android:text="9" />
+                app:num="9"
+                app:hint="XYZ"/>
 
-            <Button
-                style="@style/Input.Number.Accent"
-                android:text="_" />
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                app:num=" "
+                app:hint="_"/>
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(0)}"
-                android:text="0" />
+                app:num="0"
+                app:hint="+"/>
 
-            <Button
-                style="@style/Input.Number.Accent"
-                android:text="*" />
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                app:num=" "
+                app:hint="*"/>
 
         </GridLayout>
 
@@ -204,6 +216,10 @@
             android:src="@drawable/darts"
             fab:useCompatPadding="true"
             fab:fabSize="normal" />
+
+        <nl.entreco.dartsscorecard.play.input.InputWidget
+            android:layout_width="match_parent"
+            android:layout_height="88dp" />
 
     </RelativeLayout>
 </layout>

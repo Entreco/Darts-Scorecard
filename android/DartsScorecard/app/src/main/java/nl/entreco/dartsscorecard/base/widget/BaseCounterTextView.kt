@@ -9,7 +9,7 @@ import kotlin.math.round
 /**
  * Created by Entreco on 20/11/2017.
  */
-abstract class BaseCounterTextView : AppCompatTextView {
+abstract class BaseCounterTextView: AppCompatTextView {
     private val STEP_10 = 10
     private val speed: Long = 10
     private var mTarget: Long = 0
