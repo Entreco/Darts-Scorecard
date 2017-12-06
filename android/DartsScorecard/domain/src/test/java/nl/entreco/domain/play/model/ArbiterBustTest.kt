@@ -18,24 +18,27 @@ class ArbiterBustTest {
     val subject: Arbiter = Arbiter(initialScore, turnHandler)
 
     @Test
-    fun `it should not update Next() when busting`() {
+    fun `it should update Next() when busting with state==BUST`() {
         val expected = subject.start()
         val actual = subject.handle(Turn(Dart.TEST_501, Dart.TEST_501, Dart.TEST_501), expected)
-        assertEquals(expected, actual)
+        assertNotEquals(expected, actual)
+        assertEquals(actual.state, State.ERR_BUST)
     }
 
     @Test
-    fun `it should not update Next() when leaving 1`() {
+    fun `it should update Next() when leaving 1 with state==ERR_BUST`() {
         val expected = subject.start()
         val actual = subject.handle(Turn(Dart.SINGLE_4, Dart.SINGLE_15, Dart.SINGLE_20), expected)
-        assertEquals(expected, actual)
+        assertNotEquals(expected, actual)
+        assertEquals(actual.state, State.ERR_BUST)
     }
 
     @Test
-    fun `it should not update Next() when not finishing with double`() {
+    fun `it should update Next() when not finishing with double with state==ERR_REQUIRES_DOUBLE`() {
         val expected = subject.start()
         val actual = subject.handle(Turn(Dart.SINGLE_5, Dart.SINGLE_15, Dart.SINGLE_20), expected)
-        assertEquals(expected, actual)
+        assertNotEquals(expected, actual)
+        assertEquals(actual.state, State.ERR_REQUIRES_DOUBLE)
     }
 
     @Test

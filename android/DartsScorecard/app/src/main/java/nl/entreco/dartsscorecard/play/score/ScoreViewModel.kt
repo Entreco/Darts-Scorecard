@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), ScoreListener, PlayerListener, SpecialEventListener<SpecialEvent> {
+open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(scoreSettings.numSets)
 
@@ -38,13 +38,5 @@ open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreS
     override fun onNext(next: Next) {
         logger.d("NoNICE", "onNext: ${next.player}")
         teams.forEachIndexed({ index, _ -> adapter.teamAtIndexTurnUpdate(index, next) })
-    }
-
-    override fun handle(event: SpecialEvent) {
-        when(event){
-            is OneEightyEvent -> logger.i("YoYoYo", "special OneEightyEvent")
-            is NoScoreEvent -> logger.i("YoYoYo", "special NoScoreEvent")
-        }
-
     }
 }
