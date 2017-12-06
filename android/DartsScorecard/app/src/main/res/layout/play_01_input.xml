@@ -35,37 +35,37 @@
                 android:id="@+id/input_arrow"
                 android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
-                android:rotation="180"
-                android:layout_alignTop="@id/input_escape"
                 android:layout_alignBottom="@id/input_escape"
+                android:layout_alignTop="@id/input_escape"
+                android:rotation="180"
                 android:src="@drawable/ic_current_team" />
 
             <TextView
                 style="@style/Input.Score.No"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/input_score"
-                android:layout_alignTop="@id/input_arrow"
                 android:layout_alignBottom="@id/input_arrow"
-                app:special="@{viewModel.special}"/>
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@id/input_arrow"
+                android:layout_toStartOf="@id/input_score"
+                app:special="@{viewModel.special}" />
 
             <ImageButton
-                style="@style/Input.Back"
                 android:id="@+id/input_escape"
+                style="@style/Input.Back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:onClick="@{() -> viewModel.back()}"
-                app:backAnimation="@{viewModel.scoredTxt}"/>
+                app:backAnimation="@{viewModel.scoredTxt}" />
 
             <TextView
                 android:id="@+id/input_score"
                 style="@style/Input.Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_alignBottom="@id/input_escape"
+                android:layout_alignParentTop="true"
                 android:layout_toStartOf="@id/input_escape"
                 app:scoreInput="@{viewModel.scoredTxt}" />
 
@@ -105,72 +105,72 @@
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(1)}"
-                app:num="1"
-                app:hint="ABC"/>
+                app:hint="ABC"
+                app:num="1" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(2)}"
-                app:num="2"
-                app:hint="DEF"/>
+                app:hint="DEF"
+                app:num="2" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(3)}"
-                app:num="3"
-                app:hint="GHI"/>
+                app:hint="GHI"
+                app:num="3" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(4)}"
-                app:num="4"
-                app:hint="JKL"/>
+                app:hint="JKL"
+                app:num="4" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(5)}"
-                app:num="5"
-                app:hint="MNO"/>
+                app:hint="MNO"
+                app:num="5" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(6)}"
-                app:num="6"
-                app:hint="PQ"/>
+                app:hint="PQ"
+                app:num="6" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(7)}"
-                app:num="7"
-                app:hint="RST"/>
+                app:hint="RST"
+                app:num="7" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(8)}"
-                app:num="8"
-                app:hint="UWV"/>
+                app:hint="UWV"
+                app:num="8" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(9)}"
-                app:num="9"
-                app:hint="XYZ"/>
+                app:hint="XYZ"
+                app:num="9" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                app:num=" "
-                app:hint="_"/>
+                app:hint="_"
+                app:num=" " />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(0)}"
-                app:num="0"
-                app:hint="+"/>
+                app:hint="+"
+                app:num="0" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                app:num=" "
-                app:hint="*"/>
+                app:hint="*"
+                app:num=" " />
 
         </GridLayout>
 
@@ -178,12 +178,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/input_keys"
-            android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/input_top"
-            android:orientation="vertical"
-            android:background="@drawable/panel">
+            android:layout_toEndOf="@id/input_keys"
+            android:background="@drawable/panel"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/input_label"
@@ -195,9 +195,9 @@
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/input_toggle"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:checked="@={viewModel.toggle}"
                 android:padding="16dp" />
 
@@ -214,12 +214,8 @@
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:scaleType="fitXY"
             android:src="@drawable/darts"
-            fab:useCompatPadding="true"
-            fab:fabSize="normal" />
-
-        <nl.entreco.dartsscorecard.play.input.InputWidget
-            android:layout_width="match_parent"
-            android:layout_height="88dp" />
+            fab:fabSize="normal"
+            fab:useCompatPadding="true" />
 
     </RelativeLayout>
 </layout>
