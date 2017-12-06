@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.base.widget
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-import java.text.NumberFormat
+import kotlin.math.round
 
 
 /**
@@ -11,12 +11,10 @@ import java.text.NumberFormat
  */
 abstract class BaseCounterTextView : AppCompatTextView {
     private val STEP_10 = 10
-    private val speed : Long = 10
+    private val speed: Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
     @Volatile private var stopped = false
-
-    private val numberFormat : NumberFormat by lazy { NumberFormat.getInstance() }
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -31,7 +29,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
         display(mCurrent)
     }
 
-    private fun stopTick(){
+    private fun stopTick() {
         stopped = true
         display(mTarget)
     }
@@ -55,7 +53,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
                         mCurrent--
                     }
                 } else {
-                    val oneStep = Math.round(Math.random() * (step / 10 / 2) + step / 10 / 2)
+                    val oneStep = round(Math.random() * (step / 10 / 2) + step / 10 / 2).toLong()
                     if (increase) {
                         mCurrent += oneStep
                     } else {
@@ -68,13 +66,14 @@ abstract class BaseCounterTextView : AppCompatTextView {
             }
         }
 
-        if(!stopped) {
+        if (!stopped) {
             postDelayed({ tick() }, speed)
         }
     }
 
     private fun display(current: Long) {
-        text = numberFormat.format(current)
+        text = current.toString()
+//        text = numberFormat.format(current)
     }
 
     fun setTarget(target: Long) {
