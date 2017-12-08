@@ -44,3 +44,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 }
+
+task copyTestClasses(type: Copy) {
+    from "build/tmp/kotlin-classes/debugUnitTest"
+    into "build/intermediates/classes/debug"
+}

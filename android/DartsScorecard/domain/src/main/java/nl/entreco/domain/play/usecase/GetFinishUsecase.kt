@@ -25,7 +25,7 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
     }
 
     private val impossible = arrayOf(169, 168, 166, 165, 163, 162, 159)
-    private val notPossible = ""
+    val notPossible = ""
 
     @WorkerThread
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -197,12 +197,12 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
         if (require(target, turn, 22, 1)) return "D11"
         if (require(target, turn, 21, 2)) return "5 D8"
         if (require(target, turn, 20, 1)) return "D10"
-        if (require(target, turn, 19, 1)) return "11 D4"
+        if (require(target, turn, 19, 2)) return "11 D4"
         if (require(target, turn, 18, 3)) return "2 D8"
         if (require(target, turn, 18, 1)) return "D9"
-        if (require(target, turn, 17, 1)) return "9 D4"
+        if (require(target, turn, 17, 2)) return "9 D4"
         if (require(target, turn, 16, 1)) return "D8"
-        if (require(target, turn, 15, 1)) return "7 D4"
+        if (require(target, turn, 15, 2)) return "7 D4"
         if (require(target, turn, 14, 1)) return "D7"
         if (require(target, turn, 13, 2)) return "5 D4"
         if (require(target, turn, 12, 1)) return "D6"

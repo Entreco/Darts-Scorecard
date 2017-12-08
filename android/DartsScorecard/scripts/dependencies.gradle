@@ -54,7 +54,7 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            support = '27.0.1',
+            support = '27.0.2',
             daggerVersion = '2.13',
             constraint = '1.0.2',
             architectureComponents = '1.0.0',
