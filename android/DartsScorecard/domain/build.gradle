@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../scripts/coverage_library.gradle'
 
 android {
     def config = rootProject.extensions.getByName("ext")
@@ -43,9 +44,4 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
-}
-
-task copyTestClasses(type: Copy) {
-    from "build/tmp/kotlin-classes/debugUnitTest"
-    into "build/intermediates/classes/debug"
 }

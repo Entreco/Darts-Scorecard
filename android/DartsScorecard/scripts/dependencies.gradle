@@ -44,6 +44,7 @@ ext {
     gradleVersion = '3.0.1'
     gmsVersion = '3.1.0'
     dexCountVersion = '0.8.2'
+    detektVersion = '1.0.0.RC5-6'
 
     androidBuildToolsVersion = '26.0.2'
     androidCompileSdkVersion = 26
