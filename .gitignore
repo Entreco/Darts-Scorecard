@@ -61,3 +61,5 @@ android/DartsScorecard/scripts/dsc_keystore
 android/DartsScorecard/app/lint-report\.html
 
 release/
+
+*.exec
