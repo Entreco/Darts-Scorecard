@@ -13,6 +13,8 @@ android.applicationVariants.all { variant ->
                          '**/BuildConfig.*',
                          '**/*$ViewBinder*.*',
                          '**/*$ViewInjector*.*',
+                         '**/*Factory.class',
+                         '**/*inlined*.class',
                          '**/Lambda$*.class',
                          '**/Lambda.class',
                          '**/*Lambda.class',
