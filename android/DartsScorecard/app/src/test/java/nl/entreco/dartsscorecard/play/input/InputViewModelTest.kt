@@ -29,10 +29,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class InputViewModelTest {
     @Mock lateinit var mockAnalytics: Analytics
     @Mock lateinit var mockLogger: Logger
-    @InjectMocks lateinit var subject: InputViewModel
+    @InjectMocks private lateinit var subject: InputViewModel
 
-    @Mock lateinit var mockListener : InputListener
-    @Mock lateinit var mockInput : TextView
+    @Mock private lateinit var mockListener : InputListener
+    @Mock private lateinit var mockInput : TextView
 
     private lateinit var givenEvent: SpecialEvent
     private lateinit var givenPlayer: Player
@@ -119,6 +119,38 @@ class InputViewModelTest {
     }
 
     @Test
+    fun `it should NOT submit Turn when hint pressed, with single mode`() {
+        givenPlayer("player1")
+        givenSingleMode(true)
+        whenPressingHint(0)
+        verify(mockListener, never()).onTurnSubmitted(any(), eq(givenPlayer))
+    }
+
+    @Test
+    fun `it should submit Dart when hint pressed, with single mode`() {
+        givenPlayer("player1")
+        givenSingleMode(true)
+        whenPressingHint(1)
+        verify(mockListener).onDartThrown(any(), eq(givenPlayer))
+    }
+
+    @Test
+    fun `it should submit Bust when hint pressed`() {
+        givenPlayer("player1")
+        whenPressingHint(-1)
+        verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
+    }
+
+
+    @Test
+    fun `it should submit Bust when hint pressed in single Mode`() {
+        givenPlayer("player1")
+        givenSingleMode(true)
+        whenPressingHint(-1)
+        verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
+    }
+
+    @Test
     fun `it should submit Darts when 'throw' is pressed`() {
         givenPlayer("player1")
         whenPressingSubmit(140)
@@ -183,6 +215,10 @@ class InputViewModelTest {
         subject.onNoScoreEvent(givenEvent as NoScoreEvent)
     }
 
+    private fun givenSingleMode(singleMode: Boolean) {
+        subject.toggle.set(singleMode)
+    }
+
     private fun whenPressingBack() {
         subject.back()
     }
@@ -197,7 +233,7 @@ class InputViewModelTest {
     }
 
     private fun whenSubmittingSingle(scored: Int){
-        subject.toggle.set(true)
+        givenSingleMode(true)
         whenPressingSubmit(scored)
     }
 
