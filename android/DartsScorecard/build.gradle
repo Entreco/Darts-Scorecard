@@ -49,9 +49,11 @@ detekt {
         output = "$projectDir/app/build/reports/detekt/"
     }
 }
-// Only allows specifying of a single file
-def publishedProjects = subprojects.findAll {}
+
 coveralls {
-    sourceDirs = publishedProjects.sourceSets.main.allSource.srcDirs.flatten()
+    sourceDirs = files(["${buildDir}/../app/src/main/java"], ["${buildDir}/../data/src/main/java"], ["${buildDir}/../domain/src/main/java"]).flatten()
+    println("==========================")
+    println(sourceDirs)
+    println("==========================")
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
 }
