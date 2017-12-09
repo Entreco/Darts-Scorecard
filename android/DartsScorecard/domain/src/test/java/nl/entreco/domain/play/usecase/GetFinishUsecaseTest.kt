@@ -57,7 +57,12 @@ class GetFinishUsecaseTest {
 
         for (score in 0..180) {
             when {
-                score >= 101 || score == 99 -> verifyNotPossible(score, turn)
+                score == 110 -> verifyDartsNeeded(score, turn, 2)
+                score == 107 -> verifyDartsNeeded(score, turn, 2)
+                score == 104 -> verifyDartsNeeded(score, turn, 2)
+                score == 101 -> verifyDartsNeeded(score, turn, 2)
+                score >= 101 -> verifyNotPossible(score, turn)
+                score == 99 -> verifyNotPossible(score, turn)
                 score >= 42 -> verifyDartsNeeded(score, turn, 2)
                 score == 28 || score == 22 -> verifyDartsNeeded(score, turn, 2)
                 score == 1 || score == 0 -> verifyNotPossible(score, turn)
