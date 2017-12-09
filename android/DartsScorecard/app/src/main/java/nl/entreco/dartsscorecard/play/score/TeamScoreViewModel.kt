@@ -4,12 +4,7 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
-import nl.entreco.domain.play.listeners.events.OneEightyEvent
-import nl.entreco.domain.play.listeners.events.SpecialEvent
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
@@ -65,7 +60,6 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
 
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         val cancelled = finishFuture?.cancel(true)
-        Log.d("NoNice", "calculateFinish cancelled:$cancelled")
         finishFuture = getFinishUsecase.calculate(input, turn, player.prefs.favoriteDouble, { finish.set(it) })
     }
 

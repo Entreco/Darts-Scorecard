@@ -1,11 +1,10 @@
 package nl.entreco.dartsscorecard.play
 
 import android.support.annotation.VisibleForTesting
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
@@ -42,12 +41,10 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {
-        Log.d("NICE", "scored:${turn.last()} by:$by")
         notifyDartThrown(turn, by)
     }
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
-        Log.d("NICE", "turn:$turn by:$by")
         handleTurn(turn, by)
     }
 
@@ -58,7 +55,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         val next = game.next
         val scores = game.scores
 
-        notifyAboutSpecialEvents(next, turn ,by, scores)
+        notifyAboutSpecialEvents(next, turn, by, scores)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }

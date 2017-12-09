@@ -34,8 +34,6 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
         // Calculate desired target
         val target = score - turn.total()
 
-        logger.d("Hoi", "wooot", "woot2")
-
         // First, handle the obvious cases before we go into recursion ;)
         if (target > 170) return notPossible
         if (target <= 1) return notPossible
