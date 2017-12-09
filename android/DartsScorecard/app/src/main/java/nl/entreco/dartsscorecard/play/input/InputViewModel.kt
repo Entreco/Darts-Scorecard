@@ -57,6 +57,10 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         special.set(event)
     }
 
+    fun back() {
+        scoredTxt.set(scoredTxt.get().dropLast(1))
+    }
+
     fun entered(score: Int) {
         val oldValue = scoredTxt.get()
         if (oldValue.length < 3) {
@@ -64,7 +68,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         }
     }
 
-    fun enteredHint(hint: Int, listener: InputListener): Boolean {
+    fun onPressedHint(hint: Int, listener: InputListener): Boolean {
         val score = parseScore(hintProvider.get().getHint(hint))
         if (hint == -1) { // Bust
             submit(score, listener, false)
@@ -74,11 +78,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         return true
     }
 
-    fun back() {
-        scoredTxt.set(scoredTxt.get().dropLast(1))
-    }
-
-    fun tryToSubmit(input: TextView, listener: InputListener) {
+    fun onSubmitScore(input: TextView, listener: InputListener) {
         val scored = extractScore(input)
         submit(scored, listener)
     }
@@ -92,7 +92,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
             submitDart(estimatedTurn.first(), listener)
             this.scoredTxt.set(turn.total().toString())
         } else {
-            submit(estimatedTurn, listener)
+            submitScore(estimatedTurn, listener)
         }
 
         clearScoreInput()
@@ -117,12 +117,12 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
         when {
             lastDart() -> {
-                submit(turn.copy(), listener)
+                submitScore(turn.copy(), listener)
             }
         }
     }
 
-    private fun submit(turn: Turn, listener: InputListener) {
+    private fun submitScore(turn: Turn, listener: InputListener) {
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
 
         this.scoredTxt.set(turn.total().toString())

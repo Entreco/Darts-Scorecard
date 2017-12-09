@@ -105,76 +105,76 @@
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(1)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(1, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(1, listener)}"
                 app:hint="@{viewModel.hintProvider.hint1}"
                 app:num="1" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(2)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(2, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(2, listener)}"
                 app:hint="@{viewModel.hintProvider.hint2}"
                 app:num="2" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(3)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(3, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(3, listener)}"
                 app:hint="@{viewModel.hintProvider.hint3}"
                 app:num="3" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(4)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(4, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(4, listener)}"
                 app:hint="@{viewModel.hintProvider.hint4}"
                 app:num="4" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(5)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(5, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(5, listener)}"
                 app:hint="@{viewModel.hintProvider.hint5}"
                 app:num="5" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(6)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(6, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(6, listener)}"
                 app:hint="@{viewModel.hintProvider.hint6}"
                 app:num="6" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(7)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(7, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(7, listener)}"
                 app:hint="@{viewModel.hintProvider.hint7}"
                 app:num="7" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(8)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(8, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(8, listener)}"
                 app:hint="@{viewModel.hintProvider.hint8}"
                 app:num="8" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(9)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(9, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(9, listener)}"
                 app:hint="@{viewModel.hintProvider.hint9}"
                 app:num="9" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                android:onClick="@{() -> viewModel.enteredHint(-1, listener)}"
+                android:onClick="@{() -> viewModel.onPressedHint(-1, listener)}"
                 app:accent="true"
                 app:hint="@string/bust" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(0)}"
-                android:onLongClick="@{() -> viewModel.enteredHint(0, listener)}"
+                android:onLongClick="@{() -> viewModel.onPressedHint(0, listener)}"
                 app:hint="@{viewModel.hintProvider.hint0}"
                 app:num="0" />
 
@@ -222,7 +222,7 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
+            android:onClick="@{() -> viewModel.onSubmitScore(inputScore, listener)}"
             android:scaleType="fitXY"
             android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
             fab:fabSize="normal"
