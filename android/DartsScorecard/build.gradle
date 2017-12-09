@@ -51,5 +51,5 @@ detekt {
 }
 // Only allows specifying of a single file
 coveralls {
-    jacocoReportPath = "${buildDir}/build/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
 }
