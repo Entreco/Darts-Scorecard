@@ -4,6 +4,8 @@ import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import android.view.ViewPropertyAnimator
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import kotlin.math.max
+import kotlin.math.sqrt
 
 /**
  * Created by Entreco on 02/12/2017.
@@ -33,12 +35,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                 fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
 
                 // Fade In MainSheet
-                mainSheet.animate().alpha(1 - Math.sqrt(slideOffset.toDouble()).toFloat()).setDuration(0).start()
+                mainSheet.animate().alpha(1 - sqrt(slideOffset)).setDuration(0).start()
                 mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
 
                 // Fly In Players
-                player1.animate().translationX(slideOffset * -player1.width/3).setDuration(0).start()
-                player2.animate().translationX(slideOffset * player2.width/3).setDuration(0).start()
+                player1.animate().translationX(slideOffset * -player1.width / 3).setDuration(0).start()
+                player2.animate().translationX(slideOffset * player2.width / 3).setDuration(0).start()
 
                 // Fly In stats
                 animateState(stat1.animate(), 1, slideOffset)
@@ -59,6 +61,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     }
 
     private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
-        anim.translationY(-index * 50 * slideOffset * index).scaleX(Math.max(0.0, (1- slideOffset * index).toDouble()).toFloat()).alpha(1 - slideOffset).setDuration(0).start()
+        anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
     }
 }

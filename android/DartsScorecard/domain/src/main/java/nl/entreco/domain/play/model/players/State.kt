@@ -6,6 +6,8 @@ package nl.entreco.domain.play.model.players
 enum class State {
     START,
     NORMAL,
+    ERR_BUST,
+    ERR_REQUIRES_DOUBLE,
     LEG,
     SET,
     TIEBREAK,

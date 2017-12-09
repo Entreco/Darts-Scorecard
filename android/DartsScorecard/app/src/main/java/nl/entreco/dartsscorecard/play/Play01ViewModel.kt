@@ -1,18 +1,20 @@
 package nl.entreco.dartsscorecard.play
 
 import android.support.annotation.VisibleForTesting
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.input.InputListener
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.listeners.InputListener
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.ScoreListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.CreateGameUsecase
+import nl.entreco.domain.play.usecase.GetFinishUsecase
 import javax.inject.Inject
 
 /**
@@ -24,11 +26,13 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
     private val game: Game by lazy { createGameUseCase.start() }
     private val playerListeners = mutableListOf<PlayerListener>()
     private val scoreListeners = mutableListOf<ScoreListener>()
+    private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
     init {
         addScoreListener(scoreViewModel)
         addPlayerListener(scoreViewModel)
         addPlayerListener(inputViewModel)
+        addSpecialEventListener(inputViewModel)
     }
 
     fun onReady() {
@@ -37,12 +41,10 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {
-        Log.d("NICE", "scored:${turn.last()} by:$by")
         notifyDartThrown(turn, by)
     }
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
-        Log.d("NICE", "turn:$turn by:$by")
         handleTurn(turn, by)
     }
 
@@ -51,8 +53,10 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         game.handle(turn)
 
         val next = game.next
+        val scores = game.scores
 
-        notifyScoreChanged(game.scores, by)
+        notifyAboutSpecialEvents(next, turn, by, scores)
+        notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
 
@@ -73,7 +77,16 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    private fun notifyScoreChanged(scores : Array<Score>, by: Player) {
+
+    private fun addSpecialEventListener(specialEventListener: SpecialEventListener<*>) {
+        synchronized(specialEventListener) {
+            if (!specialEventListeners.contains(specialEventListener)) {
+                specialEventListeners.add(specialEventListener)
+            }
+        }
+    }
+
+    private fun notifyScoreChanged(scores: Array<Score>, by: Player) {
         synchronized(scoreListeners) {
             scoreListeners.forEach { it.onScoreChange(scores, by) }
         }
@@ -82,6 +95,12 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
     private fun notifyDartThrown(turn: Turn, by: Player) {
         synchronized(scoreListeners) {
             scoreListeners.forEach { it.onDartThrown(turn, by) }
+        }
+    }
+
+    private fun notifyAboutSpecialEvents(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
+        synchronized(specialEventListeners) {
+            specialEventListeners.forEach { it.onSpecialEvent(next, turn, by, scores) }
         }
     }
 

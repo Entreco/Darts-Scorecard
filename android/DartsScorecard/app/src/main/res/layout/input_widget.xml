@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/play_01_input">
+
+    <TextView
+        style="@style/InputNumberBtn"
+        android:id="@+id/num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:maxLines="1"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/hint"
+        style="@style/InputNumberHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="@dimen/xsmall"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/accent"
+        android:textColor="?attr/grad_score_pts_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/hint"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        android:layout_centerVertical="true" />
+
+</merge>

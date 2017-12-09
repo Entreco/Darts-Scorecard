@@ -4,7 +4,6 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
@@ -18,13 +17,14 @@ import java.util.concurrent.Future
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, starter : Boolean) : BaseViewModel() {
+class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, starter: Boolean) : BaseViewModel() {
 
     val finish = ObservableField<String>("")
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
+
     private val handler = Handler()
     private var finishFuture: Future<*>? = null
 
@@ -40,18 +40,18 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
     }
 
     fun threw(turn: Turn, player: Player) {
-        if(team.contains(player)) {
+        if (team.contains(player)) {
             scored.set(turn.total())
             calculateFinish(this.score.get(), player, turn)
         }
     }
 
-    private fun updateCurrentTeam(next: Next){
+    private fun updateCurrentTeam(next: Next) {
         currentTeam.set(team.contains(next.player))
     }
 
     private fun updateLegStarter(next: Next) {
-        when{
+        when {
             next.state == State.START -> started.set(team.contains(next.player))
             next.state == State.LEG -> started.set(team.contains(next.player))
             next.state == State.SET -> started.set(team.contains(next.player))
@@ -60,7 +60,6 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
 
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         val cancelled = finishFuture?.cancel(true)
-        Log.d("NoNice", "calculateFinish cancelled:$cancelled")
         finishFuture = getFinishUsecase.calculate(input, turn, player.prefs.favoriteDouble, { finish.set(it) })
     }
 

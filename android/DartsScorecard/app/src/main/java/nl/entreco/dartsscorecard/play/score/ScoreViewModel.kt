@@ -1,14 +1,17 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.databinding.*
-import android.util.Log
+import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.PlayerListener
-import nl.entreco.dartsscorecard.play.ScoreListener
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.ScoreListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.listeners.events.NoScoreEvent
+import nl.entreco.domain.play.listeners.events.OneEightyEvent
+import nl.entreco.domain.play.listeners.events.SpecialEvent
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
@@ -17,7 +20,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: ScoreAdapter, val logger: Logger) : BaseViewModel(), ScoreListener, PlayerListener {
+open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(scoreSettings.numSets)
 
@@ -34,6 +37,6 @@ open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreS
 
     override fun onNext(next: Next) {
         logger.d("NoNICE", "onNext: ${next.player}")
-        teams.forEachIndexed({ index ,_ -> adapter.teamAtIndexTurnUpdate(index, next)})
+        teams.forEachIndexed({ index, _ -> adapter.teamAtIndexTurnUpdate(index, next) })
     }
 }

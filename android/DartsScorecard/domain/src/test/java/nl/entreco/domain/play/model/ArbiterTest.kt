@@ -62,6 +62,6 @@ class ArbiterTest {
     }
 
     private fun givenLegFinished() {
-        subject.handle(Turn(Dart.TEST_501, Dart.ZERO, Dart.ZERO), next)
+        subject.handle(Turn(Dart.SINGLE_1, Dart.TEST_D250), next)
     }
 }

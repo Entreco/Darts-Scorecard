@@ -2,7 +2,6 @@ package nl.entreco.domain.play.usecase
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
-import android.util.Log
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
@@ -26,7 +25,7 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
     }
 
     private val impossible = arrayOf(169, 168, 166, 165, 163, 162, 159)
-    private val notPossible = ""
+    val notPossible = ""
 
     @WorkerThread
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -34,8 +33,6 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
 
         // Calculate desired target
         val target = score - turn.total()
-
-        logger.d("Hoi", "wooot", "woot2")
 
         // First, handle the obvious cases before we go into recursion ;)
         if (target > 170) return notPossible
@@ -98,15 +95,19 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
         if (require(target, turn, 112, 3)) return "T20 12 D20"
         if (require(target, turn, 111, 3)) return "T20 19 D16"
         if (require(target, turn, 110, 3)) return "T20 18 D16"
+        if (require(target, turn, 110, 2)) return "T20 BULL"
         if (require(target, turn, 109, 3)) return "T19 20 D16"
         if (require(target, turn, 108, 3)) return "T20 16 D16"
         if (require(target, turn, 107, 3)) return "T19 18 D16"
+        if (require(target, turn, 107, 2)) return "T19 BULL"
         if (require(target, turn, 106, 3)) return "T20 14 D16"
         if (require(target, turn, 105, 3)) return "T19 16 D16"
         if (require(target, turn, 104, 3)) return "T18 18 D16"
+        if (require(target, turn, 104, 2)) return "T18 BULL"
         if (require(target, turn, 103, 3)) return "T20 3 D20"
         if (require(target, turn, 102, 3)) return "T20 10 D16"
         if (require(target, turn, 101, 3)) return "T20 1 D20"
+        if (require(target, turn, 101, 2)) return "T17 BULL"
         if (require(target, turn, 100, 2)) return "T20 D20"
         if (require(target, turn, 99, 3)) return "T19 10 D16"
         if (require(target, turn, 98, 2)) return "T19 D19"
@@ -198,12 +199,12 @@ open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
         if (require(target, turn, 22, 1)) return "D11"
         if (require(target, turn, 21, 2)) return "5 D8"
         if (require(target, turn, 20, 1)) return "D10"
-        if (require(target, turn, 19, 1)) return "11 D4"
+        if (require(target, turn, 19, 2)) return "11 D4"
         if (require(target, turn, 18, 3)) return "2 D8"
         if (require(target, turn, 18, 1)) return "D9"
-        if (require(target, turn, 17, 1)) return "9 D4"
+        if (require(target, turn, 17, 2)) return "9 D4"
         if (require(target, turn, 16, 1)) return "D8"
-        if (require(target, turn, 15, 1)) return "7 D4"
+        if (require(target, turn, 15, 2)) return "7 D4"
         if (require(target, turn, 14, 1)) return "D7"
         if (require(target, turn, 13, 2)) return "5 D4"
         if (require(target, turn, 12, 1)) return "D6"

@@ -8,6 +8,4 @@ import android.util.AttributeSet
  */
 open class CounterTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseCounterTextView(context, attrs, defStyleAttr) {
-
-}
+) : BaseCounterTextView(context, attrs, defStyleAttr)
