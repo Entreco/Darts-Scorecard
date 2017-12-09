@@ -50,6 +50,8 @@ detekt {
     }
 }
 // Only allows specifying of a single file
+def publishedProjects = subprojects.findAll {}
 coveralls {
+    sourceDirs = publishedProjects.sourceSets.main.allSource.srcDirs.flatten()
     jacocoReportPath = "${buildDir}/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
 }
