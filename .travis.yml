@@ -47,6 +47,8 @@ before_install:
 - ./gradlew dependencies || true
 script:
 - ./gradlew clean build check -PdisablePreDex --stacktrace
+after_success:
+- ./gradlew jacocoFullReport coveralls
 before_deploy:
 - APP_NAME=$(./gradlew -q showAppName | tail -n 1)
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME
@@ -56,8 +58,6 @@ before_deploy:
   --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --out
   _${APP_NAME} _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify _${APP_NAME}
-after_success:
-- ./gradlew jacocoFullReport coveralls
 deploy:
   provider: releases
   file: 
