@@ -24,6 +24,8 @@ buildscript {
 
 apply from: 'scripts/dependencies.gradle'
 apply from: 'scripts/tasks.gradle'
+apply from: 'scripts/detekt.gradle'
+apply from: 'scripts/coveralls.gradle'
 
 allprojects {
     repositories {
@@ -35,25 +37,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-apply plugin: 'com.palantir.jacoco-full-report'
-apply plugin: "com.github.kt3k.coveralls"
-apply plugin: "io.gitlab.arturbosch.detekt"
-detekt {
-    version = "$detektVersion"
-    profile("main") {
-        input = "$projectDir/app/src/main"
-        config = "$projectDir/scripts/detekt.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "$projectDir/app/build/reports/detekt/"
-    }
-}
-
-coveralls {
-    sourceDirs = files(["${buildDir}/../app/src/main/java"], ["${buildDir}/../data/src/main/java"], ["${buildDir}/../domain/src/main/java"]).flatten()
-    println("==========================")
-    println(sourceDirs)
-    println("==========================")
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
 }
