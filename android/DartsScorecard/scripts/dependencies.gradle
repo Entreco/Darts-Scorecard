@@ -46,6 +46,7 @@ ext {
     dexCountVersion = '0.8.2'
     detektVersion = '1.0.0.RC5-6'
     jacocoCoverageVersion = '0.4.0'
+    coverallsVersion = '2.8.2'
 
     androidBuildToolsVersion = '26.0.2'
     androidCompileSdkVersion = 26

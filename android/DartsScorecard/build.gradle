@@ -15,6 +15,7 @@ buildscript {
         classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexCountVersion"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
         classpath "com.palantir:jacoco-coverage:$jacocoCoverageVersion"
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:$coverallsVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -37,6 +38,7 @@ task clean(type: Delete) {
 }
 
 apply plugin: 'com.palantir.jacoco-full-report'
+apply plugin: "com.github.kt3k.coveralls"
 apply plugin: "io.gitlab.arturbosch.detekt"
 detekt {
     version = "$detektVersion"
@@ -46,4 +48,8 @@ detekt {
         filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
         output = "$projectDir/app/build/reports/detekt/"
     }
+}
+// Only allows specifying of a single file
+coveralls {
+    jacocoReportPath = "${buildDir}/build/reports/jacoco/jacocoFullReport/jacocoFullReport.xml"
 }
