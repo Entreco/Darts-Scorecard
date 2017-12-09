@@ -51,4 +51,8 @@ data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart
             else -> "${d1.desc()} ${d2.desc()} ${d3.desc()}"
         }
     }
+
+    fun lastIsDouble(): Boolean {
+        return last().isDouble()
+    }
 }

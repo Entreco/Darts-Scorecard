@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dartsLeft_0"
+        android:state_pressed="true"
+        android:drawable="@drawable/dart_throw" />
+
+    <item
+        android:id="@+id/dartsLeft_1"
+        android:drawable="@drawable/ic_dart" />
+
+    <transition
+        android:fromId="@id/dartsLeft_1"
+        android:toId="@id/dartsLeft_0"
+        android:drawable="@drawable/dart_throw" />
+
+    <transition
+        android:fromId="@id/dartsLeft_0"
+        android:toId="@id/dartsLeft_1"
+        android:drawable="@drawable/dart_fade" />
+
+</animated-selector>

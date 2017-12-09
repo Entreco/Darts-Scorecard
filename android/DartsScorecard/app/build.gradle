@@ -2,7 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.getkeepsafe.dexcount'
 apply from: '../scripts/versioning.gradle'
+apply from: '../scripts/coverage.gradle'
 
 android {
     def config = rootProject.extensions.getByName("ext")
@@ -49,21 +51,27 @@ dependencies {
     implementation project(":domain")
     implementation project(":data")
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    implementation "com.google.dagger:dagger:$daggerVersion"
+    // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.android.databinding:compiler:$gradleVersion"
+    kapt "android.arch.persistence.room:compiler:$architectureComponents"
 
+    // Implementation
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
-    implementation "android.arch.lifecycle:extensions:$architectureComponents"
     implementation "com.google.firebase:firebase-core:$firebase"
+    implementation "android.arch.lifecycle:extensions:$architectureComponents"
+    implementation "android.arch.persistence.room:runtime:$architectureComponents"
 
+    // Test
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 
+    // AndroidTest
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
 }

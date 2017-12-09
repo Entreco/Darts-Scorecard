@@ -1,11 +1,13 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.BindingAdapter
-import android.support.design.widget.FloatingActionButton
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import nl.entreco.domain.play.model.Turn
+import nl.entreco.dartsscorecard.R
+import nl.entreco.domain.play.listeners.events.BustEvent
+import nl.entreco.domain.play.listeners.events.NoScoreEvent
+import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.listeners.events.ThrownEvent
 
 /**
  * Created by Entreco on 02/12/2017.
@@ -29,6 +31,47 @@ class InputBindings {
             } else {
                 view.animate().scaleX(1f).scaleY(1f).setDuration(DEFAULT_ANIMATION_TIME).start()
             }
+        }
+
+
+        @JvmStatic
+        @BindingAdapter("special")
+        fun showSpecialEvents(view: TextView, event: SpecialEvent?) {
+            clear(view, 0)
+            if (event != null) {
+                when(event) {
+                    is NoScoreEvent -> handleNoScore(view)
+                    is ThrownEvent -> handleThrown(view, event.describe)
+                    is BustEvent -> handleBust(view)
+                }
+            }
+        }
+
+        private fun clear(view: TextView, delay: Long) {
+            view.animate().translationX(-2000F).setStartDelay(delay).withEndAction({
+                view.text = ""
+            }).setDuration(DEFAULT_ANIMATION_TIME).start()
+        }
+
+        private fun handleThrown(view: TextView, describe: String) {
+            view.text = describe
+            view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
+                clear(view, 500)
+            }).start()
+        }
+
+        private fun handleNoScore(view: TextView) {
+            view.setText( R.string.no_score )
+            view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
+                clear(view, 500)
+            }).start()
+        }
+
+        private fun handleBust(view: TextView) {
+            view.setText( R.string.bust )
+            view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
+                clear(view, 500)
+            }).start()
         }
     }
 }

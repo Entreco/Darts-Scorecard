@@ -4,6 +4,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team

@@ -12,7 +12,7 @@
 
         <variable
             name="listener"
-            type="nl.entreco.dartsscorecard.play.input.InputListener" />
+            type="nl.entreco.domain.play.listeners.InputListener" />
     </data>
 
     <RelativeLayout
@@ -32,29 +32,40 @@
             android:background="@drawable/score_header">
 
             <ImageView
+                android:id="@+id/input_arrow"
                 android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
-                android:rotation="180"
-                android:layout_alignTop="@id/input_escape"
                 android:layout_alignBottom="@id/input_escape"
-                android:src="@drawable/ic_current_team"/>
+                android:layout_alignTop="@id/input_escape"
+                android:rotation="180"
+                android:src="@drawable/ic_current_team" />
+
+            <TextView
+                style="@style/Input.Score.No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/input_arrow"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@id/input_arrow"
+                android:layout_toStartOf="@id/input_score"
+                app:special="@{viewModel.special}" />
 
             <ImageButton
-                style="@style/Input.Back"
                 android:id="@+id/input_escape"
+                style="@style/Input.Back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:onClick="@{() -> viewModel.back()}"
-                app:backAnimation="@{viewModel.scoredTxt}"/>
+                app:backAnimation="@{viewModel.scoredTxt}" />
 
             <TextView
                 android:id="@+id/input_score"
                 style="@style/Input.Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_alignBottom="@id/input_escape"
+                android:layout_alignParentTop="true"
                 android:layout_toStartOf="@id/input_escape"
                 app:scoreInput="@{viewModel.scoredTxt}" />
 
@@ -91,63 +102,86 @@
             android:columnCount="3"
             android:rowCount="4">
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(1)}"
-                android:text="1" />
+                android:onLongClick="@{() -> viewModel.enteredHint(1, listener)}"
+                app:hint="@{viewModel.hintProvider.hint1}"
+                app:num="1" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(2)}"
-                android:text="2" />
+                android:onLongClick="@{() -> viewModel.enteredHint(2, listener)}"
+                app:hint="@{viewModel.hintProvider.hint2}"
+                app:num="2" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(3)}"
-                android:text="3" />
+                android:onLongClick="@{() -> viewModel.enteredHint(3, listener)}"
+                app:hint="@{viewModel.hintProvider.hint3}"
+                app:num="3" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(4)}"
-                android:text="4" />
+                android:onLongClick="@{() -> viewModel.enteredHint(4, listener)}"
+                app:hint="@{viewModel.hintProvider.hint4}"
+                app:num="4" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(5)}"
-                android:text="5" />
+                android:onLongClick="@{() -> viewModel.enteredHint(5, listener)}"
+                app:hint="@{viewModel.hintProvider.hint5}"
+                app:num="5" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(6)}"
-                android:text="6" />
+                android:onLongClick="@{() -> viewModel.enteredHint(6, listener)}"
+                app:hint="@{viewModel.hintProvider.hint6}"
+                app:num="6" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(7)}"
-                android:text="7" />
+                android:onLongClick="@{() -> viewModel.enteredHint(7, listener)}"
+                app:hint="@{viewModel.hintProvider.hint7}"
+                app:num="7" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(8)}"
-                android:text="8" />
+                android:onLongClick="@{() -> viewModel.enteredHint(8, listener)}"
+                app:hint="@{viewModel.hintProvider.hint8}"
+                app:num="8" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(9)}"
-                android:text="9" />
+                android:onLongClick="@{() -> viewModel.enteredHint(9, listener)}"
+                app:hint="@{viewModel.hintProvider.hint9}"
+                app:num="9" />
 
-            <Button
-                style="@style/Input.Number.Accent"
-                android:text="_" />
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.enteredHint(-1, listener)}"
+                app:accent="true"
+                app:hint="@string/bust" />
 
-            <Button
-                style="@style/Input.Number"
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(0)}"
-                android:text="0" />
+                android:onLongClick="@{() -> viewModel.enteredHint(0, listener)}"
+                app:hint="@{viewModel.hintProvider.hint0}"
+                app:num="0" />
 
-            <Button
-                style="@style/Input.Number.Accent"
-                android:text="*" />
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                app:accent="true"
+                app:hint="@string/undo" />
 
         </GridLayout>
 
@@ -155,12 +189,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/input_keys"
-            android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/input_top"
-            android:orientation="vertical"
-            android:background="@drawable/panel">
+            android:layout_toEndOf="@id/input_keys"
+            android:background="@drawable/panel"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/input_label"
@@ -172,9 +206,9 @@
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/input_toggle"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:checked="@={viewModel.toggle}"
                 android:padding="16dp" />
 
@@ -190,9 +224,9 @@
             android:layout_margin="16dp"
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:scaleType="fitXY"
-            android:src="@drawable/darts"
-            fab:useCompatPadding="true"
-            fab:fabSize="normal" />
+            android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
+            fab:fabSize="normal"
+            fab:useCompatPadding="true" />
 
     </RelativeLayout>
 </layout>

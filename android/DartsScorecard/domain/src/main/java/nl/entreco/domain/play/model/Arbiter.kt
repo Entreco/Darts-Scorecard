@@ -5,19 +5,28 @@ import nl.entreco.domain.play.model.players.Team
 
 class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
+    companion object {
+        const val OK : Int = 1
+        const val BUST : Int = -1
+        const val ERR : Int = -2
+    }
+
     private var scores = initForStart(initial)
 
     private var legs = mutableListOf<Array<Score>>()
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    fun start() : Next {
+    fun start(): Next {
         return turnHandler.start()
     }
 
     fun handle(turn: Turn, next: Next): Next {
         val teamIndex = teamIndexOfNext(turnHandler.teams, next)
-        applyScore(teamIndex, turn)
+        when (applyScore(teamIndex, turn)) {
+            ERR -> return turnHandler.next().copy(state = State.ERR_REQUIRES_DOUBLE)
+            BUST -> return turnHandler.next().copy(state = State.ERR_BUST)
+        }
 
         if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player)
         if (requiresNewSet(teamIndex)) return playerForNewSet()
@@ -76,8 +85,23 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
         initForNewSet()
     }
 
-    private fun applyScore(currentPlayer: Int, turn: Turn) {
-        scores[currentPlayer] -= turn
+    private fun applyScore(currentPlayer: Int, turn: Turn): Int {
+        val current = scores[currentPlayer].score
+        val remainder = current - turn.total()
+        return when {
+            remainder > 1 -> {
+                scores[currentPlayer] -= turn
+                OK
+            }
+            remainder == 0 && turn.lastIsDouble() -> {
+                scores[currentPlayer] -= turn
+                OK
+            }
+            remainder == 0 && !turn.lastIsDouble() -> {
+                ERR
+            }
+            else -> BUST
+        }
     }
 
     private fun legFinished(currentPlayer: Int) = scores[currentPlayer].legFinished()

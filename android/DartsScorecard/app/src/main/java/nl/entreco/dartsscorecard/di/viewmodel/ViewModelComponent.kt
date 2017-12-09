@@ -2,14 +2,13 @@ package nl.entreco.dartsscorecard.di.viewmodel
 
 import android.app.Activity
 import dagger.Subcomponent
-import nl.entreco.dartsscorecard.base.Styler
 import nl.entreco.dartsscorecard.play.Play01Component
 import nl.entreco.dartsscorecard.play.Play01Module
 
 /**
  * Created by Entreco on 14/11/2017.
  */
-@Subcomponent(modules = arrayOf(ViewModelModule::class))
+@Subcomponent(modules = [(ViewModelModule::class)])
 interface ViewModelComponent {
     fun inject(activity: Activity)
 
