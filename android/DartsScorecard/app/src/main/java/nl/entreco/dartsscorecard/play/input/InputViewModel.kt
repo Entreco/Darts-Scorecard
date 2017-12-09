@@ -1,14 +1,13 @@
 package nl.entreco.dartsscorecard.play.input
 
+import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.os.Handler
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.listeners.PlayerListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.InputListener
@@ -19,7 +18,6 @@ import nl.entreco.domain.play.model.ScoreEstimator
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.play.listeners.events.ThrownEvent
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -34,11 +32,25 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField<String>("")
     val nextDescription = ObservableInt(R.string.empty)
+    val hintProvider = ObservableField<HintKeyProvider>(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
     private var nextUp: Next? = null
+
+    init {
+        toggle.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                updateKeyboardHints()
+            }
+
+        })
+    }
+
+    private fun updateKeyboardHints() {
+        hintProvider.set(HintKeyProvider(toggle.get()))
+    }
 
     override fun onNoScoreEvent(event: NoScoreEvent) {
         special.set(if(event.noScore) event else null)
@@ -55,17 +67,31 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         }
     }
 
+    fun enteredHint(hint: Int, listener: InputListener) : Boolean {
+        val score = parseScore(hintProvider.get().getHint(hint))
+        if(hint == -1) { // Bust
+            submit(score, listener, false)
+        } else {
+            submit(score, listener)
+        }
+        return true
+    }
+
     fun back() {
         scoredTxt.set(scoredTxt.get().dropLast(1))
     }
 
     fun tryToSubmit(input: TextView, listener: InputListener) {
-        val scored = parseScore(input)
+        val scored = extractScore(input)
+        submit(scored, listener)
+    }
+
+    private fun submit(scored: Int, listener: InputListener, singles: Boolean = toggle.get()){
         if (gameIsFinished()) return
 
         // Estimate Darts thrown
-        val estimatedTurn = estimator.guess(scored, toggle.get())
-        if (toggle.get()) {
+        val estimatedTurn = estimator.guess(scored, singles)
+        if (singles) {
             submitDart(estimatedTurn.first(), listener)
             this.scoredTxt.set(turn.total().toString())
         } else {
@@ -75,11 +101,15 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         clearScoreInput()
     }
 
-    private fun parseScore(input: TextView): Int {
+    private fun extractScore(input: TextView): Int {
+        return parseScore(input.text.toString())
+    }
+
+    private fun parseScore(score: String): Int {
         return try {
-            input.text.toString().toInt()
+            score.toInt()
         } catch (err: Exception) {
-            logger.w("Unable to parse text from Score Input: ${input.text}")
+            logger.w("Unable to parse text from Score: $score")
             0
         }
     }
@@ -111,6 +141,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     override fun onNext(next: Next) {
         clearScoreInput()
         nextUp = next
+        toggle.set(false)
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
         turn = Turn()

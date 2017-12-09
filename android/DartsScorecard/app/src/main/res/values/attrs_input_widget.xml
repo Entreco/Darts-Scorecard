@@ -3,5 +3,6 @@
     <declare-styleable name="InputWidget">
         <attr name="num" format="string" />
         <attr name="hint" format="string" />
+        <attr name="accent" format="boolean" />
     </declare-styleable>
 </resources>

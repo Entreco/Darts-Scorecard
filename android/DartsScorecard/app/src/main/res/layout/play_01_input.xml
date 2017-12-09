@@ -105,72 +105,83 @@
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(1)}"
-                app:hint="ABC"
+                android:onLongClick="@{() -> viewModel.enteredHint(1, listener)}"
+                app:hint="@{viewModel.hintProvider.hint1}"
                 app:num="1" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(2)}"
-                app:hint="DEF"
+                android:onLongClick="@{() -> viewModel.enteredHint(2, listener)}"
+                app:hint="@{viewModel.hintProvider.hint2}"
                 app:num="2" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(3)}"
-                app:hint="GHI"
+                android:onLongClick="@{() -> viewModel.enteredHint(3, listener)}"
+                app:hint="@{viewModel.hintProvider.hint3}"
                 app:num="3" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(4)}"
-                app:hint="JKL"
+                android:onLongClick="@{() -> viewModel.enteredHint(4, listener)}"
+                app:hint="@{viewModel.hintProvider.hint4}"
                 app:num="4" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(5)}"
-                app:hint="MNO"
+                android:onLongClick="@{() -> viewModel.enteredHint(5, listener)}"
+                app:hint="@{viewModel.hintProvider.hint5}"
                 app:num="5" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(6)}"
-                app:hint="PQ"
+                android:onLongClick="@{() -> viewModel.enteredHint(6, listener)}"
+                app:hint="@{viewModel.hintProvider.hint6}"
                 app:num="6" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(7)}"
-                app:hint="RST"
+                android:onLongClick="@{() -> viewModel.enteredHint(7, listener)}"
+                app:hint="@{viewModel.hintProvider.hint7}"
                 app:num="7" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(8)}"
-                app:hint="UWV"
+                android:onLongClick="@{() -> viewModel.enteredHint(8, listener)}"
+                app:hint="@{viewModel.hintProvider.hint8}"
                 app:num="8" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(9)}"
-                app:hint="XYZ"
+                android:onLongClick="@{() -> viewModel.enteredHint(9, listener)}"
+                app:hint="@{viewModel.hintProvider.hint9}"
                 app:num="9" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                app:hint="_"
-                app:num=" " />
+                android:onClick="@{() -> viewModel.enteredHint(-1, listener)}"
+                app:accent="true"
+                app:hint="@string/bust" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 android:onClick="@{() -> viewModel.entered(0)}"
-                app:hint="+"
+                android:onLongClick="@{() -> viewModel.enteredHint(0, listener)}"
+                app:hint="@{viewModel.hintProvider.hint0}"
                 app:num="0" />
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                app:hint="*"
-                app:num=" " />
+                app:accent="true"
+                app:hint="@string/undo" />
 
         </GridLayout>
 
