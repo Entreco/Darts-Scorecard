@@ -224,7 +224,7 @@
             android:layout_margin="16dp"
             android:onClick="@{() -> viewModel.tryToSubmit(inputScore, listener)}"
             android:scaleType="fitXY"
-            android:src="@drawable/darts"
+            android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
             fab:fabSize="normal"
             fab:useCompatPadding="true" />
 

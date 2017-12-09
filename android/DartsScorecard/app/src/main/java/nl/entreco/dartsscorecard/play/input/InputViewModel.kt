@@ -7,17 +7,14 @@ import android.databinding.ObservableInt
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.InputListener
+import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.events.BustEvent
-import nl.entreco.domain.play.model.Dart
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.ScoreEstimator
-import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -53,7 +50,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     }
 
     override fun onNoScoreEvent(event: NoScoreEvent) {
-        special.set(if(event.noScore) event else null)
+        special.set(if (event.noScore) event else null)
     }
 
     override fun onBustEvent(event: BustEvent) {
@@ -67,9 +64,9 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         }
     }
 
-    fun enteredHint(hint: Int, listener: InputListener) : Boolean {
+    fun enteredHint(hint: Int, listener: InputListener): Boolean {
         val score = parseScore(hintProvider.get().getHint(hint))
-        if(hint == -1) { // Bust
+        if (hint == -1) { // Bust
             submit(score, listener, false)
         } else {
             submit(score, listener)
@@ -86,7 +83,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         submit(scored, listener)
     }
 
-    private fun submit(scored: Int, listener: InputListener, singles: Boolean = toggle.get()){
+    private fun submit(scored: Int, listener: InputListener, singles: Boolean = toggle.get()) {
         if (gameIsFinished()) return
 
         // Estimate Darts thrown
