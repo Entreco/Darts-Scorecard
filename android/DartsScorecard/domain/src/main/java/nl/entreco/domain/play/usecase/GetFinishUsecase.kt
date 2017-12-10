@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 open class GetFinishUsecase @Inject constructor(private val logger: Logger, private val bg: ExecutorService) {
 
-    fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*> {
+    open fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*> {
         return bg.submit{
             val finish = calculateInBack(score.score, turn.copy(), favDouble)
             result(finish)
