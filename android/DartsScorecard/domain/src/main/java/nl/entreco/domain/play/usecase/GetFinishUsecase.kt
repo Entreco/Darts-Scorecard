@@ -13,12 +13,10 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 24/11/2017.
  */
-open class GetFinishUsecase @Inject constructor(private val logger: Logger) {
+open class GetFinishUsecase @Inject constructor(private val logger: Logger, private val bg: ExecutorService) {
 
-    private val bg: ExecutorService = Executors.newSingleThreadExecutor()
-
-    fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*> {
-        return bg.submit {
+    open fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*> {
+        return bg.submit{
             val finish = calculateInBack(score.score, turn.copy(), favDouble)
             result(finish)
         }

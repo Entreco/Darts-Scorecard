@@ -1,15 +1,20 @@
 package nl.entreco.domain.play.usecase
 
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Dart
+import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
+import org.mockito.*
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.concurrent.ExecutorService
 
 /**
  * Created by Entreco on 24/11/2017.
@@ -18,7 +23,13 @@ import org.mockito.junit.MockitoJUnitRunner
 class GetFinishUsecaseTest {
 
     @Mock private lateinit var mockLogger: Logger
-    @InjectMocks lateinit var subject: GetFinishUsecase
+    @Mock private lateinit var mockBg: ExecutorService
+    lateinit var subject: GetFinishUsecase
+
+    @Before
+    fun setUp() {
+        subject = GetFinishUsecase(mockLogger, mockBg)
+    }
 
     @Test
     fun `it should return empty for scores higher than 170`() {
