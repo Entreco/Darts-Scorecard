@@ -81,7 +81,6 @@
             style="@style/Score.Hint"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:translationX="200dp"
             android:layout_gravity="end"
             android:gravity="start"
             android:paddingEnd="@dimen/def"
