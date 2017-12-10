@@ -33,8 +33,9 @@ class TeamScoreBindings {
         @BindingAdapter("special")
         fun showSpecials(view: TextView, score: Int, oldScore: Int) {
             val diff = score - oldScore
-            when (diff) {
-                180 -> handle180(view)
+            when {
+                diff == 180 -> handle180(view)
+                diff < 0 -> clear(view, 0)
                 else -> {}
             }
         }
