@@ -11,6 +11,9 @@ import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.repository.GameRepository
 import nl.entreco.domain.settings.ScoreSettings
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -41,5 +44,10 @@ class Play01Module(private val settings: ScoreSettings, private val teams: Array
     @Provides @ActivityScope
     fun provideReadyListener(): ReadyListener {
         return onReady
+    }
+
+    @Provides @ActivityScope
+    fun provideExecutorService() : ExecutorService {
+        return Executors.newSingleThreadExecutor()
     }
 }
