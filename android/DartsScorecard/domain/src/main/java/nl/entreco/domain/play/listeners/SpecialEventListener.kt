@@ -1,9 +1,6 @@
 package nl.entreco.domain.play.listeners
 
-import nl.entreco.domain.play.listeners.events.BustEvent
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
-import nl.entreco.domain.play.listeners.events.OneEightyEvent
-import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.listeners.events.*
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
@@ -21,9 +18,17 @@ interface SpecialEventListener<in T : SpecialEvent> {
         handleOneEight(turn)
         handleNoScore(turn)
         handleBust(next)
+        handleThrown(turn)
     }
 
-    fun handleBust(next: Next) {
+    private fun handleThrown(turn: Turn) {
+        try {
+            val event = ThrownEvent(turn.asFinish()) as T
+            handle(event)
+        } catch (ignore: ClassCastException) { }
+    }
+
+    private fun handleBust(next: Next) {
         if (next.state == State.ERR_BUST) {
             try {
                 val event = BustEvent() as T
@@ -33,12 +38,11 @@ interface SpecialEventListener<in T : SpecialEvent> {
         }
     }
 
-    fun handleNoScore(turn: Turn) {
+    private fun handleNoScore(turn: Turn) {
         try {
             val event = NoScoreEvent(turn.total() == 0) as T
             handle(event)
-        } catch (ignore: ClassCastException) {
-        }
+        } catch (ignore: ClassCastException) { }
     }
 
     private fun handleOneEight(turn: Turn) {
@@ -46,8 +50,7 @@ interface SpecialEventListener<in T : SpecialEvent> {
             try {
                 val event = OneEightyEvent() as T
                 handle(event)
-            } catch (ignore: ClassCastException) {
-            }
+            } catch (ignore: ClassCastException) { }
         }
     }
 }

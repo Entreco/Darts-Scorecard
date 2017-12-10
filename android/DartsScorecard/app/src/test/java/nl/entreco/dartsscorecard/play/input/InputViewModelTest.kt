@@ -224,7 +224,7 @@ class InputViewModelTest {
     }
 
     private fun whenPressingHint(hintDigit: Int) {
-        subject.onPressedHint(hintDigit, mockListener)
+        subject.onPressedKey(hintDigit, mockListener)
     }
 
     private fun whenPressingSubmit(scored: Int) {
