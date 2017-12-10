@@ -33,15 +33,15 @@ class TeamScoreBindings {
         @BindingAdapter("special")
         fun showSpecials(view: TextView, score: Int, oldScore: Int) {
             val diff = score - oldScore
-            when {
-                diff == 180 -> handle180(view)
-                diff < 0 -> clear(view, 0)
-                else -> {}
+            when (diff) {
+                180 -> handle180(view)
+                0 -> {}
+                else -> { clear(view, 0)}
             }
         }
 
         private fun clear(view: TextView, delay: Long) {
-            view.animate().translationX(view.width.toFloat()).setStartDelay(delay).withEndAction({
+            view.animate().translationX(200F).setStartDelay(delay).withEndAction({
                 view.text = ""
             }).setDuration(DEFAULT_ANIMATION_TIME).start()
         }
