@@ -6,16 +6,14 @@ import android.databinding.BindingAdapter
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.ColorUtils
+import android.util.Log
 import android.util.TypedValue
-import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
-import nl.entreco.dartsscorecard.play.input.InputBindings
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
-import nl.entreco.domain.play.listeners.events.OneEightyEvent
 
 /**
  * Created by Entreco on 25/11/2017.
@@ -32,18 +30,49 @@ class TeamScoreBindings {
         }
 
         @JvmStatic
-        @BindingAdapter("currentPlayer")
+        @BindingAdapter("special")
+        fun showSpecials(view: TextView, score: Int, oldScore: Int) {
+            val diff = score - oldScore
+            when (diff) {
+                180 -> handle180(view)
+                else -> {}
+            }
+        }
+
+        private fun clear(view: TextView, delay: Long) {
+            view.animate().translationX(view.width.toFloat()).setStartDelay(delay).withEndAction({
+                view.text = ""
+            }).setDuration(DEFAULT_ANIMATION_TIME).start()
+        }
+
+        private fun handle180(view: TextView) {
+            view.text = "180"
+            view.animate().translationX(0F).setInterpolator(OvershootInterpolator()).setDuration(DEFAULT_ANIMATION_TIME)
+                    .withEndAction({
+                        val howLong = 1200L
+                        animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, howLong)
+                        clear(view, howLong)
+                    }).start()
+        }
+
+        private fun animateColor(view: TextView, attr: Int, attr2: Int, duration: Long) {
+            view.animate().setDuration(duration / 3)
+                    .setStartDelay(duration / 3)
+                    .withStartAction{ view.setTextColor(fromAttr(view.context, attr)) }
+                    .withEndAction { view.setTextColor(fromAttr(view.context, attr2)) }
+                    .start()
+        }
+
+
+        @JvmStatic
+        @BindingAdapter("currentScore")
         fun showCurrentScore(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
             if (score <= 0) {
                 view.animate().translationX(200F).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
             } else {
                 view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
-                if (score == 180) {
-                    view.setTextColor(view.context.getColor(R.color.colorOneEighty))
-                } else {
-                    view.setTextColor(fromAttr(view.context, R.attr.scoreText))
-                }
+                view.setTextColor(fromAttr(view.context, R.attr.scoreText))
             }
         }
 

@@ -68,9 +68,9 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         }
     }
 
-    fun onPressedHint(hint: Int, listener: InputListener): Boolean {
-        val score = parseScore(hintProvider.get().getHintForKey(hint))
-        if (hint == -1) { // Bust
+    fun onPressedKey(key: Int, listener: InputListener): Boolean {
+        val score = parseScore(hintProvider.get().getHintForKey(key))
+        if (key == -1) { // Bust
             submit(score, listener, false)
         } else {
             submit(score, listener)

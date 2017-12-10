@@ -13,6 +13,7 @@
         <item name="colorAccent">@color/bdo_red_dark</item>
         <item name="highlightColor">@color/white</item>
         <item name="statBorderColor">@android:color/transparent</item>
+        <item name="colorOneEighty">@color/bdo_yellow_dark</item>
         <item name="nameText">@color/white</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/black</item>
