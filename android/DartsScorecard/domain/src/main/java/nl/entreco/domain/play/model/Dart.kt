@@ -84,4 +84,13 @@ enum class Dart(private val description: String, private val value: Int) {
     fun isDouble(): Boolean {
         return description.startsWith("D") || description.startsWith("BULL")
     }
+
+    companion object {
+        fun fromString(dart: String) : Dart {
+            Dart.values()
+                    .filter { it.desc() == dart }
+                    .forEach { return it }
+            return Dart.NONE
+        }
+    }
 }
