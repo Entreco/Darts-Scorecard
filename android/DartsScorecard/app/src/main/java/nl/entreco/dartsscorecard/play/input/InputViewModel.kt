@@ -32,6 +32,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     val hintProvider = ObservableField<HintKeyProvider>(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
     val required = ObservableField<Score>()
+    val dartsLeft = ObservableInt()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -114,6 +115,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
     private fun submitDart(dart: Dart, listener: InputListener) {
         turn += dart
+        dartsLeft.set(turn.dartsLeft())
         listener.onDartThrown(turn.copy(), nextUp?.player!!)
 
         when {
@@ -143,6 +145,7 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
         turn = Turn()
+        dartsLeft.set(turn.dartsLeft())
     }
 
     private fun descriptionFromNext(next: Next): Int {
