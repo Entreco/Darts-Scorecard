@@ -18,6 +18,6 @@
     <string name="game_shot_and_match">Game shot, and the match</string>
 
 
-    <string name="single_mode">Single</string>
-    <string name="all_mode">All</string>
+    <string name="single_mode">individual</string>
+    <string name="all_mode">total</string>
 </resources>

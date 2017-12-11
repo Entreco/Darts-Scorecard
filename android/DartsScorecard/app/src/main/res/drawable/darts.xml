@@ -2,22 +2,57 @@
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/dartsLeft_0"
+        android:id="@+id/dartsLeft_3"
+        android:drawable="@drawable/ic_darts_3"
+        android:state_selected="true"
+        android:state_activated="false"
+        android:state_pressed="false"/>
+
+    <item
+        android:id="@+id/dartsLeft_3a"
+        android:drawable="@drawable/ic_darts_3"
+        android:state_selected="true"
+        android:state_activated="false"
+        android:state_pressed="true"/>
+
+    <item
+        android:id="@+id/dartsLeft_2"
+        android:drawable="@drawable/ic_darts_2"
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_pressed="false"/>
+
+    <item
+        android:id="@+id/dartsLeft_2a"
+        android:drawable="@drawable/ic_darts_2"
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_pressed="true"/>
+
+    <item
+        android:id="@+id/dartsLeft_1a"
         android:state_pressed="true"
-        android:drawable="@drawable/dart_throw" />
+        android:state_selected="false"
+        android:state_activated="false"
+        android:drawable="@drawable/ic_darts_1" />
 
     <item
         android:id="@+id/dartsLeft_1"
-        android:drawable="@drawable/ic_darts" />
+        android:drawable="@drawable/ic_darts_1" />
+
+    <transition
+        android:fromId="@id/dartsLeft_3"
+        android:toId="@id/dartsLeft_3a"
+        android:drawable="@drawable/dart_throw_first" />
+
+    <transition
+        android:fromId="@id/dartsLeft_2"
+        android:toId="@id/dartsLeft_2a"
+        android:drawable="@drawable/dart_throw_second" />
 
     <transition
         android:fromId="@id/dartsLeft_1"
-        android:toId="@id/dartsLeft_0"
-        android:drawable="@drawable/dart_throw" />
-
-    <transition
-        android:fromId="@id/dartsLeft_0"
-        android:toId="@id/dartsLeft_1"
-        android:drawable="@drawable/dart_fade" />
+        android:toId="@id/dartsLeft_1a"
+        android:drawable="@drawable/dart_throw_third" />
 
 </animated-selector>
