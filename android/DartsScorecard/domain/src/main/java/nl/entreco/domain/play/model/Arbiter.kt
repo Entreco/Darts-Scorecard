@@ -23,25 +23,24 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     fun handle(turn: Turn, next: Next): Next {
         val teamIndex = teamIndexOfNext(turnHandler.teams, next)
-        val score = scores[teamIndex]
         when (applyScore(teamIndex, turn)) {
-            ERR -> return turnHandler.next(score).copy(state = State.ERR_REQUIRES_DOUBLE)
-            BUST -> return turnHandler.next(score).copy(state = State.ERR_BUST)
+            ERR -> return turnHandler.next(scores).copy(state = State.ERR_REQUIRES_DOUBLE)
+            BUST -> return turnHandler.next(scores).copy(state = State.ERR_BUST)
         }
 
-        if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player, score)
-        if (requiresNewSet(teamIndex)) return playerForNewSet(score)
-        else if (requiresNewLeg(teamIndex)) return playerForNewLeg(score)
+        if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player, scores[teamIndex])
+        if (requiresNewSet(teamIndex)) return playerForNewSet()
+        else if (requiresNewLeg(teamIndex)) return playerForNewLeg()
 
-        return turnHandler.next(score)
+        return turnHandler.next(scores)
     }
 
     private fun teamIndexOfNext(teams: Array<out Team>, next: Next): Int {
         return teams.indexOf(next.team)
     }
 
-    private fun playerForNewLeg(required: Score) = turnHandler.nextLeg(required)
-    private fun playerForNewSet(required: Score) = turnHandler.nextSet(required)
+    private fun playerForNewLeg() = turnHandler.nextLeg(scores)
+    private fun playerForNewSet() = turnHandler.nextSet(scores)
 
     private fun gameShotAndTheMatch(currentPlayer: Int): Boolean {
         if (matchFinished(currentPlayer)) {
