@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.databinding.BindingAdapter
+import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
@@ -35,11 +36,31 @@ class InputBindings {
 
 
         @JvmStatic
+        @BindingAdapter("numDarts")
+        fun numDartsState(view: FloatingActionButton, dartsLeft: Int) {
+            when (dartsLeft) {
+                3 -> {
+                    view.isSelected = true
+                    view.isActivated = false
+                }
+                2 ->{
+                    view.isSelected = false
+                    view.isActivated = true
+                }
+                1 -> {
+                    view.isSelected = false
+                    view.isActivated = false
+                }
+            }
+        }
+
+
+        @JvmStatic
         @BindingAdapter("special")
         fun showSpecialEvents(view: TextView, event: SpecialEvent?) {
             clear(view, 0)
             if (event != null) {
-                when(event) {
+                when (event) {
                     is NoScoreEvent -> handleNoScore(view)
                     is ThrownEvent -> handleThrown(view, event.describe)
                     is BustEvent -> handleBust(view)
@@ -61,14 +82,14 @@ class InputBindings {
         }
 
         private fun handleNoScore(view: TextView) {
-            view.setText( R.string.no_score )
+            view.setText(R.string.no_score)
             view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
                 clear(view, 500)
             }).start()
         }
 
         private fun handleBust(view: TextView) {
-            view.setText( R.string.bust )
+            view.setText(R.string.bust)
             view.animate().translationX(0F).setDuration(DEFAULT_ANIMATION_TIME).withEndAction({
                 clear(view, 500)
             }).start()
