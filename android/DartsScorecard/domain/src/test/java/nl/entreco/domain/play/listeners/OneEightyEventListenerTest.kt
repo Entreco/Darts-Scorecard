@@ -41,13 +41,14 @@ class OneEightyEventListenerTest : SpecialEventListenerTest() {
 
         private val player = Player("180 thrower")
         private val team = Team(player)
+        private val score = Score()
 
         override fun handle(event: OneEightyEvent) {
             check.set(true)
         }
 
         fun onScored(turn: Turn) {
-            onSpecialEvent(Next(State.NORMAL, team, 0, player), turn, player, arrayOf(Score()))
+            onSpecialEvent(Next(State.NORMAL, team, 0, player, score), turn, player, arrayOf(score))
         }
 
         fun wasNotified(): Boolean {

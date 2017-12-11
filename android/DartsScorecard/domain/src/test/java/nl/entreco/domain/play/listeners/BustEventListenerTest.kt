@@ -41,13 +41,14 @@ class BustEventListenerTest  : SpecialEventListenerTest() {
 
         private val player = Player("No Score thrower")
         private val team = Team(player)
+        private val score = Score()
 
         override fun handle(event: BustEvent) {
             check.set(true)
         }
 
         fun onNext(state: State) {
-            onSpecialEvent(Next(state, team, 0, player), Turn(), player, arrayOf(Score()))
+            onSpecialEvent(Next(state, team, 0, player, score), Turn(), player, arrayOf(score))
         }
 
         fun wasNotified(): Boolean {

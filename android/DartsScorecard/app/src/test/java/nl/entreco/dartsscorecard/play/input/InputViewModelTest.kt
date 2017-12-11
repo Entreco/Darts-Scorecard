@@ -9,7 +9,10 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Next
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.NoPlayer
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -36,6 +39,7 @@ class InputViewModelTest {
 
     private lateinit var givenEvent: SpecialEvent
     private lateinit var givenPlayer: Player
+    private lateinit var givenRequiredScore: Score
 
     @Test
     fun `it should put toggle in 'off' state initially`() {
@@ -191,9 +195,35 @@ class InputViewModelTest {
         thenToggleState(false)
     }
 
-    private fun givenPlayer(playerName: String) {
+    @Test
+    fun `it should store required Score, when Next player is throwing`() {
+        givenPlayer("some player", 201)
+        thenRequiredIs(201)
+    }
+
+    @Test
+    fun `it should submit Score when finishing with 1 dart in SingleMode`() {
+        givenPlayer("Mvg", 18)
+        givenSingleMode(true)
+        whenSubmittingSingle(18)
+        verify(mockListener).onDartThrown(any(), eq(givenPlayer))
+        verify(mockListener).onTurnSubmitted(Turn(Dart.DOUBLE_9), givenPlayer)
+    }
+
+    @Test
+    fun `it should submit Score when finishing with 2 darts in SingleMode`() {
+        givenPlayer("Mvg", 18)
+        givenSingleMode(true)
+        whenSubmittingSingle(2)
+        whenSubmittingSingle(16)
+        verify(mockListener, times(2)).onDartThrown(any(), eq(givenPlayer))
+        verify(mockListener).onTurnSubmitted(Turn(Dart.DOUBLE_1, Dart.DOUBLE_8), givenPlayer)
+    }
+
+    private fun givenPlayer(playerName: String, pts: Int = 501) {
         givenPlayer = Player(playerName)
-        subject.onNext(Next(State.NORMAL, Team(givenPlayer), 0, givenPlayer))
+        givenRequiredScore = Score(pts, 0, 0)
+        subject.onNext(Next(State.NORMAL, Team(givenPlayer), 0, givenPlayer, givenRequiredScore))
     }
 
     private fun givenEntered(scored: Int) {
@@ -243,5 +273,9 @@ class InputViewModelTest {
 
     private fun thenToggleState(state: Boolean) {
         assertEquals(state, subject.toggle.get())
+    }
+
+    private fun thenRequiredIs(required: Int) {
+        assertEquals(required, subject.required.get().score)
     }
 }

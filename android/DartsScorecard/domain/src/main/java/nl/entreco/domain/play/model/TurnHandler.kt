@@ -21,33 +21,33 @@ class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int = 0) 
 
     private fun teamIndex() = teams.indexOf(team())
 
-    fun start(): Next {
+    fun start(required: Score = Score()): Next {
         turns = 0
         legs = 0
         sets = 0
-        return Next(State.START, team(),teamStartIndex, currentPlayer)
+        return Next(State.START, team(),teamStartIndex, currentPlayer, required)
     }
 
-    fun next(): Next {
+    fun next(required: Score = Score()): Next {
         if (turns < 0) throw IllegalStateException("not started")
         turns++
-        return Next(State.NORMAL, team(), teamIndex(), currentPlayer)
+        return Next(State.NORMAL, team(), teamIndex(), currentPlayer, required)
     }
 
     override fun toString(): String {
         return currentPlayer.toString()
     }
 
-    fun nextLeg(): Next {
+    fun nextLeg(required: Score = Score()): Next {
         turns = 0
         legs++
-        return Next(State.LEG, team(), teamIndex(), currentPlayer)
+        return Next(State.LEG, team(), teamIndex(), currentPlayer, required)
     }
 
-    fun nextSet(): Next {
+    fun nextSet(required: Score = Score()): Next {
         turns = 0
         legs = 0
         sets++
-        return Next(State.SET, team(), teamIndex(), currentPlayer)
+        return Next(State.SET, team(), teamIndex(), currentPlayer, required)
     }
 }
