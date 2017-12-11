@@ -6,9 +6,9 @@ import nl.entreco.domain.play.model.players.Team
 class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     companion object {
-        const val OK : Int = 1
-        const val BUST : Int = -1
-        const val ERR : Int = -2
+        const val OK: Int = 1
+        const val BUST: Int = -1
+        const val ERR: Int = -2
     }
 
     private var scores = initForStart(initial)
@@ -18,29 +18,29 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
     fun start(): Next {
-        return turnHandler.start()
+        return turnHandler.start(scores[0])
     }
 
     fun handle(turn: Turn, next: Next): Next {
         val teamIndex = teamIndexOfNext(turnHandler.teams, next)
         when (applyScore(teamIndex, turn)) {
-            ERR -> return turnHandler.next().copy(state = State.ERR_REQUIRES_DOUBLE)
-            BUST -> return turnHandler.next().copy(state = State.ERR_BUST)
+            ERR -> return turnHandler.next(scores).copy(state = State.ERR_REQUIRES_DOUBLE)
+            BUST -> return turnHandler.next(scores).copy(state = State.ERR_BUST)
         }
 
-        if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player)
+        if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player, scores[teamIndex])
         if (requiresNewSet(teamIndex)) return playerForNewSet()
         else if (requiresNewLeg(teamIndex)) return playerForNewLeg()
 
-        return turnHandler.next()
+        return turnHandler.next(scores)
     }
 
     private fun teamIndexOfNext(teams: Array<out Team>, next: Next): Int {
         return teams.indexOf(next.team)
     }
 
-    private fun playerForNewLeg() = turnHandler.nextLeg()
-    private fun playerForNewSet() = turnHandler.nextSet()
+    private fun playerForNewLeg() = turnHandler.nextLeg(scores)
+    private fun playerForNewSet() = turnHandler.nextSet(scores)
 
     private fun gameShotAndTheMatch(currentPlayer: Int): Boolean {
         if (matchFinished(currentPlayer)) {

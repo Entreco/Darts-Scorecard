@@ -132,7 +132,7 @@ class TeamScoreViewModelTest {
     }
 
     private fun whenNextEventOccurs(state: State, player: Player) {
-        givenNext = Next(state, Team("some team"), 0, player)
+        givenNext = Next(state, Team("some team"), 0, player, Score())
         subject.turnUpdate(givenNext)
     }
 

@@ -70,4 +70,27 @@ class TurnTest {
     fun `it IS allowed to add ZERO to a turn`() {
         assertEquals(0, (Turn() + Dart.ZERO).total())
     }
+
+    @Test
+    fun `it should return first dart correctly`() {
+        assertEquals(Dart.NONE, Turn().first())
+        assertEquals(Dart.SINGLE_BULL, Turn(Dart.SINGLE_BULL).first())
+        assertEquals(Dart.SINGLE_BULL, Turn(Dart.SINGLE_BULL, Dart.TRIPLE_2).first())
+        assertEquals(Dart.SINGLE_BULL, Turn(Dart.SINGLE_BULL, Dart.SINGLE_2, Dart.TRIPLE_20).first())
+    }
+
+    @Test
+    fun `it should print nicely (= subjective) formatted string`() {
+        assertEquals("10 T20 D15 (100)", Turn(Dart.SINGLE_10, Dart.TRIPLE_20, Dart.DOUBLE_15).toString())
+    }
+
+    @Test
+    fun `it should print nicely (= subjective) as Finish string`() {
+        assertEquals("", Turn().asFinish())
+        assertEquals("D20", Turn(Dart.DOUBLE_20).asFinish())
+        assertEquals("10 D15", Turn(Dart.SINGLE_10, Dart.DOUBLE_15).asFinish())
+        assertEquals("10 T20 D15", Turn(Dart.SINGLE_10, Dart.TRIPLE_20, Dart.DOUBLE_15).asFinish())
+        assertEquals("BULL", Turn(Dart.BULL).asFinish())
+        assertEquals("S.BULL BULL", Turn(Dart.SINGLE_BULL, Dart.BULL).asFinish())
+    }
 }

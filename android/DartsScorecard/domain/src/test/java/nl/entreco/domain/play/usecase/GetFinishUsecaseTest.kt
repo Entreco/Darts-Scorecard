@@ -1,11 +1,13 @@
 package nl.entreco.domain.play.usecase
 
+import android.text.TextUtils.split
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.ScoreEstimator
 import nl.entreco.domain.play.model.Turn
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -119,7 +121,26 @@ class GetFinishUsecaseTest {
 
     private fun verifyDartsNeeded(scored: Int, turn: Turn, numDarts: Int) {
         val finish = subject.calculateInBack(scored, turn, 20)
+        val thrown = ScoreEstimator().guess(scored, false)
         assertNotEquals("scored: $scored finish: $finish", subject.notPossible, finish)
         assertEquals("scored: $scored finish: $finish", numDarts, finish.split(" ").size)
+        assertEquals("scored: $scored thrown: ${thrown.total()}", scored, thrown.total())
+        assertEquals("scored: $scored thrown: ${thrown.total()} finish: $finish", scored, finishToDarts(finish))
+    }
+
+    private fun finishToDarts(finish: String) : Int {
+        var turn = Turn()
+        for( dart in finish.split(" ")){
+            try {
+                val d = Dart.fromString(dart)
+                if(d != Dart.NONE) {
+                    turn += d
+                }
+            } catch(oops: IllegalStateException){
+                System.out.println("dart:$dart, $oops")
+            }
+        }
+
+        return turn.total()
     }
 }

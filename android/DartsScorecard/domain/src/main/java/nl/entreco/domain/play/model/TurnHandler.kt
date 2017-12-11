@@ -8,7 +8,7 @@ import nl.entreco.domain.play.model.players.Team
 /**
  * Created by Entreco on 18/11/2017.
  */
-class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int = 0) {
+class TurnHandler(val teams: Array<Team>, private val teamStartIndex: Int = 0) {
 
     private var turns = -1
     private var legs = 0
@@ -21,33 +21,36 @@ class TurnHandler(val teams: Array<Team>, private val teamStartIndex : Int = 0) 
 
     private fun teamIndex() = teams.indexOf(team())
 
-    fun start(): Next {
+    fun start(required: Score = Score()): Next {
         turns = 0
         legs = 0
         sets = 0
-        return Next(State.START, team(),teamStartIndex, currentPlayer)
+        return Next(State.START, team(), teamStartIndex, currentPlayer, required)
     }
 
-    fun next(): Next {
+    fun next(scores: Array<Score>): Next {
         if (turns < 0) throw IllegalStateException("not started")
         turns++
-        return Next(State.NORMAL, team(), teamIndex(), currentPlayer)
+        val index = teamIndex()
+        return Next(State.NORMAL, team(), index, currentPlayer, scores[index])
     }
 
     override fun toString(): String {
         return currentPlayer.toString()
     }
 
-    fun nextLeg(): Next {
+    fun nextLeg(scores: Array<Score>): Next {
         turns = 0
         legs++
-        return Next(State.LEG, team(), teamIndex(), currentPlayer)
+        val index = teamIndex()
+        return Next(State.LEG, team(), index, currentPlayer, scores[index])
     }
 
-    fun nextSet(): Next {
+    fun nextSet(scores: Array<Score>): Next {
         turns = 0
         legs = 0
         sets++
-        return Next(State.SET, team(), teamIndex(), currentPlayer)
+        val index = teamIndex()
+        return Next(State.SET, team(), index, currentPlayer, scores[index])
     }
 }

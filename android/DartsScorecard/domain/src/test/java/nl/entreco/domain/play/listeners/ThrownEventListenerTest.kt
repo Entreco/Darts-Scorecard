@@ -1,6 +1,5 @@
 package nl.entreco.domain.play.listeners
 
-import nl.entreco.domain.play.listeners.events.OneEightyEvent
 import nl.entreco.domain.play.listeners.events.ThrownEvent
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
@@ -37,19 +36,20 @@ class ThrownEventListenerTest : SpecialEventListenerTest() {
 
         private val player = Player("180 thrower")
         private val team = Team(player)
-        private var description : String? = null
+        private val score = Score()
+        private var description: String? = null
 
         override fun handle(event: ThrownEvent) {
             check.set(true)
             description = event.describe
         }
 
-        fun describe() : String? {
+        fun describe(): String? {
             return description
         }
 
         fun onThrown(turn: Turn) {
-            onSpecialEvent(Next(State.NORMAL, team, 0, player), turn, player, arrayOf(Score()))
+            onSpecialEvent(Next(State.NORMAL, team, 0, player, score), turn, player, arrayOf(score))
         }
 
         fun wasNotified(): Boolean {

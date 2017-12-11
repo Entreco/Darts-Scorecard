@@ -8,7 +8,7 @@ import nl.entreco.dartsscorecard.di.application.DaggerAppComponent
 /**
  * Created by Entreco on 14/11/2017.
  */
-class App : Application() {
+open class App : Application() {
 
     val appComponent: AppComponent by lazy { DaggerAppComponent.builder().appModule(AppModule(this)).build() }
 

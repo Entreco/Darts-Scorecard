@@ -1,6 +1,7 @@
 package nl.entreco.domain.play
 
 import nl.entreco.domain.play.model.Next
+import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
@@ -21,6 +22,6 @@ class TestProvider {
     }
 
     fun next(): Next {
-        return Next(State.START, team1, 0, player1)
+        return Next(State.START, team1, 0, player1, Score())
     }
 }

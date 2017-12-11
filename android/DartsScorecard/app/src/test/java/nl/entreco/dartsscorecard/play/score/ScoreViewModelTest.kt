@@ -68,7 +68,7 @@ class ScoreViewModelTest {
     }
 
     private fun `given NextInfo for Team`(index: Int) {
-        givenNext = Next(State.MATCH, givenTeams[index], index, givenTeams[index].players[0])
+        givenNext = Next(State.MATCH, givenTeams[index], index, givenTeams[index].players[0], Score())
     }
 
     private fun `given 3 Darts thrown`(d1:Dart, d2:Dart, d3: Dart) {

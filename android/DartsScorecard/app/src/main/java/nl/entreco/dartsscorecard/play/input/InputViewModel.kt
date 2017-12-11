@@ -31,6 +31,8 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
     val nextDescription = ObservableInt(R.string.empty)
     val hintProvider = ObservableField<HintKeyProvider>(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
+    val required = ObservableField<Score>()
+    val dartsLeft = ObservableInt()
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -113,12 +115,12 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
 
     private fun submitDart(dart: Dart, listener: InputListener) {
         turn += dart
+        dartsLeft.set(turn.dartsLeft())
         listener.onDartThrown(turn.copy(), nextUp?.player!!)
 
         when {
-            lastDart() -> {
-                submitScore(turn.copy(), listener)
-            }
+            lastDart() -> submitScore(turn.copy(), listener)
+            didFinishLeg() -> submitScore(turn.copy(), listener)
         }
     }
 
@@ -139,9 +141,11 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         clearScoreInput()
         nextUp = next
         toggle.set(false)
+        required.set(next.requiredScore)
         nextDescription.set(descriptionFromNext(next))
         current.set(next.player)
         turn = Turn()
+        dartsLeft.set(turn.dartsLeft())
     }
 
     private fun descriptionFromNext(next: Next): Int {
@@ -152,6 +156,10 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
             State.MATCH -> R.string.game_shot_and_match
             else -> R.string.to_throw
         }
+    }
+
+    private fun didFinishLeg(): Boolean {
+        return required.get().score == turn.total()
     }
 
     private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH

@@ -81,16 +81,16 @@ enum class Dart(private val description: String, private val value: Int) {
         return description
     }
 
-    fun next(): Dart {
-        return when {
-            this == Dart.NONE -> Dart.DOUBLE_1
-            this == Dart.DOUBLE_1 -> Dart.DOUBLE_2
-            this == Dart.DOUBLE_2 -> Dart.DOUBLE_3
-            else -> Dart.NONE
-        }
+    fun isDouble(): Boolean {
+        return description.startsWith("D") || description.startsWith("BULL")
     }
 
-    fun isDouble(): Boolean {
-        return description.startsWith("D")
+    companion object {
+        fun fromString(dart: String) : Dart {
+            Dart.values()
+                    .filter { it.desc() == dart }
+                    .forEach { return it }
+            return Dart.NONE
+        }
     }
 }

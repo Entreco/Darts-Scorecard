@@ -41,13 +41,14 @@ class NoScoreEventListenerTest : SpecialEventListenerTest() {
 
         private val player = Player("No Score thrower")
         private val team = Team(player)
+        private val score = Score()
 
         override fun handle(event: NoScoreEvent) {
             check.set(event.noScore)
         }
 
         fun onScored(turn: Turn) {
-            onSpecialEvent(Next(State.NORMAL, team, 0, player), turn, player, arrayOf(Score()))
+            onSpecialEvent(Next(State.NORMAL, team, 0, player, score), turn, player, arrayOf(score))
         }
 
         fun wasNotified(): Boolean {
