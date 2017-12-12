@@ -44,7 +44,7 @@ class ScoreViewModelTest {
 
     @Test
     fun `it should get numTeams from ScoreSettings`() {
-        assertEquals(givenScoreSettings.numSets, subject.numSets.get())
+        assertEquals(0, subject.numSets.get())
     }
 
     @Test
@@ -57,7 +57,7 @@ class ScoreViewModelTest {
     fun `it should notify adapter which player of which team threw some darts`() {
         `given 3 Darts thrown`(Dart.SINGLE_1, Dart.SINGLE_2, Dart.SINGLE_3)
         `when a this player throws`(player2)
-        `then Adapter is notified that TeamAtIndex has thrown`(1, player2)
+        `then Adapter is notified that TeamAtIndex has thrown`(-1, player2)
     }
 
     @Test
