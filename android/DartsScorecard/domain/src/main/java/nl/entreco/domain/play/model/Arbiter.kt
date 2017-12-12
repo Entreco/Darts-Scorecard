@@ -3,13 +3,11 @@ package nl.entreco.domain.play.model
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
 
-class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
+const val OK: Int = 1
+const val BUST: Int = -1
+const val ERR: Int = -2
 
-    companion object {
-        const val OK: Int = 1
-        const val BUST: Int = -1
-        const val ERR: Int = -2
-    }
+open class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var scores = initForStart(initial)
 
@@ -19,6 +17,10 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     fun start(): Next {
         return turnHandler.start(scores[0])
+    }
+
+    fun teams(): Array<Team> {
+        return turnHandler.teams
     }
 
     fun handle(turn: Turn, next: Next): Next {

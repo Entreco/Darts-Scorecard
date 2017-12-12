@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-open class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) : RecyclerView.Adapter<TeamScoreView>() {
+open class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
@@ -62,10 +62,6 @@ open class ScoreAdapter @Inject constructor(private val onReady: ReadyListener) 
         if (position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
         notifyItemChanged(position)
-    }
-
-    open fun onTeamsReady() {
-        onReady.onReady()
     }
 
     private class LazyInflater(context: Context) {

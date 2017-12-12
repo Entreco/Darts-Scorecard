@@ -40,7 +40,7 @@ class OneEightyEventListenerTest : SpecialEventListenerTest() {
     private class OneEightEventListener(private val check: AtomicBoolean = AtomicBoolean(false)) : SpecialEventListener<OneEightyEvent> {
 
         private val player = Player("180 thrower")
-        private val team = Team(player)
+        private val team = Team(arrayOf(player))
         private val score = Score()
 
         override fun handle(event: OneEightyEvent) {

@@ -9,5 +9,5 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 @ActivityScope
 @Subcomponent(modules = [(Play01Module::class)])
 interface Play01Component {
-    fun viewModel(): Play01ViewModel
+    fun inject(activity: Play01Activity)
 }

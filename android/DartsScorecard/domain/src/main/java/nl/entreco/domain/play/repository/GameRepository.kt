@@ -1,11 +1,23 @@
 package nl.entreco.domain.play.repository
 
-import nl.entreco.domain.play.model.Arbiter
+import android.support.annotation.WorkerThread
 import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.usecase.SetupModel
 
 /**
  * Created by Entreco on 15/11/2017.
  */
 interface GameRepository {
-    fun new(arbiter: Arbiter) : Game
+
+    @Throws
+    @WorkerThread
+    fun create(createModel: SetupModel): Game
+
+    @Throws
+    @WorkerThread
+    fun fetchBy(uid: String): Game
+
+    @Throws
+    @WorkerThread
+    fun fetchLatest(): Game
 }

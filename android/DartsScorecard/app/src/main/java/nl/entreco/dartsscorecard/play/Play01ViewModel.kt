@@ -2,8 +2,9 @@ package nl.entreco.dartsscorecard.play
 
 import android.support.annotation.VisibleForTesting
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.input.InputViewModel
+import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
@@ -13,29 +14,35 @@ import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.usecase.CreateGameUsecase
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.usecase.RetrieveGameUsecase
+import nl.entreco.domain.play.usecase.SetupModel
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, val inputViewModel: InputViewModel, val getFinishUsecase: GetFinishUsecase, createGameUseCase: CreateGameUsecase) : BaseViewModel(), InputListener {
+class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: RetrieveGameUsecase) : BaseViewModel(), UiCallback, InputListener {
 
     // Lazy to keep state
-    private val game: Game by lazy { createGameUseCase.start() }
+    private lateinit var game: Game
     private val playerListeners = mutableListOf<PlayerListener>()
     private val scoreListeners = mutableListOf<ScoreListener>()
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    init {
-        addScoreListener(scoreViewModel)
-        addPlayerListener(scoreViewModel)
-        addPlayerListener(inputViewModel)
-        addSpecialEventListener(inputViewModel)
+    fun retrieveGame(uid: String, settings: SetupModel, load: GameLoadable) {
+        retrieveGameUseCase.start(uid, settings, ok = startOk(load, settings), err = { })
     }
 
-    fun onReady() {
+    private fun startOk(load: GameLoadable, settings: SetupModel): (Game) -> Unit {
+        return {
+            game = it
+            load.startWith(it, settings, this)
+        }
+    }
+
+    override fun onLetsPlayDarts() {
+        game.start()
+
         notifyNextPlayer(game.next)
         notifyScoreChanged(game.scores, game.next.player)
     }
@@ -60,7 +67,6 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         notifyNextPlayer(next)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
@@ -69,7 +75,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
         }
     }
 
-    private fun addPlayerListener(playerListener: PlayerListener) {
+    fun addPlayerListener(playerListener: PlayerListener) {
         synchronized(playerListeners) {
             if (!playerListeners.contains(playerListener)) {
                 playerListeners.add(playerListener)
@@ -78,7 +84,7 @@ class Play01ViewModel @Inject constructor(val scoreViewModel: ScoreViewModel, va
     }
 
 
-    private fun addSpecialEventListener(specialEventListener: SpecialEventListener<*>) {
+    fun addSpecialEventListener(specialEventListener: SpecialEventListener<*>) {
         synchronized(specialEventListener) {
             if (!specialEventListeners.contains(specialEventListener)) {
                 specialEventListeners.add(specialEventListener)

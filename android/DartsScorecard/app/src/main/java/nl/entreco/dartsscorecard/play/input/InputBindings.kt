@@ -43,7 +43,7 @@ class InputBindings {
                     view.isSelected = true
                     view.isActivated = false
                 }
-                2 ->{
+                2 -> {
                     view.isSelected = false
                     view.isActivated = true
                 }

@@ -1,5 +1,7 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.TestProvider
+import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
@@ -14,7 +16,7 @@ class ArbiterBustTest {
 
     private val startIndex = 0
     private val initialScore = Score(40, 0, 0, ScoreSettings(40, 1, 1, startIndex))
-    private val turnHandler = TurnHandler(arrayOf(Team("team1"), Team("team2")), startIndex)
+    private val turnHandler = TurnHandler(TestProvider().teams(), startIndex)
     val subject: Arbiter = Arbiter(initialScore, turnHandler)
 
     @Test

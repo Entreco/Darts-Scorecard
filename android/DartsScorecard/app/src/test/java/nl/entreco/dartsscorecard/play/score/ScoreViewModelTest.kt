@@ -28,18 +28,18 @@ class ScoreViewModelTest {
     private val player2 = Player("2")
     private val player3 = Player("3")
 
-    private val givenTeams = arrayOf(Team(player1), Team(player2), Team(player3))
+    private val givenTeams = arrayOf(Team(arrayOf(player1)), Team(arrayOf(player2)), Team(arrayOf(player3)))
     private val givenScores = arrayOf(Score(), Score(), Score())
     private val givenScoreSettings = ScoreSettings()
-    private lateinit var givenTurn : Turn
-    private lateinit var givenNext : Next
+    private lateinit var givenTurn: Turn
+    private lateinit var givenNext: Next
     @Mock private lateinit var mockAdapter: ScoreAdapter
     @Mock private lateinit var mockPlayer: Player
     @Mock private lateinit var mockLogger: Logger
 
     @Before
     fun setUp() {
-        subject = ScoreViewModel(givenTeams, givenScoreSettings, mockAdapter, mockLogger)
+        subject = ScoreViewModel(mockAdapter, mockLogger)
     }
 
     @Test
@@ -71,7 +71,7 @@ class ScoreViewModelTest {
         givenNext = Next(State.MATCH, givenTeams[index], index, givenTeams[index].players[0], Score())
     }
 
-    private fun `given 3 Darts thrown`(d1:Dart, d2:Dart, d3: Dart) {
+    private fun `given 3 Darts thrown`(d1: Dart, d2: Dart, d3: Dart) {
         givenTurn = Turn(d1, d2, d3)
     }
 

@@ -3,23 +3,22 @@ package nl.entreco.domain.play.usecase
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
 import nl.entreco.domain.Logger
+import nl.entreco.domain.executors.Background
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 24/11/2017.
  */
-open class GetFinishUsecase @Inject constructor(private val logger: Logger, private val bg: ExecutorService) {
+open class GetFinishUsecase @Inject constructor(private val logger: Logger, private val bg: Background) {
 
     open fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*> {
-        return bg.submit{
+        return bg.post(Runnable {
             val finish = calculateInBack(score.score, turn.copy(), favDouble)
             result(finish)
-        }
+        })
     }
 
     private val impossible = arrayOf(169, 168, 166, 165, 163, 162, 159)

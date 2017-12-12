@@ -30,7 +30,7 @@ class TeamScoreViewModelTest {
 
     private val playerFromMyTeam: Player = Player("pietje")
     private val playerFromOtherTeam: Player = Player("paultje")
-    private val givenTeam: Team = Team(playerFromMyTeam)
+    private val givenTeam: Team = Team(arrayOf(playerFromMyTeam))
     private val givenStartScore: Score = Score()
     private lateinit var givenNext: Next
     private lateinit var givenScore: Score
@@ -132,7 +132,7 @@ class TeamScoreViewModelTest {
     }
 
     private fun whenNextEventOccurs(state: State, player: Player) {
-        givenNext = Next(state, Team("some team"), 0, player, Score())
+        givenNext = Next(state, Team(arrayOf(Player("some team"))), 0, player, Score())
         subject.turnUpdate(givenNext)
     }
 

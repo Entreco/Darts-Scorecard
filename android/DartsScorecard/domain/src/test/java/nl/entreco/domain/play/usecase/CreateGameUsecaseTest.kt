@@ -2,51 +2,64 @@ package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.play.TestBackground
+import nl.entreco.domain.play.TestForeground
 import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * Created by Entreco on 14/11/2017.
+ * Created by Entreco on 12/12/2017.
  */
 @RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
-    @Mock private lateinit var mockGameRepository : GameRepository
+    @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
+    @Mock private lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockArbiter: Arbiter
 
-    private lateinit var subject : CreateGameUsecase
+    private lateinit var subject: CreateGameUsecase
 
-    private var mockTurnHandler : TurnHandler = TurnHandler(arrayOf(Team(Player("1")), Team(Player("2"))), 0)
-    private var arbiter = Arbiter(Score(), mockTurnHandler)
-    private var game = Game(arbiter)
+    private var setup = SetupModel(501, 0, 3, 2)
+    private lateinit var game: Game
+    private var mockBg = TestBackground()
+    private var mockFg = TestForeground()
 
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        game = Game(mockArbiter)
+    }
 
     @Test
     fun `it should create a game and start it`() {
         givenCreateGameUsecase()
         whenStartIsCalled()
         thenGameIsStarted()
+        andCallbackIsNotified()
     }
 
     private fun givenCreateGameUsecase() {
-        whenever(mockGameRepository.new(arbiter)).then{ game }
-        subject = CreateGameUsecase(arbiter, mockGameRepository)
+        subject = CreateGameUsecase(mockGameRepository, mockBg, mockFg)
     }
 
     private fun whenStartIsCalled() {
-        subject.start()
+        whenever(mockGameRepository.create(setup)).then { game }
+        subject.start(setup, mockCallback)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).new(arbiter)
+        verify(mockGameRepository).create(setup)
+    }
+
+    private fun andCallbackIsNotified() {
+        verify(mockCallback).onGameCreated(game, setup)
     }
 
 }

@@ -1,28 +1,38 @@
 package nl.entreco.dartsscorecard.play.score
 
+import android.databinding.ObservableArrayList
+import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.Logger
+import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
-import nl.entreco.domain.play.listeners.events.OneEightyEvent
-import nl.entreco.domain.play.listeners.events.SpecialEvent
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.play.usecase.SetupModel
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 18/11/2017.
  */
-open class ScoreViewModel @Inject constructor(val teams: Array<Team>, val scoreSettings: ScoreSettings, val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), ScoreListener, PlayerListener {
+open class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadable, ScoreListener, PlayerListener {
 
-    val numSets = ObservableInt(scoreSettings.numSets)
+    val numSets = ObservableInt(0)
+    val teams = ObservableArrayList<Team>()
+    val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
+    val uiCallback = ObservableField<UiCallback>()
+
+    override fun startWith(game: Game, settings: SetupModel, uiCallback: UiCallback) {
+        this.uiCallback.set(uiCallback)
+        this.scoreSettings.set(ScoreSettings(settings.startScore, settings.numLegs, settings.numSets, settings.startIndex))
+        this.teams.addAll(game.teams())
+        this.numSets.set(settings.numSets)
+    }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {
         logger.d("NoNICE", "1:$scores by:$by")
