@@ -33,7 +33,7 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
         retrieveGameUseCase.start(uid, settings, ok = startOk(load, settings), err = { })
     }
 
-    private fun startOk(load: GameLoadable, settings: SetupModel): (Game) -> Unit {
+    fun startOk(load: GameLoadable, settings: SetupModel): (Game) -> Unit {
         return {
             game = it
             load.startWith(it, settings, this)
@@ -55,8 +55,7 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
         handleTurn(turn, by)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    fun handleTurn(turn: Turn, by: Player) {
+    private fun handleTurn(turn: Turn, by: Player) {
         game.handle(turn)
 
         val next = game.next

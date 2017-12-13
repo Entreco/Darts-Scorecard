@@ -15,7 +15,7 @@ open class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    fun start(): Next {
+    open fun start(): Next {
         return turnHandler.start(scores[0])
     }
 
