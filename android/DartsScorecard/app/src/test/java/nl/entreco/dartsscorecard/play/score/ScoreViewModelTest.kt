@@ -1,14 +1,13 @@
 package nl.entreco.dartsscorecard.play.score
 
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.domain.Logger
-import nl.entreco.domain.play.model.Dart
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.play.usecase.SetupModel
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -36,6 +35,7 @@ class ScoreViewModelTest {
     @Mock private lateinit var mockAdapter: ScoreAdapter
     @Mock private lateinit var mockPlayer: Player
     @Mock private lateinit var mockLogger: Logger
+    @Mock private lateinit var mockCallback: UiCallback
 
     @Before
     fun setUp() {
@@ -61,10 +61,47 @@ class ScoreViewModelTest {
     }
 
     @Test
-    fun `it should notify adapter for each team, about turn updates`() {
+    fun `it should notify adapter for each team, about turn updates, when game started`() {
+        `given game has started`()
         `given NextInfo for Team`(0)
         `when onNext() is called`()
         `then Adapter should notify each Team about next`()
+    }
+
+    @Test
+    fun `it should NOT notify adapter about turn updates, when game not started`() {
+        `given NextInfo for Team`(0)
+        `when onNext() is called`()
+        `then Adapter should NOT notify each Team about next`()
+    }
+
+    @Test
+    fun `it should set UiCallback in Observable when game started`() {
+        `given game has started`()
+        assertEquals(mockCallback, subject.uiCallback.get())
+    }
+
+    @Test
+    fun `it should set ScoreSettings in Observable when game started`() {
+        `given game has started`()
+        assertEquals(givenScoreSettings, subject.scoreSettings.get())
+    }
+
+    @Test
+    fun `it should add Teams to ObservableList when game started`() {
+        `given game has started`()
+        assertEquals(givenTeams.size, subject.teams.size)
+    }
+
+    @Test
+    fun `it should set numSets in Observable when game started`() {
+        `given game has started`()
+        assertEquals(givenScoreSettings.numSets, subject.numSets.get())
+    }
+
+    private fun `given game has started`() {
+        val score = givenScoreSettings.score()
+        subject.startWith(Game(Arbiter(score, TurnHandler(givenTeams, 0))), SetupModel(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {
@@ -97,6 +134,10 @@ class ScoreViewModelTest {
 
     private fun `then Adapter should notify each Team about next`() {
         givenTeams.forEachIndexed { index, _ -> verify(mockAdapter).teamAtIndexTurnUpdate(index, givenNext) }
+    }
+
+    private fun `then Adapter should NOT notify each Team about next`() {
+        verifyZeroInteractions(mockAdapter)
     }
 
 }
