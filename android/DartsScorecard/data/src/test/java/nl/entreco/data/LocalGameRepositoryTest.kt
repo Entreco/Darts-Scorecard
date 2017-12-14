@@ -1,17 +1,12 @@
 package nl.entreco.data
 
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.play.repository.LocalGameRepository
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.usecase.SetupModel
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -21,14 +16,20 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LocalGameRepositoryTest {
 
-    @Mock private lateinit var mockSetup: SetupModel
-    @InjectMocks private lateinit var subject : LocalGameRepository
-    private val mockArbiter = Arbiter(Score(), TurnHandler(arrayOf(Team(arrayOf(Player("1"))), Team(arrayOf(Player("2"))))))
+    @Mock private lateinit var mockDb: DscDatabase
+    @Mock private lateinit var mockGameDao: GameDao
+    private val setupModel: SetupModel = SetupModel(501, 0, 3, 2)
+    private lateinit var subject: LocalGameRepository
 
+    @Before
+    fun setUp() {
+        whenever(mockDb.gameDao()).thenReturn(mockGameDao)
+        subject = LocalGameRepository(mockDb)
+    }
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create(mockSetup)
-        assertTrue(Game(mockArbiter) == game)
+        val game = subject.create(setupModel)
+        assertNotNull(game)
     }
 }
