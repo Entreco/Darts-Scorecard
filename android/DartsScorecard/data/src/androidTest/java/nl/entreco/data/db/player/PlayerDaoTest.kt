@@ -5,7 +5,6 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.TestProvider
-import nl.entreco.domain.play.model.players.Player
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -41,11 +40,19 @@ class PlayerDaoTest {
     }
 
     @Test
-    fun fetchBy() {
+    fun fetchByUid() {
         val player = TestProvider.createPlayer("remco", 20)
-        assertNull(playerDao.fetchBy(""))
+        assertNull(playerDao.fetchByUid(player.uid))
         playerDao.create(player)
-        assertNotNull(playerDao.fetchBy(player.uid))
+        assertNotNull(playerDao.fetchByUid(player.uid))
+    }
+
+    @Test
+    fun fetchByName() {
+        val player = TestProvider.createPlayer("remco", 20)
+        assertNull(playerDao.fetchByName("remco"))
+        playerDao.create(player)
+        assertNotNull(playerDao.fetchByName(player.name))
     }
 
     @Test

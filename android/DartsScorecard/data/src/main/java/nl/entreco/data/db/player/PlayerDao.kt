@@ -14,10 +14,10 @@ interface PlayerDao {
     fun fetchAll(): List<PlayerTable>
 
     @Query("SELECT * FROM Player WHERE uid = :uid")
-    fun fetchByUid(uid: String): PlayerTable
+    fun fetchByUid(uid: String): PlayerTable?
 
     @Query("SELECT * FROM Player WHERE name = :name")
-    fun fetchByName(name: String): PlayerTable
+    fun fetchByName(name: String): PlayerTable?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(player: PlayerTable): Long

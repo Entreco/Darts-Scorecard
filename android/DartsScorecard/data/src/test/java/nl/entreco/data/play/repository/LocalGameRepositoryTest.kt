@@ -1,9 +1,10 @@
-package nl.entreco.data
+package nl.entreco.data.play.repository
 
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameMapper
-import nl.entreco.data.play.repository.LocalGameRepository
+import nl.entreco.domain.play.model.Game
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -19,18 +20,19 @@ class LocalGameRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockGameDao: GameDao
-    @Mock private lateinit var mockMapper: GameMapper
     private lateinit var subject: LocalGameRepository
+    private lateinit var mapper: GameMapper
 
     @Before
     fun setUp() {
         whenever(mockDb.gameDao()).thenReturn(mockGameDao)
-        subject = LocalGameRepository(mockDb, mockMapper)
+        mapper = GameMapper()
+        subject = LocalGameRepository(mockDb, mapper)
     }
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create("uid", 2, 3, 501, 0)
+        val game = subject.create("uid", "1|2", 2, 3, 501, 0)
         assertNotNull(game)
     }
 }

@@ -16,7 +16,7 @@ interface GameDao {
     fun fetchAll(): List<GameTable>
 
     @Query("SELECT * FROM Game WHERE uid = :uid")
-    fun fetchBy(uid: String): GameTable
+    fun fetchBy(uid: String): GameTable?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(game: GameTable) : Long

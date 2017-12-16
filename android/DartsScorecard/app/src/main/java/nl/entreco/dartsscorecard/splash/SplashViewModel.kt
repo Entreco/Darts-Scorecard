@@ -12,11 +12,15 @@ import javax.inject.Inject
  */
 class SplashViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase) : BaseViewModel() {
 
-    fun createTeamsIfNoneExists(teamsInput: TeamsString, callback: CreateTeamsUsecase.Callback) {
+    fun ensureTeamPlayersExist(teamsInput: TeamsString, callback: CreateTeamsUsecase.Callback) {
         createTeamsUsecase.start(teamsInput, callback)
     }
 
-    fun createGameIfNoneExists(createGameInput: CreateGameInput, teams: TeamsString, callback: CreateGameUsecase.Callback) {
+    fun createNewGame(createGameInput: CreateGameInput, teams: TeamsString, callback: CreateGameUsecase.Callback) {
         createGameUsecase.start(createGameInput, teams, callback)
+    }
+
+    fun retrieveLastGame(createGameInput: CreateGameInput, callback: CreateGameUsecase.Callback) {
+        createGameUsecase.fetchLatest(createGameInput, callback)
     }
 }

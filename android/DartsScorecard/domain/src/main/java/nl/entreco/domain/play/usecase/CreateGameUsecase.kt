@@ -2,7 +2,10 @@ package nl.entreco.domain.play.usecase
 
 import nl.entreco.domain.executors.Background
 import nl.entreco.domain.executors.Foreground
-import nl.entreco.domain.play.model.*
+import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.model.players.TeamsString
 import nl.entreco.domain.play.repository.GameRepository
 import nl.entreco.domain.settings.ScoreSettings
@@ -16,25 +19,33 @@ class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepo
 
     interface Callback {
         fun onGameCreated(game: Game, setup: CreateGameInput)
-        fun onGameFailed(err: Throwable)
+        fun onGameRetrieved(game: Game, setup: CreateGameInput)
+        fun onGameRetrieveFailed(err: Throwable)
+        fun onGameCreateFailed(err: Throwable)
     }
 
     fun start(createModel: CreateGameInput, teams: TeamsString, callback: Callback) {
         bg.post(Runnable {
-
             try {
-                val lastGame = gameRepository.fetchLatest()
-                postOnUi({ callback.onGameCreated(lastGame, createModel) })
-            } catch (oops: Exception){
                 val game = modelToGame(createModel, teams)
                 val (score, index, legs, sets) = createModel
+                gameRepository.create(game.uuid, teams.asString(), score, index, legs, sets)
+                postOnUi({ callback.onGameCreated(game, createModel) })
+            } catch (oops: Exception) {
+                postOnUi({ callback.onGameCreateFailed(oops) })
+            }
+        })
+    }
 
-                try {
-                    gameRepository.create(game.uuid, teams.asString(), score, index, legs, sets)
-                    postOnUi({ callback.onGameCreated(game, createModel) })
-                } catch (oops: Exception) {
-                    postOnUi({ callback.onGameFailed(oops) })
-                }
+    fun fetchLatest(createModel: CreateGameInput, callback: Callback) {
+        bg.post(Runnable {
+            try {
+                val game = gameRepository.fetchLatest()
+                fg.post(Runnable {
+                    callback.onGameRetrieved(game, createModel)
+                })
+            } catch (ohno: Exception) {
+                fg.post(Runnable { callback.onGameRetrieveFailed(ohno) })
             }
         })
     }

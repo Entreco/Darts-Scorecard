@@ -21,9 +21,11 @@ class CreateTeamsUsecase @Inject constructor(private val playerRepository: Playe
             try {
 
                 teamsInput.asPlayersList().forEach {
-                    val player = playerRepository.fetchByName(it.name)
+                    val name = it.name
+                    val double = it.prefs.favoriteDouble
+                    val player = playerRepository.fetchByName(name)
                     if(player == null) {
-                        playerRepository.create(it.name, it.prefs.favoriteDouble)
+                        playerRepository.create(name, double)
                     }
                 }
 

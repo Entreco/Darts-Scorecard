@@ -24,12 +24,12 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: PlayerMapper) :
     }
 
     override fun fetchByUid(uid: String): Player? {
-        val table = playerDao.fetchByUid(uid)
+        val table = playerDao.fetchByUid(uid) ?: return null
         return mapper.to(table)
     }
 
     override fun fetchByName(name: String): Player? {
-        val table = playerDao.fetchByName(name)
+        val table = playerDao.fetchByName(name) ?: return null
         return mapper.to(table)
     }
 

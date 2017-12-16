@@ -20,29 +20,41 @@ class SplashActivity : ViewModelActivity(), CreateGameUsecase.Callback, CreateTe
     private val component: SplashComponent by componentProvider { it.plus(SplashModule()) }
     private val viewModel: SplashViewModel by viewModelProvider { component.viewModel() }
 
+    private val setup = CreateGameInput(501, 0, 3, 2)
+    private val teams = TeamsString("Remco,Boeffie|Eva,Guusje")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val teams = TeamsString("Remco,Sibbel|Boeffie|Eva,Guusje,Beer")
-        viewModel.createTeamsIfNoneExists(teams, this)
+        viewModel.ensureTeamPlayersExist(teams, this)
     }
 
     override fun onTeamsCreated(teams: TeamsString) {
-        val setup = CreateGameInput(501, 0, 3, 2)
-        viewModel.createGameIfNoneExists(setup, teams, this)
+        viewModel.retrieveLastGame(setup, this)
     }
 
     override fun onGameCreated(game: Game, setup: CreateGameInput) {
-        Play01Activity.startGame(this, game, setup)
-        finish()
+        start(game, setup)
+    }
+
+    override fun onGameRetrieved(game: Game, setup: CreateGameInput) {
+        start(game, setup)
+    }
+
+    override fun onGameRetrieveFailed(err: Throwable) {
+        viewModel.createNewGame(setup, teams, this)
+    }
+
+    override fun onGameCreateFailed(err: Throwable) {
+        err(err)
     }
 
     override fun onTeamsFailed(err: Throwable) {
         err(err)
     }
 
-    override fun onGameFailed(err: Throwable) {
-        err(err)
+    private fun start(game: Game, setup: CreateGameInput) {
+        Play01Activity.startGame(this, game, setup)
+        finish()
     }
 
     private fun err(err: Throwable) {

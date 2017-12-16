@@ -3,8 +3,10 @@ package nl.entreco.domain.play.usecase
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
+import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.players.TeamsString
 import nl.entreco.domain.play.repository.GameRepository
 import org.junit.Before
@@ -48,7 +50,7 @@ class CreateGameUsecaseTest {
 
     private fun whenStartIsCalled() {
         subject.start(setup, teamString, mockCallback)
-        verify(mockGameRepository).create(any(), teamString.asString(), eq(501), eq(0), eq(3), eq(2))
+        verify(mockGameRepository).create(any(), eq(teamString.asString()), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun thenGameIsStarted() {

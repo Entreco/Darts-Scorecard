@@ -30,18 +30,16 @@ class LocalGameRepository(db: DscDatabase, private var mapper: GameMapper) : Gam
         return gameDao.create(table)
     }
 
-    @Throws
     @WorkerThread
     override fun fetchBy(uid: String): Game {
-        val gameTable = gameDao.fetchBy(uid)
+        val gameTable = gameDao.fetchBy(uid) ?: throw IllegalStateException("Game $uid does not exist")
         return mapper.to(gameTable)
     }
 
-    @Throws
     @WorkerThread
     override fun fetchLatest(): Game {
         val all = gameDao.fetchAll()
-        return if (all.isEmpty()) throw IllegalStateException("game not found")
+        return if (all.isEmpty()) throw IllegalStateException("no Games found")
         else mapper.to(all[0])
     }
 }

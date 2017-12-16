@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created by Entreco on 14/11/2017.
  */
 class RetrieveGameUsecase @Inject constructor(private val gameRepository: GameRepository, private val bg: Background,
-                                                   private val fg: Foreground) {
+                                              private val fg: Foreground) {
 
     fun start(uid: String, ok: (Game) -> Unit, err: (Throwable) -> Unit) {
         bg.post(Runnable {

@@ -7,14 +7,14 @@ import android.arch.persistence.room.PrimaryKey
 /**
  * Created by Entreco on 16/12/2017.
  */
-@Entity(tableName = "player")
+@Entity(tableName = "Player")
 class PlayerTable {
     @PrimaryKey
-    lateinit var uid: String
+    var uid: String = ""
 
     @ColumnInfo(name = "name")
-    lateinit var name: String
+    var name: String = ""
 
     @ColumnInfo(name = "fav")
-    lateinit var fav: String
+    var fav: String = ""
 }
