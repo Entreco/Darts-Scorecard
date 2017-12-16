@@ -46,6 +46,7 @@ class CreateGameUsecaseTest {
 
     private fun whenStartIsCalled() {
         subject.start(setup, mockCallback)
+        verify(mockGameRepository).create(any(), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun thenGameIsStarted() {

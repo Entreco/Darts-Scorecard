@@ -11,10 +11,10 @@ interface GameRepository {
     @Throws
     @WorkerThread
     fun create(uid: String,
-               numLegs: Int,
-               numSets: Int,
+               startScore: Int,
                startIndex: Int,
-               startScore: Int): Long
+               numLegs: Int,
+               numSets: Int): Long
 
     @Throws
     @WorkerThread

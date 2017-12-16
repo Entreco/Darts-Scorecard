@@ -27,7 +27,7 @@ class LocalGameRepositoryTest {
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create("uid", 501, 0, 3, 2)
+        val game = subject.create("uid", 2, 3, 501, 0)
         assertNotNull(game)
     }
 }

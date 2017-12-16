@@ -12,7 +12,6 @@ import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
 import nl.entreco.domain.settings.ScoreSettings
-import java.util.*
 
 /**
  * Created by Entreco on 15/11/2017.
@@ -22,7 +21,7 @@ class LocalGameRepository(db: DscDatabase) : GameRepository {
     private val gameDao: GameDao = db.gameDao()
 
     @WorkerThread
-    override fun create(uid: String, numLegs: Int, numSets: Int, startIndex: Int, startScore: Int): Long {
+    override fun create(uid: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
         val table = GameTable()
 
         table.uid = uid
