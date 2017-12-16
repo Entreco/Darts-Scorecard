@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-open class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
+class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
@@ -37,28 +37,28 @@ open class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreVi
         return items.size
     }
 
-    open fun addItem(teamScoreViewModel: TeamScoreViewModel) {
+    fun addItem(teamScoreViewModel: TeamScoreViewModel) {
         items.add(teamScoreViewModel)
         notifyItemInserted(items.size - 1)
     }
 
-    open fun teamAtIndexScored(position: Int, score: Score, by: Player) {
+    fun teamAtIndexScored(position: Int, score: Score, by: Player) {
         items[position].scored(score, by)
         notifyItemChanged(position)
     }
 
-    open fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
+    fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
         items[position].threw(turn, player)
         notifyItemChanged(position)
     }
 
-    open fun clear() {
+    fun clear() {
         val count = itemCount
         items.clear()
         notifyItemRangeRemoved(0, count)
     }
 
-    open fun teamAtIndexTurnUpdate(position: Int, next: Next) {
+    fun teamAtIndexTurnUpdate(position: Int, next: Next) {
         if (position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
         notifyItemChanged(position)

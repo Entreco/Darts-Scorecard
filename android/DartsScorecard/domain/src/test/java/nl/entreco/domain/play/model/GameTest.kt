@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.model
 
-import nl.entreco.domain.play.TestProvider
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class GameTest : BaseGameTest() {
@@ -82,7 +82,6 @@ class GameTest : BaseGameTest() {
     @Test
     fun `it should return correct teams`() {
         givenGameStarted()
-        assertNotNull( subject.teams() )
-//        assertArrayEquals(TestProvider().teams(), subject.teams() )
+        assertNotNull(subject.teams())
     }
 }

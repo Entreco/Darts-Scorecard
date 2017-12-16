@@ -66,15 +66,15 @@ class RetrieveGameUsecaseTest {
 
     private fun whenStartIsCalled(game: Game?) {
         if (game == null) {
-            whenever(mockGameRepository.fetchLatest()).thenThrow(IllegalStateException("game not found"))
+            whenever(mockGameRepository.fetchBy(uid)).thenThrow(IllegalStateException("game not found"))
         } else {
-            whenever(mockGameRepository.fetchLatest()).thenReturn(game)
+            whenever(mockGameRepository.fetchBy(uid)).thenReturn(game)
         }
-        subject.start(uid, settings, mockOk, mockErr)
+        subject.start(uid, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).fetchLatest()
+        verify(mockGameRepository).fetchBy(uid)
     }
 
     private fun andOkIsReported() {
