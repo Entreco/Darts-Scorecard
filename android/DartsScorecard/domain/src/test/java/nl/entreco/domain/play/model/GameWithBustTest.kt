@@ -33,7 +33,7 @@ class GameWithBustTest {
     }
 
     private fun givenStartedGame(): Next {
-        subject = Game(arbiter)
+        subject = Game("uid", arbiter)
         subject.start()
         return subject.next
     }

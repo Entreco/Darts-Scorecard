@@ -19,5 +19,5 @@ interface GameDao {
     fun fetchBy(uid: String): GameTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun create(game: GameTable)
+    fun create(game: GameTable) : Long
 }

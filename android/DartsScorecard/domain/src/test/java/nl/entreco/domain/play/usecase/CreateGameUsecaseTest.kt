@@ -1,11 +1,10 @@
 package nl.entreco.domain.play.usecase
 
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.repository.GameRepository
 import org.junit.Before
 import org.junit.Test
@@ -22,19 +21,16 @@ class CreateGameUsecaseTest {
 
     @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
     @Mock private lateinit var mockGameRepository: GameRepository
-    @Mock private lateinit var mockArbiter: Arbiter
 
     private lateinit var subject: CreateGameUsecase
 
     private var setup = SetupModel(501, 0, 3, 2)
-    private lateinit var game: Game
     private var mockBg = TestBackground()
     private var mockFg = TestForeground()
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        game = Game(mockArbiter)
     }
 
     @Test
@@ -42,7 +38,6 @@ class CreateGameUsecaseTest {
         givenCreateGameUsecase()
         whenStartIsCalled()
         thenGameIsStarted()
-        andCallbackIsNotified()
     }
 
     private fun givenCreateGameUsecase() {
@@ -50,16 +45,10 @@ class CreateGameUsecaseTest {
     }
 
     private fun whenStartIsCalled() {
-        whenever(mockGameRepository.create(setup)).then { game }
         subject.start(setup, mockCallback)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).create(setup)
+        verify(mockCallback).onGameCreated(any(), eq(setup))
     }
-
-    private fun andCallbackIsNotified() {
-        verify(mockCallback).onGameCreated(game, setup)
-    }
-
 }

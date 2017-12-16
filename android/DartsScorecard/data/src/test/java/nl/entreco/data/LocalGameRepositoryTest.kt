@@ -18,7 +18,6 @@ class LocalGameRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockGameDao: GameDao
-    private val setupModel: SetupModel = SetupModel(501, 0, 3, 2)
     private lateinit var subject: LocalGameRepository
 
     @Before
@@ -29,7 +28,7 @@ class LocalGameRepositoryTest {
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create(setupModel)
+        val game = subject.create("uid", 501, 0, 3, 2)
         assertNotNull(game)
     }
 }

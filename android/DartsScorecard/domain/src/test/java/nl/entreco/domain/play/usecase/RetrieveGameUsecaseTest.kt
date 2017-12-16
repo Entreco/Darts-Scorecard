@@ -28,7 +28,7 @@ class RetrieveGameUsecaseTest {
 
     private lateinit var subject: RetrieveGameUsecase
 
-    private lateinit var uuid: String
+    private lateinit var uid: String
     private lateinit var settings: SetupModel
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
@@ -37,9 +37,9 @@ class RetrieveGameUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        uuid = "uuid"
+        uid = "uid"
         settings = SetupModel(501, 0, 3, 2)
-        game = Game(arbiter)
+        game = Game(uid, arbiter)
 
         mockForeground = TestForeground()
         mockBackground = TestBackground()
@@ -70,7 +70,7 @@ class RetrieveGameUsecaseTest {
         } else {
             whenever(mockGameRepository.fetchLatest()).thenReturn(game)
         }
-        subject.start(uuid, settings, mockOk, mockErr)
+        subject.start(uid, settings, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {

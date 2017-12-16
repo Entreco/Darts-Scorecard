@@ -9,21 +9,20 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
-import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.domain.play.usecase.SetupModel
-import javax.inject.Inject
 
 class Play01Activity : ViewModelActivity() {
 
-    @Inject lateinit var viewModel: Play01ViewModel
-    @Inject lateinit var scoreViewModel: ScoreViewModel
-    @Inject lateinit var inputViewModel: InputViewModel
-    @Inject lateinit var finishUsecase: GetFinishUsecase
+    private val component: Play01Component by componentProvider { it.plus(Play01Module()) }
+    private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
+    private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
+    private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
+    private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +34,22 @@ class Play01Activity : ViewModelActivity() {
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
 
-        viewModel.retrieveGame("", retrieveSetup(), scoreViewModel)
+        if (savedInstanceState == null) {
+            initGame()
+        }
 
+        resumeGame()
+    }
+
+    private fun initGame() {
+        viewModel.retrieveGame("", retrieveSetup(), scoreViewModel)
+    }
+
+    private fun resumeGame() {
         viewModel.addScoreListener(scoreViewModel)
         viewModel.addPlayerListener(scoreViewModel)
         viewModel.addPlayerListener(inputViewModel)
         viewModel.addSpecialEventListener(inputViewModel)
-    }
-
-    override fun inject(component: ViewModelComponent) {
-        component.plus(Play01Module()).inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,7 +65,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun retrieveSetup(): SetupModel {
-        return SetupModel(intent.getIntExtra("1", -1),intent.getIntExtra("2", -1),intent.getIntExtra("3", -1),intent.getIntExtra("4", -1))
+        return SetupModel(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
     }
 
     companion object {

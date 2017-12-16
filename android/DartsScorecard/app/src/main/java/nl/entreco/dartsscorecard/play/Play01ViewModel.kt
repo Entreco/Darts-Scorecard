@@ -1,9 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
-import android.support.annotation.VisibleForTesting
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadable
-import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
@@ -35,14 +33,12 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
 
     fun startOk(load: GameLoadable, settings: SetupModel): (Game) -> Unit {
         return {
-            game = it
+            game = it.start()
             load.startWith(it, settings, this)
         }
     }
 
     override fun onLetsPlayDarts() {
-        game.start()
-
         notifyNextPlayer(game.next)
         notifyScoreChanged(game.scores, game.next.player)
     }

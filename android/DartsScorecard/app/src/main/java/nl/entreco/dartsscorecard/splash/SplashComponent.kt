@@ -9,5 +9,5 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 @ActivityScope
 @Subcomponent(modules = [(SplashModule::class)])
 interface SplashComponent {
-    fun inject(activity: SplashActivity)
+    fun viewModel(): SplashViewModel
 }

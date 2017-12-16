@@ -4,11 +4,13 @@ import android.support.annotation.WorkerThread
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.GameDao
 import nl.entreco.data.GameTable
-import nl.entreco.domain.play.model.*
+import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
-import nl.entreco.domain.play.usecase.SetupModel
 import nl.entreco.domain.settings.ScoreSettings
 import java.util.*
 
@@ -20,16 +22,16 @@ class LocalGameRepository(db: DscDatabase) : GameRepository {
     private val gameDao: GameDao = db.gameDao()
 
     @WorkerThread
-    override fun create(createModel: SetupModel): Game {
-        val teams = arrayOf(Team(arrayOf(Player("remco"), Player("sibbel"))), Team(arrayOf(Player("Boeffie"))), Team(arrayOf(Player("eva"), Player("guusje"), Player("Beer"))))
-        val turnHandler = TurnHandler(teams, createModel.startIndex)
-        val settings = ScoreSettings(createModel.startScore, createModel.numLegs, createModel.numSets)
-        val initial = Score(createModel.startScore, 0, 0, settings)
-        val arbiter = Arbiter(initial, turnHandler)
-        val game = Game(arbiter)
+    override fun create(uid: String, numLegs: Int, numSets: Int, startIndex: Int, startScore: Int): Long {
+        val table = GameTable()
 
-        gameDao.create(toGameTable(game))
-        return game
+        table.uid = uid
+        table.numLegs = numLegs
+        table.numSets = numSets
+        table.startIndex = startIndex
+        table.startScore = startScore
+
+        return gameDao.create(table)
     }
 
     @WorkerThread
@@ -56,16 +58,6 @@ class LocalGameRepository(db: DscDatabase) : GameRepository {
         val setting = ScoreSettings(startScore, legs, sets, startIndex)
         val initial = Score(startScore, 0, 0, setting)
         val arbiter = Arbiter(initial, TurnHandler(teams, startIndex))
-        return Game(arbiter)
-    }
-
-    private fun toGameTable(game: Game): GameTable {
-        val table = GameTable()
-        table.uid = UUID.randomUUID().toString()
-        table.numLegs = 3
-        table.numSets = 2
-        table.startIndex = 0
-        table.startScore = 501
-        return table
+        return Game(uid, arbiter)
     }
 }

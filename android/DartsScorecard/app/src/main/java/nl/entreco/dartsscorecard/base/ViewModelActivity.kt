@@ -1,6 +1,9 @@
 package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
@@ -18,13 +21,26 @@ abstract class ViewModelActivity : AppCompatActivity() {
     val Activity.app: App
         get() = application as App
 
-    private val component by lazy { app.appComponent.plus(ViewModelModule(this)) }
 
-    abstract fun inject(component: ViewModelComponent)
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified VM : ViewModel> ViewModelActivity.viewModelProvider(
+            mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+            crossinline provider: () -> VM) = lazy(mode) {
+        ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T1 : ViewModel> create(aClass: Class<T1>) =
+                    provider() as T1
+        }).get(VM::class.java)
+    }
+
+    inline fun <reified VM> ViewModelActivity.componentProvider(
+            mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+            crossinline provider: (ViewModelComponent) -> VM) = lazy(mode) {
+        val component = app.appComponent.plus(ViewModelModule(this))
+        provider(component)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(styler.get())
-        inject(component)
         super.onCreate(savedInstanceState)
     }
 

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import nl.entreco.dartsscorecard.base.ViewModelActivity
-import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import nl.entreco.domain.play.usecase.SetupModel
-import javax.inject.Inject
 
 
 /**
@@ -17,17 +15,14 @@ import javax.inject.Inject
  */
 class SplashActivity : ViewModelActivity(), CreateGameUsecase.Callback {
 
-    @Inject lateinit var viewModel: SplashViewModel
+    private val component: SplashComponent by componentProvider { it.plus(SplashModule()) }
+    private val viewModel: SplashViewModel by viewModelProvider { component.viewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val setup = SetupModel(501, 0, 3, 2)
         viewModel.createGameIfNoneExists(setup, this)
-    }
-
-    override fun inject(component: ViewModelComponent) {
-        component.plus(SplashModule()).inject(this)
     }
 
     override fun onGameCreated(game: Game, setup: SetupModel) {
