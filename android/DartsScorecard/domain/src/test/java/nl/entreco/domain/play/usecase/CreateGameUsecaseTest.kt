@@ -1,9 +1,6 @@
 package nl.entreco.domain.play.usecase
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
 import nl.entreco.domain.play.model.Game
@@ -24,6 +21,7 @@ class CreateGameUsecaseTest {
 
     @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
     @Mock private lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockGame: Game
 
     private lateinit var subject: CreateGameUsecase
 
@@ -44,8 +42,32 @@ class CreateGameUsecaseTest {
         thenGameIsStarted()
     }
 
+    @Test
+    fun `it should return existing game when fetching latest`() {
+        givenCreateGameUsecase()
+        givenExistingGame()
+        whenFetchLatestIsCalled()
+        thenGameIsRetrieved()
+    }
+
+    @Test
+    fun `it should fetch latest`() {
+        givenCreateGameUsecase()
+        givenNoExistingGame()
+        whenFetchLatestIsCalled()
+        thenErrorIsReportedBack()
+    }
+
     private fun givenCreateGameUsecase() {
         subject = CreateGameUsecase(mockGameRepository, mockBg, mockFg)
+    }
+
+    private fun givenExistingGame() {
+        whenever(mockGameRepository.fetchLatest()).thenReturn(mockGame)
+    }
+
+    private fun givenNoExistingGame() {
+        whenever(mockGameRepository.fetchLatest()).thenThrow(IllegalStateException("ohno"))
     }
 
     private fun whenStartIsCalled() {
@@ -53,7 +75,20 @@ class CreateGameUsecaseTest {
         verify(mockGameRepository).create(any(), eq(teamString.asString()), eq(501), eq(0), eq(3), eq(2))
     }
 
+    private fun whenFetchLatestIsCalled() {
+        subject.fetchLatest(setup, mockCallback)
+        verify(mockGameRepository).fetchLatest()
+    }
+
     private fun thenGameIsStarted() {
         verify(mockCallback).onGameCreated(any(), eq(setup))
+    }
+
+    private fun thenGameIsRetrieved() {
+        verify(mockCallback).onGameRetrieved(mockGame, setup)
+    }
+
+    private fun thenErrorIsReportedBack() {
+        verify(mockCallback).onGameRetrieveFailed(isA())
     }
 }

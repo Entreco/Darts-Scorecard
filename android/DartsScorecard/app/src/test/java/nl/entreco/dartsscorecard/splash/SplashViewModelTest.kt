@@ -17,6 +17,7 @@ class SplashViewModelTest {
 
     @Mock private lateinit var mockInputs: CreateGameInput
     @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
+    @Mock private lateinit var mockCallback2: CreateTeamsUsecase.Callback
     @Mock private lateinit var mockCreateGameUsecase: CreateGameUsecase
     @Mock private lateinit var mockCreatTeamsUsecase: CreateTeamsUsecase
     private lateinit var subject: SplashViewModel
@@ -33,6 +34,19 @@ class SplashViewModelTest {
     fun createGameIfNoneExists() {
         subject.createNewGame(mockInputs, teams, mockCallback)
         verify(mockCreateGameUsecase).start(mockInputs, teams, mockCallback)
+    }
+
+    @Test
+    fun `it should ensure teams exist`() {
+        subject.ensureTeamPlayersExist(teams, mockCallback2)
+        verify(mockCreatTeamsUsecase).start(teams, mockCallback2)
+
+    }
+
+    @Test
+    fun `it should retrieve last`() {
+        subject.retrieveLastGame(mockInputs, mockCallback)
+        verify(mockCreateGameUsecase).fetchLatest(mockInputs, mockCallback)
     }
 
 }
