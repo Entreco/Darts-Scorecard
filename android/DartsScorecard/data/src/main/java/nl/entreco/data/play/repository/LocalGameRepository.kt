@@ -2,29 +2,26 @@ package nl.entreco.data.play.repository
 
 import android.support.annotation.WorkerThread
 import nl.entreco.data.DscDatabase
-import nl.entreco.data.GameDao
-import nl.entreco.data.GameTable
-import nl.entreco.domain.play.model.Arbiter
+import nl.entreco.data.db.game.GameDao
+import nl.entreco.data.db.game.GameMapper
+import nl.entreco.data.db.game.GameTable
 import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
-import nl.entreco.domain.settings.ScoreSettings
 
 /**
  * Created by Entreco on 15/11/2017.
  */
-class LocalGameRepository(db: DscDatabase) : GameRepository {
+class LocalGameRepository(db: DscDatabase, private var mapper: GameMapper) : GameRepository {
 
     private val gameDao: GameDao = db.gameDao()
 
+    @Throws
     @WorkerThread
-    override fun create(uid: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
+    override fun create(uid: String, teams: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
         val table = GameTable()
 
         table.uid = uid
+        table.teams = teams
         table.numLegs = numLegs
         table.numSets = numSets
         table.startIndex = startIndex
@@ -33,30 +30,18 @@ class LocalGameRepository(db: DscDatabase) : GameRepository {
         return gameDao.create(table)
     }
 
+    @Throws
     @WorkerThread
     override fun fetchBy(uid: String): Game {
         val gameTable = gameDao.fetchBy(uid)
-        return toGame(gameTable)
+        return mapper.to(gameTable)
     }
 
+    @Throws
     @WorkerThread
     override fun fetchLatest(): Game {
         val all = gameDao.fetchAll()
         return if (all.isEmpty()) throw IllegalStateException("game not found")
-        else toGame(all[0])
-    }
-
-    private fun toGame(gameTable: GameTable): Game {
-        val uid = gameTable.uid
-        val startIndex = gameTable.startIndex
-        val startScore = gameTable.startScore
-        val legs = gameTable.numLegs
-        val sets = gameTable.numSets
-        val teams = arrayOf(Team(arrayOf(Player("remco"), Player("eva"))), Team(arrayOf(Player("henkie"))), Team(arrayOf(Player("Guusje"), Player("De beestenboel"))))
-
-        val setting = ScoreSettings(startScore, legs, sets, startIndex)
-        val initial = Score(startScore, 0, 0, setting)
-        val arbiter = Arbiter(initial, TurnHandler(teams, startIndex))
-        return Game(uid, arbiter)
+        else mapper.to(all[0])
     }
 }

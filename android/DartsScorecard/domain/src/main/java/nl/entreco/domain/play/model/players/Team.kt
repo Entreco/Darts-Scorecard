@@ -38,12 +38,12 @@ class Team(val players: Array<Player> = emptyArray()) {
     }
 
     override fun toString(): String {
-        return StringBuilder(firstOrNo().name).apply {
+        return StringBuilder(firstPlayer().name).apply {
             players.drop(1).forEach { append(" & ").append(it.name) }
         }.toString()
     }
 
-    private fun firstOrNo(): Player {
+    private fun firstPlayer(): Player {
         return if (players.isEmpty()) NoPlayer()
         else players[0]
     }

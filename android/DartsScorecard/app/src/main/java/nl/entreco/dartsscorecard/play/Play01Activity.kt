@@ -13,6 +13,7 @@ import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.players.TeamsString
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.domain.play.usecase.CreateGameInput
 
@@ -76,6 +77,7 @@ class Play01Activity : ViewModelActivity() {
         fun startGame(context: Context, game: Game, setup: CreateGameInput) {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("0", game.uuid)
+            intent.putExtra("team", TeamsString.parse(game.teams()))
             intent.putExtra("1", setup.startIndex)
             intent.putExtra("2", setup.startScore)
             intent.putExtra("3", setup.numLegs)

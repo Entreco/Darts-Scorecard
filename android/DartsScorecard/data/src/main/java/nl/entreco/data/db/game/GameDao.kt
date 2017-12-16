@@ -1,4 +1,4 @@
-package nl.entreco.data
+package nl.entreco.data.db.game
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert

@@ -1,6 +1,8 @@
 package nl.entreco.data
 
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.data.db.game.GameDao
+import nl.entreco.data.db.game.GameMapper
 import nl.entreco.data.play.repository.LocalGameRepository
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -17,12 +19,13 @@ class LocalGameRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockGameDao: GameDao
+    @Mock private lateinit var mockMapper: GameMapper
     private lateinit var subject: LocalGameRepository
 
     @Before
     fun setUp() {
         whenever(mockDb.gameDao()).thenReturn(mockGameDao)
-        subject = LocalGameRepository(mockDb)
+        subject = LocalGameRepository(mockDb, mockMapper)
     }
 
     @Test

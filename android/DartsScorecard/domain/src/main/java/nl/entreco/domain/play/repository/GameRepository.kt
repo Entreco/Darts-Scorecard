@@ -11,6 +11,7 @@ interface GameRepository {
     @Throws
     @WorkerThread
     fun create(uid: String,
+               teams: String,
                startScore: Int,
                startIndex: Int,
                numLegs: Int,

@@ -1,4 +1,4 @@
-package nl.entreco.data
+package nl.entreco.data.db.game
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
@@ -24,7 +24,7 @@ class GameTable {
     @ColumnInfo(name = "numSets")
     var numSets: Int = 0
 
-//    @ColumnInfo(name = "teams")
-//    lateinit var teams: Array<String>
+    @ColumnInfo(name = "teams")
+    var teams: String = ""
 
 }
