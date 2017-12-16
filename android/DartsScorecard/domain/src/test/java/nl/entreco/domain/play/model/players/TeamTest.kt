@@ -15,7 +15,7 @@ class TeamTest{
     val player1 = Player("one")
     val player2 = Player("two")
 
-    val subject : Team = Team(player1, player2)
+    val subject : Team = Team(arrayOf(player1, player2))
 
     @Test
     fun `it should have non null list of players`() {

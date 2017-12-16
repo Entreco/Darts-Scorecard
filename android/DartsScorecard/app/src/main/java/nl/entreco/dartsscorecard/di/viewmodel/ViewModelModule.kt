@@ -11,6 +11,11 @@ import nl.entreco.dartsscorecard.App
  */
 @Module
 class ViewModelModule(private val activity: Activity) {
-    @Provides @ActivityScope fun context() : Context = activity
-    @Provides @ActivityScope fun application(app: App) : Context = app.applicationContext
+    @Provides
+    @ActivityScope
+    fun context(): Context = activity
+
+    @Provides
+    @ActivityScope
+    fun application(app: App): Context = app.applicationContext
 }

@@ -1,16 +1,19 @@
 package nl.entreco.dartsscorecard.play
 
-import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.domain.play.usecase.GetFinishUsecase
-import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.play.score.GameLoadable
+import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.repository.GameRepository
-import nl.entreco.domain.play.usecase.CreateGameUsecase
-import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.domain.play.usecase.RetrieveGameUsecase
+import nl.entreco.domain.play.usecase.CreateGameInput
+import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -22,10 +25,17 @@ import org.mockito.MockitoAnnotations
 class Play01ViewModelTest {
 
     private lateinit var subject: Play01ViewModel
-    @Mock private lateinit var mockGameRepository: GameRepository
-    @Mock private lateinit var mockScoreViewModel: ScoreViewModel
-    @Mock private lateinit var mockInputViewModel: InputViewModel
-    @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
+    private lateinit var game: Game
+
+    @Mock private lateinit var mockRetrieveGameUsecase: RetrieveGameUsecase
+    @Mock private lateinit var mockLoadable: GameLoadable
+    @Mock private lateinit var mockScoreListener: ScoreListener
+    @Mock private lateinit var mockPlayerListener: PlayerListener
+    @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
+
+    private val createGameInput: CreateGameInput = CreateGameInput(501, 0, 3, 2)
+    private val mockArbiter: Arbiter = Arbiter(Score(createGameInput.startScore), TurnHandler(arrayOf(Team(arrayOf(Player("piet"))), Team(arrayOf(Player("puk")))), createGameInput.startIndex))
+    private val uid: String = "some uid"
 
     @Before
     fun setUp() {
@@ -33,11 +43,103 @@ class Play01ViewModelTest {
     }
 
     @Test
+    fun `it should notify GameLoadable when game was loaded`() {
+        givenGameRetrieved()
+        whenUiIsReady()
+    }
+
+    @Test
+    fun `it should not notify GameLoadable when game was loaded`() {
+        givenGameRetrieved()
+        whenUiIsNotReady()
+    }
+
+    @Test
     fun `it should show correct score when initial turn submitted`() {
-        givenScoreListener()
-        givenGameStartedWithInitialScore(Score())
+        givenGameRetrieved()
+        givenPlayerListener(mockPlayerListener)
+        whenUiIsReady()
         whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20))
-        verifyScores(arrayOf(Score(441), Score(501)))
+        thenScoresAre(arrayOf(Score(441), Score(501)))
+    }
+
+    @Test
+    fun `it should show correct score when second turn submitted`() {
+        givenGameRetrieved()
+        givenPlayerListener(mockPlayerListener)
+        whenUiIsReady()
+        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20), Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20))
+        thenScoresAre(arrayOf(Score(441), Score(321)))
+    }
+
+    @Test
+    fun `it should show correct score when leg is finished`() {
+        givenGameRetrieved()
+        givenPlayerListener(mockPlayerListener)
+        whenUiIsReady()
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.TEST_D250))
+        thenScoresAre(arrayOf(Score(501, 1, 0), Score(501, 0, 0)))
+    }
+
+    @Test
+    fun `it should notify scoreListeners on dart thrown`() {
+        givenGameRetrieved()
+        whenUiIsReady()
+        givenScoreListener(mockScoreListener)
+        whenDartThrown(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
+        thenScoreListenerIsNotifiedOfDartThrown()
+    }
+
+
+    @Test
+    fun `it should notify scoreListeners when turns submitted`() {
+        givenGameRetrieved()
+        whenUiIsReady()
+        givenScoreListener(mockScoreListener)
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
+        thenScoreListenerIsNotifiedOfScoreChange()
+    }
+
+    @Test
+    fun `it should notify playerListeners when turns submitted`() {
+        givenGameRetrieved()
+        whenUiIsReady()
+        givenPlayerListener(mockPlayerListener)
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
+        thenPlayerListenerIsNotified()
+    }
+
+    @Test
+    fun `it should notify specialListeners when turns submitted`() {
+        givenGameRetrieved()
+        whenUiIsReady()
+        givenSpecialListener(mockSpecialListener)
+        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
+        thenSpecialListenerIsNotified()
+    }
+
+    @Test
+    fun `it should notify scoreListeners when UiIsReady`() {
+        givenGameRetrieved()
+        givenScoreListener(mockScoreListener)
+        whenUiIsReady()
+        thenScoreListenerIsNotifiedOfScoreChange()
+    }
+
+    @Test
+    fun `it should notify playerListeners when UiIsReady`() {
+        givenGameRetrieved()
+        givenPlayerListener(mockPlayerListener)
+        whenUiIsReady()
+        thenPlayerListenerIsNotified()
+    }
+
+    @Test
+    fun `it should NOT notify specialListeners when UiIsReady`() {
+        givenGameRetrieved()
+        givenSpecialListener(mockSpecialListener)
+        whenUiIsReady()
+        thenSpecialListenerIsNotNotified()
     }
 
     private fun givenScoreListener(vararg listeners: ScoreListener) {
@@ -46,33 +148,69 @@ class Play01ViewModelTest {
         }
     }
 
-    @Test
-    fun `it should show correct score when second turn submitted`() {
-        givenGameStartedWithInitialScore(Score())
-        whenTurnSubmitted(Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20), Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20))
-        verifyScores(arrayOf(Score(441), Score(321)))
+    private fun givenPlayerListener(vararg listeners: PlayerListener) {
+        for (listener in listeners) {
+            subject.addPlayerListener(listener)
+        }
     }
 
-    @Test
-    fun `it should show correct score when leg is finished`() {
-        givenGameStartedWithInitialScore(Score(61, 0, 0, settings = ScoreSettings(61, 2, 2)))
-        whenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.SINGLE_20, Dart.DOUBLE_20))
-        verifyScores(arrayOf(Score(61, 1, 0), Score(61, 0, 0)))
+    private fun givenSpecialListener(vararg listeners: SpecialEventListener<*>) {
+        for (listener in listeners) {
+            subject.addSpecialEventListener(listener)
+        }
     }
 
-    private fun givenGameStartedWithInitialScore(score: Score) {
-        val arbiter = Arbiter(score, TurnHandler(arrayOf(Team(Player("1")), Team(Player("2")))))
-        whenever(mockGameRepository.new(arbiter)).then { Game(arbiter).apply { start() } }
-        subject = Play01ViewModel(mockScoreViewModel, mockInputViewModel, mockGetFinishUsecase, CreateGameUsecase(arbiter, mockGameRepository))
+    private fun givenGameRetrieved() {
+        game = Game("uid", mockArbiter)
+        subject = Play01ViewModel(mockRetrieveGameUsecase)
+        subject.retrieveGame(uid, createGameInput, mockLoadable)
+        verify(mockRetrieveGameUsecase).start(eq(uid), any(), any())
+    }
+
+    private fun whenUiIsReady() {
+        subject.startOk(mockLoadable, createGameInput).invoke(game)
+        verify(mockLoadable).startWith(game, createGameInput, subject)
+        subject.onLetsPlayDarts()
+    }
+
+    private fun whenUiIsNotReady() {
+        verify(mockLoadable, never()).startWith(game, createGameInput, subject)
+        // Some error callback in the future
     }
 
     private fun whenTurnSubmitted(vararg turns: Turn) {
         for (turn in turns) {
-            subject.handleTurn(turn, Player(""))
+            subject.onTurnSubmitted(turn, Player(""))
         }
     }
 
-    private fun verifyScores(scores: Array<Score>) {
+    private fun whenDartThrown(vararg turns: Turn) {
+        for (turn in turns) {
+            subject.onDartThrown(turn, Player(""))
+        }
+    }
 
+    private fun thenScoresAre(expected: Array<Score>) {
+        assertArrayEquals(expected, game.scores)
+    }
+
+    private fun thenPlayerListenerIsNotified() {
+        verify(mockPlayerListener).onNext(any())
+    }
+
+    private fun thenScoreListenerIsNotifiedOfScoreChange() {
+        verify(mockScoreListener).onScoreChange(any(), any())
+    }
+
+    private fun thenScoreListenerIsNotifiedOfDartThrown() {
+        verify(mockScoreListener).onDartThrown(any(), any())
+    }
+
+    private fun thenSpecialListenerIsNotNotified() {
+        verify(mockSpecialListener, never()).onSpecialEvent(any(), any(), any(), any())
+    }
+
+    private fun thenSpecialListenerIsNotified() {
+        verify(mockSpecialListener).onSpecialEvent(any(), any(), any(), any())
     }
 }

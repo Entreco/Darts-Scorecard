@@ -223,7 +223,7 @@ class InputViewModelTest {
     private fun givenPlayer(playerName: String, pts: Int = 501) {
         givenPlayer = Player(playerName)
         givenRequiredScore = Score(pts, 0, 0)
-        subject.onNext(Next(State.NORMAL, Team(givenPlayer), 0, givenPlayer, givenRequiredScore))
+        subject.onNext(Next(State.NORMAL, Team(arrayOf(givenPlayer)), 0, givenPlayer, givenRequiredScore))
     }
 
     private fun givenEntered(scored: Int) {

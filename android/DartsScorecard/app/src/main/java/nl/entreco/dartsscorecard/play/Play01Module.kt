@@ -3,56 +3,42 @@ package nl.entreco.dartsscorecard.play
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
-import nl.entreco.dartsscorecard.play.score.ReadyListener
-import nl.entreco.data.LocalGameRepository
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.game.GameMapper
+import nl.entreco.data.play.repository.LocalGameRepository
+import nl.entreco.domain.executors.Background
+import nl.entreco.domain.executors.BgExecutor
+import nl.entreco.domain.executors.FgExecutor
+import nl.entreco.domain.executors.Foreground
 import nl.entreco.domain.play.repository.GameRepository
-import nl.entreco.domain.settings.ScoreSettings
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * Created by Entreco on 14/11/2017.
  */
 @Module
-class Play01Module(private val settings: ScoreSettings, private val teams: Array<Team>, private val onReady: ReadyListener) {
+class Play01Module {
 
     @Provides
     @ActivityScope
-    fun provideArbiter(): Arbiter {
-        return Arbiter(Score(settings = settings), TurnHandler(teams, settings.teamStartIndex))
+    fun provideGameMapper(): GameMapper {
+        return GameMapper()
     }
 
     @Provides
     @ActivityScope
-    fun provideGameRepository(): GameRepository {
-        return LocalGameRepository()
+    fun provideGameRepository(db: DscDatabase, mapper: GameMapper): GameRepository {
+        return LocalGameRepository(db, mapper)
     }
 
     @Provides
     @ActivityScope
-    fun provideTeams(): Array<Team> {
-        return teams
+    fun provideBackground(): Background {
+        return BgExecutor()
     }
 
     @Provides
     @ActivityScope
-    fun provideScoreSettings(): ScoreSettings {
-        return settings
-    }
-
-    @Provides
-    @ActivityScope
-    fun provideReadyListener(): ReadyListener {
-        return onReady
-    }
-
-    @Provides
-    @ActivityScope
-    fun provideExecutorService(): ExecutorService {
-        return Executors.newSingleThreadExecutor()
+    fun provideForeground(): Foreground {
+        return FgExecutor()
     }
 }

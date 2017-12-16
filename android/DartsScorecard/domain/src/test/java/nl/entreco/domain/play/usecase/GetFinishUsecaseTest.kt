@@ -1,10 +1,9 @@
 package nl.entreco.domain.play.usecase
 
-import android.text.TextUtils.split
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.Logger
+import nl.entreco.domain.executors.Background
+import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.model.Dart
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.ScoreEstimator
@@ -14,9 +13,8 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.*
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.concurrent.ExecutorService
 
 /**
  * Created by Entreco on 24/11/2017.
@@ -24,13 +22,20 @@ import java.util.concurrent.ExecutorService
 @RunWith(MockitoJUnitRunner::class)
 class GetFinishUsecaseTest {
 
+    private val mockBg: Background = TestBackground()
     @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockBg: ExecutorService
+    @Mock private lateinit var mockResult: (String) -> Unit
     lateinit var subject: GetFinishUsecase
 
     @Before
     fun setUp() {
         subject = GetFinishUsecase(mockLogger, mockBg)
+    }
+
+    @Test
+    fun `it should report result`() {
+        subject.calculate(Score(170), Turn(), 20, mockResult)
+        verify(mockResult).invoke("T20 T20 BULL")
     }
 
     @Test
@@ -128,15 +133,15 @@ class GetFinishUsecaseTest {
         assertEquals("scored: $scored thrown: ${thrown.total()} finish: $finish", scored, finishToDarts(finish))
     }
 
-    private fun finishToDarts(finish: String) : Int {
+    private fun finishToDarts(finish: String): Int {
         var turn = Turn()
-        for( dart in finish.split(" ")){
+        for (dart in finish.split(" ")) {
             try {
                 val d = Dart.fromString(dart)
-                if(d != Dart.NONE) {
+                if (d != Dart.NONE) {
                     turn += d
                 }
-            } catch(oops: IllegalStateException){
+            } catch (oops: IllegalStateException) {
                 System.out.println("dart:$dart, $oops")
             }
         }

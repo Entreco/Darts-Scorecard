@@ -40,7 +40,7 @@ class NoScoreEventListenerTest : SpecialEventListenerTest() {
     private class NoScoreEventListener(private val check: AtomicBoolean = AtomicBoolean(false)) : SpecialEventListener<NoScoreEvent> {
 
         private val player = Player("No Score thrower")
-        private val team = Team(player)
+        private val team = Team(arrayOf(player))
         private val score = Score()
 
         override fun handle(event: NoScoreEvent) {

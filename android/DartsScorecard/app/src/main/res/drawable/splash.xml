@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <bitmap android:src="@drawable/splash_bg_2"/>
+    </item>
+
+    <item>
+        <shape>
+            <gradient android:type="radial" android:startColor="#44000000" android:endColor="@color/black" android:gradientRadius="100%" android:centerX="50%" android:centerY="80%"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/ic_entreco_black_bg" android:bottom="@dimen/large" android:gravity="bottom|center_horizontal"/>
+
+</layer-list>

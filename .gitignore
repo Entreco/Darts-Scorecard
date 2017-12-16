@@ -63,3 +63,5 @@ android/DartsScorecard/app/lint-report\.html
 release/
 
 *.exec
+
+android/DartsScorecard/dig/web/

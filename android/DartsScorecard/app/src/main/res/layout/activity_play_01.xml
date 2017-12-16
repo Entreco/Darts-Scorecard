@@ -9,6 +9,18 @@
             type="nl.entreco.dartsscorecard.play.Play01ViewModel" />
 
         <variable
+            name="inputViewModel"
+            type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
+
+        <variable
+            name="scoreViewModel"
+            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+
+        <variable
+            name="finishUsecase"
+            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
+
+        <variable
             name="animator"
             type="nl.entreco.dartsscorecard.play.main.Play01Animator" />
 
@@ -31,24 +43,24 @@
             <include
                 android:id="@+id/includeMain"
                 layout="@layout/play_01_main"
-                android:layout_marginEnd="@dimen/def"
-                android:layout_marginStart="@dimen/def"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/includeScore" />
+                android:layout_below="@id/includeScore"
+                android:layout_marginEnd="@dimen/def"
+                android:layout_marginStart="@dimen/def" />
 
             <include
                 android:id="@+id/includeScore"
                 layout="@layout/play_01_score"
-                app:getFinishUsecase="@{viewModel.getFinishUsecase}"
-                app:viewModel="@{viewModel.scoreViewModel}" />
+                app:finishUsecase="@{finishUsecase}"
+                app:viewModel="@{scoreViewModel}" />
         </RelativeLayout>
 
         <include
             android:id="@+id/includeInput"
             layout="@layout/play_01_input"
             app:listener="@{viewModel}"
-            app:viewModel="@{viewModel.inputViewModel}" />
+            app:viewModel="@{inputViewModel}" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

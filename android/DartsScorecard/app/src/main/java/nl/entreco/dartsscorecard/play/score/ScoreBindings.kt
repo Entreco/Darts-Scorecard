@@ -14,16 +14,20 @@ import nl.entreco.domain.settings.ScoreSettings
 class ScoreBindings {
     companion object {
         @JvmStatic
-        @BindingAdapter("adapter", "teams", "scoreSettings", "getFinishUsecase", requireAll = true)
-        fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: Array<Team>, scoreSettings: ScoreSettings, getFinishUsecase: GetFinishUsecase) {
+        @BindingAdapter("adapter", "teams", "scoreSettings", "finishUsecase", "uiCallback", requireAll = true)
+        fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scoreSettings: ScoreSettings, finishUsecase: GetFinishUsecase, uiCallback: UiCallback?) {
+
             recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
             recyclerView.itemAnimator = null
             recyclerView.adapter = adapter
             adapter.clear()
 
-            teams.forEachIndexed { index, team -> adapter.addItem(TeamScoreViewModel(team, scoreSettings.score(), getFinishUsecase, starter = scoreSettings.teamStartIndex == index)) }
+            teams.forEachIndexed { index, team ->
+                val vm = TeamScoreViewModel(team, scoreSettings.score(), finishUsecase, starter = scoreSettings.teamStartIndex == index)
+                adapter.addItem(vm)
+            }
 
-            adapter.onTeamsReady()
+            uiCallback?.onLetsPlayDarts()
         }
     }
 }

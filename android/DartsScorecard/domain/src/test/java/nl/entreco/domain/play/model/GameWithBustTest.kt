@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.model
 
+import nl.entreco.domain.play.TestProvider
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
 import org.junit.Assert.assertEquals
@@ -13,7 +14,7 @@ class GameWithBustTest {
 
     lateinit var subject: Game
 
-    private val team: Team = Team("team1")
+    private val team: Team = TestProvider().team1()
     private val turnHandler: TurnHandler = TurnHandler(arrayOf(team), 0)
     private val arbiter: Arbiter = Arbiter(Score(), turnHandler)
 
@@ -32,7 +33,7 @@ class GameWithBustTest {
     }
 
     private fun givenStartedGame(): Next {
-        subject = Game(arbiter)
+        subject = Game("uid", arbiter)
         subject.start()
         return subject.next
     }

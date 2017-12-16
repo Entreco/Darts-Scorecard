@@ -5,7 +5,7 @@ import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class GameWithLegTest : BaseGameTest(Game(Arbiter(Score(201, settings = ScoreSettings(201)), TestProvider().turnHandler()))) {
+class GameWithLegTest : BaseGameTest(Game("uid", Arbiter(Score(201, settings = ScoreSettings(201)), TestProvider().turnHandler()))) {
 
     @Test
     fun `it should print correct start score`() {
