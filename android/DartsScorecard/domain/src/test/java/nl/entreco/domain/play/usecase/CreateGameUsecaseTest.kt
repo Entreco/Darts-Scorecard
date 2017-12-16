@@ -24,7 +24,7 @@ class CreateGameUsecaseTest {
 
     private lateinit var subject: CreateGameUsecase
 
-    private var setup = SetupModel(501, 0, 3, 2)
+    private var setup = CreateGameInput(501, 0, 3, 2)
     private var mockBg = TestBackground()
     private var mockFg = TestForeground()
 

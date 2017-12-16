@@ -7,7 +7,7 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.usecase.CreateGameUsecase
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 
 
 /**
@@ -21,11 +21,11 @@ class SplashActivity : ViewModelActivity(), CreateGameUsecase.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val setup = SetupModel(501, 0, 3, 2)
+        val setup = CreateGameInput(501, 0, 3, 2)
         viewModel.createGameIfNoneExists(setup, this)
     }
 
-    override fun onGameCreated(game: Game, setup: SetupModel) {
+    override fun onGameCreated(game: Game, setup: CreateGameInput) {
         Play01Activity.startGame(this, game, setup)
         finish()
     }

@@ -13,7 +13,7 @@ import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun startWith(game: Game, settings: SetupModel, uiCallback: UiCallback) {
+    override fun startWith(game: Game, settings: CreateGameInput, uiCallback: UiCallback) {
         this.uiCallback.set(uiCallback)
         this.scoreSettings.set(ScoreSettings(settings.startScore, settings.numLegs, settings.numSets, settings.startIndex))
         this.teams.addAll(game.teams())

@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.splash
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import javax.inject.Inject
  */
 class SplashViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase) : BaseViewModel() {
 
-    fun createGameIfNoneExists(setupModel: SetupModel, callback: CreateGameUsecase.Callback) {
-        createGameUsecase.start(setupModel, callback)
+    fun createGameIfNoneExists(createGameInput: CreateGameInput, callback: CreateGameUsecase.Callback) {
+        createGameUsecase.start(createGameInput, callback)
     }
 }

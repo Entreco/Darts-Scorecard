@@ -29,7 +29,7 @@ class RetrieveGameUsecaseTest {
     private lateinit var subject: RetrieveGameUsecase
 
     private lateinit var uid: String
-    private lateinit var settings: SetupModel
+    private lateinit var settings: CreateGameInput
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
     private lateinit var mockBackground: TestBackground
@@ -38,7 +38,7 @@ class RetrieveGameUsecaseTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         uid = "uid"
-        settings = SetupModel(501, 0, 3, 2)
+        settings = CreateGameInput(501, 0, 3, 2)
         game = Game(uid, arbiter)
 
         mockForeground = TestForeground()

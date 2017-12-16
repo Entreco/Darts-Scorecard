@@ -2,7 +2,6 @@ package nl.entreco.data
 
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.play.repository.LocalGameRepository
-import nl.entreco.domain.play.usecase.SetupModel
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test

@@ -14,7 +14,7 @@ import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.usecase.GetFinishUsecase
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 
 class Play01Activity : ViewModelActivity() {
 
@@ -64,8 +64,8 @@ class Play01Activity : ViewModelActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun retrieveSetup(): SetupModel {
-        return SetupModel(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
+    private fun retrieveSetup(): CreateGameInput {
+        return CreateGameInput(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
     }
     private fun retrieveUid() : String {
         return intent.getStringExtra("0")
@@ -73,7 +73,7 @@ class Play01Activity : ViewModelActivity() {
 
     companion object {
         @JvmStatic
-        fun startGame(context: Context, game: Game, setup: SetupModel) {
+        fun startGame(context: Context, game: Game, setup: CreateGameInput) {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("0", game.uuid)
             intent.putExtra("1", setup.startIndex)

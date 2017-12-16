@@ -13,7 +13,7 @@ import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.RetrieveGameUsecase
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 import javax.inject.Inject
 
 /**
@@ -27,11 +27,11 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
     private val scoreListeners = mutableListOf<ScoreListener>()
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun retrieveGame(uid: String, settings: SetupModel, load: GameLoadable) {
+    fun retrieveGame(uid: String, settings: CreateGameInput, load: GameLoadable) {
         retrieveGameUseCase.start(uid, ok = startOk(load, settings), err = { })
     }
 
-    fun startOk(load: GameLoadable, settings: SetupModel): (Game) -> Unit {
+    fun startOk(load: GameLoadable, settings: CreateGameInput): (Game) -> Unit {
         return {
             game = it.start()
             load.startWith(it, settings, this)

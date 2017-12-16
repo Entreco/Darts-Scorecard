@@ -12,7 +12,7 @@ import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.usecase.RetrieveGameUsecase
-import nl.entreco.domain.play.usecase.SetupModel
+import nl.entreco.domain.play.usecase.CreateGameInput
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
@@ -33,8 +33,8 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockPlayerListener: PlayerListener
     @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
 
-    private val setupModel: SetupModel = SetupModel(501, 0, 3, 2)
-    private val mockArbiter: Arbiter = Arbiter(Score(setupModel.startScore), TurnHandler(arrayOf(Team(arrayOf(Player("piet"))), Team(arrayOf(Player("puk")))), setupModel.startIndex))
+    private val createGameInput: CreateGameInput = CreateGameInput(501, 0, 3, 2)
+    private val mockArbiter: Arbiter = Arbiter(Score(createGameInput.startScore), TurnHandler(arrayOf(Team(arrayOf(Player("piet"))), Team(arrayOf(Player("puk")))), createGameInput.startIndex))
     private val uid: String = "some uid"
 
     @Before
@@ -163,18 +163,18 @@ class Play01ViewModelTest {
     private fun givenGameRetrieved() {
         game = Game("uid", mockArbiter)
         subject = Play01ViewModel(mockRetrieveGameUsecase)
-        subject.retrieveGame(uid, setupModel, mockLoadable)
+        subject.retrieveGame(uid, createGameInput, mockLoadable)
         verify(mockRetrieveGameUsecase).start(eq(uid), any(), any())
     }
 
     private fun whenUiIsReady() {
-        subject.startOk(mockLoadable, setupModel).invoke(game)
-        verify(mockLoadable).startWith(game, setupModel, subject)
+        subject.startOk(mockLoadable, createGameInput).invoke(game)
+        verify(mockLoadable).startWith(game, createGameInput, subject)
         subject.onLetsPlayDarts()
     }
 
     private fun whenUiIsNotReady() {
-        verify(mockLoadable, never()).startWith(game, setupModel, subject)
+        verify(mockLoadable, never()).startWith(game, createGameInput, subject)
         // Some error callback in the future
     }
 

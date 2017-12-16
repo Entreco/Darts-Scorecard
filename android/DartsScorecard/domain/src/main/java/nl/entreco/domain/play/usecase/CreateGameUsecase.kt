@@ -19,11 +19,11 @@ import javax.inject.Inject
 class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepository, private val bg: Background, private val fg: Foreground) {
 
     interface Callback {
-        fun onGameCreated(game: Game, setup: SetupModel)
+        fun onGameCreated(game: Game, setup: CreateGameInput)
         fun onGameFailed(err: Throwable)
     }
 
-    fun start(createModel: SetupModel, callback: Callback) {
+    fun start(createModel: CreateGameInput, callback: Callback) {
         bg.post(Runnable {
 
             val game = modelToGame(createModel)
@@ -33,13 +33,13 @@ class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepo
         })
     }
 
-    private fun postOnUi(callback: Callback, game: Game, createModel: SetupModel) {
+    private fun postOnUi(callback: Callback, game: Game, createModel: CreateGameInput) {
         fg.post(Runnable {
             callback.onGameCreated(game, createModel)
         })
     }
 
-    private fun modelToGame(createModel: SetupModel): Game {
+    private fun modelToGame(createModel: CreateGameInput): Game {
         val teams = arrayOf(Team(arrayOf(Player("remco"), Player("sibbel"))), Team(arrayOf(Player("Boeffie"))), Team(arrayOf(Player("eva"), Player("guusje"), Player("Beer"))))
         val turnHandler = TurnHandler(teams, createModel.startIndex)
         val settings = ScoreSettings(createModel.startScore, createModel.numLegs, createModel.numSets)
