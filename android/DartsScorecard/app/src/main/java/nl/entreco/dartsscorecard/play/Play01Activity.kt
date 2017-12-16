@@ -42,7 +42,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun initGame() {
-        viewModel.retrieveGame("", retrieveSetup(), scoreViewModel)
+        viewModel.retrieveGame(retrieveUid(), retrieveSetup(), scoreViewModel )
     }
 
     private fun resumeGame() {
@@ -67,11 +67,15 @@ class Play01Activity : ViewModelActivity() {
     private fun retrieveSetup(): SetupModel {
         return SetupModel(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
     }
+    private fun retrieveUid() : String {
+        return intent.getStringExtra("0")
+    }
 
     companion object {
         @JvmStatic
         fun startGame(context: Context, game: Game, setup: SetupModel) {
             val intent = Intent(context, Play01Activity::class.java)
+            intent.putExtra("0", game.uuid)
             intent.putExtra("1", setup.startIndex)
             intent.putExtra("2", setup.startScore)
             intent.putExtra("3", setup.numLegs)

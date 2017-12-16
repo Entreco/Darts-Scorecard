@@ -7,7 +7,7 @@ const val OK: Int = 1
 const val BUST: Int = -1
 const val ERR: Int = -2
 
-open class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
+class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var scores = initForStart(initial)
 
@@ -15,7 +15,7 @@ open class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var sets = mutableListOf<MutableList<Array<Score>>>()
 
-    open fun start(): Next {
+    fun start(): Next {
         return turnHandler.start(scores[0])
     }
 

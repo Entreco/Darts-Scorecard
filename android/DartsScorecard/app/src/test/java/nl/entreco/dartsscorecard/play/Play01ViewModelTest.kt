@@ -164,7 +164,7 @@ class Play01ViewModelTest {
         game = Game("uid", mockArbiter)
         subject = Play01ViewModel(mockRetrieveGameUsecase)
         subject.retrieveGame(uid, setupModel, mockLoadable)
-        verify(mockRetrieveGameUsecase).start(eq(uid), eq(setupModel), any(), any())
+        verify(mockRetrieveGameUsecase).start(eq(uid), any(), any())
     }
 
     private fun whenUiIsReady() {

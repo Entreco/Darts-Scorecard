@@ -7,9 +7,8 @@ import java.util.concurrent.Future
 /**
  * Created by Entreco on 12/12/2017.
  */
-class BgExecutor : Background {
-    private val bg: ExecutorService = Executors.newSingleThreadExecutor()
-    override fun post(runnable: Runnable): Future<*> {
-        return bg.submit { runnable.run() }
+class BgExecutor(private val bg: ExecutorService = Executors.newSingleThreadExecutor()) : Background {
+    override fun post(runnable: Runnable): Future<*>? {
+        return bg.submit(runnable)
     }
 }

@@ -9,14 +9,14 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 14/11/2017.
  */
-open class RetrieveGameUsecase @Inject constructor(private val gameRepository: GameRepository, private val bg: Background,
+class RetrieveGameUsecase @Inject constructor(private val gameRepository: GameRepository, private val bg: Background,
                                                    private val fg: Foreground) {
 
-    open fun start(uid: String, settings: SetupModel, ok: (Game) -> Unit, err: (Throwable) -> Unit) {
+    fun start(uid: String, ok: (Game) -> Unit, err: (Throwable) -> Unit) {
         bg.post(Runnable {
 
             try {
-                val game = gameRepository.fetchLatest()
+                val game = gameRepository.fetchBy(uid)
                 fg.post(Runnable {
                     ok(game)
                 })

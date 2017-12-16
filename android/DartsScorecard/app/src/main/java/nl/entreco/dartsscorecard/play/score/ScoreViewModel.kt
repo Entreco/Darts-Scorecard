@@ -20,7 +20,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-open class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadable, ScoreListener, PlayerListener {
+class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadable, ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
