@@ -29,4 +29,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
     }
 
     private val GAME_FINISHED = "game finished"
+    fun setTeams(teams: Array<Team>) {
+        arbiter.setTeams(teams)
+    }
 }

@@ -5,6 +5,7 @@ import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerTable
 import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.PlayerRepository
 
 /**
@@ -29,6 +30,10 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTa
     override fun fetchByName(name: String): Player? {
         val table = playerDao.fetchByName(name) ?: return null
         return mapper.to(table)
+    }
+
+    override fun fetchTeams(teams: String): Array<Team> {
+        return emptyArray()
     }
 
     override fun fetchAll(): List<Player> {

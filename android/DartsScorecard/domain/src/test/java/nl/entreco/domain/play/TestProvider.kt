@@ -18,7 +18,7 @@ class TestProvider {
     private val teams = arrayOf(team1, team2)
 
     fun turnHandler(): TurnHandler {
-        return TurnHandler(teams)
+        return TurnHandler().also { it.teams = teams }
     }
 
     fun next(): Next {

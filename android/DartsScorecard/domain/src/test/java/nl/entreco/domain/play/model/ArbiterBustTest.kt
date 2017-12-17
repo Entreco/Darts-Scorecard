@@ -16,7 +16,7 @@ class ArbiterBustTest {
 
     private val startIndex = 0
     private val initialScore = Score(40, 0, 0, ScoreSettings(40, 1, 1, startIndex))
-    private val turnHandler = TurnHandler(TestProvider().teams(), startIndex)
+    private val turnHandler = TurnHandler(startIndex).also { it.teams = TestProvider().teams() }
     val subject: Arbiter = Arbiter(initialScore, turnHandler)
 
     @Test

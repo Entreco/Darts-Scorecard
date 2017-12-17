@@ -1,9 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
@@ -11,11 +8,15 @@ import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import nl.entreco.domain.play.usecase.RetrieveGameUsecase
-import nl.entreco.domain.play.usecase.CreateGameInput
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentCaptor
+import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
@@ -33,9 +34,12 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockPlayerListener: PlayerListener
     @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
 
-    private val createGameInput: CreateGameInput = CreateGameInput(501, 0, 3, 2)
-    private val mockArbiter: Arbiter = Arbiter(Score(createGameInput.startScore), TurnHandler(arrayOf(Team(arrayOf(Player("piet"))), Team(arrayOf(Player("puk")))), createGameInput.startIndex))
+    private val captor = argumentCaptor<(Game) -> Unit>()
+
+    private val gameSettingsRequest: GameSettingsRequest = GameSettingsRequest(501, 0, 3, 2)
+    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore), TurnHandler(gameSettingsRequest.startIndex).also { it.teams = arrayOf(Team(arrayOf(Player("p1"))),Team(arrayOf(Player("p2")))) })
     private val gameId: Long = 1002
+    private val teamIds = TeamIdsString("1|2")
 
     @Before
     fun setUp() {
@@ -163,18 +167,20 @@ class Play01ViewModelTest {
     private fun givenGameRetrieved() {
         game = Game(101, mockArbiter)
         subject = Play01ViewModel(mockRetrieveGameUsecase)
-        subject.retrieveGame(gameId, createGameInput, mockLoadable)
-        verify(mockRetrieveGameUsecase).start(eq(gameId), any(), any())
+        val retrieveGameRequest = RetrieveGameRequest(gameId, teamIds, gameSettingsRequest)
+        subject.retrieveGame(retrieveGameRequest, mockLoadable)
+
+        verify(mockRetrieveGameUsecase).start(eq(retrieveGameRequest), captor.capture(), any())
     }
 
     private fun whenUiIsReady() {
-        subject.startOk(mockLoadable, createGameInput).invoke(game)
-        verify(mockLoadable).startWith(game, createGameInput, subject)
+        captor.firstValue.invoke(game)
+        verify(mockLoadable).startWith(game, gameSettingsRequest, subject)
         subject.onLetsPlayDarts()
     }
 
     private fun whenUiIsNotReady() {
-        verify(mockLoadable, never()).startWith(game, createGameInput, subject)
+        verify(mockLoadable, never()).startWith(game, gameSettingsRequest, subject)
         // Some error callback in the future
     }
 

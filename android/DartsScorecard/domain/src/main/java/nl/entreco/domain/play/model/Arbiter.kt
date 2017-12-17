@@ -133,4 +133,8 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
         scores.drop(1).forEach { builder.append("\n$it") }
         return builder.toString()
     }
+
+    fun setTeams(teams: Array<Team>) {
+        turnHandler.teams = teams
+    }
 }

@@ -3,7 +3,7 @@ package nl.entreco.domain.play.model.players
 /**
  * Created by Entreco on 16/12/2017.
  */
-data class TeamsString(private val teamString: String) {
+data class TeamNamesString(private val teamString: String) {
 
     private val illegalState = IllegalStateException("invalid team string, should be 'player1,player2|player3|player4,player5'")
     private val playerSplit: MutableList<List<String>> = emptyList<List<String>>().toMutableList()
@@ -13,15 +13,15 @@ data class TeamsString(private val teamString: String) {
         validate(teamString)
     }
 
-    private val teams: Array<Team> by lazy {
+    private val teams: Array<Array<String>> by lazy {
 
-        val teamsArray = ArrayList<Team>()
+        val teamsArray = ArrayList<Array<String>>()
         teamSplit.forEachIndexed { index, _ ->
-            val players = ArrayList<Player>()
+            val players = ArrayList<String>()
             playerSplit[index].forEachIndexed { _, player ->
-                players.add(Player(player))
+                players.add(player)
             }
-            teamsArray.add(Team(players.toTypedArray()))
+            teamsArray.add(players.toTypedArray())
         }
 
         teamsArray.toTypedArray()
@@ -41,37 +41,13 @@ data class TeamsString(private val teamString: String) {
         }
     }
 
-    fun toTeams(): Array<Team> {
-        return teams
-    }
-
-    fun toPlayers(): List<Player> {
-        val players = ArrayList<Player>()
-        teams.forEach { players.addAll(it.players) }
+    fun toPlayerNames(): List<String> {
+        val players = ArrayList<String>()
+        teams.forEach { players.addAll(it) }
         return players
     }
 
     override fun toString(): String {
         return teamString
-    }
-
-    companion object {
-        fun fromTeams(teams: Array<Team>): String {
-            val teamString = StringBuilder()
-            teams.forEach {
-
-                if (!teamString.isEmpty()) {
-                    teamString.append("|")
-                }
-
-                teamString.append(it.players[0])
-                it.players.drop(1).forEach {
-                    teamString.append(",")
-                    teamString.append(it)
-                }
-            }
-
-            return teamString.toString()
-        }
     }
 }

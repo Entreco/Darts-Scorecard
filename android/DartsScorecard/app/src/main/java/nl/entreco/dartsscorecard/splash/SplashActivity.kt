@@ -7,11 +7,12 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.di.splash.SplashComponent
 import nl.entreco.dartsscorecard.di.splash.SplashModule
 import nl.entreco.dartsscorecard.play.Play01Activity
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.TeamsString
-import nl.entreco.domain.play.usecase.CreateGameInput
+import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.play.model.players.TeamNamesString
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import nl.entreco.domain.play.usecase.CreateTeamsUsecase
+import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.play.usecase.RetrieveGameRequest
 
 
 /**
@@ -22,40 +23,40 @@ class SplashActivity : ViewModelActivity(), CreateGameUsecase.Callback, CreateTe
     private val component: SplashComponent by componentProvider { it.plus(SplashModule()) }
     private val viewModel: SplashViewModel by viewModelProvider { component.viewModel() }
 
-    private val setup = CreateGameInput(501, 0, 3, 2)
-    private val teams = TeamsString("Remco,Boeffie|Eva,Guusje")
+    private val setup = GameSettingsRequest(501, 0, 3, 2)
+    private val teams = TeamNamesString("Remco,Boeffie|Eva,Guusje")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.ensureTeamPlayersExist(teams, this)
     }
 
-    override fun onTeamsCreated(teams: TeamsString) {
-        viewModel.retrieveLastGame(setup, this)
+    override fun onTeamsFailed(err: Throwable) {
+        err(err)
     }
 
-    override fun onGameCreated(game: Game, setup: CreateGameInput) {
-        start(game, setup)
+    override fun onTeamsCreated(teamIds: TeamIdsString) {
+        viewModel.retrieveLastGame(setup, teamIds, this)
     }
 
-    override fun onGameRetrieved(game: Game, setup: CreateGameInput) {
-        start(game, setup)
+    override fun onGameRetrieved(setup: RetrieveGameRequest) {
+        start(setup)
     }
 
-    override fun onGameRetrieveFailed(err: Throwable) {
-        viewModel.createNewGame(setup, teams, this)
+    override fun onGameRetrieveFailed(err: Throwable, teamIds: TeamIdsString) {
+        viewModel.createNewGame(setup, teamIds, this)
+    }
+
+    override fun onGameCreated(setup: RetrieveGameRequest) {
+        start(setup)
     }
 
     override fun onGameCreateFailed(err: Throwable) {
         err(err)
     }
 
-    override fun onTeamsFailed(err: Throwable) {
-        err(err)
-    }
-
-    private fun start(game: Game, setup: CreateGameInput) {
-        Play01Activity.startGame(this, game, setup)
+    private fun start(setup: RetrieveGameRequest) {
+        Play01Activity.startGame(this, setup)
         finish()
     }
 

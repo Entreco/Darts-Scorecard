@@ -1,8 +1,9 @@
 package nl.entreco.dartsscorecard.splash
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.model.players.TeamsString
-import nl.entreco.domain.play.usecase.CreateGameInput
+import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.play.model.players.TeamNamesString
+import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.play.usecase.CreateGameUsecase
 import nl.entreco.domain.play.usecase.CreateTeamsUsecase
 import javax.inject.Inject
@@ -12,15 +13,15 @@ import javax.inject.Inject
  */
 class SplashViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase) : BaseViewModel() {
 
-    fun ensureTeamPlayersExist(teamsInput: TeamsString, callback: CreateTeamsUsecase.Callback) {
-        createTeamsUsecase.start(teamsInput, callback)
+    fun ensureTeamPlayersExist(teamNamesInput: TeamNamesString, callback: CreateTeamsUsecase.Callback) {
+        createTeamsUsecase.start(teamNamesInput, callback)
     }
 
-    fun createNewGame(createGameInput: CreateGameInput, teams: TeamsString, callback: CreateGameUsecase.Callback) {
-        createGameUsecase.start(createGameInput, teams, callback)
+    fun createNewGame(gameSettingsRequest: GameSettingsRequest, teamNames: TeamIdsString, callback: CreateGameUsecase.Callback) {
+        createGameUsecase.start(gameSettingsRequest, teamNames, callback)
     }
 
-    fun retrieveLastGame(createGameInput: CreateGameInput, callback: CreateGameUsecase.Callback) {
-        createGameUsecase.fetchLatest(createGameInput, callback)
+    fun retrieveLastGame(gameSettingsRequest: GameSettingsRequest, teamIds: TeamIdsString, callback: CreateGameUsecase.Callback) {
+        createGameUsecase.fetchLatest(gameSettingsRequest, teamIds,  callback)
     }
 }

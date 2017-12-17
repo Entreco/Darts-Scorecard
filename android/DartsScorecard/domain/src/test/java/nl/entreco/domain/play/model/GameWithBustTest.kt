@@ -15,7 +15,7 @@ class GameWithBustTest {
     lateinit var subject: Game
 
     private val team: Team = TestProvider().team1()
-    private val turnHandler: TurnHandler = TurnHandler(arrayOf(team), 0)
+    private val turnHandler: TurnHandler = TurnHandler(0).also { it.teams = arrayOf(team) }
     private val arbiter: Arbiter = Arbiter(Score(), turnHandler)
 
     @Test

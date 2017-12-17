@@ -7,7 +7,7 @@ import nl.entreco.domain.play.model.*
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.usecase.CreateGameInput
+import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -101,7 +101,7 @@ class ScoreViewModelTest {
 
     private fun `given game has started`() {
         val score = givenScoreSettings.score()
-        subject.startWith(Game(-122, Arbiter(score, TurnHandler(givenTeams, 0))), CreateGameInput(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.startWith(Game(-122, Arbiter(score, TurnHandler(0).also { it.teams = givenTeams })), GameSettingsRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {
