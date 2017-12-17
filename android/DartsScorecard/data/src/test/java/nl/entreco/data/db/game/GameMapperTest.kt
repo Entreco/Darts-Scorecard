@@ -26,10 +26,6 @@ class GameMapperTest {
         givenGameTable(id = 1, teams = "1,2|3,4", numLegs = 100, numSets = 1000, startScore = 42, startIndex = 18)
         whenConverting()
         assertEquals(1, actualGame.id)
-        assertEquals(100, actualGame.arbiter.getScoreSettings().numLegs)
-        assertEquals(1000, actualGame.arbiter.getScoreSettings().numSets)
-        assertEquals(42, actualGame.arbiter.getScoreSettings().startScore)
-        assertEquals(18, actualGame.arbiter.getScoreSettings().teamStartIndex)
     }
 
     private fun givenGameTable(id: Long = 0, teams: String = "", numLegs: Int = 0, numSets: Int = 0, startScore: Int = 0, startIndex: Int = 0) {

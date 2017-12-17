@@ -2,13 +2,12 @@ package nl.entreco.domain.play.model
 
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.settings.ScoreSettings
 
 const val OK: Int = 1
 const val BUST: Int = -1
 const val ERR: Int = -2
 
-class Arbiter(private val initial: Score) {
+class Arbiter(initial: Score) {
 
     private lateinit var turnHandler: TurnHandler
     private var scores: Array<Score> = emptyArray()
@@ -18,7 +17,7 @@ class Arbiter(private val initial: Score) {
 
     fun start(startIndex: Int, teams: Array<Team>): Next {
         this.turnHandler = TurnHandler(startIndex, teams)
-        this.scores = Array(teams.size, { initial.copy() })
+        this.scores = Array(teams.size, { scoreSettings.score().copy() })
         return turnHandler.start(scores[0])
     }
 
@@ -103,10 +102,6 @@ class Arbiter(private val initial: Score) {
     private fun setFinished(currentPlayer: Int) = scores[currentPlayer].setFinished()
     private fun matchFinished(currentPlayer: Int) = scores[currentPlayer].matchFinished()
 
-    fun getScoreSettings(): ScoreSettings {
-        return scoreSettings
-    }
-
     fun getScores(): Array<Score> {
         return scores
     }
@@ -117,11 +112,5 @@ class Arbiter(private val initial: Score) {
 
     fun getSets(): MutableList<MutableList<Array<Score>>> {
         return sets
-    }
-
-    override fun toString(): String {
-        val builder = StringBuilder().append("${scores[0]}")
-        scores.drop(1).forEach { builder.append("\n$it") }
-        return builder.toString()
     }
 }
