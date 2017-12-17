@@ -14,7 +14,7 @@ import nl.entreco.domain.settings.ScoreSettings
 class GameMapper : Mapper<GameTable, Game> {
 
     override fun to(from: GameTable): Game {
-        val uid = from.uid
+        val id = from.id
         val startIndex = from.startIndex
         val startScore = from.startScore
         val legs = from.numLegs
@@ -24,6 +24,6 @@ class GameMapper : Mapper<GameTable, Game> {
         val setting = ScoreSettings(startScore, legs, sets, startIndex)
         val initial = Score(startScore, 0, 0, setting)
         val arbiter = Arbiter(initial, TurnHandler(teams, startIndex))
-        return Game(uid, arbiter)
+        return Game(id, arbiter)
     }
 }

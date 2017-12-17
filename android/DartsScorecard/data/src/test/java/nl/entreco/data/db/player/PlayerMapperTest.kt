@@ -25,7 +25,6 @@ class PlayerMapperTest {
 
     private fun givenPlayer(name: String = "", fav: Int = 0): PlayerTable {
         val table = PlayerTable()
-        table.uid = "some uid"
         table.name = name
         table.fav = fav.toString()
         return table

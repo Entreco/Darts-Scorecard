@@ -2,6 +2,7 @@ package nl.entreco.data.db.game
 
 import nl.entreco.domain.play.model.Game
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 /**
@@ -18,9 +19,9 @@ class GameMapperTest {
 
     @Test
     fun `should create Game when valid table`() {
-        val table = givenTable(uid = "some uid", teams = "1,2|3,4", numLegs = 100, numSets = 1000, startScore = 42, startIndex = 18)
+        val table = givenTable(id = 1, teams = "1,2|3,4", numLegs = 100, numSets = 1000, startScore = 42, startIndex = 18)
         val actual = subject.to(table)
-        assertEquals("some uid", actual.uuid)
+        assertEquals(1, actual.id)
         assertEquals(2, actual.teams().size)
         assertEquals("1", playerName(actual, 0, 0))
         assertEquals("2", playerName(actual, 0, 1))
@@ -35,14 +36,14 @@ class GameMapperTest {
     private fun playerName(actual: Game, team: Int, player: Int) =
             actual.teams()[team].players[player].name
 
-    private fun givenTable(uid: String = "", teams: String = "", numLegs: Int = 0, numSets: Int = 0, startScore: Int = 0, startIndex: Int = 0): GameTable {
+    private fun givenTable(id : Long = 0, teams: String = "", numLegs: Int = 0, numSets: Int = 0, startScore: Int = 0, startIndex: Int = 0): GameTable {
         val table = GameTable()
+        table.id = id
         table.teams = teams
         table.numLegs = numLegs
         table.numSets = numSets
         table.startScore = startScore
         table.startIndex = startIndex
-        table.uid = uid
         return table
     }
 }

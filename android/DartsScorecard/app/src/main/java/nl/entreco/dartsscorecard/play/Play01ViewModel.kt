@@ -27,8 +27,8 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
     private val scoreListeners = mutableListOf<ScoreListener>()
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun retrieveGame(uid: String, settings: CreateGameInput, load: GameLoadable) {
-        retrieveGameUseCase.start(uid, ok = startOk(load, settings), err = { })
+    fun retrieveGame(id: Long, settings: CreateGameInput, load: GameLoadable) {
+        retrieveGameUseCase.start(id, ok = startOk(load, settings), err = { })
     }
 
     fun startOk(load: GameLoadable, settings: CreateGameInput): (Game) -> Unit {

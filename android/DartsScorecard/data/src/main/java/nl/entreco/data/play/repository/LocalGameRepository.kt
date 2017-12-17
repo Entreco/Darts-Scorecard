@@ -17,10 +17,9 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
 
     @Throws
     @WorkerThread
-    override fun create(uid: String, teams: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
+    override fun create(teams: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
         val table = GameTable()
 
-        table.uid = uid
         table.teams = teams
         table.numLegs = numLegs
         table.numSets = numSets
@@ -31,8 +30,8 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     }
 
     @WorkerThread
-    override fun fetchBy(uid: String): Game {
-        val gameTable = gameDao.fetchBy(uid) ?: throw IllegalStateException("Game $uid does not exist")
+    override fun fetchBy(id: Long): Game {
+        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
         return mapper.to(gameTable)
     }
 

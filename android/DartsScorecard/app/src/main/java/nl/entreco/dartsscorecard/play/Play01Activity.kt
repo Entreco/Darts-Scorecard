@@ -70,15 +70,15 @@ class Play01Activity : ViewModelActivity() {
     private fun retrieveSetup(): CreateGameInput {
         return CreateGameInput(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
     }
-    private fun retrieveUid() : String {
-        return intent.getStringExtra("0")
+    private fun retrieveUid() : Long {
+        return intent.getLongExtra("0", 0)
     }
 
     companion object {
         @JvmStatic
         fun startGame(context: Context, game: Game, setup: CreateGameInput) {
             val intent = Intent(context, Play01Activity::class.java)
-            intent.putExtra("0", game.uuid)
+            intent.putExtra("0", game.id)
             intent.putExtra("team", TeamsString.fromTeams(game.teams()))
             intent.putExtra("1", setup.startIndex)
             intent.putExtra("2", setup.startScore)

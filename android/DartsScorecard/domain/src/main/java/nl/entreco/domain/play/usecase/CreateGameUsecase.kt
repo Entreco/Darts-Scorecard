@@ -9,7 +9,6 @@ import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.model.players.TeamsString
 import nl.entreco.domain.play.repository.GameRepository
 import nl.entreco.domain.settings.ScoreSettings
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -27,9 +26,9 @@ class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepo
     fun start(createModel: CreateGameInput, teams: TeamsString, callback: Callback) {
         bg.post(Runnable {
             try {
-                val game = modelToGame(createModel, teams)
                 val (score, index, legs, sets) = createModel
-                gameRepository.create(game.uuid, teams.toString(), score, index, legs, sets)
+                val id = gameRepository.create(teams.toString(), score, index, legs, sets)
+                val game = modelToGame(id, createModel, teams)
                 postOnUi({ callback.onGameCreated(game, createModel) })
             } catch (oops: Exception) {
                 postOnUi({ callback.onGameCreateFailed(oops) })
@@ -56,11 +55,11 @@ class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepo
         })
     }
 
-    private fun modelToGame(createModel: CreateGameInput, teams: TeamsString): Game {
+    private fun modelToGame(id: Long, createModel: CreateGameInput, teams: TeamsString): Game {
         val turnHandler = TurnHandler(teams.toTeams(), createModel.startIndex)
         val settings = ScoreSettings(createModel.startScore, createModel.numLegs, createModel.numSets)
         val initial = Score(createModel.startScore, 0, 0, settings)
         val arbiter = Arbiter(initial, turnHandler)
-        return Game(UUID.randomUUID().toString(), arbiter)
+        return Game(id, arbiter)
     }
 }

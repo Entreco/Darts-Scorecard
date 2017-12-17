@@ -6,7 +6,8 @@ import android.support.test.runner.AndroidJUnit4
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.TestProvider
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,6 +20,9 @@ class PlayerDaoTest {
 
     private lateinit var playerDao: PlayerDao
     private lateinit var db: DscDatabase
+    private var givenPlayer: PlayerTable? = null
+    private var actualPlayer: PlayerTable? = null
+    private var actualRow: Long = -1
 
     @Before
     fun setUp() {
@@ -34,25 +38,16 @@ class PlayerDaoTest {
 
     @Test
     fun create() {
-        val player = TestProvider.createPlayer("remco", 20)
-        val row = playerDao.create(player)
-        assertEquals(1, row)
-    }
-
-    @Test
-    fun fetchByUid() {
-        val player = TestProvider.createPlayer("remco", 20)
-        assertNull(playerDao.fetchByUid(player.uid))
-        playerDao.create(player)
-        assertNotNull(playerDao.fetchByUid(player.uid))
+        givenPlayer("remco", 11)
+        whenCreatingPlayer()
+        assertEquals(1, actualRow)
     }
 
     @Test
     fun fetchByName() {
-        val player = TestProvider.createPlayer("remco", 20)
-        assertNull(playerDao.fetchByName("remco"))
-        playerDao.create(player)
-        assertNotNull(playerDao.fetchByName(player.name))
+        createPlayer("remco")
+        whenFetchingByName("remco")
+        assertNotNull(actualPlayer)
     }
 
     @Test
@@ -66,14 +61,31 @@ class PlayerDaoTest {
         assertNotNull(players)
 
         assertEquals(4, players.size)
-        assertEquals("remco", players[0].name)
-        assertEquals("eva", players[1].name)
-        assertEquals("guusje", players[2].name)
-        assertEquals("sibbel", players[3].name)
+        verifyPlayer("remco", 1, players[0])
+        verifyPlayer("eva", 2, players[1])
+        verifyPlayer("guusje", 3, players[2])
+        verifyPlayer("sibbel", 4, players[3])
     }
 
-    private fun createPlayer(name: String, fav: Int) {
+    private fun verifyPlayer(expectedName: String, expectedId: Long, player: PlayerTable) {
+        assertEquals(expectedName, player.name)
+        assertEquals(expectedId, player.id)
+    }
+
+    private fun createPlayer(name: String, fav: Int = 0) {
         val player = TestProvider.createPlayer(name, fav)
         playerDao.create(player)
+    }
+
+    private fun givenPlayer(name: String, fav: Int = 0) {
+        givenPlayer = TestProvider.createPlayer(name, fav)
+    }
+
+    private fun whenCreatingPlayer() {
+        actualRow = playerDao.create(givenPlayer!!)
+    }
+
+    private fun whenFetchingByName(name: String) {
+        actualPlayer = playerDao.fetchByName(name)
     }
 }

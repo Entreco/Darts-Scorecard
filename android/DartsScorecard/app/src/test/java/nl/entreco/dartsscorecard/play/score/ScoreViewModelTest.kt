@@ -101,7 +101,7 @@ class ScoreViewModelTest {
 
     private fun `given game has started`() {
         val score = givenScoreSettings.score()
-        subject.startWith(Game("uid", Arbiter(score, TurnHandler(givenTeams, 0))), CreateGameInput(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.startWith(Game(-122, Arbiter(score, TurnHandler(givenTeams, 0))), CreateGameInput(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {

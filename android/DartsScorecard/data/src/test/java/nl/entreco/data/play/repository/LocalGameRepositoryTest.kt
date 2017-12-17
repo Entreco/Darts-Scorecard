@@ -35,7 +35,7 @@ class LocalGameRepositoryTest {
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create("uid", "1|2", 2, 3, 501, 0)
+        val game = subject.create("1|2", 2, 3, 501, 0)
         assertNotNull(game)
     }
 
@@ -55,15 +55,15 @@ class LocalGameRepositoryTest {
 
     @Test
     fun `it should fetch games by Uid`() {
-        givenExistingGames("some uid")
-        whenFetchingByUid("some uid")
+        givenExistingGames(1)
+        whenFetchingByUid(1)
         thenFetchByUidIsCalledOnDao()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `it should throw IllegalState when game with Uid does not exist`() {
-        givenExistingGames("some uid")
-        whenFetchingByUid("another uid")
+        givenExistingGames(1)
+        whenFetchingByUid(2)
     }
 
     private fun givenExistingGames(){
@@ -73,20 +73,20 @@ class LocalGameRepositoryTest {
         table.numSets = 5
         table.numLegs = 5
         table.teams = "1,2|3"
-        table.uid = "some uid"
+        table.id = 1
         val games = listOf(table)
         whenever(mockGameDao.fetchAll()).thenReturn(games)
     }
 
-    private fun givenExistingGames(uid: String){
+    private fun givenExistingGames(id: Long){
         val table = GameTable()
         table.startIndex = 0
         table.startScore = 5
         table.numSets = 5
         table.numLegs = 5
         table.teams = "1,2|3"
-        table.uid = uid
-        whenever(mockGameDao.fetchBy(uid)).thenReturn(table)
+        table.id = id
+        whenever(mockGameDao.fetchBy(id)).thenReturn(table)
     }
 
     private fun givenNoGames(){
@@ -97,8 +97,8 @@ class LocalGameRepositoryTest {
         subject.fetchLatest()
     }
 
-    private fun whenFetchingByUid(uid: String){
-        subject.fetchBy(uid)
+    private fun whenFetchingByUid(id: Long){
+        subject.fetchBy(id)
     }
 
     private fun thenFetchAllIsCalledOnDao() {
