@@ -9,6 +9,7 @@ import nl.entreco.domain.play.model.players.PlayerPrefs
  */
 class PlayerMapper : Mapper<PlayerTable, Player> {
     override fun to(from: PlayerTable): Player {
+        if (from.name.isEmpty()) throw IllegalStateException("name:'${from.name}' is invalid")
         return Player(from.name, PlayerPrefs(from.fav.toInt()))
     }
 }

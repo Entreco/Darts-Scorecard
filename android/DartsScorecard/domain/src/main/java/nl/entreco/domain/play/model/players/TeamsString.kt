@@ -5,6 +5,14 @@ package nl.entreco.domain.play.model.players
  */
 data class TeamsString(private val teamString: String) {
 
+    private val illegalState = IllegalStateException("invalid team string, should be 'player1,player2|player3|player4,player5'")
+    private val playerSplit: MutableList<List<String>> = emptyList<List<String>>().toMutableList()
+    private lateinit var teamSplit: List<String>
+
+    init {
+        validate(teamString)
+    }
+
     private val teams: Array<Team> by lazy {
 
         val teamsArray = ArrayList<Team>()
@@ -18,14 +26,6 @@ data class TeamsString(private val teamString: String) {
 
         teamsArray.toTypedArray()
 
-    }
-    private val illegalState = IllegalStateException("invalid team string, should be 'player1,player2|player3|player4,player5'")
-
-    private lateinit var teamSplit: List<String>
-    private val playerSplit: MutableList<List<String>> = emptyList<List<String>>().toMutableList()
-
-    init {
-        validate(teamString)
     }
 
     private fun validate(teams: String) {
@@ -41,26 +41,26 @@ data class TeamsString(private val teamString: String) {
         }
     }
 
-    fun asTeamArray(): Array<Team> {
+    fun toTeams(): Array<Team> {
         return teams
     }
 
-    fun asPlayersList(): List<Player> {
+    fun toPlayers(): List<Player> {
         val players = ArrayList<Player>()
         teams.forEach { players.addAll(it.players) }
         return players
     }
 
-    fun asString(): String {
+    override fun toString(): String {
         return teamString
     }
 
     companion object {
-        fun parse(teams: Array<Team>) : String {
+        fun fromTeams(teams: Array<Team>): String {
             val teamString = StringBuilder()
             teams.forEach {
 
-                if (!teamString.isEmpty()){
+                if (!teamString.isEmpty()) {
                     teamString.append("|")
                 }
 

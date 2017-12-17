@@ -79,7 +79,7 @@ class Play01Activity : ViewModelActivity() {
         fun startGame(context: Context, game: Game, setup: CreateGameInput) {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("0", game.uuid)
-            intent.putExtra("team", TeamsString.parse(game.teams()))
+            intent.putExtra("team", TeamsString.fromTeams(game.teams()))
             intent.putExtra("1", setup.startIndex)
             intent.putExtra("2", setup.startScore)
             intent.putExtra("3", setup.numLegs)

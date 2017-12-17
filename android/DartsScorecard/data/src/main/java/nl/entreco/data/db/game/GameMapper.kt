@@ -5,8 +5,6 @@ import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.model.players.TeamsString
 import nl.entreco.domain.settings.ScoreSettings
 
@@ -21,7 +19,7 @@ class GameMapper : Mapper<GameTable, Game> {
         val startScore = from.startScore
         val legs = from.numLegs
         val sets = from.numSets
-        val teams = TeamsString(from.teams).asTeamArray()
+        val teams = TeamsString(from.teams).toTeams()
 
         val setting = ScoreSettings(startScore, legs, sets, startIndex)
         val initial = Score(startScore, 0, 0, setting)

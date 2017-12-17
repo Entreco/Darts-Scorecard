@@ -72,7 +72,7 @@ class CreateGameUsecaseTest {
 
     private fun whenStartIsCalled() {
         subject.start(setup, teamString, mockCallback)
-        verify(mockGameRepository).create(any(), eq(teamString.asString()), eq(501), eq(0), eq(3), eq(2))
+        verify(mockGameRepository).create(any(), eq(teamString.toString()), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun whenFetchLatestIsCalled() {

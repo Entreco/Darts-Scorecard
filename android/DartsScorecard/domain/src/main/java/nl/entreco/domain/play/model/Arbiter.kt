@@ -2,6 +2,7 @@ package nl.entreco.domain.play.model
 
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.settings.ScoreSettings
 
 const val OK: Int = 1
 const val BUST: Int = -1
@@ -10,6 +11,7 @@ const val ERR: Int = -2
 class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     private var scores = initForStart(initial)
+    private var scoreSettings = initial.settings
 
     private var legs = mutableListOf<Array<Score>>()
 
@@ -109,6 +111,10 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
     private fun legFinished(currentPlayer: Int) = scores[currentPlayer].legFinished()
     private fun setFinished(currentPlayer: Int) = scores[currentPlayer].setFinished()
     private fun matchFinished(currentPlayer: Int) = scores[currentPlayer].matchFinished()
+
+    fun getScoreSettings(): ScoreSettings {
+        return scoreSettings
+    }
 
     fun getScores(): Array<Score> {
         return scores
