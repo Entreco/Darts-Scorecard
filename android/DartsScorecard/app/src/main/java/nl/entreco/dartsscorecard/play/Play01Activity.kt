@@ -9,6 +9,8 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.di.play.Play01Component
+import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel

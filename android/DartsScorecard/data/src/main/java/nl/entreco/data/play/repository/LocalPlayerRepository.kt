@@ -1,6 +1,7 @@
 package nl.entreco.data.play.repository
 
 import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.data.db.player.PlayerTable
@@ -11,7 +12,7 @@ import java.util.*
 /**
  * Created by Entreco on 16/12/2017.
  */
-class LocalPlayerRepository(db: DscDatabase, private val mapper: PlayerMapper) : PlayerRepository {
+class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTable, Player>) : PlayerRepository {
 
     private val playerDao: PlayerDao = db.playerDao()
 

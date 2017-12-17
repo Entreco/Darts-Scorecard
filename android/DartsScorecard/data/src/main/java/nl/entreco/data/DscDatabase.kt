@@ -14,4 +14,8 @@ import nl.entreco.data.db.player.PlayerTable
 abstract class DscDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
     abstract fun playerDao(): PlayerDao
+
+    companion object {
+        const val name: String = "dsc_database"
+    }
 }

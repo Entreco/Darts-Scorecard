@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import nl.entreco.dartsscorecard.base.ViewModelActivity
+import nl.entreco.dartsscorecard.di.splash.SplashComponent
+import nl.entreco.dartsscorecard.di.splash.SplashModule
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.players.TeamsString
