@@ -10,7 +10,7 @@
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
         <variable
-            name="getFinishUsecase"
+            name="finishUsecase"
             type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
     </data>
 
@@ -65,11 +65,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="40dp"
-            app:adapter="@{viewModel.adapter}"
-            app:getFinishUsecase="@{getFinishUsecase}"
             app:layout_constraintTop_toBottomOf="@id/header"
+            app:adapter="@{viewModel.adapter}"
+            app:finishUsecase="@{finishUsecase}"
             app:scoreSettings="@{viewModel.scoreSettings}"
             app:teams="@{viewModel.teams}"
+            app:uiCallback="@{viewModel.uiCallback}"
             tools:listitem="@layout/team_score_view" />
 
         <!-- Footer -->

@@ -34,8 +34,8 @@ class InputViewModelTest {
     @Mock lateinit var mockLogger: Logger
     @InjectMocks private lateinit var subject: InputViewModel
 
-    @Mock private lateinit var mockListener : InputListener
-    @Mock private lateinit var mockInput : TextView
+    @Mock private lateinit var mockListener: InputListener
+    @Mock private lateinit var mockInput: TextView
 
     private lateinit var givenEvent: SpecialEvent
     private lateinit var givenPlayer: Player
@@ -161,6 +161,13 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
 
+    @Test(expected = NumberFormatException::class)
+    fun `it should NOT submit Darts when 'invalid throw (eg unparsable score)' is entered`() {
+        givenPlayer("player1")
+        whenPressingSubmit("this is not a valid sore -> it's a string dude")
+        verify(mockListener, never()).onTurnSubmitted(any(), eq(givenPlayer))
+    }
+
     @Test
     fun `it should submit Single Darts when 'first throw' is submitted`() {
         givenPlayer("player1")
@@ -220,10 +227,40 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(Turn(Dart.DOUBLE_1, Dart.DOUBLE_8), givenPlayer)
     }
 
-    private fun givenPlayer(playerName: String, pts: Int = 501) {
+    @Test
+    fun `it should show correct next state (normal)`() {
+        givenPlayer("1", 201, State.NORMAL)
+        assertEquals(R.string.to_throw, subject.nextDescription.get())
+    }
+
+    @Test
+    fun `it should show correct next state (start)`() {
+        givenPlayer("1", 201, State.START)
+        assertEquals("should be: 'game on'", R.string.game_on, subject.nextDescription.get())
+    }
+
+    @Test
+    fun `it should show correct next state (match)`() {
+        givenPlayer("1", 201, State.MATCH)
+        assertEquals("should be: 'game shot and the match'", R.string.game_shot_and_match, subject.nextDescription.get())
+    }
+
+    @Test
+    fun `it should show correct next state (set)`() {
+        givenPlayer("1", 201, State.SET)
+        assertEquals("should be: 'to throw first'", R.string.to_throw_first, subject.nextDescription.get())
+    }
+
+    @Test
+    fun `it should show correct next state (leg)`() {
+        givenPlayer("1", 201, State.LEG)
+        assertEquals("should be: 'to throw first'", R.string.to_throw_first, subject.nextDescription.get())
+    }
+
+    private fun givenPlayer(playerName: String, pts: Int = 501, state: State = State.NORMAL) {
         givenPlayer = Player(playerName)
         givenRequiredScore = Score(pts, 0, 0)
-        subject.onNext(Next(State.NORMAL, Team(givenPlayer), 0, givenPlayer, givenRequiredScore))
+        subject.onNext(Next(state, Team(arrayOf(givenPlayer)), 0, givenPlayer, givenRequiredScore))
     }
 
     private fun givenEntered(scored: Int) {
@@ -262,7 +299,12 @@ class InputViewModelTest {
         subject.onSubmitScore(mockInput, mockListener)
     }
 
-    private fun whenSubmittingSingle(scored: Int){
+    private fun whenPressingSubmit(scored: String) {
+        whenever(mockInput.text).thenReturn(scored)
+        subject.onSubmitScore(mockInput, mockListener)
+    }
+
+    private fun whenSubmittingSingle(scored: Int) {
         givenSingleMode(true)
         whenPressingSubmit(scored)
     }

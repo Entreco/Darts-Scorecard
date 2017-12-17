@@ -1,33 +1,39 @@
 package nl.entreco.domain.play.usecase
 
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.play.model.Arbiter
+import com.nhaarman.mockito_kotlin.*
+import nl.entreco.domain.play.TestBackground
+import nl.entreco.domain.play.TestForeground
 import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.play.model.players.TeamIdsString
 import nl.entreco.domain.play.repository.GameRepository
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * Created by Entreco on 14/11/2017.
+ * Created by Entreco on 12/12/2017.
  */
 @RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
-    @Mock private lateinit var mockGameRepository : GameRepository
+    @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
+    @Mock private lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockGame: Game
 
-    private lateinit var subject : CreateGameUsecase
+    private lateinit var subject: CreateGameUsecase
 
-    private var mockTurnHandler : TurnHandler = TurnHandler(arrayOf(Team(Player("1")), Team(Player("2"))), 0)
-    private var arbiter = Arbiter(Score(), mockTurnHandler)
-    private var game = Game(arbiter)
+    private var setup = GameSettingsRequest(501, 0, 3, 2)
+    private var teamString = TeamIdsString("a|b")
+    private var mockBg = TestBackground()
+    private var mockFg = TestForeground()
 
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+    }
 
     @Test
     fun `it should create a game and start it`() {
@@ -36,17 +42,53 @@ class CreateGameUsecaseTest {
         thenGameIsStarted()
     }
 
+    @Test
+    fun `it should return existing game when fetching latest`() {
+        givenCreateGameUsecase()
+        givenExistingGame()
+        whenFetchLatestIsCalled()
+        thenGameIsRetrieved()
+    }
+
+    @Test
+    fun `it should fetch latest`() {
+        givenCreateGameUsecase()
+        givenNoExistingGame()
+        whenFetchLatestIsCalled()
+        thenErrorIsReportedBack()
+    }
+
     private fun givenCreateGameUsecase() {
-        whenever(mockGameRepository.new(arbiter)).then{ game }
-        subject = CreateGameUsecase(arbiter, mockGameRepository)
+        subject = CreateGameUsecase(mockGameRepository, mockBg, mockFg)
+    }
+
+    private fun givenExistingGame() {
+        whenever(mockGameRepository.fetchLatest()).thenReturn(mockGame)
+    }
+
+    private fun givenNoExistingGame() {
+        whenever(mockGameRepository.fetchLatest()).thenThrow(IllegalStateException("ohno"))
     }
 
     private fun whenStartIsCalled() {
-        subject.start()
+        subject.start(setup, teamString, mockCallback)
+        verify(mockGameRepository).create(eq(teamString.toString()), eq(501), eq(0), eq(3), eq(2))
+    }
+
+    private fun whenFetchLatestIsCalled() {
+        subject.fetchLatest(setup, teamString, mockCallback)
+        verify(mockGameRepository).fetchLatest()
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).new(arbiter)
+        verify(mockCallback).onGameCreated(any())
     }
 
+    private fun thenGameIsRetrieved() {
+        verify(mockCallback).onGameRetrieved(any())
+    }
+
+    private fun thenErrorIsReportedBack() {
+        verify(mockCallback).onGameRetrieveFailed(isA(), eq(teamString))
+    }
 }

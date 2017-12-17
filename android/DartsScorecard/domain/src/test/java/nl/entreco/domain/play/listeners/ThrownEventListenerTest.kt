@@ -35,7 +35,7 @@ class ThrownEventListenerTest : SpecialEventListenerTest() {
     private class ThrownEventListener(private val check: AtomicBoolean = AtomicBoolean(false)) : SpecialEventListener<ThrownEvent> {
 
         private val player = Player("180 thrower")
-        private val team = Team(player)
+        private val team = Team(arrayOf(player))
         private val score = Score()
         private var description: String? = null
 

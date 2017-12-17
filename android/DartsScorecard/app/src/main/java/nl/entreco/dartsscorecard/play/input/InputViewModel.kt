@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-open class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
+class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
@@ -108,8 +108,8 @@ open class InputViewModel @Inject constructor(private val analytics: Analytics, 
         return try {
             score.toInt()
         } catch (err: Exception) {
-            logger.w("Unable to parse text from Score: $score")
-            0
+            logger.w("Unable to fromTeams text from Score: $score")
+            throw err
         }
     }
 

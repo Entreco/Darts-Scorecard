@@ -11,13 +11,15 @@ import org.mockito.junit.MockitoJUnitRunner
 class ArbiterTest {
 
     private val tp = TestProvider()
-    private var turnHandler: TurnHandler = tp.turnHandler()
+    private var teams = tp.teams()
     private var next: Next = tp.next()
     private lateinit var subject: Arbiter
 
     @Before
     fun setUp() {
-        subject = Arbiter(Score(), turnHandler).apply { start() }
+        subject = Arbiter(Score()).apply {
+            start(0, teams)
+        }
     }
 
     @Test

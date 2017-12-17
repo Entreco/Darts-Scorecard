@@ -1,7 +1,6 @@
 package nl.entreco.domain.play.listeners
 
 import nl.entreco.domain.play.listeners.events.BustEvent
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
@@ -40,7 +39,7 @@ class BustEventListenerTest  : SpecialEventListenerTest() {
     private class BustEventListener(private val check: AtomicBoolean = AtomicBoolean(false)) : SpecialEventListener<BustEvent> {
 
         private val player = Player("No Score thrower")
-        private val team = Team(player)
+        private val team = Team(arrayOf(player))
         private val score = Score()
 
         override fun handle(event: BustEvent) {

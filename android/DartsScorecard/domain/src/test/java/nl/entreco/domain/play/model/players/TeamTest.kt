@@ -1,7 +1,6 @@
 package nl.entreco.domain.play.model.players
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -12,10 +11,11 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TeamTest{
 
-    val player1 = Player("one")
-    val player2 = Player("two")
+    private val player1 = Player("one")
+    private val player2 = Player("two")
+    private val player3 = Player("three")
 
-    val subject : Team = Team(player1, player2)
+    val subject : Team = Team(arrayOf(player1, player2))
 
     @Test
     fun `it should have non null list of players`() {
@@ -25,5 +25,20 @@ class TeamTest{
     @Test
     fun `it should print all players correct`() {
         assertEquals("one & two", subject.toString())
+    }
+
+    @Test
+    fun `it should contain player1`() {
+        assertTrue(subject.contains(player1))
+    }
+
+    @Test
+    fun `it should contain player2`() {
+        assertTrue(subject.contains(player2))
+    }
+
+    @Test
+    fun `it should not contain player3`() {
+        assertFalse(subject.contains(player3))
     }
 }

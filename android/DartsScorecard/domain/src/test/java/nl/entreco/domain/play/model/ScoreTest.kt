@@ -69,6 +69,11 @@ class ScoreTest{
     }
 
     @Test
+    fun `it should correctly print score`() {
+        assertEquals("10 | 2 | 1", Score(10, 2, 1).toString())
+    }
+
+    @Test
     fun `it should know when a match is not yet finished`() {
         assertFalse(Score(0, 0, 0).matchFinished())
         assertFalse(Score(0, 1, 0).matchFinished())

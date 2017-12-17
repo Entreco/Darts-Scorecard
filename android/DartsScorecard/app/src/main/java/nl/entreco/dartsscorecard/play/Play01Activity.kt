@@ -1,5 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
+import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.Menu
@@ -7,29 +9,50 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.di.play.Play01Component
+import nl.entreco.dartsscorecard.di.play.Play01Module
+import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
-import nl.entreco.dartsscorecard.play.score.ReadyListener
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.usecase.RetrieveGameRequest
 
-class Play01Activity : ViewModelActivity(), ReadyListener {
+class Play01Activity : ViewModelActivity() {
 
-    private val play01Module by lazy { Play01Module(ScoreSettings(teamStartIndex = 1), arrayOf(Team(Player("remco"), Player("sibbel")), Team("Boeffie"), Team(Player("eva"), Player("guusje"), Player("Beer"))), this) }
-    private val viewModel: Play01ViewModel by viewModelProvider {
-        component.plus(play01Module).viewModel()
-    }
+    private val component: Play01Component by componentProvider { it.plus(Play01Module()) }
+    private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
+    private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
+    private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
+    private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
+        binding.inputViewModel = inputViewModel
+        binding.scoreViewModel = scoreViewModel
+        binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
+
+        if (savedInstanceState == null) {
+            initGame()
+        }
+
+        resumeGame()
     }
 
-    override fun onReady() {
-        viewModel.onReady()
+    private fun initGame() {
+        viewModel.load(retrieveSetup(), scoreViewModel)
+    }
+
+    private fun resumeGame() {
+        viewModel.addScoreListener(scoreViewModel)
+        viewModel.addPlayerListener(scoreViewModel)
+        viewModel.addPlayerListener(inputViewModel)
+        viewModel.addSpecialEventListener(inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -42,5 +65,22 @@ class Play01Activity : ViewModelActivity(), ReadyListener {
             R.id.menu_play_settings -> swapStyle()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun retrieveSetup(): RetrieveGameRequest {
+        return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
+                TeamIdsString( intent.getStringExtra("teamIds")),
+                intent.getParcelableExtra("settings"))
+    }
+
+    companion object {
+        @JvmStatic
+        fun startGame(context: Context, retrieve: RetrieveGameRequest) {
+            val intent = Intent(context, Play01Activity::class.java)
+            intent.putExtra("gameId", retrieve.gameId)
+            intent.putExtra("teamIds", retrieve.teamIds.toString())
+            intent.putExtra("settings", retrieve.settings)
+            context.startActivity(intent)
+        }
     }
 }

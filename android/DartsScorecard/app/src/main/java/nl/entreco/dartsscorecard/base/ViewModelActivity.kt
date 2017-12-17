@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import nl.entreco.dartsscorecard.App
+import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 
 /**
@@ -20,12 +21,6 @@ abstract class ViewModelActivity : AppCompatActivity() {
     val Activity.app: App
         get() = application as App
 
-    protected val component by lazy { app.appComponent.plus(ViewModelModule(this)) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(styler.get())
-        super.onCreate(savedInstanceState)
-    }
 
     @Suppress("UNCHECKED_CAST")
     inline fun <reified VM : ViewModel> ViewModelActivity.viewModelProvider(
@@ -35,6 +30,18 @@ abstract class ViewModelActivity : AppCompatActivity() {
             override fun <T1 : ViewModel> create(aClass: Class<T1>) =
                     provider() as T1
         }).get(VM::class.java)
+    }
+
+    inline fun <reified VM> ViewModelActivity.componentProvider(
+            mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
+            crossinline provider: (ViewModelComponent) -> VM) = lazy(mode) {
+        val component = app.appComponent.plus(ViewModelModule(this))
+        provider(component)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(styler.get())
+        super.onCreate(savedInstanceState)
     }
 
     protected fun swapStyle() {

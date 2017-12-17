@@ -1,17 +1,19 @@
 package nl.entreco.domain.play.model
 
 import nl.entreco.domain.play.model.players.State
+import nl.entreco.domain.play.model.players.Team
 
-data class Game(val arbiter: Arbiter) {
+data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
     lateinit var next: Next
     var state = "game on"
-    var scores = arbiter.getScores()
+    var scores = emptyArray<Score>()
         get() = arbiter.getScores()
 
-    fun start() {
-        next = arbiter.start()
+    fun start(startIndex: Int, teams: Array<Team>): Game {
+        next = arbiter.start(startIndex, teams)
         state = "${next.player} to throw first"
+        return this
     }
 
     fun handle(turn: Turn) {

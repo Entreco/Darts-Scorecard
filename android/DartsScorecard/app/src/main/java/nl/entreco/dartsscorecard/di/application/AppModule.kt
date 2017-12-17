@@ -1,11 +1,13 @@
 package nl.entreco.dartsscorecard.di.application
 
+import android.arch.persistence.room.Room
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.DscLogger
-import nl.entreco.domain.Analytics
 import nl.entreco.dartsscorecard.analytics.FirebaseAnalytics
+import nl.entreco.data.DscDatabase
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 
 /**
@@ -27,5 +29,10 @@ class AppModule(val app: App) {
     @Provides
     fun provideLogger(): Logger {
         return DscLogger("Dsc")
+    }
+
+    @Provides
+    fun provideDb(app: App): DscDatabase {
+        return Room.databaseBuilder(app, DscDatabase::class.java, DscDatabase.name).build()
     }
 }
