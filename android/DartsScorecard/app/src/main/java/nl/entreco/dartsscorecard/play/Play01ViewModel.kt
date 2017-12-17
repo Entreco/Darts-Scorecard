@@ -31,13 +31,11 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
     fun retrieveGame(settings: RetrieveGameRequest, load: GameLoadable) {
 
         // 1) Retrieve Teams
-        retrieveTeamsUsecase.start(settings.teamIds, {
-
+        retrieveTeamsUsecase.start(settings.teamIds, { teams ->
             // 2) Retrieve Game
-            retrieveGameUseCase.start(settings.gameId, it, ok = {
-                game = it
-                game.start()
-                load.startWith(it, settings.settings, this)
+            retrieveGameUseCase.start(settings.gameId, ok = { game ->
+                this.game = game.start(settings.settings.startIndex, teams)
+                load.startWith(teams, settings.settings, this)
             }, err = {
 
             })

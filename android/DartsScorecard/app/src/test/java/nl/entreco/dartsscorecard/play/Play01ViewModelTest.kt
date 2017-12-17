@@ -16,8 +16,6 @@ import nl.entreco.domain.play.usecase.RetrieveTeamsUsecase
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
@@ -41,7 +39,7 @@ class Play01ViewModelTest {
 
     private val gameSettingsRequest: GameSettingsRequest = GameSettingsRequest(501, 0, 3, 2)
     private val givenTeams = arrayOf(Team(arrayOf(Player("p1"))),Team(arrayOf(Player("p2"))))
-    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore), TurnHandler(gameSettingsRequest.startIndex)).apply { setTeams(givenTeams) }
+    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore))
     private val gameId: Long = 1002
     private val teamIds = TeamIdsString("1|2")
 
@@ -169,7 +167,7 @@ class Play01ViewModelTest {
     }
 
     private fun givenGameRetrieved() {
-        game = Game(101, mockArbiter)
+        game = Game(101, mockArbiter).start(0, givenTeams)
         subject = Play01ViewModel(mockRetrieveGameUsecase, mockRetrieveTeamUsecase)
         val retrieveGameRequest = RetrieveGameRequest(gameId, teamIds, gameSettingsRequest)
         subject.retrieveGame(retrieveGameRequest, mockLoadable)
@@ -178,18 +176,18 @@ class Play01ViewModelTest {
 
     private fun whenTeamsRetrieved(){
         teamCaptor.firstValue.invoke(givenTeams)
-        verify(mockRetrieveGameUsecase).start(eq(gameId), any(), captor.capture(), any())
+        verify(mockRetrieveGameUsecase).start(eq(gameId), captor.capture(), any())
     }
 
     private fun whenUiIsReady() {
         whenTeamsRetrieved()
         captor.firstValue.invoke(game)
-        verify(mockLoadable).startWith(game, gameSettingsRequest, subject)
+        verify(mockLoadable).startWith(givenTeams, gameSettingsRequest, subject)
         subject.onLetsPlayDarts()
     }
 
     private fun whenUiIsNotReady() {
-        verify(mockLoadable, never()).startWith(game, gameSettingsRequest, subject)
+        verify(mockLoadable, never()).startWith(givenTeams, gameSettingsRequest, subject)
         // Some error callback in the future
     }
 

@@ -70,7 +70,7 @@ class RetrieveGameUsecaseTest {
         } else {
             whenever(mockGameRepository.fetchBy(game.id)).thenReturn(game)
         }
-        subject.start(givenId, givenTeam, mockOk, mockErr)
+        subject.start(givenId, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {

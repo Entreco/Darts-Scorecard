@@ -4,7 +4,6 @@ import nl.entreco.data.db.Mapper
 import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.settings.ScoreSettings
 
 /**
@@ -21,7 +20,7 @@ class GameMapper : Mapper<GameTable, Game> {
 
         val setting = ScoreSettings(startScore, legs, sets, startIndex)
         val initial = Score(startScore, 0, 0, setting)
-        val arbiter = Arbiter(initial, TurnHandler(startIndex))
+        val arbiter = Arbiter(initial)
         return Game(id, arbiter)
     }
 }

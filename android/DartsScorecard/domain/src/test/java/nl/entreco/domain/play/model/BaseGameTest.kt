@@ -8,6 +8,9 @@ import org.junit.Assert
  */
 abstract class BaseGameTest(val subject: Game = Game(0, TestProvider().arbiter())) {
 
+    private val teams = TestProvider().teams()
+    private val startIndex = TestProvider().startIndex()
+
     protected fun whenDartsThrown(vararg turns: Turn) {
         for(turn in turns) {
             subject.handle(turn)
@@ -15,7 +18,7 @@ abstract class BaseGameTest(val subject: Game = Game(0, TestProvider().arbiter()
     }
 
     protected fun givenGameStarted() {
-        subject.start()
+        subject.start(startIndex , teams)
     }
 
     protected fun assertScore(score1: Int, score2: Int, leg: Int = 0) {

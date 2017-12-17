@@ -7,11 +7,11 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
     lateinit var next: Next
     var state = "game on"
-    var scores = arbiter.getScores()
+    var scores = emptyArray<Score>()
         get() = arbiter.getScores()
 
-    fun start(): Game {
-        next = arbiter.start()
+    fun start(startIndex: Int, teams: Array<Team>): Game {
+        next = arbiter.start(startIndex, teams)
         state = "${next.player} to throw first"
         return this
     }
@@ -24,12 +24,5 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
         }
     }
 
-    fun teams(): Array<Team> {
-        return arbiter.teams()
-    }
-
     private val GAME_FINISHED = "game finished"
-    fun setTeams(teams: Array<Team>) {
-        arbiter.setTeams(teams)
-    }
 }

@@ -3,7 +3,10 @@ package nl.entreco.dartsscorecard.play.score
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.domain.Logger
-import nl.entreco.domain.play.model.*
+import nl.entreco.domain.play.model.Dart
+import nl.entreco.domain.play.model.Next
+import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
@@ -100,8 +103,7 @@ class ScoreViewModelTest {
     }
 
     private fun `given game has started`() {
-        val score = givenScoreSettings.score()
-        subject.startWith(Game(-122, Arbiter(score, TurnHandler(0).also { it.teams = givenTeams })), GameSettingsRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.startWith(givenTeams, GameSettingsRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {

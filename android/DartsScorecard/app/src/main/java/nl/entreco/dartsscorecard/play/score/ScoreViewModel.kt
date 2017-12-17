@@ -27,10 +27,10 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun startWith(game: Game, settings: GameSettingsRequest, uiCallback: UiCallback) {
+    override fun startWith(teams: Array<Team>, settings: GameSettingsRequest, uiCallback: UiCallback) {
         this.uiCallback.set(uiCallback)
         this.scoreSettings.set(ScoreSettings(settings.startScore, settings.numLegs, settings.numSets, settings.startIndex))
-        this.teams.addAll(game.teams())
+        this.teams.addAll(teams)
         this.numSets.set(settings.numSets)
     }
 

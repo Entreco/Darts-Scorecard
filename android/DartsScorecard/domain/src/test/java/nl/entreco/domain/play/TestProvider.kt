@@ -18,17 +18,22 @@ class TestProvider {
     private val team1 = Team(arrayOf(player1))
     private val team2 = Team(arrayOf(player2))
     private val teams = arrayOf(team1, team2)
+    private val startIndex = 0
 
-    fun arbiter(startScore : Int = 501) : Arbiter {
-        return Arbiter(Score(score = startScore,settings = ScoreSettings(startScore)), TestProvider().turnHandler()).also { it.setTeams(teams) }
+    fun arbiter(startScore: Int = 501): Arbiter {
+        return Arbiter(Score(score = startScore, settings = ScoreSettings(startScore))).also { it.start(0, teams) }
     }
 
     fun turnHandler(): TurnHandler {
-        return TurnHandler().also{ it.teams = teams }
+        return TurnHandler(startIndex, teams)
     }
 
     fun next(): Next {
-        return Next(State.START, team1, 0, player1, Score())
+        return Next(State.START, team1, startIndex, player1, Score())
+    }
+
+    fun startIndex(): Int {
+        return startIndex
     }
 
     fun teams(): Array<Team> {
