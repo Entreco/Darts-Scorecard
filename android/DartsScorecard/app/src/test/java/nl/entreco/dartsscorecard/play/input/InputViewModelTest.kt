@@ -161,11 +161,11 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
 
-    @Test(expected = NumberFormatException::class)
-    fun `it should NOT submit Darts when 'invalid throw (eg unparsable score)' is entered`() {
+    @Test
+    fun `it should submit Turn() = (with score 0) when 'invalid throw (eg unparsable score)' is entered`() {
         givenPlayer("player1")
         whenPressingSubmit("this is not a valid sore -> it's a string dude")
-        verify(mockListener, never()).onTurnSubmitted(any(), eq(givenPlayer))
+        verify(mockListener).onTurnSubmitted(isA(), givenPlayer)
     }
 
     @Test
