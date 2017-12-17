@@ -165,7 +165,7 @@ class InputViewModelTest {
     fun `it should submit Turn() = (with score 0) when 'invalid throw (eg unparsable score)' is entered`() {
         givenPlayer("player1")
         whenPressingSubmit("this is not a valid sore -> it's a string dude")
-        verify(mockListener).onTurnSubmitted(isA(), givenPlayer)
+        verify(mockListener).onTurnSubmitted(isA(), eq(givenPlayer))
     }
 
     @Test
