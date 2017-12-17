@@ -45,7 +45,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun initGame() {
-        viewModel.retrieveGame(retrieveSetup(), scoreViewModel)
+        viewModel.load(retrieveSetup(), scoreViewModel)
     }
 
     private fun resumeGame() {

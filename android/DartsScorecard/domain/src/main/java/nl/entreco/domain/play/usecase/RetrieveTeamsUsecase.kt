@@ -13,10 +13,14 @@ import javax.inject.Inject
  */
 class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, private val bg: Background, private val fg: Foreground) {
 
-    fun start(teamIds: TeamIdsString, callable: (Array<Team>) -> Unit) {
+    fun start(teamIds: TeamIdsString, done: (Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
         bg.post(Runnable {
-            val teams = retrieveTeams(teamIds.toString())
-            fg.post(Runnable { callable(teams) })
+            try {
+                val teams = retrieveTeams(teamIds.toString())
+                fg.post(Runnable { done(teams) })
+            } catch (oops: Exception) {
+                fg.post(Runnable { fail(oops) })
+            }
         })
     }
 

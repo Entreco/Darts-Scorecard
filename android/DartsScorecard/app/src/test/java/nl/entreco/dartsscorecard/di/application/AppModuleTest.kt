@@ -44,7 +44,7 @@ class AppModuleTest {
     }
 
     @Test
-    fun provideRoomDatabase() {
+    fun provideDatabase() {
         assertNotNull(subject.provideDb(mockApp))
     }
 }
