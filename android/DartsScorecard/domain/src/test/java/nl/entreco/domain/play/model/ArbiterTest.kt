@@ -17,7 +17,9 @@ class ArbiterTest {
 
     @Before
     fun setUp() {
-        subject = Arbiter(Score(), turnHandler).apply { start() }
+        subject = Arbiter(Score(), turnHandler).apply {
+            setTeams(turnHandler.teams)
+            start() }
     }
 
     @Test

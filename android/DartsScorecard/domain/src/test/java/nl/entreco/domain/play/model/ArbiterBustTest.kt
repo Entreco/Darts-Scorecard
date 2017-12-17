@@ -1,9 +1,7 @@
 package nl.entreco.domain.play.model
 
 import nl.entreco.domain.play.TestProvider
-import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
-import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -17,7 +15,7 @@ class ArbiterBustTest {
     private val startIndex = 0
     private val initialScore = Score(40, 0, 0, ScoreSettings(40, 1, 1, startIndex))
     private val turnHandler = TurnHandler(startIndex).also { it.teams = TestProvider().teams() }
-    val subject: Arbiter = Arbiter(initialScore, turnHandler)
+    val subject: Arbiter = Arbiter(initialScore, turnHandler).apply { setTeams(turnHandler.teams) }
 
     @Test
     fun `it should update Next() when busting with state==BUST`() {

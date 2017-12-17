@@ -1,11 +1,13 @@
 package nl.entreco.domain.play
 
+import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.TurnHandler
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.State
 import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.settings.ScoreSettings
 
 /**
  * Created by Entreco on 21/11/2017.
@@ -17,8 +19,12 @@ class TestProvider {
     private val team2 = Team(arrayOf(player2))
     private val teams = arrayOf(team1, team2)
 
+    fun arbiter(startScore : Int = 501) : Arbiter {
+        return Arbiter(Score(score = startScore,settings = ScoreSettings(startScore)), TestProvider().turnHandler()).also { it.setTeams(teams) }
+    }
+
     fun turnHandler(): TurnHandler {
-        return TurnHandler().also { it.teams = teams }
+        return TurnHandler().also{ it.teams = teams }
     }
 
     fun next(): Next {

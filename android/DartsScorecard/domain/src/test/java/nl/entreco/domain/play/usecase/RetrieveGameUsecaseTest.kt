@@ -9,9 +9,7 @@ import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Game
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
 import nl.entreco.domain.play.repository.GameRepository
-import nl.entreco.domain.play.repository.PlayerRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,15 +24,14 @@ import org.mockito.junit.MockitoJUnitRunner
 class RetrieveGameUsecaseTest {
 
     @Mock private lateinit var mockGameRepository: GameRepository
-    @Mock private lateinit var mockPlayerRepository: PlayerRepository
-    @Mock private lateinit var arbiter: Arbiter
+    @Mock private lateinit var mockArbiter: Arbiter
     @Mock private lateinit var mockOk: ((Game) -> Unit)
     @Mock private lateinit var mockErr: ((Throwable) -> Unit)
 
     private lateinit var subject: RetrieveGameUsecase
 
-    private var id: Long = 0
-    private lateinit var settings: GameSettingsRequest
+    private val givenId: Long = 42
+    private val givenTeam = arrayOf(Team(arrayOf(Player("henk"))))
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
     private lateinit var mockBackground: TestBackground
@@ -42,9 +39,7 @@ class RetrieveGameUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        id = 42
-        settings = GameSettingsRequest(501, 0, 3, 2)
-        game = Game(id, arbiter)
+        game = Game(givenId, mockArbiter)
 
         mockForeground = TestForeground()
         mockBackground = TestBackground()
@@ -66,22 +61,20 @@ class RetrieveGameUsecaseTest {
     }
 
     private fun givenRetrievedGameUsecase() {
-        subject = RetrieveGameUsecase(mockGameRepository, mockPlayerRepository, mockBackground, mockForeground)
+        subject = RetrieveGameUsecase(mockGameRepository, mockBackground, mockForeground)
     }
 
     private fun whenStartIsCalled(game: Game?) {
         if (game == null) {
-            whenever(mockPlayerRepository.fetchTeams(any())).thenReturn(null)
             whenever(mockGameRepository.fetchBy(any())).thenThrow(IllegalStateException("game not found"))
         } else {
-            whenever(mockPlayerRepository.fetchTeams(any())).thenReturn(arrayOf(Team(arrayOf(Player("piet")))))
             whenever(mockGameRepository.fetchBy(game.id)).thenReturn(game)
         }
-        subject.start(RetrieveGameRequest(id, TeamIdsString("1"), GameSettingsRequest(501, 0, 0, 1)), mockOk, mockErr)
+        subject.start(givenId, givenTeam, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).fetchBy(id)
+        verify(mockGameRepository).fetchBy(givenId)
     }
 
     private fun andOkIsReported() {

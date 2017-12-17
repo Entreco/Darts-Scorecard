@@ -8,14 +8,12 @@ const val OK: Int = 1
 const val BUST: Int = -1
 const val ERR: Int = -2
 
-class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
+class Arbiter(private val initial: Score, private val turnHandler: TurnHandler) {
 
-    private var scores = initForStart(initial)
-    private var scoreSettings = initial.settings
-
-    private var legs = mutableListOf<Array<Score>>()
-
-    private var sets = mutableListOf<MutableList<Array<Score>>>()
+    private var scores = emptyArray<Score>()
+    private val scoreSettings = initial.settings
+    private val legs = mutableListOf<Array<Score>>()
+    private val sets = mutableListOf<MutableList<Array<Score>>>()
 
     fun start(): Next {
         return turnHandler.start(scores[0])
@@ -136,5 +134,6 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     fun setTeams(teams: Array<Team>) {
         turnHandler.teams = teams
+        scores = initForStart(initial)
     }
 }

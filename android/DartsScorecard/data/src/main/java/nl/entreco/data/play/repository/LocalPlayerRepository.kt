@@ -32,10 +32,6 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTa
         return mapper.to(table)
     }
 
-    override fun fetchTeams(teams: String): Array<Team> {
-        return emptyArray()
-    }
-
     override fun fetchAll(): List<Player> {
         val table = playerDao.fetchAll()
         return mapper.to(table)

@@ -38,7 +38,7 @@ class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepo
                     callback.onGameRetrieved(RetrieveGameRequest(game.id, teamIds, modelSettings))
                 })
             } catch (ohno: Exception) {
-                fg.post(Runnable { callback.onGameRetrieveFailed(ohno, teamIds) })
+                fg.post(Runnable { callback.onGameRetrieveFailed(ohno,teamIds) })
             }
         })
     }

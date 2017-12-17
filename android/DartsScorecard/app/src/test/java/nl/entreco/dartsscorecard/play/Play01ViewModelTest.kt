@@ -12,6 +12,7 @@ import nl.entreco.domain.play.model.players.TeamIdsString
 import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import nl.entreco.domain.play.usecase.RetrieveGameUsecase
+import nl.entreco.domain.play.usecase.RetrieveTeamsUsecase
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
@@ -29,15 +30,18 @@ class Play01ViewModelTest {
     private lateinit var game: Game
 
     @Mock private lateinit var mockRetrieveGameUsecase: RetrieveGameUsecase
+    @Mock private lateinit var mockRetrieveTeamUsecase: RetrieveTeamsUsecase
     @Mock private lateinit var mockLoadable: GameLoadable
     @Mock private lateinit var mockScoreListener: ScoreListener
     @Mock private lateinit var mockPlayerListener: PlayerListener
     @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
 
+    private val teamCaptor = argumentCaptor<(Array<Team>) -> Unit>()
     private val captor = argumentCaptor<(Game) -> Unit>()
 
     private val gameSettingsRequest: GameSettingsRequest = GameSettingsRequest(501, 0, 3, 2)
-    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore), TurnHandler(gameSettingsRequest.startIndex).also { it.teams = arrayOf(Team(arrayOf(Player("p1"))),Team(arrayOf(Player("p2")))) })
+    private val givenTeams = arrayOf(Team(arrayOf(Player("p1"))),Team(arrayOf(Player("p2"))))
+    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore), TurnHandler(gameSettingsRequest.startIndex)).apply { setTeams(givenTeams) }
     private val gameId: Long = 1002
     private val teamIds = TeamIdsString("1|2")
 
@@ -166,14 +170,19 @@ class Play01ViewModelTest {
 
     private fun givenGameRetrieved() {
         game = Game(101, mockArbiter)
-        subject = Play01ViewModel(mockRetrieveGameUsecase)
+        subject = Play01ViewModel(mockRetrieveGameUsecase, mockRetrieveTeamUsecase)
         val retrieveGameRequest = RetrieveGameRequest(gameId, teamIds, gameSettingsRequest)
         subject.retrieveGame(retrieveGameRequest, mockLoadable)
+        verify(mockRetrieveTeamUsecase).start(eq(teamIds), teamCaptor.capture())
+    }
 
-        verify(mockRetrieveGameUsecase).start(eq(retrieveGameRequest), captor.capture(), any())
+    private fun whenTeamsRetrieved(){
+        teamCaptor.firstValue.invoke(givenTeams)
+        verify(mockRetrieveGameUsecase).start(eq(gameId), any(), captor.capture(), any())
     }
 
     private fun whenUiIsReady() {
+        whenTeamsRetrieved()
         captor.firstValue.invoke(game)
         verify(mockLoadable).startWith(game, gameSettingsRequest, subject)
         subject.onLetsPlayDarts()

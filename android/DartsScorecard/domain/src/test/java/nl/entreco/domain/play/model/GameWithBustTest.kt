@@ -15,8 +15,8 @@ class GameWithBustTest {
     lateinit var subject: Game
 
     private val team: Team = TestProvider().team1()
-    private val turnHandler: TurnHandler = TurnHandler(0).also { it.teams = arrayOf(team) }
-    private val arbiter: Arbiter = Arbiter(Score(), turnHandler)
+    private val turnHandler: TurnHandler = TurnHandler(0)
+    private val arbiter: Arbiter = Arbiter(Score(), turnHandler).also { it.setTeams(arrayOf(team)) }
 
     @Test
     fun `it should update next to State ERR_BUST when bust scored`() {

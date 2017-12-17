@@ -14,12 +14,13 @@ import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import nl.entreco.domain.play.usecase.RetrieveGameUsecase
+import nl.entreco.domain.play.usecase.RetrieveTeamsUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: RetrieveGameUsecase) : BaseViewModel(), UiCallback, InputListener {
+class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: RetrieveGameUsecase, private val retrieveTeamsUsecase: RetrieveTeamsUsecase) : BaseViewModel(), UiCallback, InputListener {
 
     // Lazy to keep state
     private lateinit var game: Game
@@ -28,10 +29,19 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
     fun retrieveGame(settings: RetrieveGameRequest, load: GameLoadable) {
-        retrieveGameUseCase.start(settings, ok = {
-            game = it.start()
-            load.startWith(it, settings.settings, this)
-        }, err = {})
+
+        // 1) Retrieve Teams
+        retrieveTeamsUsecase.start(settings.teamIds, {
+
+            // 2) Retrieve Game
+            retrieveGameUseCase.start(settings.gameId, it, ok = {
+                game = it
+                game.start()
+                load.startWith(it, settings.settings, this)
+            }, err = {
+
+            })
+        })
     }
 
     override fun onLetsPlayDarts() {
