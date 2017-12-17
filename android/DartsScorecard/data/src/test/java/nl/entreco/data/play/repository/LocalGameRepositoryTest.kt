@@ -1,5 +1,6 @@
 package nl.entreco.data.play.repository
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.DscDatabase
@@ -52,12 +53,17 @@ class LocalGameRepositoryTest {
         thenFetchAllIsCalledOnDao()
     }
 
-    private fun thenFetchAllIsCalledOnDao() {
-        verify(mockGameDao).fetchAll()
+    @Test
+    fun `it should fetch games by Uid`() {
+        givenExistingGames("some uid")
+        whenFetchingByUid("some uid")
+        thenFetchByUidIsCalledOnDao()
     }
 
-    private fun whenFetchingAll() {
-        subject.fetchLatest()
+    @Test(expected = IllegalStateException::class)
+    fun `it should throw IllegalState when game with Uid does not exist`() {
+        givenExistingGames("some uid")
+        whenFetchingByUid("another uid")
     }
 
     private fun givenExistingGames(){
@@ -72,7 +78,34 @@ class LocalGameRepositoryTest {
         whenever(mockGameDao.fetchAll()).thenReturn(games)
     }
 
+    private fun givenExistingGames(uid: String){
+        val table = GameTable()
+        table.startIndex = 0
+        table.startScore = 5
+        table.numSets = 5
+        table.numLegs = 5
+        table.teams = "1,2|3"
+        table.uid = uid
+        whenever(mockGameDao.fetchBy(uid)).thenReturn(table)
+    }
+
     private fun givenNoGames(){
         whenever(mockGameDao.fetchAll()).thenReturn(emptyList())
+    }
+
+    private fun whenFetchingAll() {
+        subject.fetchLatest()
+    }
+
+    private fun whenFetchingByUid(uid: String){
+        subject.fetchBy(uid)
+    }
+
+    private fun thenFetchAllIsCalledOnDao() {
+        verify(mockGameDao).fetchAll()
+    }
+
+    private fun thenFetchByUidIsCalledOnDao() {
+        verify(mockGameDao).fetchBy(any())
     }
 }
