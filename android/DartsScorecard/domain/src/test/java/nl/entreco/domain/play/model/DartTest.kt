@@ -89,4 +89,9 @@ class DartTest {
     fun `it should NOT mark S_BULL as valid Double`() {
         assertFalse(Dart.SINGLE_BULL.isDouble())
     }
+
+    @Test
+    fun `it should create dart from string`() {
+        assertEquals(Dart.NONE, Dart.fromString("this is not a valid darts string"))
+    }
 }

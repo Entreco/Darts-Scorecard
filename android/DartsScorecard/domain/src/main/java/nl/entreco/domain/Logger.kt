@@ -16,5 +16,5 @@ interface Logger {
     fun e(message: String)
     fun e(message: String, error: Throwable)
     fun e(message: String, vararg args: String)
-    fun e(message: String, vararg args: String, error: Throwable)
+    fun e(message: String, error: Throwable, vararg args: String)
 }
