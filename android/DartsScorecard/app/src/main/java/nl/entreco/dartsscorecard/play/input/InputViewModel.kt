@@ -109,7 +109,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
             score.toInt()
         } catch (err: Exception) {
             logger.w("Unable to parse text from Score: $score")
-            0
+            throw err
         }
     }
 
