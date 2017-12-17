@@ -109,7 +109,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
             score.toInt()
         } catch (err: Exception) {
             logger.w("Unable to fromTeams text from Score: $score")
-            throw err
+            0
         }
     }
 
