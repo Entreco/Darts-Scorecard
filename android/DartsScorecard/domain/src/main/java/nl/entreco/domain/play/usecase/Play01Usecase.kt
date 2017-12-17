@@ -7,8 +7,8 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 17/12/2017.
  */
-class PlayGameUsecase @Inject constructor(private val retrieveGameUsecase: RetrieveGameUsecase,
-                                          private val retrieveTeamsUsecase: RetrieveTeamsUsecase) {
+class Play01Usecase @Inject constructor(private val retrieveGameUsecase: RetrieveGameUsecase,
+                                        private val retrieveTeamsUsecase: RetrieveTeamsUsecase) {
 
     fun loadGameAndStart(req: RetrieveGameRequest, done: (Game, Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
         retrieveTeams(req, done, fail)

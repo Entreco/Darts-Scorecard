@@ -4,11 +4,8 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.DscDatabase
-import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerMapper
-import nl.entreco.data.db.player.PlayerTable
 import nl.entreco.data.play.repository.LocalPlayerRepository
-import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.repository.PlayerRepository
 
 /**

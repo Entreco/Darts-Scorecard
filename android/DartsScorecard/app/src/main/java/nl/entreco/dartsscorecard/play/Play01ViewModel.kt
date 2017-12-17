@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play
 
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.UiCallback
@@ -14,14 +13,14 @@ import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.usecase.PlayGameUsecase
+import nl.entreco.domain.play.usecase.Play01Usecase
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(private val playGameUsecase: PlayGameUsecase, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
+class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     // Lazy to keep state
     private lateinit var game: Game

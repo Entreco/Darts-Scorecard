@@ -11,7 +11,7 @@ import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.model.players.TeamIdsString
 import nl.entreco.domain.play.usecase.GameSettingsRequest
-import nl.entreco.domain.play.usecase.PlayGameUsecase
+import nl.entreco.domain.play.usecase.Play01Usecase
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
@@ -28,7 +28,7 @@ class Play01ViewModelTest {
     private lateinit var game: Game
     private lateinit var req: RetrieveGameRequest
 
-    @Mock private lateinit var mockPlayGameUsecase: PlayGameUsecase
+    @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockLoadable: GameLoadable
     @Mock private lateinit var mockScoreListener: ScoreListener

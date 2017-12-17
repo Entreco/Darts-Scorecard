@@ -1,6 +1,7 @@
 package nl.entreco.domain.play.usecase
 
 import nl.entreco.domain.executors.Background
+import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.executors.Foreground
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
@@ -11,17 +12,13 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 17/12/2017.
  */
-class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, private val bg: Background, private val fg: Foreground) {
+class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg){
 
     fun start(teamIds: TeamIdsString, done: (Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
-        bg.post(Runnable {
-            try {
-                val teams = retrieveTeams(teamIds.toString())
-                fg.post(Runnable { done(teams) })
-            } catch (oops: Exception) {
-                fg.post(Runnable { fail(oops) })
-            }
-        })
+        onBackground({
+            val teams = retrieveTeams(teamIds.toString())
+            onUi { done(teams) }
+        }, fail)
     }
 
     private fun retrieveTeams(teamIdsString: String): Array<Team> {
