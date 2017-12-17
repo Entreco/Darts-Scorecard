@@ -28,7 +28,7 @@ class RetrieveGameUsecaseTest {
 
     private lateinit var subject: RetrieveGameUsecase
 
-    private lateinit var uid: String
+    private var id: Long = 0
     private lateinit var settings: CreateGameInput
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
@@ -37,9 +37,9 @@ class RetrieveGameUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        uid = "uid"
+        id = 42
         settings = CreateGameInput(501, 0, 3, 2)
-        game = Game(uid, arbiter)
+        game = Game(id, arbiter)
 
         mockForeground = TestForeground()
         mockBackground = TestBackground()
@@ -66,15 +66,15 @@ class RetrieveGameUsecaseTest {
 
     private fun whenStartIsCalled(game: Game?) {
         if (game == null) {
-            whenever(mockGameRepository.fetchBy(uid)).thenThrow(IllegalStateException("game not found"))
+            whenever(mockGameRepository.fetchBy(id)).thenThrow(IllegalStateException("game not found"))
         } else {
-            whenever(mockGameRepository.fetchBy(uid)).thenReturn(game)
+            whenever(mockGameRepository.fetchBy(id)).thenReturn(game)
         }
-        subject.start(uid, mockOk, mockErr)
+        subject.start(id, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).fetchBy(uid)
+        verify(mockGameRepository).fetchBy(id)
     }
 
     private fun andOkIsReported() {

@@ -10,7 +10,7 @@ interface GameRepository {
 
     @Throws
     @WorkerThread
-    fun create(uid: String,
+    fun create(
                teams: String,
                startScore: Int,
                startIndex: Int,
@@ -19,7 +19,7 @@ interface GameRepository {
 
     @Throws
     @WorkerThread
-    fun fetchBy(uid: String): Game
+    fun fetchBy(id: Long): Game
 
     @Throws
     @WorkerThread

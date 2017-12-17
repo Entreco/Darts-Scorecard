@@ -35,7 +35,7 @@ class Play01ViewModelTest {
 
     private val createGameInput: CreateGameInput = CreateGameInput(501, 0, 3, 2)
     private val mockArbiter: Arbiter = Arbiter(Score(createGameInput.startScore), TurnHandler(arrayOf(Team(arrayOf(Player("piet"))), Team(arrayOf(Player("puk")))), createGameInput.startIndex))
-    private val uid: String = "some uid"
+    private val gameId: Long = 1002
 
     @Before
     fun setUp() {
@@ -161,10 +161,10 @@ class Play01ViewModelTest {
     }
 
     private fun givenGameRetrieved() {
-        game = Game("uid", mockArbiter)
+        game = Game(101, mockArbiter)
         subject = Play01ViewModel(mockRetrieveGameUsecase)
-        subject.retrieveGame(uid, createGameInput, mockLoadable)
-        verify(mockRetrieveGameUsecase).start(eq(uid), any(), any())
+        subject.retrieveGame(gameId, createGameInput, mockLoadable)
+        verify(mockRetrieveGameUsecase).start(eq(gameId), any(), any())
     }
 
     private fun whenUiIsReady() {

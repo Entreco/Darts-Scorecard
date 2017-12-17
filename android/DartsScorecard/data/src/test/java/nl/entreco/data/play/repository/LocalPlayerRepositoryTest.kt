@@ -53,48 +53,45 @@ class LocalPlayerRepositoryTest {
 
     @Test
     fun `it should fetch by uid`() {
-        givenPlayerWith("some uid")
-        whenFetching("some uid")
+        givenPlayerWith(1)
+        whenFetching(1)
         thenPlayerIsNotNull()
     }
 
     @Test
     fun `it should return null fetching non-existing uid`() {
-        givenPlayerWith("some uid")
-        whenFetching("another uid")
+        whenFetching(1)
         thenPlayerIsNull()
     }
 
     @Test
-    fun `it should fecth all existing players`() {
-        givenPlayerWith("id1", "id2", "id3")
+    fun `it should fetch all existing players`() {
+        givenPlayerWith(1,2,3)
         whenFetchingAll()
         thenPlayersAreRetrieved(3)
     }
 
     private fun givenPlayerWith(name: String, double: Int) {
         val table = PlayerTable()
-        table.uid = "random uid"
         table.name = name
         table.fav = double.toString()
         whenever(mockPlayerDao.fetchByName(name)).thenReturn(table)
     }
 
-    private fun givenPlayerWith(vararg uid: String) {
+    private fun givenPlayerWith(vararg id: Long) {
         val tables = ArrayList<PlayerTable>()
-        uid.forEach {
+        id.forEach {
             val table = givenPlayerWith(it)
             tables.add(table)
         }
         whenever(mockPlayerDao.fetchAll()).thenReturn(tables.toList())
     }
 
-    private fun givenPlayerWith(uid: String) : PlayerTable {
+    private fun givenPlayerWith(id: Long): PlayerTable {
         val table = PlayerTable()
-        table.uid = uid
         table.name = "some name"
         table.fav = "1"
-        whenever(mockPlayerDao.fetchByUid(uid)).thenReturn(table)
+        whenever(mockPlayerDao.fetchById(id)).thenReturn(table)
         return table
     }
 
@@ -102,8 +99,8 @@ class LocalPlayerRepositoryTest {
         expectedPlayer = subject.fetchByName(name)
     }
 
-    private fun whenFetching(uid: String) {
-        expectedPlayer = subject.fetchByUid(uid)
+    private fun whenFetching(id: Long) {
+        expectedPlayer = subject.fetchById(id)
     }
 
     private fun whenFetchingAll() {

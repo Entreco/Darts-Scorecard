@@ -9,8 +9,8 @@ import android.arch.persistence.room.PrimaryKey
  */
 @Entity(tableName = "Player")
 class PlayerTable {
-    @PrimaryKey
-    var uid: String = ""
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
 
     @ColumnInfo(name = "name")
     var name: String = ""

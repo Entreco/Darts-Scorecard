@@ -12,11 +12,11 @@ import javax.inject.Inject
 class RetrieveGameUsecase @Inject constructor(private val gameRepository: GameRepository, private val bg: Background,
                                               private val fg: Foreground) {
 
-    fun start(uid: String, ok: (Game) -> Unit, err: (Throwable) -> Unit) {
+    fun start(id: Long, ok: (Game) -> Unit, err: (Throwable) -> Unit) {
         bg.post(Runnable {
 
             try {
-                val game = gameRepository.fetchBy(uid)
+                val game = gameRepository.fetchBy(id)
                 fg.post(Runnable {
                     ok(game)
                 })
