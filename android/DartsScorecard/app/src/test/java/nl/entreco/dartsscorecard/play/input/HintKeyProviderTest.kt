@@ -12,6 +12,7 @@ class HintKeyProviderTest{
     @Test
     fun `it should provide normal hints`() {
         subject = HintKeyProvider(false)
+        assertEquals("0", subject.getHintForKey(-1))
         assertEquals("21", subject.getHintForKey(1))
         assertEquals("22", subject.getHintForKey(2))
         assertEquals("25", subject.getHintForKey(3))
@@ -22,11 +23,13 @@ class HintKeyProviderTest{
         assertEquals("60", subject.getHintForKey(8))
         assertEquals("100", subject.getHintForKey(9))
         assertEquals("140", subject.getHintForKey(0))
+        assertEquals("", subject.getHintForKey(10))
     }
 
     @Test
     fun `it should provide single hints`() {
         subject = HintKeyProvider(true)
+        assertEquals("0", subject.getHintForKey(-1))
         assertEquals("10", subject.getHintForKey(1))
         assertEquals("12", subject.getHintForKey(2))
         assertEquals("14", subject.getHintForKey(3))
@@ -37,5 +40,6 @@ class HintKeyProviderTest{
         assertEquals("19", subject.getHintForKey(8))
         assertEquals("20", subject.getHintForKey(9))
         assertEquals("25", subject.getHintForKey(0))
+        assertEquals("", subject.getHintForKey(10))
     }
 }

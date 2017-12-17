@@ -1,5 +1,6 @@
 package nl.entreco.data.play.repository
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.DscDatabase
@@ -34,7 +35,7 @@ class LocalGameRepositoryTest {
 
     @Test
     fun `it should create a new game`() {
-        val game = subject.create("uid", "1|2", 2, 3, 501, 0)
+        val game = subject.create("1|2", 2, 3, 501, 0)
         assertNotNull(game)
     }
 
@@ -52,12 +53,17 @@ class LocalGameRepositoryTest {
         thenFetchAllIsCalledOnDao()
     }
 
-    private fun thenFetchAllIsCalledOnDao() {
-        verify(mockGameDao).fetchAll()
+    @Test
+    fun `it should fetch games by Uid`() {
+        givenExistingGames(1)
+        whenFetchingByUid(1)
+        thenFetchByUidIsCalledOnDao()
     }
 
-    private fun whenFetchingAll() {
-        subject.fetchLatest()
+    @Test(expected = IllegalStateException::class)
+    fun `it should throw IllegalState when game with Uid does not exist`() {
+        givenExistingGames(1)
+        whenFetchingByUid(2)
     }
 
     private fun givenExistingGames(){
@@ -67,12 +73,39 @@ class LocalGameRepositoryTest {
         table.numSets = 5
         table.numLegs = 5
         table.teams = "1,2|3"
-        table.uid = "some uid"
+        table.id = 1
         val games = listOf(table)
         whenever(mockGameDao.fetchAll()).thenReturn(games)
     }
 
+    private fun givenExistingGames(id: Long){
+        val table = GameTable()
+        table.startIndex = 0
+        table.startScore = 5
+        table.numSets = 5
+        table.numLegs = 5
+        table.teams = "1,2|3"
+        table.id = id
+        whenever(mockGameDao.fetchBy(id)).thenReturn(table)
+    }
+
     private fun givenNoGames(){
         whenever(mockGameDao.fetchAll()).thenReturn(emptyList())
+    }
+
+    private fun whenFetchingAll() {
+        subject.fetchLatest()
+    }
+
+    private fun whenFetchingByUid(id: Long){
+        subject.fetchBy(id)
+    }
+
+    private fun thenFetchAllIsCalledOnDao() {
+        verify(mockGameDao).fetchAll()
+    }
+
+    private fun thenFetchByUidIsCalledOnDao() {
+        verify(mockGameDao).fetchBy(any())
     }
 }

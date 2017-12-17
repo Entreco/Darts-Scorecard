@@ -7,6 +7,8 @@ import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
 import nl.entreco.domain.play.model.Arbiter
 import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.play.model.players.Team
 import nl.entreco.domain.play.repository.GameRepository
 import org.junit.Before
 import org.junit.Test
@@ -22,14 +24,14 @@ import org.mockito.junit.MockitoJUnitRunner
 class RetrieveGameUsecaseTest {
 
     @Mock private lateinit var mockGameRepository: GameRepository
-    @Mock private lateinit var arbiter: Arbiter
+    @Mock private lateinit var mockArbiter: Arbiter
     @Mock private lateinit var mockOk: ((Game) -> Unit)
     @Mock private lateinit var mockErr: ((Throwable) -> Unit)
 
     private lateinit var subject: RetrieveGameUsecase
 
-    private lateinit var uid: String
-    private lateinit var settings: CreateGameInput
+    private val givenId: Long = 42
+    private val givenTeam = arrayOf(Team(arrayOf(Player("henk"))))
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
     private lateinit var mockBackground: TestBackground
@@ -37,9 +39,7 @@ class RetrieveGameUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        uid = "uid"
-        settings = CreateGameInput(501, 0, 3, 2)
-        game = Game(uid, arbiter)
+        game = Game(givenId, mockArbiter)
 
         mockForeground = TestForeground()
         mockBackground = TestBackground()
@@ -66,15 +66,15 @@ class RetrieveGameUsecaseTest {
 
     private fun whenStartIsCalled(game: Game?) {
         if (game == null) {
-            whenever(mockGameRepository.fetchBy(uid)).thenThrow(IllegalStateException("game not found"))
+            whenever(mockGameRepository.fetchBy(any())).thenThrow(IllegalStateException("game not found"))
         } else {
-            whenever(mockGameRepository.fetchBy(uid)).thenReturn(game)
+            whenever(mockGameRepository.fetchBy(game.id)).thenReturn(game)
         }
-        subject.start(uid, mockOk, mockErr)
+        subject.start(givenId, mockOk, mockErr)
     }
 
     private fun thenGameIsStarted() {
-        verify(mockGameRepository).fetchBy(uid)
+        verify(mockGameRepository).fetchBy(givenId)
     }
 
     private fun andOkIsReported() {

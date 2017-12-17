@@ -1,9 +1,8 @@
 package nl.entreco.domain.play.model
 
-import nl.entreco.domain.play.TestProvider
 import nl.entreco.domain.play.model.players.Player
 import nl.entreco.domain.play.model.players.Team
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -16,8 +15,10 @@ class TurnHandlerTest {
     private val player3 = Player("3")
     private val player4 = Player("4")
     private val player5 = Player("5")
+    private val teams = arrayOf(Team(arrayOf(player1)), Team(arrayOf(player2, player3)), Team(arrayOf(player4, player5)))
+    private val startIndex = 0
 
-    private var subject = TurnHandler(arrayOf(Team(arrayOf(player1)), Team(arrayOf(player2, player3)), Team(arrayOf(player4, player5))))
+    private var subject = TurnHandler(startIndex, teams)
 
     private var scores = arrayOf(Score(), Score(), Score(), Score(), Score())
 
@@ -84,7 +85,7 @@ class TurnHandlerTest {
         assertEquals(player4, subject.nextSet(scores).player)
     }
 
-    private fun givenStartedGame() : Player {
+    private fun givenStartedGame(): Player {
         return subject.start().player
     }
 

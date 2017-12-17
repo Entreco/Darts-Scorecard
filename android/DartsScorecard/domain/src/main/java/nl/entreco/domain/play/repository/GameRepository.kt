@@ -10,16 +10,16 @@ interface GameRepository {
 
     @Throws
     @WorkerThread
-    fun create(uid: String,
-               teams: String,
-               startScore: Int,
-               startIndex: Int,
-               numLegs: Int,
-               numSets: Int): Long
+    fun create(
+            teams: String,
+            startScore: Int,
+            startIndex: Int,
+            numLegs: Int,
+            numSets: Int): Long
 
     @Throws
     @WorkerThread
-    fun fetchBy(uid: String): Game
+    fun fetchBy(id: Long): Game
 
     @Throws
     @WorkerThread

@@ -9,15 +9,12 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by Entreco on 11/12/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class AppModuleTest {
 
     @Mock private lateinit var mockApp: App
@@ -44,5 +41,10 @@ class AppModuleTest {
     @Test
     fun provideLogger() {
         assertTrue(subject.provideLogger() is DscLogger)
+    }
+
+    @Test
+    fun provideDatabase() {
+        assertNotNull(subject.provideDb(mockApp))
     }
 }

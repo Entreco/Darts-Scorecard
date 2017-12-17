@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
@@ -12,14 +13,14 @@ import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn
 import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.usecase.RetrieveGameUsecase
-import nl.entreco.domain.play.usecase.CreateGameInput
+import nl.entreco.domain.play.usecase.Play01Usecase
+import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: RetrieveGameUsecase) : BaseViewModel(), UiCallback, InputListener {
+class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     // Lazy to keep state
     private lateinit var game: Game
@@ -27,15 +28,13 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
     private val scoreListeners = mutableListOf<ScoreListener>()
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun retrieveGame(uid: String, settings: CreateGameInput, load: GameLoadable) {
-        retrieveGameUseCase.start(uid, ok = startOk(load, settings), err = { })
-    }
-
-    fun startOk(load: GameLoadable, settings: CreateGameInput): (Game) -> Unit {
-        return {
-            game = it.start()
-            load.startWith(it, settings, this)
-        }
+    fun load(request: RetrieveGameRequest, load: GameLoadable) {
+        playGameUsecase.loadGameAndStart(request,
+                { game, teams ->
+                    this.game = game
+                    load.startWith(teams, request.settings, this)
+                },
+                { err -> logger.e("err: $err") })
     }
 
     override fun onLetsPlayDarts() {
@@ -77,7 +76,6 @@ class Play01ViewModel @Inject constructor(private val retrieveGameUseCase: Retri
             }
         }
     }
-
 
     fun addSpecialEventListener(specialEventListener: SpecialEventListener<*>) {
         synchronized(specialEventListener) {

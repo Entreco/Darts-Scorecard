@@ -7,24 +7,22 @@ const val OK: Int = 1
 const val BUST: Int = -1
 const val ERR: Int = -2
 
-class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
+class Arbiter(initial: Score) {
 
-    private var scores = initForStart(initial)
+    private lateinit var turnHandler: TurnHandler
+    private var scores: Array<Score> = emptyArray()
+    private val scoreSettings = initial.settings
+    private val legs = mutableListOf<Array<Score>>()
+    private val sets = mutableListOf<MutableList<Array<Score>>>()
 
-    private var legs = mutableListOf<Array<Score>>()
-
-    private var sets = mutableListOf<MutableList<Array<Score>>>()
-
-    fun start(): Next {
+    fun start(startIndex: Int, teams: Array<Team>): Next {
+        this.turnHandler = TurnHandler(startIndex, teams)
+        this.scores = Array(teams.size, { scoreSettings.score().copy() })
         return turnHandler.start(scores[0])
     }
 
-    fun teams(): Array<Team> {
-        return turnHandler.teams
-    }
-
     fun handle(turn: Turn, next: Next): Next {
-        val teamIndex = teamIndexOfNext(turnHandler.teams, next)
+        val teamIndex = turnHandler.indexOf(next.team)
         when (applyScore(teamIndex, turn)) {
             ERR -> return turnHandler.next(scores).copy(state = State.ERR_REQUIRES_DOUBLE)
             BUST -> return turnHandler.next(scores).copy(state = State.ERR_BUST)
@@ -35,10 +33,6 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
         else if (requiresNewLeg(teamIndex)) return playerForNewLeg()
 
         return turnHandler.next(scores)
-    }
-
-    private fun teamIndexOfNext(teams: Array<out Team>, next: Next): Int {
-        return teams.indexOf(next.team)
     }
 
     private fun playerForNewLeg() = turnHandler.nextLeg(scores)
@@ -72,8 +66,6 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
         }
         return false
     }
-
-    private fun initForStart(score: Score) = Array(turnHandler.teams.size, { score.copy() })
 
     private fun initForNewLeg() {
         scores.forEachIndexed { index, score -> scores[index] = score.rollLeg() }
@@ -120,11 +112,5 @@ class Arbiter(initial: Score, private val turnHandler: TurnHandler) {
 
     fun getSets(): MutableList<MutableList<Array<Score>>> {
         return sets
-    }
-
-    override fun toString(): String {
-        val builder = StringBuilder().append("${scores[0]}")
-        scores.drop(1).forEach { builder.append("\n$it") }
-        return builder.toString()
     }
 }

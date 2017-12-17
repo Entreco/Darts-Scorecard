@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
 import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.TeamsString
+import nl.entreco.domain.play.model.players.TeamIdsString
 import nl.entreco.domain.play.repository.GameRepository
 import org.junit.Before
 import org.junit.Test
@@ -25,8 +25,8 @@ class CreateGameUsecaseTest {
 
     private lateinit var subject: CreateGameUsecase
 
-    private var setup = CreateGameInput(501, 0, 3, 2)
-    private var teamString = TeamsString("a|b")
+    private var setup = GameSettingsRequest(501, 0, 3, 2)
+    private var teamString = TeamIdsString("a|b")
     private var mockBg = TestBackground()
     private var mockFg = TestForeground()
 
@@ -72,23 +72,23 @@ class CreateGameUsecaseTest {
 
     private fun whenStartIsCalled() {
         subject.start(setup, teamString, mockCallback)
-        verify(mockGameRepository).create(any(), eq(teamString.asString()), eq(501), eq(0), eq(3), eq(2))
+        verify(mockGameRepository).create(eq(teamString.toString()), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun whenFetchLatestIsCalled() {
-        subject.fetchLatest(setup, mockCallback)
+        subject.fetchLatest(setup, teamString, mockCallback)
         verify(mockGameRepository).fetchLatest()
     }
 
     private fun thenGameIsStarted() {
-        verify(mockCallback).onGameCreated(any(), eq(setup))
+        verify(mockCallback).onGameCreated(any())
     }
 
     private fun thenGameIsRetrieved() {
-        verify(mockCallback).onGameRetrieved(mockGame, setup)
+        verify(mockCallback).onGameRetrieved(any())
     }
 
     private fun thenErrorIsReportedBack() {
-        verify(mockCallback).onGameRetrieveFailed(isA())
+        verify(mockCallback).onGameRetrieveFailed(isA(), eq(teamString))
     }
 }

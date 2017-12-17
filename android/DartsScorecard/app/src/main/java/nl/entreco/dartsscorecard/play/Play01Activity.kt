@@ -9,13 +9,15 @@ import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.di.play.Play01Component
+import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.TeamsString
+import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.play.usecase.GetFinishUsecase
-import nl.entreco.domain.play.usecase.CreateGameInput
+import nl.entreco.domain.play.usecase.RetrieveGameRequest
 
 class Play01Activity : ViewModelActivity() {
 
@@ -43,7 +45,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun initGame() {
-        viewModel.retrieveGame(retrieveUid(), retrieveSetup(), scoreViewModel )
+        viewModel.load(retrieveSetup(), scoreViewModel)
     }
 
     private fun resumeGame() {
@@ -65,23 +67,19 @@ class Play01Activity : ViewModelActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun retrieveSetup(): CreateGameInput {
-        return CreateGameInput(intent.getIntExtra("1", -1), intent.getIntExtra("2", -1), intent.getIntExtra("3", -1), intent.getIntExtra("4", -1))
-    }
-    private fun retrieveUid() : String {
-        return intent.getStringExtra("0")
+    private fun retrieveSetup(): RetrieveGameRequest {
+        return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
+                TeamIdsString( intent.getStringExtra("teamIds")),
+                intent.getParcelableExtra("settings"))
     }
 
     companion object {
         @JvmStatic
-        fun startGame(context: Context, game: Game, setup: CreateGameInput) {
+        fun startGame(context: Context, retrieve: RetrieveGameRequest) {
             val intent = Intent(context, Play01Activity::class.java)
-            intent.putExtra("0", game.uuid)
-            intent.putExtra("team", TeamsString.parse(game.teams()))
-            intent.putExtra("1", setup.startIndex)
-            intent.putExtra("2", setup.startScore)
-            intent.putExtra("3", setup.numLegs)
-            intent.putExtra("4", setup.numSets)
+            intent.putExtra("gameId", retrieve.gameId)
+            intent.putExtra("teamIds", retrieve.teamIds.toString())
+            intent.putExtra("settings", retrieve.settings)
             context.startActivity(intent)
         }
     }

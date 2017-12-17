@@ -14,7 +14,7 @@ interface PlayerRepository {
 
     @Throws
     @WorkerThread
-    fun fetchByUid(uid: String): Player?
+    fun fetchById(id: Long): Player?
 
     @Throws
     @WorkerThread

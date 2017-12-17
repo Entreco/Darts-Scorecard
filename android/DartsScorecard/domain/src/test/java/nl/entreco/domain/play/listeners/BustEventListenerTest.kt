@@ -1,7 +1,6 @@
 package nl.entreco.domain.play.listeners
 
 import nl.entreco.domain.play.listeners.events.BustEvent
-import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.model.Next
 import nl.entreco.domain.play.model.Score
 import nl.entreco.domain.play.model.Turn

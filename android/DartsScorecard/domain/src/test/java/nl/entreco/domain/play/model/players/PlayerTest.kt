@@ -21,7 +21,7 @@ class PlayerTest {
 
     @Test
     fun `it should have correct favourite double`() {
-        assertEquals(15, Player("", PlayerPrefs(15)).prefs.favoriteDouble)
+        assertEquals(15, Player("", 0, PlayerPrefs(15)).prefs.favoriteDouble)
     }
 
 }

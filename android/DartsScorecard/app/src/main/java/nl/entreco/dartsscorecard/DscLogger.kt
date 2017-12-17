@@ -9,8 +9,8 @@ import nl.entreco.domain.Logger
 internal class DscLogger(private val tag: String) : Logger {
 
     companion object {
-        var ENABLED = BuildConfig.DEBUG
-        var SEPARATOR = ", "
+        private var ENABLED = BuildConfig.DEBUG
+        private var SEPARATOR = ", "
         fun setEnabled(enable: Boolean) {
             ENABLED = enable
         }
@@ -82,7 +82,7 @@ internal class DscLogger(private val tag: String) : Logger {
         }
     }
 
-    override fun e(message: String, vararg args: String, error: Throwable) {
+    override fun e(message: String, error: Throwable, vararg args: String) {
         if (ENABLED) {
             Log.d(tag, withArgs(message, args), error)
         }

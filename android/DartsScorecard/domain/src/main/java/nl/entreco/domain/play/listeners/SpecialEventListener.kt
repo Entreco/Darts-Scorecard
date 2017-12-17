@@ -25,7 +25,8 @@ interface SpecialEventListener<in T : SpecialEvent> {
         try {
             val event = ThrownEvent(turn.asFinish()) as T
             handle(event)
-        } catch (ignore: ClassCastException) { }
+        } catch (ignore: ClassCastException) {
+        }
     }
 
     private fun handleBust(next: Next) {
@@ -42,7 +43,8 @@ interface SpecialEventListener<in T : SpecialEvent> {
         try {
             val event = NoScoreEvent(turn.total() == 0) as T
             handle(event)
-        } catch (ignore: ClassCastException) { }
+        } catch (ignore: ClassCastException) {
+        }
     }
 
     private fun handleOneEight(turn: Turn) {
@@ -50,7 +52,8 @@ interface SpecialEventListener<in T : SpecialEvent> {
             try {
                 val event = OneEightyEvent() as T
                 handle(event)
-            } catch (ignore: ClassCastException) { }
+            } catch (ignore: ClassCastException) {
+            }
         }
     }
 }

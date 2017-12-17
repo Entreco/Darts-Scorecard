@@ -78,10 +78,4 @@ class GameTest : BaseGameTest() {
 
         assertScore(321, 321)
     }
-
-    @Test
-    fun `it should return correct teams`() {
-        givenGameStarted()
-        assertNotNull(subject.teams())
-    }
 }
