@@ -39,32 +39,43 @@ class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>()
 
     fun addItem(teamScoreViewModel: TeamScoreViewModel) {
         items.add(teamScoreViewModel)
-        notifyItemInserted(items.size - 1)
+        tryNotifyItemInserted(items.size - 1)
     }
 
     fun teamAtIndexScored(position: Int, score: Score, by: Player) {
         items[position].scored(score, by)
-        notifyItemChanged(position)
+        tryNotifyItemChanged(position)
     }
 
     fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
         items[position].threw(turn, player)
-        notifyItemChanged(position)
-    }
-
-    fun clear() {
-        val count = itemCount
-        items.clear()
-        notifyItemRangeRemoved(0, count)
+        tryNotifyItemChanged(position)
     }
 
     fun teamAtIndexTurnUpdate(position: Int, next: Next) {
         if (position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
-        notifyItemChanged(position)
+        tryNotifyItemChanged(position)
+    }
+
+    fun clear() {
+        val count = itemCount
+        items.clear()
+        tryNotifyItemRangeRemoved(0, count)
     }
 
     private class LazyInflater(context: Context) {
         val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
+    }
+
+    private fun tryNotifyItemInserted(position: Int) {
+        try { notifyItemInserted(position) } catch (ignore : NullPointerException){}
+    }
+    private fun tryNotifyItemChanged(position: Int) {
+        try { notifyItemChanged(position) } catch (ignore : NullPointerException){}
+    }
+
+    private fun tryNotifyItemRangeRemoved(position : Int, count: Int){
+        try {  notifyItemRangeRemoved(position, count) } catch (ignore : NullPointerException){}
     }
 }
