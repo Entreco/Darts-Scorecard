@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.model.players
+package nl.entreco.domain.model.players
 
 import org.junit.Assert.*
 import org.junit.Test

@@ -1,5 +1,6 @@
-package nl.entreco.domain.play.model.players
+package nl.entreco.domain.model.players
 
+import nl.entreco.domain.splash.TeamNamesString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
