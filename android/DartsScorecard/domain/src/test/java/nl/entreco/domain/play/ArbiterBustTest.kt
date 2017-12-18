@@ -1,7 +1,10 @@
-package nl.entreco.domain.model
+package nl.entreco.domain.play
 
-import nl.entreco.domain.play.TestProvider
-import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.TestProvider
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals

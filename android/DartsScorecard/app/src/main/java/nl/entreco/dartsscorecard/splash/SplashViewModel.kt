@@ -1,12 +1,12 @@
 package nl.entreco.dartsscorecard.splash
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.splash.TeamNamesString
 import nl.entreco.domain.splash.usecase.CreateGameUsecase
 import nl.entreco.domain.splash.usecase.CreateTeamsUsecase
-import nl.entreco.domain.play.usecase.GameSettingsRequest
-import nl.entreco.domain.play.usecase.RetrieveGameRequest
+import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
 import javax.inject.Inject
 
 /**
@@ -15,31 +15,31 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase) : BaseViewModel() {
 
 
-    fun createFrom(teams: TeamNamesString, request: GameSettingsRequest, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
+    fun createFrom(teams: TeamNamesString, requestCreate: CreateGameRequest, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
         ensureTeamPlayersExist(teams,
-                handleTeamRetrieved(request, done, fail),
+                handleTeamRetrieved(requestCreate, done, fail),
                 fail)
     }
 
-    private fun handleTeamRetrieved(request: GameSettingsRequest, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit): (TeamIdsString) -> Unit {
+    private fun handleTeamRetrieved(requestCreate: CreateGameRequest, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit): (TeamIdsString) -> Unit {
         return {
-            retrieveLastGame(request, it, done,
-                    retry(request, it, done, fail))
+            retrieveLastGame(requestCreate, it, done,
+                    retry(requestCreate, it, done, fail))
         }
     }
 
-    private fun retry(request: GameSettingsRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit): (Throwable) -> Unit =
-            { createNewGame(request, teamIds, done, fail) }
+    private fun retry(requestCreate: CreateGameRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit): (Throwable) -> Unit =
+            { createNewGame(requestCreate, teamIds, done, fail) }
 
     private fun ensureTeamPlayersExist(teamNamesInput: TeamNamesString, done: (TeamIdsString) -> Unit, fail: (Throwable) -> Unit) {
         createTeamsUsecase.start(teamNamesInput, done, fail)
     }
 
-    private fun createNewGame(gameSettingsRequest: GameSettingsRequest, teamNames: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
-        createGameUsecase.start(gameSettingsRequest, teamNames, done, fail)
+    private fun createNewGame(createGameRequest: CreateGameRequest, teamNames: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
+        createGameUsecase.start(createGameRequest, teamNames, done, fail)
     }
 
-    private fun retrieveLastGame(gameSettingsRequest: GameSettingsRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
-        createGameUsecase.fetchLatest(gameSettingsRequest, teamIds, done, fail)
+    private fun retrieveLastGame(createGameRequest: CreateGameRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
+        createGameUsecase.fetchLatest(createGameRequest, teamIds, done, fail)
     }
 }

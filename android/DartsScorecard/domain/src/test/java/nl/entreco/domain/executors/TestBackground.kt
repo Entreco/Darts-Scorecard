@@ -1,4 +1,4 @@
-package nl.entreco.domain.play
+package nl.entreco.domain.executors
 
 import nl.entreco.domain.executors.Background
 import java.util.concurrent.Future

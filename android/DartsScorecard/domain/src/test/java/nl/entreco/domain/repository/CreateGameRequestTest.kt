@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.repository
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -6,8 +6,8 @@ import org.junit.Test
 /**
  * Created by Entreco on 17/12/2017.
  */
-class GameSettingsRequestTest {
-    private val subject = GameSettingsRequest(1, 2, 3, 4)
+class CreateGameRequestTest {
+    private val subject = CreateGameRequest(1, 2, 3, 4)
 
     @Test
     fun `it should map correct values`() {

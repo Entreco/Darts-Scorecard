@@ -5,7 +5,7 @@ import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.executors.Foreground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.repository.PlayerRepository
 import javax.inject.Inject
 

@@ -1,6 +1,4 @@
-package nl.entreco.domain.play
-
-import nl.entreco.domain.executors.Foreground
+package nl.entreco.domain.executors
 
 /**
  * Created by Entreco on 12/12/2017.

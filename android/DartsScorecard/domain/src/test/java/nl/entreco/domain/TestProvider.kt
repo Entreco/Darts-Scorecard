@@ -1,10 +1,12 @@
-package nl.entreco.domain.play
+package nl.entreco.domain
 
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.play.TurnHandler
 import nl.entreco.domain.settings.ScoreSettings
 
 /**

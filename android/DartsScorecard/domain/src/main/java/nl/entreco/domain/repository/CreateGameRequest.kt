@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.repository
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,7 +6,7 @@ import android.os.Parcelable
 /**
  * Created by Entreco on 12/12/2017.
  */
-data class GameSettingsRequest(val startScore: Int, val startIndex: Int, val numLegs: Int, val numSets: Int) : Parcelable {
+data class CreateGameRequest(val startScore: Int, val startIndex: Int, val numLegs: Int, val numSets: Int) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readInt(),
@@ -24,12 +24,12 @@ data class GameSettingsRequest(val startScore: Int, val startIndex: Int, val num
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<GameSettingsRequest> {
-        override fun createFromParcel(parcel: Parcel): GameSettingsRequest {
-            return GameSettingsRequest(parcel)
+    companion object CREATOR : Parcelable.Creator<CreateGameRequest> {
+        override fun createFromParcel(parcel: Parcel): CreateGameRequest {
+            return CreateGameRequest(parcel)
         }
 
-        override fun newArray(size: Int): Array<GameSettingsRequest?> {
+        override fun newArray(size: Int): Array<CreateGameRequest?> {
             return arrayOfNulls(size)
         }
     }

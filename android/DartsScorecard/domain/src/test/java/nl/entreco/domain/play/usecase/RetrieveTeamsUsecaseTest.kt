@@ -1,11 +1,11 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.TestForeground
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.executors.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Before
 import org.junit.Test

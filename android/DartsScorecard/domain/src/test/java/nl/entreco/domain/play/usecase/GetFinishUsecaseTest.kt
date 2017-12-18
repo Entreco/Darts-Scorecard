@@ -3,7 +3,7 @@ package nl.entreco.domain.play.usecase
 import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.Logger
 import nl.entreco.domain.executors.Background
-import nl.entreco.domain.play.TestBackground
+import nl.entreco.domain.executors.TestBackground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.play.ScoreEstimator

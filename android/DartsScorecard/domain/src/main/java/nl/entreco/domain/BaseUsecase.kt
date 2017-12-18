@@ -8,21 +8,21 @@ import nl.entreco.domain.executors.Foreground
  */
 abstract class BaseUsecase(private val bg: Background, private val fg: Foreground) {
 
-    fun onBackground(f: () -> Unit, err: (Throwable) -> Unit){
+    fun onBackground(f: () -> Unit, err: (Throwable) -> Unit) {
         bg.post(Runnable {
             try {
                 f()
-            } catch(oops: Throwable){
+            } catch (oops: Throwable) {
                 onErr(err, oops)
             }
         })
     }
 
-    fun onUi(f: () -> Unit){
-        fg.post(Runnable{ f() })
+    fun onUi(f: () -> Unit) {
+        fg.post(Runnable { f() })
     }
 
-    fun onErr(f: (Throwable) -> Unit, oops: Throwable){
-        fg.post(Runnable{ f(oops) })
+    fun onErr(f: (Throwable) -> Unit, oops: Throwable) {
+        fg.post(Runnable { f(oops) })
     }
 }

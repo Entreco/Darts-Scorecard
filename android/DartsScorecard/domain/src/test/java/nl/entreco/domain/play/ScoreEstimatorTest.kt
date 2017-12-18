@@ -1,6 +1,6 @@
-package nl.entreco.domain.model
+package nl.entreco.domain.play
 
-import nl.entreco.domain.play.ScoreEstimator
+import nl.entreco.domain.model.Turn
 import org.junit.Assert.*
 import org.junit.Test
 

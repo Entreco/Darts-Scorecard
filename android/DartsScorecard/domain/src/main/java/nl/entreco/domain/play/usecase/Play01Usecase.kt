@@ -2,6 +2,7 @@ package nl.entreco.domain.play.usecase
 
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.repository.RetrieveGameRequest
 import javax.inject.Inject
 
 /**
@@ -16,7 +17,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
 
     private fun retrieveTeams(req: RetrieveGameRequest, done: (Game, Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
         retrieveTeamsUsecase.start(req.teamIds,
-                { teams -> retrieveGame(req.gameId, req.settings.startIndex, teams, done, fail) },
+                { teams -> retrieveGame(req.gameId, req.create.startIndex, teams, done, fail) },
                 { err -> fail(err) }
         )
     }

@@ -1,12 +1,13 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.splash.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.TestForeground
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.executors.TestForeground
 import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
 import nl.entreco.domain.repository.GameRepository
-import nl.entreco.domain.splash.usecase.CreateGameUsecase
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +29,7 @@ class CreateGameUsecaseTest {
 
     private lateinit var subject: CreateGameUsecase
 
-    private var setup = GameSettingsRequest(501, 0, 3, 2)
+    private var setup = CreateGameRequest(501, 0, 3, 2)
     private var teamString = TeamIdsString("a|b")
     private var mockBg = TestBackground()
     private var mockFg = TestForeground()

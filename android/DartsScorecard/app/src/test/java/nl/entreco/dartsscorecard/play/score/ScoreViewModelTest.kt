@@ -10,7 +10,7 @@ import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -103,7 +103,7 @@ class ScoreViewModelTest {
     }
 
     private fun `given game has started`() {
-        subject.startWith(givenTeams, GameSettingsRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.startWith(givenTeams, CreateGameRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {

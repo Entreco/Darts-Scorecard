@@ -3,7 +3,7 @@ package nl.entreco.domain.splash.usecase
 import nl.entreco.domain.executors.Background
 import nl.entreco.domain.executors.Foreground
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.splash.TeamNamesString
 import nl.entreco.domain.repository.PlayerRepository
 import javax.inject.Inject

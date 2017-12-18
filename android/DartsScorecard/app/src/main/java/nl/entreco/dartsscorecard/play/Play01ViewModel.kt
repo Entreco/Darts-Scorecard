@@ -14,7 +14,7 @@ import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.usecase.Play01Usecase
-import nl.entreco.domain.play.usecase.RetrieveGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
 import javax.inject.Inject
 
 /**
@@ -32,7 +32,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         playGameUsecase.loadGameAndStart(request,
                 { game, teams ->
                     this.game = game
-                    load.startWith(teams, request.settings, this)
+                    load.startWith(teams, request.create, this)
                 },
                 { err -> logger.e("err: $err") })
     }

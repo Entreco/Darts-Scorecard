@@ -7,8 +7,8 @@ import nl.entreco.dartsscorecard.di.splash.SplashComponent
 import nl.entreco.dartsscorecard.di.splash.SplashModule
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.splash.TeamNamesString
-import nl.entreco.domain.play.usecase.GameSettingsRequest
-import nl.entreco.domain.play.usecase.RetrieveGameRequest
+import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
 
 
 /**
@@ -19,7 +19,7 @@ class SplashActivity : ViewModelActivity() {
     private val component: SplashComponent by componentProvider { it.plus(SplashModule()) }
     private val viewModel: SplashViewModel by viewModelProvider { component.viewModel() }
 
-    private val setup = GameSettingsRequest(501, 0, 3, 2)
+    private val setup = CreateGameRequest(501, 0, 3, 2)
     private val teams = TeamNamesString("Remco,Boeffie|Eva,Guusje")
 
     override fun onCreate(savedInstanceState: Bundle?) {

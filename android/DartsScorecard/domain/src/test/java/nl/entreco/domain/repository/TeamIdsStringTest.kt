@@ -1,5 +1,6 @@
-package nl.entreco.domain.model.players
+package nl.entreco.domain.repository
 
+import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -1,8 +1,8 @@
-package nl.entreco.domain.model
+package nl.entreco.domain.play
 
+import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.TurnHandler
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

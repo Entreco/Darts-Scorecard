@@ -1,13 +1,12 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.splash.usecase
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.executors.TestForeground
+import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.splash.TeamNamesString
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.domain.splash.usecase.CreateTeamsUsecase
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

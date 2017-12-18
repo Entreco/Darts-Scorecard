@@ -1,6 +1,6 @@
 package nl.entreco.domain.model
 
-import nl.entreco.domain.play.TestProvider
+import nl.entreco.domain.TestProvider
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
 import org.junit.Assert.assertEquals
