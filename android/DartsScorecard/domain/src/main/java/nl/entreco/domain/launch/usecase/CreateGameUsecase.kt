@@ -1,4 +1,4 @@
-package nl.entreco.domain.splash.usecase
+package nl.entreco.domain.launch.usecase
 
 import nl.entreco.domain.executors.Background
 import nl.entreco.domain.executors.Foreground

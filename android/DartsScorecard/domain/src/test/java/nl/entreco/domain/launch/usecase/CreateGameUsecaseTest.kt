@@ -1,4 +1,4 @@
-package nl.entreco.domain.splash.usecase
+package nl.entreco.domain.launch.usecase
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.executors.TestBackground

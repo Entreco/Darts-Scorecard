@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Launch"></style>
+
+    <style name="Launch.Btn" parent="Base.Widget.AppCompat.Button"></style>
+</resources>

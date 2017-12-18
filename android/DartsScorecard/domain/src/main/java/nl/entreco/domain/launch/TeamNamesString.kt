@@ -1,4 +1,4 @@
-package nl.entreco.domain.splash
+package nl.entreco.domain.launch
 
 /**
  * Created by Entreco on 16/12/2017.

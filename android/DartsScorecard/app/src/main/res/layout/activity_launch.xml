@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:padding="@dimen/large">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/launch_play"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Play / Resume" />
+
+        <Button
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Players" />
+
+        <Button
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stats" />
+
+        <Button
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="News" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingTop="@dimen/large"
+            android:shadowColor="@color/colorAccent"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+            android:text="powered by"
+            android:textColor="#fff"
+            android:textSize="8sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/large"
+            android:src="@drawable/ic_entreco_black_bg" />
+
+    </LinearLayout>
+</layout>

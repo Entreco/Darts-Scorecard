@@ -1,18 +1,18 @@
-package nl.entreco.dartsscorecard.splash
+package nl.entreco.dartsscorecard.launch
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.repository.TeamIdsString
-import nl.entreco.domain.splash.TeamNamesString
-import nl.entreco.domain.splash.usecase.CreateGameUsecase
-import nl.entreco.domain.splash.usecase.CreateTeamsUsecase
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.launch.TeamNamesString
+import nl.entreco.domain.launch.usecase.CreateGameUsecase
+import nl.entreco.domain.launch.usecase.CreateTeamsUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 12/12/2017.
  */
-class SplashViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase) : BaseViewModel() {
+class LaunchViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase) : BaseViewModel() {
 
 
     fun createFrom(teams: TeamNamesString, requestCreate: CreateGameRequest, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {

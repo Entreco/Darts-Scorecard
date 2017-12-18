@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.di.splash
+package nl.entreco.dartsscorecard.di.launch
 
 import javax.inject.Scope
 
@@ -7,4 +7,4 @@ import javax.inject.Scope
  */
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
-annotation class SplashScope
+annotation class LaunchScope

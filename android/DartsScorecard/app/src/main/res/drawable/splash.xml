@@ -2,15 +2,19 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <bitmap android:src="@drawable/splash_bg_2"/>
+        <bitmap android:src="@drawable/splash_bg_2" />
     </item>
 
     <item>
         <shape>
-            <gradient android:type="radial" android:startColor="#44000000" android:endColor="@color/black" android:gradientRadius="100%" android:centerX="50%" android:centerY="80%"/>
+            <gradient
+                android:centerX="50%"
+                android:centerY="80%"
+                android:endColor="@color/black"
+                android:gradientRadius="100%"
+                android:startColor="#44000000"
+                android:type="radial" />
         </shape>
     </item>
-
-    <item android:drawable="@drawable/ic_entreco_black_bg" android:bottom="@dimen/large" android:gravity="bottom|center_horizontal"/>
 
 </layer-list>
