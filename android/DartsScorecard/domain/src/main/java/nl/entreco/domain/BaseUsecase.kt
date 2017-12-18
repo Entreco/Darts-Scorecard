@@ -22,7 +22,7 @@ abstract class BaseUsecase(private val bg: Background, private val fg: Foregroun
         fg.post(Runnable { f() })
     }
 
-    fun onErr(f: (Throwable) -> Unit, oops: Throwable) {
+    private fun onErr(f: (Throwable) -> Unit, oops: Throwable) {
         fg.post(Runnable { f(oops) })
     }
 }

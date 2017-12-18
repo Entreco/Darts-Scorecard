@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <color name="bdo_yellow_light">#FFD71B</color>
     <color name="bdo_yellow_accent">#BC9910</color>
     <color name="bdo_yellow_dark">#FCC804</color>
@@ -10,6 +9,7 @@
     <color name="bdo_red_dark">#760A10</color>
 
     <style name="Bdo" parent="AppTheme">
+        <item name="match_description">@string/bdo_match</item>
         <item name="colorAccent">@color/bdo_red_dark</item>
         <item name="highlightColor">@color/white</item>
         <item name="statBorderColor">@android:color/transparent</item>

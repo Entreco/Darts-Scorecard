@@ -1,6 +1,5 @@
 package nl.entreco.domain.executors
 
-import nl.entreco.domain.executors.Background
 import java.util.concurrent.Future
 import java.util.concurrent.FutureTask
 

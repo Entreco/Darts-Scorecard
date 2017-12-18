@@ -10,7 +10,7 @@ import kotlin.math.round
  * Created by Entreco on 20/11/2017.
  */
 abstract class BaseCounterTextView : AppCompatTextView {
-    private val STEP_10 = 10
+    private val step10 = 10
     private val speed: Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
@@ -41,12 +41,12 @@ abstract class BaseCounterTextView : AppCompatTextView {
             mCurrent - mTarget
         }
         var stepFound = false
-        var step = STEP_10
+        var step = step10
         while (!stepFound) {
             if (diff < step) {
                 stepFound = true
 
-                if (step == STEP_10) {
+                if (step == step10) {
                     if (increase) {
                         mCurrent++
                     } else {
@@ -62,7 +62,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
                 }
 
             } else {
-                step *= STEP_10
+                step *= step10
             }
         }
 

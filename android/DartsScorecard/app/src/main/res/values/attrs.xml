@@ -8,6 +8,7 @@
     <attr name="header_text_color" format="color" />
 
     <!-- Score View -->
+    <attr name="match_description" format="string" />
     <attr name="scoreBorderColor" format="color" />
     <attr name="highlightColor" format="color" />
     <attr name="scoreBorderAlpha" format="float" />

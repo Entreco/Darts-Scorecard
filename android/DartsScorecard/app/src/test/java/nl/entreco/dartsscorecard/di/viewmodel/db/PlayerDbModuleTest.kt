@@ -1,13 +1,12 @@
 package nl.entreco.dartsscorecard.di.viewmodel.db
 
-import android.os.Handler
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.data.play.repository.LocalPlayerRepository
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 

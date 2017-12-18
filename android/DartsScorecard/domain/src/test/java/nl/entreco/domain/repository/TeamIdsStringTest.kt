@@ -1,9 +1,7 @@
 package nl.entreco.domain.repository
 
-import nl.entreco.domain.repository.TeamIdsString
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Created by Entreco on 17/12/2017.

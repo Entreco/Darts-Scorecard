@@ -6,7 +6,6 @@ import android.databinding.BindingAdapter
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.ColorUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -42,12 +41,12 @@ class TeamScoreBindings {
 
         private fun clear(view: TextView, delay: Long) {
             view.animate().translationX(200F).setStartDelay(delay).withEndAction({
-                view.text = ""
+                view.setText( R.string.empty )
             }).setDuration(DEFAULT_ANIMATION_TIME).start()
         }
 
         private fun handle180(view: TextView) {
-            view.text = "180"
+            view.setText( R.string.score_180 )
             view.animate().translationX(0F).setInterpolator(OvershootInterpolator()).setDuration(DEFAULT_ANIMATION_TIME)
                     .withEndAction({
                         val howLong = 1200L

@@ -1,6 +1,5 @@
 package nl.entreco.domain.splash
 
-import nl.entreco.domain.splash.TeamNamesString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test

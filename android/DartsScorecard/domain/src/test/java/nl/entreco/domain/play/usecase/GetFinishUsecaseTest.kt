@@ -29,7 +29,7 @@ class GetFinishUsecaseTest {
 
     @Before
     fun setUp() {
-        subject = GetFinishUsecase(mockLogger, mockBg)
+        subject = GetFinishUsecase(mockBg)
     }
 
     @Test
