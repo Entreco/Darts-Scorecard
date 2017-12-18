@@ -3,9 +3,10 @@ package nl.entreco.domain.play.usecase
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.repository.GameRepository
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.GameRepository
+import nl.entreco.domain.splash.usecase.CreateGameUsecase
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,9 +20,11 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
-    @Mock private lateinit var mockCallback: CreateGameUsecase.Callback
     @Mock private lateinit var mockGameRepository: GameRepository
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockOk: (RetrieveGameRequest) -> Unit
+    @Mock private lateinit var mockFail: (Throwable) -> Unit
+
 
     private lateinit var subject: CreateGameUsecase
 
@@ -71,24 +74,24 @@ class CreateGameUsecaseTest {
     }
 
     private fun whenStartIsCalled() {
-        subject.start(setup, teamString, mockCallback)
+        subject.start(setup, teamString, mockOk, mockFail)
         verify(mockGameRepository).create(eq(teamString.toString()), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun whenFetchLatestIsCalled() {
-        subject.fetchLatest(setup, teamString, mockCallback)
+        subject.fetchLatest(setup, teamString, mockOk, mockFail)
         verify(mockGameRepository).fetchLatest()
     }
 
     private fun thenGameIsStarted() {
-        verify(mockCallback).onGameCreated(any())
+        verify(mockOk).invoke(any())
     }
 
     private fun thenGameIsRetrieved() {
-        verify(mockCallback).onGameRetrieved(any())
+        verify(mockOk).invoke(any())
     }
 
     private fun thenErrorIsReportedBack() {
-        verify(mockCallback).onGameRetrieveFailed(isA(), eq(teamString))
+        verify(mockFail).invoke(any())
     }
 }

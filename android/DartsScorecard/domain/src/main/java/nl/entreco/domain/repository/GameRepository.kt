@@ -1,7 +1,7 @@
-package nl.entreco.domain.play.repository
+package nl.entreco.domain.repository
 
 import android.support.annotation.WorkerThread
-import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.model.Game
 
 /**
  * Created by Entreco on 15/11/2017.

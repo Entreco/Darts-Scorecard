@@ -1,10 +1,10 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.model.players.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.score
 
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.usecase.GameSettingsRequest
 
 /**

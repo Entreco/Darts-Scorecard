@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.model.players
+package nl.entreco.domain.model
 
 /**
  * Created by Entreco on 21/11/2017.

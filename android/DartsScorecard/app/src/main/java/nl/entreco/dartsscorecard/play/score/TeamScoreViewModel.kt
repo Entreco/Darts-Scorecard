@@ -5,12 +5,12 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.State
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import java.util.concurrent.Future
 

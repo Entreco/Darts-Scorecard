@@ -1,7 +1,7 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
-import nl.entreco.domain.play.model.players.State
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.Arbiter
 
 data class Game(val id: Long = 0, val arbiter: Arbiter) {
 

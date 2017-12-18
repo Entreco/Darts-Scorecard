@@ -8,11 +8,11 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.usecase.Play01Usecase
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 import javax.inject.Inject

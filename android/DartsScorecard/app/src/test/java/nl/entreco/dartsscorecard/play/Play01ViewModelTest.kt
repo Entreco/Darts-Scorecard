@@ -6,10 +6,11 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.model.*
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.model.*
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.play.usecase.Play01Usecase
 import nl.entreco.domain.play.usecase.RetrieveGameRequest

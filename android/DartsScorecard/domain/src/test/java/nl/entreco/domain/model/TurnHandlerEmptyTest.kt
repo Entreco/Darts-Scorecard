@@ -1,9 +1,10 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
 import nl.entreco.domain.play.TestProvider
-import nl.entreco.domain.play.model.players.NoPlayer
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.players.NoPlayer
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.TurnHandler
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test

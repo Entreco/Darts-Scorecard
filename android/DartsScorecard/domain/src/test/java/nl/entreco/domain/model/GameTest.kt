@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

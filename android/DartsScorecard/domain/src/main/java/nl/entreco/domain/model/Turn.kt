@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
 data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart.NONE, internal val d3: Dart = Dart.NONE){
     private val sum = d1.value() + d2.value() + d3.value()

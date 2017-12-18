@@ -14,8 +14,7 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.model.players.TeamIdsString
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.domain.play.usecase.RetrieveGameRequest
 

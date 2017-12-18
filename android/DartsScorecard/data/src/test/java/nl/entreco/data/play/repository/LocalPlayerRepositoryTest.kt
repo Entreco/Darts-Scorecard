@@ -5,7 +5,7 @@ import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.data.db.player.PlayerTable
-import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.model.players.Player
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

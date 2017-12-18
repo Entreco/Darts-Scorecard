@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
 import nl.entreco.domain.settings.ScoreSettings
 

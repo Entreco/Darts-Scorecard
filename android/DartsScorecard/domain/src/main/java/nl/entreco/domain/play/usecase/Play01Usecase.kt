@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.usecase
 
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.players.Team
 import javax.inject.Inject
 
 /**

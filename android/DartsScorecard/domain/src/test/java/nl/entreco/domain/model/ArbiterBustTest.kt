@@ -1,7 +1,7 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
 import nl.entreco.domain.play.TestProvider
-import nl.entreco.domain.play.model.players.State
+import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals

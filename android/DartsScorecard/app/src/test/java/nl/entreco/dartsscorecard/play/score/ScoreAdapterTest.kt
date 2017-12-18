@@ -1,12 +1,11 @@
 package nl.entreco.dartsscorecard.play.score
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

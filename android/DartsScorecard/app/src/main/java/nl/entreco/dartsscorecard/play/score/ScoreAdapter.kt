@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
-import nl.entreco.domain.play.listeners.PlayerListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
 import javax.inject.Inject
 
 /**

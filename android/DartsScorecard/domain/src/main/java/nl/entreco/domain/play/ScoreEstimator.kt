@@ -1,4 +1,7 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.play
+
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Turn
 
 /**
  * Created by Entreco on 02/12/2017.

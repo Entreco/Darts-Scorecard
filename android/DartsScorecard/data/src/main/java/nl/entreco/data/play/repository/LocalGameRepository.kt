@@ -5,8 +5,8 @@ import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameTable
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.repository.GameRepository
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.repository.GameRepository
 
 /**
  * Created by Entreco on 15/11/2017.

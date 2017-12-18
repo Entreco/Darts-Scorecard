@@ -4,9 +4,10 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.model.players.TeamNamesString
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.splash.TeamNamesString
+import nl.entreco.domain.repository.PlayerRepository
+import nl.entreco.domain.splash.usecase.CreateTeamsUsecase
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -18,7 +19,8 @@ import org.mockito.MockitoAnnotations
 class CreateTeamsUsecaseTest {
 
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
-    @Mock private lateinit var mockCallback: CreateTeamsUsecase.Callback
+    @Mock private lateinit var mockOk: (TeamIdsString)->Unit
+    @Mock private lateinit var mockFail: (Throwable)->Unit
     private lateinit var subject: CreateTeamsUsecase
 
     private val bg = TestBackground()
@@ -47,11 +49,11 @@ class CreateTeamsUsecaseTest {
             whenever(mockPlayerRepository.fetchByName(player)).thenReturn(null)
             whenever(mockPlayerRepository.create(player, 0)).thenReturn(count.toLong())
         }
-        subject.start(givenTeamNames, mockCallback)
+        subject.start(givenTeamNames, mockOk, mockFail)
     }
 
     private fun thenCallbackIsNotified(expected: String) {
-        verify(mockCallback).onTeamsCreated(TeamIdsString(expected))
+        verify(mockOk).invoke(TeamIdsString(expected))
     }
 
 }

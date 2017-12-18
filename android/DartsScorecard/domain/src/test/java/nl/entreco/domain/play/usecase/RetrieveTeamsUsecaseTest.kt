@@ -1,13 +1,12 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import net.bytebuddy.implementation.bytecode.Throw
 import nl.entreco.domain.play.TestBackground
 import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

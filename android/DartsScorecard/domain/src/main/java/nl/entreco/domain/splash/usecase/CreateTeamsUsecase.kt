@@ -1,23 +1,19 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.splash.usecase
 
 import nl.entreco.domain.executors.Background
 import nl.entreco.domain.executors.Foreground
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.model.players.TeamNamesString
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.TeamIdsString
+import nl.entreco.domain.splash.TeamNamesString
+import nl.entreco.domain.repository.PlayerRepository
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 16/12/2017.
  */
 class CreateTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, private val bg: Background, private val fg: Foreground) {
-    interface Callback {
-        fun onTeamsCreated(teamIds: TeamIdsString)
-        fun onTeamsFailed(err: Throwable)
-    }
 
-    fun start(teamNamesInput: TeamNamesString, callback: CreateTeamsUsecase.Callback) {
+    fun start(teamNamesInput: TeamNamesString, done: (TeamIdsString) -> Unit, fail: (Throwable) -> Unit) {
         bg.post(Runnable {
 
             try {
@@ -29,10 +25,10 @@ class CreateTeamsUsecase @Inject constructor(private val playerRepository: Playe
                 }
 
                 fg.post(Runnable {
-                    callback.onTeamsCreated(TeamIdsString(teamIds))
+                    done(TeamIdsString(teamIds))
                 })
             } catch (oops: Exception) {
-                fg.post(Runnable { callback.onTeamsFailed(oops) })
+                fg.post(Runnable { fail(oops) })
             }
         })
     }

@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.play.score
 import android.databinding.BindingAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.domain.settings.ScoreSettings
 

@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.listeners
 
-import nl.entreco.domain.play.model.Dart
-import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Turn
 
 /**
  * Created by Entreco on 05/12/2017.

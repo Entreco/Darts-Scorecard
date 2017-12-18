@@ -7,7 +7,6 @@ import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameMapper
 import nl.entreco.data.db.game.GameTable
-import nl.entreco.domain.play.model.Game
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test

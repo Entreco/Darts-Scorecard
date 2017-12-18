@@ -1,5 +1,6 @@
-package nl.entreco.domain.play.model
+package nl.entreco.domain.model
 
+import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.TestProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before

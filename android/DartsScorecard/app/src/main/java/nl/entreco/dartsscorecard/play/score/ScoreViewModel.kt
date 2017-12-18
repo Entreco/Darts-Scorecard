@@ -7,12 +7,11 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
