@@ -20,10 +20,6 @@ class LaunchViewModel @Inject constructor(private val createGameUsecase: CreateG
 
     val resumeGame = ObservableField<RetrieveGameRequest?>(null)
 
-    init {
-        retrieveLatestGame()
-    }
-
     fun startNewGame(context: Context) {
         val setup = CreateGameRequest(501, 0, 3, 2)
         val teams = randomTeam()
