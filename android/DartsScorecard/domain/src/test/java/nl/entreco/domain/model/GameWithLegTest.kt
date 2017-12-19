@@ -1,7 +1,6 @@
 package nl.entreco.domain.model
 
 import nl.entreco.domain.TestProvider
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GameWithLegTest : BaseGameTest(Game(0, TestProvider().arbiter(201))) {
@@ -17,7 +16,6 @@ class GameWithLegTest : BaseGameTest(Game(0, TestProvider().arbiter(201))) {
         whenDartsThrown(oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.DOUBLE_10))
 
         assertScore(201, 201, 1)
-        assertEquals("player 2 to throw", subject.state)
     }
 
     @Test
@@ -26,6 +24,5 @@ class GameWithLegTest : BaseGameTest(Game(0, TestProvider().arbiter(201))) {
         whenDartsThrown(sixty(), oneEighty(), sixty(), Turn(Dart.SINGLE_1, Dart.DOUBLE_10))
 
         assertScore(201, 201, 1)
-        assertEquals("player 2 to throw", subject.state)
     }
 }
