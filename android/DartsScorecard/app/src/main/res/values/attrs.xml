@@ -11,6 +11,7 @@
     <attr name="match_description" format="string" />
     <attr name="scoreBorderColor" format="color" />
     <attr name="highlightColor" format="color" />
+    <attr name="launchText" format="color" />
     <attr name="scoreBorderAlpha" format="float" />
     <attr name="statBorderColor" format="float" />
     <attr name="colorOneEighty" format="float" />
@@ -26,6 +27,8 @@
     <attr name="grad_score_hint_stop" format="color" />
     <attr name="grad_current_start" format="color" />
     <attr name="grad_current_stop" format="color" />
+    <attr name="grad_launch_btn_start" format="color" />
+    <attr name="grad_launch_btn_stop" format="color" />
 
     <!-- Input View -->
     <attr name="inputToggle" format="color" />

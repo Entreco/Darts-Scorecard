@@ -1,6 +1,7 @@
 package nl.entreco.domain.repository
 
 import android.support.annotation.WorkerThread
+import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.model.Game
 
 /**
@@ -23,5 +24,5 @@ interface GameRepository {
 
     @Throws
     @WorkerThread
-    fun fetchLatest(): Game
+    fun fetchLatest(): FetchLatestGameResponse
 }

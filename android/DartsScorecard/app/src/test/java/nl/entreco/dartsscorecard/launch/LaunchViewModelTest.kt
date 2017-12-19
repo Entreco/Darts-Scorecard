@@ -88,7 +88,7 @@ class LaunchViewModelTest {
     }
 
     private fun whenStarting() {
-        subject.createFrom(givenTeamNames, givenRequestCreate, mockOk, mockFail)
+        subject.retrieveLatestGame(givenTeamNames, givenRequestCreate, mockOk, mockFail)
     }
 
     private fun whenRetrievingTeamsSucceeds() {
