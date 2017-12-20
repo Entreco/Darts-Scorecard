@@ -6,6 +6,7 @@ import android.databinding.BindingAdapter
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.ColorUtils
+import android.util.Log
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -30,8 +31,8 @@ class TeamScoreBindings {
 
         @JvmStatic
         @BindingAdapter("special")
-        fun showSpecials(view: TextView, score: Int, oldScore: Int) {
-            val diff = score - oldScore
+        fun showSpecials(view: TextView, oldScore: Int, score: Int) {
+            val diff = oldScore - score
             when (diff) {
                 180 -> handle180(view)
                 0 -> {}
@@ -40,12 +41,14 @@ class TeamScoreBindings {
         }
 
         private fun clear(view: TextView, delay: Long) {
+            view.animate().cancel()
             view.animate().translationX(200F).setStartDelay(delay).withEndAction({
                 view.setText( R.string.empty )
             }).setDuration(DEFAULT_ANIMATION_TIME).start()
         }
 
         private fun handle180(view: TextView) {
+            view.animate().cancel()
             view.setText( R.string.score_180 )
             view.animate().translationX(0F).setInterpolator(OvershootInterpolator()).setDuration(DEFAULT_ANIMATION_TIME)
                     .withEndAction({
@@ -108,6 +111,7 @@ class TeamScoreBindings {
                         .setDuration(DEFAULT_ANIMATION_TIME).start()
 
                 val startColor = colorToHex(view.currentTextColor)
+                Log.e("REMCO", "COLORINT:${view.currentTextColor}")
                 val endColor = if (isCurrentTeam) "#FFFFFFFF" else "#aaFFFFFF"
                 if (startColor != endColor) {
                     val valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(DEFAULT_ANIMATION_TIME)
@@ -121,10 +125,10 @@ class TeamScoreBindings {
         }
 
         private fun colorToHex(color: Int): String {
-            val alpha = android.graphics.Color.alpha(color)
-            val blue = android.graphics.Color.blue(color)
-            val green = android.graphics.Color.green(color)
-            val red = android.graphics.Color.red(color)
+            val alpha = Color.alpha(color)
+            val blue = Color.blue(color)
+            val green = Color.green(color)
+            val red = Color.red(color)
 
             val alphaHex = to00Hex(alpha)
             val blueHex = to00Hex(blue)

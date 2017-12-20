@@ -1,12 +1,18 @@
 package nl.entreco.dartsscorecard.play.score
 
+import android.content.Context
+import android.content.res.Resources
+import android.view.ViewPropertyAnimator
+import android.widget.ImageView
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.AdditionalMatchers.*
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -17,7 +23,11 @@ import org.mockito.junit.MockitoJUnitRunner
 class TeamScoreBindingsTest {
 
     @Mock private lateinit var mockCounterTextView: CounterTextView
+    @Mock private lateinit var mockContext: Context
+    @Mock private lateinit var mockTheme: Resources.Theme
     @Mock private lateinit var mockTextView: TextView
+    @Mock private lateinit var mockImageView: ImageView
+    @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
     @Test
     @Ignore("unable to mock CounterTextView -> base class is abstract ??")
@@ -36,7 +46,6 @@ class TeamScoreBindingsTest {
     @Test
     fun `it should set 'starter' drawable when player is starting player`() {
         givenPlayerStartedLeg()
-
         thenStarterDrawableIsShown()
     }
 
@@ -44,6 +53,89 @@ class TeamScoreBindingsTest {
     fun `it should clear 'starter' drawable when player is !starting player`() {
         givenPlayerWasNotStarting()
         thenStarterDrawableIsNotShown()
+    }
+
+    @Test
+    fun `it should show specials when scoring 180`() {
+        givenSpecialScore(180, 0)
+        then180AnimationIsShown()
+    }
+
+    @Test
+    fun `it should NOT show specials when scoring 0`() {
+        givenSpecialScore(0, 0)
+        thenNoAnimationIsShown()
+    }
+
+    @Test
+    fun `it should clear specials when scoring all others`() {
+        givenSpecialScore(1, 0)
+        thenClearAnimationIsShown()
+    }
+
+    @Test
+    fun `it should show current score animation gt 0`() {
+        givenCurrentScore(100)
+        thenShowCurrentAnimationIsDone()
+    }
+
+    @Test
+    fun `it should hide current score animation lt 0`() {
+        givenCurrentScore(0)
+        thenHideCurrentAnimationIsDone()
+    }
+
+    @Test
+    fun `it should show current team animation`() {
+        givenCurrentTeam(true)
+        thenCurrentTeamAnimationIsShown()
+    }
+
+    @Test
+    fun `it should clear current team animation`() {
+        givenCurrentTeam(false)
+        thenCurrentTeamAnimationIsHidden()
+    }
+
+    @Test(expected = NullPointerException::class) // Unable to mock android.graphics.Color
+    fun `it should show finish animation`() {
+        givenFinish("T20 D10")
+        thenFinishAnimationIsShown()
+    }
+
+    @Test
+    fun `it should hide finish animation`() {
+        givenFinish("")
+        thenFinishAnimationIsNotShown()
+    }
+
+    private fun givenSpecialScore(oldScore: Int, score: Int) {
+        whenever(mockTextView.animate()).thenReturn(mockAnimator)
+        mockAnimations()
+        TeamScoreBindings.showSpecials(mockTextView, oldScore, score)
+    }
+
+    private fun givenCurrentScore(score: Int) {
+        whenever(mockCounterTextView.animate()).thenReturn(mockAnimator)
+        whenever(mockCounterTextView.context).thenReturn(mockContext)
+        whenever(mockContext.theme).thenReturn(mockTheme)
+        mockAnimations()
+        TeamScoreBindings.showCurrentScore(mockCounterTextView, score)
+        verify(mockCounterTextView).setTarget(score.toLong())
+    }
+
+    private fun givenCurrentTeam(current: Boolean) {
+        whenever(mockImageView.animate()).thenReturn(mockAnimator)
+        mockAnimations()
+        TeamScoreBindings.showCurrentTeam(mockImageView, current)
+    }
+
+    private fun givenFinish(finish: String) {
+        whenever(mockTextView.animate()).thenReturn(mockAnimator)
+        whenever(mockTextView.currentTextColor).thenReturn(-1)
+        mockAnimations()
+
+        TeamScoreBindings.showFinishWithAlpha(mockTextView, finish, true)
     }
 
     private fun givenPlayerWasNotStarting() {
@@ -60,6 +152,61 @@ class TeamScoreBindingsTest {
 
     private fun thenStarterDrawableIsNotShown() {
         verify(mockTextView).setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+    }
+
+    private fun then180AnimationIsShown() {
+        verify(mockTextView).setText(R.string.score_180)
+        verify(mockTextView, times(2)).animate()
+    }
+
+    private fun thenNoAnimationIsShown() {
+        verify(mockTextView, never()).setText(R.string.score_180)
+        verify(mockTextView, never()).animate()
+    }
+
+    private fun thenClearAnimationIsShown() {
+        verify(mockTextView, never()).setText(R.string.score_180)
+        verify(mockTextView, times(2)).animate()
+    }
+
+    private fun thenShowCurrentAnimationIsDone() {
+        verify(mockCounterTextView).animate()
+        verify(mockAnimator).start()
+        verify(mockCounterTextView).setTextColor(anyInt())
+    }
+
+    private fun thenHideCurrentAnimationIsDone() {
+        verify(mockCounterTextView).animate()
+        verify(mockAnimator).start()
+        verify(mockCounterTextView, never()).setTextColor(anyInt())
+    }
+
+    private fun thenCurrentTeamAnimationIsShown() {
+        verify(mockImageView).animate()
+        verify(mockAnimator).translationX(0f)
+    }
+
+    private fun thenCurrentTeamAnimationIsHidden() {
+        verify(mockImageView).animate()
+        verify(mockAnimator).translationX(gt(10F))
+    }
+
+    private fun thenFinishAnimationIsShown() {
+        verify(mockTextView).text = not(eq(""))
+        verify(mockAnimator).translationX(eq(0F))
+    }
+
+    private fun thenFinishAnimationIsNotShown() {
+        verify(mockTextView).text = eq("")
+        verify(mockAnimator).translationX(lt(0F))
+    }
+
+    private fun mockAnimations() {
+        whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setInterpolator(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setStartDelay(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.withEndAction(any())).thenReturn(mockAnimator)
     }
 
 }

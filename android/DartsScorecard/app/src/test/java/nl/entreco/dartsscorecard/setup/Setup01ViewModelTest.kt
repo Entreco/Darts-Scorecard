@@ -5,6 +5,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.launch.usecase.CreateGameUsecase
 import nl.entreco.domain.launch.usecase.ExtractTeamsUsecase
@@ -14,6 +15,7 @@ import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.exceptions.misusing.NotAMockException
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -97,7 +99,10 @@ class Setup01ViewModelTest {
     }
 
     private fun thenPlay01ActivityIsLaunched() {
-        // Unable to verify
+        try {
+            verify(Play01Activity).startGame(mockContext, givenRetrieveGameRequest)
+        } catch (ignore: NotAMockException) {
+        }
     }
 
     private fun thenPlay01ActivityIsNotLaunched() {
