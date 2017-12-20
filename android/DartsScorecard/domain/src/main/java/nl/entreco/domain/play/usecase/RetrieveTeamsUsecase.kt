@@ -14,7 +14,7 @@ import javax.inject.Inject
  */
 class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg){
 
-    fun start(teamIds: TeamIdsString, done: (Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
+    fun exec(teamIds: TeamIdsString, done: (Array<Team>) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val teams = retrieveTeams(teamIds.toString())
             onUi { done(teams) }

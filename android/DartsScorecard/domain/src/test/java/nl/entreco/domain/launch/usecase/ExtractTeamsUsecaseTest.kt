@@ -15,12 +15,12 @@ import org.mockito.MockitoAnnotations
 /**
  * Created by Entreco on 17/12/2017.
  */
-class CreateTeamsUsecaseTest {
+class ExtractTeamsUsecaseTest {
 
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
     @Mock private lateinit var mockOk: (TeamIdsString)->Unit
     @Mock private lateinit var mockFail: (Throwable)->Unit
-    private lateinit var subject: CreateTeamsUsecase
+    private lateinit var subject: ExtractTeamsUsecase
 
     private val bg = TestBackground()
     private val fg = TestForeground()
@@ -29,7 +29,7 @@ class CreateTeamsUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = CreateTeamsUsecase(mockPlayerRepository, bg, fg)
+        subject = ExtractTeamsUsecase(mockPlayerRepository, bg, fg)
     }
 
     @Test
@@ -48,7 +48,7 @@ class CreateTeamsUsecaseTest {
             whenever(mockPlayerRepository.fetchByName(player)).thenReturn(null)
             whenever(mockPlayerRepository.create(player, 0)).thenReturn(count.toLong())
         }
-        subject.start(givenTeamNames, mockOk, mockFail)
+        subject.exec(givenTeamNames, mockOk, mockFail)
     }
 
     private fun thenCallbackIsNotified(expected: String) {

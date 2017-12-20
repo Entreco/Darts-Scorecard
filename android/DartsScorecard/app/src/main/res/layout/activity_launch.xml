@@ -36,8 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_dart"
-            app:resumeGame="@{viewModel.resumeGame}"
-            android:onClick="@{() -> viewModel.resumeGame(context)}"
+            app:resumeGame="@{viewModel.resumedGame}"
+            android:onClick="@{() -> viewModel.onResumePressed(context)}"
             android:text="Resume" />
 
         <Button
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_darts_3"
-            android:onClick="@{() -> viewModel.startNewGame(context)}"
+            android:onClick="@{() -> viewModel.onNewGamePressed(context)}"
             android:text="Start new 01" />
 
         <Button

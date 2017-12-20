@@ -3,12 +3,11 @@ package nl.entreco.dartsscorecard.launch
 import android.content.Context
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.play.Play01Activity
+import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.launch.usecase.CreateGameUsecase
-import nl.entreco.domain.launch.usecase.CreateTeamsUsecase
 import nl.entreco.domain.launch.usecase.RetrieveLatestGameUsecase
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
@@ -19,6 +18,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.exceptions.misusing.NotAMockException
 
 /**
  * Created by Entreco on 16/12/2017.
@@ -26,11 +26,7 @@ import org.mockito.MockitoAnnotations
 class LaunchViewModelTest {
 
     @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockCreateGameUsecase: CreateGameUsecase
-    @Mock private lateinit var mockCreatTeamsUsecase: CreateTeamsUsecase
     @Mock private lateinit var mockRetrieveGameUsecase: RetrieveLatestGameUsecase
-    @Mock private lateinit var mockOk: (RetrieveGameRequest) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
 
     private lateinit var subject: LaunchViewModel
 
@@ -42,46 +38,39 @@ class LaunchViewModelTest {
     private lateinit var expectedGameRequest: RetrieveGameRequest
     private lateinit var expectedFetchResponse: FetchLatestGameResponse
 
-    private val doneTeamIdsCaptor = argumentCaptor<(TeamIdsString) -> Unit>()
-    private val doneGameRequestCaptor = argumentCaptor<(RetrieveGameRequest) -> Unit>()
     private val doneLatestRequestCaptor = argumentCaptor<(FetchLatestGameResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = LaunchViewModel(mockCreateGameUsecase, mockCreatTeamsUsecase, mockRetrieveGameUsecase)
+        subject = LaunchViewModel(mockRetrieveGameUsecase)
     }
 
     @Test
-    fun `it should create Teams, fetch lastest game and notify ok`() {
+    fun `it should store latest game, when it exist`() {
         givenTeamsAndStartScore("remco|eva", 501)
-        whenLastGameIsRetrieved()
-        thenDoneIsExecuted()
+        givenLatestGameExists()
+        thenGameIsStoredInObservable()
     }
 
     @Test
-    fun `it should create Teams, and notify failure, when that fails`() {
+    fun `it should clear latest game, when no latest game`() {
         givenTeamsAndStartScore("remco|eva", 501)
-        whenLastGameIsNotRetrieved()
-        thenFailIsExecuted()
+        givenNoLatestGameExists()
+        theObservableIsCleared()
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should create Game, when fetching latest game fails, and notify success`() {
-        givenTeamsAndStartScore("remco|eva", 501)
-        whenStartingNewGame()
-        whenRetrievingTeamsSucceeds()
-        butNewGameCreationSucceeds() // TODO: throws RuntimeException, because laucnhing activity is not mocked
+    @Test(expected = NotAMockException::class)
+    fun `it should launch Setup when 'onNewGame' is pressed`() {
+        whenOnNewGameIsClicked()
+        thenSetup01IsLaunched()
     }
 
-    @Test
-    fun `it should create Game, when fetching latest game fails, and notify fail when that fails as well`() {
-        givenTeamsAndStartScore("remco|eva", 501)
-        whenStartingNewGame()
-        whenRetrievingTeamsSucceeds()
-        andNewGameCreationFails()
-        thenFailIsExecuted()
+    @Test(expected = NotAMockException::class)
+    fun `it should launch Play01 when 'onResume' is pressed`() {
+        whenOnResumeIsClicked()
+        thenPlay01IsLaunched()
     }
 
     private fun givenTeamsAndStartScore(teams: String, start: Int) {
@@ -89,49 +78,41 @@ class LaunchViewModelTest {
         givenRequestCreate = CreateGameRequest(start, 0, 3, 3)
         expectedGameRequest = RetrieveGameRequest(givenGameId, givenTeamIds, givenRequestCreate)
         expectedFetchResponse = FetchLatestGameResponse(givenGameId, givenTeamIds, givenRequestCreate)
-    }
 
-    private fun whenStartingNewGame() {
-        subject.startNewGame(mockContext)
-    }
-
-    private fun whenRetrievingTeamsSucceeds() {
-        verify(mockCreatTeamsUsecase).start(any(), doneTeamIdsCaptor.capture(), any())
-        doneTeamIdsCaptor.lastValue.invoke(givenTeamIds)
-    }
-
-    private fun whenRetrievingTeamsFails() {
-        verify(mockCreatTeamsUsecase).start(eq(givenTeamNames), any(), failCaptor.capture())
-        failCaptor.lastValue.invoke(Throwable("unable to retrieve teams"))
-    }
-
-    private fun whenLastGameIsRetrieved() {
         subject.retrieveLatestGame()
-        verify(mockRetrieveGameUsecase).fetchLatest(doneLatestRequestCaptor.capture(), any())
+    }
+
+    private fun givenLatestGameExists() {
+        verify(mockRetrieveGameUsecase).exec(doneLatestRequestCaptor.capture(), any())
         doneLatestRequestCaptor.lastValue.invoke(expectedFetchResponse)
     }
 
-    private fun whenLastGameIsNotRetrieved() {
-        subject.retrieveLatestGame()
-        verify(mockRetrieveGameUsecase).fetchLatest(any(), failCaptor.capture())
+    private fun givenNoLatestGameExists() {
+        verify(mockRetrieveGameUsecase).exec(any(), failCaptor.capture())
         failCaptor.lastValue.invoke(Throwable("unable to fetch latest game"))
     }
 
-    private fun butNewGameCreationSucceeds() {
-        verify(mockCreateGameUsecase).start(any(), eq(givenTeamIds), doneGameRequestCaptor.capture(), any())
-        doneGameRequestCaptor.lastValue.invoke(expectedGameRequest)
+    private fun whenOnNewGameIsClicked() {
+        subject.onNewGamePressed(mockContext)
     }
 
-    private fun andNewGameCreationFails() {
-        verify(mockCreateGameUsecase).start(any(), eq(givenTeamIds), any(), failCaptor.capture())
-        failCaptor.lastValue.invoke(Throwable("Unable to create Game"))
+    private fun whenOnResumeIsClicked() {
+        subject.onResumePressed(mockContext)
     }
 
-    private fun thenDoneIsExecuted() {
-        assertEquals(subject.resumeGame.get(), expectedGameRequest)
+    private fun thenGameIsStoredInObservable() {
+        assertEquals(subject.resumedGame.get(), expectedGameRequest)
     }
 
-    private fun thenFailIsExecuted() {
-        assertNull(subject.resumeGame.get())
+    private fun theObservableIsCleared() {
+        assertNull(subject.resumedGame.get())
+    }
+
+    private fun thenSetup01IsLaunched(){
+        verify(Setup01Activity).launch(mockContext)
+    }
+
+    private fun thenPlay01IsLaunched(){
+        verify(Play01Activity).startGame(mockContext, expectedGameRequest)
     }
 }

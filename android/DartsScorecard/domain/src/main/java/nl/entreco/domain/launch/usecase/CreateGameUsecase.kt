@@ -14,7 +14,7 @@ import javax.inject.Inject
  */
 class CreateGameUsecase @Inject constructor(private val gameRepository: GameRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun start(modelCreate: CreateGameRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
+    fun exec(modelCreate: CreateGameRequest, teamIds: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val (score, index, legs, sets) = modelCreate
             val id = gameRepository.create(teamIds.toString(), score, index, legs, sets)

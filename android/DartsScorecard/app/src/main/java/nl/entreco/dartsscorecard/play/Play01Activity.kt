@@ -68,7 +68,7 @@ class Play01Activity : ViewModelActivity() {
     private fun retrieveSetup(): RetrieveGameRequest {
         return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
                 TeamIdsString(intent.getStringExtra("teamIds")),
-                intent.getParcelableExtra("create"))
+                intent.getParcelableExtra("exec"))
     }
 
     companion object {
@@ -77,7 +77,7 @@ class Play01Activity : ViewModelActivity() {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("gameId", retrieve.gameId)
             intent.putExtra("teamIds", retrieve.teamIds.toString())
-            intent.putExtra("create", retrieve.create)
+            intent.putExtra("exec", retrieve.create)
             context.startActivity(intent)
         }
     }

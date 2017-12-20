@@ -12,9 +12,7 @@ import javax.inject.Inject
  */
 class RetrieveLatestGameUsecase @Inject constructor(private val gameRepository: GameRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-
-    fun fetchLatest(done: (FetchLatestGameResponse) -> Unit, fail: (Throwable) -> Unit) {
-
+    fun exec(done: (FetchLatestGameResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val response = gameRepository.fetchLatest()
             onUi { done(response) }

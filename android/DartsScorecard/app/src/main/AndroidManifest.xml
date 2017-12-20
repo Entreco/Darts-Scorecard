@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".launch.LaunchActivity" />
+        <activity android:name=".setup.Setup01Activity" android:noHistory="true" />
         <activity android:name=".play.Play01Activity" />
 
     </application>

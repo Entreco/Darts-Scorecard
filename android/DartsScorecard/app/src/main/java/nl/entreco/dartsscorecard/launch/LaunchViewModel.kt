@@ -4,65 +4,39 @@ import android.content.Context
 import android.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Activity
-import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.launch.usecase.CreateGameUsecase
-import nl.entreco.domain.launch.usecase.CreateTeamsUsecase
+import nl.entreco.dartsscorecard.setup.Setup01Activity
+import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.usecase.RetrieveLatestGameUsecase
-import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.TeamIdsString
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 12/12/2017.
  */
-class LaunchViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val createTeamsUsecase: CreateTeamsUsecase, private val retrieveGameUsecase: RetrieveLatestGameUsecase) : BaseViewModel() {
+class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: RetrieveLatestGameUsecase) : BaseViewModel() {
 
-    val resumeGame = ObservableField<RetrieveGameRequest?>(null)
+    val resumedGame = ObservableField<RetrieveGameRequest?>(null)
 
-    fun startNewGame(context: Context) {
-        val setup = CreateGameRequest(501, 0, 3, 2)
-        val teams = randomTeam()
-
-        ensureTeamPlayersExist(teams, {
-            createNewGame(setup, it, { Play01Activity.startGame(context, it) }, {})
-        }, {})
+    fun onNewGamePressed(context: Context) {
+        Setup01Activity.launch(context)
     }
 
-    fun resumeGame(context: Context) {
-        val request = resumeGame.get()
+    fun onResumePressed(context: Context) {
+        val request = resumedGame.get()
         if (request != null) {
             Play01Activity.startGame(context, request)
         }
     }
 
-    private fun randomTeam(): TeamNamesString {
-        return when ((Math.random() * 10).toInt()) {
-            0 -> TeamNamesString("Remco,Charlie|Eva,Guusje")
-            1 -> TeamNamesString("Remco,Eva,Guusje|Boeffie,Beer,Charlie")
-            2 -> TeamNamesString("Boeffie|Beer")
-            3 -> TeamNamesString("Remco|Eva|Guusje")
-            4 -> TeamNamesString("Remco|Eva|Guusje|Boeffie|Beer|Charlie")
-            5 -> TeamNamesString("Rob|Geert|Boy")
-            6 -> TeamNamesString("Rob,Allison|Geert,Mikka|Boy,Linda")
-            7 -> TeamNamesString("Guusje|Eva")
-            8 -> TeamNamesString("Guusje,Eva,Beer,Boeffie,Charlie|Co")
-            9 -> TeamNamesString("Entreco|Bonske")
-            else -> TeamNamesString("Co")
-        }
-    }
-
     fun retrieveLatestGame() {
-        retrieveGameUsecase.fetchLatest({ (gameId, teamIds, gameRequest) ->
-            resumeGame.set(RetrieveGameRequest(gameId, teamIds, gameRequest))
-        }, { resumeGame.set(null) })
+        retrieveGameUsecase.exec(setGameToResume(), removeGameToResume())
     }
 
-    private fun ensureTeamPlayersExist(teamNamesInput: TeamNamesString, done: (TeamIdsString) -> Unit, fail: (Throwable) -> Unit) {
-        createTeamsUsecase.start(teamNamesInput, done, fail)
-    }
+    private fun removeGameToResume(): (Throwable) -> Unit = { resumedGame.set(null) }
 
-    private fun createNewGame(createGameRequest: CreateGameRequest, teamNames: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
-        createGameUsecase.start(createGameRequest, teamNames, done, fail)
+    private fun setGameToResume(): (FetchLatestGameResponse) -> Unit {
+        return { (gameId, teamIds, gameRequest) ->
+            resumedGame.set(RetrieveGameRequest(gameId, teamIds, gameRequest))
+        }
     }
 }

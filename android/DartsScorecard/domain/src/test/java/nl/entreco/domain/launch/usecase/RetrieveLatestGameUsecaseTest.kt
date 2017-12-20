@@ -11,7 +11,6 @@ import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -67,7 +66,7 @@ class RetrieveLatestGameUsecaseTest {
     }
 
     private fun whenFetchingLatest() {
-        subject.fetchLatest(mockDone, mockFail)
+        subject.exec(mockDone, mockFail)
     }
 
     private fun thenDoneIsCalled() {
