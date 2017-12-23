@@ -21,6 +21,14 @@ data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart
         return d1
     }
 
+    fun second(): Dart{
+        return d2
+    }
+
+    fun third(): Dart{
+        return d3
+    }
+
     fun last(): Dart {
         return when {
             d1 == Dart.NONE -> Dart.NONE

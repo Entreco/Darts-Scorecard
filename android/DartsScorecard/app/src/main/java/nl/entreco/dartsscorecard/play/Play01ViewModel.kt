@@ -4,17 +4,18 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.Logger
-import nl.entreco.domain.play.listeners.InputListener
-import nl.entreco.domain.play.listeners.PlayerListener
-import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.play.listeners.InputListener
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.ScoreListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.usecase.Play01Usecase
 import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.repository.StoreTurnRequest
 import javax.inject.Inject
 
 /**
@@ -32,7 +33,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         playGameUsecase.loadGameAndStart(request,
                 { game, teams ->
                     this.game = game
-                    load.startWith(teams, request.create, this)
+                    load.startWith(teams, game.scores, request.create, this)
                 },
                 { err -> logger.e("err: $err") })
     }
@@ -48,6 +49,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
         handleTurn(turn, by)
+        storeTurn(turn)
+    }
+
+    private fun storeTurn(turn: Turn) {
+        playGameUsecase.storeTurn(StoreTurnRequest(game.id, turn))
     }
 
     private fun handleTurn(turn: Turn, by: Player) {

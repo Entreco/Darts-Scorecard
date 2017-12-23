@@ -10,13 +10,14 @@ import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.di.viewmodel.db.GameDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.PlayerDbModule
+import nl.entreco.dartsscorecard.di.viewmodel.db.TurnDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
 
 /**
  * Created by Entreco on 14/11/2017.
  */
 @ActivityScope
-@Subcomponent(modules = [(ViewModelModule::class), (ThreadingModule::class), (GameDbModule::class), (PlayerDbModule::class)])
+@Subcomponent(modules = [(ViewModelModule::class), (ThreadingModule::class), (GameDbModule::class), (PlayerDbModule::class), (TurnDbModule::class)])
 interface ViewModelComponent {
     fun inject(activity: Activity)
 

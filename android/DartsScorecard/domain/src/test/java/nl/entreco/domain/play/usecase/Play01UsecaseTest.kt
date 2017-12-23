@@ -2,11 +2,12 @@ package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -25,20 +26,24 @@ class Play01UsecaseTest {
 
     private val teamOkCaptor = argumentCaptor<(Array<Team>) -> Unit>()
     private val gameOkCaptor = argumentCaptor<(Game) -> Unit>()
+    private val turnOkCaptor = argumentCaptor<(Array<Turn>) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     @Mock private lateinit var done: (Game, Array<Team>) -> Unit
     @Mock private lateinit var fail: (Throwable) -> Unit
     @Mock private lateinit var mockGameUc: RetrieveGameUsecase
+    @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
     @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
+    @Mock private lateinit var mockStoreUc: StoreTurnUsecase
     @Mock private lateinit var mockGame: Game
+    private val mockTurns = emptyArray<Turn>()
 
     private lateinit var subject: Play01Usecase
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = Play01Usecase(mockGameUc, mockTeamUc)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockStoreUc)
     }
 
     @Test
@@ -46,6 +51,7 @@ class Play01UsecaseTest {
         whenLoadingGameAndStarting()
         whenTeamsAreRetrieved()
         whenGameIsLoaded()
+        whenTurnsRetrieved()
         thenGameIsStarted()
     }
 
@@ -80,8 +86,15 @@ class Play01UsecaseTest {
     }
 
     private fun whenGameIsLoaded() {
+        whenever(mockGame.id).thenReturn(gameId)
         verify(mockGameUc).start(eq(gameId), gameOkCaptor.capture(), any())
         gameOkCaptor.firstValue.invoke(mockGame)
+    }
+
+
+    private fun whenTurnsRetrieved() {
+        verify(mockTurnsUc).exec(eq(gameId), turnOkCaptor.capture(), any())
+        turnOkCaptor.firstValue.invoke(mockTurns)
     }
 
     private fun whenGameIsNotLoaded() {

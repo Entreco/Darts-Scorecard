@@ -68,8 +68,9 @@
             app:layout_constraintTop_toBottomOf="@id/header"
             app:adapter="@{viewModel.adapter}"
             app:finishUsecase="@{finishUsecase}"
-            app:scoreSettings="@{viewModel.scoreSettings}"
             app:teams="@{viewModel.teams}"
+            app:scores="@{viewModel.scores}"
+            app:scoreSettings="@{viewModel.scoreSettings}"
             app:uiCallback="@{viewModel.uiCallback}"
             tools:listitem="@layout/team_score_view" />
 

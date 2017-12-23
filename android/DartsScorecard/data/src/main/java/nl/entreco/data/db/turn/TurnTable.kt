@@ -1,0 +1,26 @@
+package nl.entreco.data.db.turn
+
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+
+/**
+ * Created by Entreco on 23/12/2017.
+ */
+@Entity(tableName = "Turn")
+class TurnTable {
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+
+    @ColumnInfo(name = "d1")
+    var d1: Int = 0
+    @ColumnInfo(name = "d2")
+    var d2: Int = 0
+    @ColumnInfo(name = "d3")
+    var d3: Int = 0
+    @ColumnInfo(name = "numDarts")
+    var numDarts: Int = 0
+
+    @ColumnInfo(name = "game")
+    var game: Long = 0
+}

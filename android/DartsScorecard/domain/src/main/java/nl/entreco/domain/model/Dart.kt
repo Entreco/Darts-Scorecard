@@ -4,7 +4,7 @@ package nl.entreco.domain.model
  * Created by Entreco on 24/11/2017.
  */
 enum class Dart(private val description: String, private val value: Int) {
-    ZERO("", 0),
+    ZERO("0", 0),
     SINGLE_1("1", 1),
     SINGLE_2("2", 2),
     SINGLE_3("3", 3),
@@ -86,9 +86,16 @@ enum class Dart(private val description: String, private val value: Int) {
     }
 
     companion object {
-        fun fromString(dart: String) : Dart {
+        fun fromString(dart: String): Dart {
             Dart.values()
                     .filter { it.desc() == dart }
+                    .forEach { return it }
+            return Dart.NONE
+        }
+
+        fun fromInt(dart: Int): Dart {
+            Dart.values()
+                    .filter { it.value() == dart }
                     .forEach { return it }
             return Dart.NONE
         }
