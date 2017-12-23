@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/input_escape"
                 android:layout_alignTop="@id/input_escape"
+                android:contentDescription="@null"
                 android:rotation="180"
                 android:src="@drawable/ic_current_team" />
 
@@ -56,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:contentDescription="@string/cd_score_back"
                 android:onClick="@{() -> viewModel.back()}"
                 app:backAnimation="@{viewModel.scoredTxt}" />
 

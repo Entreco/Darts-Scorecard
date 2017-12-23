@@ -6,7 +6,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.data.play.repository.LocalPlayerRepository
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.repository.PlayerRepository
 
 /**
  * Created by Entreco on 17/12/2017.

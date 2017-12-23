@@ -12,12 +12,10 @@ import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.dartsscorecard.play.main.Play01Animator
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.usecase.GameSettingsRequest
 import nl.entreco.domain.play.usecase.GetFinishUsecase
-import nl.entreco.domain.play.usecase.RetrieveGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.repository.TeamIdsString
 
 class Play01Activity : ViewModelActivity() {
 
@@ -69,8 +67,8 @@ class Play01Activity : ViewModelActivity() {
 
     private fun retrieveSetup(): RetrieveGameRequest {
         return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
-                TeamIdsString( intent.getStringExtra("teamIds")),
-                intent.getParcelableExtra("settings"))
+                TeamIdsString(intent.getStringExtra("teamIds")),
+                intent.getParcelableExtra("exec"))
     }
 
     companion object {
@@ -79,7 +77,7 @@ class Play01Activity : ViewModelActivity() {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("gameId", retrieve.gameId)
             intent.putExtra("teamIds", retrieve.teamIds.toString())
-            intent.putExtra("settings", retrieve.settings)
+            intent.putExtra("exec", retrieve.create)
             context.startActivity(intent)
         }
     }

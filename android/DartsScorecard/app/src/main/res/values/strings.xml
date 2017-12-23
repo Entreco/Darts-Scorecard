@@ -1,23 +1,31 @@
 <resources>
     <string name="app_name">Darts Scorecard</string>
+    <string name="empty" translatable="false" />
+
+    <!-- General Darts -->
     <string name="first_to">First to %1$s</string>
     <string name="individual">Submit Individual Darts</string>
     <string name="all">Submit full score</string>
+    <string name="single_mode">individual</string>
+    <string name="all_mode">total</string>
     <string name="random">Random</string>
     <string name="set">Set</string>
     <string name="leg">Leg</string>
     <string name="no_score">No Score</string>
     <string name="bust">Bust</string>
     <string name="undo">Undo</string>
+    <string name="score_180">180</string>
 
-
-    <string name="empty"></string>
+    <!-- Game States -->
     <string name="to_throw">to throw</string>
     <string name="to_throw_first">to throw first</string>
     <string name="game_on">Game on</string>
     <string name="game_shot_and_match">Game shot, and the match</string>
 
+    <!-- Specific -->
+    <string name="bdo_match">BDO World Cup - semi finals</string>
+    <string name="pdc_match">PDC World Cup - semi finals</string>
 
-    <string name="single_mode">individual</string>
-    <string name="all_mode">total</string>
+    <!-- Content Descriptions -->
+    <string name="cd_score_back">delete</string>
 </resources>

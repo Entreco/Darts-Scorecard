@@ -3,8 +3,8 @@ package nl.entreco.dartsscorecard.play.score
 import android.support.v7.widget.RecyclerView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.usecase.GetFinishUsecase
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Test

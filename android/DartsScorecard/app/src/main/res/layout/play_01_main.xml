@@ -11,8 +11,8 @@
         tools:alpha="1">
 
         <TextView
-            style="@style/Main"
             android:id="@+id/title"
+            style="@style/Main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -24,9 +24,9 @@
         <!-- Players -->
         <LinearLayout
             android:id="@+id/players"
-            android:layout_below="@id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/title"
             android:orientation="horizontal"
             android:paddingTop="20dp">
 
@@ -35,6 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_player1" />
 
             <ImageView
@@ -42,15 +43,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_player2" />
         </LinearLayout>
 
         <!-- Results -->
         <LinearLayout
             android:id="@+id/results"
-            android:layout_below="@id/players"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/players"
             android:orientation="horizontal">
 
             <TextView
@@ -78,10 +80,10 @@
 
         <!-- Stats -->
         <LinearLayout
-            android:layout_below="@id/stat6"
             android:id="@+id/stat7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat6"
             android:orientation="horizontal">
 
             <TextView
@@ -105,10 +107,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/stat5"
             android:id="@+id/stat6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat5"
             android:orientation="horizontal">
 
             <TextView
@@ -132,10 +134,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/stat4"
             android:id="@+id/stat5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat4"
             android:orientation="horizontal">
 
             <TextView
@@ -159,10 +161,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/stat3"
             android:id="@+id/stat4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat3"
             android:orientation="horizontal">
 
             <TextView
@@ -187,10 +189,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/stat2"
             android:id="@+id/stat3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat2"
             android:orientation="horizontal">
 
             <TextView
@@ -214,10 +216,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/stat1"
             android:id="@+id/stat2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/stat1"
             android:orientation="horizontal">
 
             <TextView
@@ -241,10 +243,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_below="@id/results"
             android:id="@+id/stat1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/results"
             android:orientation="horizontal">
 
             <TextView

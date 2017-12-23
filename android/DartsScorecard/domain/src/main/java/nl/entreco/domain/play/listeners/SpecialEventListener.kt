@@ -1,11 +1,11 @@
 package nl.entreco.domain.play.listeners
 
 import nl.entreco.domain.play.listeners.events.*
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.State
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.State
 
 /**
  * Created by Entreco on 05/12/2017.

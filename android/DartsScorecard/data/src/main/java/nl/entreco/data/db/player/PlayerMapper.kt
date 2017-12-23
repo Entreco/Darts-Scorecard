@@ -1,8 +1,8 @@
 package nl.entreco.data.db.player
 
 import nl.entreco.data.db.Mapper
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.PlayerPrefs
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.PlayerPrefs
 
 /**
  * Created by Entreco on 16/12/2017.

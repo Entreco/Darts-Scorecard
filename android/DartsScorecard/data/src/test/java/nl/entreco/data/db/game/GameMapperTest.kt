@@ -1,6 +1,6 @@
 package nl.entreco.data.db.game
 
-import nl.entreco.domain.play.model.Game
+import nl.entreco.domain.model.Game
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test

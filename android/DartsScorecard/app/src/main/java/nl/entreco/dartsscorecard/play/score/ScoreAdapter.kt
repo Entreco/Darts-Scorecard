@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
-import nl.entreco.domain.play.listeners.PlayerListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
 import javax.inject.Inject
 
 /**
@@ -39,32 +36,43 @@ class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>()
 
     fun addItem(teamScoreViewModel: TeamScoreViewModel) {
         items.add(teamScoreViewModel)
-        notifyItemInserted(items.size - 1)
+        tryNotifyItemInserted(items.size - 1)
     }
 
     fun teamAtIndexScored(position: Int, score: Score, by: Player) {
         items[position].scored(score, by)
-        notifyItemChanged(position)
+        tryNotifyItemChanged(position)
     }
 
     fun teamAtIndexThrew(position: Int, turn: Turn, player: Player) {
         items[position].threw(turn, player)
-        notifyItemChanged(position)
-    }
-
-    fun clear() {
-        val count = itemCount
-        items.clear()
-        notifyItemRangeRemoved(0, count)
+        tryNotifyItemChanged(position)
     }
 
     fun teamAtIndexTurnUpdate(position: Int, next: Next) {
         if (position < 0 || position >= itemCount) return
         items[position].turnUpdate(next)
-        notifyItemChanged(position)
+        tryNotifyItemChanged(position)
+    }
+
+    fun clear() {
+        val count = itemCount
+        items.clear()
+        tryNotifyItemRangeRemoved(0, count)
     }
 
     private class LazyInflater(context: Context) {
         val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
+    }
+
+    private fun tryNotifyItemInserted(position: Int) {
+        try { notifyItemInserted(position) } catch (ignore : NullPointerException){}
+    }
+    private fun tryNotifyItemChanged(position: Int) {
+        try { notifyItemChanged(position) } catch (ignore : NullPointerException){}
+    }
+
+    private fun tryNotifyItemRangeRemoved(position : Int, count: Int){
+        try {  notifyItemRangeRemoved(position, count) } catch (ignore : NullPointerException){}
     }
 }

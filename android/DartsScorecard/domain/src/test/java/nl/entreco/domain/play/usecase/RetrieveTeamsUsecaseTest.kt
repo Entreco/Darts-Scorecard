@@ -1,13 +1,12 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import net.bytebuddy.implementation.bytecode.Throw
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.executors.TestForeground
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -57,7 +56,7 @@ class RetrieveTeamsUsecaseTest {
     }
 
     private fun whenExecuting() {
-        subject.start(teamIds, ok, fail)
+        subject.exec(teamIds, ok, fail)
     }
 
     private fun thenPlayersAreRetrieved(vararg ids: Long) {

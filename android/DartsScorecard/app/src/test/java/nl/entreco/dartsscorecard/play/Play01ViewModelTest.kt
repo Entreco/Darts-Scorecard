@@ -6,13 +6,14 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.model.*
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
-import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.model.*
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.play.usecase.Play01Usecase
-import nl.entreco.domain.play.usecase.RetrieveGameRequest
+import nl.entreco.domain.repository.RetrieveGameRequest
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
@@ -38,9 +39,9 @@ class Play01ViewModelTest {
     private val doneCaptor = argumentCaptor<(Game, Array<Team>) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
-    private val gameSettingsRequest: GameSettingsRequest = GameSettingsRequest(501, 0, 3, 2)
+    private val createGameRequest: CreateGameRequest = CreateGameRequest(501, 0, 3, 2)
     private val givenTeams = arrayOf(Team(arrayOf(Player("p1"))), Team(arrayOf(Player("p2"))))
-    private val mockArbiter: Arbiter = Arbiter(Score(gameSettingsRequest.startScore))
+    private val mockArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
     private val gameId: Long = 1002
     private val teamIds = TeamIdsString("1|2")
 
@@ -146,7 +147,7 @@ class Play01ViewModelTest {
 
     private fun givenGameAndRequest() {
         game = Game(101, mockArbiter).start(0, givenTeams)
-        req = RetrieveGameRequest(gameId, teamIds, gameSettingsRequest)
+        req = RetrieveGameRequest(gameId, teamIds, createGameRequest)
         subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
         subject.load(req, mockLoadable)
     }
@@ -157,11 +158,11 @@ class Play01ViewModelTest {
     }
 
     private fun thenUiIsReady() {
-        verify(mockLoadable).startWith(givenTeams, gameSettingsRequest, subject)
+        verify(mockLoadable).startWith(givenTeams, createGameRequest, subject)
     }
 
     private fun thenUiIsNotReady() {
-        verify(mockLoadable, never()).startWith(givenTeams, gameSettingsRequest, subject)
+        verify(mockLoadable, never()).startWith(givenTeams, createGameRequest, subject)
         verify(mockLogger).e(any())
     }
 

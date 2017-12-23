@@ -1,10 +1,12 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.model.players.TeamIdsString
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.repository.RetrieveGameRequest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -18,7 +20,7 @@ class Play01UsecaseTest {
     private val gameId: Long = 42
     private val teams = arrayOf(Team(arrayOf(Player("1"), Player("2"))), Team(arrayOf(Player("3"))), Team(arrayOf(Player("4"))))
     private val teamIds = TeamIdsString("1,2|3|4")
-    private val settings = GameSettingsRequest(1001, 2, 3, 10)
+    private val settings = CreateGameRequest(1001, 2, 3, 10)
     private val req: RetrieveGameRequest = RetrieveGameRequest(gameId, teamIds, settings)
 
     private val teamOkCaptor = argumentCaptor<(Array<Team>) -> Unit>()
@@ -68,12 +70,12 @@ class Play01UsecaseTest {
     }
 
     private fun whenTeamsAreRetrieved() {
-        verify(mockTeamUc).start(eq(teamIds), teamOkCaptor.capture(), any())
+        verify(mockTeamUc).exec(eq(teamIds), teamOkCaptor.capture(), any())
         teamOkCaptor.firstValue.invoke(teams)
     }
 
     private fun whenTeamsAreNotRetrieved() {
-        verify(mockTeamUc).start(eq(teamIds), any(), failCaptor.capture())
+        verify(mockTeamUc).exec(eq(teamIds), any(), failCaptor.capture())
         failCaptor.firstValue.invoke(Throwable("unable to retrieve teams"))
     }
 

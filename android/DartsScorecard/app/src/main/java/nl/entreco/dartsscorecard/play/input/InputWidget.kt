@@ -28,14 +28,6 @@ class InputWidget @JvmOverloads constructor(
             hintView.text = value
         }
 
-    var num: String
-        get() {
-            return numView.text.toString()
-        }
-        set(value) {
-            numView.text = value
-        }
-
     init {
         // We use <merge/> as root tag, so no xml attributes from root layout are present
         LayoutInflater.from(context).inflate(R.layout.input_widget, this, true)
@@ -57,11 +49,11 @@ class InputWidget @JvmOverloads constructor(
     }
 
     private fun setupAccent(num: String?, hint: String?, accent: Boolean) {
-        numView.visibility = if(accent) View.INVISIBLE else View.VISIBLE
-        hintView.visibility =if(accent) View.INVISIBLE else View.VISIBLE
-        accentView.visibility = if(accent) View.VISIBLE else View.INVISIBLE
-        accentView.text = if(accent) hint else ""
-        hintView.text = if(accent) "" else hint
+        numView.visibility = if (accent) View.INVISIBLE else View.VISIBLE
+        hintView.visibility = if (accent) View.INVISIBLE else View.VISIBLE
+        accentView.visibility = if (accent) View.VISIBLE else View.INVISIBLE
+        accentView.text = if (accent) hint else ""
+        hintView.text = if (accent) "" else hint
         numView.text = num
     }
 }

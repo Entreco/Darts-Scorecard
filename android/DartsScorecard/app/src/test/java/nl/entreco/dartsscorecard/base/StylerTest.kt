@@ -29,7 +29,7 @@ class StylerTest {
     @Mock private lateinit var mockActivity : Activity
     @InjectMocks private lateinit var subject : Styler
 
-    @Captor lateinit var styleCaptor : ArgumentCaptor<Int>
+    @Captor private lateinit var styleCaptor : ArgumentCaptor<Int>
 
     @Test
     fun `it should return 'PDC' style`() {

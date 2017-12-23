@@ -1,13 +1,12 @@
 package nl.entreco.dartsscorecard.di.viewmodel.threading
 
 import android.os.Handler
-import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.executors.BgExecutor
 import nl.entreco.domain.executors.FgExecutor
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 

@@ -89,11 +89,12 @@
             tools:text="180" />
 
         <ImageView
-            android:layout_gravity="end|center_vertical"
             android:layout_width="6dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:contentDescription="@null"
             android:src="@drawable/ic_current_team"
-            app:currentTeam="@{viewModel.currentTeam}"/>
+            app:currentTeam="@{viewModel.currentTeam}" />
 
     </FrameLayout>
 </layout>

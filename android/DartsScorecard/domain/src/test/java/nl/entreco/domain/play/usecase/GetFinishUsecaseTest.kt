@@ -3,11 +3,11 @@ package nl.entreco.domain.play.usecase
 import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.Logger
 import nl.entreco.domain.executors.Background
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.model.Dart
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.ScoreEstimator
-import nl.entreco.domain.play.model.Turn
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.play.ScoreEstimator
+import nl.entreco.domain.model.Turn
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -29,7 +29,7 @@ class GetFinishUsecaseTest {
 
     @Before
     fun setUp() {
-        subject = GetFinishUsecase(mockLogger, mockBg)
+        subject = GetFinishUsecase(mockBg)
     }
 
     @Test

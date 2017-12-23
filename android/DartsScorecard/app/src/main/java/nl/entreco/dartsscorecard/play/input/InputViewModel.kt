@@ -14,10 +14,11 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.play.model.*
-import nl.entreco.domain.play.model.players.NoPlayer
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.State
+import nl.entreco.domain.model.*
+import nl.entreco.domain.model.players.NoPlayer
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.State
+import nl.entreco.domain.play.ScoreEstimator
 import javax.inject.Inject
 
 /**

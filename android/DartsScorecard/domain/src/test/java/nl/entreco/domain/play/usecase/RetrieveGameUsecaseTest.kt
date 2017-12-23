@@ -3,13 +3,11 @@ package nl.entreco.domain.play.usecase
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.play.TestBackground
-import nl.entreco.domain.play.TestForeground
-import nl.entreco.domain.play.model.Arbiter
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.repository.GameRepository
+import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.executors.TestForeground
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.repository.GameRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +29,6 @@ class RetrieveGameUsecaseTest {
     private lateinit var subject: RetrieveGameUsecase
 
     private val givenId: Long = 42
-    private val givenTeam = arrayOf(Team(arrayOf(Player("henk"))))
     private lateinit var game: Game
     private lateinit var mockForeground: TestForeground
     private lateinit var mockBackground: TestBackground

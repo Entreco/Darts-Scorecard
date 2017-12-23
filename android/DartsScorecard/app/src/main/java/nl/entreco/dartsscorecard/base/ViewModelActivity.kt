@@ -44,6 +44,11 @@ abstract class ViewModelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onRestart() {
+        setTheme(styler.get())
+        super.onRestart()
+    }
+
     protected fun swapStyle() {
         styler.switch()
     }

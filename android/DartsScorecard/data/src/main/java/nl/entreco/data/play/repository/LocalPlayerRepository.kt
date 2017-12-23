@@ -4,8 +4,8 @@ import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerTable
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.repository.PlayerRepository
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.repository.PlayerRepository
 
 /**
  * Created by Entreco on 16/12/2017.

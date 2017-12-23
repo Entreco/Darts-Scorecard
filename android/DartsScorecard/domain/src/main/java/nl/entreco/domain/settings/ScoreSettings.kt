@@ -1,6 +1,6 @@
 package nl.entreco.domain.settings
 
-import nl.entreco.domain.play.model.Score
+import nl.entreco.domain.model.Score
 
 /**
  * Created by Entreco on 13/11/2017.

@@ -13,63 +13,63 @@ class DscLoggerTest {
 
     private val subject = DscLogger("tag")
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'd(msg)' (and hence crash)`() {
+    @Test
+    fun `it should log 'd(msg)'`() {
         subject.d("msg")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'd(msg, args)' (and hence crash)`() {
+    @Test
+    fun `it should log 'd(msg, args)'`() {
         subject.d("msg", "args")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'v(msg)' (and hence crash)`() {
+    @Test
+    fun `it should log 'v(msg)'`() {
         subject.v("msg")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'v(msg, args)' (and hence crash)`() {
+    @Test
+    fun `it should log 'v(msg, args)'`() {
         subject.v("msg", "args")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'i(msg)' (and hence crash)`() {
+    @Test
+    fun `it should log 'i(msg)'`() {
         subject.i("msg")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'i(msg, args)' (and hence crash)`() {
+    @Test
+    fun `it should log 'i(msg, args)'`() {
         subject.i("msg", "args")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'w(msg)' (and hence crash)`() {
+    @Test
+    fun `it should log 'w(msg)'`() {
         subject.w("msg")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'w(msg, args)' (and hence crash)`() {
+    @Test
+    fun `it should log 'w(msg, args)'`() {
         subject.w("msg", "args")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'e(msg)' (and hence crash)`() {
+    @Test
+    fun `it should log 'e(msg)'`() {
         subject.e("msg")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'e(msg, error)' (and hence crash)`() {
+    @Test
+    fun `it should log 'e(msg, error)'`() {
         subject.e("msg", Throwable("oops"))
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'e(msg, args)' (and hence crash)`() {
+    @Test
+    fun `it should log 'e(msg, args)'`() {
         subject.e("msg", "args")
     }
 
-    @Test(expected = RuntimeException::class)
-    fun `it should log 'e(msg, args, error)' (and hence crash)`() {
+    @Test
+    fun `it should log 'e(msg, args, error)'`() {
         subject.e("msg", Throwable("oh no"), "args")
     }
 

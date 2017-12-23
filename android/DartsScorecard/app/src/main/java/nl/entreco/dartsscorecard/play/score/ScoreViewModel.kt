@@ -7,13 +7,12 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Logger
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.play.model.Game
-import nl.entreco.domain.play.model.Next
-import nl.entreco.domain.play.model.Score
-import nl.entreco.domain.play.model.Turn
-import nl.entreco.domain.play.model.players.Player
-import nl.entreco.domain.play.model.players.Team
-import nl.entreco.domain.play.usecase.GameSettingsRequest
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
@@ -27,11 +26,11 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun startWith(teams: Array<Team>, settings: GameSettingsRequest, uiCallback: UiCallback) {
+    override fun startWith(teams: Array<Team>, create: CreateGameRequest, uiCallback: UiCallback) {
         this.uiCallback.set(uiCallback)
-        this.scoreSettings.set(ScoreSettings(settings.startScore, settings.numLegs, settings.numSets, settings.startIndex))
+        this.scoreSettings.set(ScoreSettings(create.startScore, create.numLegs, create.numSets, create.startIndex))
         this.teams.addAll(teams)
-        this.numSets.set(settings.numSets)
+        this.numSets.set(create.numSets)
     }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {
