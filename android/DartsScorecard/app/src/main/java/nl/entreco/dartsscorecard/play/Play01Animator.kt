@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.main
+package nl.entreco.dartsscorecard.play
 
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View

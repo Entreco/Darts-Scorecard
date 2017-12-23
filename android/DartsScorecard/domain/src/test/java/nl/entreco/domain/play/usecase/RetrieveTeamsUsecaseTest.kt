@@ -56,7 +56,7 @@ class RetrieveTeamsUsecaseTest {
     }
 
     private fun whenExecuting() {
-        subject.start(teamIds, ok, fail)
+        subject.exec(teamIds, ok, fail)
     }
 
     private fun thenPlayersAreRetrieved(vararg ids: Long) {

@@ -22,20 +22,13 @@
 
         <variable
             name="animator"
-            type="nl.entreco.dartsscorecard.play.main.Play01Animator" />
+            type="nl.entreco.dartsscorecard.play.Play01Animator" />
 
     </data>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/curtains" />
 
         <RelativeLayout
             android:layout_width="match_parent"

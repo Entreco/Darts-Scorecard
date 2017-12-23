@@ -70,12 +70,12 @@ class Play01UsecaseTest {
     }
 
     private fun whenTeamsAreRetrieved() {
-        verify(mockTeamUc).start(eq(teamIds), teamOkCaptor.capture(), any())
+        verify(mockTeamUc).exec(eq(teamIds), teamOkCaptor.capture(), any())
         teamOkCaptor.firstValue.invoke(teams)
     }
 
     private fun whenTeamsAreNotRetrieved() {
-        verify(mockTeamUc).start(eq(teamIds), any(), failCaptor.capture())
+        verify(mockTeamUc).exec(eq(teamIds), any(), failCaptor.capture())
         failCaptor.firstValue.invoke(Throwable("unable to retrieve teams"))
     }
 

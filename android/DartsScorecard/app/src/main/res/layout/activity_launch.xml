@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.launch.LaunchAnimator" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.launch.LaunchViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <include
+                android:id="@+id/include_launch_header"
+                layout="@layout/include_launch_header" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/launch_resume"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_dart"
+            app:resumeGame="@{viewModel.resumedGame}"
+            android:onClick="@{() -> viewModel.onResumePressed(context)}"
+            android:text="Resume" />
+
+        <Button
+            android:id="@+id/launch_play"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_darts_3"
+            android:onClick="@{() -> viewModel.onNewGamePressed(context)}"
+            android:text="Start new 01" />
+
+        <Button
+            android:id="@+id/launch_players"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_player2"
+            android:text="Players" />
+
+        <Button
+            android:id="@+id/launch_stats"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_stats"
+            android:text="Stats" />
+
+        <TextView
+            style="@style/Launch.Powered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="powered by" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/large"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_entreco_black_bg" />
+
+    </LinearLayout>
+</layout>

@@ -2,10 +2,12 @@ package nl.entreco.dartsscorecard.di.viewmodel
 
 import android.app.Activity
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.di.launch.LaunchComponent
+import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
-import nl.entreco.dartsscorecard.di.splash.SplashComponent
-import nl.entreco.dartsscorecard.di.splash.SplashModule
+import nl.entreco.dartsscorecard.di.setup.Setup01Component
+import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.di.viewmodel.db.GameDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.PlayerDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
@@ -19,7 +21,7 @@ interface ViewModelComponent {
     fun inject(activity: Activity)
 
     // Where can this be used
-    fun plus(module: SplashModule): SplashComponent
-
+    fun plus(module: LaunchModule): LaunchComponent
+    fun plus(module: Setup01Module): Setup01Component
     fun plus(module: Play01Module): Play01Component
 }

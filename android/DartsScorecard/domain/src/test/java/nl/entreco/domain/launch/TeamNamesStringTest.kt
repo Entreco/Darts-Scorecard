@@ -1,4 +1,4 @@
-package nl.entreco.domain.splash
+package nl.entreco.domain.launch
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
