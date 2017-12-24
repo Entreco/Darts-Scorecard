@@ -27,8 +27,46 @@ class TurnTest {
     }
 
     @Test
+    fun `first should be NONE, for empty turn`() {
+        assertEquals(Dart.NONE, Turn().first())
+    }
+
+
+    @Test
+    fun `second should be NONE, for empty turn`() {
+        assertEquals(Dart.NONE, Turn().second())
+    }
+
+    @Test
+    fun `third should be NONE, for empty turn`() {
+        assertEquals(Dart.NONE, Turn().third())
+    }
+
+    @Test
     fun `last should be NONE, for empty turn`() {
         assertEquals(Dart.NONE, Turn().last())
+    }
+
+
+    @Test
+    fun `1st should be same as last`() {
+        val turn = Turn(Dart.TRIPLE_7)
+        assertEquals(Dart.TRIPLE_7, turn.first())
+        assertEquals(Dart.TRIPLE_7, turn.last())
+    }
+
+    @Test
+    fun `2nd should be same as last`() {
+        val turn = Turn(Dart.SINGLE_1, Dart.BULL)
+        assertEquals(Dart.BULL, turn.second())
+        assertEquals(Dart.BULL, turn.last())
+    }
+
+    @Test
+    fun `3rd should be same as last`() {
+        val turn = Turn(Dart.SINGLE_1, Dart.BULL, Dart.ZERO)
+        assertEquals(Dart.ZERO, turn.third())
+        assertEquals(Dart.ZERO, turn.last())
     }
 
     @Test
