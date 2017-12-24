@@ -1,12 +1,14 @@
 package nl.entreco.domain.play.usecase
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.repository.StoreTurnRequest
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
@@ -37,6 +39,7 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockStoreUc: StoreTurnUsecase
     @Mock private lateinit var mockGame: Game
     private val mockTurns = emptyArray<Turn>()
+    private lateinit var expectedTurnRequest: StoreTurnRequest
 
     private lateinit var subject: Play01Usecase
 
@@ -62,13 +65,27 @@ class Play01UsecaseTest {
         thenGameIsNotStarted()
     }
 
-
     @Test
     fun loadGameWithGameErrors() {
         whenLoadingGameAndStarting()
         whenTeamsAreRetrieved()
         whenGameIsNotLoaded()
         thenGameIsNotStarted()
+    }
+
+    @Test
+    fun storeTurn() {
+        whenStoringTurn(Turn(Dart.DOUBLE_1, Dart.DOUBLE_15))
+        thenTurnIsStored()
+    }
+
+    private fun whenStoringTurn(turn: Turn) {
+        expectedTurnRequest = StoreTurnRequest(gameId, turn)
+        subject.storeTurn(expectedTurnRequest)
+    }
+
+    private fun thenTurnIsStored() {
+        verify(mockStoreUc).exec(expectedTurnRequest)
     }
 
     private fun whenLoadingGameAndStarting() {
