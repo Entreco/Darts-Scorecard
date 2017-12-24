@@ -91,7 +91,6 @@ class Play01UsecaseTest {
         gameOkCaptor.firstValue.invoke(mockGame)
     }
 
-
     private fun whenTurnsRetrieved() {
         verify(mockTurnsUc).exec(eq(gameId), turnOkCaptor.capture(), any())
         turnOkCaptor.firstValue.invoke(mockTurns)

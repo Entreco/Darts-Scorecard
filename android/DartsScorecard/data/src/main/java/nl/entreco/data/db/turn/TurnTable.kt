@@ -18,6 +18,12 @@ class TurnTable {
     var d2: Int = 0
     @ColumnInfo(name = "d3")
     var d3: Int = 0
+    @ColumnInfo(name = "m1")
+    var m1: Int = 0
+    @ColumnInfo(name = "m2")
+    var m2: Int = 0
+    @ColumnInfo(name = "m3")
+    var m3: Int = 0
     @ColumnInfo(name = "numDarts")
     var numDarts: Int = 0
 
