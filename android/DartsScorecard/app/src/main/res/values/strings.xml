@@ -16,6 +16,15 @@
     <string name="undo">Undo</string>
     <string name="score_180">180</string>
 
+    <!-- Setup -->
+    <string name="select_x01_score">Select x01 score</string>
+    <string name="sponsored_by">Sponsored by</string>
+    <string name="number_of_sets">Number of sets</string>
+    <string name="number_of_legs">Number of legs</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="cont">Continue</string>
+
     <!-- Game States -->
     <string name="to_throw">to throw</string>
     <string name="to_throw_first">to throw first</string>
@@ -28,4 +37,5 @@
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
+    <string name="demo_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

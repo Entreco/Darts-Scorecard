@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup
 
 import android.content.Context
+import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.launch.TeamNamesString
@@ -16,8 +17,12 @@ import javax.inject.Inject
  */
 class Setup01ViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val extractTeamsUsecase: ExtractTeamsUsecase) : BaseViewModel() {
 
+    val startScore = ObservableInt(501)
+    val numSets = ObservableInt(1)
+    val numLegs = ObservableInt(3)
+
     fun onStartPressed(context: Context) {
-        val setup = CreateGameRequest(501, 0, 3, 2)
+        val setup = CreateGameRequest(startScore.get(), 0, numLegs.get(), numSets.get())
         val teams = randomTeam()
 
         ensureTeamPlayersExist(teams, {
