@@ -1,17 +1,18 @@
 package nl.entreco.dartsscorecard.setup
 
 import android.content.Context
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
+import android.widget.Adapter
+import android.widget.AdapterView
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.play.Play01Activity
+import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.launch.usecase.CreateGameUsecase
 import nl.entreco.domain.launch.usecase.ExtractTeamsUsecase
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
 import nl.entreco.domain.repository.TeamIdsString
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -26,7 +27,10 @@ class Setup01ViewModelTest {
 
     @Mock private lateinit var mockExtractTeamUsecase: ExtractTeamsUsecase
     @Mock private lateinit var mockCreateGameUsecase: CreateGameUsecase
+    @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockContext: Context
+    @Mock private lateinit var mockAdapterView: AdapterView<*>
+    @Mock private lateinit var mockAdapter: Adapter
 
     private val teamExtractDoneCaptor = argumentCaptor<(TeamIdsString) -> Unit>()
     private val teamExtractFailCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -66,16 +70,29 @@ class Setup01ViewModelTest {
         thenPlay01ActivityIsNotLaunched()
     }
 
+    @Test
+    fun `it should update startIndex`() {
+        givenSetupViewModel()
+        givenOnStartScoreSelected(0, arrayOf("501"))
+        thenStartScoreEquals(501)
+    }
+
     private fun givenSetupViewModel() {
         givenTeamNamesString = TeamNamesString("p1,p2|p3")
         givenTeamIdsString = TeamIdsString("1,2|3")
         givenCreateRequest = CreateGameRequest(3, 4, 5, 6)
         givenRetrieveGameRequest = RetrieveGameRequest(88, givenTeamIdsString, givenCreateRequest)
-        subject = Setup01ViewModel(mockCreateGameUsecase, mockExtractTeamUsecase)
+        subject = Setup01ViewModel(mockCreateGameUsecase, mockExtractTeamUsecase, mockLogger)
     }
 
     private fun givenStartNewGamePressed() {
         subject.onStartPressed(mockContext)
+    }
+
+    private fun givenOnStartScoreSelected(index: Int, array: Array<String>) {
+        whenever(mockAdapterView.adapter).thenReturn(mockAdapter)
+        whenever(mockAdapter.getItem(index)).thenReturn(array[index])
+        subject.onStartScoreSelected(mockAdapterView, index)
     }
 
     private fun whenTeamExists() {
@@ -107,6 +124,10 @@ class Setup01ViewModelTest {
 
     private fun thenPlay01ActivityIsNotLaunched() {
         // Unable to verify
+    }
+
+    private fun thenStartScoreEquals(expected: Int) {
+        assertEquals(expected, subject.startScore.get())
     }
 
     private fun anyBecauseRandom(): TeamNamesString = any()
