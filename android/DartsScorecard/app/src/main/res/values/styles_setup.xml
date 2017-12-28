@@ -47,7 +47,7 @@
 
     <style name="Setup.Entry.Value">
         <item name="android:background">@drawable/score_pts</item>
-        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:textColor">?attr/header_text_color</item>
         <item name="android:padding">@dimen/def</item>
         <item name="android:gravity">center</item>
     </style>
