@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -49,7 +49,7 @@
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="@dimen/setup_width"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.startScore}" />
+                    android:text="@{@string/number(viewModel.startScore)}" />
             </LinearLayout>
 
             <!-- Footer -->
@@ -75,16 +75,15 @@
                 android:layout_height="wrap_content"
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/demo_ad_unit_id"
-                app:loadAdd="@{true}"/>
+                app:loadAdd="@{true}" />
 
             <!-- Footer -->
             <TextView
                 style="@style/Setup.Ftr"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/def"
+                android:layout_height="@dimen/large"
                 android:background="@drawable/score_footer"
                 android:padding="@dimen/xsmall" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,30 +120,31 @@
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onSetsChanged(setupSets, -1)}"
                     android:text="@string/minus" />
-
 
                 <SeekBar
                     style="@style/Setup.Progress"
+                    android:id="@+id/setup_sets"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:max="21"
                     android:min="1"
-                    android:onProgressChanged="@{() -> viewModel.onNumberOfSetsChanged()}"
                     android:progress="1" />
 
                 <TextView
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onSetsChanged(setupSets, +1)}"
                     android:text="@string/plus" />
 
                 <TextView
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="@dimen/setup_width"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.numSets}" />
+                    android:text="@{@string/number(viewModel.numSets)}" />
             </LinearLayout>
 
             <LinearLayout
@@ -204,7 +204,7 @@
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="@dimen/setup_width"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.numLegs}" />
+                    android:text="@{@string/number(viewModel.numLegs)}" />
             </LinearLayout>
 
             <!-- Footer -->

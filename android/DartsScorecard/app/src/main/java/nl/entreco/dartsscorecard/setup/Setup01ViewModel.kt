@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.setup
 
 import android.content.Context
 import android.databinding.ObservableInt
+import android.widget.SeekBar
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.launch.TeamNamesString
@@ -28,6 +29,10 @@ class Setup01ViewModel @Inject constructor(private val createGameUsecase: Create
         ensureTeamPlayersExist(teams, {
             createNewGame(setup, it, onGameCreated(context), onGameCreatedFailed())
         }, onGameCreatedFailed())
+    }
+
+    fun onSetsChanged(seekBar: SeekBar, delta: Int) {
+        seekBar.progress += delta
     }
 
     private fun onGameCreated(context: Context): (RetrieveGameRequest) -> Unit =

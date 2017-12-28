@@ -6,7 +6,7 @@
     <dimen name="large">16dp</dimen>
     <dimen name="xlarge">32dp</dimen>
 
-    <dimen name="setup_width">80</dimen>
+    <dimen name="setup_width">80dp</dimen>
     <dimen name="score_name_w">300</dimen>
     <dimen name="score_leg_w">42</dimen>
     <dimen name="score_set_w">42</dimen>

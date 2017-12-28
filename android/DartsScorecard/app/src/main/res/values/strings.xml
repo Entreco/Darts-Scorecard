@@ -3,6 +3,7 @@
     <string name="empty" translatable="false" />
 
     <!-- General Darts -->
+    <string name="number">%1$s</string>
     <string name="first_to">First to %1$s</string>
     <string name="individual">Submit Individual Darts</string>
     <string name="all">Submit full score</string>
@@ -37,5 +38,8 @@
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
+
+    <!-- AdMob -->
     <string name="demo_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="real_ad_unit_id">ca-app-pub-3793327349392749/2238054293</string>
 </resources>
