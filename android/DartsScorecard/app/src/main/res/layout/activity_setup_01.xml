@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -8,6 +7,18 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.setup.Setup01ViewModel" />
+
+        <variable
+            name="playersViewModel"
+            type="nl.entreco.dartsscorecard.setup.players.PlayersViewModel" />
+
+        <variable
+            name="adsViewModel"
+            type="nl.entreco.dartsscorecard.setup.ad.AdViewModel" />
+
+        <variable
+            name="settingsViewModel"
+            type="nl.entreco.dartsscorecard.setup.settings.SettingsViewModel" />
     </data>
 
     <ScrollView
@@ -19,212 +30,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/Setup.Hdr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/score_header"
-                android:orientation="horizontal"
-                android:padding="@dimen/xsmall"
-                android:text="@string/select_x01_score" />
+            <include
+                layout="@layout/include_setup_players"
+                app:viewModel="@{playersViewModel}" />
 
-            <RelativeLayout
-                style="@style/Setup.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <include
+                layout="@layout/include_setup_ad"
+                app:viewModel="@{adsViewModel}" />
 
-                <TextView
-                    style="@style/Setup.Entry.Txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:text="start score:" />
-
-                <TextView
-                    style="@style/Setup.Entry.Value"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="@{@string/number(viewModel.startScore)}" />
-
-                <android.support.v7.widget.AppCompatSpinner
-                    style="@style/Setup.Entry.Spinner"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:alpha="0"
-                    android:entries="@array/x01"
-                    android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onStartScoreSelected(adapter,index)}" />
-            </RelativeLayout>
-
-            <!-- Footer -->
-            <TextView style="@style/Setup.Ftr" />
-
-            <TextView
-                style="@style/Setup.Hdr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/score_header"
-                android:orientation="horizontal"
-                android:padding="@dimen/xsmall"
-                android:text="@string/sponsored_by" />
-
-            <!-- Ad -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-
-                <com.google.android.gms.ads.AdView
-                    style="@style/Setup.Ad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    ads:adSize="SMART_BANNER"
-                    ads:adUnitId="@string/real_ad_unit_id"
-                    app:loadAdd="@{true}" />
-            </FrameLayout>
-
-            <!-- Footer -->
-            <TextView style="@style/Setup.Ftr" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/score_header"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Setup.Hdr"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/xsmall"
-                    android:text="@string/number_of_sets" />
-
-                <TextView
-                    style="@style/Setup.Hdr.End"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/xsmall"
-                    android:text="@string/first_to" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/Setup.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Setup.Entry.Txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onSetsChanged(setupSets, -1)}"
-                    android:text="@string/minus" />
-
-                <SeekBar
-                    android:id="@+id/setup_sets"
-                    style="@style/Setup.Progress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="@{viewModel.max}"
-                    android:onProgressChanged="@{(view, sets, user) -> viewModel.onSetsProgressChanged(sets)}"
-                    android:progress="0" />
-
-                <TextView
-                    style="@style/Setup.Entry.Txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onSetsChanged(setupSets, +1)}"
-                    android:text="@string/plus" />
-
-                <TextView
-                    style="@style/Setup.Entry.Value"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/score_pts"
-                    android:text="@{@string/number(viewModel.numSets)}" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/score_header"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Setup.Hdr"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/xsmall"
-                    android:text="@string/number_of_legs" />
-
-                <TextView
-                    style="@style/Setup.Hdr.End"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/xsmall"
-                    android:text="@string/first_to" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/Setup.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Setup.Entry.Txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onLegsChanged(setupLegs, -1)}"
-                    android:text="@string/minus" />
-
-
-                <SeekBar
-                    android:id="@+id/setup_legs"
-                    style="@style/Setup.Progress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="@{viewModel.max}"
-                    android:onProgressChanged="@{(view, legs, user) -> viewModel.onLegsProgressChanged(legs)}"
-                    android:progress="2" />
-
-                <TextView
-                    style="@style/Setup.Entry.Txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onLegsChanged(setupLegs, +1)}"
-                    android:text="@string/plus" />
-
-                <TextView
-                    style="@style/Setup.Entry.Value"
-                    android:layout_width="@dimen/setup_width"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/number(viewModel.numLegs)}" />
-            </LinearLayout>
-
-            <!-- Footer -->
-            <TextView style="@style/Setup.Ftr" />
+            <include
+                layout="@layout/include_setup_settings"
+                app:viewModel="@{settingsViewModel}" />
 
             <Button
                 style="@style/Setup.Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onStartPressed(context)}"
+                android:onClick="@{() -> viewModel.onStartPressed(context, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
                 android:text="@string/cont" />
 
         </LinearLayout>

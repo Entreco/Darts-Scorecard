@@ -32,12 +32,13 @@
 
     <!-- Setup -->
     <string name="select_x01_score">Select x01 score</string>
-    <string name="sponsored_by">Sponsored by</string>
+    <string name="start_score">Start score</string>
     <string name="number_of_sets">Number of sets</string>
     <string name="number_of_legs">Number of legs</string>
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="cont">Continue</string>
+    <string name="sponsored_by">Sponsored by</string>
 
     <!-- Game States -->
     <string name="to_throw">to throw</string>
