@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 ads:adSize="SMART_BANNER"
-                ads:adUnitId="@string/real_ad_unit_id"
+                ads:adUnitId="@string/setup_ad_unit_id"
                 app:adListener="@{viewModel.adLoader}"
                 app:loadAdd="@{viewModel.loadAd}" />
         </FrameLayout>

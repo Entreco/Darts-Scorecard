@@ -52,8 +52,4 @@
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
-
-    <!-- AdMob -->
-    <string name="demo_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="real_ad_unit_id">ca-app-pub-3793327349392749/2238054293</string>
 </resources>
