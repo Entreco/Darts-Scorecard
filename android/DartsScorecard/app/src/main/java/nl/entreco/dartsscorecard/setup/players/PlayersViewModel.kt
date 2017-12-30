@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 29/12/2017.
  */
-class PlayersViewModel @Inject constructor() : BaseViewModel() {
+class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseViewModel() {
 
     fun setupTeams(): TeamNamesString {
         return randomTeam()

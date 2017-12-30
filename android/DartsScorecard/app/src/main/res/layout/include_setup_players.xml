@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/activity_setup_01">
 
@@ -8,15 +9,17 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.setup.players.PlayersViewModel" />
+
     </data>
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <!-- Header -->
         <LinearLayout
+            android:id="@+id/setup_players_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/score_header"
@@ -41,37 +44,29 @@
         </LinearLayout>
 
         <!-- Players -->
-        <RelativeLayout
-            style="@style/Setup.Entry"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/setup_players_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/Setup.Auto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/teamIndex"
-                android:gravity="start"
-                android:text="@string/add_player" />
-
-            <TextView
-                android:id="@+id/teamIndex"
-                style="@style/Setup.Entry.Value"
-                android:layout_width="@dimen/setup_width"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="1" />
-
-            <android.support.v7.widget.AppCompatSpinner
-                style="@style/Setup.Entry.Spinner"
-                android:layout_width="@dimen/setup_width"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:alpha="0" />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setup_players_header"
+            app:adapter="@{viewModel.adapter}"
+            tools:listitem="@layout/select_player_view" />
 
         <!-- Footer -->
-        <TextView style="@style/Setup.Ftr" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/setup_players_footer"
+            style="@style/Setup.Ftr"
+            android:layout_below="@id/setup_players_list" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="@dimen/large"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@color/white"
+            app:fabSize="mini" />
+    </RelativeLayout>
+
 </layout>
