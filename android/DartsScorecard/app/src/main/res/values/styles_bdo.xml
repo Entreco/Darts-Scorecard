@@ -35,6 +35,8 @@
         <item name="grad_current_stop">@color/bdo_red_dark</item>
         <item name="grad_launch_btn_start">@color/bdo_yellow_light</item>
         <item name="grad_launch_btn_stop">@color/bdo_yellow_dark</item>
+        <item name="grad_score_starter_start">@color/bdo_yellow_light</item>
+        <item name="grad_score_starter_stop">@color/bdo_yellow_dark</item>
         <item name="header_text_color">@color/black</item>
     </style>
 

@@ -16,6 +16,8 @@
     <string name="bust">Bust</string>
     <string name="undo">Undo</string>
     <string name="score_180">180</string>
+    <string name="tap_to_resume">Tap to Resume</string>
+    <string name="resume">Resume</string>
 
     <string-array name="x01">
         <item>101</item>
@@ -31,6 +33,9 @@
     </string-array>
 
     <!-- Setup -->
+    <string name="select_players">Select Players</string>
+    <string name="team">Team</string>
+    <string name="add_player">Click to add player</string>
     <string name="select_x01_score">Select x01 score</string>
     <string name="start_score">Start score</string>
     <string name="number_of_sets">Number of sets</string>

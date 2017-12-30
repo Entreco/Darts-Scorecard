@@ -29,6 +29,8 @@
     <attr name="grad_current_stop" format="color" />
     <attr name="grad_launch_btn_start" format="color" />
     <attr name="grad_launch_btn_stop" format="color" />
+    <attr name="grad_score_starter_start" format="color" />
+    <attr name="grad_score_starter_stop" format="color" />
 
     <!-- Input View -->
     <attr name="inputToggle" format="color" />

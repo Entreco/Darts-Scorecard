@@ -37,6 +37,8 @@
         <item name="grad_current_stop">@color/pdc_green_dark</item>
         <item name="grad_launch_btn_start">@color/pdc_white_light</item>
         <item name="grad_launch_btn_stop">@color/pdc_white_dark</item>
+        <item name="grad_score_starter_start">@color/pdc_red_dark</item>
+        <item name="grad_score_starter_stop">@color/pdc_red_light</item>
         <item name="header_text_color">@color/white</item>
     </style>
 

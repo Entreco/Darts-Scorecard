@@ -71,6 +71,12 @@
         <item name="android:textColor">?attr/nameText</item>
     </style>
 
+    <style name="Setup.Auto">
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:textColor">?attr/nameText</item>
+    </style>
+
     <style name="Setup.Btn" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/score_hint</item>
         <item name="android:textColor">?attr/scoreText</item>
