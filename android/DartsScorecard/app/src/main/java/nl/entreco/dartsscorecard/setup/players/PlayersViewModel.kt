@@ -10,26 +10,28 @@ import javax.inject.Inject
 class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseViewModel() {
 
     fun setupTeams(): TeamNamesString {
-        return randomTeam()
+        val teamString = StringBuilder()
+        val players = adapter.playersMap()
+        players.groupBy { it.teamIndex.get() }.forEach({
+            if (!teamString.isEmpty()) {
+                teamString.append("|")
+            }
+            appendTeam(it.value, teamString)
+        })
+
+        return TeamNamesString(teamString.toString())
     }
 
-    fun addPlayer(){
-        adapter.onAddPlayer()
-    }
-
-    private fun randomTeam(): TeamNamesString {
-        return when ((Math.random() * 10).toInt()) {
-            0 -> TeamNamesString("Remco,Charlie|Eva,Guusje")
-            1 -> TeamNamesString("Remco,Eva,Guusje|Boeffie,Beer,Charlie")
-            2 -> TeamNamesString("Boeffie|Beer")
-            3 -> TeamNamesString("Remco|Eva|Guusje")
-            4 -> TeamNamesString("Remco|Eva|Guusje|Boeffie|Beer|Charlie")
-            5 -> TeamNamesString("Rob|Geert|Boy")
-            6 -> TeamNamesString("Rob,Allison|Geert,Mikka|Boy,Linda")
-            7 -> TeamNamesString("Guusje|Eva")
-            8 -> TeamNamesString("Guusje,Eva,Beer,Boeffie,Charlie|Co")
-            9 -> TeamNamesString("Entreco|Bonske")
-            else -> TeamNamesString("Co")
+    private fun appendTeam(team: List<PlayerViewModel>, teamString: StringBuilder) {
+        team.forEachIndexed { index, player ->
+            teamString.append(player.name.get())
+            if (index < team.size - 1) {
+                teamString.append(",")
+            }
         }
+    }
+
+    fun addPlayer() {
+        adapter.onAddPlayer()
     }
 }

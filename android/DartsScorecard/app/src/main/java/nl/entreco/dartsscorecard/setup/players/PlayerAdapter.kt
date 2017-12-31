@@ -59,4 +59,8 @@ class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<SelectPlayerVie
         }
         notifyItemRangeChanged(0, itemCount)
     }
+
+    fun playersMap(): Array<PlayerViewModel> {
+        return items.toTypedArray()
+    }
 }
