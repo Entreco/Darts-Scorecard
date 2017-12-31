@@ -12,7 +12,7 @@ import nl.entreco.domain.settings.ScoreSettings
 /**
  * Created by Entreco on 20/11/2017.
  */
-class ScoreBindings {
+abstract class ScoreBindings {
     companion object {
         @JvmStatic
         @BindingAdapter("adapter", "teams", "scores", "scoreSettings", "finishUsecase", "uiCallback", requireAll = true)

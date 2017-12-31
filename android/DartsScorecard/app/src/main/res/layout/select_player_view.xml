@@ -22,6 +22,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/teamIndex"
             android:gravity="start"
+            android:onClick="@{(v) -> player.onEditPlayerName(v)}"
             android:text="@{player.name}" />
 
         <TextView

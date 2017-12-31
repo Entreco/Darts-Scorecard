@@ -9,7 +9,7 @@ import com.google.android.gms.ads.AdView
 /**
  * Created by Entreco on 29/12/2017.
  */
-class AdBindings {
+abstract class AdBindings {
     companion object {
         @JvmStatic
         @BindingAdapter("loadAdd", "adListener")

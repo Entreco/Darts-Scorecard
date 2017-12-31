@@ -5,7 +5,7 @@ import android.databinding.BindingAdapter
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayersBindings {
+abstract class PlayersBindings {
     companion object {
         @JvmStatic
         @BindingAdapter("adapter")
