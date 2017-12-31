@@ -6,17 +6,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.databinding.AddPlayerViewBinding
 import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<BasePlayerView<*>>(), AddPlayerClicker {
-
-    private val typeAdd = 0
-    private val typePlayer = 1
+class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<SelectPlayerView>(), AddPlayerClicker {
 
     private val items = mutableListOf<PlayerViewModel>()
 
@@ -25,20 +21,11 @@ class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<BasePlayerView<
     }
 
     init {
-        addPlayerNumber(1)
+        addPlayerNumber(0)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BasePlayerView<*> {
-        return when (viewType) {
-            typeAdd -> createAddFooter(parent)
-            else -> createPlayer(parent)
-        }
-    }
-
-    private fun createAddFooter(parent: ViewGroup?): AddPlayerView {
-        val inflater = LazyInflater(parent?.context!!).inflater
-        val binding = DataBindingUtil.inflate<AddPlayerViewBinding>(inflater, R.layout.add_player_view, parent, false)
-        return AddPlayerView(binding)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
+        return createPlayer(parent)
     }
 
     private fun createPlayer(parent: ViewGroup?): SelectPlayerView {
@@ -47,36 +34,28 @@ class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<BasePlayerView<
         return SelectPlayerView(binding)
     }
 
-    override fun onBindViewHolder(holder: BasePlayerView<*>?, position: Int) {
-        when (holder) {
-            is SelectPlayerView -> holder.bind(items[position])
-            is AddPlayerView -> holder.bind(this)
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if(position + 1 == itemCount) typeAdd
-        else typePlayer
+    override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
+        holder?.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return items.size + 1
+        return items.size
     }
 
     override fun onAddPlayer() {
         updateTeamCount()
-        addPlayerNumber(items.size + 1)
+        addPlayerNumber(itemCount)
     }
 
-    private fun addPlayerNumber(number: Int) {
-        items.add(PlayerViewModel(number, number))
-        notifyItemInserted(items.size)
+    private fun addPlayerNumber(index: Int) {
+        items.add(PlayerViewModel(index))
+        notifyItemInserted(itemCount)
     }
 
     private fun updateTeamCount() {
         // Update TeamCounter for all
         items.forEach {
-            it.updateTeams(items.size + 1)
+            it.onTeamsUpdated(itemCount)
         }
         notifyItemRangeChanged(0, itemCount)
     }

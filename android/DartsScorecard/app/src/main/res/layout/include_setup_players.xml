@@ -45,13 +45,13 @@
         </LinearLayout>
 
         <!-- Players -->
-        <android.support.v7.widget.RecyclerView
+        <nl.entreco.dartsscorecard.setup.players.PlayersWidget
             android:id="@+id/setup_players_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/setup_players_header"
-            app:adapter="@{viewModel.adapter}"
-            tools:listitem="@layout/select_player_view" />
+            android:animateLayoutChanges="true"
+            app:adapter="@{viewModel.adapter}" />
 
         <!-- Footer -->
         <TextView
@@ -65,6 +65,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/large"
+            android:onClick="@{() -> viewModel.addPlayer()}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/white"
             app:fabSize="mini" />

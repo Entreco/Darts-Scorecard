@@ -13,6 +13,10 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
         return randomTeam()
     }
 
+    fun addPlayer(){
+        adapter.onAddPlayer()
+    }
+
     private fun randomTeam(): TeamNamesString {
         return when ((Math.random() * 10).toInt()) {
             0 -> TeamNamesString("Remco,Charlie|Eva,Guusje")
