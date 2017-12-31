@@ -1,10 +1,8 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.widget.AdapterView
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -12,7 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class PlayerViewModelTest {
-    @Mock private lateinit var mockAdapter: AdapterView<*>
+
     private lateinit var subject: PlayerViewModel
 
     @Test
@@ -48,10 +46,11 @@ class PlayerViewModelTest {
 
     private fun whenAddingNewPlayers(count: Int) {
         subject.onTeamsUpdated(count)
+        subject.onTeamSelected(0)
     }
 
     private fun whenTeamIndexSelected(expectedIndex: Int) {
-        subject.onTeamSelected(mockAdapter, expectedIndex)
+        subject.onTeamSelected(expectedIndex)
     }
 
     private fun thenPlayerNameIs(expectedName: String) {

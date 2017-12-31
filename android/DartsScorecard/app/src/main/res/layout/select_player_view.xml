@@ -39,7 +39,7 @@
             android:layout_alignParentEnd="true"
             android:alpha="0"
             android:entries="@{player.teams}"
-            android:onItemSelected="@{(adapter,i,index,l) -> player.onTeamSelected(adapter, index)}" />
+            android:onItemSelected="@{(a,i,index,l) -> player.onTeamSelected(index)}" />
     </RelativeLayout>
 
 </layout>

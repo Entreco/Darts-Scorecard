@@ -2,23 +2,19 @@ package nl.entreco.dartsscorecard.setup.players
 
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<SelectPlayerView>(), AddPlayerClicker {
+class PlayerAdapter @Inject constructor() : TestableAdapter<SelectPlayerView>(), AddPlayerClicker {
 
     private val items = mutableListOf<PlayerViewModel>()
-
-    private class LazyInflater(context: Context) {
-        val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
-    }
 
     init {
         addPlayerNumber(0)
@@ -43,21 +39,20 @@ class PlayerAdapter @Inject constructor() : RecyclerView.Adapter<SelectPlayerVie
     }
 
     override fun onAddPlayer() {
-        updateTeamCount()
         addPlayerNumber(itemCount)
+        updateTeamCount()
     }
 
     private fun addPlayerNumber(index: Int) {
         items.add(PlayerViewModel(index))
-        notifyItemInserted(itemCount)
+        tryNotifyItemInserted(itemCount)
     }
 
     private fun updateTeamCount() {
-        // Update TeamCounter for all
         items.forEach {
             it.onTeamsUpdated(itemCount)
         }
-        notifyItemRangeChanged(0, itemCount)
+        tryNotifyItemRangeChanged(0, itemCount)
     }
 
     fun playersMap(): Array<PlayerViewModel> {

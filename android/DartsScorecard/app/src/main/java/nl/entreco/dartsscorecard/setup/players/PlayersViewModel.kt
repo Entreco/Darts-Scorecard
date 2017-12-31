@@ -2,6 +2,8 @@ package nl.entreco.dartsscorecard.setup.players
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.launch.TeamNamesString
+import nl.entreco.domain.model.players.PlayerSeperator
+import nl.entreco.domain.model.players.TeamSeperator
 import javax.inject.Inject
 
 /**
@@ -11,27 +13,26 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
 
     fun setupTeams(): TeamNamesString {
         val teamString = StringBuilder()
-        val players = adapter.playersMap()
-        players.groupBy { it.teamIndex.get() }.forEach({
-            if (!teamString.isEmpty()) {
-                teamString.append("|")
-            }
-            appendTeam(it.value, teamString)
-        })
-
+        val players = adapter.playersMap().groupBy { it.teamIndex.get() }.toSortedMap()
+        appendTeams(players, teamString)
         return TeamNamesString(teamString.toString())
     }
 
-    private fun appendTeam(team: List<PlayerViewModel>, teamString: StringBuilder) {
+    private fun appendTeams(players: Map<Int, List<PlayerViewModel>>, teamString: StringBuilder) {
+        players.forEach({
+            if (!teamString.isEmpty()) {
+                teamString.append(TeamSeperator)
+            }
+            appendPlayers(it.value, teamString)
+        })
+    }
+
+    private fun appendPlayers(team: List<PlayerViewModel>, teamString: StringBuilder) {
         team.forEachIndexed { index, player ->
             teamString.append(player.name.get())
             if (index < team.size - 1) {
-                teamString.append(",")
+                teamString.append(PlayerSeperator)
             }
         }
-    }
-
-    fun addPlayer() {
-        adapter.onAddPlayer()
     }
 }

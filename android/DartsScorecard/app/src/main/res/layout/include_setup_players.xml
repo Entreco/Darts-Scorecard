@@ -65,7 +65,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/large"
-            android:onClick="@{() -> viewModel.addPlayer()}"
+            android:onClick="@{() -> viewModel.adapter.onAddPlayer()}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/white"
             app:fabSize="mini" />

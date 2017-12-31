@@ -24,6 +24,10 @@ class PlayersWidget @JvmOverloads constructor(
         }
 
     init {
+        setupUi()
+    }
+
+    private fun setupUi() {
         orientation = VERTICAL
         layoutTransition = LayoutTransition()
     }

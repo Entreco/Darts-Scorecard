@@ -3,14 +3,13 @@ package nl.entreco.dartsscorecard.setup.players
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.widget.AdapterView
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayerViewModel(teamIndex: Int) {
-    val name = ObservableField<String>("Player ${teamIndex + 1}")
+class PlayerViewModel(teamIndex: Int, name: String = "Player ${teamIndex + 1}") {
+    val name = ObservableField<String>(name)
     val teamIndex = ObservableInt(teamIndex)
     val teams = ObservableArrayList<Int>()
     private var updating = AtomicBoolean(false)
@@ -20,7 +19,7 @@ class PlayerViewModel(teamIndex: Int) {
         updating.set(false)
     }
 
-    fun onTeamSelected(adapter: AdapterView<*>, index: Int) {
+    fun onTeamSelected(index: Int) {
         if (!updating.get()) {
             teamIndex.set(index)
         } else {
