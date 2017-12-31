@@ -72,6 +72,7 @@
             app:scores="@{viewModel.scores}"
             app:scoreSettings="@{viewModel.scoreSettings}"
             app:uiCallback="@{viewModel.uiCallback}"
+            app:currentTeam="@{viewModel.currentTeam}"
             tools:listitem="@layout/team_score_view" />
 
         <!-- Footer -->

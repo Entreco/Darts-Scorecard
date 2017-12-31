@@ -23,6 +23,7 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
 
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
+    val currentTeam = ObservableInt()
     val scores = ObservableArrayList<Score>()
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
@@ -48,6 +49,7 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
 
     override fun onNext(next: Next) {
         logger.d("NoNICE", "onNext: ${next.player}")
+        currentTeam.set(teams.indexOf(next.team))
         teams.forEachIndexed({ index, _ -> adapter.teamAtIndexTurnUpdate(index, next) })
     }
 }

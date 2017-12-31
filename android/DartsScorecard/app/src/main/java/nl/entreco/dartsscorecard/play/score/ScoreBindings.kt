@@ -30,5 +30,11 @@ abstract class ScoreBindings {
 
             uiCallback?.onLetsPlayDarts()
         }
+
+        @JvmStatic
+        @BindingAdapter("currentTeam")
+        fun scrollToCurrentTeam(recyclerView: RecyclerView, currentTeamIndex: Int) {
+            recyclerView.smoothScrollToPosition(currentTeamIndex)
+        }
     }
 }

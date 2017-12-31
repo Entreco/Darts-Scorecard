@@ -41,4 +41,10 @@ class ScoreBindingsTest {
         verify(mockScoreAdapter, times(givenTeams.size)).addItem(any())
         verify(mockUiCallback).onLetsPlayDarts()
     }
+
+    @Test
+    fun `it should scroll to position`() {
+        ScoreBindings.scrollToCurrentTeam(mockRecyclerView, 0)
+        verify(mockRecyclerView).smoothScrollToPosition(0)
+    }
 }
