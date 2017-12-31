@@ -34,17 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ScrollView
+            <include
+                android:id="@+id/includeMain"
+                layout="@layout/play_01_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/includeScore"
                 android:layout_marginEnd="@dimen/def"
-                android:layout_marginStart="@dimen/def">
-
-                <include
-                    android:id="@+id/includeMain"
-                    layout="@layout/play_01_main" />
-            </ScrollView>
+                android:layout_marginStart="@dimen/def" />
 
             <include
                 android:id="@+id/includeScore"
