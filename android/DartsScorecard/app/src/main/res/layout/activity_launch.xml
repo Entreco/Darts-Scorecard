@@ -38,7 +38,7 @@
             android:drawableEnd="@drawable/ic_dart"
             app:resumeGame="@{viewModel.resumedGame}"
             android:onClick="@{() -> viewModel.onResumePressed(context)}"
-            android:text="Resume" />
+            android:text="@string/resume" />
 
         <Button
             android:id="@+id/launch_play"

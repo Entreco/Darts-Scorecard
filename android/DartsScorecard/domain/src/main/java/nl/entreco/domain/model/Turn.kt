@@ -1,7 +1,7 @@
 package nl.entreco.domain.model
 
 data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart.NONE, internal val d3: Dart = Dart.NONE){
-    private val sum = d1.value() + d2.value() + d3.value()
+    private val sum = d1.points() + d2.points() + d3.points()
 
     override fun toString(): String {
         return "${d1.desc()} ${d2.desc()} ${d3.desc()} ($sum)"
@@ -19,6 +19,14 @@ data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart
 
     fun first(): Dart{
         return d1
+    }
+
+    fun second(): Dart{
+        return d2
+    }
+
+    fun third(): Dart{
+        return d3
     }
 
     fun last(): Dart {

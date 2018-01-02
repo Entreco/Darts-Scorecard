@@ -1,11 +1,9 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.content.Context
 import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -16,7 +14,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 22/11/2017.
  */
-class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>() {
+class ScoreAdapter @Inject constructor() : TestableAdapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
@@ -59,20 +57,5 @@ class ScoreAdapter @Inject constructor() : RecyclerView.Adapter<TeamScoreView>()
         val count = itemCount
         items.clear()
         tryNotifyItemRangeRemoved(0, count)
-    }
-
-    private class LazyInflater(context: Context) {
-        val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }
-    }
-
-    private fun tryNotifyItemInserted(position: Int) {
-        try { notifyItemInserted(position) } catch (ignore : NullPointerException){}
-    }
-    private fun tryNotifyItemChanged(position: Int) {
-        try { notifyItemChanged(position) } catch (ignore : NullPointerException){}
-    }
-
-    private fun tryNotifyItemRangeRemoved(position : Int, count: Int){
-        try {  notifyItemRangeRemoved(position, count) } catch (ignore : NullPointerException){}
     }
 }

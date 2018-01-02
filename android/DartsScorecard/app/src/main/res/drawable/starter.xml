@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:width="@dimen/def" android:height="@dimen/def" android:end="@dimen/xsmall">
         <shape android:shape="oval">
-            <gradient android:startColor="?attr/grad_score_pts_start" android:endColor="?attr/grad_score_pts_stop" android:angle="45"/>
+            <gradient android:startColor="?attr/grad_score_starter_start" android:endColor="?attr/grad_score_starter_stop" android:angle="45"/>
         </shape>
     </item>
 </layer-list>

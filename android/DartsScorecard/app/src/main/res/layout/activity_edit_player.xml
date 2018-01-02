@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.setup.edit.EditPlayerViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.edit.EditPlayerNavigator" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/EditPlayer.Hdr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_player_name" />
+
+        <EditText
+            style="@style/EditPlayer.Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_player"
+            android:imeActionId="6"
+            android:imeOptions="actionDone"
+            android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
+            android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
+            android:selectAllOnFocus="true"
+            app:suggestion="@{viewModel.suggestedName}"
+            android:textColor="?attr/nameText" />
+
+        <TextView
+            style="@style/EditPlayer.Middle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_existing_player"
+            android:visibility="@{viewModel.filteredPlayers.isEmpty() ? View.GONE: View.VISIBLE}" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/score_name"
+                android:orientation="vertical"
+                app:clicker="@{navigator}"
+                app:filteredPlayers="@{viewModel.filteredPlayers}" />
+        </ScrollView>
+        <!-- Footer -->
+        <TextView style="@style/Setup.Ftr" />
+
+    </LinearLayout>
+
+</layout>

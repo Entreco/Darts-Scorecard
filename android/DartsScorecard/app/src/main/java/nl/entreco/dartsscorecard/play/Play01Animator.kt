@@ -14,6 +14,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
     private val fab = binding.includeInput?.fab!!
     private val inputSheet = binding.includeInput?.inputSheet!!
+    private val inputResume = binding.includeInput?.inputResume!!
     private val mainSheet = binding.includeMain?.mainSheet!!
     private val behaviour = BottomSheetBehavior.from(inputSheet)
     private val stat1 = binding.includeMain?.stat1!!
@@ -53,10 +54,25 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
                 // Also, Fly In Version
                 animateState(version.animate(), 8, slideOffset)
+
+                // Show Resume
+                inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
             }
 
-            override fun onStateChanged(bottomSheet: View, newState: Int) {}
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        inputResume.setOnClickListener { expand() }
+                    }
+                    else -> inputResume.setOnClickListener(null)
+                }
+            }
         })
+
+        expand()
+    }
+
+    private fun expand() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
     }
 

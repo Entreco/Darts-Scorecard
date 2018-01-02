@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pdc_2018_green_light">#26A80D</color>
+    <color name="pdc_2018_green_dark">#00A100</color>
+    <color name="pdc_2018_red_light">#B40000</color>
+    <color name="pdc_2018_red_dark">#760A10</color>
+    <color name="pdc_2018_yellow">#FFD61A</color>
+    <color name="pdc_2018_white_light">#FFFFFF</color>
+    <color name="pdc_2018_white_dark">#EFEFEF</color>
+    <color name="pdc_2018_black_light">#343436</color>
+    <color name="pdc_2018_black_dark">#13120E</color>
+
+    <style name="Pdc_2018" parent="AppTheme">
+        <item name="match_description">@string/pdc_match</item>
+        <item name="colorAccent">@color/pdc_2018_green_dark</item>
+        <item name="highlightColor">#22FFFFFF</item>
+        <item name="statBorderColor">@android:color/transparent</item>
+        <item name="colorOneEighty">@color/pdc_2018_yellow</item>
+        <item name="launchText">@color/black</item>
+        <item name="nameText">@color/black</item>
+        <item name="scoreText">@color/white</item>
+        <item name="ptsText">@color/white</item>
+        <item name="scoreBorderColor">@android:color/transparent</item>
+        <item name="scoreBorderAlpha">.1</item>
+        <item name="inputToggle">@color/pdc_2018_green_dark</item>
+        <item name="grad_score_header_start">@color/pdc_2018_black_light</item>
+        <item name="grad_score_header_stop">@color/pdc_2018_black_dark</item>
+        <item name="grad_score_name_start">@color/pdc_2018_white_light</item>
+        <item name="grad_score_name_stop">@color/pdc_2018_white_dark</item>
+        <item name="grad_score_start">@color/pdc_2018_green_dark</item>
+        <item name="grad_score_stop">@color/pdc_2018_green_light</item>
+        <item name="grad_score_pts_start">@color/pdc_2018_green_dark</item>
+        <item name="grad_score_pts_stop">@color/pdc_2018_green_light</item>
+        <item name="grad_score_hint_start">@color/pdc_2018_red_light</item>
+        <item name="grad_score_hint_stop">@color/pdc_2018_red_light</item>
+        <item name="grad_current_start">@color/pdc_2018_red_light</item>
+        <item name="grad_current_stop">@color/pdc_2018_red_light</item>
+        <item name="grad_launch_btn_start">@color/pdc_2018_green_light</item>
+        <item name="grad_launch_btn_stop">@color/pdc_2018_green_dark</item>
+        <item name="grad_score_starter_start">@color/pdc_2018_red_light</item>
+        <item name="grad_score_starter_stop">@color/pdc_2018_red_dark</item>
+        <item name="header_text_color">@color/white</item>
+    </style>
+
+</resources>

@@ -42,6 +42,7 @@
                 android:src="@drawable/ic_current_team" />
 
             <TextView
+                android:id="@+id/input_text"
                 style="@style/Input.Score.No"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +60,7 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/cd_score_back"
                 android:onClick="@{() -> viewModel.back()}"
+                android:onLongClick="@{() -> viewModel.clear()}"
                 app:backAnimation="@{viewModel.scoredTxt}" />
 
             <TextView
@@ -89,6 +91,21 @@
                 android:layout_below="@id/input_next"
                 android:layout_toStartOf="@id/input_score"
                 android:text="@{viewModel.nextDescription}" />
+
+            <LinearLayout
+                android:id="@+id/input_resume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/input_arrow"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@id/input_arrow"
+                android:background="@drawable/score_hint"
+                android:translationX="-500dp">
+
+                <include
+                    layout="@layout/include_resume" />
+            </LinearLayout>
 
         </RelativeLayout>
 
