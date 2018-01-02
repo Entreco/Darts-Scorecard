@@ -75,6 +75,7 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "com.github.dpreussler:android-tdd-utils:$tddUtils"
 
     // AndroidTest
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"

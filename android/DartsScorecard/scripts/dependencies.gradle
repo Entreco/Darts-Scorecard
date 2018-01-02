@@ -64,6 +64,7 @@ ext {
             junit = '4.12',
             mockito = '2.12.0',
             mockitoKotlin = '1.5.0',
+            tddUtils = 'v0.1',
             espressoCore = '3.0.1',
             espressoRunner = '1.0.1'
     ]

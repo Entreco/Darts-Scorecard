@@ -1,16 +1,11 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.content.Context
-import android.databinding.DataBindingUtil
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.*
-import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.base.TestableAdapter
-import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
