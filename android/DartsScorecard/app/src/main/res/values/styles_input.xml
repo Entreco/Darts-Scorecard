@@ -95,4 +95,11 @@
         <item name="android:gravity">end|center</item>
     </style>
 
+    <style name="Input.Resume">
+        <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:paddingStart">@dimen/large</item>
+        <item name="android:paddingEnd">@dimen/large</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

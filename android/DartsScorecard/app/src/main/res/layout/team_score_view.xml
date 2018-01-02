@@ -24,7 +24,7 @@
             <TextView
                 style="@style/Score.Name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="@dimen/score_name_w"
                 android:text="@{viewModel.team.toString()}"
                 app:started="@{viewModel.started}"
@@ -33,7 +33,7 @@
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 style="@style/Score.Set"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="@dimen/score_leg_w"
                 app:score="@{viewModel.score.set}"
                 tools:text="1" />
@@ -41,7 +41,7 @@
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 style="@style/Score.Leg"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="@dimen/score_set_w"
                 app:score="@{viewModel.score.leg}"
                 tools:text="2" />
@@ -49,7 +49,7 @@
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 style="@style/Score.Pts"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="@dimen/score_pts_w"
                 app:score="@{viewModel.score.score}"
                 tools:text="501" />

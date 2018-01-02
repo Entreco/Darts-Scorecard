@@ -8,7 +8,6 @@ import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.AdditionalMatchers.*
@@ -30,17 +29,9 @@ class TeamScoreBindingsTest {
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
     @Test
-    @Ignore("unable to mock CounterTextView -> base class is abstract ??")
     fun `it should setTarget() on CounterTextView (ScorePts TextView)`() {
         TeamScoreBindings.showScore(mockCounterTextView, 50)
         verify(mockCounterTextView).setTarget(50)
-    }
-
-    @Test
-    @Ignore("unable to mock CounterTextView -> base class is abstract ??")
-    fun `it should setTarget() on CounterTextView (Hint TextView)`() {
-        TeamScoreBindings.showCurrentScore(mockCounterTextView, 501)
-        verify(mockCounterTextView).setTarget(501)
     }
 
     @Test

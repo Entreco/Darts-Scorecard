@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="player"
+            type="nl.entreco.domain.model.players.Player" />
+
+        <variable
+            name="clicker"
+            type="nl.entreco.dartsscorecard.setup.edit.ExistingPlayerSelectedClicker" />
+    </data>
+
+    <TextView
+        style="@style/EditPlayer.Existing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(view) -> clicker.onSelected(view, player)}"
+        android:text="@{player.name}" />
+</layout>

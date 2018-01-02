@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_setup_01">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.setup.players.PlayersViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/large">
+
+        <!-- Header -->
+        <LinearLayout
+            android:id="@+id/setup_players_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_header"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Setup.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="@dimen/xsmall"
+                android:text="@string/select_players" />
+
+            <TextView
+                style="@style/Setup.Hdr.End"
+                android:layout_width="@dimen/setup_width"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/xsmall"
+                android:text="@string/team" />
+        </LinearLayout>
+
+        <!-- Players -->
+        <nl.entreco.dartsscorecard.setup.players.PlayersWidget
+            android:id="@+id/setup_players_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setup_players_header"
+            android:animateLayoutChanges="true"
+            app:adapter="@{viewModel.adapter}" />
+
+        <!-- Footer -->
+        <TextView
+            android:id="@+id/setup_players_footer"
+            style="@style/Setup.Ftr"
+            android:layout_below="@id/setup_players_list" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="@dimen/large"
+            android:onClick="@{() -> navigator.onAddNewPlayer(viewModel.adapter)}"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@color/white"
+            app:fabSize="mini" />
+    </RelativeLayout>
+
+</layout>

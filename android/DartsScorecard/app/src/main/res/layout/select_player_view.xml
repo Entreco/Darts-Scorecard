@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_setup_01">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <variable
+            name="player"
+            type="nl.entreco.dartsscorecard.setup.players.PlayerViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
+
+        <variable
+            name="entries"
+            type="List&lt;Integer&gt;" />
+    </data>
+
+    <RelativeLayout
+        style="@style/Setup.Entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/Setup.Auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/teamIndex"
+            android:gravity="start"
+            android:onClick="@{() -> navigator.onEditPlayerName(player)}"
+            android:text="@{player.name}" />
+
+        <TextView
+            android:id="@+id/teamIndex"
+            style="@style/Setup.Entry.Spinner"
+            android:layout_width="@dimen/setup_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@{@string/number(player.teamIndex)}" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            style="@style/Setup.Spinner"
+            android:layout_width="@dimen/setup_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:entries="@{entries}"
+            android:onItemSelected="@{(adapter,i,index,l) -> player.onTeamSelected(adapter, index)}" />
+    </RelativeLayout>
+
+</layout>

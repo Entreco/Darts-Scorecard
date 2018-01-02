@@ -13,7 +13,7 @@ import nl.entreco.domain.play.listeners.events.ThrownEvent
 /**
  * Created by Entreco on 02/12/2017.
  */
-class InputBindings {
+abstract class InputBindings {
 
 
     companion object {
