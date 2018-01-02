@@ -67,6 +67,7 @@ dependencies {
     implementation "com.android.support:design:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "com.google.firebase:firebase-core:$firebase"
+    implementation "com.google.android.gms:play-services-ads:$firebase"
     implementation "android.arch.lifecycle:extensions:$architectureComponents"
     implementation "android.arch.persistence.room:runtime:$architectureComponents"
 
@@ -74,6 +75,7 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "com.github.dpreussler:android-tdd-utils:$tddUtils"
 
     // AndroidTest
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"

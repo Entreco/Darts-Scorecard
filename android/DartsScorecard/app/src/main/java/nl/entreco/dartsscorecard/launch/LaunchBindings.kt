@@ -7,7 +7,7 @@ import nl.entreco.domain.repository.RetrieveGameRequest
 /**
  * Created by Entreco on 19/12/2017.
  */
-class LaunchBindings {
+abstract class LaunchBindings {
 
     companion object {
         @JvmStatic

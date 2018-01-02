@@ -110,6 +110,13 @@ class InputViewModelTest {
     }
 
     @Test
+    fun `it should clear scoredTxt on Long press`() {
+        givenEntered(66)
+        whenLongPressingBack()
+        thenScoredTxtIs("")
+    }
+
+    @Test
     fun `it should NOT submit Turn when hint pressed, but no player is throwing`() {
         whenPressingHint(0)
         verify(mockListener, never()).onTurnSubmitted(any(), any())
@@ -288,6 +295,10 @@ class InputViewModelTest {
 
     private fun whenPressingBack() {
         subject.back()
+    }
+
+    private fun whenLongPressingBack() {
+        subject.clear()
     }
 
     private fun whenPressingHint(hintDigit: Int) {

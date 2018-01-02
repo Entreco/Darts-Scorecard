@@ -1,5 +1,8 @@
 package nl.entreco.domain.launch
 
+import nl.entreco.domain.model.players.PlayerSeperator
+import nl.entreco.domain.model.players.TeamSeperator
+
 /**
  * Created by Entreco on 16/12/2017.
  */
@@ -30,10 +33,10 @@ data class TeamNamesString(private val teamString: String) {
 
     private fun validate(teams: String) {
         if (teams.isEmpty()) throw illegalState
-        teamSplit = teams.split("|")
+        teamSplit = teams.split(TeamSeperator)
         teamSplit.forEach {
             if (it.isEmpty()) throw illegalState
-            val split = it.split(",")
+            val split = it.split(PlayerSeperator)
             split.forEach {
                 if (it.trim().isEmpty()) throw illegalState
             }

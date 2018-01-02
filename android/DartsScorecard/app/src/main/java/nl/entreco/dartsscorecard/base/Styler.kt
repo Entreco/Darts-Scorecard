@@ -12,8 +12,9 @@ import javax.inject.Inject
 class Styler @Inject constructor(private val prefs: SharedPreferences, private val activity: Activity) {
 
     enum class Style(@StyleRes val style: Int) {
-        PDC(R.style.Pdc),
-        BDO(R.style.Bdo);
+        PDC_2018(R.style.Pdc_2018),
+        BDO(R.style.Bdo),
+        PDC(R.style.Pdc);
     }
 
     fun get(): Int {
@@ -27,7 +28,10 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
     }
 
     private fun swap(style: Int): Int {
-        return if (style == R.style.Pdc) Style.BDO.style
-        else Style.PDC.style
+        return when (style) {
+            R.style.Pdc_2018 -> Style.BDO.style
+            R.style.Bdo -> Style.PDC.style
+            else -> Style.PDC_2018.style
+        }
     }
 }

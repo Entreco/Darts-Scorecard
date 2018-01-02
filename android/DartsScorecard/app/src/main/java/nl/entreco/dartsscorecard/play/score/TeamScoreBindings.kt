@@ -18,7 +18,7 @@ import nl.entreco.dartsscorecard.base.widget.CounterTextView
 /**
  * Created by Entreco on 25/11/2017.
  */
-class TeamScoreBindings {
+abstract class TeamScoreBindings {
     companion object {
 
         private val DEFAULT_ANIMATION_TIME: Long = 150
