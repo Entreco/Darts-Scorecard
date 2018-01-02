@@ -4,9 +4,8 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -18,9 +17,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class PlayerAdapterTest {
 
-    @Mock private lateinit var mockPlayerViewHolder : SelectPlayerView
-    @Mock private lateinit var mockNavigator : Setup01Navigator
-    @InjectMocks private lateinit var subject : PlayerAdapter
+    @Mock private lateinit var mockPlayerViewHolder: SelectPlayerView
+    @Mock private lateinit var mockNavigator: Setup01Navigator
+    @InjectMocks private lateinit var subject: PlayerAdapter
 
     @Test
     fun `it should add 1 player by default to playersMap`() {
@@ -38,7 +37,7 @@ class PlayerAdapterTest {
     @Test
     fun `it should bind to correct item`() {
         subject.onBindViewHolder(mockPlayerViewHolder, 0)
-        verify(mockPlayerViewHolder).bind(any())
+        verify(mockPlayerViewHolder).bind(any(), any())
     }
 
     @Test
