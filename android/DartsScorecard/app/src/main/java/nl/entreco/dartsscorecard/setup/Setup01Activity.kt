@@ -33,16 +33,15 @@ class Setup01Activity : ViewModelActivity() {
         binding.playersViewModel = playersViewModel
         binding.adsViewModel = adsViewModel
         binding.settingsViewModel = settingsViewModel
-        binding.navigator = Setup01Navigator(this)
+        binding.navigator = Setup01Navigator(this).apply { onAddNewPlayer(playersViewModel.adapter) }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == EditPlayerActivity.REQUEST_CODE) {
-            val oldName = data?.getStringExtra("oldName")
-            val playerName = data?.getStringExtra("playerName")
-            val playerId = data?.getLongExtra("playerId", -1)
-            playersViewModel.handlePlayerUpdated(oldName, playerName, playerId)
+            val oldName = data?.getStringExtra("oldName")!!
+            val playerName = data.getStringExtra("playerName")!!
+            playersViewModel.handlePlayerUpdated(oldName, playerName)
         }
     }
 

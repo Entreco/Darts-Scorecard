@@ -15,10 +15,6 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
 
     private val items = mutableListOf<PlayerViewModel>()
 
-    init {
-        addPlayerNumber(0)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
         return createPlayer(parent)
     }
@@ -37,14 +33,16 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
         return items.size
     }
 
-    override fun onAddPlayer() {
-        addPlayerNumber(itemCount)
+    override fun onAddPlayer(): String {
         updateTeamCount()
+        return addPlayerNumber(itemCount)
     }
 
-    private fun addPlayerNumber(index: Int) {
-        items.add(PlayerViewModel(index))
+    private fun addPlayerNumber(index: Int): String {
+        val pvm = PlayerViewModel(index)
+        items.add(pvm)
         tryNotifyItemInserted(itemCount)
+        return pvm.name.get()
     }
 
     private fun updateTeamCount() {
@@ -58,10 +56,10 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
         return items.toTypedArray()
     }
 
-    fun replacePlayer(oldName: String?, playerName: String?, playerId: Long?) {
-        val pvm = items.first { it.name.get() == oldName }
+    fun replacePlayer(oldPlayerName: String, newPlayerName: String) {
+        val pvm = items.first { it.name.get() == oldPlayerName }
         val index = items.indexOf(pvm)
-        pvm.name.set(playerName)
+        pvm.name.set(newPlayerName)
         tryNotifyItemChanged(index)
     }
 }

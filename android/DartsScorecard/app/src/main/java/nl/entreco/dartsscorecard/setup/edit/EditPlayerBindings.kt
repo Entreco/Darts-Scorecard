@@ -19,10 +19,14 @@ class EditPlayerBindings {
             view.removeAllViews()
             players.forEach {
                 val binding = DataBindingUtil.inflate<ExistingPlayerViewBinding>(LayoutInflater.from(view.context), R.layout.existing_player_view, view, false)
-                binding.player = it
-                binding.clicker = clicker
-                view.addView(binding.root)
+                bind(binding, it, clicker, view)
             }
+        }
+
+        internal fun bind(binding: ExistingPlayerViewBinding, player: Player, clicker: ExistingPlayerSelectedClicker, view: ViewGroup) {
+            binding.player = player
+            binding.clicker = clicker
+            view.addView(binding.root)
         }
     }
 }

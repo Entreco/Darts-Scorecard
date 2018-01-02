@@ -20,6 +20,7 @@
         <item name="android:padding">@dimen/def</item>
         <item name="android:background">@drawable/score_name</item>
         <item name="android:textColor">?attr/nameText</item>
+        <item name="android:alpha">0.3</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>

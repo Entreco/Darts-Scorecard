@@ -42,7 +42,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     fun filter(text: CharSequence) {
-        val filter = allPlayers.filter { it.name.startsWith(text) }
+        val filter = allPlayers.filter { it.name.toLowerCase().startsWith(text.toString().toLowerCase()) }
         filteredPlayers.clear()
         filteredPlayers.addAll(filter)
     }

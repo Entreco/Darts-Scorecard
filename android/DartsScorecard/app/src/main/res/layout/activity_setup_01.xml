@@ -39,7 +39,8 @@
 
             <include
                 layout="@layout/include_setup_players"
-                app:viewModel="@{playersViewModel}" />
+                app:viewModel="@{playersViewModel}"
+                app:navigator="@{navigator}"/>
 
             <include
                 layout="@layout/include_setup_ad"

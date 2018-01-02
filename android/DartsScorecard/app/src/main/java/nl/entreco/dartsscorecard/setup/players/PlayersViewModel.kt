@@ -37,8 +37,7 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter, private v
         }
     }
 
-    fun handlePlayerUpdated(oldName: String?, playerName: String?, playerId: Long?) {
-        logger.w("handlePlayerUpdated: $playerName ($playerId) -> was $oldName")
-        adapter.replacePlayer(oldName, playerName, playerId)
+    fun handlePlayerUpdated(oldName: String, playerName: String) {
+        adapter.replacePlayer(oldName, playerName)
     }
 }
