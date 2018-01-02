@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.ExistingPlayerViewBinding
 import nl.entreco.domain.model.players.Player
@@ -13,6 +14,14 @@ import nl.entreco.domain.model.players.Player
  */
 class EditPlayerBindings {
     companion object {
+
+        @JvmStatic
+        @BindingAdapter("selectAll")
+        fun selectAll(view: TextView, focus: Boolean) {
+            view.setSelectAllOnFocus(focus)
+            view.requestFocus()
+        }
+
         @JvmStatic
         @BindingAdapter("filteredPlayers", "clicker")
         fun showFilteredPlayers(view: ViewGroup, players: List<Player>, clicker: ExistingPlayerSelectedClicker) {

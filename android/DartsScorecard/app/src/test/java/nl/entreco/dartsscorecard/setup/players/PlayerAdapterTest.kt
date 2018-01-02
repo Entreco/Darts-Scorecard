@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,5 +52,17 @@ class PlayerAdapterTest {
     fun `it should NOT bind when item is null`() {
         subject.onBindViewHolder(null, 0)
         verifyZeroInteractions(mockPlayerViewHolder)
+    }
+
+    @Test
+    fun `it should replace existing player`() {
+        subject.replacePlayer("Player 1", "two")
+        assertTrue(subject.playersMap().map { it.name.get() }.contains("two"))
+    }
+
+    @Test(expected = NoSuchElementException::class)
+    fun `it should throw exception if replace non-existing player`() {
+        subject.replacePlayer("player that does not exist", "two")
+        assertTrue(subject.playersMap().map { it.name.get() }.contains("two"))
     }
 }

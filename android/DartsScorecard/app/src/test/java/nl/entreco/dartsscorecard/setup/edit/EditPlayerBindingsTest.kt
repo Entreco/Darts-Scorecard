@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.setup.edit
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
@@ -21,6 +22,7 @@ class EditPlayerBindingsTest {
 
     @Mock private lateinit var mockViewGroup: ViewGroup
     @Mock private lateinit var mockRoot: View
+    @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockClicker: ExistingPlayerSelectedClicker
     @Mock private lateinit var mockBinding: ExistingPlayerViewBinding
 
@@ -61,6 +63,13 @@ class EditPlayerBindingsTest {
 
         EditPlayerBindings.bind(mockBinding, expectedPlayer, mockClicker, mockViewGroup)
         verify(mockViewGroup).addView(mockRoot)
+    }
+
+    @Test
+    fun `it should select all on Focus`() {
+        EditPlayerBindings.selectAll(mockTextView, true)
+        verify(mockTextView).setSelectAllOnFocus(true)
+        verify(mockTextView).requestFocus()
     }
 
     private fun givenPlayer(name: String): Player {

@@ -4,9 +4,10 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.executors.TestBackground
 import nl.entreco.domain.executors.TestForeground
-import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.launch.TeamNamesString
+import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
+import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -18,8 +19,8 @@ import org.mockito.MockitoAnnotations
 class ExtractTeamsUsecaseTest {
 
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
-    @Mock private lateinit var mockOk: (TeamIdsString)->Unit
-    @Mock private lateinit var mockFail: (Throwable)->Unit
+    @Mock private lateinit var mockOk: (TeamIdsString) -> Unit
+    @Mock private lateinit var mockFail: (Throwable) -> Unit
     private lateinit var subject: ExtractTeamsUsecase
 
     private val bg = TestBackground()
@@ -33,9 +34,16 @@ class ExtractTeamsUsecaseTest {
     }
 
     @Test
-    fun start() {
+    fun `it should extract teams, and create for non-existing players`() {
         givenTeams("remco,piet|henk")
         whenStartingUsecase()
+        thenCallbackIsNotified("0,1|2")
+    }
+
+    @Test
+    fun `it should extract teams for existing players`() {
+        givenTeams("remco,piet|henk")
+        whenStartingUsecaseWithExisting()
         thenCallbackIsNotified("0,1|2")
     }
 
@@ -47,6 +55,13 @@ class ExtractTeamsUsecaseTest {
         for ((count, player) in givenTeamNames.toPlayerNames().withIndex()) {
             whenever(mockPlayerRepository.fetchByName(player)).thenReturn(null)
             whenever(mockPlayerRepository.create(player, 0)).thenReturn(count.toLong())
+        }
+        subject.exec(givenTeamNames, mockOk, mockFail)
+    }
+
+    private fun whenStartingUsecaseWithExisting() {
+        for ((count, player) in givenTeamNames.toPlayerNames().withIndex()) {
+            whenever(mockPlayerRepository.fetchByName(player)).thenReturn(Player(player, count.toLong()))
         }
         subject.exec(givenTeamNames, mockOk, mockFail)
     }

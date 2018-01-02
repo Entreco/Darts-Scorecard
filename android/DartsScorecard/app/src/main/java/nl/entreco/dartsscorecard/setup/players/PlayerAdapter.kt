@@ -47,7 +47,7 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
 
     private fun updateTeamCount() {
         items.forEach {
-            it.onTeamsUpdated(itemCount)
+            it.onTeamsUpdated(itemCount + 1)
         }
         tryNotifyItemRangeChanged(0, itemCount)
     }

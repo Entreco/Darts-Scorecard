@@ -2,13 +2,10 @@ package nl.entreco.dartsscorecard.setup.settings
 
 import android.widget.Adapter
 import android.widget.AdapterView
+import android.widget.SeekBar
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.dartsscorecard.setup.Setup01ViewModel
-import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.TeamIdsString
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -22,6 +19,7 @@ class SettingsViewModelTest {
 
     @Mock private lateinit var mockAdapterView: AdapterView<*>
     @Mock private lateinit var mockAdapter: Adapter
+    @Mock private lateinit var mockSeekbar: SeekBar
 
     private lateinit var subject: SettingsViewModel
 
@@ -60,6 +58,29 @@ class SettingsViewModelTest {
         thenNumberOfLegsIs(subject.startLegs)
     }
 
+    @Test
+    fun `it should update legs progress`() {
+        givenSetupViewModel()
+        whenLegsChanged(6)
+        verify(mockSeekbar).progress = 6
+    }
+
+    @Test
+    fun `it should update sets progress`() {
+        givenSetupViewModel()
+        whenSetsChanged(8)
+        verify(mockSeekbar).progress = 8
+    }
+
+    @Test
+    fun `it should generate correct request`() {
+        givenSetupViewModel()
+        givenOnStartScoreSelected(0, arrayOf("501"))
+        whenLegProgressChanged(6)
+        whenSetProgressChanged(8)
+        thenRequestIs(0, 501, 6+1, 8+1)
+    }
+
     private fun givenSetupViewModel() {
         subject = SettingsViewModel()
     }
@@ -78,6 +99,14 @@ class SettingsViewModelTest {
         subject.onLegsProgressChanged(progress)
     }
 
+    private fun whenLegsChanged(delta: Int) {
+        subject.onLegsChanged(mockSeekbar, delta)
+    }
+
+    private fun whenSetsChanged(delta: Int) {
+        subject.onSetsChanged(mockSeekbar, delta)
+    }
+
     private fun thenStartScoreEquals(expected: Int) {
         assertEquals(expected, subject.startScore.get())
     }
@@ -85,7 +114,16 @@ class SettingsViewModelTest {
     private fun thenNumberOfSetsIs(expected: Int) {
         assertEquals(expected, subject.numSets.get())
     }
+
     private fun thenNumberOfLegsIs(expected: Int) {
         assertEquals(expected, subject.numLegs.get())
+    }
+
+    private fun thenRequestIs(index: Int, score: Int, legs: Int, sets: Int) {
+        val request = subject.setupRequest()
+        assertEquals(index, request.startIndex)
+        assertEquals(score, request.startScore)
+        assertEquals(legs, request.numLegs)
+        assertEquals(sets, request.numSets)
     }
 }
