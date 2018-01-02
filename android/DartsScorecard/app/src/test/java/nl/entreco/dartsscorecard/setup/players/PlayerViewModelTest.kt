@@ -1,8 +1,11 @@
 package nl.entreco.dartsscorecard.setup.players
 
+import android.widget.AdapterView
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -11,26 +14,19 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class PlayerViewModelTest {
 
+    @Mock private lateinit var mockAdapter : AdapterView<*>
     private lateinit var subject: PlayerViewModel
 
     @Test
     fun `it should have correct name`() {
         givenSubject(0)
-        thenPlayerNameIs("Player 1")
+        thenPlayerNameIs("Player 0")
     }
 
     @Test
     fun `it should have correct teamIndex`() {
         givenSubject(0)
         thenTeamIndexIs(0)
-    }
-
-    @Test
-    fun `it should update teams array when teams have been added`() {
-        givenSubject(1)
-        whenAddingNewPlayers(4)
-        thenTeamIndices(1, 2, 3, 4)
-        andTeamIndexStillIs(1)
     }
 
     @Test
@@ -44,13 +40,9 @@ class PlayerViewModelTest {
         subject = PlayerViewModel(index)
     }
 
-    private fun whenAddingNewPlayers(count: Int) {
-        subject.onTeamsUpdated(count)
-        subject.onTeamSelected(0)
-    }
-
     private fun whenTeamIndexSelected(expectedIndex: Int) {
-        subject.onTeamSelected(expectedIndex)
+        whenever(mockAdapter.getItemAtPosition(expectedIndex)).thenReturn(expectedIndex)
+        subject.onTeamSelected(mockAdapter, expectedIndex)
     }
 
     private fun thenPlayerNameIs(expectedName: String) {
@@ -59,15 +51,5 @@ class PlayerViewModelTest {
 
     private fun thenTeamIndexIs(expectedIndex: Int) {
         assertEquals(expectedIndex, subject.teamIndex.get())
-    }
-
-    private fun thenTeamIndices(vararg indices: Int) {
-        indices.forEachIndexed { index, _ ->
-            assertEquals(indices[index], subject.teams[index])
-        }
-    }
-
-    private fun andTeamIndexStillIs(expectedIndex: Int) {
-        thenTeamIndexIs(expectedIndex)
     }
 }

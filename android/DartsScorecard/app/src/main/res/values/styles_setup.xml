@@ -52,9 +52,17 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Setup.Entry.Spinner" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
+    <style name="Setup.Entry.Spinner">
+        <item name="android:background">@drawable/score_spinner</item>
+        <item name="android:textColor">?attr/header_text_color</item>
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Setup.Spinner" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:background">@drawable/score_pts</item>
         <item name="android:textColor">?attr/scoreText</item>
+        <item name="android:alpha">0</item>
         <item name="android:padding">@dimen/def</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>

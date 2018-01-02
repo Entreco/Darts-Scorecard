@@ -40,9 +40,10 @@ class EditPlayerActivity : ViewModelActivity() {
         const val REQUEST_CODE = 1002
 
         @JvmStatic
-        fun start(activity: Activity, suggestion: CharSequence) {
+        fun start(activity: Activity, suggestion: CharSequence, teamIndex: Int) {
             val intent = Intent(activity, EditPlayerActivity::class.java)
             intent.putExtra("suggestion", suggestion)
+            intent.putExtra("teamIndex", teamIndex)
             activity.startActivityForResult(intent, REQUEST_CODE)
         }
     }

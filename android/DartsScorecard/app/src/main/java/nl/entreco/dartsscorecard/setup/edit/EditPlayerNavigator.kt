@@ -14,6 +14,7 @@ class EditPlayerNavigator(private val activity: EditPlayerActivity) : ExistingPl
         intent.putExtra("oldName", activity.intent.getStringExtra("suggestion"))
         intent.putExtra("playerName", player.name)
         intent.putExtra("playerId", player.id)
+        intent.putExtra("teamIndex", activity.intent.getIntExtra("teamIndex", -1))
         activity.setResult(RESULT_OK, intent)
         activity.finish()
     }

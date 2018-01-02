@@ -16,9 +16,10 @@ class EditPlayerBindings {
     companion object {
 
         @JvmStatic
-        @BindingAdapter("selectAll")
-        fun selectAll(view: TextView, focus: Boolean) {
-            view.setSelectAllOnFocus(focus)
+        @BindingAdapter("suggestion")
+        fun selectAll(view: TextView, suggestedName: String) {
+            view.text = suggestedName
+            view.setSelectAllOnFocus(true)
             view.requestFocus()
         }
 

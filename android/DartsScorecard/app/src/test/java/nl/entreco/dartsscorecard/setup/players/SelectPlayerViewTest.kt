@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class SelectPlayerViewTest {
     @Mock private lateinit var mockBinding: SelectPlayerViewBinding
     @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockEntries: MutableList<Int>
     @Mock private lateinit var mockNavigator: Setup01Navigator
     @Mock private lateinit var mockViewModel: PlayerViewModel
     private lateinit var subject: SelectPlayerView
@@ -30,9 +31,10 @@ class SelectPlayerViewTest {
 
     @Test
     fun bind() {
-        subject.bind(mockViewModel, mockNavigator)
+        subject.bind(mockViewModel, mockNavigator, mockEntries)
         verify(mockBinding).player = mockViewModel
         verify(mockBinding).navigator = mockNavigator
+        verify(mockBinding).entries = mockEntries
         verify(mockBinding).executePendingBindings()
     }
 

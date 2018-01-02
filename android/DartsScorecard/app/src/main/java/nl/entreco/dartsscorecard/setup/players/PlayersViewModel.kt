@@ -37,7 +37,7 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter, private v
         }
     }
 
-    fun handlePlayerUpdated(oldName: String, playerName: String) {
-        adapter.replacePlayer(oldName, playerName)
+    fun handlePlayerUpdated(oldName: String, playerName: String, teamIndex: Int) {
+        adapter.replacePlayer(oldName, playerName, teamIndex)
     }
 }

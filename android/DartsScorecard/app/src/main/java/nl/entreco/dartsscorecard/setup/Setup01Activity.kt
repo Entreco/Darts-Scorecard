@@ -41,7 +41,8 @@ class Setup01Activity : ViewModelActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == EditPlayerActivity.REQUEST_CODE) {
             val oldName = data?.getStringExtra("oldName")!!
             val playerName = data.getStringExtra("playerName")!!
-            playersViewModel.handlePlayerUpdated(oldName, playerName)
+            val teamIndex = data.getIntExtra("teamIndex", -1)
+            playersViewModel.handlePlayerUpdated(oldName, playerName, teamIndex)
         }
     }
 

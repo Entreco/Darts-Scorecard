@@ -37,18 +37,17 @@
                 android:text="@string/start_score" />
 
             <TextView
-                style="@style/Setup.Entry.Value"
+                style="@style/Setup.Entry.Spinner"
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="@{@string/number(viewModel.startScore)}" />
 
             <android.support.v7.widget.AppCompatSpinner
-                style="@style/Setup.Entry.Spinner"
+                style="@style/Setup.Spinner"
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:alpha="0"
                 android:entries="@array/x01"
                 android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onStartScoreSelected(adapter,index)}" />
         </RelativeLayout>

@@ -12,11 +12,11 @@ import nl.entreco.domain.repository.RetrieveGameRequest
 class Setup01Navigator(private val activity: Setup01Activity) {
 
     fun onEditPlayerName(player: PlayerViewModel) {
-        EditPlayerActivity.start(activity, player.name.get())
+        EditPlayerActivity.start(activity, player.name.get(), player.teamIndex.get())
     }
 
     fun onAddNewPlayer(adapter: PlayerAdapter) {
-        EditPlayerActivity.start(activity, adapter.onAddPlayer())
+        EditPlayerActivity.start(activity, adapter.onAddPlayer(), adapter.itemCount)
     }
 
     fun launch(req: RetrieveGameRequest) {

@@ -37,8 +37,8 @@
             android:imeOptions="actionDone"
             android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
             android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
-            app:selectAll="@{true}"
-            android:text="@{viewModel.suggestedName}"
+            android:selectAllOnFocus="true"
+            app:suggestion="@{viewModel.suggestedName}"
             android:textColor="?attr/nameText" />
 
         <TextView

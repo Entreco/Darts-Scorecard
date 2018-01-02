@@ -14,6 +14,7 @@ import javax.inject.Inject
 class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator) : TestableAdapter<SelectPlayerView>(), AddPlayerClicker {
 
     private val items = mutableListOf<PlayerViewModel>()
+    private val teams = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
         return createPlayer(parent)
@@ -26,7 +27,7 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
     }
 
     override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
-        holder?.bind(items[position], navigator)
+        holder?.bind(items[position], navigator, teams)
     }
 
     override fun getItemCount(): Int {
@@ -34,8 +35,7 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
     }
 
     override fun onAddPlayer(): String {
-        updateTeamCount()
-        return addPlayerNumber(itemCount)
+        return addPlayerNumber(itemCount + 1)
     }
 
     private fun addPlayerNumber(index: Int): String {
@@ -46,9 +46,8 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
     }
 
     private fun updateTeamCount() {
-        items.forEach {
-            it.onTeamsUpdated(itemCount + 1)
-        }
+        teams.clear()
+        teams += 1..itemCount
         tryNotifyItemRangeChanged(0, itemCount)
     }
 
@@ -56,10 +55,13 @@ class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator)
         return items.toTypedArray()
     }
 
-    fun replacePlayer(oldPlayerName: String, newPlayerName: String) {
+    fun replacePlayer(oldPlayerName: String, newPlayerName: String, teamIndex: Int) {
         val pvm = items.first { it.name.get() == oldPlayerName }
         val index = items.indexOf(pvm)
         pvm.name.set(newPlayerName)
+        pvm.teamIndex.set(teamIndex)
+
+        updateTeamCount()
         tryNotifyItemChanged(index)
     }
 }

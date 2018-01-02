@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup
 
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.setup.players.PlayerAdapter
@@ -21,6 +22,7 @@ class Setup01NavigatorTest {
 
     @Mock private lateinit var mockActivity: Setup01Activity
     @Mock private lateinit var mockName: ObservableField<String>
+    @Mock private lateinit var mockTeamIndex: ObservableInt
     @Mock private lateinit var mockPlayerViewModel: PlayerViewModel
     @Mock private lateinit var mockAdapter: PlayerAdapter
     private lateinit var subject: Setup01Navigator
@@ -29,6 +31,8 @@ class Setup01NavigatorTest {
     fun onEditPlayerName() {
         whenever(mockPlayerViewModel.name).thenReturn(mockName)
         whenever(mockName.get()).thenReturn("another name")
+        whenever(mockPlayerViewModel.teamIndex).thenReturn(mockTeamIndex)
+        whenever(mockTeamIndex.get()).thenReturn(4)
         givenSubject()
         subject.onEditPlayerName(mockPlayerViewModel)
         verify(mockPlayerViewModel).name
@@ -37,6 +41,7 @@ class Setup01NavigatorTest {
     @Test
     fun onAddNewPlayer() {
         whenever(mockAdapter.onAddPlayer()).thenReturn("some name")
+        whenever(mockAdapter.itemCount).thenReturn(1)
         givenSubject()
         subject.onAddNewPlayer(mockAdapter)
         verify(mockAdapter).onAddPlayer()

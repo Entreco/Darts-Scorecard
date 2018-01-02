@@ -45,7 +45,7 @@ class PlayerAdapterTest {
     @Test
     fun `it should bind to correct item`() {
         subject.onBindViewHolder(mockPlayerViewHolder, 0)
-        verify(mockPlayerViewHolder).bind(any(), eq(mockNavigator))
+        verify(mockPlayerViewHolder).bind(any(), eq(mockNavigator), any())
     }
 
     @Test
@@ -56,13 +56,13 @@ class PlayerAdapterTest {
 
     @Test
     fun `it should replace existing player`() {
-        subject.replacePlayer("Player 1", "two")
+        subject.replacePlayer("Player 1", "two", 2)
         assertTrue(subject.playersMap().map { it.name.get() }.contains("two"))
     }
 
     @Test(expected = NoSuchElementException::class)
     fun `it should throw exception if replace non-existing player`() {
-        subject.replacePlayer("player that does not exist", "two")
+        subject.replacePlayer("player that does not exist", "two", 2)
         assertTrue(subject.playersMap().map { it.name.get() }.contains("two"))
     }
 }
