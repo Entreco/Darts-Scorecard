@@ -8,6 +8,10 @@
         <variable
             name="player"
             type="nl.entreco.dartsscorecard.setup.players.PlayerViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
     </data>
 
     <RelativeLayout
@@ -22,7 +26,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/teamIndex"
             android:gravity="start"
-            android:onClick="@{(v) -> player.onEditPlayerName(v)}"
+            android:onClick="@{() -> navigator.onEditPlayerName(player)}"
             android:text="@{player.name}" />
 
         <TextView

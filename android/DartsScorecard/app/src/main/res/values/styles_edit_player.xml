@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditPlayer">
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="EditPlayer.Edit">
+        <item name="android:textSize">46sp</item>
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:inputType">textPersonName|textNoSuggestions</item>
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:textColor">?attr/nameText</item>
+    </style>
+
+    <style name="EditPlayer.Existing">
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:background">@drawable/score_name</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="EditPlayer.Hdr">
+        <item name="android:background">@drawable/score_header</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:textColor">?attr/header_text_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="EditPlayer.Middle">
+        <item name="android:background">@drawable/score_header_middle</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:textColor">?attr/header_text_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

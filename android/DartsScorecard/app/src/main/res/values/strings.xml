@@ -18,6 +18,7 @@
     <string name="score_180">180</string>
     <string name="tap_to_resume">Tap to Resume</string>
     <string name="resume">Resume</string>
+    <string name="save">Save</string>
 
     <string-array name="x01">
         <item>101</item>
@@ -32,8 +33,13 @@
         <item>1001</item>
     </string-array>
 
+    <!-- Title -->
+    <string name="title_select_player">Select Player</string>
+
     <!-- Setup -->
     <string name="select_players">Select Players</string>
+    <string name="enter_player_name">Enter New Player name</string>
+    <string name="choose_existing_player">Or choose existing players</string>
     <string name="team">Team</string>
     <string name="add_player">Click to add player</string>
     <string name="select_x01_score">Select x01 score</string>

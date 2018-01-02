@@ -19,6 +19,10 @@
         <variable
             name="settingsViewModel"
             type="nl.entreco.dartsscorecard.setup.settings.SettingsViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
     </data>
 
     <ScrollView
@@ -49,7 +53,7 @@
                 style="@style/Setup.Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onStartPressed(context, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
+                android:onClick="@{() -> viewModel.onStartPressed(navigator, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
                 android:text="@string/cont" />
 
         </LinearLayout>

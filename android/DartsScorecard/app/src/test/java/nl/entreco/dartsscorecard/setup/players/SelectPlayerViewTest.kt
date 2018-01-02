@@ -4,10 +4,9 @@ import android.view.View
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
-import org.junit.Test
-
-import org.junit.Assert.*
+import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -17,10 +16,11 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class SelectPlayerViewTest {
-    @Mock private lateinit var mockBinding : SelectPlayerViewBinding
-    @Mock private lateinit var mockView : View
-    @Mock private lateinit var mockViewModel : PlayerViewModel
-    private lateinit var subject : SelectPlayerView
+    @Mock private lateinit var mockBinding: SelectPlayerViewBinding
+    @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockNavigator: Setup01Navigator
+    @Mock private lateinit var mockViewModel: PlayerViewModel
+    private lateinit var subject: SelectPlayerView
 
     @Before
     fun setUp() {
@@ -30,8 +30,9 @@ class SelectPlayerViewTest {
 
     @Test
     fun bind() {
-        subject.bind(mockViewModel)
+        subject.bind(mockViewModel, mockNavigator)
         verify(mockBinding).player = mockViewModel
+        verify(mockBinding).navigator = mockNavigator
         verify(mockBinding).executePendingBindings()
     }
 

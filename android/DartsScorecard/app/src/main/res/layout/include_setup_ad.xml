@@ -29,24 +29,14 @@
             android:text="@string/sponsored_by" />
 
         <!-- Ad -->
-        <FrameLayout
+        <com.google.android.gms.ads.AdView
+            style="@style/Setup.Ad"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <com.google.android.gms.ads.AdView
-                style="@style/Setup.Ad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ads:adSize="SMART_BANNER"
-                ads:adUnitId="@string/setup_ad_unit_id"
-                app:adListener="@{viewModel.adLoader}"
-                app:loadAdd="@{viewModel.loadAd}" />
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/setup_ad_unit_id"
+            app:adListener="@{viewModel.adLoader}"
+            app:loadAdd="@{viewModel.loadAd}" />
 
         <!-- Footer -->
         <TextView style="@style/Setup.Ftr" />

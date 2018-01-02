@@ -1,8 +1,6 @@
 package nl.entreco.dartsscorecard.setup
 
-import android.content.Context
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.launch.usecase.CreateGameUsecase
@@ -17,14 +15,14 @@ import javax.inject.Inject
  */
 class Setup01ViewModel @Inject constructor(private val createGameUsecase: CreateGameUsecase, private val extractTeamsUsecase: ExtractTeamsUsecase, private val logger: Logger) : BaseViewModel() {
 
-    fun onStartPressed(context: Context, setup: CreateGameRequest, teams: TeamNamesString) {
+    fun onStartPressed(navigator: Setup01Navigator, setup: CreateGameRequest, teams: TeamNamesString) {
         ensureTeamPlayersExist(teams, {
-            createNewGame(setup, it, onGameCreated(context), onGameCreatedFailed())
+            createNewGame(setup, it, onGameCreated(navigator), onGameCreatedFailed())
         }, onGameCreatedFailed())
     }
 
-    private fun onGameCreated(context: Context): (RetrieveGameRequest) -> Unit =
-            { req -> Play01Activity.startGame(context, req) }
+    private fun onGameCreated(navigator: Setup01Navigator): (RetrieveGameRequest) -> Unit =
+            { req -> navigator.launch(req) }
 
     private fun onGameCreatedFailed(): (Throwable) -> Unit = { err ->
         logger.w("Unable to create game $err")

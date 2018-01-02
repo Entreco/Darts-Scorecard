@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.setup
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import nl.entreco.dartsscorecard.databinding.ActivitySetup01Binding
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.setup.ad.AdViewModel
+import nl.entreco.dartsscorecard.setup.edit.EditPlayerActivity
 import nl.entreco.dartsscorecard.setup.players.PlayersViewModel
 import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel
 
@@ -18,7 +20,7 @@ import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel
  */
 class Setup01Activity : ViewModelActivity() {
 
-    private val component: Setup01Component by componentProvider { it.plus(Setup01Module()) }
+    private val component: Setup01Component by componentProvider { it.plus(Setup01Module(this)) }
     private val viewModel: Setup01ViewModel by viewModelProvider { component.viewModel() }
     private val playersViewModel: PlayersViewModel by viewModelProvider { component.players() }
     private val adsViewModel: AdViewModel by viewModelProvider { component.ads() }
@@ -31,6 +33,17 @@ class Setup01Activity : ViewModelActivity() {
         binding.playersViewModel = playersViewModel
         binding.adsViewModel = adsViewModel
         binding.settingsViewModel = settingsViewModel
+        binding.navigator = Setup01Navigator(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == EditPlayerActivity.REQUEST_CODE) {
+            val oldName = data?.getStringExtra("oldName")
+            val playerName = data?.getStringExtra("playerName")
+            val playerId = data?.getLongExtra("playerId", -1)
+            playersViewModel.handlePlayerUpdated(oldName, playerName, playerId)
+        }
     }
 
     companion object {

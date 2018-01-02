@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup.players
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.model.players.PlayerSeperator
 import nl.entreco.domain.model.players.TeamSeperator
@@ -9,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 29/12/2017.
  */
-class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseViewModel() {
+class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter, private val logger: Logger) : BaseViewModel() {
 
     fun setupTeams(): TeamNamesString {
         val teamString = StringBuilder()
@@ -34,5 +35,10 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
                 teamString.append(PlayerSeperator)
             }
         }
+    }
+
+    fun handlePlayerUpdated(oldName: String?, playerName: String?, playerId: Long?) {
+        logger.w("handlePlayerUpdated: $playerName ($playerId) -> was $oldName")
+        adapter.replacePlayer(oldName, playerName, playerId)
     }
 }

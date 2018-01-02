@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup.players
 
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -15,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class PlayersViewModelTest {
 
     @Mock private lateinit var mockAdapter: PlayerAdapter
+    @Mock private lateinit var mockLogger: Logger
     private lateinit var subject: PlayersViewModel
 
     @Test
@@ -81,7 +83,7 @@ class PlayersViewModelTest {
     }
 
     private fun givenSubject() {
-        subject = PlayersViewModel(mockAdapter)
+        subject = PlayersViewModel(mockAdapter, mockLogger)
     }
 
     private fun givenPlayersMap(vararg players: TeamPlayer) {

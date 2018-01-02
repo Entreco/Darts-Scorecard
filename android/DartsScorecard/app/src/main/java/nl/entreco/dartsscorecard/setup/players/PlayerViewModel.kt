@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.setup.players
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.view.View
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -33,9 +32,5 @@ class PlayerViewModel(teamIndex: Int, name: String = "Player ${teamIndex + 1}") 
         updating.set(true)
         teams.clear()
         teams += 1..itemCount
-    }
-
-    fun onEditPlayerName(view: View) {
-
     }
 }

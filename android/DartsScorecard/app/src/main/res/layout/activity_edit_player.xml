@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.setup.edit.EditPlayerViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.setup.edit.EditPlayerNavigator" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            app:existingPlayers="@{viewModel.existingPlayers}"
+            app:clicker="@{navigator}">
+
+            <TextView
+                style="@style/EditPlayer.Hdr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enter_player_name" />
+
+            <EditText
+                style="@style/EditPlayer.Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_player"
+                android:imeOptions="actionDone"
+                android:imeActionId="6"
+                android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
+                android:selectAllOnFocus="true"
+                android:text="@{viewModel.suggestedName}"
+                android:textColor="?attr/nameText" />
+
+            <TextView
+                style="@style/EditPlayer.Middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_existing_player"
+                android:visibility="@{viewModel.existingPlayers.isEmpty() ? View.GONE: View.VISIBLE}" />
+
+            <!-- Footer -->
+            <TextView style="@style/Setup.Ftr" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>

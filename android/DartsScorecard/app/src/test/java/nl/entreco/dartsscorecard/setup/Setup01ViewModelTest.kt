@@ -1,11 +1,6 @@
 package nl.entreco.dartsscorecard.setup
 
-import android.content.Context
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.dartsscorecard.play.Play01Activity
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.launch.usecase.CreateGameUsecase
@@ -16,7 +11,6 @@ import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.exceptions.misusing.NotAMockException
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -28,7 +22,7 @@ class Setup01ViewModelTest {
     @Mock private lateinit var mockExtractTeamUsecase: ExtractTeamsUsecase
     @Mock private lateinit var mockCreateGameUsecase: CreateGameUsecase
     @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockContext: Context
+    @Mock private lateinit var mockNavigator: Setup01Navigator
 
     private val teamExtractDoneCaptor = argumentCaptor<(TeamIdsString) -> Unit>()
     private val teamExtractFailCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -77,7 +71,7 @@ class Setup01ViewModelTest {
     }
 
     private fun givenStartNewGamePressed() {
-        subject.onStartPressed(mockContext, givenCreateRequest, givenTeamNamesString)
+        subject.onStartPressed(mockNavigator, givenCreateRequest, givenTeamNamesString)
     }
 
     private fun whenTeamExists() {
@@ -101,14 +95,12 @@ class Setup01ViewModelTest {
     }
 
     private fun thenPlay01ActivityIsLaunched() {
-        try {
-            verify(Play01Activity).startGame(mockContext, givenRetrieveGameRequest)
-        } catch (ignore: NotAMockException) {
-        }
+        verify(mockNavigator).launch(givenRetrieveGameRequest)
+
     }
 
     private fun thenPlay01ActivityIsNotLaunched() {
-        // Unable to verify
+        verifyZeroInteractions(mockNavigator)
     }
 
     private fun anyBecauseRandom(): TeamNamesString = any()

@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
+import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayerAdapter @Inject constructor() : TestableAdapter<SelectPlayerView>(), AddPlayerClicker {
+class PlayerAdapter @Inject constructor(private val navigator: Setup01Navigator) : TestableAdapter<SelectPlayerView>(), AddPlayerClicker {
 
     private val items = mutableListOf<PlayerViewModel>()
 
@@ -29,7 +30,7 @@ class PlayerAdapter @Inject constructor() : TestableAdapter<SelectPlayerView>(),
     }
 
     override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
-        holder?.bind(items[position])
+        holder?.bind(items[position], navigator)
     }
 
     override fun getItemCount(): Int {
@@ -55,5 +56,12 @@ class PlayerAdapter @Inject constructor() : TestableAdapter<SelectPlayerView>(),
 
     fun playersMap(): Array<PlayerViewModel> {
         return items.toTypedArray()
+    }
+
+    fun replacePlayer(oldName: String?, playerName: String?, playerId: Long?) {
+        val pvm = items.first { it.name.get() == oldName }
+        val index = items.indexOf(pvm)
+        pvm.name.set(playerName)
+        tryNotifyItemChanged(index)
     }
 }

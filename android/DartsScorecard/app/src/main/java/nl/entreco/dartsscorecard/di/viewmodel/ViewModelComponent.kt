@@ -6,6 +6,8 @@ import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
+import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
+import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.di.viewmodel.db.GameDbModule
@@ -24,5 +26,6 @@ interface ViewModelComponent {
     // Where can this be used
     fun plus(module: LaunchModule): LaunchComponent
     fun plus(module: Setup01Module): Setup01Component
+    fun plus(module: EditPlayerModule): EditPlayerComponent
     fun plus(module: Play01Module): Play01Component
 }
