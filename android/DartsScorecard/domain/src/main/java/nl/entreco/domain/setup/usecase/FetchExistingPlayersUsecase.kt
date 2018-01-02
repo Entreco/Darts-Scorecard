@@ -1,4 +1,4 @@
-package nl.entreco.domain.setup
+package nl.entreco.domain.setup.usecase
 
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.executors.Background

@@ -6,19 +6,23 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.setup.FetchExistingPlayersUsecase
+import nl.entreco.domain.setup.usecase.CreatePlayerRequest
+import nl.entreco.domain.setup.usecase.CreatePlayerUsecase
+import nl.entreco.domain.setup.usecase.FetchExistingPlayersUsecase
 import javax.inject.Inject
 import javax.inject.Named
 
 /**
  * Created by Entreco on 02/01/2018.
  */
-class EditPlayerViewModel @Inject constructor(@Named("suggestion") suggestedName: String,
+class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: CreatePlayerUsecase,
+                                              @Named("suggestion") suggestedName: String,
                                               fetchExistingPlayersUsecase: FetchExistingPlayersUsecase)
     : BaseViewModel() {
 
-    val existingPlayers = ObservableArrayList<Player>()
+    val filteredPlayers = ObservableArrayList<Player>()
     val suggestedName = ObservableField<String>(suggestedName)
+    private val allPlayers = emptyList<Player>().toMutableList()
 
     init {
         fetchExistingPlayersUsecase.exec(
@@ -28,18 +32,33 @@ class EditPlayerViewModel @Inject constructor(@Named("suggestion") suggestedName
     }
 
     private fun onPlayersFailed() {
-        existingPlayers.clear()
+        allPlayers.clear()
+        filteredPlayers.clear()
     }
 
     private fun onPlayersRetrieved(players: List<Player>) {
-        existingPlayers.addAll(players)
+        allPlayers.addAll(players)
+        filteredPlayers.addAll(players)
+    }
+
+    fun filter(text: CharSequence) {
+        val filter = allPlayers.filter { it.name.startsWith(text) }
+        filteredPlayers.clear()
+        filteredPlayers.addAll(filter)
     }
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNavigator): Boolean {
         if (action == EditorInfo.IME_ACTION_DONE) {
-            navigator.onSelected(view, Player(view.text.toString()))
+            createPlayerUsecase.exec(CreatePlayerRequest(view.text.toString(), 16),
+                    onCreateSuccess(navigator, view),
+                    onCreateFailed())
             return true
         }
         return false
     }
+
+    private fun onCreateSuccess(navigator: EditPlayerNavigator, view: TextView): (Player) -> Unit =
+            { player -> navigator.onSelected(view, player) }
+
+    private fun onCreateFailed(): (Throwable) -> Unit = { }
 }

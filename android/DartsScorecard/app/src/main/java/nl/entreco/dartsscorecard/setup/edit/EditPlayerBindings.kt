@@ -14,13 +14,14 @@ import nl.entreco.domain.model.players.Player
 class EditPlayerBindings {
     companion object {
         @JvmStatic
-        @BindingAdapter("existingPlayers", "clicker")
-        fun showExistingPlayers(view: ViewGroup, players: List<Player>, clicker: ExistingPlayerSelectedClicker) {
+        @BindingAdapter("filteredPlayers", "clicker")
+        fun showFilteredPlayers(view: ViewGroup, players: List<Player>, clicker: ExistingPlayerSelectedClicker) {
+            view.removeAllViews()
             players.forEach {
                 val binding = DataBindingUtil.inflate<ExistingPlayerViewBinding>(LayoutInflater.from(view.context), R.layout.existing_player_view, view, false)
                 binding.player = it
                 binding.clicker = clicker
-                view.addView(binding.root, view.childCount - 1)
+                view.addView(binding.root)
             }
         }
     }

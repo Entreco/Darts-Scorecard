@@ -7,6 +7,7 @@ import nl.entreco.domain.executors.TestBackground
 import nl.entreco.domain.executors.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
+import nl.entreco.domain.setup.usecase.FetchExistingPlayersUsecase
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
