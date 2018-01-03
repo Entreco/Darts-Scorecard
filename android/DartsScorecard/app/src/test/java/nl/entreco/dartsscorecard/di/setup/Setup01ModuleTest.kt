@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.di.setup
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -15,6 +16,12 @@ import org.mockito.junit.MockitoJUnitRunner
 class Setup01ModuleTest {
 
     @Mock private lateinit var mockActivity: Setup01Activity
+    private lateinit var subject : Setup01Module
+    
+    @Before
+    fun setUp() {
+        subject = Setup01Module(mockActivity)
+    }
 
     @Test
     fun provideNavigator() {
@@ -31,7 +38,7 @@ class Setup01ModuleTest {
         assertEquals(givenEditor(), givenNavigator())
     }
 
-    private fun givenNavigator() = Setup01Module(mockActivity).provideNavigator()
+    private fun givenNavigator() = subject.provideNavigator()
 
-    private fun givenEditor() = Setup01Module(mockActivity).providePlayerEditor()
+    private fun givenEditor() = subject.providePlayerEditor()
 }
