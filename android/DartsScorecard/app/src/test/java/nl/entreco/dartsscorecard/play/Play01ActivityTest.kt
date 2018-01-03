@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.content.Context
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.repository.CreateGameRequest
@@ -24,6 +25,8 @@ class Play01ActivityTest {
     private val givenTeamString = "1,2|3"
     private val givenTeamIds = TeamIdsString(givenTeamString)
     private val givenCreate = CreateGameRequest(1, 2, 3, 4)
+
+    val subject = spy(Play01Activity())
 
     @Test
     fun `should start Play01Activity`() {

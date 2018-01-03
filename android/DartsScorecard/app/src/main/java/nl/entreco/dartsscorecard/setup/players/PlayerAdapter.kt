@@ -21,6 +21,7 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
         return SelectPlayerView(binding)
     }
 
+    @Synchronized
     override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
         holder?.bind(items[position], editor, teams, position)
     }
@@ -34,20 +35,20 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
         viewModel.name.set(playerName)
         viewModel.teamIndex.set(teamIndex)
         tryNotifyItemChanged(position)
-        updateTeamCount()
     }
 
-    override fun onPlayerAdded(teamIndex: Int, playerName: String) {
-        val viewModel = PlayerViewModel(teamIndex, playerName)
+    override fun onPlayerAdded(playerName: String) {
+        val viewModel = PlayerViewModel(items.size + 1, playerName)
         items.add(viewModel)
-        tryNotifyItemInserted(itemCount)
         updateTeamCount()
+        tryNotifyItemInserted(itemCount)
     }
 
     fun playersMap(): Array<PlayerViewModel> {
         return items.toTypedArray()
     }
 
+    @Synchronized
     private fun updateTeamCount() {
         teams.clear()
         teams += 1..itemCount

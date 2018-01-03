@@ -37,11 +37,10 @@ class PlayerViewModelTest {
         thenTeamIndexIs(4)
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException::class)
     fun `it should update teamIndex with default when Spinner item selected is out of range`() {
         givenSubject(1)
         whenInvalidTeamIndexSelected(4)
-        thenTeamIndexIs(1)
     }
 
     @Test(expected = Exception::class)
@@ -52,6 +51,7 @@ class PlayerViewModelTest {
 
     private fun givenSubject(index: Int) {
         subject = PlayerViewModel(index)
+        subject.onTeamSelected(mockAdapter, index)
     }
 
     private fun whenTeamIndexSelected(expectedIndex: Int) {

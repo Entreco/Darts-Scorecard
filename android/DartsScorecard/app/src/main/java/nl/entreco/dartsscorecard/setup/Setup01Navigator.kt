@@ -25,7 +25,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun onAddNewPlayer(index: Int) {
-        val vm = PlayerViewModel(index)
+        val vm = PlayerViewModel(index + 1)
         editPlayerRequest(activity, vm.name.get(), vm.teamIndex.get(), POSITION_NONE)
     }
 
@@ -37,14 +37,14 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         activity.startActivityForResult(request, REQUEST_CODE)
     }
 
-    override fun handleResult(requestCode: Int, resultCode: Int, data: Intent, callback: PlayerEditor.Callback) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)!!
+    override fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: PlayerEditor.Callback) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
+            val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)
             val teamIndex = data.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE)
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
             if (index == POSITION_NONE) {
-                callback.onPlayerAdded(teamIndex, playerName)
+                callback.onPlayerAdded(playerName)
             } else {
                 callback.onPlayerEdited(index, teamIndex, playerName)
             }

@@ -51,13 +51,13 @@ class PlayerAdapterTest {
     @Test
     fun `it should replace existing player`() {
         givenPlayer("Frankie")
-        subject.onPlayerEdited(0, 1,"new player")
+        subject.onPlayerEdited(0, 1, "new player")
         assertTrue(subject.playersMap().map { it.name.get() }.contains("new player"))
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
     fun `it should throw if replacing non-existing player`() {
-        subject.onPlayerEdited(2, 1,"new player")
+        subject.onPlayerEdited(2, 1, "new player")
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
@@ -67,6 +67,6 @@ class PlayerAdapterTest {
     }
 
     private fun givenPlayer(name: String) {
-        subject.onPlayerAdded(4, name)
+        subject.onPlayerAdded(name)
     }
 }

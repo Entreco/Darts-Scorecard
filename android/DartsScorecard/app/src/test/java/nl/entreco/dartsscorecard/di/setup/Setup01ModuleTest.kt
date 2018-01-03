@@ -17,7 +17,7 @@ class Setup01ModuleTest {
 
     @Mock private lateinit var mockActivity: Setup01Activity
     private lateinit var subject : Setup01Module
-    
+
     @Before
     fun setUp() {
         subject = Setup01Module(mockActivity)

@@ -56,7 +56,7 @@ class Setup01NavigatorTest {
 
         givenSubject()
         subject.handleResult(1002, RESULT_OK, mockIntent, mockCallback)
-        verify(mockCallback).onPlayerAdded(any(), any())
+        verify(mockCallback).onPlayerAdded(any())
     }
 
     @Test

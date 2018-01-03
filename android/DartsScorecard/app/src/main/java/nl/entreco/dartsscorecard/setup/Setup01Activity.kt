@@ -34,12 +34,12 @@ class Setup01Activity : ViewModelActivity() {
         binding.settingsViewModel = settingsViewModel
         binding.navigator = navigator
 
-        navigator.onAddNewPlayer(playersViewModel.adapter.itemCount)
+        navigator.onAddNewPlayer(0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        navigator.handleResult(requestCode, resultCode, data!!, playersViewModel.adapter)
+        navigator.handleResult(requestCode, resultCode, data, playersViewModel.adapter)
     }
 
     companion object {
