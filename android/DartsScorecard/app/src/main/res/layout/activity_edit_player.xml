@@ -38,6 +38,7 @@
             android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
             android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
             android:selectAllOnFocus="true"
+            android:digits="@string/valid_player_characters"
             app:suggestion="@{viewModel.suggestedName}"
             android:textColor="?attr/nameText" />
 

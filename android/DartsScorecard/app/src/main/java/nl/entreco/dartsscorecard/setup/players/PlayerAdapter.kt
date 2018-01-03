@@ -16,10 +16,6 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     private val teams = mutableListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
-        return createPlayer(parent)
-    }
-
-    private fun createPlayer(parent: ViewGroup?): SelectPlayerView {
         val inflater = LazyInflater(parent?.context!!).inflater
         val binding = DataBindingUtil.inflate<SelectPlayerViewBinding>(inflater, R.layout.select_player_view, parent, false)
         return SelectPlayerView(binding)
@@ -31,10 +27,6 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
 
     override fun getItemCount(): Int {
         return items.size
-    }
-
-    fun playersMap(): Array<PlayerViewModel> {
-        return items.toTypedArray()
     }
 
     override fun onPlayerEdited(position: Int, teamIndex: Int, playerName: String) {
@@ -50,6 +42,10 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
         items.add(viewModel)
         tryNotifyItemInserted(itemCount)
         updateTeamCount()
+    }
+
+    fun playersMap(): Array<PlayerViewModel> {
+        return items.toTypedArray()
     }
 
     private fun updateTeamCount() {
