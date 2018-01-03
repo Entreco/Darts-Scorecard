@@ -12,8 +12,12 @@
             type="nl.entreco.dartsscorecard.setup.players.PlayerViewModel" />
 
         <variable
-            name="navigator"
-            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
+            name="editor"
+            type="nl.entreco.dartsscorecard.setup.players.PlayerEditor" />
+
+        <variable
+            name="positionInList"
+            type="Integer" />
 
         <variable
             name="entries"
@@ -32,7 +36,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/teamIndex"
             android:gravity="start"
-            android:onClick="@{() -> navigator.onEditPlayerName(player)}"
+            android:onClick="@{() -> editor.onEditPlayer(positionInList, player)}"
             android:text="@{player.name}" />
 
         <TextView

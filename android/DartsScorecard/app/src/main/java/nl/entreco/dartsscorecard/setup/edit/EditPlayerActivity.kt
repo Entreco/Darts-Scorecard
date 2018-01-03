@@ -1,7 +1,5 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.app.Activity
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import nl.entreco.dartsscorecard.R
@@ -33,18 +31,5 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private fun getSuggestedName(): String {
         return intent.getStringExtra("suggestion")
-    }
-
-    companion object {
-
-        const val REQUEST_CODE = 1002
-
-        @JvmStatic
-        fun start(activity: Activity, suggestion: CharSequence, teamIndex: Int) {
-            val intent = Intent(activity, EditPlayerActivity::class.java)
-            intent.putExtra("suggestion", suggestion)
-            intent.putExtra("teamIndex", teamIndex)
-            activity.startActivityForResult(intent, REQUEST_CODE)
-        }
     }
 }

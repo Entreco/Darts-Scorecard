@@ -50,15 +50,15 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNavigator): Boolean {
         if (action == EditorInfo.IME_ACTION_DONE) {
             createPlayerUsecase.exec(CreatePlayerRequest(view.text.toString(), 16),
-                    onCreateSuccess(navigator, view),
+                    onCreateSuccess(navigator),
                     onCreateFailed())
             return true
         }
         return false
     }
 
-    private fun onCreateSuccess(navigator: EditPlayerNavigator, view: TextView): (Player) -> Unit =
-            { player -> navigator.onSelected(view, player) }
+    private fun onCreateSuccess(navigator: EditPlayerNavigator): (Player) -> Unit =
+            { player -> navigator.onSelected(player) }
 
     private fun onCreateFailed(): (Throwable) -> Unit = { }
 }

@@ -1,10 +1,12 @@
 package nl.entreco.dartsscorecard.setup
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.dartsscorecard.setup.players.PlayerAdapter
+import android.support.v4.view.PagerAdapter.POSITION_NONE
+import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.RetrieveGameRequest
@@ -24,7 +26,8 @@ class Setup01NavigatorTest {
     @Mock private lateinit var mockName: ObservableField<String>
     @Mock private lateinit var mockTeamIndex: ObservableInt
     @Mock private lateinit var mockPlayerViewModel: PlayerViewModel
-    @Mock private lateinit var mockAdapter: PlayerAdapter
+    @Mock private lateinit var mockIntent: Intent
+    @Mock private lateinit var mockCallback: PlayerEditor.Callback
     private lateinit var subject: Setup01Navigator
 
     @Test
@@ -34,17 +37,44 @@ class Setup01NavigatorTest {
         whenever(mockPlayerViewModel.teamIndex).thenReturn(mockTeamIndex)
         whenever(mockTeamIndex.get()).thenReturn(4)
         givenSubject()
-        subject.onEditPlayerName(mockPlayerViewModel)
-        verify(mockPlayerViewModel).name
+        subject.onEditPlayer(0, mockPlayerViewModel)
+        verify(mockActivity).startActivityForResult(any(), eq(1002))
     }
 
     @Test
     fun onAddNewPlayer() {
-        whenever(mockAdapter.onAddPlayer()).thenReturn("some name")
-        whenever(mockAdapter.itemCount).thenReturn(1)
         givenSubject()
-        subject.onAddNewPlayer(mockAdapter)
-        verify(mockAdapter).onAddPlayer()
+        subject.onAddNewPlayer(2)
+        verify(mockActivity).startActivityForResult(any(), eq(1002))
+    }
+
+    @Test
+    fun `it should notify player added, when item position==POSITION_NONE`() {
+        whenever(mockIntent.getStringExtra("playerName")).thenReturn("what my name")
+        whenever(mockIntent.getIntExtra(eq("teamIndex"), any())).thenReturn(POSITION_NONE)
+        whenever(mockIntent.getIntExtra(eq("positionInList"), any())).thenReturn(POSITION_NONE)
+
+        givenSubject()
+        subject.handleResult(1002, RESULT_OK, mockIntent, mockCallback)
+        verify(mockCallback).onPlayerAdded(any(), any())
+    }
+
+    @Test
+    fun `it should notify player edited, when item position!=POSITION_NONE`() {
+        whenever(mockIntent.getStringExtra("playerName")).thenReturn("no hables names")
+        whenever(mockIntent.getIntExtra(eq("teamIndex"), any())).thenReturn(POSITION_NONE)
+        whenever(mockIntent.getIntExtra(eq("positionInList"), any())).thenReturn(POSITION_NONE + 2)
+
+        givenSubject()
+        subject.handleResult(1002, RESULT_OK, mockIntent, mockCallback)
+        verify(mockCallback).onPlayerEdited(eq(POSITION_NONE + 2), any(), any())
+    }
+
+    @Test
+    fun `it should ignore results that are not related to REQUEST_CODE`() {
+        givenSubject()
+        subject.handleResult(1, 2, mockIntent, mockCallback)
+        verifyZeroInteractions(mockCallback)
     }
 
     @Test
