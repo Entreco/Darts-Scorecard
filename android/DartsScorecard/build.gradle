@@ -35,6 +35,12 @@ allprojects {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
