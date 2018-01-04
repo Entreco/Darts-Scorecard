@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.setup.settings
 
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.SeekBar
 import com.nhaarman.mockito_kotlin.verify
@@ -20,7 +19,6 @@ class SettingsViewModelTest {
 
     @Mock private lateinit var mockFetchSettings: FetchPreferredSettingsUsecase
     @Mock private lateinit var mockAdapterView: AdapterView<*>
-    @Mock private lateinit var mockAdapter: Adapter
     @Mock private lateinit var mockSeekbar: SeekBar
 
     private lateinit var subject: SettingsViewModel

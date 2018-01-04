@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * Created by entreco on 04/01/2018.
  */
-class FetchSettingsResponseTest{
+class FetchSettingsResponseTest {
 
     private val subject = FetchSettingsResponse()
 
@@ -32,7 +32,7 @@ class FetchSettingsResponseTest{
 
     @Test
     fun `default startScore should be 501`() {
-        assertEquals(501, subject.startScore)
+        assertEquals(4, subject.startScore)
     }
 
 }

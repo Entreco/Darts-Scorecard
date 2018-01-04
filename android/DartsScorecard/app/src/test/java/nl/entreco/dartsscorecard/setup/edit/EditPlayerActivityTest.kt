@@ -7,7 +7,7 @@ import org.junit.Test
 /**
  * Created by entreco on 04/01/2018.
  */
-class EditPlayerActivityTest{
+class EditPlayerActivityTest {
     val subject = spy(EditPlayerActivity())
 
     @Test

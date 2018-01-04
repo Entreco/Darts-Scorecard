@@ -13,7 +13,7 @@ data class FetchSettingsResponse(val startSets: Int = def_sets,
         const val def_legs = 3
         const val def_min = 0
         const val def_max = 20
-        const val def_start = 4
+        const val def_start = 4 // should be index of '501'
     }
 }
 

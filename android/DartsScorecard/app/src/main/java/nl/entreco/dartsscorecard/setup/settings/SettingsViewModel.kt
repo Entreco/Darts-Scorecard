@@ -22,7 +22,7 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
     }
 
     private val min = preferred.get().min
-    val startScoreIndex = ObservableInt(0)
+    val startScoreIndex = ObservableInt(preferred.get().startScore)
     val max = preferred.get().max
     val startScore = ObservableInt()
     val numSets = ObservableInt(preferred.get().startSets)
