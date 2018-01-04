@@ -58,7 +58,15 @@ class Setup01NavigatorTest {
     }
 
     @Test
-    fun `it should notify player added, when when item position==POSITION_NONE && no newName is given`() {
+    fun `it should notify player added, when when item position==POSITION_NONE && no newName is given and 'Player 1'`() {
+        givenIntentData("Player 1", "", POSITION_NONE, POSITION_NONE)
+        givenSubject()
+        whenHandlingResult(1002, RESULT_OK)
+        verify(mockCallback).onPlayerAdded("Player 1")
+    }
+    
+    @Test
+    fun `it should NOT notify player added, when when item position==POSITION_NONE && no newName is given but not 'Player 1'`() {
         givenIntentData("suggestion", "", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)

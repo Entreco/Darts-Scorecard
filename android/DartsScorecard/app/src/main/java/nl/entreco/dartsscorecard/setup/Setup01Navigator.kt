@@ -46,7 +46,13 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
             if (isNewPlayer(index)) {
-                callback.onPlayerAdded(if (suggestion.isEmpty()) playerName else suggestion)
+
+                if(suggestion.isEmpty()){
+                    callback.onPlayerAdded(playerName)
+                } else if(suggestion == "Player 1"){
+                    callback.onPlayerAdded(suggestion)
+                }
+
             } else {
                 callback.onPlayerEdited(index, teamIndex, playerName)
             }
