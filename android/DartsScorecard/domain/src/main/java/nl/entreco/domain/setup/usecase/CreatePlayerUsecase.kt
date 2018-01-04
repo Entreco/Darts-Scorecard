@@ -14,8 +14,9 @@ import javax.inject.Inject
 class CreatePlayerUsecase @Inject constructor(private var playerRepository: PlayerRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
     fun exec(req: CreatePlayerRequest, done: (Player) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val playerId = playerRepository.create(req.name, req.double)
-            onUi { done(Player(req.name, playerId, PlayerPrefs(req.double))) }
+            val lowercaseName = req.name.toLowerCase()
+            val playerId = playerRepository.create(lowercaseName, req.double)
+            onUi { done(Player(lowercaseName, playerId, PlayerPrefs(req.double))) }
         }, fail)
     }
 }

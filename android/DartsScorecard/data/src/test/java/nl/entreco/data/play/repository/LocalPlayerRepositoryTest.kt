@@ -1,5 +1,7 @@
 package nl.entreco.data.play.repository
 
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.player.PlayerDao
@@ -24,6 +26,7 @@ class LocalPlayerRepositoryTest {
     private lateinit var subject: LocalPlayerRepository
     private var expectedPlayer: Player? = null
     private var expectedPlayers: List<Player>? = null
+    private val playerCaptor = argumentCaptor<PlayerTable>()
 
     @Before
     fun setUp() {
@@ -33,9 +36,22 @@ class LocalPlayerRepositoryTest {
     }
 
     @Test
-    fun `it should create a new player`() {
-        val player = subject.create("pietje puk", 12)
-        assertNotNull(player)
+    fun `it should create a new player with non-null id`() {
+        val playerId = subject.create("pietje puk", 12)
+        assertNotNull(playerId)
+    }
+
+    @Test
+    fun `it should create a new player with id==0`() {
+        val playerId = subject.create("rembrand remser", -112)
+        assertTrue(playerId >= 0)
+    }
+
+    @Test
+    fun `it should create a new player with lowercase name`() {
+        subject.create("Pietje Puk", 12)
+        verify(mockPlayerDao).create(playerCaptor.capture())
+        assertEquals("pietje puk", playerCaptor.lastValue.name)
     }
 
     @Test

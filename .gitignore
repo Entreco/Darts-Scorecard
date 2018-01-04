@@ -55,13 +55,11 @@ freeline/
 freeline_project_description.json
 
 android/DartsScorecard/\.idea/
-
 android/DartsScorecard/scripts/dsc_keystore
-
-android/DartsScorecard/app/lint-report\.html
 
 release/
 
 *.exec
 
-android/DartsScorecard/dig/web/
+**/dig/web/
+**/lint-report\.html

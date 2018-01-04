@@ -11,8 +11,8 @@
             type="nl.entreco.dartsscorecard.setup.players.PlayersViewModel" />
 
         <variable
-            name="navigator"
-            type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
+            name="editor"
+            type="nl.entreco.dartsscorecard.setup.players.PlayerEditor" />
 
     </data>
 
@@ -69,7 +69,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/large"
-            android:onClick="@{() -> navigator.onAddNewPlayer(viewModel.adapter)}"
+            android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount)}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/white"
             app:fabSize="mini" />

@@ -64,7 +64,16 @@ class EditPlayerViewModelTest {
         givenSubject("Player 1")
         whenFetchingSucceeds()
         whenTypingLetters("Re")
-        thenFilteredPlayersContains("Remco", "Re")
+        thenFilteredPlayersContains("Remco", "EmReCo", "Re")
+    }
+    
+    @Test
+    fun `it should filter list with when typing "Rec" `() {
+        givenExistingPlayers("Remco", "EmReCo", "Re")
+        givenSubject("Player 1")
+        whenFetchingSucceeds()
+        whenTypingLetters("Rec")
+        thenFilteredPlayersContains("EmReCo")
     }
 
     @Test

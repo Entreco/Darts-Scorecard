@@ -20,6 +20,5 @@ abstract class DscDatabase : RoomDatabase() {
 
     companion object {
         const val name: String = "dsc_database"
-
     }
 }

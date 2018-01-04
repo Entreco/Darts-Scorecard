@@ -1,7 +1,5 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.app.Activity
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import nl.entreco.dartsscorecard.R
@@ -17,12 +15,13 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName())) }
     private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
+    private val navigator: EditPlayerNavigator by lazy{ EditPlayerNavigator(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityEditPlayerBinding>(this, R.layout.activity_edit_player)
         binding.viewModel = viewModel
-        binding.navigator = EditPlayerNavigator(this)
+        binding.navigator = navigator
         initToolbar()
     }
 
@@ -35,16 +34,7 @@ class EditPlayerActivity : ViewModelActivity() {
         return intent.getStringExtra("suggestion")
     }
 
-    companion object {
-
-        const val REQUEST_CODE = 1002
-
-        @JvmStatic
-        fun start(activity: Activity, suggestion: CharSequence, teamIndex: Int) {
-            val intent = Intent(activity, EditPlayerActivity::class.java)
-            intent.putExtra("suggestion", suggestion)
-            intent.putExtra("teamIndex", teamIndex)
-            activity.startActivityForResult(intent, REQUEST_CODE)
-        }
+    override fun onBackPressed() {
+        navigator.onBackPressed()
     }
 }

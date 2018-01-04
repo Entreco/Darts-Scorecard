@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="number" translatable="false">%1$s</string>
+    <string name="empty" translatable="false" />
+    <string name="valid_player_characters" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.[]*!?@( )</string>
+    <string name="score_180" translatable="false">180</string>
+    <string-array name="x01">
+        <item>101</item>
+        <item>201</item>
+        <item>301</item>
+        <item>401</item>
+        <item>501</item>
+        <item>601</item>
+        <item>701</item>
+        <item>801</item>
+        <item>901</item>
+        <item>1001</item>
+    </string-array>
+</resources>

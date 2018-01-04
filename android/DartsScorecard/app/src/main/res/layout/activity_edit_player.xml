@@ -26,20 +26,18 @@
             style="@style/EditPlayer.Hdr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enter_player_name" />
+            android:text="@string/choose_player_name" />
 
+        <!--suppress AndroidUnknownAttribute -->
         <EditText
             style="@style/EditPlayer.Edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_player"
             android:imeActionId="6"
             android:imeOptions="actionDone"
             android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
             android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
-            android:selectAllOnFocus="true"
-            app:suggestion="@{viewModel.suggestedName}"
-            android:textColor="?attr/nameText" />
+            app:suggestion="@{viewModel.suggestedName}" />
 
         <TextView
             style="@style/EditPlayer.Middle"

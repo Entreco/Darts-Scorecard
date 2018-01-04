@@ -2,7 +2,7 @@ ext.gitTag = { ->
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
-            commandLine 'git', 'describe', '--tags'
+            commandLine 'git', 'describe', '--tags', '--abbrev=0'
             standardOutput = stdout
         }
         return "v" + stdout.toString().trim()
@@ -21,12 +21,7 @@ ext.gitCommit = { ->
 }
 
 ext.branchName = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--abbrev-ref', 'HEAD'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim().take(1)
+    return "Barney"
 }
 
 ext.versionCode = { ->
@@ -43,14 +38,14 @@ ext {
     gradleVersion = '3.0.1'
     gmsVersion = '3.1.1'
     dexCountVersion = '0.8.2'
-    detektVersion = '1.0.0.RC5-6'
+    detektVersion = '1.0.0.RC6-1'
     jacocoCoverageVersion = '0.4.0'
     coverallsVersion = '2.8.2'
 
-    androidBuildToolsVersion = '26.0.2'
-    androidCompileSdkVersion = 26
+    androidBuildToolsVersion = '27.0.3'
+    androidCompileSdkVersion = 27
     androidMinSdkVersion = 23
-    androidTargetSdkVersion = 26
+    androidTargetSdkVersion = 27
 
     versionCode = versionCode()
     versionName = versionName()

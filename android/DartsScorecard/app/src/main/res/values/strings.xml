@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Darts Scorecard</string>
-    <string name="empty" translatable="false" />
 
     <!-- General Darts -->
-    <string name="number">%1$s</string>
     <string name="first_to">First to %1$s</string>
     <string name="individual">Submit Individual Darts</string>
     <string name="all">Submit full score</string>
@@ -15,30 +13,16 @@
     <string name="no_score">No Score</string>
     <string name="bust">Bust</string>
     <string name="undo">Undo</string>
-    <string name="score_180">180</string>
     <string name="tap_to_resume">Tap to Resume</string>
     <string name="resume">Resume</string>
     <string name="save">Save</string>
-
-    <string-array name="x01">
-        <item>101</item>
-        <item>201</item>
-        <item>301</item>
-        <item>401</item>
-        <item>501</item>
-        <item>601</item>
-        <item>701</item>
-        <item>801</item>
-        <item>901</item>
-        <item>1001</item>
-    </string-array>
 
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>
-    <string name="enter_player_name">Enter New Player name</string>
+    <string name="choose_player_name">Choose player name</string>
     <string name="choose_existing_player">Or choose existing players</string>
     <string name="team">Team</string>
     <string name="add_player">Click to add player</string>

@@ -19,15 +19,27 @@ class PlayerViewModelTest {
     private lateinit var subject: PlayerViewModel
 
     @Test
-    fun `it should have correct name`() {
-        givenSubject(0)
-        thenPlayerNameIs("Player 0")
+    fun `it should have correct name(1)`() {
+        givenSubject(1)
+        thenPlayerNameIs("Player 1")
     }
 
     @Test
-    fun `it should have correct teamIndex`() {
-        givenSubject(0)
+    fun `it should have correct name(-1)`() {
+        givenSubject(-1)
+        thenPlayerNameIs("Player -1")
+    }
+
+    @Test
+    fun `it should have correct teamIndex(1)`() {
+        givenSubject(1)
         thenTeamIndexIs(0)
+    }
+
+    @Test
+    fun `it should have correct teamIndex(-1)`() {
+        givenSubject(-1)
+        thenTeamIndexIs(-2)
     }
 
     @Test
@@ -37,11 +49,10 @@ class PlayerViewModelTest {
         thenTeamIndexIs(4)
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException::class)
     fun `it should update teamIndex with default when Spinner item selected is out of range`() {
         givenSubject(1)
         whenInvalidTeamIndexSelected(4)
-        thenTeamIndexIs(1)
     }
 
     @Test(expected = Exception::class)
