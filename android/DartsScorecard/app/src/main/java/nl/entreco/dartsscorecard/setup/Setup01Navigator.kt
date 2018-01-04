@@ -38,13 +38,16 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: PlayerEditor.Callback) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null) {
+        if (requestCode == REQUEST_CODE && data != null) {
+            val suggestion = data.getStringExtra(EXTRA_SUGGESTION)
             val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)
             val teamIndex = data.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE)
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
-            if (index == POSITION_NONE) {
+            if(resultCode == Activity.RESULT_OK && index == POSITION_NONE) {
                 callback.onPlayerAdded(playerName)
+            } else if(resultCode == Activity.RESULT_CANCELED){
+                callback.onPlayerAdded(suggestion)
             } else {
                 callback.onPlayerEdited(index, teamIndex, playerName)
             }
@@ -53,16 +56,25 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
 
     companion object {
 
-        private const val REQUEST_CODE = 1002
-        private const val EXTRA_SUGGESTION = "suggestion"
-        private const val EXTRA_TEAM_INDEX = "teamIndex"
-        private const val EXTRA_POSITION_IN_LIST = "positionInList"
-        private const val EXTRA_PLAYER_NAME = "playerName"
+        internal const val REQUEST_CODE = 1002
+        internal const val EXTRA_SUGGESTION = "suggestion"
+        internal const val EXTRA_TEAM_INDEX = "teamIndex"
+        internal const val EXTRA_POSITION_IN_LIST = "positionInList"
+        internal const val EXTRA_PLAYER_NAME = "playerName"
 
         @JvmStatic
         fun editPlayerResponse(player: Player, request: Intent): Intent {
             val response = Intent()
             response.putExtra(EXTRA_PLAYER_NAME, player.name)
+            response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
+            response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
+            return response
+        }
+
+        @JvmStatic
+        fun cancelPlayerResponse(request: Intent): Intent {
+            val response = Intent()
+            response.putExtra(EXTRA_PLAYER_NAME, request.getStringExtra(EXTRA_SUGGESTION))
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
             return response

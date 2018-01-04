@@ -7,4 +7,5 @@ import nl.entreco.domain.model.players.Player
  */
 interface ExistingPlayerSelectedClicker {
     fun onSelected(player: Player)
+    fun onBackPressed()
 }

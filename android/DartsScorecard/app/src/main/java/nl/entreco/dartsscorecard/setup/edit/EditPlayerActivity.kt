@@ -15,12 +15,13 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName())) }
     private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
+    private val navigator: EditPlayerNavigator by lazy{ EditPlayerNavigator(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityEditPlayerBinding>(this, R.layout.activity_edit_player)
         binding.viewModel = viewModel
-        binding.navigator = EditPlayerNavigator(this)
+        binding.navigator = navigator
         initToolbar()
     }
 
@@ -31,5 +32,10 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private fun getSuggestedName(): String {
         return intent.getStringExtra("suggestion")
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navigator.onBackPressed()
     }
 }

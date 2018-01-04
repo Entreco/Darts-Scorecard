@@ -32,7 +32,7 @@ class EditPlayerNavigatorTest {
     }
 
     @Test
-    fun `it should set Result onSelected`() {
+    fun `it should set RESULT_OK onSelected`() {
         subject.onSelected(mockPlayer)
         verify(mockActivity).setResult(eq(Activity.RESULT_OK), any())
     }
@@ -40,6 +40,19 @@ class EditPlayerNavigatorTest {
     @Test
     fun `it should finish activity onSelected`() {
         subject.onSelected(mockPlayer)
+        verify(mockActivity).finish()
+    }
+
+
+    @Test
+    fun `it should set RESULT_CANCELLED onBackPressed`() {
+        subject.onBackPressed()
+        verify(mockActivity).setResult(eq(Activity.RESULT_CANCELED), any())
+    }
+
+    @Test
+    fun `it should finish activity onBackPressed`() {
+        subject.onBackPressed()
         verify(mockActivity).finish()
     }
 
