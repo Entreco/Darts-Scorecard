@@ -19,15 +19,27 @@ class PlayerViewModelTest {
     private lateinit var subject: PlayerViewModel
 
     @Test
-    fun `it should have correct name`() {
-        givenSubject(0)
-        thenPlayerNameIs("Player 0")
+    fun `it should have correct name(1)`() {
+        givenSubject(1)
+        thenPlayerNameIs("Player 1")
     }
 
     @Test
-    fun `it should have correct teamIndex`() {
-        givenSubject(0)
+    fun `it should have correct name(-1)`() {
+        givenSubject(-1)
+        thenPlayerNameIs("Player -1")
+    }
+
+    @Test
+    fun `it should have correct teamIndex(1)`() {
+        givenSubject(1)
         thenTeamIndexIs(0)
+    }
+
+    @Test
+    fun `it should have correct teamIndex(-1)`() {
+        givenSubject(-1)
+        thenTeamIndexIs(-2)
     }
 
     @Test
@@ -51,7 +63,6 @@ class PlayerViewModelTest {
 
     private fun givenSubject(index: Int) {
         subject = PlayerViewModel(index)
-        subject.onTeamSelected(mockAdapter, index)
     }
 
     private fun whenTeamIndexSelected(expectedIndex: Int) {
