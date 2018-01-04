@@ -8,12 +8,14 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
 import nl.entreco.domain.setup.usecase.FetchSettingsResponse
+import nl.entreco.domain.setup.usecase.StorePreferredSettingsUsecase
+import nl.entreco.domain.setup.usecase.StoreSettingsRequest
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 29/12/2017.
  */
-class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUsecase) : BaseViewModel() {
+class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUsecase, private val storePrefs: StorePreferredSettingsUsecase) : BaseViewModel() {
 
     private val preferred = ObservableField<FetchSettingsResponse>(FetchSettingsResponse())
 
@@ -22,11 +24,11 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
     }
 
     private val min = preferred.get().min
-    val startScoreIndex = ObservableInt(preferred.get().startScore)
+    val startScoreIndex = ObservableInt(preferred.get().score)
     val max = preferred.get().max
     val startScore = ObservableInt()
-    val numSets = ObservableInt(preferred.get().startSets)
-    val numLegs = ObservableInt(preferred.get().startLegs)
+    val numSets = ObservableInt(preferred.get().sets)
+    val numLegs = ObservableInt(preferred.get().legs)
 
     fun onStartScoreSelected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString().toInt()
@@ -55,6 +57,7 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
     }
 
     fun setupRequest(): CreateGameRequest {
+        storePrefs.exec(StoreSettingsRequest(numSets.get(), numLegs.get(), min, max, startScoreIndex.get()))
         return CreateGameRequest(startScore.get(), 0, numLegs.get(), numSets.get())
     }
 }

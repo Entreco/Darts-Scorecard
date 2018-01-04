@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.support.v4.view.PagerAdapter.POSITION_NONE
 import nl.entreco.dartsscorecard.play.Play01Activity
@@ -38,21 +39,21 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: PlayerEditor.Callback) {
-        if (requestCode == REQUEST_CODE && data != null) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null) {
             val suggestion = data.getStringExtra(EXTRA_SUGGESTION)
             val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)
             val teamIndex = data.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE)
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
-            if(resultCode == Activity.RESULT_OK && index == POSITION_NONE) {
-                callback.onPlayerAdded(playerName)
-            } else if(resultCode == Activity.RESULT_CANCELED){
-                callback.onPlayerAdded(suggestion)
+            if (isNewPlayer(index)) {
+                callback.onPlayerAdded(if(suggestion.isEmpty()) playerName else suggestion)
             } else {
                 callback.onPlayerEdited(index, teamIndex, playerName)
             }
         }
     }
+
+    private fun isNewPlayer(index: Int) = index == POSITION_NONE
 
     companion object {
 
@@ -74,7 +75,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         @JvmStatic
         fun cancelPlayerResponse(request: Intent): Intent {
             val response = Intent()
-            response.putExtra(EXTRA_PLAYER_NAME, request.getStringExtra(EXTRA_SUGGESTION))
+            response.putExtra(EXTRA_SUGGESTION, request.getStringExtra(EXTRA_SUGGESTION))
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
             return response

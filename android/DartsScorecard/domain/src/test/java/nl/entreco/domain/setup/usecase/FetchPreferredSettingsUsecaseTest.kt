@@ -57,9 +57,9 @@ class FetchPreferredSettingsUsecaseTest {
     }
 
     private fun thenResponseIs(legs: Int, sets: Int, min: Int, max: Int, score: Int) {
-        assertEquals(legs, responseCaptor.lastValue.startLegs)
-        assertEquals(sets, responseCaptor.lastValue.startSets)
-        assertEquals(score, responseCaptor.lastValue.startScore)
+        assertEquals(legs, responseCaptor.lastValue.legs)
+        assertEquals(sets, responseCaptor.lastValue.sets)
+        assertEquals(score, responseCaptor.lastValue.score)
         assertEquals(min, responseCaptor.lastValue.min)
         assertEquals(max, responseCaptor.lastValue.max)
     }

@@ -1,5 +1,8 @@
 package nl.entreco.dartsscorecard.di.setup
 
+import android.content.SharedPreferences
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -15,12 +18,19 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class Setup01ModuleTest {
 
+    @Mock private lateinit var mockPrefs: SharedPreferences
     @Mock private lateinit var mockActivity: Setup01Activity
-    private lateinit var subject : Setup01Module
+    private lateinit var subject: Setup01Module
 
     @Before
     fun setUp() {
+        whenever(mockActivity.getSharedPreferences(any(), any())).thenReturn(mockPrefs)
         subject = Setup01Module(mockActivity)
+    }
+
+    @Test
+    fun providePreferenceRepo() {
+        assertNotNull(givenPreferenceRepo())
     }
 
     @Test
@@ -38,7 +48,7 @@ class Setup01ModuleTest {
         assertEquals(givenEditor(), givenNavigator())
     }
 
+    private fun givenPreferenceRepo() = subject.providePreferenceRepo()
     private fun givenNavigator() = subject.provideNavigator()
-
     private fun givenEditor() = subject.providePlayerEditor()
 }

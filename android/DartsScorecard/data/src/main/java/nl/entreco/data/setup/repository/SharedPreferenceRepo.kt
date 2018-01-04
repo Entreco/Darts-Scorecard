@@ -3,6 +3,7 @@ package nl.entreco.data.setup.repository
 import android.content.SharedPreferences
 import nl.entreco.domain.repository.PreferenceRepository
 import nl.entreco.domain.setup.usecase.FetchSettingsResponse
+import nl.entreco.domain.setup.usecase.StoreSettingsRequest
 
 /**
  * Created by entreco on 04/01/2018.
@@ -24,5 +25,15 @@ class SharedPreferenceRepo(private val prefs: SharedPreferences) : PreferenceRep
         val max = prefs.getInt(PREF_MAX, FetchSettingsResponse.def_max)
         val score = prefs.getInt(PREF_SCORE, FetchSettingsResponse.def_start)
         return FetchSettingsResponse(sets, legs, min, max, score)
+    }
+
+    override fun storePreferredSetup(request: StoreSettingsRequest) {
+        prefs.edit().apply {
+            putInt(PREF_SETS, request.sets)
+            putInt(PREF_LEGS, request.legs)
+            putInt(PREF_MIN, request.min)
+            putInt(PREF_MAX, request.max)
+            putInt(PREF_SCORE, request.score)
+        }.apply()
     }
 }

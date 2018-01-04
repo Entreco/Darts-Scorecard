@@ -50,27 +50,35 @@ class Setup01NavigatorTest {
     }
 
     @Test
-    fun `it should notify player added, when item position==POSITION_NONE`() {
-        givenIntentData("what's my name", POSITION_NONE, POSITION_NONE)
+    fun `it should notify player added, when item position==POSITION_NONE && no suggestion is given`() {
+        givenIntentData("","what's my name", POSITION_NONE, POSITION_NONE)
         givenSubject()
-        whenHandlingResult(1002,RESULT_OK)
+        whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerAdded("what's my name")
     }
 
     @Test
-    fun `it should notify player edited, when item position!=POSITION_NONE`() {
-        givenIntentData("no hables names", POSITION_NONE, POSITION_NONE + 2)
+    fun `it should notify player added, when when item position==POSITION_NONE && no newName is given`() {
+        givenIntentData("suggestion", "", POSITION_NONE, POSITION_NONE)
         givenSubject()
-        whenHandlingResult(1002,RESULT_OK)
+        whenHandlingResult(1002, RESULT_OK)
+        verify(mockCallback).onPlayerAdded("suggestion")
+    }
+
+    @Test
+    fun `it should notify player edited, when item position!=POSITION_NONE`() {
+        givenIntentData("suggestion","no hables names", POSITION_NONE, POSITION_NONE + 2)
+        givenSubject()
+        whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerEdited(POSITION_NONE + 2, POSITION_NONE, "no hables names")
     }
 
     @Test
-    fun `it should notify player added, when RESULT_CANCELLED`() {
-        givenIntentData("no hablez names", POSITION_NONE, POSITION_NONE + 8)
+    fun `it should NOT notify callback, when RESULT_CANCELLED`() {
+        givenIntentData("suggestion","no hablez names", POSITION_NONE, POSITION_NONE + 8)
         givenSubject()
         whenHandlingResult(1002, RESULT_CANCELED)
-        verify(mockCallback).onPlayerAdded("no hablez names")
+        verifyZeroInteractions(mockCallback)
     }
 
     @Test
@@ -90,7 +98,7 @@ class Setup01NavigatorTest {
 
     @Test
     fun `it should create editPlayerResponse`() {
-        givenEditResponse(2,5)
+        givenEditResponse(2, 5)
         assertNotNull(Setup01Navigator.editPlayerResponse(mockPlayer, mockIntent))
     }
 
@@ -104,12 +112,13 @@ class Setup01NavigatorTest {
         subject = Setup01Navigator(mockActivity)
     }
 
-    private fun givenIntentData(name: String, teamIndex: Int, position: Int) {
-        whenever(mockIntent.getStringExtra("suggestion")).thenReturn(name)
+    private fun givenIntentData(suggestion: String, name: String, teamIndex: Int, position: Int) {
+        whenever(mockIntent.getStringExtra("suggestion")).thenReturn(suggestion)
         whenever(mockIntent.getStringExtra("playerName")).thenReturn(name)
         whenever(mockIntent.getIntExtra(eq("teamIndex"), any())).thenReturn(teamIndex)
         whenever(mockIntent.getIntExtra(eq("positionInList"), any())).thenReturn(position)
     }
+
     private fun givenEditRequest() {
         whenever(mockPlayerViewModel.name).thenReturn(mockName)
         whenever(mockName.get()).thenReturn("another name")
@@ -117,12 +126,12 @@ class Setup01NavigatorTest {
         whenever(mockTeamIndex.get()).thenReturn(4)
     }
 
-    private fun givenEditResponse(teamIndex: Int, position: Int){
+    private fun givenEditResponse(teamIndex: Int, position: Int) {
         whenever(mockIntent.getIntExtra(Setup01Navigator.EXTRA_TEAM_INDEX, POSITION_NONE)).thenReturn(teamIndex)
         whenever(mockIntent.getIntExtra(Setup01Navigator.EXTRA_POSITION_IN_LIST, POSITION_NONE)).thenReturn(position)
     }
 
-    private fun givenCancelResponse(suggestion: String, teamIndex: Int, position: Int){
+    private fun givenCancelResponse(suggestion: String, teamIndex: Int, position: Int) {
         whenever(mockIntent.getStringExtra(Setup01Navigator.EXTRA_SUGGESTION)).thenReturn(suggestion)
         whenever(mockIntent.getIntExtra(Setup01Navigator.EXTRA_TEAM_INDEX, POSITION_NONE)).thenReturn(teamIndex)
         whenever(mockIntent.getIntExtra(Setup01Navigator.EXTRA_POSITION_IN_LIST, POSITION_NONE)).thenReturn(position)

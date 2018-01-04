@@ -3,11 +3,11 @@ package nl.entreco.domain.setup.usecase
 /**
  * Created by entreco on 04/01/2018.
  */
-data class FetchSettingsResponse(val startSets: Int = def_sets,
-                                 val startLegs: Int = def_legs,
+data class FetchSettingsResponse(val sets: Int = def_sets,
+                                 val legs: Int = def_legs,
                                  val min: Int = def_min,
                                  val max: Int = def_max,
-                                 val startScore: Int = def_start) {
+                                 val score: Int = def_start) {
     companion object {
         const val def_sets = 1
         const val def_legs = 3

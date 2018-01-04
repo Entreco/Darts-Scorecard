@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import nl.entreco.domain.model.players.Player
@@ -15,7 +14,7 @@ class EditPlayerNavigator(private val activity: EditPlayerActivity) : ExistingPl
     }
 
     override fun onBackPressed() {
-        activity.setResult(RESULT_CANCELED, Setup01Navigator.cancelPlayerResponse(activity.intent))
+        activity.setResult(RESULT_OK, Setup01Navigator.cancelPlayerResponse(activity.intent))
         activity.finish()
     }
 }
