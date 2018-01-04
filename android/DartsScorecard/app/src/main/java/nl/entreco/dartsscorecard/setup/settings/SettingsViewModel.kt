@@ -1,28 +1,37 @@
 package nl.entreco.dartsscorecard.setup.settings
 
+import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.widget.AdapterView
 import android.widget.SeekBar
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
+import nl.entreco.domain.setup.usecase.FetchSettingsResponse
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 29/12/2017.
  */
-class SettingsViewModel @Inject constructor() : BaseViewModel() {
+class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUsecase) : BaseViewModel() {
 
-    internal val startSets = 1
-    internal val startLegs = 1
-    val min = 0
-    val max = 20
-    val startScore = ObservableInt(501)
-    val numSets = ObservableInt(startSets)
-    val numLegs = ObservableInt(startLegs)
+    private val preferred = ObservableField<FetchSettingsResponse>(FetchSettingsResponse())
+
+    init {
+        fetchPrefs.exec { preferred.set(it) }
+    }
+
+    private val min = preferred.get().min
+    val startScoreIndex = ObservableInt(0)
+    val max = preferred.get().max
+    val startScore = ObservableInt()
+    val numSets = ObservableInt(preferred.get().startSets)
+    val numLegs = ObservableInt(preferred.get().startLegs)
 
     fun onStartScoreSelected(adapter: AdapterView<*>, index: Int) {
-        val selectedString = adapter.adapter.getItem(index) as? String
-        startScore.set(selectedString?.toInt()!!)
+        val resolved = adapter.getItemAtPosition(index).toString().toInt()
+        startScoreIndex.set(index)
+        startScore.set(resolved)
     }
 
     fun onSetsChanged(seekBar: SeekBar, delta: Int) {

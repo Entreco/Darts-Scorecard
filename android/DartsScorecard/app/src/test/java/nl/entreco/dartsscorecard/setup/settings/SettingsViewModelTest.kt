@@ -5,6 +5,7 @@ import android.widget.AdapterView
 import android.widget.SeekBar
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class SettingsViewModelTest {
 
+    @Mock private lateinit var mockFetchSettings: FetchPreferredSettingsUsecase
     @Mock private lateinit var mockAdapterView: AdapterView<*>
     @Mock private lateinit var mockAdapter: Adapter
     @Mock private lateinit var mockSeekbar: SeekBar
@@ -28,6 +30,7 @@ class SettingsViewModelTest {
         givenSetupViewModel()
         givenOnStartScoreSelected(0, arrayOf("501"))
         thenStartScoreEquals(501)
+        thenStartScoreIndexEquals(0)
     }
 
     @Test
@@ -41,7 +44,7 @@ class SettingsViewModelTest {
     fun `it should NOT update number of sets when out of range`() {
         givenSetupViewModel()
         whenSetProgressChanged(-1)
-        thenNumberOfSetsIs(subject.startSets)
+        thenNumberOfSetsIs(subject.numSets.get())
     }
 
     @Test
@@ -55,7 +58,7 @@ class SettingsViewModelTest {
     fun `it should NOT update number of legs when out of range`() {
         givenSetupViewModel()
         whenLegProgressChanged(21)
-        thenNumberOfLegsIs(subject.startLegs)
+        thenNumberOfLegsIs(subject.numLegs.get())
     }
 
     @Test
@@ -78,16 +81,15 @@ class SettingsViewModelTest {
         givenOnStartScoreSelected(0, arrayOf("501"))
         whenLegProgressChanged(6)
         whenSetProgressChanged(8)
-        thenRequestIs(0, 501, 6+1, 8+1)
+        thenRequestIs(0, 501, 6 + 1, 8 + 1)
     }
 
     private fun givenSetupViewModel() {
-        subject = SettingsViewModel()
+        subject = SettingsViewModel(mockFetchSettings)
     }
 
     private fun givenOnStartScoreSelected(index: Int, array: Array<String>) {
-        whenever(mockAdapterView.adapter).thenReturn(mockAdapter)
-        whenever(mockAdapter.getItem(index)).thenReturn(array[index])
+        whenever(mockAdapterView.getItemAtPosition(index)).thenReturn(array[index])
         subject.onStartScoreSelected(mockAdapterView, index)
     }
 
@@ -109,6 +111,10 @@ class SettingsViewModelTest {
 
     private fun thenStartScoreEquals(expected: Int) {
         assertEquals(expected, subject.startScore.get())
+    }
+
+    private fun thenStartScoreIndexEquals(expected: Int) {
+        assertEquals(expected, subject.startScoreIndex.get())
     }
 
     private fun thenNumberOfSetsIs(expected: Int) {
