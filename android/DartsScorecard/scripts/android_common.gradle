@@ -37,5 +37,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += "$buildDir/generated/source/kapt/"
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
     }
 }
