@@ -51,7 +51,7 @@ class Setup01NavigatorTest {
 
     @Test
     fun `it should notify player added, when item position==POSITION_NONE && no suggestion is given`() {
-        givenIntentData("","what's my name", POSITION_NONE, POSITION_NONE)
+        givenIntentData("", "what's my name", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerAdded("what's my name")
@@ -64,18 +64,18 @@ class Setup01NavigatorTest {
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerAdded("Player 1")
     }
-    
+
     @Test
     fun `it should NOT notify player added, when when item position==POSITION_NONE && no newName is given but not 'Player 1'`() {
         givenIntentData("suggestion", "", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
-        verify(mockCallback).onPlayerAdded("suggestion")
+        verify(mockCallback, never()).onPlayerAdded(any())
     }
 
     @Test
     fun `it should notify player edited, when item position!=POSITION_NONE`() {
-        givenIntentData("suggestion","no hables names", POSITION_NONE, POSITION_NONE + 2)
+        givenIntentData("suggestion", "no hables names", POSITION_NONE, POSITION_NONE + 2)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerEdited(POSITION_NONE + 2, POSITION_NONE, "no hables names")
@@ -83,7 +83,7 @@ class Setup01NavigatorTest {
 
     @Test
     fun `it should NOT notify callback, when RESULT_CANCELLED`() {
-        givenIntentData("suggestion","no hablez names", POSITION_NONE, POSITION_NONE + 8)
+        givenIntentData("suggestion", "no hablez names", POSITION_NONE, POSITION_NONE + 8)
         givenSubject()
         whenHandlingResult(1002, RESULT_CANCELED)
         verifyZeroInteractions(mockCallback)
