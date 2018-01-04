@@ -57,7 +57,7 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
     }
 
     fun setupRequest(): CreateGameRequest {
-        storePrefs.exec(StoreSettingsRequest(numSets.get(), numLegs.get(), min, max, startScoreIndex.get()))
+        storePrefs.exec(StoreSettingsRequest(numSets.get() - 1, numLegs.get() - 1, min, max, startScoreIndex.get()))
         return CreateGameRequest(startScore.get(), 0, numLegs.get(), numSets.get())
     }
 }

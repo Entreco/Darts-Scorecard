@@ -35,7 +35,6 @@ class EditPlayerActivity : ViewModelActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         navigator.onBackPressed()
     }
 }

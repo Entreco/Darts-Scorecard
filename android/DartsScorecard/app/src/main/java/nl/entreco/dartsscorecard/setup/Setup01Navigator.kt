@@ -46,7 +46,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
             if (isNewPlayer(index)) {
-                callback.onPlayerAdded(if(suggestion.isEmpty()) playerName else suggestion)
+                callback.onPlayerAdded(if (suggestion.isEmpty()) playerName else suggestion)
             } else {
                 callback.onPlayerEdited(index, teamIndex, playerName)
             }
@@ -66,6 +66,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         @JvmStatic
         fun editPlayerResponse(player: Player, request: Intent): Intent {
             val response = Intent()
+            response.putExtra(EXTRA_SUGGESTION, "")
             response.putExtra(EXTRA_PLAYER_NAME, player.name)
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
@@ -76,6 +77,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         fun cancelPlayerResponse(request: Intent): Intent {
             val response = Intent()
             response.putExtra(EXTRA_SUGGESTION, request.getStringExtra(EXTRA_SUGGESTION))
+            response.putExtra(EXTRA_PLAYER_NAME, "")
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
             return response

@@ -47,7 +47,7 @@ class EditPlayerNavigatorTest {
     @Test
     fun `it should set RESULT_CANCELLED onBackPressed`() {
         subject.onBackPressed()
-        verify(mockActivity).setResult(eq(Activity.RESULT_CANCELED), any())
+        verify(mockActivity).setResult(eq(Activity.RESULT_OK), any())
     }
 
     @Test
