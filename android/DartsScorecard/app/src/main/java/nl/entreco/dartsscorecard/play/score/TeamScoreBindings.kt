@@ -9,7 +9,8 @@ import android.support.v4.graphics.ColorUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.OvershootInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
@@ -39,29 +40,28 @@ abstract class TeamScoreBindings {
                 0 -> {
                 }
                 else -> {
-                    clear(view, 0)
+                    clear(view)
                 }
             }
         }
 
-        private fun clear(view: TextView, delay: Long) {
-            Log.w("REMCO", "showSpecial: clear")
-            view.setText(R.string.empty)
+        private fun clear(view: TextView, delay: Long = 0) {
             view.animate().scaleY(0F).setStartDelay(delay)
+                    .setInterpolator(DecelerateInterpolator())
                     .withStartAction {
                         view.pivotY = view.height.toFloat()
                     }
                     .withEndAction({
                         view.scaleY = 0F
                         view.translationY = 0F
-                    }).setDuration(DEFAULT_ANIMATION_TIME).start()
+                        view.setText(R.string.empty)
+                    }).setDuration(if (delay == 0L) 0 else DEFAULT_ANIMATION_TIME).start()
         }
 
         private fun handle180(view: TextView) {
-            Log.w("REMCO", "showSpecial: handle180")
             view.setText(R.string.score_180)
             view.animate().scaleY(1F).setDuration(DEFAULT_ANIMATION_TIME)
-                    .setInterpolator(OvershootInterpolator())
+                    .setInterpolator(AccelerateInterpolator())
                     .withStartAction {
                         view.scaleY = 0F
                         view.pivotY = 0F

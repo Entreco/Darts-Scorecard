@@ -10,7 +10,7 @@
     <dimen name="score_name_w">300</dimen>
     <dimen name="score_leg_w">42</dimen>
     <dimen name="score_set_w">42</dimen>
-    <dimen name="score_pts_w">50</dimen>
+    <dimen name="score_pts_w">54</dimen>
 
     <dimen name="icon_size_default">24dp</dimen>
     <dimen name="icon_size_large">48dp</dimen>
