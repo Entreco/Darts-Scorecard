@@ -81,7 +81,9 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNavigator): Boolean {
         if (action == EditorInfo.IME_ACTION_DONE) {
-            val existing = allPlayers.findLast { it.name.toLowerCase() == view.text.toString().toLowerCase() }
+            val existing = allPlayers.findLast {
+                it.name.toLowerCase() == view.text.toString().toLowerCase()
+            }
             if (existing == null) {
                 createPlayerUsecase.exec(CreatePlayerRequest(view.text.toString(), 16),
                         onCreateSuccess(navigator),
