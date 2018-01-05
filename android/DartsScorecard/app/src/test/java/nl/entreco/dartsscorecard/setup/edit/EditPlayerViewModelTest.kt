@@ -139,6 +139,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun whenPressingImeAction(typed: String, action: Int) {
+        whenever(mockView.rootView).thenReturn(mockView)
         whenever(mockView.text).thenReturn(typed)
         subject.onActionDone(mockView, action, mockNavigator)
     }

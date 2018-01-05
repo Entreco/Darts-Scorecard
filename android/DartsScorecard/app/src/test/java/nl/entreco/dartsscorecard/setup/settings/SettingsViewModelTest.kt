@@ -86,7 +86,7 @@ class SettingsViewModelTest {
         givenOnStartScoreSelected(0, arrayOf("501"))
         whenLegProgressChanged(6)
         whenSetProgressChanged(8)
-        thenRequestIs(0, 501, 6, 8)
+        thenRequestIs(0, 501, 6 + 1, 8 + 1)
     }
 
     @Test

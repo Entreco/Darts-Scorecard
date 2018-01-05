@@ -30,14 +30,14 @@ class CreatePlayerUsecaseTest {
     @Test
     fun `it should report Player when creating succeeds`() {
         givenSubject()
-        whenExecutingSucceeds("1", -1)
+        whenCreatingSucceeds("1", -1)
         thenSuccessIsReported()
     }
 
     @Test
     fun `it should create players with lowercase name`() {
         givenSubject()
-        whenExecutingSucceeds("ThIs NaMe Is CaPiTaLiSeD", 180)
+        whenCreatingSucceeds("ThIs NaMe Is CaPiTaLiSeD", 180)
         thenSuccessIsReported()
         andReturnedPlayerNameIs("this name is capitalised")
     }
@@ -45,7 +45,21 @@ class CreatePlayerUsecaseTest {
     @Test
     fun `it should report Error when creating fails`() {
         givenSubject()
-        whenExecutingFails("2", 100)
+        whenCreatingFails("2", 100)
+        thenErrorIsReported()
+    }
+
+    @Test
+    fun `it should report Error when name is Blank`() {
+        givenSubject()
+        whenCreatingSucceeds("   ", 100)
+        thenErrorIsReported()
+    }
+
+    @Test
+    fun `it should report Error when name is Empty`() {
+        givenSubject()
+        whenCreatingSucceeds("", 100)
         thenErrorIsReported()
     }
 
@@ -53,13 +67,13 @@ class CreatePlayerUsecaseTest {
         subject = CreatePlayerUsecase(mockRepo, bg, fg)
     }
 
-    private fun whenExecutingSucceeds(name: String, double: Int) {
+    private fun whenCreatingSucceeds(name: String, double: Int) {
         whenever(mockRepo.create(eq(name.toLowerCase()), any())).thenReturn(givenId)
         givenRequest = CreatePlayerRequest(name, double)
         subject.exec(givenRequest, mockDone, mockFail)
     }
 
-    private fun whenExecutingFails(name: String, double: Int) {
+    private fun whenCreatingFails(name: String, double: Int) {
         whenever(mockRepo.create(any(), any())).thenThrow(IllegalStateException("oops"))
         givenRequest = CreatePlayerRequest(name, double)
         subject.exec(givenRequest, mockDone, mockFail)
