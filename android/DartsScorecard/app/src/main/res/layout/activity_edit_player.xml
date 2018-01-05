@@ -17,51 +17,61 @@
             type="nl.entreco.dartsscorecard.setup.edit.EditPlayerNavigator" />
     </data>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/EditPlayer.Hdr"
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_setup_01" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_player_name" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!--suppress AndroidUnknownAttribute -->
-        <EditText
-            style="@style/EditPlayer.Edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeActionId="6"
-            android:imeOptions="actionDone"
-            android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
-            android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
-            app:suggestion="@{viewModel.suggestedName}" />
-
-        <TextView
-            style="@style/EditPlayer.Middle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_existing_player"
-            android:visibility="@{viewModel.filteredPlayers.isEmpty() ? View.GONE: View.VISIBLE}" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
+            <TextView
+                style="@style/EditPlayer.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:background="@drawable/score_name"
-                android:orientation="vertical"
-                app:clicker="@{navigator}"
-                app:filteredPlayers="@{viewModel.filteredPlayers}" />
-        </ScrollView>
-        <!-- Footer -->
-        <TextView style="@style/Setup.Ftr" />
+                android:text="@string/choose_player_name" />
 
-    </LinearLayout>
+            <!--suppress AndroidUnknownAttribute -->
+            <EditText
+                style="@style/EditPlayer.Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeActionId="6"
+                android:imeOptions="actionDone"
+                android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
+                android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
+                app:suggestion="@{viewModel.suggestedName}" />
+
+            <TextView
+                style="@style/EditPlayer.Middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_existing_player"
+                android:visibility="@{viewModel.filteredPlayers.isEmpty() ? View.GONE: View.VISIBLE}" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/score_name"
+                    android:orientation="vertical"
+                    app:clicker="@{navigator}"
+                    app:filteredPlayers="@{viewModel.filteredPlayers}" />
+            </ScrollView>
+            <!-- Footer -->
+            <TextView style="@style/Setup.Ftr" />
+
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>
