@@ -33,12 +33,10 @@ abstract class TeamScoreBindings {
         @JvmStatic
         @BindingAdapter("special")
         fun showSpecials(view: TextView, oldScore: Int, score: Int) {
-            Log.w("REMCO", "showSpecial: $score")
             val diff = oldScore - score
             when (diff) {
                 180 -> handle180(view)
-                0 -> {
-                }
+                0 -> { }
                 else -> {
                     clear(view)
                 }
@@ -67,9 +65,8 @@ abstract class TeamScoreBindings {
                         view.pivotY = 0F
                     }
                     .withEndAction({
-                        val howLong = 1200L
-                        animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, howLong)
-                        clear(view, howLong)
+                        animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, 1200L)
+                        clear(view, 1200L)
                     }).start()
         }
 

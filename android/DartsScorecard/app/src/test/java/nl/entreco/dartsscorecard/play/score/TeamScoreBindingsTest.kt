@@ -27,6 +27,7 @@ class TeamScoreBindingsTest {
     @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockImageView: ImageView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
+    private val runnable = argumentCaptor<Runnable>()
 
     @Test
     fun `it should setTarget() on CounterTextView (ScorePts TextView)`() {
@@ -148,6 +149,9 @@ class TeamScoreBindingsTest {
     private fun then180AnimationIsShown() {
         verify(mockTextView).setText(R.string.score_180)
         verify(mockTextView, times(1)).animate()
+        verify(mockAnimator).withStartAction(runnable.capture())
+        verify(mockAnimator).withEndAction(runnable.capture())
+        runnable.allValues.forEach { it.run() }
     }
 
     private fun thenNoAnimationIsShown() {
@@ -158,6 +162,9 @@ class TeamScoreBindingsTest {
     private fun thenClearAnimationIsShown() {
         verify(mockTextView, never()).setText(R.string.score_180)
         verify(mockTextView, times(1)).animate()
+        verify(mockAnimator).withStartAction(runnable.capture())
+        verify(mockAnimator).withEndAction(runnable.capture())
+        runnable.allValues.forEach { it.run() }
     }
 
     private fun thenShowCurrentAnimationIsDone() {
