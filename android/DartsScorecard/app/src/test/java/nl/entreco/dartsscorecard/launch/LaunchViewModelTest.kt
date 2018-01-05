@@ -4,6 +4,7 @@ import android.content.Context
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
@@ -69,17 +70,22 @@ class LaunchViewModelTest {
 
     @Test
     fun `it should launch Play01 when 'onResume' is pressed`() {
+        givenTeamsAndStartScore("remco|eva", 501)
         givenResumedGame()
         whenOnResumeIsClicked()
         thenPlay01IsLaunched()
     }
 
     private fun givenResumedGame() {
+        whenever(mockRetrieveGameRequest.create).thenReturn(givenRequestCreate)
+        whenever(mockRetrieveGameRequest.gameId).thenReturn(givenGameId)
+        whenever(mockRetrieveGameRequest.teamIds).thenReturn(givenTeamIds)
         subject.resumedGame.set(mockRetrieveGameRequest)
     }
 
     @Test
     fun `it should NOT launch Play01 when 'onResume' is pressed without a game`() {
+        givenTeamsAndStartScore("remco|eva", 501)
         whenOnResumeIsClicked()
         thenPlay01IsNotLaunched()
     }
@@ -129,7 +135,7 @@ class LaunchViewModelTest {
     private fun thenPlay01IsLaunched() {
         try {
             verify(Play01Activity).startGame(mockContext, expectedGameRequest)
-        } catch (ignore: NullPointerException) {
+        } catch (ignore: NotAMockException) {
         }
     }
 
@@ -137,7 +143,7 @@ class LaunchViewModelTest {
         try {
             verify(Play01Activity).startGame(mockContext, expectedGameRequest)
             fail()
-        } catch (ignore: NullPointerException) {
+        } catch (ignore: NotAMockException) {
         }
     }
 }
