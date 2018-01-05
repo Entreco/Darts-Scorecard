@@ -28,12 +28,12 @@ class SharedPreferenceRepo(private val prefs: SharedPreferences) : PreferenceRep
     }
 
     override fun storePreferredSetup(request: StoreSettingsRequest) {
-        prefs.edit().apply {
-            putInt(PREF_SETS, request.sets)
-            putInt(PREF_LEGS, request.legs)
-            putInt(PREF_MIN, request.min)
-            putInt(PREF_MAX, request.max)
-            putInt(PREF_SCORE, request.score)
-        }.apply()
+        prefs.edit()
+                .putInt(PREF_SETS, request.sets)
+                .putInt(PREF_LEGS, request.legs)
+                .putInt(PREF_MIN, request.min)
+                .putInt(PREF_MAX, request.max)
+                .putInt(PREF_SCORE, request.score)
+                .apply()
     }
 }

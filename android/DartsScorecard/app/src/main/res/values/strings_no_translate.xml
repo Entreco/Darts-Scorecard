@@ -2,6 +2,9 @@
 <resources>
     <string name="number" translatable="false">%1$s</string>
     <string name="empty" translatable="false" />
+    <string name="lets" translatable="false" >Let\'s</string>
+    <string name="play" translatable="false" >Play</string>
+    <string name="darts" translatable="false" >Darts</string>
     <string name="valid_player_characters" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.[]*!?@( )</string>
     <string name="score_180" translatable="false">180</string>
     <string-array name="x01">

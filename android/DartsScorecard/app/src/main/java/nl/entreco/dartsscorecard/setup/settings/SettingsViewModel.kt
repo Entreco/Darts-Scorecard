@@ -23,8 +23,8 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
         fetchPrefs.exec { preferred.set(it) }
     }
 
-    private val min = preferred.get().min
     val startScoreIndex = ObservableInt(preferred.get().score)
+    val min = preferred.get().min
     val max = preferred.get().max
     val startScore = ObservableInt()
     val numSets = ObservableInt(preferred.get().sets)
@@ -46,18 +46,18 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
 
     fun onSetsProgressChanged(sets: Int) {
         if (sets in min..max) {
-            numSets.set(sets + 1)
+            numSets.set(sets)
         }
     }
 
     fun onLegsProgressChanged(legs: Int) {
         if (legs in min..max) {
-            numLegs.set(legs + 1)
+            numLegs.set(legs)
         }
     }
 
     fun setupRequest(): CreateGameRequest {
-        storePrefs.exec(StoreSettingsRequest(numSets.get() - 1, numLegs.get() - 1, min, max, startScoreIndex.get()))
+        storePrefs.exec(StoreSettingsRequest(numSets.get(), numLegs.get(), min, max, startScoreIndex.get()))
         return CreateGameRequest(startScore.get(), 0, numLegs.get(), numSets.get())
     }
 }
