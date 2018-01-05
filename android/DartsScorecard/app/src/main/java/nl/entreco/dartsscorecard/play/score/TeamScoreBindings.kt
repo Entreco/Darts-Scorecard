@@ -32,25 +32,40 @@ abstract class TeamScoreBindings {
         @JvmStatic
         @BindingAdapter("special")
         fun showSpecials(view: TextView, oldScore: Int, score: Int) {
+            Log.w("REMCO", "showSpecial: $score")
             val diff = oldScore - score
             when (diff) {
                 180 -> handle180(view)
-                0 -> {}
-                else -> { clear(view, 0)}
+                0 -> {
+                }
+                else -> {
+                    clear(view, 0)
+                }
             }
         }
 
         private fun clear(view: TextView, delay: Long) {
-            view.animate().cancel()
-            view.animate().translationX(200F).setStartDelay(delay).withEndAction({
-                view.setText( R.string.empty )
-            }).setDuration(DEFAULT_ANIMATION_TIME).start()
+            Log.w("REMCO", "showSpecial: clear")
+            view.setText(R.string.empty)
+            view.animate().scaleY(0F).setStartDelay(delay)
+                    .withStartAction {
+                        view.pivotY = view.height.toFloat()
+                    }
+                    .withEndAction({
+                        view.scaleY = 0F
+                        view.translationY = 0F
+                    }).setDuration(DEFAULT_ANIMATION_TIME).start()
         }
 
         private fun handle180(view: TextView) {
-            view.animate().cancel()
-            view.setText( R.string.score_180 )
-            view.animate().translationX(0F).setInterpolator(OvershootInterpolator()).setDuration(DEFAULT_ANIMATION_TIME)
+            Log.w("REMCO", "showSpecial: handle180")
+            view.setText(R.string.score_180)
+            view.animate().scaleY(1F).setDuration(DEFAULT_ANIMATION_TIME)
+                    .setInterpolator(OvershootInterpolator())
+                    .withStartAction {
+                        view.scaleY = 0F
+                        view.pivotY = 0F
+                    }
                     .withEndAction({
                         val howLong = 1200L
                         animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, howLong)
@@ -61,7 +76,7 @@ abstract class TeamScoreBindings {
         private fun animateColor(view: TextView, attr: Int, attr2: Int, duration: Long) {
             view.animate().setDuration(duration / 3)
                     .setStartDelay(duration / 3)
-                    .withStartAction{ view.setTextColor(fromAttr(view.context, attr)) }
+                    .withStartAction { view.setTextColor(fromAttr(view.context, attr)) }
                     .withEndAction { view.setTextColor(fromAttr(view.context, attr2)) }
                     .start()
         }

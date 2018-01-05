@@ -147,7 +147,7 @@ class TeamScoreBindingsTest {
 
     private fun then180AnimationIsShown() {
         verify(mockTextView).setText(R.string.score_180)
-        verify(mockTextView, times(2)).animate()
+        verify(mockTextView, times(1)).animate()
     }
 
     private fun thenNoAnimationIsShown() {
@@ -157,7 +157,7 @@ class TeamScoreBindingsTest {
 
     private fun thenClearAnimationIsShown() {
         verify(mockTextView, never()).setText(R.string.score_180)
-        verify(mockTextView, times(2)).animate()
+        verify(mockTextView, times(1)).animate()
     }
 
     private fun thenShowCurrentAnimationIsDone() {
@@ -194,9 +194,11 @@ class TeamScoreBindingsTest {
 
     private fun mockAnimations() {
         whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.scaleY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setInterpolator(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setStartDelay(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.withStartAction(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.withEndAction(any())).thenReturn(mockAnimator)
     }
 
