@@ -16,7 +16,6 @@ import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
-import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
@@ -48,7 +47,7 @@ class Play01ViewModelTest {
     private val givenScores = arrayOf(Score(), Score())
     private val mockArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
     private val gameId: Long = 1002
-    private val teamIds = TeamIdsString("1|2")
+    private val teamIds = "1|2"
 
     @Before
     fun setUp() {

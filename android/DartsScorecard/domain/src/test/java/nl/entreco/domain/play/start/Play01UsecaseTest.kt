@@ -8,7 +8,6 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.StoreTurnUsecase
-import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Before
 import org.junit.Test
@@ -22,7 +21,7 @@ class Play01UsecaseTest {
 
     private val gameId: Long = 42
     private val teams = arrayOf(Team(arrayOf(Player("1"), Player("2"))), Team(arrayOf(Player("3"))), Team(arrayOf(Player("4"))))
-    private val teamIds = TeamIdsString("1,2|3|4")
+    private val teamIds = "1,2|3|4"
     private val settings = CreateGameRequest(1001, 2, 3, 10)
     private val req: Play01Request = Play01Request(gameId, teamIds, settings)
 

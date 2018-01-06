@@ -21,7 +21,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
     }
 
     private fun retrieveTeams(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
-        retrieveTeamsUsecase.exec(RetrieveTeamsRequest(req.teamIds.toString()),
+        retrieveTeamsUsecase.exec(RetrieveTeamsRequest(req.teamIds),
                 { response -> retrieveGame(req, RetrieveGameRequest(req.gameId), response, done, fail) },
                 { err -> fail(err) }
         )

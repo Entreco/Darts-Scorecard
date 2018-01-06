@@ -16,7 +16,6 @@ import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
-import nl.entreco.domain.repository.TeamIdsString
 import nl.entreco.domain.setup.game.CreateGameResponse
 
 class Play01Activity : ViewModelActivity() {
@@ -76,7 +75,7 @@ class Play01Activity : ViewModelActivity() {
         @JvmStatic
         fun retrieveSetup(intent: Intent): Play01Request {
             return Play01Request(intent.getLongExtra("gameId", -1),
-                    TeamIdsString(intent.getStringExtra("teamIds")),
+                    intent.getStringExtra("teamIds"),
                     intent.getParcelableExtra("exec"))
         }
 
