@@ -25,38 +25,46 @@
             type="nl.entreco.dartsscorecard.setup.Setup01Navigator" />
     </data>
 
-    <ScrollView
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/def"
-        android:paddingTop="@dimen/def">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <include layout="@layout/toolbar_setup_01" android:id="@+id/includeToolbar" />
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/def"
+            android:paddingTop="@dimen/def"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include
-                layout="@layout/include_setup_players"
-                app:viewModel="@{playersViewModel}"
-                app:navigator="@{navigator}"/>
-
-            <include
-                layout="@layout/include_setup_ad"
-                app:viewModel="@{adsViewModel}" />
-
-            <include
-                layout="@layout/include_setup_settings"
-                app:viewModel="@{settingsViewModel}" />
-
-            <Button
-                style="@style/Setup.Btn"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onStartPressed(navigator, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
-                android:text="@string/cont" />
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </ScrollView>
+                <include
+                    layout="@layout/include_setup_players"
+                    app:editor="@{navigator}"
+                    app:viewModel="@{playersViewModel}" />
+
+                <include
+                    layout="@layout/include_setup_ad"
+                    app:viewModel="@{adsViewModel}" />
+
+                <include
+                    layout="@layout/include_setup_settings"
+                    app:viewModel="@{settingsViewModel}" />
+
+                <Button
+                    style="@style/Setup.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onStartPressed(navigator, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
+                    android:text="@string/cont" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

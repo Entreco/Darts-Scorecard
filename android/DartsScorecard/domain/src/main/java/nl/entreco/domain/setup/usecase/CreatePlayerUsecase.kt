@@ -14,8 +14,15 @@ import javax.inject.Inject
 class CreatePlayerUsecase @Inject constructor(private var playerRepository: PlayerRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
     fun exec(req: CreatePlayerRequest, done: (Player) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val playerId = playerRepository.create(req.name, req.double)
-            onUi { done(Player(req.name, playerId, PlayerPrefs(req.double))) }
+            val validLowercaseName = getValidLowerCaseName(req.name)
+            val playerId = playerRepository.create(validLowercaseName, req.double)
+            onUi { done(Player(validLowercaseName, playerId, PlayerPrefs(req.double))) }
         }, fail)
+    }
+
+    private fun getValidLowerCaseName(name: String): String {
+        val lowerCase = name.toLowerCase()
+        if(lowerCase.isBlank()) throw InvalidPlayerNameException("$name is invalid")
+        return lowerCase
     }
 }

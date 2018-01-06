@@ -64,7 +64,16 @@ class EditPlayerViewModelTest {
         givenSubject("Player 1")
         whenFetchingSucceeds()
         whenTypingLetters("Re")
-        thenFilteredPlayersContains("Remco", "Re")
+        thenFilteredPlayersContains("Remco", "EmReCo", "Re")
+    }
+    
+    @Test
+    fun `it should filter list with when typing "Rec" `() {
+        givenExistingPlayers("Remco", "EmReCo", "Re")
+        givenSubject("Player 1")
+        whenFetchingSucceeds()
+        whenTypingLetters("Rec")
+        thenFilteredPlayersContains("EmReCo")
     }
 
     @Test
@@ -86,6 +95,15 @@ class EditPlayerViewModelTest {
         givenSubject("Player 1")
         whenPressingImeAction("Henk", EditorInfo.IME_ACTION_DONE)
         thenPlayerIsCreated()
+    }
+
+    @Test
+    fun `it should NOT create player if it already exists when 'Done'`() {
+        givenExistingPlayers("plaYer 1")
+        givenSubject("Player 1")
+        whenFetchingSucceeds()
+        whenPressingImeAction("pLaYer 1", EditorInfo.IME_ACTION_DONE)
+        thenPlayerIsNotCreated()
     }
 
     @Test
@@ -121,6 +139,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun whenPressingImeAction(typed: String, action: Int) {
+        whenever(mockView.rootView).thenReturn(mockView)
         whenever(mockView.text).thenReturn(typed)
         subject.onActionDone(mockView, action, mockNavigator)
     }

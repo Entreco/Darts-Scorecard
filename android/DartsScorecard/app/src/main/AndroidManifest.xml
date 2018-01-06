@@ -20,9 +20,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".launch.LaunchActivity" />
-        <activity android:name=".setup.Setup01Activity" />
-        <activity android:name=".setup.edit.EditPlayerActivity" />
-        <activity android:name=".play.Play01Activity" />
+        <activity
+            android:name=".setup.Setup01Activity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".setup.edit.EditPlayerActivity"
+            android:parentActivityName=".setup.Setup01Activity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".play.Play01Activity"
+            android:parentActivityName=".launch.LaunchActivity" />
 
     </application>
 

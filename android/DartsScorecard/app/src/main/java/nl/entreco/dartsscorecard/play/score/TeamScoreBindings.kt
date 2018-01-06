@@ -9,7 +9,8 @@ import android.support.v4.graphics.ColorUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.OvershootInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
@@ -35,33 +36,44 @@ abstract class TeamScoreBindings {
             val diff = oldScore - score
             when (diff) {
                 180 -> handle180(view)
-                0 -> {}
-                else -> { clear(view, 0)}
+                0 -> { }
+                else -> {
+                    clear(view)
+                }
             }
         }
 
-        private fun clear(view: TextView, delay: Long) {
-            view.animate().cancel()
-            view.animate().translationX(200F).setStartDelay(delay).withEndAction({
-                view.setText( R.string.empty )
-            }).setDuration(DEFAULT_ANIMATION_TIME).start()
+        private fun clear(view: TextView, delay: Long = 0) {
+            view.animate().scaleY(0F).setStartDelay(delay)
+                    .setInterpolator(DecelerateInterpolator())
+                    .withStartAction {
+                        view.pivotY = view.height.toFloat()
+                    }
+                    .withEndAction({
+                        view.scaleY = 0F
+                        view.translationY = 0F
+                        view.setText(R.string.empty)
+                    }).setDuration(if (delay == 0L) 0 else DEFAULT_ANIMATION_TIME).start()
         }
 
         private fun handle180(view: TextView) {
-            view.animate().cancel()
-            view.setText( R.string.score_180 )
-            view.animate().translationX(0F).setInterpolator(OvershootInterpolator()).setDuration(DEFAULT_ANIMATION_TIME)
+            view.setText(R.string.score_180)
+            view.animate().scaleY(1F).setDuration(DEFAULT_ANIMATION_TIME)
+                    .setInterpolator(AccelerateInterpolator())
+                    .withStartAction {
+                        view.scaleY = 0F
+                        view.pivotY = 0F
+                    }
                     .withEndAction({
-                        val howLong = 1200L
-                        animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, howLong)
-                        clear(view, howLong)
+                        animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, 1200L)
+                        clear(view, 1200L)
                     }).start()
         }
 
         private fun animateColor(view: TextView, attr: Int, attr2: Int, duration: Long) {
             view.animate().setDuration(duration / 3)
                     .setStartDelay(duration / 3)
-                    .withStartAction{ view.setTextColor(fromAttr(view.context, attr)) }
+                    .withStartAction { view.setTextColor(fromAttr(view.context, attr)) }
                     .withEndAction { view.setTextColor(fromAttr(view.context, attr2)) }
                     .start()
         }

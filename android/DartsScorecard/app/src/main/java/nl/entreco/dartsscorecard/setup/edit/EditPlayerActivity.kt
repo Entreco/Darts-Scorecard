@@ -1,9 +1,8 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.app.Activity
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerBinding
@@ -17,34 +16,25 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName())) }
     private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
+    private val navigator: EditPlayerNavigator by lazy { EditPlayerNavigator(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityEditPlayerBinding>(this, R.layout.activity_edit_player)
         binding.viewModel = viewModel
-        binding.navigator = EditPlayerNavigator(this)
-        initToolbar()
-    }
-
-    private fun initToolbar() {
-        setTitle(R.string.title_select_player)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        binding.navigator = navigator
+        initToolbar(toolbar(binding), R.string.title_select_player)
     }
 
     private fun getSuggestedName(): String {
         return intent.getStringExtra("suggestion")
     }
 
-    companion object {
+    private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {
+        return binding.includeToolbar?.toolbar!!
+    }
 
-        const val REQUEST_CODE = 1002
-
-        @JvmStatic
-        fun start(activity: Activity, suggestion: CharSequence, teamIndex: Int) {
-            val intent = Intent(activity, EditPlayerActivity::class.java)
-            intent.putExtra("suggestion", suggestion)
-            intent.putExtra("teamIndex", teamIndex)
-            activity.startActivityForResult(intent, REQUEST_CODE)
-        }
+    override fun onBackPressed() {
+        navigator.onBackPressed()
     }
 }
