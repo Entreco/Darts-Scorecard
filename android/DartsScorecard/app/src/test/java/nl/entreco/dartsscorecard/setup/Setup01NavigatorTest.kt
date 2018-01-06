@@ -10,9 +10,7 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -99,7 +97,7 @@ class Setup01NavigatorTest {
     @Test
     fun `it should launch Play01Activity`() {
         givenSubject()
-        subject.launch(CreateGameResponse(42, TeamIdsString("1,2"), CreateGameRequest(-1, -2, -3, -4)))
+        subject.launch(CreateGameResponse(42, "1,2", -1, -2, -3, -4))
         verify(mockActivity).finish()
     }
 

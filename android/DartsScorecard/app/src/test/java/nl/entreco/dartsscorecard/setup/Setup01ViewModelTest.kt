@@ -2,12 +2,12 @@ package nl.entreco.dartsscorecard.setup
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Logger
-import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.setup.game.CreateGameUsecase
-import nl.entreco.domain.launch.usecase.ExtractTeamsUsecase
+import nl.entreco.domain.launch.ExtractTeamsRequest
+import nl.entreco.domain.launch.ExtractTeamsResponse
+import nl.entreco.domain.launch.ExtractTeamsUsecase
 import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
-import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.setup.game.CreateGameUsecase
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -24,14 +24,18 @@ class Setup01ViewModelTest {
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockNavigator: Setup01Navigator
 
-    private val teamExtractDoneCaptor = argumentCaptor<(TeamIdsString) -> Unit>()
+    private val teamExtractDoneCaptor = argumentCaptor<(ExtractTeamsResponse) -> Unit>()
     private val teamExtractFailCaptor = argumentCaptor<(Throwable) -> Unit>()
     private val gameCreateDoneCaptor = argumentCaptor<(CreateGameResponse) -> Unit>()
     private val gameCreateFailCaptor = argumentCaptor<(Throwable) -> Unit>()
 
-    private lateinit var givenTeamNamesString: TeamNamesString
-    private lateinit var givenTeamIdsString: TeamIdsString
-    private lateinit var givenCreateRequest: CreateGameRequest
+    private lateinit var givenTeamNamesString: String
+    private lateinit var givenTeamIdsString: String
+    private var givenStartScore: Int = -1
+    private var givenStartIndex: Int = -1
+    private var givenStartLegs: Int = -1
+    private var givenStartSets: Int = -1
+    private lateinit var givenCreateGameRequest: CreateGameRequest
     private lateinit var givenCreateGameResponse: CreateGameResponse
 
     private lateinit var subject: Setup01ViewModel
@@ -63,24 +67,28 @@ class Setup01ViewModelTest {
     }
 
     private fun givenSetupViewModel() {
-        givenTeamNamesString = TeamNamesString("p1,p2|p3")
-        givenTeamIdsString = TeamIdsString("1,2|3")
-        givenCreateRequest = CreateGameRequest(3, 4, 5, 6)
-        givenCreateGameResponse = CreateGameResponse(88, givenTeamIdsString, givenCreateRequest)
+        givenTeamNamesString = "p1,p2|p3"
+        givenTeamIdsString = "1,2|3"
+        givenStartScore = 3
+        givenStartIndex = 4
+        givenStartLegs = 5
+        givenStartSets = 6
+        givenCreateGameRequest = CreateGameRequest(givenStartScore, givenStartIndex, givenStartLegs, givenStartSets)
+        givenCreateGameResponse = CreateGameResponse(88, givenTeamIdsString, givenStartScore, givenStartIndex, givenStartLegs, givenStartSets)
         subject = Setup01ViewModel(mockCreateGameUsecase, mockExtractTeamUsecase, mockLogger)
     }
 
     private fun givenStartNewGamePressed() {
-        subject.onStartPressed(mockNavigator, givenCreateRequest, givenTeamNamesString)
+        subject.onStartPressed(mockNavigator, givenCreateGameRequest, ExtractTeamsRequest(givenTeamNamesString))
     }
 
     private fun whenTeamExists() {
-        verify(mockExtractTeamUsecase).exec(anyBecauseRandom(), teamExtractDoneCaptor.capture(), any())
-        teamExtractDoneCaptor.lastValue.invoke(givenTeamIdsString)
+        verify(mockExtractTeamUsecase).exec(eq(ExtractTeamsRequest(givenTeamNamesString)), teamExtractDoneCaptor.capture(), any())
+        teamExtractDoneCaptor.lastValue.invoke(ExtractTeamsResponse(givenTeamIdsString))
     }
 
     private fun whenTeamDoesNotExist() {
-        verify(mockExtractTeamUsecase).exec(anyBecauseRandom(), any(), teamExtractFailCaptor.capture())
+        verify(mockExtractTeamUsecase).exec(eq(ExtractTeamsRequest(givenTeamNamesString)), any(), teamExtractFailCaptor.capture())
         teamExtractFailCaptor.lastValue.invoke(Throwable("Unable to create team $givenTeamNamesString"))
     }
 
@@ -102,7 +110,4 @@ class Setup01ViewModelTest {
     private fun thenPlay01ActivityIsNotLaunched() {
         verifyZeroInteractions(mockNavigator)
     }
-
-    private fun anyBecauseRandom(): TeamNamesString = any()
-
 }

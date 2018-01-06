@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup.players
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.launch.TeamNamesString
+import nl.entreco.domain.launch.ExtractTeamsRequest
 import nl.entreco.domain.model.players.PlayerSeperator
 import nl.entreco.domain.model.players.TeamSeperator
 import javax.inject.Inject
@@ -11,11 +11,11 @@ import javax.inject.Inject
  */
 class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseViewModel() {
 
-    fun setupTeams(): TeamNamesString {
+    fun setupTeams(): ExtractTeamsRequest {
         val teamString = StringBuilder()
         val players = adapter.playersMap().groupBy { it.teamIndex.get() }.toSortedMap()
         appendTeams(players, teamString)
-        return TeamNamesString(teamString.toString())
+        return ExtractTeamsRequest(teamString.toString())
     }
 
     private fun appendTeams(players: Map<Int, List<PlayerViewModel>>, teamString: StringBuilder) {

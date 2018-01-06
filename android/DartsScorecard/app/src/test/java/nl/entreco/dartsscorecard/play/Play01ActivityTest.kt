@@ -8,7 +8,6 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +25,7 @@ class Play01ActivityTest {
     @Mock private lateinit var mockIntent: Intent
     private val givenGameId: Long = 111
     private val givenTeamString = "1,2|3"
-    private val givenTeamIds = TeamIdsString(givenTeamString)
+    private val givenTeamIds = givenTeamString
     private val givenCreate = CreateGameRequest(1, 2, 3, 4)
 
     val subject = spy(Play01Activity())
@@ -35,7 +34,10 @@ class Play01ActivityTest {
     fun `should start Play01Activity`() {
         whenever(mockCreateResponse.gameId).thenReturn(givenGameId)
         whenever(mockCreateResponse.teamIds).thenReturn(givenTeamIds)
-        whenever(mockCreateResponse.create).thenReturn(givenCreate)
+        whenever(mockCreateResponse.startIndex).thenReturn(givenCreate.startIndex)
+        whenever(mockCreateResponse.startScore).thenReturn(givenCreate.startScore)
+        whenever(mockCreateResponse.numLegs).thenReturn(givenCreate.numLegs)
+        whenever(mockCreateResponse.numSets).thenReturn(givenCreate.numSets)
         Play01Activity.startGame(mockContext, mockCreateResponse)
         verify(mockContext).startActivity(any())
     }
@@ -44,7 +46,9 @@ class Play01ActivityTest {
     fun `should retrieve setup from Intent`() {
         whenever(mockIntent.getLongExtra("gameId", -1)).thenReturn(givenGameId)
         whenever(mockIntent.getStringExtra("teamIds")).thenReturn(givenTeamString)
-        whenever(mockIntent.getParcelableExtra<CreateGameRequest>("exec")).thenReturn(givenCreate)
+        whenever(mockIntent.getIntExtra("startScore", -1)).thenReturn(givenCreate.startScore)
+        whenever(mockIntent.getIntExtra("legs", -1)).thenReturn(givenCreate.numLegs)
+        whenever(mockIntent.getIntExtra("sets", -1)).thenReturn(givenCreate.numSets)
         assertNotNull(Play01Activity.retrieveSetup(mockIntent))
     }
 

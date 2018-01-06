@@ -37,7 +37,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
     private fun retrieveTurns(playRequest: Play01Request, gameResponse: RetrieveGameResponse, teamResponse: RetrieveTeamsResponse, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
         retrieveTurnsUsecase.exec(RetrieveTurnsRequest(gameResponse.game.id),
                 { response ->
-                    gameResponse.game.start(playRequest.create.startIndex, teamResponse.teams)
+                    gameResponse.game.start(playRequest.startIndex, teamResponse.teams)
                     response.turns.forEach { gameResponse.game.handle(it) }
                     done.invoke(Play01Response(gameResponse.game, teamResponse.teams))
                 }, { err -> fail(err) })

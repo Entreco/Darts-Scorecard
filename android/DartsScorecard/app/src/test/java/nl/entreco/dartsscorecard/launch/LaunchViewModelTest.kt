@@ -8,11 +8,9 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
-import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.launch.usecase.RetrieveLatestGameUsecase
+import nl.entreco.domain.launch.RetrieveLatestGameUsecase
 import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -31,11 +29,11 @@ class LaunchViewModelTest {
 
     private lateinit var subject: LaunchViewModel
 
-    private lateinit var givenTeamNames: TeamNamesString
+    private lateinit var givenTeamNames: String
     private lateinit var givenRequestCreate: CreateGameRequest
 
     private val givenGameId = 88L
-    private val givenTeamIds = TeamIdsString("1|2")
+    private val givenTeamIds = "1|2"
     private lateinit var expectedGameResponse: CreateGameResponse
     private lateinit var expectedFetchResponse: FetchLatestGameResponse
 
@@ -77,7 +75,10 @@ class LaunchViewModelTest {
     }
 
     private fun givenResumedGame() {
-        whenever(mockCreateGameResponse.create).thenReturn(givenRequestCreate)
+        whenever(mockCreateGameResponse.startIndex).thenReturn(givenRequestCreate.startIndex)
+        whenever(mockCreateGameResponse.startScore).thenReturn(givenRequestCreate.startScore)
+        whenever(mockCreateGameResponse.numSets).thenReturn(givenRequestCreate.numSets)
+        whenever(mockCreateGameResponse.numLegs).thenReturn(givenRequestCreate.numLegs)
         whenever(mockCreateGameResponse.gameId).thenReturn(givenGameId)
         whenever(mockCreateGameResponse.teamIds).thenReturn(givenTeamIds)
         subject.resumedGame.set(mockCreateGameResponse)
@@ -91,10 +92,10 @@ class LaunchViewModelTest {
     }
 
     private fun givenTeamsAndStartScore(teams: String, start: Int) {
-        givenTeamNames = TeamNamesString(teams)
+        givenTeamNames = teams
         givenRequestCreate = CreateGameRequest(start, 0, 3, 3)
-        expectedGameResponse = CreateGameResponse(givenGameId, givenTeamIds, givenRequestCreate)
-        expectedFetchResponse = FetchLatestGameResponse(givenGameId, givenTeamIds, givenRequestCreate)
+        expectedGameResponse = CreateGameResponse(givenGameId, givenTeamIds, givenRequestCreate.startScore, givenRequestCreate.startIndex, givenRequestCreate.numLegs, givenRequestCreate.numSets)
+        expectedFetchResponse = FetchLatestGameResponse(givenGameId, givenTeamIds, givenRequestCreate.startScore, givenRequestCreate.startIndex, givenRequestCreate.numLegs, givenRequestCreate.numSets)
 
         subject.retrieveLatestGame()
     }

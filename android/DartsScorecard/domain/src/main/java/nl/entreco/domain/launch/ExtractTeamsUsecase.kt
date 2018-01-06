@@ -1,12 +1,10 @@
-package nl.entreco.domain.launch.usecase
+package nl.entreco.domain.launch
 
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
-import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.domain.repository.TeamIdsString
 import javax.inject.Inject
 
 /**
@@ -14,14 +12,14 @@ import javax.inject.Inject
  */
 class ExtractTeamsUsecase @Inject constructor(private val playerRepository: PlayerRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(teamNamesInput: TeamNamesString, done: (TeamIdsString) -> Unit, fail: (Throwable) -> Unit) {
+    fun exec(request: ExtractTeamsRequest, done: (ExtractTeamsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            var teamIds = teamNamesInput.toString()
-            teamNamesInput.toPlayerNames().forEach {
+            var teamIds = request.toString()
+            request.toPlayerNames().forEach {
                 val player = playerRepository.fetchByName(it)
                 teamIds = replaceNameWithId(player, it, teamIds)
             }
-            onUi { done(TeamIdsString(teamIds)) }
+            onUi { done(ExtractTeamsResponse(teamIds)) }
         }, fail)
     }
 

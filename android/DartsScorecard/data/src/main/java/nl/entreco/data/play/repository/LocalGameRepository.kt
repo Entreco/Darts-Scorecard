@@ -5,11 +5,9 @@ import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameTable
-import nl.entreco.domain.model.Game
-import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.launch.FetchLatestGameResponse
+import nl.entreco.domain.model.Game
 import nl.entreco.domain.repository.GameRepository
-import nl.entreco.domain.repository.TeamIdsString
 
 /**
  * Created by Entreco on 15/11/2017.
@@ -44,7 +42,7 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
         return if (all.isEmpty()) throw IllegalStateException("no Games found")
         else {
             val latestGame = all[0]
-            FetchLatestGameResponse(latestGame.id, TeamIdsString(latestGame.teams), CreateGameRequest(latestGame.startScore, latestGame.startIndex, latestGame.numLegs, latestGame.numSets))
+            FetchLatestGameResponse(latestGame.id, latestGame.teams, latestGame.startScore, latestGame.startIndex, latestGame.numLegs, latestGame.numSets)
         }
     }
 }

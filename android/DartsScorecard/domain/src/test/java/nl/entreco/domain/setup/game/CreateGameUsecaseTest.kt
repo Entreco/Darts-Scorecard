@@ -6,7 +6,6 @@ import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.GameRepository
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +27,7 @@ class CreateGameUsecaseTest {
     private lateinit var subject: CreateGameUsecase
 
     private var setup = CreateGameRequest(501, 0, 3, 2)
-    private var teamString = TeamIdsString("a|b")
+    private var teamString = "a|b"
     private var mockBg = TestBackground()
     private var mockFg = TestForeground()
 

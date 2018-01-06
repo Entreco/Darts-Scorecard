@@ -76,15 +76,21 @@ class Play01Activity : ViewModelActivity() {
         fun retrieveSetup(intent: Intent): Play01Request {
             return Play01Request(intent.getLongExtra("gameId", -1),
                     intent.getStringExtra("teamIds"),
-                    intent.getParcelableExtra("exec"))
+                    intent.getIntExtra("startScore", -1),
+                    intent.getIntExtra("startIndex", -1),
+                    intent.getIntExtra("legs", -1),
+                    intent.getIntExtra("sets", -1))
         }
 
         @JvmStatic
         fun startGame(context: Context, create: CreateGameResponse) {
             val intent = Intent(context, Play01Activity::class.java)
             intent.putExtra("gameId", create.gameId)
-            intent.putExtra("teamIds", create.teamIds.toString())
-            intent.putExtra("exec", create.create)
+            intent.putExtra("teamIds", create.teamIds)
+            intent.putExtra("startScore", create.startScore)
+            intent.putExtra("startIndex", create.startIndex)
+            intent.putExtra("legs", create.numLegs)
+            intent.putExtra("sets", create.numSets)
             context.startActivity(intent)
         }
     }

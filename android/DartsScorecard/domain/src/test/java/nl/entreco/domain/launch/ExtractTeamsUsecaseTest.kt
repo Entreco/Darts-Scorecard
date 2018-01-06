@@ -1,13 +1,11 @@
-package nl.entreco.domain.launch.usecase
+package nl.entreco.domain.launch
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -19,13 +17,13 @@ import org.mockito.MockitoAnnotations
 class ExtractTeamsUsecaseTest {
 
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
-    @Mock private lateinit var mockOk: (TeamIdsString) -> Unit
+    @Mock private lateinit var mockOk: (ExtractTeamsResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
     private lateinit var subject: ExtractTeamsUsecase
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    private lateinit var givenTeamNames: TeamNamesString
+    private lateinit var givenTeamNames: ExtractTeamsRequest
 
     @Before
     fun setUp() {
@@ -48,7 +46,7 @@ class ExtractTeamsUsecaseTest {
     }
 
     private fun givenTeams(teamString: String) {
-        givenTeamNames = TeamNamesString(teamString)
+        givenTeamNames = ExtractTeamsRequest(teamString)
     }
 
     private fun whenStartingUsecase() {
@@ -67,7 +65,7 @@ class ExtractTeamsUsecaseTest {
     }
 
     private fun thenCallbackIsNotified(expected: String) {
-        verify(mockOk).invoke(TeamIdsString(expected))
+        verify(mockOk).invoke(ExtractTeamsResponse(expected))
     }
 
 }

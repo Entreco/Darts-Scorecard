@@ -6,7 +6,7 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
-import nl.entreco.domain.launch.usecase.RetrieveLatestGameUsecase
+import nl.entreco.domain.launch.RetrieveLatestGameUsecase
 import nl.entreco.domain.setup.game.CreateGameResponse
 import javax.inject.Inject
 
@@ -35,8 +35,8 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
     private fun removeGameToResume(): (Throwable) -> Unit = { resumedGame.set(null) }
 
     private fun setGameToResume(): (FetchLatestGameResponse) -> Unit {
-        return { (gameId, teamIds, gameRequest) ->
-            resumedGame.set(CreateGameResponse(gameId, teamIds, gameRequest))
+        return { (gameId, teamIds, startScore, startIndex, numLegs, numSets) ->
+            resumedGame.set(CreateGameResponse(gameId, teamIds, startScore, startIndex, numLegs, numSets))
         }
     }
 }

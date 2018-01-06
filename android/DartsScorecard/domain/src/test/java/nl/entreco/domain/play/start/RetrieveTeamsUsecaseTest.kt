@@ -5,7 +5,6 @@ import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -18,10 +17,10 @@ class RetrieveTeamsUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    private lateinit var teamIds: TeamIdsString
+    private lateinit var teamIds: String
 
-    @Mock private lateinit var ok : (RetrieveTeamsResponse) -> Unit
-    @Mock private lateinit var fail : (Throwable) -> Unit
+    @Mock private lateinit var ok: (RetrieveTeamsResponse) -> Unit
+    @Mock private lateinit var fail: (Throwable) -> Unit
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
     @Mock private lateinit var mockPlayer: Player
 
@@ -50,12 +49,12 @@ class RetrieveTeamsUsecaseTest {
     }
 
     private fun givenPlayersWithIds(teams: String) {
-        teamIds = TeamIdsString(teams)
+        teamIds = teams
         whenever(mockPlayerRepository.fetchById(any())).thenReturn(mockPlayer)
     }
 
     private fun whenExecuting() {
-        subject.exec(RetrieveTeamsRequest( teamIds.toString() ), ok, fail)
+        subject.exec(RetrieveTeamsRequest(teamIds.toString()), ok, fail)
     }
 
     private fun thenPlayersAreRetrieved(vararg ids: Long) {

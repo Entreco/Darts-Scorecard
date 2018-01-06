@@ -33,7 +33,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         playGameUsecase.loadGameAndStart(request,
                 { response ->
                     this.game = response.game
-                    load.startWith(response.teams, game.scores, request.create, this)
+                    load.startWith(response.teams, game.scores, request.createRequest(), this)
                 },
                 { err -> logger.e("err: $err") })
     }

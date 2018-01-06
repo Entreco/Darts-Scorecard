@@ -151,7 +151,7 @@ class Play01ViewModelTest {
 
     private fun givenGameAndRequest() {
         game = Game(101, mockArbiter).start(0, givenTeams)
-        req = Play01Request(gameId, teamIds, createGameRequest)
+        req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
         subject.load(req, mockLoadable)
     }
