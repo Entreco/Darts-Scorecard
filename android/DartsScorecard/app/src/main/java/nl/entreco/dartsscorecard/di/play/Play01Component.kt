@@ -4,7 +4,7 @@ import dagger.Subcomponent
 import nl.entreco.dartsscorecard.play.Play01ViewModel
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishUsecase
 
 /**
  * Created by Entreco on 14/11/2017.

@@ -7,11 +7,12 @@ import android.os.Handler
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishRequest
+import nl.entreco.domain.play.finish.GetFinishUsecase
 import java.util.concurrent.Future
 
 /**
@@ -59,7 +60,7 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
 
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         finishFuture?.cancel(true)
-        finishFuture = getFinishUsecase.calculate(input, turn, player.prefs.favoriteDouble, { finish.set(it) })
+        finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble), { finish.set(it.finish) })
     }
 
     private fun removeScoredBadgeAfter(duration: Long) {

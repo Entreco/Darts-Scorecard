@@ -1,13 +1,12 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.play.finish
 
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.Logger
-import nl.entreco.domain.executors.Background
-import nl.entreco.domain.executors.TestBackground
+import nl.entreco.domain.common.executors.Background
+import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Score
-import nl.entreco.domain.play.ScoreEstimator
 import nl.entreco.domain.model.Turn
+import nl.entreco.domain.play.ScoreEstimator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -23,8 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class GetFinishUsecaseTest {
 
     private val mockBg: Background = TestBackground()
-    @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockResult: (String) -> Unit
+    @Mock private lateinit var mockResult: (GetFinishResponse) -> Unit
     lateinit var subject: GetFinishUsecase
 
     @Before
@@ -34,8 +32,8 @@ class GetFinishUsecaseTest {
 
     @Test
     fun `it should report result`() {
-        subject.calculate(Score(170), Turn(), 20, mockResult)
-        verify(mockResult).invoke("T20 T20 BULL")
+        subject.calculate(GetFinishRequest(Score(170), Turn(), 20), mockResult)
+        verify(mockResult).invoke(GetFinishResponse("T20 T20 BULL"))
     }
 
     @Test

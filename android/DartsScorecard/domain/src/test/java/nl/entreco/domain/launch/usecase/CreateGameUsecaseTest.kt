@@ -3,8 +3,8 @@ package nl.entreco.domain.launch.usecase
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.executors.TestBackground
-import nl.entreco.domain.executors.TestForeground
+import nl.entreco.domain.common.executors.TestBackground
+import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.GameRepository

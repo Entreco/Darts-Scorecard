@@ -2,8 +2,8 @@ package nl.entreco.domain.launch.usecase
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.executors.TestBackground
-import nl.entreco.domain.executors.TestForeground
+import nl.entreco.domain.common.executors.TestBackground
+import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository

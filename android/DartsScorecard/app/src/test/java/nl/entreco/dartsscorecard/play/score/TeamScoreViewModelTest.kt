@@ -1,18 +1,13 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.os.Handler
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Next
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
+import com.nhaarman.mockito_kotlin.*
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishRequest
+import nl.entreco.domain.play.finish.GetFinishResponse
+import nl.entreco.domain.play.finish.GetFinishUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -37,6 +32,8 @@ class TeamScoreViewModelTest {
     private lateinit var givenTurn: Turn
     @Mock private lateinit var mockHandler: Handler
     @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
+    private val finishRequestCaptor = argumentCaptor<GetFinishRequest>()
+    private val finishResponseCaptor = argumentCaptor<(GetFinishResponse)->Unit>()
 
     @Test
     fun `when leg finished by other team, it should be false`() {
@@ -81,7 +78,7 @@ class TeamScoreViewModelTest {
     fun `it should start calculating finish when player scores points`() {
         givenTeamScoreViewModel(true)
         whenScoringPoints(201)
-        verify(mockGetFinishUsecase).calculate(eq(givenScore), any(), any(), any())
+        thenScoreIs(givenScore.score)
     }
 
     @Test
@@ -102,7 +99,7 @@ class TeamScoreViewModelTest {
     fun `it should calculate finish when player in this team threw`() {
         givenTeamScoreViewModel(true)
         whenThrowing(Turn(), playerFromMyTeam)
-        verify(mockGetFinishUsecase).calculate(any(), eq(givenTurn), any(), any())
+        thenScoreIs(501)
     }
 
     @Test
@@ -116,7 +113,7 @@ class TeamScoreViewModelTest {
     fun `it should NOT calculate finish when player in other this team threw`() {
         givenTeamScoreViewModel(true)
         whenThrowing(Turn(Dart.DOUBLE_20), playerFromOtherTeam)
-        verify(mockGetFinishUsecase, never()).calculate(any(), eq(givenTurn), any(), any())
+        verify(mockGetFinishUsecase, never()).calculate(any(), any())
     }
 
     private fun whenLegFinishedByPlayer(player: Player) {
@@ -152,5 +149,10 @@ class TeamScoreViewModelTest {
 
     private fun andCurrentTeamIs(current: Boolean) {
         assertEquals(current, subject.currentTeam.get())
+    }
+
+    private fun thenScoreIs(score: Int) {
+        verify(mockGetFinishUsecase).calculate(finishRequestCaptor.capture(), finishResponseCaptor.capture())
+        assertEquals(score, finishRequestCaptor.lastValue.score.score)
     }
 }

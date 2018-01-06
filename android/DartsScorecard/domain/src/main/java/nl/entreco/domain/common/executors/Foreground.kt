@@ -1,4 +1,4 @@
-package nl.entreco.domain.executors
+package nl.entreco.domain.common.executors
 
 /**
  * Created by Entreco on 12/12/2017.

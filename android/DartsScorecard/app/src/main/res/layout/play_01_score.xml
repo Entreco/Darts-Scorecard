@@ -11,7 +11,7 @@
 
         <variable
             name="finishUsecase"
-            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
+            type="nl.entreco.domain.play.finish.GetFinishUsecase" />
     </data>
 
     <android.support.constraint.ConstraintLayout

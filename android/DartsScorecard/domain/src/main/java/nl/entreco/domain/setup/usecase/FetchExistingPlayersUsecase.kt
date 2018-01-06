@@ -1,8 +1,8 @@
 package nl.entreco.domain.setup.usecase
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.executors.Background
-import nl.entreco.domain.executors.Foreground
+import nl.entreco.domain.common.executors.Background
+import nl.entreco.domain.common.executors.Foreground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
 import javax.inject.Inject

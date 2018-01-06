@@ -1,31 +1,32 @@
-package nl.entreco.domain.executors
+package nl.entreco.domain.common.executors
 
+import android.os.Handler
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.domain.common.executors.FgExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import java.util.concurrent.ExecutorService
 
 /**
  * Created by Entreco on 16/12/2017.
  */
-class BgExecutorTest {
-
+class FgExecutorTest {
     @Mock private lateinit var mockRunnable: Runnable
-    @Mock private lateinit var mockExecutor: ExecutorService
-    private lateinit var subject: BgExecutor
+    @Mock private lateinit var mockHandler: Handler
+    private lateinit var subject: FgExecutor
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = BgExecutor(mockExecutor)
+        subject = FgExecutor(mockHandler)
     }
 
     @Test
-    fun `post should submit runnable`() {
+    fun `post should post runnable`() {
         subject.post(mockRunnable)
-        verify(mockExecutor).submit(mockRunnable)
+        verify(mockHandler).post(mockRunnable)
     }
+
 
 }

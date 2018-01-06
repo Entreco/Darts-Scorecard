@@ -4,10 +4,10 @@ import android.os.Handler
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
-import nl.entreco.domain.executors.Background
-import nl.entreco.domain.executors.BgExecutor
-import nl.entreco.domain.executors.FgExecutor
-import nl.entreco.domain.executors.Foreground
+import nl.entreco.domain.common.executors.Background
+import nl.entreco.domain.common.executors.BgExecutor
+import nl.entreco.domain.common.executors.FgExecutor
+import nl.entreco.domain.common.executors.Foreground
 
 /**
  * Created by Entreco on 17/12/2017.

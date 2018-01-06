@@ -1,4 +1,4 @@
-package nl.entreco.domain.executors
+package nl.entreco.domain.common.executors
 
 import android.os.Handler
 import android.os.Looper

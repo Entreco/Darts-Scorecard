@@ -1,9 +1,8 @@
-package nl.entreco.domain.play.usecase
+package nl.entreco.domain.play.finish
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
-import nl.entreco.domain.executors.Background
-import nl.entreco.domain.model.Score
+import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.model.Turn
 import java.util.concurrent.Future
 import javax.inject.Inject
@@ -13,10 +12,10 @@ import javax.inject.Inject
  */
 class GetFinishUsecase @Inject constructor(private val bg: Background) {
 
-    fun calculate(score: Score, turn: Turn, favDouble: Int, result: (String) -> Unit): Future<*>? {
+    fun calculate(request: GetFinishRequest, result: (GetFinishResponse) -> Unit): Future<*>? {
         return bg.post(Runnable {
-            val finish = calculateInBack(score.score, turn.copy(), favDouble)
-            result(finish)
+            val finish = calculateInBack(request.score(), request.turn(), request.double())
+            result(GetFinishResponse(finish))
         })
     }
 

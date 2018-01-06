@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.settings.ScoreSettings
 
 

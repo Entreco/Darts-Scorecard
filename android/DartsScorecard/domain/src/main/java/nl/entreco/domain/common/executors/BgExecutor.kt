@@ -1,4 +1,4 @@
-package nl.entreco.domain.executors
+package nl.entreco.domain.common.executors
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
