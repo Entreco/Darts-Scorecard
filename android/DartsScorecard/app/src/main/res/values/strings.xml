@@ -19,6 +19,7 @@
 
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
+    <string name="title_setup">Configure 01 Game</string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>
@@ -44,6 +45,9 @@
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>
     <string name="pdc_match">PDC World Cup - semi finals</string>
+
+    <!-- Errors -->
+    <string name="err_unable_to_create_player">Unable to create player.</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>

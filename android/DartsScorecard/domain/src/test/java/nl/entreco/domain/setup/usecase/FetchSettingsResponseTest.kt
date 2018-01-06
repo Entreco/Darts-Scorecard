@@ -12,12 +12,12 @@ class FetchSettingsResponseTest {
 
     @Test
     fun `default number of sets should be 1`() {
-        assertEquals(1, subject.sets)
+        assertEquals(0, subject.sets)
     }
 
     @Test
     fun `default number of legs should be 3`() {
-        assertEquals(3, subject.legs)
+        assertEquals(2, subject.legs)
     }
 
     @Test
