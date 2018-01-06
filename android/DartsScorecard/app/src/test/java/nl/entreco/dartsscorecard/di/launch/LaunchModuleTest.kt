@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.di.launch
 
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 /**

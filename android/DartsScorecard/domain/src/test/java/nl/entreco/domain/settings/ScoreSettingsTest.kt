@@ -1,9 +1,8 @@
 package nl.entreco.domain.settings
 
 import nl.entreco.domain.model.Score
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Created by Entreco on 18/12/2017.

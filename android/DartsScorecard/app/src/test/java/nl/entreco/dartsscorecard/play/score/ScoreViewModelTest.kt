@@ -3,15 +3,11 @@ package nl.entreco.dartsscorecard.play.score
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Next
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

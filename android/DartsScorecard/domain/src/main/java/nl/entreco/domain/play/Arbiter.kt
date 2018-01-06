@@ -2,8 +2,8 @@ package nl.entreco.domain.play
 
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Team
 
 const val OK: Int = 1

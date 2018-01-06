@@ -1,9 +1,9 @@
 package nl.entreco.data.db.game
 
 import nl.entreco.data.db.Mapper
-import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Score
+import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.settings.ScoreSettings
 
 /**

@@ -1,8 +1,7 @@
 package nl.entreco.domain.model
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Created by Entreco on 27/11/2017.

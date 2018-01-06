@@ -2,9 +2,8 @@ package nl.entreco.data.db.turn
 
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Turn
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Created by Entreco on 24/12/2017.

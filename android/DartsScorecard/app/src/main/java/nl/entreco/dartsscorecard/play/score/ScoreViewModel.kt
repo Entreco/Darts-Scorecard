@@ -12,8 +12,8 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.domain.setup.game.CreateGameRequest
 import javax.inject.Inject
 
 /**

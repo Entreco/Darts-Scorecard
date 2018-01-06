@@ -1,7 +1,6 @@
 package nl.entreco.domain.common.executors
 
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.common.executors.BgExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
