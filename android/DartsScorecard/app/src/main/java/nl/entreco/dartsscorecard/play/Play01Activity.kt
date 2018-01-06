@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
@@ -39,11 +40,16 @@ class Play01Activity : ViewModelActivity() {
             initGame()
         }
 
+        initToolbar(toolbar(binding))
         resumeGame()
     }
 
     private fun initGame() {
-        viewModel.load(retrieveSetup(), scoreViewModel)
+        viewModel.load(retrieveSetup(intent), scoreViewModel)
+    }
+
+    private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
+        return binding.includeToolbar?.toolbar!!
     }
 
     private fun resumeGame() {
@@ -65,13 +71,14 @@ class Play01Activity : ViewModelActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun retrieveSetup(): RetrieveGameRequest {
-        return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
-                TeamIdsString(intent.getStringExtra("teamIds")),
-                intent.getParcelableExtra("exec"))
-    }
-
     companion object {
+        @JvmStatic
+        fun retrieveSetup(intent: Intent): RetrieveGameRequest {
+            return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
+                    TeamIdsString(intent.getStringExtra("teamIds")),
+                    intent.getParcelableExtra("exec"))
+        }
+
         @JvmStatic
         fun startGame(context: Context, retrieve: RetrieveGameRequest) {
             val intent = Intent(context, Play01Activity::class.java)

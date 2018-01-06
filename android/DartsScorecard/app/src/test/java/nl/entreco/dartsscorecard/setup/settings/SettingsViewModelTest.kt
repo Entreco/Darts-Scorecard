@@ -42,7 +42,7 @@ class SettingsViewModelTest {
     fun `it should update number of sets when in range`() {
         givenSetupViewModel()
         whenSetProgressChanged(10)
-        thenNumberOfSetsIs(11)
+        thenNumberOfSetsIs(10)
     }
 
     @Test
@@ -56,7 +56,7 @@ class SettingsViewModelTest {
     fun `it should update number of legs when in range`() {
         givenSetupViewModel()
         whenLegProgressChanged(2)
-        thenNumberOfLegsIs(3)
+        thenNumberOfLegsIs(2)
     }
 
     @Test

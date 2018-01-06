@@ -98,7 +98,7 @@
                 android:layout_weight="1"
                 android:max="@{viewModel.max}"
                 android:onProgressChanged="@{(view, sets, user) -> viewModel.onSetsProgressChanged(sets)}"
-                android:progress="0" />
+                android:progress="@{viewModel.numSets}" />
 
             <TextView
                 style="@style/Setup.Entry.Txt"
@@ -112,7 +112,7 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:background="@drawable/score_pts"
-                android:text="@{@string/number(viewModel.numSets)}" />
+                android:text="@{@string/number(viewModel.numSets + 1)}" />
         </LinearLayout>
 
         <LinearLayout
@@ -152,7 +152,6 @@
                 android:onClick="@{() -> viewModel.onLegsChanged(setupLegs, -1)}"
                 android:text="@string/minus" />
 
-
             <SeekBar
                 android:id="@+id/setup_legs"
                 style="@style/Setup.Progress"
@@ -161,7 +160,7 @@
                 android:layout_weight="1"
                 android:max="@{viewModel.max}"
                 android:onProgressChanged="@{(view, legs, user) -> viewModel.onLegsProgressChanged(legs)}"
-                android:progress="2" />
+                android:progress="@{viewModel.numLegs}" />
 
             <TextView
                 style="@style/Setup.Entry.Txt"
@@ -174,7 +173,8 @@
                 style="@style/Setup.Entry.Value"
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
-                android:text="@{@string/number(viewModel.numLegs)}" />
+                android:background="@drawable/score_pts"
+                android:text="@{@string/number(viewModel.numLegs + 1)}" />
         </LinearLayout>
 
         <!-- Footer -->

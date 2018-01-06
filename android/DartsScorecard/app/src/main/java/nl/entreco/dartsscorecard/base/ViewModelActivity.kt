@@ -6,8 +6,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.App
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 
@@ -51,5 +54,11 @@ abstract class ViewModelActivity : AppCompatActivity() {
 
     protected fun swapStyle() {
         styler.switch()
+    }
+
+    protected fun initToolbar(toolbar: Toolbar, @StringRes title: Int = R.string.app_name, showHomeEnabled: Boolean = true) {
+        setSupportActionBar(toolbar)
+        setTitle(title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(showHomeEnabled)
     }
 }

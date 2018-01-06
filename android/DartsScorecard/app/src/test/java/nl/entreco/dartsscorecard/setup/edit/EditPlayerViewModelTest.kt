@@ -98,6 +98,15 @@ class EditPlayerViewModelTest {
     }
 
     @Test
+    fun `it should NOT create player if it already exists when 'Done'`() {
+        givenExistingPlayers("plaYer 1")
+        givenSubject("Player 1")
+        whenFetchingSucceeds()
+        whenPressingImeAction("pLaYer 1", EditorInfo.IME_ACTION_DONE)
+        thenPlayerIsNotCreated()
+    }
+
+    @Test
     fun `it should NOT create player when 'Go'`() {
         givenExistingPlayers("Remco", "EmReCo", "Re")
         givenSubject("Player 1")
@@ -130,6 +139,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun whenPressingImeAction(typed: String, action: Int) {
+        whenever(mockView.rootView).thenReturn(mockView)
         whenever(mockView.text).thenReturn(typed)
         subject.onActionDone(mockView, action, mockNavigator)
     }
