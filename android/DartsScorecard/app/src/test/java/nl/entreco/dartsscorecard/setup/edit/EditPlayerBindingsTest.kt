@@ -69,8 +69,9 @@ class EditPlayerBindingsTest {
     fun `it should select all on Focus`() {
         EditPlayerBindings.selectAll(mockTextView, "Henk")
         verify(mockTextView).text = "Henk"
+        verify(mockTextView).clearFocus()
         verify(mockTextView).setSelectAllOnFocus(true)
-        verify(mockTextView).requestFocus()
+        verify(mockTextView).requestFocusFromTouch()
     }
 
     private fun givenPlayer(name: String): Player {

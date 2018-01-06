@@ -4,7 +4,6 @@ import android.view.View
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.databinding.SelectPlayerViewBinding
-import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,8 +18,9 @@ class SelectPlayerViewTest {
     @Mock private lateinit var mockBinding: SelectPlayerViewBinding
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockEntries: MutableList<Int>
-    @Mock private lateinit var mockNavigator: Setup01Navigator
-    @Mock private lateinit var mockViewModel: PlayerViewModel
+    @Mock private lateinit var mockEditor: PlayerEditor
+    @Mock private lateinit var mockPlayerViewModel: PlayerViewModel
+    private val mockPositionInList = 42
     private lateinit var subject: SelectPlayerView
 
     @Before
@@ -30,12 +30,36 @@ class SelectPlayerViewTest {
     }
 
     @Test
-    fun bind() {
-        subject.bind(mockViewModel, mockNavigator, mockEntries)
-        verify(mockBinding).player = mockViewModel
-        verify(mockBinding).navigator = mockNavigator
+    fun `it should bind playerViewModel`() {
+        whenBinding()
+        verify(mockBinding).player = mockPlayerViewModel
+    }
+
+    @Test
+    fun `it should bind editor`() {
+        whenBinding()
+        verify(mockBinding).editor = mockEditor
+    }
+
+    @Test
+    fun `it should bind entries`() {
+        whenBinding()
         verify(mockBinding).entries = mockEntries
+    }
+
+    @Test
+    fun `it should bind positionInList`() {
+        whenBinding()
+        verify(mockBinding).positionInList = mockPositionInList
+    }
+
+    @Test
+    fun `it should executePendingBindings`() {
+        whenBinding()
         verify(mockBinding).executePendingBindings()
     }
 
+    private fun whenBinding() {
+        subject.bind(mockPlayerViewModel, mockEditor, mockEntries, mockPositionInList)
+    }
 }

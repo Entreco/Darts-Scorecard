@@ -1,6 +1,5 @@
 package nl.entreco.data.play.repository
 
-import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.DscDatabase
@@ -11,7 +10,6 @@ import nl.entreco.domain.model.Turn
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 

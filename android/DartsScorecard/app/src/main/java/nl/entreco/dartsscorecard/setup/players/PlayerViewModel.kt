@@ -9,13 +9,10 @@ import android.widget.AdapterView
  */
 class PlayerViewModel(teamIndex: Int, name: String = "Player $teamIndex") {
     val name = ObservableField<String>(name)
-    val teamIndex = ObservableInt(teamIndex)
+    val teamIndex = ObservableInt(teamIndex - 1)
 
     fun onTeamSelected(adapter: AdapterView<*>, index: Int) {
-        try {
-            teamIndex.set(adapter.getItemAtPosition(index).toString().toInt())
-        } catch (oops: IndexOutOfBoundsException) {
-            teamIndex.set(teamIndex.get())
-        }
+        val resolved = adapter.getItemAtPosition(index).toString().toInt()
+        teamIndex.set(resolved)
     }
 }

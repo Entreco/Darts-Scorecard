@@ -20,7 +20,8 @@ class EditPlayerBindings {
         fun selectAll(view: TextView, suggestedName: String) {
             view.text = suggestedName
             view.setSelectAllOnFocus(true)
-            view.requestFocus()
+            view.clearFocus()
+            view.requestFocusFromTouch()
         }
 
         @JvmStatic

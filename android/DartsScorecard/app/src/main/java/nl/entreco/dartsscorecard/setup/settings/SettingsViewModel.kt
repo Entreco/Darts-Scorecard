@@ -1,28 +1,39 @@
 package nl.entreco.dartsscorecard.setup.settings
 
+import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.widget.AdapterView
 import android.widget.SeekBar
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
+import nl.entreco.domain.setup.usecase.FetchSettingsResponse
+import nl.entreco.domain.setup.usecase.StorePreferredSettingsUsecase
+import nl.entreco.domain.setup.usecase.StoreSettingsRequest
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 29/12/2017.
  */
-class SettingsViewModel @Inject constructor() : BaseViewModel() {
+class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUsecase, private val storePrefs: StorePreferredSettingsUsecase) : BaseViewModel() {
 
-    internal val startSets = 1
-    internal val startLegs = 1
-    val min = 0
-    val max = 20
-    val startScore = ObservableInt(501)
-    val numSets = ObservableInt(startSets)
-    val numLegs = ObservableInt(startLegs)
+    private val preferred = ObservableField<FetchSettingsResponse>(FetchSettingsResponse())
+
+    init {
+        fetchPrefs.exec { preferred.set(it) }
+    }
+
+    val startScoreIndex = ObservableInt(preferred.get().score)
+    val min = preferred.get().min
+    val max = preferred.get().max
+    val startScore = ObservableInt()
+    val numSets = ObservableInt(preferred.get().sets)
+    val numLegs = ObservableInt(preferred.get().legs)
 
     fun onStartScoreSelected(adapter: AdapterView<*>, index: Int) {
-        val selectedString = adapter.adapter.getItem(index) as? String
-        startScore.set(selectedString?.toInt()!!)
+        val resolved = adapter.getItemAtPosition(index).toString().toInt()
+        startScoreIndex.set(index)
+        startScore.set(resolved)
     }
 
     fun onSetsChanged(seekBar: SeekBar, delta: Int) {
@@ -35,17 +46,18 @@ class SettingsViewModel @Inject constructor() : BaseViewModel() {
 
     fun onSetsProgressChanged(sets: Int) {
         if (sets in min..max) {
-            numSets.set(sets + 1)
+            numSets.set(sets)
         }
     }
 
     fun onLegsProgressChanged(legs: Int) {
         if (legs in min..max) {
-            numLegs.set(legs + 1)
+            numLegs.set(legs)
         }
     }
 
     fun setupRequest(): CreateGameRequest {
-        return CreateGameRequest(startScore.get(), 0, numLegs.get(), numSets.get())
+        storePrefs.exec(StoreSettingsRequest(numSets.get(), numLegs.get(), min, max, startScoreIndex.get()))
+        return CreateGameRequest(startScore.get(), 0, numLegs.get() + 1, numSets.get() + 1)
     }
 }

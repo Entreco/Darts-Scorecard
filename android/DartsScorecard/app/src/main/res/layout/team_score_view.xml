@@ -46,13 +46,35 @@
                 app:score="@{viewModel.score.leg}"
                 tools:text="2" />
 
-            <nl.entreco.dartsscorecard.base.widget.CounterTextView
-                style="@style/Score.Pts"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="@dimen/score_pts_w"
-                app:score="@{viewModel.score.score}"
-                tools:text="501" />
+                android:layout_weight="@dimen/score_pts_w">
+
+                <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                    style="@style/Score.Pts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:score="@{viewModel.score.score}"
+                    tools:text="501" />
+
+                <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                    style="@style/Score.Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:currentScore="@{viewModel.scored}"
+                    tools:text="180" />
+
+                <TextView
+                    style="@style/Score.Hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:special="@{viewModel.score.score}"
+                    tools:text="180" />
+
+            </FrameLayout>
         </LinearLayout>
 
         <TextView
@@ -65,28 +87,6 @@
             app:finish="@{viewModel.finish}"
             app:finishAlpha="@{viewModel.currentTeam}"
             tools:text="T20 17 D17" />
-
-        <nl.entreco.dartsscorecard.base.widget.CounterTextView
-            style="@style/Score.Hint"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:gravity="start"
-            android:paddingEnd="@dimen/def"
-            android:paddingStart="@dimen/def"
-            app:currentScore="@{viewModel.scored}"
-            tools:text="180" />
-
-        <TextView
-            style="@style/Score.Hint"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:gravity="start"
-            android:paddingEnd="@dimen/def"
-            android:paddingStart="@dimen/def"
-            app:special="@{viewModel.score.score}"
-            tools:text="180" />
 
         <ImageView
             android:layout_width="6dp"
