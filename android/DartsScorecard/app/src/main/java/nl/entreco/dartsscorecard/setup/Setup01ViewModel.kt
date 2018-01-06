@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.setup
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.launch.usecase.CreateGameUsecase
+import nl.entreco.domain.setup.game.CreateGameUsecase
 import nl.entreco.domain.launch.usecase.ExtractTeamsUsecase
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.repository.TeamIdsString
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class Setup01ViewModel @Inject constructor(private val createGameUsecase: Create
         }, onGameCreatedFailed())
     }
 
-    private fun onGameCreated(navigator: Setup01Navigator): (RetrieveGameRequest) -> Unit =
+    private fun onGameCreated(navigator: Setup01Navigator): (CreateGameResponse) -> Unit =
             { req -> navigator.launch(req) }
 
     private fun onGameCreatedFailed(): (Throwable) -> Unit = { err ->
@@ -32,7 +32,7 @@ class Setup01ViewModel @Inject constructor(private val createGameUsecase: Create
         extractTeamsUsecase.exec(teamNamesInput, done, fail)
     }
 
-    private fun createNewGame(createGameRequest: CreateGameRequest, teamNames: TeamIdsString, done: (RetrieveGameRequest) -> Unit, fail: (Throwable) -> Unit) {
+    private fun createNewGame(createGameRequest: CreateGameRequest, teamNames: TeamIdsString, done: (CreateGameResponse) -> Unit, fail: (Throwable) -> Unit) {
         createGameUsecase.exec(createGameRequest, teamNames, done, fail)
     }
 }

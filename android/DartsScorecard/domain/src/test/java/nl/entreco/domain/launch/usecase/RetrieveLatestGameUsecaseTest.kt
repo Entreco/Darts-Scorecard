@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.launch.FetchLatestGameResponse
-import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
@@ -29,7 +29,7 @@ class RetrieveLatestGameUsecaseTest {
 
     private val gameId : Long = 44
     private val teamids = TeamIdsString("1,2,3,4|5,6,7,8")
-    private val createRequest = CreateGameRequest(501, 1,2,3)
+    private val createRequest = CreateGameRequest(501, 1, 2, 3)
 
     private lateinit var subject : RetrieveLatestGameUsecase
     private lateinit var gavenLatestGame : FetchLatestGameResponse

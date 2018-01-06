@@ -6,8 +6,8 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -22,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ActivityTest {
 
     @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockRetrieveRequest: RetrieveGameRequest
+    @Mock private lateinit var mockCreateResponse: CreateGameResponse
     @Mock private lateinit var mockIntent: Intent
     private val givenGameId: Long = 111
     private val givenTeamString = "1,2|3"
@@ -33,10 +33,10 @@ class Play01ActivityTest {
 
     @Test
     fun `should start Play01Activity`() {
-        whenever(mockRetrieveRequest.gameId).thenReturn(givenGameId)
-        whenever(mockRetrieveRequest.teamIds).thenReturn(givenTeamIds)
-        whenever(mockRetrieveRequest.create).thenReturn(givenCreate)
-        Play01Activity.startGame(mockContext, mockRetrieveRequest)
+        whenever(mockCreateResponse.gameId).thenReturn(givenGameId)
+        whenever(mockCreateResponse.teamIds).thenReturn(givenTeamIds)
+        whenever(mockCreateResponse.create).thenReturn(givenCreate)
+        Play01Activity.startGame(mockContext, mockCreateResponse)
         verify(mockContext).startActivity(any())
     }
 

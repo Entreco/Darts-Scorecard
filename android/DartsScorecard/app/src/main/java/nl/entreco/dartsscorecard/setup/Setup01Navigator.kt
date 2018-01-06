@@ -9,14 +9,14 @@ import nl.entreco.dartsscorecard.setup.edit.EditPlayerActivity
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 
 /**
  * Created by Entreco on 02/01/2018.
  */
 class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
 
-    fun launch(req: RetrieveGameRequest) {
+    fun launch(req: CreateGameResponse) {
         Play01Activity.startGame(activity, req)
         activity.finish()
     }

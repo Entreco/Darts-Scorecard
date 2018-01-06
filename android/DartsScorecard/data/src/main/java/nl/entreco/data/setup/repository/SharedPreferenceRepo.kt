@@ -2,8 +2,8 @@ package nl.entreco.data.setup.repository
 
 import android.content.SharedPreferences
 import nl.entreco.domain.repository.PreferenceRepository
-import nl.entreco.domain.setup.usecase.FetchSettingsResponse
-import nl.entreco.domain.setup.usecase.StoreSettingsRequest
+import nl.entreco.domain.setup.settings.FetchSettingsResponse
+import nl.entreco.domain.setup.settings.StoreSettingsRequest
 
 /**
  * Created by entreco on 04/01/2018.

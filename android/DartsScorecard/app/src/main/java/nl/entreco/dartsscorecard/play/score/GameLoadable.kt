@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.play.score
 
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
 
 /**
  * Created by Entreco on 12/12/2017.

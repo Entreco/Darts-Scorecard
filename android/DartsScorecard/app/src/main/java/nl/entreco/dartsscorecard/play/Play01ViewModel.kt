@@ -13,9 +13,9 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.usecase.Play01Usecase
-import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.StoreTurnRequest
+import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.play.stats.StoreTurnRequest
 import javax.inject.Inject
 
 /**
@@ -29,11 +29,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private val scoreListeners = mutableListOf<ScoreListener>()
     private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun load(request: RetrieveGameRequest, load: GameLoadable) {
+    fun load(request: Play01Request, load: GameLoadable) {
         playGameUsecase.loadGameAndStart(request,
-                { game, teams ->
-                    this.game = game
-                    load.startWith(teams, game.scores, request.create, this)
+                { response ->
+                    this.game = response.game
+                    load.startWith(response.teams, game.scores, request.create, this)
                 },
                 { err -> logger.e("err: $err") })
     }

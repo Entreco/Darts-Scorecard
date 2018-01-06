@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.setup
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Logger
 import nl.entreco.domain.launch.TeamNamesString
-import nl.entreco.domain.launch.usecase.CreateGameUsecase
+import nl.entreco.domain.setup.game.CreateGameUsecase
 import nl.entreco.domain.launch.usecase.ExtractTeamsUsecase
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,13 +26,13 @@ class Setup01ViewModelTest {
 
     private val teamExtractDoneCaptor = argumentCaptor<(TeamIdsString) -> Unit>()
     private val teamExtractFailCaptor = argumentCaptor<(Throwable) -> Unit>()
-    private val gameCreateDoneCaptor = argumentCaptor<(RetrieveGameRequest) -> Unit>()
+    private val gameCreateDoneCaptor = argumentCaptor<(CreateGameResponse) -> Unit>()
     private val gameCreateFailCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     private lateinit var givenTeamNamesString: TeamNamesString
     private lateinit var givenTeamIdsString: TeamIdsString
     private lateinit var givenCreateRequest: CreateGameRequest
-    private lateinit var givenRetrieveGameRequest: RetrieveGameRequest
+    private lateinit var givenCreateGameResponse: CreateGameResponse
 
     private lateinit var subject: Setup01ViewModel
 
@@ -66,7 +66,7 @@ class Setup01ViewModelTest {
         givenTeamNamesString = TeamNamesString("p1,p2|p3")
         givenTeamIdsString = TeamIdsString("1,2|3")
         givenCreateRequest = CreateGameRequest(3, 4, 5, 6)
-        givenRetrieveGameRequest = RetrieveGameRequest(88, givenTeamIdsString, givenCreateRequest)
+        givenCreateGameResponse = CreateGameResponse(88, givenTeamIdsString, givenCreateRequest)
         subject = Setup01ViewModel(mockCreateGameUsecase, mockExtractTeamUsecase, mockLogger)
     }
 
@@ -86,7 +86,7 @@ class Setup01ViewModelTest {
 
     private fun andGameCreateSucceeds() {
         verify(mockCreateGameUsecase).exec(any(), eq(givenTeamIdsString), gameCreateDoneCaptor.capture(), any())
-        gameCreateDoneCaptor.lastValue.invoke(givenRetrieveGameRequest)
+        gameCreateDoneCaptor.lastValue.invoke(givenCreateGameResponse)
     }
 
     private fun butGameCreateFails() {
@@ -95,7 +95,7 @@ class Setup01ViewModelTest {
     }
 
     private fun thenPlay01ActivityIsLaunched() {
-        verify(mockNavigator).launch(givenRetrieveGameRequest)
+        verify(mockNavigator).launch(givenCreateGameResponse)
 
     }
 

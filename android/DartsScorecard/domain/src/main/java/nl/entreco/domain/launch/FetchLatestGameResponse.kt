@@ -1,7 +1,7 @@
 package nl.entreco.domain.launch
 
-import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.setup.game.CreateGameRequest
 
 /**
  * Created by Entreco on 19/12/2017.

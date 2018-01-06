@@ -6,7 +6,7 @@ import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameTable
 import nl.entreco.domain.model.Game
-import nl.entreco.domain.repository.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.TeamIdsString

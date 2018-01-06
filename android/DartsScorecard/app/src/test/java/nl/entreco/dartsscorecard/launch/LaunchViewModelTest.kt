@@ -10,8 +10,8 @@ import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.TeamNamesString
 import nl.entreco.domain.launch.usecase.RetrieveLatestGameUsecase
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.repository.TeamIdsString
 import org.junit.Assert.*
 import org.junit.Before
@@ -27,7 +27,7 @@ class LaunchViewModelTest {
 
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockRetrieveGameUsecase: RetrieveLatestGameUsecase
-    @Mock private lateinit var mockRetrieveGameRequest: RetrieveGameRequest
+    @Mock private lateinit var mockCreateGameResponse: CreateGameResponse
 
     private lateinit var subject: LaunchViewModel
 
@@ -36,7 +36,7 @@ class LaunchViewModelTest {
 
     private val givenGameId = 88L
     private val givenTeamIds = TeamIdsString("1|2")
-    private lateinit var expectedGameRequest: RetrieveGameRequest
+    private lateinit var expectedGameResponse: CreateGameResponse
     private lateinit var expectedFetchResponse: FetchLatestGameResponse
 
     private val doneLatestRequestCaptor = argumentCaptor<(FetchLatestGameResponse) -> Unit>()
@@ -77,10 +77,10 @@ class LaunchViewModelTest {
     }
 
     private fun givenResumedGame() {
-        whenever(mockRetrieveGameRequest.create).thenReturn(givenRequestCreate)
-        whenever(mockRetrieveGameRequest.gameId).thenReturn(givenGameId)
-        whenever(mockRetrieveGameRequest.teamIds).thenReturn(givenTeamIds)
-        subject.resumedGame.set(mockRetrieveGameRequest)
+        whenever(mockCreateGameResponse.create).thenReturn(givenRequestCreate)
+        whenever(mockCreateGameResponse.gameId).thenReturn(givenGameId)
+        whenever(mockCreateGameResponse.teamIds).thenReturn(givenTeamIds)
+        subject.resumedGame.set(mockCreateGameResponse)
     }
 
     @Test
@@ -93,7 +93,7 @@ class LaunchViewModelTest {
     private fun givenTeamsAndStartScore(teams: String, start: Int) {
         givenTeamNames = TeamNamesString(teams)
         givenRequestCreate = CreateGameRequest(start, 0, 3, 3)
-        expectedGameRequest = RetrieveGameRequest(givenGameId, givenTeamIds, givenRequestCreate)
+        expectedGameResponse = CreateGameResponse(givenGameId, givenTeamIds, givenRequestCreate)
         expectedFetchResponse = FetchLatestGameResponse(givenGameId, givenTeamIds, givenRequestCreate)
 
         subject.retrieveLatestGame()
@@ -118,7 +118,7 @@ class LaunchViewModelTest {
     }
 
     private fun thenGameIsStoredInObservable() {
-        assertEquals(subject.resumedGame.get(), expectedGameRequest)
+        assertEquals(subject.resumedGame.get(), expectedGameResponse)
     }
 
     private fun theObservableIsCleared() {
@@ -134,14 +134,14 @@ class LaunchViewModelTest {
 
     private fun thenPlay01IsLaunched() {
         try {
-            verify(Play01Activity).startGame(mockContext, expectedGameRequest)
+            verify(Play01Activity).startGame(mockContext, expectedGameResponse)
         } catch (ignore: NotAMockException) {
         }
     }
 
     private fun thenPlay01IsNotLaunched() {
         try {
-            verify(Play01Activity).startGame(mockContext, expectedGameRequest)
+            verify(Play01Activity).startGame(mockContext, expectedGameResponse)
             fail()
         } catch (ignore: NotAMockException) {
         }

@@ -13,10 +13,11 @@ import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.usecase.Play01Usecase
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.play.start.Play01Response
+import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
@@ -30,7 +31,7 @@ class Play01ViewModelTest {
 
     private lateinit var subject: Play01ViewModel
     private lateinit var game: Game
-    private lateinit var req: RetrieveGameRequest
+    private lateinit var req: Play01Request
 
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockLogger: Logger
@@ -39,7 +40,7 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockPlayerListener: PlayerListener
     @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
 
-    private val doneCaptor = argumentCaptor<(Game, Array<Team>) -> Unit>()
+    private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     private val createGameRequest: CreateGameRequest = CreateGameRequest(501, 0, 3, 2)
@@ -151,14 +152,14 @@ class Play01ViewModelTest {
 
     private fun givenGameAndRequest() {
         game = Game(101, mockArbiter).start(0, givenTeams)
-        req = RetrieveGameRequest(gameId, teamIds, createGameRequest)
+        req = Play01Request(gameId, teamIds, createGameRequest)
         subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
         subject.load(req, mockLoadable)
     }
 
     private fun whenLoadingOk() {
         verify(mockPlayGameUsecase).loadGameAndStart(eq(req), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(game, givenTeams)
+        doneCaptor.firstValue.invoke(Play01Response(game, givenTeams))
     }
 
     private fun thenUiIsReady() {
