@@ -11,8 +11,12 @@ data class GetFinishRequest(val score: Score, val turn: Turn, val favDouble: Int
         return score.score
     }
 
-    fun turn(): Turn {
-        return turn.copy()
+    fun dartsLeft(): Int {
+        return turn.dartsLeft()
+    }
+
+    fun total(): Int {
+        return turn.total()
     }
 
     fun double(): Int {

@@ -38,12 +38,14 @@ class GetFinishUsecaseTest {
 
     @Test
     fun `it should return empty for scores higher than 170`() {
-        assertEquals("", subject.calculateInBack(171, Turn(), 20))
+        val turn = Turn()
+        assertEquals("", subject.calculateInBack(171, turn.dartsLeft(), turn.total(), 20))
     }
 
     @Test
     fun `it should return T20 T20 BULL for score of 170`() {
-        assertEquals("T20 T20 BULL", subject.calculateInBack(170, Turn(), 20))
+        val turn = Turn()
+        assertEquals("T20 T20 BULL", subject.calculateInBack(170, turn.dartsLeft(), turn.total(), 20))
     }
 
     @Test
@@ -118,12 +120,12 @@ class GetFinishUsecaseTest {
     }
 
     private fun verifyNotPossible(scored: Int, turn: Turn) {
-        val finish = subject.calculateInBack(scored, turn, 20)
+        val finish = subject.calculateInBack(scored, turn.dartsLeft(), turn.total(), 20)
         assertEquals("scored: $scored finish: $finish", subject.notPossible, finish)
     }
 
     private fun verifyDartsNeeded(scored: Int, turn: Turn, numDarts: Int) {
-        val finish = subject.calculateInBack(scored, turn, 20)
+        val finish = subject.calculateInBack(scored, turn.dartsLeft(), turn.total(), 20)
         val thrown = ScoreEstimator().guess(scored, false)
         assertNotEquals("scored: $scored finish: $finish", subject.notPossible, finish)
         assertEquals("scored: $scored finish: $finish", numDarts, finish.split(" ").size)
