@@ -24,13 +24,6 @@ class NoScoreEventListenerTest : SpecialEventListenerTest() {
     }
 
     @Test
-    fun `it should not notify about 180 event when 180 was scored`() {
-        val subject = NoScoreEventListener()
-        subject.onScored(`180`())
-        Assert.assertFalse(subject.wasNotified())
-    }
-
-    @Test
     fun `it should not notify about 180 event when no 180 was scored`() {
         val subject = NoScoreEventListener()
         subject.onScored(`60`())

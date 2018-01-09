@@ -39,7 +39,7 @@ class ScoreBindingsTest {
     fun `it should notify adapter when all teams have been added`() {
         ScoreBindings.addTeams(mockRecyclerView, mockScoreAdapter, givenTeams, givenScores, givenScoreSettings, mockGetFinishUsecase, mockUiCallback)
         verify(mockScoreAdapter, times(givenTeams.size)).addItem(any())
-        verify(mockUiCallback).onLetsPlayDarts()
+        verify(mockUiCallback).onLetsPlayDarts(any())
     }
 
     @Test

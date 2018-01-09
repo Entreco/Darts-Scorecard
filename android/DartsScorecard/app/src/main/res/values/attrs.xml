@@ -15,6 +15,7 @@
     <attr name="scoreBorderAlpha" format="float" />
     <attr name="statBorderColor" format="float" />
     <attr name="colorOneEighty" format="float" />
+    <attr name="colorNineDart" format="float" />
     <attr name="grad_score_header_start" format="color" />
     <attr name="grad_score_header_stop" format="color" />
     <attr name="grad_score_name_start" format="color" />
@@ -25,6 +26,8 @@
     <attr name="grad_score_pts_stop" format="color" />
     <attr name="grad_score_hint_start" format="color" />
     <attr name="grad_score_hint_stop" format="color" />
+    <attr name="grad_score_nine_start" format="color" />
+    <attr name="grad_score_nine_stop" format="color" />
     <attr name="grad_current_start" format="color" />
     <attr name="grad_current_stop" format="color" />
     <attr name="grad_launch_btn_start" format="color" />

@@ -13,28 +13,35 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.finish.GetFinishRequest
 import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.domain.play.listeners.events.NineDartEvent
 import java.util.concurrent.Future
 
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, private val handler: Handler = Handler(), starter: Boolean) : BaseViewModel() {
+class TeamScoreViewModel(val team: Team, startScore: Score,
+                         private val getFinishUsecase: GetFinishUsecase,
+                         private val handler: Handler = Handler(),
+                         starter: Boolean) : BaseViewModel(), TeamScoreListener {
 
     val finish = ObservableField<String>("")
+    val nineDarter = ObservableBoolean(false)
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
 
+    private var nineDartPossible = false
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
+        nineDartPossible = next.state == State.LEG || next.state == State.START || next.state == State.SET
         updateLegStarter(next)
         updateCurrentTeam(next)
     }
 
     fun scored(input: Score, by: Player) {
-        this.score.set(input.copy())
+        score.set(input.copy())
         removeScoredBadgeAfter(100)
         calculateFinish(input, by)
     }
@@ -55,6 +62,13 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
             next.state == State.START -> started.set(team.contains(next.player))
             next.state == State.LEG -> started.set(team.contains(next.player))
             next.state == State.SET -> started.set(team.contains(next.player))
+        }
+    }
+
+    override fun onNineDartEvent(event: NineDartEvent) {
+        if (team.contains(event.by())) {
+            nineDarter.set(event.isPossible() && nineDartPossible)
+            nineDartPossible = event.isPossible()
         }
     }
 

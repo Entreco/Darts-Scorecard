@@ -8,6 +8,7 @@ import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.finish.GetFinishRequest
 import nl.entreco.domain.play.finish.GetFinishResponse
 import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.domain.play.listeners.events.NineDartEvent
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -116,6 +117,35 @@ class TeamScoreViewModelTest {
         verify(mockGetFinishUsecase, never()).calculate(any(), any())
     }
 
+    @Test
+    fun `it should set nine darter when nine darter possible for team && new leg is started`() {
+        givenTeamScoreViewModel(false)
+        whenNextEventOccurs(State.LEG, playerFromMyTeam)
+        whenNineDartEvent(true, playerFromMyTeam)
+        thenNineDarterIs(true)
+    }
+
+    @Test
+    fun `it should NOT set nine darter when nine darter possible for team but no new leg is started`() {
+        givenTeamScoreViewModel(false)
+        whenNineDartEvent(true, playerFromMyTeam)
+        thenNineDarterIsNotUpdated()
+    }
+
+    @Test
+    fun `it should NOT set nine darter, when not for this team`() {
+        givenTeamScoreViewModel(false)
+        whenNineDartEvent(true, playerFromOtherTeam)
+        thenNineDarterIsNotUpdated()
+    }
+
+    @Test
+    fun `it should set nine darter not possible, when not possible for this team`() {
+        givenTeamScoreViewModel(false)
+        whenNineDartEvent(false, playerFromMyTeam)
+        thenNineDarterIs(false)
+    }
+
     private fun whenLegFinishedByPlayer(player: Player) {
         whenNextEventOccurs(State.LEG, player)
     }
@@ -143,6 +173,10 @@ class TeamScoreViewModelTest {
         subject.threw(turn, player)
     }
 
+    private fun whenNineDartEvent(nineDarter: Boolean, player: Player) {
+        subject.onNineDartEvent(NineDartEvent(nineDarter, player))
+    }
+
     private fun thenStartedFlagEquals(b: Boolean) {
         assertEquals(b, subject.started.get())
     }
@@ -154,5 +188,13 @@ class TeamScoreViewModelTest {
     private fun thenScoreIs(score: Int) {
         verify(mockGetFinishUsecase).calculate(finishRequestCaptor.capture(), finishResponseCaptor.capture())
         assertEquals(score, finishRequestCaptor.lastValue.score.score)
+    }
+
+    private fun thenNineDarterIs(expected: Boolean) {
+        assertEquals(expected, subject.nineDarter.get())
+    }
+
+    private fun thenNineDarterIsNotUpdated(){
+        assertEquals(false, subject.nineDarter.get())
     }
 }

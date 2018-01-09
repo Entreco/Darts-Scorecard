@@ -38,7 +38,7 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {
         logger.d("NoNICE", "1:$scores by:$by")
-        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, by); }
+        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, by) }
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {

@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadable
+import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
@@ -38,7 +39,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                 { err -> logger.e("err: $err") })
     }
 
-    override fun onLetsPlayDarts() {
+    override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
+        listeners.forEach { addSpecialEventListener(it) }
         notifyNextPlayer(game.next)
         notifyScoreChanged(game.scores, game.next.player)
     }

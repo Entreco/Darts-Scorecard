@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.play.score.GameLoadable
+import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Game
@@ -31,6 +32,7 @@ class Play01ViewModelTest {
     private lateinit var subject: Play01ViewModel
     private lateinit var game: Game
     private lateinit var req: Play01Request
+    private lateinit var givenTeamScoreListeners: List<TeamScoreListener>
 
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockLogger: Logger
@@ -38,6 +40,7 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockScoreListener: ScoreListener
     @Mock private lateinit var mockPlayerListener: PlayerListener
     @Mock private lateinit var mockSpecialListener: SpecialEventListener<*>
+    @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
 
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -126,6 +129,14 @@ class Play01ViewModelTest {
     }
 
     @Test
+    fun `it should add TeamScoreListeners when UiIsReady`() {
+        givenGameLoadedOk()
+        whenAddingScoreListener(mockScoreListener)
+        whenLetsPlayDarts()
+        thenTeamScoreListenersAreAdded()
+    }
+
+    @Test
     fun `it should notify scoreListeners when UiIsReady`() {
         givenGameLoadedOk()
         whenAddingScoreListener(mockScoreListener)
@@ -152,6 +163,7 @@ class Play01ViewModelTest {
     private fun givenGameAndRequest() {
         game = Game(101, mockArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
+        givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
         subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
         subject.load(req, mockLoadable)
     }
@@ -177,7 +189,7 @@ class Play01ViewModelTest {
     }
 
     private fun whenLetsPlayDarts() {
-        subject.onLetsPlayDarts()
+        subject.onLetsPlayDarts(givenTeamScoreListeners)
     }
 
     private fun whenAddingScoreListener(vararg listeners: ScoreListener) {
@@ -238,4 +250,6 @@ class Play01ViewModelTest {
     private fun thenSpecialListenerIsNotified() {
         verify(mockSpecialListener).onSpecialEvent(any(), any(), any(), any())
     }
+
+    private fun thenTeamScoreListenersAreAdded() {}
 }

@@ -6,7 +6,6 @@ import android.databinding.BindingAdapter
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.v4.graphics.ColorUtils
-import android.util.Log
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
@@ -15,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
+
 
 /**
  * Created by Entreco on 25/11/2017.
@@ -28,6 +28,21 @@ abstract class TeamScoreBindings {
         @BindingAdapter("score")
         fun showScore(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
+        }
+
+        @JvmStatic
+        @BindingAdapter("nine")
+        fun showNineDarter(view: TextView, possibleNineDart: Boolean) {
+            if (possibleNineDart) handleNine(view)
+            else clearNine(view)
+        }
+
+        private fun handleNine(view: TextView) {
+            show(view)
+        }
+
+        private fun clearNine(view: TextView) {
+            hide(view)
         }
 
         @JvmStatic
@@ -83,8 +98,9 @@ abstract class TeamScoreBindings {
         @BindingAdapter("currentScore")
         fun showCurrentScore(view: CounterTextView, score: Int) {
             view.setTarget(score.toLong())
+            view.measure(0, 0)
             if (score <= 0) {
-                view.animate().translationX(200F).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
+                view.animate().translationX(view.measuredWidth.toFloat() * 3).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
             } else {
                 view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
                 view.setTextColor(fromAttr(view.context, R.attr.scoreText))
@@ -94,8 +110,13 @@ abstract class TeamScoreBindings {
         @JvmStatic
         @BindingAdapter("currentTeam")
         fun showCurrentTeam(view: ImageView, isCurrentTeam: Boolean) {
-            val w = if (view.width.toFloat() <= 0.0f) 200f else view.width.toFloat()
-            view.animate().translationX(if (isCurrentTeam) 0f else w).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
+            var target = 0F
+            if(!isCurrentTeam){
+                view.measure(0, 0)
+                target = view.width.toFloat() * 3
+            }
+
+            view.animate().translationX(target).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
         }
 
         @ColorInt
@@ -111,19 +132,13 @@ abstract class TeamScoreBindings {
         @BindingAdapter("finish", "finishAlpha", requireAll = false)
         fun showFinishWithAlpha(view: TextView, finish: String, isCurrentTeam: Boolean) {
             view.text = finish
+            view.measure(0, 0)
             if (finish.isEmpty()) {
-                view.animate()
-                        .translationX(-200F)
-                        .setInterpolator(AccelerateDecelerateInterpolator())
-                        .setDuration(DEFAULT_ANIMATION_TIME).start()
+                hide(view)
             } else {
-                view.animate()
-                        .translationX(0f)
-                        .setInterpolator(AccelerateDecelerateInterpolator())
-                        .setDuration(DEFAULT_ANIMATION_TIME).start()
+                show(view)
 
                 val startColor = colorToHex(view.currentTextColor)
-                Log.e("REMCO", "COLORINT:${view.currentTextColor}")
                 val endColor = if (isCurrentTeam) "#FFFFFFFF" else "#aaFFFFFF"
                 if (startColor != endColor) {
                     val valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(DEFAULT_ANIMATION_TIME)
@@ -134,6 +149,30 @@ abstract class TeamScoreBindings {
                     valueAnimator.start()
                 }
             }
+        }
+
+        private fun hide(view: TextView) {
+            view.measure(0, 0)
+            val animator = ValueAnimator.ofInt(view.width, 0).setDuration(DEFAULT_ANIMATION_TIME)
+            animator.addUpdateListener {
+                val lp = view.layoutParams
+                lp.width = it.animatedValue as Int
+                view.layoutParams = lp
+                view.parent.requestLayout()
+            }
+            animator.start()
+        }
+
+        private fun show(view: TextView) {
+            view.measure(0, 0)
+            val animator = ValueAnimator.ofInt(view.width, view.measuredWidth).setDuration(DEFAULT_ANIMATION_TIME)
+            animator.addUpdateListener {
+                val lp = view.layoutParams
+                lp.width = it.animatedValue as Int
+                view.layoutParams = lp
+                view.parent.requestLayout()
+            }
+            animator.start()
         }
 
         private fun colorToHex(color: Int): String {

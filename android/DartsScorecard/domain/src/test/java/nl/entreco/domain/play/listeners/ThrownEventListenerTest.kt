@@ -17,14 +17,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 class ThrownEventListenerTest : SpecialEventListenerTest() {
 
     @Test
-    fun `it should notify when darts where thrown`() {
-        val subject = ThrownEventListener()
-        subject.onThrown(`180`())
-        Assert.assertTrue(subject.wasNotified())
-        Assert.assertEquals("T20 T20 T20", subject.describe())
-    }
-
-    @Test
     fun `it should notify about throw when busting`() {
         val subject = ThrownEventListener()
         subject.onThrown(`bust`())

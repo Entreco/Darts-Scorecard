@@ -23,12 +23,14 @@ abstract class ScoreBindings {
             recyclerView.adapter = adapter
             adapter.clear()
 
+            val listeners = mutableListOf<TeamScoreListener>()
             teams.forEachIndexed { index, team ->
                 val vm = TeamScoreViewModel(team, scores[index], finishUsecase, starter = scoreSettings.teamStartIndex == index)
                 adapter.addItem(vm)
+                listeners.add(vm)
             }
 
-            uiCallback?.onLetsPlayDarts()
+            uiCallback?.onLetsPlayDarts(listeners)
         }
 
         @JvmStatic

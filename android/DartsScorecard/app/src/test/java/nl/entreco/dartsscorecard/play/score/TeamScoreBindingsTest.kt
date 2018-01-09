@@ -47,6 +47,16 @@ class TeamScoreBindingsTest {
         thenStarterDrawableIsNotShown()
     }
 
+    @Test(expected = NullPointerException::class)
+    fun `it should handle 9-darter animation`() {
+        givenNineDartEvent(true)
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun `it should clear 9-darter animation`() {
+        givenNineDartEvent(false)
+    }
+
     @Test
     fun `it should show specials when scoring 180`() {
         givenSpecialScore(180, 0)
@@ -95,7 +105,7 @@ class TeamScoreBindingsTest {
         thenFinishAnimationIsShown()
     }
 
-    @Test
+    @Test(expected = NullPointerException::class)
     fun `it should hide finish animation`() {
         givenFinish("")
         thenFinishAnimationIsNotShown()
@@ -105,6 +115,12 @@ class TeamScoreBindingsTest {
         whenever(mockTextView.animate()).thenReturn(mockAnimator)
         mockAnimations()
         TeamScoreBindings.showSpecials(mockTextView, oldScore, score)
+    }
+
+    private fun givenNineDartEvent(nineDarts: Boolean) {
+        whenever(mockTextView.width).thenReturn(200)
+        mockAnimations()
+        TeamScoreBindings.showNineDarter(mockTextView, nineDarts)
     }
 
     private fun givenCurrentScore(score: Int) {
@@ -118,13 +134,13 @@ class TeamScoreBindingsTest {
 
     private fun givenCurrentTeam(current: Boolean) {
         whenever(mockImageView.animate()).thenReturn(mockAnimator)
+        whenever(mockImageView.width).thenReturn(200)
         mockAnimations()
         TeamScoreBindings.showCurrentTeam(mockImageView, current)
     }
 
     private fun givenFinish(finish: String) {
-        whenever(mockTextView.animate()).thenReturn(mockAnimator)
-        whenever(mockTextView.currentTextColor).thenReturn(-1)
+        whenever(mockTextView.width).thenReturn(200)
         mockAnimations()
 
         TeamScoreBindings.showFinishWithAlpha(mockTextView, finish, true)
