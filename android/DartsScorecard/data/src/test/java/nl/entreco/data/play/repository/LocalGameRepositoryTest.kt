@@ -1,6 +1,7 @@
 package nl.entreco.data.play.repository
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.isA
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.DscDatabase
@@ -65,6 +66,13 @@ class LocalGameRepositoryTest {
         whenFetchingByUid(2)
     }
 
+    @Test
+    fun `it should mark game as finished`() {
+        givenExistingGames(1)
+        whenFinishingGame(1)
+        thenUpdateGamesIsCalledOnDao()
+    }
+
     private fun givenExistingGames(){
         val table = GameTable()
         table.startIndex = 0
@@ -100,11 +108,19 @@ class LocalGameRepositoryTest {
         subject.fetchBy(id)
     }
 
+    private fun whenFinishingGame(gameId: Long) {
+        subject.finish(gameId)
+    }
+
     private fun thenFetchAllIsCalledOnDao() {
         verify(mockGameDao).fetchAll()
     }
 
     private fun thenFetchByUidIsCalledOnDao() {
         verify(mockGameDao).fetchBy(any())
+    }
+
+    private fun thenUpdateGamesIsCalledOnDao(){
+        verify(mockGameDao).updateGames(isA())
     }
 }

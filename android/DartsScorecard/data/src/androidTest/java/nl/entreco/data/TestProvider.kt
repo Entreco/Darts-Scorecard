@@ -23,6 +23,7 @@ class TestProvider {
             table.startIndex = startIndex
             table.startScore = startScore
             table.teams = teamstring
+            table.finished = false
             return table
         }
 

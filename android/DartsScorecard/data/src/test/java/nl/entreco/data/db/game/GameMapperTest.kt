@@ -23,12 +23,12 @@ class GameMapperTest {
 
     @Test
     fun `should create Game with all values set (except teams)`() {
-        givenGameTable(id = 1, teams = "1,2|3,4", numLegs = 100, numSets = 1000, startScore = 42, startIndex = 18)
+        givenGameTable(id = 1, teams = "1,2|3,4", numLegs = 100, numSets = 1000, startScore = 42, startIndex = 18, finished = true)
         whenConverting()
         assertEquals(1, actualGame.id)
     }
 
-    private fun givenGameTable(id: Long = 0, teams: String = "", numLegs: Int = 0, numSets: Int = 0, startScore: Int = 0, startIndex: Int = 0) {
+    private fun givenGameTable(id: Long = 0, teams: String = "", numLegs: Int = 0, numSets: Int = 0, startScore: Int = 0, startIndex: Int = 0, finished: Boolean = false) {
         val table = GameTable()
         table.id = id
         table.teams = teams
@@ -36,6 +36,7 @@ class GameMapperTest {
         table.numSets = numSets
         table.startScore = startScore
         table.startIndex = startIndex
+        table.finished = finished
         givenTabel = table
     }
 

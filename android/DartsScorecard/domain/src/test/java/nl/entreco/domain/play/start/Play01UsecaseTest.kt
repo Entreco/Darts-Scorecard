@@ -38,16 +38,18 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
     @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
     @Mock private lateinit var mockStoreUc: StoreTurnUsecase
+    @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
     @Mock private lateinit var mockGame: Game
     private val mockTurns = emptyArray<Turn>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
+    private lateinit var givenMarkFinishRequest: MarkGameAsFinishedRequest
 
     private lateinit var subject: Play01Usecase
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockStoreUc)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockStoreUc, mockMarkUc)
     }
 
     @Test
@@ -78,6 +80,12 @@ class Play01UsecaseTest {
     fun storeTurn() {
         whenStoringTurn(Turn(Dart.DOUBLE_1, Dart.DOUBLE_15))
         thenTurnIsStored()
+    }
+
+    @Test
+    fun markGameAsFinished() {
+        whenGameIsFinished()
+        thenGameIsMarkedAsFinished()
     }
 
     private fun whenStoringTurn(turn: Turn) {
@@ -119,12 +127,21 @@ class Play01UsecaseTest {
         failCaptor.firstValue.invoke(Throwable("cant retrieve game"))
     }
 
+    private fun whenGameIsFinished(){
+        givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
+        subject.markGameAsFinished(givenMarkFinishRequest)
+    }
+
     private fun thenGameIsStarted() {
         verify(mockGame).start(2, teams)
     }
 
     private fun thenGameIsNotStarted() {
         verify(mockGame, never()).start(2, teams)
+    }
+
+    private fun thenGameIsMarkedAsFinished() {
+        verify(mockMarkUc).exec(givenMarkFinishRequest)
     }
 
 }

@@ -4,16 +4,14 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
@@ -34,6 +32,9 @@ class Play01ViewModelTest {
     private lateinit var req: Play01Request
     private lateinit var givenTeamScoreListeners: List<TeamScoreListener>
 
+    @Mock private lateinit var mockNext: Next
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockLoadable: GameLoadable
@@ -48,9 +49,10 @@ class Play01ViewModelTest {
     private val createGameRequest: CreateGameRequest = CreateGameRequest(501, 0, 3, 2)
     private val givenTeams = arrayOf(Team(arrayOf(Player("p1"))), Team(arrayOf(Player("p2"))))
     private val givenScores = arrayOf(Score(), Score())
-    private val mockArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
+    private val givenArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
     private val gameId: Long = 1002
     private val teamIds = "1|2"
+
 
     @Before
     fun setUp() {
@@ -160,12 +162,33 @@ class Play01ViewModelTest {
         thenSpecialListenerIsNotNotified()
     }
 
+    @Test
+    fun `it should mark game finished when state == MATCH`() {
+        givenFullyLoadedMockGame()
+        whenNextStateIs(State.MATCH)
+        thenGameIsMarkedAsFinished()
+    }
+
+    @Test
+    fun `it should NOT mark game finished when state != MATCH`() {
+        givenGameLoadedOk()
+        whenNextStateIs(State.START)
+        thenGameIsNotMarkedAsFinished()
+    }
+
     private fun givenGameAndRequest() {
-        game = Game(101, mockArbiter).start(0, givenTeams)
+        game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
         subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
         subject.load(req, mockLoadable)
+    }
+
+    private fun givenFullyLoadedMockGame() {
+        subject = Play01ViewModel(mockPlayGameUsecase, mockLogger)
+        subject.load(mockRequest, mockLoadable)
+        verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
+        doneCaptor.firstValue.invoke(Play01Response(mockGame, givenTeams))
     }
 
     private fun whenLoadingOk() {
@@ -227,6 +250,14 @@ class Play01ViewModelTest {
         }
     }
 
+    private fun whenNextStateIs(state: State) {
+        val turn = Turn()
+        whenever(mockNext.state).thenReturn(state)
+        whenever(mockGame.next).thenReturn(mockNext)
+        whenever(mockGame.id).thenReturn(gameId)
+        subject.onTurnSubmitted(turn, Player("you won"))
+    }
+
     private fun thenScoresAre(expected: Array<Score>) {
         assertArrayEquals(expected, game.scores)
     }
@@ -252,4 +283,12 @@ class Play01ViewModelTest {
     }
 
     private fun thenTeamScoreListenersAreAdded() {}
+
+    private fun thenGameIsMarkedAsFinished() {
+        verify(mockPlayGameUsecase).markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+    }
+
+    private fun thenGameIsNotMarkedAsFinished() {
+        verify(mockPlayGameUsecase, never()).markGameAsFinished(any())
+    }
 }

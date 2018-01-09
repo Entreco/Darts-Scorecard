@@ -18,6 +18,9 @@ interface GameRepository {
             numLegs: Int,
             numSets: Int): Long
 
+    @WorkerThread
+    fun finish(id: Long)
+
     @Throws
     @WorkerThread
     fun fetchBy(id: Long): Game

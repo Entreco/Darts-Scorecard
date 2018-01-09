@@ -10,7 +10,8 @@ import javax.inject.Inject
 class Play01Usecase @Inject constructor(private val retrieveGameUsecase: RetrieveGameUsecase,
                                         private val retrieveTurnsUsecase: RetrieveTurnsUsecase,
                                         private val retrieveTeamsUsecase: RetrieveTeamsUsecase,
-                                        private val storeTurnUsecase: StoreTurnUsecase) {
+                                        private val storeTurnUsecase: StoreTurnUsecase,
+                                        private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase) {
 
     fun loadGameAndStart(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
         retrieveTeams(req, done, fail)
@@ -18,6 +19,10 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
 
     fun storeTurn(req: StoreTurnRequest) {
         storeTurnUsecase.exec(req)
+    }
+
+    fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
+        markGameAsFinishedUsecase.exec(finishRequest)
     }
 
     private fun retrieveTeams(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {

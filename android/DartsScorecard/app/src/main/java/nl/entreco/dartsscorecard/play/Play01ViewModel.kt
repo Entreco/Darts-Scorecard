@@ -5,15 +5,13 @@ import nl.entreco.dartsscorecard.play.score.GameLoadable
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Next
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
@@ -64,9 +62,16 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val next = game.next
         val scores = game.scores
 
+        handleGameFinished(next, game.id)
         notifyAboutSpecialEvents(next, turn, by, scores)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
+    }
+
+    private fun handleGameFinished(next: Next, gameId: Long) {
+        if (next.state == State.MATCH) {
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+        }
     }
 
     fun addScoreListener(scoreListener: ScoreListener) {
