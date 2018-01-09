@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.listeners
 
+import android.util.Log
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.State
@@ -19,7 +20,8 @@ interface SpecialEventListener<in T : SpecialEvent> {
         handleBust(next)
         handleThrown(turn)
 
-        if(playing501(scores)) {
+        if (playing501(scores)) {
+            Log.w("COCO", "playing01 $by")
             handleNineDarter(turn, scores, next, by)
         }
     }
@@ -55,10 +57,25 @@ interface SpecialEventListener<in T : SpecialEvent> {
 
     private fun handleNineDarter(turn: Turn, scores: Array<Score>, next: Next, by: Player) {
         try {
-            val event = NineDartEvent(turn.dartsLeft() == 0 && isPossibleNineDarter(turn.total(), scores[next.teamIndex].score), by) as T
+            val canItBePossible = canItBePossible(turn, scores, next)
+            val event = NineDartEvent(canItBePossible, by) as T
             handle(event)
         } catch (ignore: ClassCastException) {
         }
+    }
+
+    private fun canItBePossible(turn: Turn, scores: Array<Score>, next: Next) : Boolean{
+        val score = previousTeamIndex(next.teamIndex, scores).score
+        val pnd = isPossibleNineDarter(turn.total(), score)
+        return turn.dartsLeft() == 0 && pnd
+    }
+
+    private fun previousTeamIndex(index: Int, scores: Array<Score>): Score {
+        var previousIndex = index - 1
+        if (previousIndex < 0) {
+            previousIndex = scores.size - 1
+        }
+        return scores[previousIndex]
     }
 
     private fun isPossibleNineDarter(scored: Int, score: Int): Boolean {

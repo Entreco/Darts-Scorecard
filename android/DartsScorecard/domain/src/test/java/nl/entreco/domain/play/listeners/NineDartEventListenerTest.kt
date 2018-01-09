@@ -67,7 +67,7 @@ class NineDartEventListenerTest : SpecialEventListenerTest() {
         }
 
         fun onScored(turn: Turn, score: Int) {
-            val scores = arrayOf(Score(score), Score())
+            val scores = arrayOf(Score(score))
             val team = Team(arrayOf(player))
             val next = Next(State.NORMAL, team, 0, player, scores[0])
             onSpecialEvent(next, turn, player, scores)

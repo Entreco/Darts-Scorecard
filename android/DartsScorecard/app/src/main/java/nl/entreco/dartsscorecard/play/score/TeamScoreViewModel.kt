@@ -31,13 +31,11 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
 
-    private var nineDartPossible = true
+    private var isNineDarterStillPossible = true
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
-        if(next.state == State.LEG || next.state == State.SET || next.state == State.START){
-            nineDartPossible = true
-        }
+        updateNineDarter(next)
         updateLegStarter(next)
         updateCurrentTeam(next)
     }
@@ -67,10 +65,17 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
         }
     }
 
+    private fun updateNineDarter(next: Next) {
+        if (next.state == State.LEG || next.state == State.SET || next.state == State.START) {
+            isNineDarterStillPossible = true
+            nineDarter.set(false)
+        }
+    }
+
     override fun onNineDartEvent(event: NineDartEvent) {
         if (team.contains(event.by())) {
-            nineDarter.set(event.isPossible() && nineDartPossible)
-            nineDartPossible = event.isPossible()
+            nineDarter.set(event.isPossible() && isNineDarterStillPossible)
+            isNineDarterStillPossible = event.isPossible()
         }
     }
 
