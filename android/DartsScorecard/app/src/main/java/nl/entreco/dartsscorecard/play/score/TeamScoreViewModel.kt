@@ -31,11 +31,13 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
 
-    private var nineDartPossible = false
+    private var nineDartPossible = true
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
-        nineDartPossible = next.state == State.LEG || next.state == State.START || next.state == State.SET
+        if(next.state == State.LEG || next.state == State.SET || next.state == State.START){
+            nineDartPossible = true
+        }
         updateLegStarter(next)
         updateCurrentTeam(next)
     }

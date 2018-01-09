@@ -119,6 +119,7 @@ class TeamScoreBindingsTest {
 
     private fun givenNineDartEvent(nineDarts: Boolean) {
         whenever(mockTextView.width).thenReturn(200)
+        whenever(mockTextView.measuredWidth).thenReturn(200)
         mockAnimations()
         TeamScoreBindings.showNineDarter(mockTextView, nineDarts)
     }

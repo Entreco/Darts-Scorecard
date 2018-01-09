@@ -126,10 +126,18 @@ class TeamScoreViewModelTest {
     }
 
     @Test
-    fun `it should NOT set nine darter when nine darter possible for team but no new leg is started`() {
+    fun `it should set nine darter when nine darter possible and no non-ninedart event has occured`() {
         givenTeamScoreViewModel(false)
         whenNineDartEvent(true, playerFromMyTeam)
-        thenNineDarterIsNotUpdated()
+        thenNineDarterIs(true)
+    }
+
+    @Test
+    fun `it should NOT set nine darter when nine darter possible but non-ninedart event has occured`() {
+        givenTeamScoreViewModel(false)
+        whenNineDartEvent(false, playerFromMyTeam)
+        whenNineDartEvent(true, playerFromMyTeam)
+        thenNineDarterIs(false)
     }
 
     @Test

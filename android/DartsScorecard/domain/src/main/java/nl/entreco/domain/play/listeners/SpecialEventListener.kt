@@ -18,8 +18,14 @@ interface SpecialEventListener<in T : SpecialEvent> {
         handleNoScore(turn)
         handleBust(next)
         handleThrown(turn)
-        handleNineDarter(turn, scores, next, by)
+
+        if(playing501(scores)) {
+            handleNineDarter(turn, scores, next, by)
+        }
     }
+
+    fun playing501(scores: Array<Score>) =
+            scores[0].settings.startScore == 501
 
     private fun handleThrown(turn: Turn) {
         try {
