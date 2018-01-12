@@ -4,6 +4,7 @@ import dagger.Subcomponent
 import nl.entreco.dartsscorecard.play.Play01ViewModel
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.dartsscorecard.play.stats.MatchStatViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 
 /**
@@ -15,5 +16,6 @@ interface Play01Component {
     fun viewModel(): Play01ViewModel
     fun scoreViewModel(): ScoreViewModel
     fun inputViewModel(): InputViewModel
+    fun statViewModel(): MatchStatViewModel
     fun finishUsecase(): GetFinishUsecase
 }

@@ -23,10 +23,13 @@ class StoreTurnUsecaseTest {
     @Mock private lateinit var mockTurnRepository: TurnRepository
     @Mock private lateinit var mockBg: Background
     @Mock private lateinit var mockFg: Foreground
+    @Mock private lateinit var done: (StoreTurnResponse)->Unit
+    @Mock private lateinit var fail: (Throwable)->Unit
     private val bg = TestBackground()
     private val fg = TestForeground()
     private lateinit var subject: StoreTurnUsecase
 
+    private var givenPlayerId : Long = -1
     private var givenGameId : Long = -1
     private lateinit var givenTurn : Turn
     private lateinit var givenStoreRequest : StoreTurnRequest
@@ -39,7 +42,7 @@ class StoreTurnUsecaseTest {
     @Test
     fun `it should store turns using Repository`() {
         givenViewModel(true)
-        givenGameIdAndTurn(22, Turn())
+        givenGameIdAndTurn(66,22, Turn())
         whenStoringTurn()
         thenTurnIsStored()
     }
@@ -48,7 +51,7 @@ class StoreTurnUsecaseTest {
     @Test
     fun `it should store turns even when throwing`() {
         givenViewModel(true)
-        givenGameIdAndTurn(22, Turn())
+        givenGameIdAndTurn(44,22, Turn())
         whenStoringTurnThrows(RuntimeException("oops"))
         thenExceptionIsHandled()
     }
@@ -56,7 +59,7 @@ class StoreTurnUsecaseTest {
     @Test
     fun `it should store turns on background`() {
         givenViewModel(false)
-        givenGameIdAndTurn(88, Turn(Dart.SINGLE_1))
+        givenGameIdAndTurn(18, 88, Turn(Dart.SINGLE_1))
         whenStoringTurn()
         thenBackgroundThreadIsUsed()
     }
@@ -69,19 +72,20 @@ class StoreTurnUsecaseTest {
         }
     }
 
-    private fun givenGameIdAndTurn(gameId: Long, turn: Turn) {
+    private fun givenGameIdAndTurn(playerId: Long, gameId: Long, turn: Turn) {
+        givenPlayerId = playerId
         givenGameId = gameId
         givenTurn = turn
-        givenStoreRequest = StoreTurnRequest(gameId, turn)
+        givenStoreRequest = StoreTurnRequest(givenPlayerId, gameId, turn)
     }
 
     private fun whenStoringTurn() {
-        subject.exec(givenStoreRequest)
+        subject.exec(givenStoreRequest, done, fail)
     }
 
     private fun whenStoringTurnThrows(err: Throwable) {
         whenever(mockTurnRepository.store(any(), any())).thenThrow(err)
-        subject.exec(givenStoreRequest)
+        subject.exec(givenStoreRequest, done, fail)
     }
 
     private fun thenTurnIsStored() {

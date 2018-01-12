@@ -1,7 +1,8 @@
 package nl.entreco.domain.play.start
 
-import nl.entreco.domain.play.stats.StoreTurnRequest
-import nl.entreco.domain.play.stats.StoreTurnUsecase
+import nl.entreco.domain.Logger
+import nl.entreco.domain.model.Stats
+import nl.entreco.domain.play.stats.*
 import javax.inject.Inject
 
 /**
@@ -11,14 +12,27 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                                         private val retrieveTurnsUsecase: RetrieveTurnsUsecase,
                                         private val retrieveTeamsUsecase: RetrieveTeamsUsecase,
                                         private val storeTurnUsecase: StoreTurnUsecase,
-                                        private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase) {
+                                        private val storeStatUsecase: StoreStatUsecase,
+                                        private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase,
+                                        private val logger: Logger) {
 
     fun loadGameAndStart(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
         retrieveTeams(req, done, fail)
     }
 
-    fun storeTurn(req: StoreTurnRequest) {
-        storeTurnUsecase.exec(req)
+    fun storeTurnAndStats(req: StoreTurnRequest, stats: Stats) {
+        storeTurnUsecase.exec(req,
+                onStoreTurnSuccess(req.playerId, req.gameId, stats),
+                onFailed("Storing Turn failed ${req.turn}"))
+    }
+
+    private fun onStoreTurnSuccess(playerId: Long, gameId: Long, stats: Stats) = { response: StoreTurnResponse ->
+        val statRequest = StoreStatRequest(playerId, response.statId, gameId, stats)
+        storeStatUsecase.exec(statRequest, onFailed("Storing Stat failed $stats"))
+    }
+
+    private fun onFailed(msg: String) = { err: Throwable ->
+        logger.w("$msg (${err.localizedMessage})")
     }
 
     fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
@@ -44,7 +58,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                 { response ->
                     gameResponse.game.start(playRequest.startIndex, teamResponse.teams)
                     response.turns.forEach { gameResponse.game.handle(it) }
-                    done.invoke(Play01Response(gameResponse.game, teamResponse.teams))
+                    done.invoke(Play01Response(gameResponse.game, teamResponse.teams, response.turns))
                 }, { err -> fail(err) })
     }
 }

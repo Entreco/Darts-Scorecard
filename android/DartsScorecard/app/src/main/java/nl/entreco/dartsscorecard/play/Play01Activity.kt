@@ -14,6 +14,7 @@ import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.dartsscorecard.play.stats.MatchStatViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
@@ -24,6 +25,7 @@ class Play01Activity : ViewModelActivity() {
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
+    private val statViewModel: MatchStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class Play01Activity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
+        binding.statViewModel = statViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
@@ -45,7 +48,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun initGame() {
-        viewModel.load(retrieveSetup(intent), scoreViewModel)
+        viewModel.load(retrieveSetup(intent), scoreViewModel, statViewModel)
     }
 
     private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
@@ -53,10 +56,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun resumeGame() {
-        viewModel.addScoreListener(scoreViewModel)
-        viewModel.addPlayerListener(scoreViewModel)
-        viewModel.addPlayerListener(inputViewModel)
-        viewModel.addSpecialEventListener(inputViewModel)
+        viewModel.registerListeners(scoreViewModel, inputViewModel, statViewModel, scoreViewModel, inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

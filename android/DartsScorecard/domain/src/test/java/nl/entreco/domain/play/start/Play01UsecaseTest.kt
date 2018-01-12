@@ -1,11 +1,14 @@
 package nl.entreco.domain.play.start
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Stats
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.stats.StoreStatUsecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.StoreTurnUsecase
 import org.junit.Before
@@ -37,11 +40,14 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockGameUc: RetrieveGameUsecase
     @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
     @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
-    @Mock private lateinit var mockStoreUc: StoreTurnUsecase
+    @Mock private lateinit var mockTurnUc: StoreTurnUsecase
+    @Mock private lateinit var mockStatsUc: StoreStatUsecase
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
+    @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     private val mockTurns = emptyArray<Turn>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
+    private lateinit var expectedStats: Stats
     private lateinit var givenMarkFinishRequest: MarkGameAsFinishedRequest
 
     private lateinit var subject: Play01Usecase
@@ -49,7 +55,7 @@ class Play01UsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockStoreUc, mockMarkUc)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockMarkUc, mockLogger)
     }
 
     @Test
@@ -89,12 +95,13 @@ class Play01UsecaseTest {
     }
 
     private fun whenStoringTurn(turn: Turn) {
-        expectedTurnRequest = StoreTurnRequest(gameId, turn)
-        subject.storeTurn(expectedTurnRequest)
+        expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
+        expectedStats = Stats(1,2,3)
+        subject.storeTurnAndStats(expectedTurnRequest, expectedStats)
     }
 
     private fun thenTurnIsStored() {
-        verify(mockStoreUc).exec(expectedTurnRequest)
+        verify(mockTurnUc).exec(eq(expectedTurnRequest), any(), any())
     }
 
     private fun whenLoadingGameAndStarting() {
@@ -102,12 +109,12 @@ class Play01UsecaseTest {
     }
 
     private fun whenTeamsAreRetrieved() {
-        verify(mockTeamUc).exec(eq(RetrieveTeamsRequest(teamIds.toString())), teamOkCaptor.capture(), any())
+        verify(mockTeamUc).exec(eq(RetrieveTeamsRequest(teamIds)), teamOkCaptor.capture(), any())
         teamOkCaptor.firstValue.invoke(RetrieveTeamsResponse(teams))
     }
 
     private fun whenTeamsAreNotRetrieved() {
-        verify(mockTeamUc).exec(eq(RetrieveTeamsRequest(teamIds.toString())), any(), failCaptor.capture())
+        verify(mockTeamUc).exec(eq(RetrieveTeamsRequest(teamIds)), any(), failCaptor.capture())
         failCaptor.firstValue.invoke(Throwable("unable to retrieve teams"))
     }
 

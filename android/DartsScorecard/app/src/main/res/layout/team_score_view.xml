@@ -107,6 +107,7 @@
             android:layout_width="@dimen/current_team_width"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
+            android:translationX="12dp"
             app:currentTeam="@{viewModel.currentTeam}" />
 
     </FrameLayout>

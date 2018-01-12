@@ -13,6 +13,10 @@
             type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
 
         <variable
+            name="statViewModel"
+            type="nl.entreco.dartsscorecard.play.stats.MatchStatViewModel" />
+
+        <variable
             name="scoreViewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
@@ -34,26 +38,21 @@
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_setup_01" />
 
-        <RelativeLayout
+        <include
+            android:id="@+id/includeMain"
+            layout="@layout/play_01_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/input_peek_height"
+            android:layout_marginEnd="@dimen/def"
+            android:layout_marginStart="@dimen/def"
+            app:viewModel="@{statViewModel}" />
 
-            <include
-                android:id="@+id/includeMain"
-                layout="@layout/play_01_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/includeScore"
-                android:layout_marginEnd="@dimen/def"
-                android:layout_marginStart="@dimen/def" />
-
-            <include
-                android:id="@+id/includeScore"
-                layout="@layout/play_01_score"
-                app:finishUsecase="@{finishUsecase}"
-                app:viewModel="@{scoreViewModel}" />
-        </RelativeLayout>
+        <include
+            android:id="@+id/includeScore"
+            layout="@layout/play_01_score"
+            app:finishUsecase="@{finishUsecase}"
+            app:viewModel="@{scoreViewModel}" />
 
         <include
             android:id="@+id/includeInput"

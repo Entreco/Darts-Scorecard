@@ -25,7 +25,7 @@ class TurnTable {
     @ColumnInfo(name = "m3")
     var m3: Int = 0
     @ColumnInfo(name = "numDarts")
-    var numDarts: Int = 0
+    var numDarts: Int = -1
     @ColumnInfo(name = "game")
-    var game: Long = 0
+    var game: Long = -1
 }

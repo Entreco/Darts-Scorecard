@@ -1,7 +1,6 @@
-package nl.entreco.data.play.repository
+package nl.entreco.data.db
 
 import android.support.annotation.WorkerThread
-import nl.entreco.data.DscDatabase
 import nl.entreco.data.db.turn.TurnMapper
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository
@@ -14,9 +13,9 @@ class LocalTurnRepository(db: DscDatabase, private val mapper: TurnMapper) : Tur
     private val turnDao = db.turnDao()
 
     @WorkerThread
-    override fun store(gameId: Long, turn: Turn) {
+    override fun store(gameId: Long, turn: Turn): Long {
         val table = mapper.from(gameId, turn)
-        turnDao.create(table)
+        return turnDao.create(table)
     }
 
     @WorkerThread

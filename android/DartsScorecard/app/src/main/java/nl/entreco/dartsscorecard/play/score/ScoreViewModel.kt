@@ -19,7 +19,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadable, ScoreListener, PlayerListener {
+class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<CreateGameRequest>, ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
@@ -28,12 +28,12 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun startWith(teams: Array<Team>, scores: Array<Score>, create: CreateGameRequest, uiCallback: UiCallback) {
+    override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: CreateGameRequest, uiCallback: UiCallback?) {
         this.uiCallback.set(uiCallback)
-        this.scoreSettings.set(ScoreSettings(create.startScore, create.numLegs, create.numSets, create.startIndex))
+        this.scoreSettings.set(ScoreSettings(info.startScore, info.numLegs, info.numSets, info.startIndex))
         this.scores.addAll(scores)
         this.teams.addAll(teams)
-        this.numSets.set(create.numSets)
+        this.numSets.set(info.numSets)
     }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {

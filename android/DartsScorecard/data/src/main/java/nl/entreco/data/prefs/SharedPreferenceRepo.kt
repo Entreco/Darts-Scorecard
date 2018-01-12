@@ -1,4 +1,4 @@
-package nl.entreco.data.setup.repository
+package nl.entreco.data.prefs
 
 import android.content.SharedPreferences
 import nl.entreco.domain.repository.PreferenceRepository

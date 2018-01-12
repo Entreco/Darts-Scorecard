@@ -6,7 +6,7 @@ import dagger.Provides
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.DscLogger
 import nl.entreco.dartsscorecard.analytics.FirebaseAnalytics
-import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 

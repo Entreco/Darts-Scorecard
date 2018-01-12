@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.di.viewmodel.db
 
-import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.turn.TurnMapper
 import org.junit.Assert.assertNotNull
 import org.junit.Test

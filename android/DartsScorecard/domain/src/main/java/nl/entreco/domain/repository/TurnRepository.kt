@@ -12,5 +12,5 @@ interface TurnRepository {
     fun fetchTurnsForGame(gameId: Long): List<Turn>
 
     @WorkerThread
-    fun store(gameId: Long, turn: Turn)
+    fun store(gameId: Long, turn: Turn): Long
 }

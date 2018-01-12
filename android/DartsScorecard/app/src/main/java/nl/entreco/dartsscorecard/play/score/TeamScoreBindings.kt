@@ -51,7 +51,8 @@ abstract class TeamScoreBindings {
             val diff = oldScore - score
             when (diff) {
                 180 -> handle180(view)
-                0 -> { }
+                0 -> {
+                }
                 else -> {
                     clear(view)
                 }
@@ -111,9 +112,10 @@ abstract class TeamScoreBindings {
         @BindingAdapter("currentTeam")
         fun showCurrentTeam(view: ImageView, isCurrentTeam: Boolean) {
             var target = 0F
-            if(!isCurrentTeam){
+            if (!isCurrentTeam) {
                 view.measure(0, 0)
-                target = view.width.toFloat() * 3
+                val w = view.width.toFloat() * 3
+                target = if (w == 0F) 50F else w
             }
 
             view.animate().translationX(target).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()

@@ -99,7 +99,7 @@ class ScoreViewModelTest {
     }
 
     private fun `given game has started`() {
-        subject.startWith(givenTeams, givenScores, CreateGameRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.onLoaded(givenTeams, givenScores, CreateGameRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {

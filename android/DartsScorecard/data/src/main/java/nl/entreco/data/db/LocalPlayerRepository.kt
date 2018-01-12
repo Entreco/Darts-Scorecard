@@ -1,8 +1,6 @@
-package nl.entreco.data.play.repository
+package nl.entreco.data.db
 
 import android.support.annotation.WorkerThread
-import nl.entreco.data.DscDatabase
-import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerTable
 import nl.entreco.domain.model.players.Player

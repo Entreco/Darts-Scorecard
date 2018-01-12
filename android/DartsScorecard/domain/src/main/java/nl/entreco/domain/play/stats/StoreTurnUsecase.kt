@@ -9,10 +9,12 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 23/12/2017.
  */
-class StoreTurnUsecase @Inject constructor(private val turnRepository: TurnRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
-    fun exec(req: StoreTurnRequest) {
-        onBackground(
-                { turnRepository.store(req.gameId, req.turn) },
-                {})
+class StoreTurnUsecase @Inject constructor(private val turnRepository: TurnRepository,
+                                           bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+    fun exec(req: StoreTurnRequest, done: (StoreTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
+        onBackground({
+            val turnId = turnRepository.store(req.gameId, req.turn)
+            onUi { done(StoreTurnResponse(turnId)) }
+        }, fail)
     }
 }

@@ -1,8 +1,9 @@
-package nl.entreco.data.play.repository
+package nl.entreco.data.play.local
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.DscDatabase
+import nl.entreco.data.db.LocalTurnRepository
 import nl.entreco.data.db.turn.TurnDao
 import nl.entreco.data.db.turn.TurnMapper
 import nl.entreco.data.db.turn.TurnTable

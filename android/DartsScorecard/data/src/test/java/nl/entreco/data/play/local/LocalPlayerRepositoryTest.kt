@@ -1,9 +1,10 @@
-package nl.entreco.data.play.repository
+package nl.entreco.data.play.local
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.data.DscDatabase
+import nl.entreco.data.db.DscDatabase
+import nl.entreco.data.db.LocalPlayerRepository
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.data.db.player.PlayerTable
