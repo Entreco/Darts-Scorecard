@@ -53,6 +53,21 @@ class MatchStatViewModelTest {
         thenAvageragesAre("3.00", "-")
     }
 
+    @Test
+    fun `it should have empty 180s when loaded`() {
+        givenTeams("hein", "henk")
+        givenSubjectLoaded()
+        thenNumberOf180sIs("-", "-")
+    }
+
+    @Test
+    fun `it should update 180s when stats change`() {
+        givenTeams("cross", "barney")
+        givenSubjectLoaded()
+        whenStatsChangeFor(0, Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20))
+        thenNumberOf180sIs("1", "-")
+    }
+
     private fun givenSubjectLoaded() {
         subject = MatchStatViewModel()
         subject.onLoaded(givenTeams, givenScores, givenTurns, null)
@@ -77,6 +92,12 @@ class MatchStatViewModelTest {
     private fun thenAvageragesAre(vararg avgs: String) {
         avgs.forEachIndexed { index, avg ->
             assertEquals(avg, subject.teamStats[index]?.avg?.get().toString())
+        }
+    }
+
+    private fun thenNumberOf180sIs(vararg n180s: String) {
+        n180s.forEachIndexed { index, n180 ->
+            assertEquals(n180, subject.teamStats[index]?.n180?.get().toString())
         }
     }
 
