@@ -1,15 +1,16 @@
-package nl.entreco.dartsscorecard.analytics
+package nl.entreco.data.analytics
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.domain.Analytics
-import javax.inject.Inject
 
 /**
  * Created by Entreco on 15/11/2017.
  */
-class FirebaseAnalytics @Inject constructor(context: Context) : Analytics {
+@SuppressLint("MissingPermission")
+class FirebaseAnalytics(context: Context) : Analytics {
 
     private val fb by lazy { FirebaseAnalytics.getInstance(context) }
 
