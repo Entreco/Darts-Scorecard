@@ -28,7 +28,7 @@ class MatchStatViewModel @Inject constructor() : BaseViewModel(), GameLoadedNoti
         }
     }
 
-    override fun onStatsChange(next: Next, turn: Turn, by: Player) {
+    override fun onStatsChange(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         teams.forEachIndexed { index, team ->
             if (team.contains(by)) {
                 teamStats.put(index, teamStats[index]?.applyTurn(turn))

@@ -19,7 +19,7 @@ class TeamStatModel(val name: String, turns: Array<Turn> = emptyArray()) {
         }
     }
 
-    fun applyTurn(turn: Turn) : TeamStatModel {
+    fun applyTurn(turn: Turn): TeamStatModel {
         avg.set(avg.get() + turn)
         n180.set(n180.get() + turn)
         n140.set(n140.get() + turn)

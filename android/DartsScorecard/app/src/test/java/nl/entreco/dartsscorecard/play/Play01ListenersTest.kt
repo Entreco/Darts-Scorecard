@@ -198,6 +198,6 @@ class Play01ListenersTest {
     }
 
     private fun thenMatchStatListenersAreNotified() {
-        verify(mockStatListener).onStatsChange(mockNext, mockTurn, mockPlayer)
+        verify(mockStatListener).onStatsChange(mockNext, mockTurn, mockPlayer, givenScores)
     }
 }

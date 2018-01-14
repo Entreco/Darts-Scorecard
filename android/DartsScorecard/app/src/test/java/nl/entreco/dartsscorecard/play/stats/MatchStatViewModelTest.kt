@@ -82,7 +82,7 @@ class MatchStatViewModelTest {
     }
 
     private fun whenStatsChangeFor(playerId: Int, turn: Turn) {
-        subject.onStatsChange(mockNext, turn, givenTeams[playerId].players[0])
+        subject.onStatsChange(mockNext, turn, givenTeams[playerId].players[0], givenScores)
     }
 
     private fun thenNumberOfTeamStatsIs(expected: Int) {

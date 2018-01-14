@@ -44,7 +44,7 @@ class Play01Listeners @Inject constructor() {
 
     fun onTurnSubmitted(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         notifyAboutSpecialEvents(next, turn, by, scores)
-        notifyStatListeners(next, turn, by)
+        notifyStatListeners(next, turn, by, scores)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
@@ -87,9 +87,9 @@ class Play01Listeners @Inject constructor() {
         }
     }
 
-    private fun notifyStatListeners(next: Next, turn: Turn, by: Player) {
+    private fun notifyStatListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         synchronized(statListeners) {
-            statListeners.forEach { it.onStatsChange(next, turn, by) }
+            statListeners.forEach { it.onStatsChange(next, turn, by, scores) }
         }
     }
 
