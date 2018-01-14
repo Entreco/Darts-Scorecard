@@ -25,14 +25,10 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/Main"
+                style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/stats_header"
-                android:text="Statistics"
-                android:textSize="14sp" />
+                android:text="@string/match_stats" />
 
             <!-- Players -->
             <LinearLayout
@@ -75,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|end"
-                    android:text="G.Anderson" />
+                    android:text="@{viewModel.teamStats[0].name}" />
 
                 <TextView
                     android:id="@+id/score"
@@ -91,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|start"
-                    android:text="Chisnall" />
+                    android:text="@{viewModel.teamStats[1].name}" />
             </LinearLayout>
 
             <!-- Stats -->
@@ -187,7 +183,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="8" />
+                    android:text="@{viewModel.teamStats[0].n180.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -201,7 +197,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="9" />
+                    android:text="@{viewModel.teamStats[1].n180.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -215,7 +211,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="19" />
+                    android:text="@{viewModel.teamStats[0].n140.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -228,7 +224,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="14" />
+                    android:text="@{viewModel.teamStats[1].n140.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +238,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="35" />
+                    android:text="@{viewModel.teamStats[0].n100.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -255,7 +251,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="27" />
+                    android:text="@{viewModel.teamStats[1].n100.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -269,7 +265,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="99.15" />
+                    android:text="@{viewModel.teamStats[0].avg.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -282,7 +278,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="96.04" />
+                    android:text="@{viewModel.teamStats[1].avg.toString()}" />
             </LinearLayout>
 
             <TextView

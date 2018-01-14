@@ -17,9 +17,10 @@ class TurnMapper : Mapper<TurnTable, Turn> {
         }
     }
 
-    fun from(gameId: Long, turn: Turn): TurnTable {
+    fun from(gameId: Long, playerId: Long, turn: Turn): TurnTable {
         val table = TurnTable()
         table.game = gameId
+        table.player = playerId
         table.d1 = turn.first().number()
         table.m1 = turn.first().multiplier()
         table.d2 = turn.second().number()

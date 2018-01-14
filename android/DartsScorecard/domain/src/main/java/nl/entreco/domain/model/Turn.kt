@@ -38,6 +38,10 @@ data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart
         }
     }
 
+    fun dartsUsed() : Int {
+        return 3 - dartsLeft()
+    }
+
     fun dartsLeft() : Int {
         return when {
             d1 == Dart.NONE -> 3

@@ -11,6 +11,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Main.Title">
+        <item name="android:layout_marginEnd">@dimen/large</item>
+        <item name="android:layout_marginStart">@dimen/large</item>
+        <item name="android:background">@drawable/stats_header</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     <style name="Main.Score">
         <item name="android:padding">@dimen/xsmall</item>
         <item name="android:background">@drawable/score_hint</item>

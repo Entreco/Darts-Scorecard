@@ -9,8 +9,8 @@ import nl.entreco.domain.model.Turn
 interface TurnRepository {
 
     @WorkerThread
-    fun fetchTurnsForGame(gameId: Long): List<Turn>
+    fun fetchTurnsForGame(gameId: Long): List<Pair<Long, Turn>>
 
     @WorkerThread
-    fun store(gameId: Long, turn: Turn): Long
+    fun store(gameId: Long, playerId: Long, turn: Turn): Long
 }

@@ -84,12 +84,12 @@ class StoreTurnUsecaseTest {
     }
 
     private fun whenStoringTurnThrows(err: Throwable) {
-        whenever(mockTurnRepository.store(any(), any())).thenThrow(err)
+        whenever(mockTurnRepository.store(any(), any(), any())).thenThrow(err)
         subject.exec(givenStoreRequest, done, fail)
     }
 
     private fun thenTurnIsStored() {
-        verify(mockTurnRepository).store(givenGameId, givenTurn)
+        verify(mockTurnRepository).store(givenGameId, givenPlayerId, givenTurn)
     }
 
     private fun thenExceptionIsHandled(){

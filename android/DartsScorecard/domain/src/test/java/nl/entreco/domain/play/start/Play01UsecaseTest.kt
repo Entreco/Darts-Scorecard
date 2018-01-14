@@ -10,6 +10,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.stats.StoreStatUsecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
+import nl.entreco.domain.play.stats.StoreTurnResponse
 import nl.entreco.domain.play.stats.StoreTurnUsecase
 import org.junit.Before
 import org.junit.Test
@@ -33,6 +34,7 @@ class Play01UsecaseTest {
     private val teamOkCaptor = argumentCaptor<(RetrieveTeamsResponse) -> Unit>()
     private val gameOkCaptor = argumentCaptor<(RetrieveGameResponse) -> Unit>()
     private val turnOkCaptor = argumentCaptor<(RetrieveTurnsResponse) -> Unit>()
+    private val storeOkCaptor = argumentCaptor<(StoreTurnResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     @Mock private lateinit var done: (Play01Response) -> Unit
@@ -45,7 +47,7 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
-    private val mockTurns = emptyArray<Turn>()
+    private val mockTurns = emptyList<Pair<Long, Turn>>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
     private lateinit var expectedStats: Stats
     private lateinit var givenMarkFinishRequest: MarkGameAsFinishedRequest
@@ -89,6 +91,20 @@ class Play01UsecaseTest {
     }
 
     @Test
+    fun `it should store stats when storing turns succeeds`() {
+        whenStoringTurn(Turn(Dart.DOUBLE_1, Dart.DOUBLE_15))
+        whenStoringTurnSucceeds(12L)
+        thenStatsAreStored()
+    }
+
+    @Test
+    fun `it should log error when storing turns fails`() {
+        whenStoringTurn(Turn(Dart.DOUBLE_1, Dart.DOUBLE_15))
+        whenStoringTurnFails(RuntimeException("Something went wrong"))
+        thenErrorIsLogged()
+    }
+
+    @Test
     fun markGameAsFinished() {
         whenGameIsFinished()
         thenGameIsMarkedAsFinished()
@@ -98,6 +114,16 @@ class Play01UsecaseTest {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
         expectedStats = Stats(1,2,3)
         subject.storeTurnAndStats(expectedTurnRequest, expectedStats)
+    }
+
+    private fun whenStoringTurnSucceeds(id: Long){
+        verify(mockTurnUc).exec(eq(expectedTurnRequest), storeOkCaptor.capture(), any())
+        storeOkCaptor.lastValue.invoke(StoreTurnResponse(id))
+    }
+
+    private fun whenStoringTurnFails(err: Throwable){
+        verify(mockTurnUc).exec(eq(expectedTurnRequest), any(), failCaptor.capture())
+        failCaptor.lastValue.invoke(err)
     }
 
     private fun thenTurnIsStored() {
@@ -149,6 +175,14 @@ class Play01UsecaseTest {
 
     private fun thenGameIsMarkedAsFinished() {
         verify(mockMarkUc).exec(givenMarkFinishRequest)
+    }
+
+    private fun thenErrorIsLogged(){
+        verify(mockLogger).w(any())
+    }
+
+    private fun thenStatsAreStored() {
+        verify(mockStatsUc).exec(any(), any())
     }
 
 }

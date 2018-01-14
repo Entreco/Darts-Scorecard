@@ -22,7 +22,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private lateinit var game: Game
 
-    fun load(request: Play01Request, load: GameLoadedNotifier<CreateGameRequest>, vararg loaders: GameLoadedNotifier<Array<Turn>>) {
+    fun load(request: Play01Request, load: GameLoadedNotifier<CreateGameRequest>, vararg loaders: GameLoadedNotifier<List<Pair<Long, Turn>>>) {
         playGameUsecase.loadGameAndStart(request,
                 { response ->
                     this.game = response.game

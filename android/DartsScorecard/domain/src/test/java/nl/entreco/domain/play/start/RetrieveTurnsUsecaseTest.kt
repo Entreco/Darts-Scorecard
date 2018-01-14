@@ -24,14 +24,14 @@ class RetrieveTurnsUsecaseTest {
     private lateinit var subject: RetrieveTurnsUsecase
 
     private var givenGameId: Long = -1
-    private var givenTurns: Array<Turn> = emptyArray()
+    private var givenTurns: List<Pair<Long, Turn>> = emptyList()
     @Mock private lateinit var mockOk: (RetrieveTurnsResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
 
     @Test
     fun `it should retrieve turns from database`() {
         givenUsecase(66)
-        givenStoredTurns(arrayOf(Turn(), Turn()))
+        givenStoredTurns(listOf(Pair(1L,Turn()), Pair(2L,Turn())))
         whenRetrievingTurnsSucceeds()
         thenOkIsExecuted()
     }
@@ -39,7 +39,7 @@ class RetrieveTurnsUsecaseTest {
     @Test
     fun `it should report error when failing to retrieve turns from database`() {
         givenUsecase(66)
-        givenStoredTurns(arrayOf(Turn(), Turn()))
+        givenStoredTurns(listOf(Pair(1L,Turn()), Pair(2L,Turn())))
         whenRetrievingTurnsFails(RuntimeException("Something wrong with db"))
         thenFailIsExecuted()
     }
@@ -49,12 +49,12 @@ class RetrieveTurnsUsecaseTest {
         subject = RetrieveTurnsUsecase(mockTurnRepository, mockBg, mockFg)
     }
 
-    private fun givenStoredTurns(turns: Array<Turn>) {
+    private fun givenStoredTurns(turns: List<Pair<Long, Turn>>) {
         givenTurns = turns
     }
 
     private fun whenRetrievingTurnsSucceeds() {
-        whenever(mockTurnRepository.fetchTurnsForGame(givenGameId)).thenReturn(givenTurns.toList())
+        whenever(mockTurnRepository.fetchTurnsForGame(givenGameId)).thenReturn(givenTurns)
         subject.exec(RetrieveTurnsRequest(givenGameId), mockOk, mockFail)
     }
 

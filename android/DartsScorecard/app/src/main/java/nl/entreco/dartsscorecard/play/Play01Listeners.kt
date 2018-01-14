@@ -16,10 +16,10 @@ import javax.inject.Inject
  * Created by entreco on 12/01/2018.
  */
 class Play01Listeners @Inject constructor() {
-    private val playerListeners = mutableListOf<PlayerListener>()
-    private val scoreListeners = mutableListOf<ScoreListener>()
-    private val statListeners = mutableListOf<MatchStatListener>()
-    private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
+    internal val playerListeners = mutableListOf<PlayerListener>()
+    internal val scoreListeners = mutableListOf<ScoreListener>()
+    internal val statListeners = mutableListOf<MatchStatListener>()
+    internal val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
     fun registerListeners(scoreListener: ScoreListener, specialEventListener: SpecialEventListener<*>, statListener: MatchStatListener, vararg playerListeners: PlayerListener) {
         addScoreListener(scoreListener)
@@ -44,6 +44,7 @@ class Play01Listeners @Inject constructor() {
 
     fun onTurnSubmitted(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         notifyAboutSpecialEvents(next, turn, by, scores)
+        notifyStatListeners(next, turn, by)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
@@ -83,6 +84,12 @@ class Play01Listeners @Inject constructor() {
     private fun notifyScoreChanged(scores: Array<Score>, by: Player) {
         synchronized(scoreListeners) {
             scoreListeners.forEach { it.onScoreChange(scores, by) }
+        }
+    }
+
+    private fun notifyStatListeners(next: Next, turn: Turn, by: Player) {
+        synchronized(statListeners) {
+            statListeners.forEach { it.onStatsChange(next, turn, by) }
         }
     }
 

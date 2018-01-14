@@ -30,7 +30,6 @@ class TurnTest {
         assertEquals(Dart.NONE, Turn().first())
     }
 
-
     @Test
     fun `second should be NONE, for empty turn`() {
         assertEquals(Dart.NONE, Turn().second())
@@ -74,6 +73,11 @@ class TurnTest {
     }
 
     @Test
+    fun `darts used should be 0, for empty turn`() {
+        assertEquals(0, Turn().dartsUsed())
+    }
+
+    @Test
     fun `total should be 0, for empty turn`() {
         assertEquals(0, Turn().total())
     }
@@ -96,6 +100,21 @@ class TurnTest {
 
         turn += Dart.BULL
         assertEquals(0, turn.dartsLeft())
+    }
+
+    @Test
+    fun `it should update darts used`() {
+        var turn = Turn()
+        assertEquals(0, turn.dartsUsed())
+
+        turn += Dart.SINGLE_20
+        assertEquals(1, turn.dartsUsed())
+
+        turn += Dart.TRIPLE_2
+        assertEquals(2, turn.dartsUsed())
+
+        turn += Dart.BULL
+        assertEquals(3, turn.dartsUsed())
     }
 
     @Test(expected = IllegalStateException::class)

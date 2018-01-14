@@ -25,6 +25,7 @@ class LocalTurnRepositoryTest {
     @Mock private lateinit var mockMapper: TurnMapper
     private lateinit var subject: LocalTurnRepository
     private val gameId : Long = 11
+    private val playerId : Long = 1066654
     private lateinit var givenTurn : Turn
     private lateinit var expectedTable : TurnTable
 
@@ -51,19 +52,19 @@ class LocalTurnRepositoryTest {
 
     private fun givenTurn(turn: Turn) {
         givenTurn = turn
-        expectedTable = TurnMapper().from(gameId, givenTurn)
+        expectedTable = TurnMapper().from(gameId, playerId, givenTurn)
     }
 
     private fun whenStoring() {
-        whenever(mockMapper.from(gameId, givenTurn)).thenReturn(expectedTable)
-        subject.store(gameId, givenTurn)
+        whenever(mockMapper.from(gameId, playerId, givenTurn)).thenReturn(expectedTable)
+        subject.store(gameId, playerId, givenTurn)
     }
     private fun whenFetchingTurns() {
         subject.fetchTurnsForGame(gameId)
     }
 
     private fun thenMapperConvertsFrom() {
-        verify(mockMapper).from(gameId, givenTurn)
+        verify(mockMapper).from(gameId, playerId, givenTurn)
     }
 
     private fun thenFetchIsCalledOnDao() {

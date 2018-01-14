@@ -13,7 +13,7 @@ class RetrieveTurnsUsecase @Inject constructor(private val turnRepository: TurnR
     fun exec(request: RetrieveTurnsRequest, done: (RetrieveTurnsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val turns = turnRepository.fetchTurnsForGame(request.gameId)
-            onUi { done(RetrieveTurnsResponse(turns.toTypedArray())) }
+            onUi { done(RetrieveTurnsResponse(turns)) }
         }, fail)
     }
 }

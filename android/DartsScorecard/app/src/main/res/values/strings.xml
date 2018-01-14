@@ -42,6 +42,9 @@
     <string name="game_on">Game on</string>
     <string name="game_shot_and_match">Game shot, and the match</string>
 
+    <!-- Match Stats -->
+    <string name="match_stats">Match Statistics</string>
+
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>
     <string name="pdc_match">PDC World Cup - semi finals</string>
