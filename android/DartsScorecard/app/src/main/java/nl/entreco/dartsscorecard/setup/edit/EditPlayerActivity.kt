@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.setup.edit
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerBinding
@@ -32,6 +33,16 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {
         return binding.includeToolbar?.toolbar!!
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onBackPressed() {
