@@ -2,10 +2,10 @@ package nl.entreco.dartsscorecard.setup.edit
 
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Player
@@ -103,10 +103,11 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
 
     private fun donePressed(action: Int) = action == EditorInfo.IME_ACTION_DONE
 
-    private fun onCreateSuccess(navigator: EditPlayerNavigator): (CreatePlayerResponse) -> Unit =
-            { response -> navigator.onSelected(response.player) }
+    private fun onCreateSuccess(navigator: EditPlayerNavigator): (CreatePlayerResponse) -> Unit = { response ->
+        navigator.onSelected(response.player)
+    }
 
-    private fun onCreateFailed(view : View): (Throwable) -> Unit = {
-        Snackbar.make(view, R.string.err_unable_to_create_player, Snackbar.LENGTH_SHORT).show()
+    private fun onCreateFailed(view: View): (Throwable) -> Unit = {
+        Toast.makeText(view.context, R.string.err_unable_to_create_player, Toast.LENGTH_SHORT).show()
     }
 }
