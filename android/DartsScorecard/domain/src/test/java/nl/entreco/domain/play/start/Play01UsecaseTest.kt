@@ -2,13 +2,10 @@ package nl.entreco.domain.play.start
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Stats
-import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.stats.StoreStatUsecase
+import nl.entreco.domain.play.stats.StoreMetaUsecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.StoreTurnResponse
 import nl.entreco.domain.play.stats.StoreTurnUsecase
@@ -43,13 +40,13 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
     @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
     @Mock private lateinit var mockTurnUc: StoreTurnUsecase
-    @Mock private lateinit var mockStatsUc: StoreStatUsecase
+    @Mock private lateinit var mockStatsUc: StoreMetaUsecase
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     private val mockTurns = emptyList<Pair<Long, Turn>>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
-    private lateinit var expectedStats: Stats
+    private lateinit var expectedTurnMeta: TurnMeta
     private lateinit var givenMarkFinishRequest: MarkGameAsFinishedRequest
 
     private lateinit var subject: Play01Usecase
@@ -112,13 +109,13 @@ class Play01UsecaseTest {
 
     private fun whenStoringTurn(turn: Turn) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
-        expectedStats = Stats(1,2,3)
-        subject.storeTurnAndStats(expectedTurnRequest, expectedStats)
+        expectedTurnMeta = TurnMeta(1,2, Score())
+        subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta)
     }
 
     private fun whenStoringTurnSucceeds(id: Long){
         verify(mockTurnUc).exec(eq(expectedTurnRequest), storeOkCaptor.capture(), any())
-        storeOkCaptor.lastValue.invoke(StoreTurnResponse(id))
+        storeOkCaptor.lastValue.invoke(StoreTurnResponse(id, expectedTurnRequest.turn))
     }
 
     private fun whenStoringTurnFails(err: Throwable){

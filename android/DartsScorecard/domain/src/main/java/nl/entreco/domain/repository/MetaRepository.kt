@@ -1,13 +1,13 @@
 package nl.entreco.domain.repository
 
 import android.support.annotation.WorkerThread
-import nl.entreco.domain.model.Stats
+import nl.entreco.domain.model.TurnMeta
 
 /**
  * Created by entreco on 10/01/2018.
  */
-interface StatRepository {
+interface MetaRepository {
     @Throws
     @WorkerThread
-    fun create(playerId: Long, turnId: Long, gameId: Long, stat: Stats): Long
+    fun create(turnId: Long, gameId: Long, stat: TurnMeta, atCheckout: Int): Long
 }

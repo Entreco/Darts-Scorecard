@@ -9,7 +9,6 @@ import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.play.listeners.MatchStatListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
@@ -27,7 +26,6 @@ class Play01ListenersTest {
 
     @Mock private lateinit var mockScoreListener: ScoreListener
     @Mock private lateinit var mockSpecialEventListener: SpecialEventListener<*>
-    @Mock private lateinit var mockStatListener: MatchStatListener
     @Mock private lateinit var mockPlayerListener: PlayerListener
     private lateinit var subject : Play01Listeners
 
@@ -51,13 +49,6 @@ class Play01ListenersTest {
         givenSubject()
         whenRegisteringListeners()
         thenSpecialEventListenerIsAdded()
-    }
-
-    @Test
-    fun `it should register match stat listener`() {
-        givenSubject()
-        whenRegisteringListeners()
-        thenMatchStatListenerIsAdded()
     }
 
     @Test
@@ -107,14 +98,6 @@ class Play01ListenersTest {
     }
 
     @Test
-    fun `it should notify stat listeners when turn submitted`() {
-        givenSubject()
-        whenRegisteringListeners()
-        whenTurnSubmitted()
-        thenMatchStatListenersAreNotified()
-    }
-
-    @Test
     fun `it should notify score listeners when turn submitted`() {
         givenSubject()
         whenRegisteringListeners()
@@ -135,7 +118,7 @@ class Play01ListenersTest {
     }
 
     private fun whenRegisteringListeners() {
-        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockStatListener, mockPlayerListener, mockPlayerListener)
+        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockPlayerListener, mockPlayerListener)
     }
 
     private fun whenLetsPlayDarts() {
@@ -165,11 +148,6 @@ class Play01ListenersTest {
         assertEquals(mockSpecialEventListener, subject.specialEventListeners[0])
     }
 
-    private fun thenMatchStatListenerIsAdded() {
-        assertEquals(1, subject.statListeners.size)
-        assertEquals(mockStatListener, subject.statListeners[0])
-    }
-
     private fun thenPlayerListenersAreAdded() {
         assertEquals(1, subject.playerListeners.size)
         assertEquals(mockPlayerListener, subject.playerListeners[0])
@@ -195,9 +173,5 @@ class Play01ListenersTest {
 
     private fun thenSpecialEventListenersAreNotified() {
         verify(mockSpecialEventListener).onSpecialEvent(mockNext, mockTurn, mockPlayer, givenScores)
-    }
-
-    private fun thenMatchStatListenersAreNotified() {
-        verify(mockStatListener).onStatsChange(mockNext, mockTurn, mockPlayer, givenScores)
     }
 }

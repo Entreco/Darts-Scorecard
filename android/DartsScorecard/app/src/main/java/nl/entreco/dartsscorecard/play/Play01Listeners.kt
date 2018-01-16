@@ -6,7 +6,6 @@ import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.play.listeners.MatchStatListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
@@ -18,12 +17,10 @@ import javax.inject.Inject
 class Play01Listeners @Inject constructor() {
     internal val playerListeners = mutableListOf<PlayerListener>()
     internal val scoreListeners = mutableListOf<ScoreListener>()
-    internal val statListeners = mutableListOf<MatchStatListener>()
     internal val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun registerListeners(scoreListener: ScoreListener, specialEventListener: SpecialEventListener<*>, statListener: MatchStatListener, vararg playerListeners: PlayerListener) {
+    fun registerListeners(scoreListener: ScoreListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
         addScoreListener(scoreListener)
-        addMatchStatListener(statListener)
         addSpecialEventListener(specialEventListener)
         playerListeners.forEach {
             addPlayerListener(it)
@@ -44,7 +41,6 @@ class Play01Listeners @Inject constructor() {
 
     fun onTurnSubmitted(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         notifyAboutSpecialEvents(next, turn, by, scores)
-        notifyStatListeners(next, turn, by, scores)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
@@ -53,14 +49,6 @@ class Play01Listeners @Inject constructor() {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
                 scoreListeners.add(scoreListener)
-            }
-        }
-    }
-
-    private fun addMatchStatListener(matchStatListener: MatchStatListener) {
-        synchronized(statListeners) {
-            if (!statListeners.contains(matchStatListener)) {
-                statListeners.add(matchStatListener)
             }
         }
     }
@@ -84,12 +72,6 @@ class Play01Listeners @Inject constructor() {
     private fun notifyScoreChanged(scores: Array<Score>, by: Player) {
         synchronized(scoreListeners) {
             scoreListeners.forEach { it.onScoreChange(scores, by) }
-        }
-    }
-
-    private fun notifyStatListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
-        synchronized(statListeners) {
-            statListeners.forEach { it.onStatsChange(next, turn, by, scores) }
         }
     }
 

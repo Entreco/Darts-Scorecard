@@ -13,6 +13,9 @@ interface TurnDao {
     @Query("SELECT * FROM Turn WHERE game = :gameId")
     fun fetchAll(gameId: Long): List<TurnTable>
 
+    @Query("SELECT * FROM Turn WHERE id = :turnId")
+    fun fetchById(turnId: Long) : TurnTable
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(turn: TurnTable): Long
 }

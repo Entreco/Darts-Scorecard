@@ -14,7 +14,7 @@ class StoreTurnUsecase @Inject constructor(private val turnRepository: TurnRepos
     fun exec(req: StoreTurnRequest, done: (StoreTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val turnId = turnRepository.store(req.gameId, req.playerId, req.turn)
-            onUi { done(StoreTurnResponse(turnId)) }
+            onUi { done(StoreTurnResponse(turnId, req.turn)) }
         }, fail)
     }
 }

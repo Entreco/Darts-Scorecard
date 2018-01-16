@@ -23,39 +23,27 @@ class Play01ResponseTest {
 
     @Test
     fun `it should report equals on same instance`() {
-        val (pair1: Pair<Long, Turn>, pair2: Pair<Long, Turn>) = givenPairs()
-        val response = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
+        val response = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
         assertEquals(response, response)
     }
 
     @Test
     fun `it should report equals on new instance`() {
-        val (pair1: Pair<Long, Turn>, pair2: Pair<Long, Turn>) = givenPairs()
-        val response1 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
-        val response2 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
+        val response1 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
+        val response2 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
         assertEquals(response1, response2)
     }
 
     @Test
     fun `it should report equal hashcode`() {
-        val (pair1: Pair<Long, Turn>, pair2: Pair<Long, Turn>) = givenPairs()
-        val response = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
+        val response = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
         assertEquals(response.hashCode(), response.hashCode())
     }
 
     @Test
     fun `it should report equals hashcode on new instance`() {
-        val (pair1: Pair<Long, Turn>, pair2: Pair<Long, Turn>) = givenPairs()
-        val response1 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
-        val response2 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2), listOf(pair1, pair2))
+        val response1 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
+        val response2 = Play01Response(mockGame, arrayOf(mockTeam1, mockTeam2))
         assertEquals(response1.hashCode(), response2.hashCode())
     }
-
-    private fun givenPairs(): Pair<Pair<Long, Turn>, Pair<Long, Turn>> {
-        val pair1: Pair<Long, Turn> = Pair(1, mockTurn1)
-        val pair2: Pair<Long, Turn> = Pair(2, mockTurn2)
-        return Pair(pair1, pair2)
-    }
-
-
 }

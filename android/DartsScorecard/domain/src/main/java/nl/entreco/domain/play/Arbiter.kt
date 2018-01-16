@@ -12,11 +12,12 @@ const val ERR: Int = -2
 
 class Arbiter(initial: Score) {
 
-    private lateinit var turnHandler: TurnHandler
+    internal lateinit var turnHandler: TurnHandler
     private var scores: Array<Score> = emptyArray()
     private val scoreSettings = initial.settings
     private val legs = mutableListOf<Array<Score>>()
     private val sets = mutableListOf<MutableList<Array<Score>>>()
+    private var previousScore = Score()
 
     fun start(startIndex: Int, teams: Array<Team>): Next {
         this.turnHandler = TurnHandler(startIndex, teams)
@@ -26,6 +27,8 @@ class Arbiter(initial: Score) {
 
     fun handle(turn: Turn, next: Next): Next {
         val teamIndex = turnHandler.indexOf(next.team)
+        previousScore = scores[teamIndex]
+
         when (applyScore(teamIndex, turn)) {
             ERR -> return turnHandler.next(scores).copy(state = State.ERR_REQUIRES_DOUBLE)
             BUST -> return turnHandler.next(scores).copy(state = State.ERR_BUST)
@@ -115,5 +118,9 @@ class Arbiter(initial: Score) {
 
     fun getSets(): MutableList<MutableList<Array<Score>>> {
         return sets
+    }
+
+    fun getPreviousScore(): Score {
+        return previousScore
     }
 }

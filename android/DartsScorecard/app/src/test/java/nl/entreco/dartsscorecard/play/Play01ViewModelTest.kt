@@ -8,7 +8,6 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
-import nl.entreco.domain.play.listeners.MatchStatListener
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
@@ -35,12 +34,12 @@ class Play01ViewModelTest {
 
     @Mock private lateinit var mockNext: Next
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockScore: Score
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<CreateGameRequest>
-    @Mock private lateinit var mockTurnNotifier: GameLoadedNotifier<List<Pair<Long, Turn>>>
     @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
 
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
@@ -49,7 +48,6 @@ class Play01ViewModelTest {
     private val createGameRequest: CreateGameRequest = CreateGameRequest(501, 0, 3, 2)
     private val givenTeams = arrayOf(Team(arrayOf(Player("p1"))), Team(arrayOf(Player("p2"))))
     private val givenScores = arrayOf(Score(), Score())
-    private val givenTurns = emptyList<Pair<Long, Turn>>()
     private val givenArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
     private val gameId: Long = 1002
     private val teamIds = "1|2"
@@ -65,13 +63,6 @@ class Play01ViewModelTest {
         givenGameAndRequest()
         whenLoadingOk()
         thenUiIsReady()
-    }
-
-    @Test
-    fun `it should notify loaders when game was loaded`() {
-        givenGameAndRequest(mockTurnNotifier)
-        whenLoadingOk()
-        thenLoadersAreNotified()
     }
 
     @Test
@@ -166,7 +157,7 @@ class Play01ViewModelTest {
         thenGameIsNotMarkedAsFinished()
     }
 
-    private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<List<Pair<Long, Turn>>>) {
+    private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<CreateGameRequest>) {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
@@ -178,20 +169,16 @@ class Play01ViewModelTest {
         subject = Play01ViewModel(mockPlayGameUsecase, mock01Listeners, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(Play01Response(mockGame, givenTeams, givenTurns))
+        doneCaptor.firstValue.invoke(Play01Response(mockGame, givenTeams))
     }
 
     private fun whenLoadingOk() {
         verify(mockPlayGameUsecase).loadGameAndStart(eq(req), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(Play01Response(game, givenTeams, givenTurns))
+        doneCaptor.firstValue.invoke(Play01Response(game, givenTeams))
     }
 
     private fun thenUiIsReady() {
         verify(mockCreatedNotifier).onLoaded(givenTeams, givenScores, createGameRequest, subject)
-    }
-
-    private fun thenLoadersAreNotified() {
-        verify(mockTurnNotifier).onLoaded(givenTeams, givenScores, givenTurns, null)
     }
 
     private fun thenUiIsNotReady() {
@@ -229,6 +216,7 @@ class Play01ViewModelTest {
     private fun whenNextStateIs(state: State) {
         val turn = Turn()
         whenever(mockNext.state).thenReturn(state)
+        whenever(mockGame.previousScore()).thenReturn(mockScore)
         whenever(mockGame.next).thenReturn(mockNext)
         whenever(mockGame.id).thenReturn(gameId)
         subject.onTurnSubmitted(turn, Player("you won"))
@@ -237,9 +225,8 @@ class Play01ViewModelTest {
     private fun whenRegisteringListeners() {
         val mockScoreListener = mock<ScoreListener>()
         val mockSpecialEventListener = mock<SpecialEventListener<*>>()
-        val mockStatListener = mock<MatchStatListener>()
         val mockPlayerListener = mock<PlayerListener>()
-        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockStatListener, mockPlayerListener)
+        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockPlayerListener)
     }
 
     private fun thenScoresAre(expected: Array<Score>) {
@@ -253,6 +240,7 @@ class Play01ViewModelTest {
     private fun thenListenersAreNotifiedOfDartThrown() {
         verify(mock01Listeners).onDartThrown(any(), any())
     }
+
     private fun thenListenersAreNotifiedOfLetsPlayDarts() {
         verify(mock01Listeners).onLetsPlayDarts(any(), eq(givenTeamScoreListeners))
     }
@@ -266,6 +254,6 @@ class Play01ViewModelTest {
     }
 
     private fun thenPlay01ListenersAreRegistered() {
-        verify(mock01Listeners).registerListeners(any(), any(), any(), any())
+        verify(mock01Listeners).registerListeners(any(), any(), any())
     }
 }

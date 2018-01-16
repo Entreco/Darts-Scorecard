@@ -19,4 +19,8 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
             next = arbiter.handle(turn, next)
         }
     }
+
+    fun previousScore(): Score {
+        return arbiter.getPreviousScore()
+    }
 }

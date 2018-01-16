@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.start
 
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Stats
+import nl.entreco.domain.model.TurnMeta
 import nl.entreco.domain.play.stats.*
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                                         private val retrieveTurnsUsecase: RetrieveTurnsUsecase,
                                         private val retrieveTeamsUsecase: RetrieveTeamsUsecase,
                                         private val storeTurnUsecase: StoreTurnUsecase,
-                                        private val storeStatUsecase: StoreStatUsecase,
+                                        private val storeMetaUsecase: StoreMetaUsecase,
                                         private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase,
                                         private val logger: Logger) {
 
@@ -20,15 +20,15 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
         retrieveTeams(req, done, fail)
     }
 
-    fun storeTurnAndStats(req: StoreTurnRequest, stats: Stats) {
+    fun storeTurnAndMeta(req: StoreTurnRequest, turnMeta: TurnMeta) {
         storeTurnUsecase.exec(req,
-                onStoreTurnSuccess(req.playerId, req.gameId, stats),
+                onStoreTurnSuccess(req.gameId, turnMeta),
                 onFailed("Storing Turn failed ${req.turn}"))
     }
 
-    private fun onStoreTurnSuccess(playerId: Long, gameId: Long, stats: Stats) = { response: StoreTurnResponse ->
-        val statRequest = StoreStatRequest(playerId, response.statId, gameId, stats)
-        storeStatUsecase.exec(statRequest, onFailed("Storing Stat failed $stats"))
+    private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta) = { response: StoreTurnResponse ->
+        val statRequest = StoreMetaRequest(response.turnId, gameId, response.turn, turnMeta)
+        storeMetaUsecase.exec(statRequest, onFailed("Storing Stat failed $turnMeta"))
     }
 
     private fun onFailed(msg: String) = { err: Throwable ->
@@ -58,7 +58,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                 { response ->
                     gameResponse.game.start(playRequest.startIndex, teamResponse.teams)
                     response.turns.forEach { gameResponse.game.handle(it.second) }
-                    done.invoke(Play01Response(gameResponse.game, teamResponse.teams, response.turns))
+                    done.invoke(Play01Response(gameResponse.game, teamResponse.teams))
                 }, { err -> fail(err) })
     }
 }

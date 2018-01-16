@@ -12,14 +12,15 @@ class TeamStatModel(val name: String, turns: Array<Turn> = emptyArray()) {
     val n180 = ObservableField<CountStat>(CountStat(empty, { it.total() == 180 }))
     val n140 = ObservableField<CountStat>(CountStat(empty, { (it.total() in 140..179) }))
     val n100 = ObservableField<CountStat>(CountStat(empty, { (it.total() in 100..139) }))
+    val highest = ObservableField<RecordStat>(RecordStat(empty, { old, new -> (old >= new) }))
 
     init {
         turns.forEach { turn ->
-            applyTurn(turn)
+            applyStats(turn)
         }
     }
 
-    fun applyTurn(turn: Turn): TeamStatModel {
+    fun applyStats(turn: Turn): TeamStatModel {
         avg.set(avg.get() + turn)
         n180.set(n180.get() + turn)
         n140.set(n140.get() + turn)
