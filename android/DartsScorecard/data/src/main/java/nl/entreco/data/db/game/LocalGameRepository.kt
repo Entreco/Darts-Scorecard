@@ -1,8 +1,8 @@
-package nl.entreco.data.db
+package nl.entreco.data.db.game
 
 import android.support.annotation.WorkerThread
-import nl.entreco.data.db.game.GameDao
-import nl.entreco.data.db.game.GameTable
+import nl.entreco.data.db.DscDatabase
+import nl.entreco.data.db.Mapper
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.repository.GameRepository

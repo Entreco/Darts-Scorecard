@@ -1,12 +1,16 @@
 package nl.entreco.dartsscorecard.play.stats
 
+import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.play.start.Play01Response
+import nl.entreco.domain.play.stats.FetchGameStatsUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -15,10 +19,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MatchStatViewModelTest {
 
+    @Mock private lateinit var mockFetchGameStatsUsecase : FetchGameStatsUsecase
+    @Mock private lateinit var mockGame : Game
+    @Mock private lateinit var mockResponse : Play01Response
     private lateinit var subject: MatchStatViewModel
     private var givenTeams: Array<Team> = emptyArray()
     private var givenScores: Array<Score> = emptyArray()
-    private var givenCreateRequest: CreateGameRequest = CreateGameRequest(8,5,3,1)
 
     @Test
     fun `it should create teamstats when loaded empty`() {
@@ -48,8 +54,10 @@ class MatchStatViewModelTest {
     }
 
     private fun givenSubjectLoaded() {
-        subject = MatchStatViewModel()
-        subject.onLoaded(givenTeams, givenScores, givenCreateRequest, null)
+        whenever(mockResponse.game).thenReturn(mockGame)
+        whenever(mockResponse.teamIds).thenReturn("1|2")
+        subject = MatchStatViewModel(mockFetchGameStatsUsecase)
+        subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 
     private fun givenTeams(vararg names: String){

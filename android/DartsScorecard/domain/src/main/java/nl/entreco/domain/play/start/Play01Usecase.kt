@@ -3,6 +3,7 @@ package nl.entreco.domain.play.start
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.TurnMeta
 import nl.entreco.domain.play.stats.*
+import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
@@ -58,7 +59,8 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                 { response ->
                     gameResponse.game.start(playRequest.startIndex, teamResponse.teams)
                     response.turns.forEach { gameResponse.game.handle(it.second) }
-                    done.invoke(Play01Response(gameResponse.game, teamResponse.teams))
+                    val scoreSettings = ScoreSettings(playRequest.startScore, playRequest.numLegs, playRequest.numSets, playRequest.startIndex)
+                    done.invoke(Play01Response(gameResponse.game, scoreSettings, teamResponse.teams, playRequest.teamIds))
                 }, { err -> fail(err) })
     }
 }

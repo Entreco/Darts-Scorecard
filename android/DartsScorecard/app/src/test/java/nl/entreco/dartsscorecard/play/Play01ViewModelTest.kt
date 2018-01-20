@@ -15,6 +15,7 @@ import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
@@ -34,12 +35,13 @@ class Play01ViewModelTest {
 
     @Mock private lateinit var mockNext: Next
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockScoreSettings: ScoreSettings
     @Mock private lateinit var mockScore: Score
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<CreateGameRequest>
+    @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
     @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
 
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
@@ -157,7 +159,7 @@ class Play01ViewModelTest {
         thenGameIsNotMarkedAsFinished()
     }
 
-    private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<CreateGameRequest>) {
+    private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
@@ -169,20 +171,20 @@ class Play01ViewModelTest {
         subject = Play01ViewModel(mockPlayGameUsecase, mock01Listeners, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(Play01Response(mockGame, givenTeams))
+        doneCaptor.firstValue.invoke(Play01Response(mockGame, mockScoreSettings, givenTeams, teamIds))
     }
 
     private fun whenLoadingOk() {
         verify(mockPlayGameUsecase).loadGameAndStart(eq(req), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(Play01Response(game, givenTeams))
+        doneCaptor.firstValue.invoke(Play01Response(game, mockScoreSettings, givenTeams, teamIds))
     }
 
     private fun thenUiIsReady() {
-        verify(mockCreatedNotifier).onLoaded(givenTeams, givenScores, createGameRequest, subject)
+        verify(mockCreatedNotifier).onLoaded(givenTeams, givenScores, mockScoreSettings, subject)
     }
 
     private fun thenUiIsNotReady() {
-        verify(mockCreatedNotifier, never()).onLoaded(givenTeams, givenScores, createGameRequest, subject)
+        verify(mockCreatedNotifier, never()).onLoaded(givenTeams, givenScores, mockScoreSettings, subject)
         verify(mockLogger).e(any())
     }
 

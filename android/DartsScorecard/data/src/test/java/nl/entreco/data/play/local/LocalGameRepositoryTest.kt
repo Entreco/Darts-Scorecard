@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.isA
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.LocalGameRepository
+import nl.entreco.data.db.game.LocalGameRepository
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameMapper
 import nl.entreco.data.db.game.GameTable

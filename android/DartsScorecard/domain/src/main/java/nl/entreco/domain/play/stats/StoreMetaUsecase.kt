@@ -19,7 +19,8 @@ class StoreMetaUsecase @Inject constructor(
             val turn = req.turn
             val startScore = req.turnMeta.score
             val dartsAtCheckout = 2
-            metaRepository.create(req.turnId, req.gameId, req.turnMeta, dartsAtCheckout)
+            // TODO: this should be finished, by estimating darts at checkout
+            metaRepository.create(req.turnId, req.gameId, req.turnMeta)
         }, fail)
     }
 }

@@ -1,11 +1,14 @@
 package nl.entreco.dartsscorecard.play.stats
 
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.ScoreEstimator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -14,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TeamStatModelTest {
 
+    @Mock private lateinit var mockTeam : Team
     private var givenTurns: Array<Turn> = emptyArray()
     private lateinit var subject: TeamStatModel
 
@@ -37,7 +41,8 @@ class TeamStatModelTest {
     }
 
     private fun givenSubject(name: String) {
-        subject = TeamStatModel(name, givenTurns)
+        whenever(mockTeam.toString()).thenReturn(name)
+        subject = TeamStatModel(mockTeam)
     }
 
     private fun givenTurns(vararg scores: Int) {
@@ -64,6 +69,6 @@ class TeamStatModelTest {
     }
 
     private fun thenNameIs(expectedName: String) {
-        assertEquals(expectedName, subject.name)
+        assertEquals(expectedName, subject.name.get())
     }
 }

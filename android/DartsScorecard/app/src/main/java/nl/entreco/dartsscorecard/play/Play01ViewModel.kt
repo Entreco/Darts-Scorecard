@@ -13,9 +13,10 @@ import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
-import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
@@ -25,13 +26,13 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private lateinit var game: Game
 
-    fun load(request: Play01Request, load: GameLoadedNotifier<CreateGameRequest>, vararg loaders: GameLoadedNotifier<CreateGameRequest>) {
+    fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
         playGameUsecase.loadGameAndStart(request,
                 { response ->
                     this.game = response.game
-                    load.onLoaded(response.teams, game.scores, request.createRequest(), this)
+                    load.onLoaded(response.teams, game.scores, response.settings, this)
                     loaders.forEach {
-                        it.onLoaded(response.teams, game.scores, request.createRequest(), null)
+                        it.onLoaded(response.teams, game.scores, response, null)
                     }
                 },
                 { err -> logger.e("err: $err") })
@@ -67,7 +68,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private fun storeTurn(turn: Turn, by: Player) {
         val turnRequest = StoreTurnRequest(by.id, game.id, turn)
         val score = game.previousScore()
-        val turnMeta = TurnMeta(by.id, 0, score)
+        val turnMeta = TurnMeta(by.id, 0, score, 0)
         playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta)
     }
 

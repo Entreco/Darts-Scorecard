@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.di.viewmodel.db
 
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.player.PlayerMapper
-import nl.entreco.data.db.LocalPlayerRepository
+import nl.entreco.data.db.player.LocalPlayerRepository
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before

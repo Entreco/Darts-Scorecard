@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.db.DscDatabase
+import nl.entreco.data.db.turn.LocalTurnRepository
 import nl.entreco.data.db.turn.TurnMapper
-import nl.entreco.data.db.LocalTurnRepository
 import nl.entreco.domain.repository.TurnRepository
 
 /**

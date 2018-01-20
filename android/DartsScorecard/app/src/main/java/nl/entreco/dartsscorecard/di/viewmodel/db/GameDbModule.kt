@@ -5,7 +5,7 @@ import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.game.GameMapper
-import nl.entreco.data.db.LocalGameRepository
+import nl.entreco.data.db.game.LocalGameRepository
 import nl.entreco.domain.repository.GameRepository
 
 /**

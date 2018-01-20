@@ -7,7 +7,6 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
-import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -99,7 +98,7 @@ class ScoreViewModelTest {
     }
 
     private fun `given game has started`() {
-        subject.onLoaded(givenTeams, givenScores, CreateGameRequest(givenScoreSettings.startScore, 0, givenScoreSettings.numLegs, givenScoreSettings.numSets), mockCallback)
+        subject.onLoaded(givenTeams, givenScores, ScoreSettings(givenScoreSettings.startScore, givenScoreSettings.numLegs, givenScoreSettings.numSets, givenScoreSettings.teamStartIndex), mockCallback)
     }
 
     private fun `given NextInfo for Team`(index: Int) {

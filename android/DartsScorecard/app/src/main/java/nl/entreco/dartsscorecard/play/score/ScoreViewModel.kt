@@ -13,13 +13,12 @@ import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.settings.ScoreSettings
-import nl.entreco.domain.setup.game.CreateGameRequest
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 18/11/2017.
  */
-class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<CreateGameRequest>, ScoreListener, PlayerListener {
+class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
@@ -28,9 +27,9 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: CreateGameRequest, uiCallback: UiCallback?) {
+    override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: ScoreSettings, uiCallback: UiCallback?) {
         this.uiCallback.set(uiCallback)
-        this.scoreSettings.set(ScoreSettings(info.startScore, info.numLegs, info.numSets, info.startIndex))
+        this.scoreSettings.set(info)
         this.scores.addAll(scores)
         this.teams.addAll(teams)
         this.numSets.set(info.numSets)
