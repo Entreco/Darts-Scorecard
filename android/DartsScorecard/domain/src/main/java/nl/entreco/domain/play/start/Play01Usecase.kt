@@ -28,8 +28,8 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
     }
 
     private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta) = { response: StoreTurnResponse ->
-        val statRequest = StoreMetaRequest(response.turnId, gameId, response.turn, turnMeta)
-        storeMetaUsecase.exec(statRequest, onFailed("Storing Stat failed $turnMeta"))
+        val metaRequest = StoreMetaRequest(response.turnId, gameId, response.turn, turnMeta)
+        storeMetaUsecase.exec(metaRequest, onFailed("Storing Stat failed $turnMeta"))
     }
 
     private fun onFailed(msg: String) = { err: Throwable ->

@@ -10,12 +10,8 @@ import nl.entreco.domain.repository.MetaRepository
 class LocalMetaRepository(db: DscDatabase, private val mapper: MetaMapper) : MetaRepository {
     private val metaDao: MetaDao = db.metaDao()
 
-    override fun create(turnId: Long, gameId: Long, stat: TurnMeta): Long {
-        val table = mapper.from(gameId, turnId, stat)
+    override fun create(turnId: Long, gameId: Long, stat: TurnMeta, atDouble: Int): Long {
+        val table = mapper.from(gameId, turnId, stat,atDouble)
         return metaDao.create(table)
-
-        // Sample Queries:
-        // select (number * multiplier) as scored FROM TurnMeta where Player=2
-        // select  turn, (number * multiplier) as scored FROM TurnMeta where Player=3 group by turn
     }
 }

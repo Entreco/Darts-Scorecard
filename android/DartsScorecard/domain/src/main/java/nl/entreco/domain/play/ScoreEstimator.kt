@@ -1,12 +1,14 @@
 package nl.entreco.domain.play
 
 import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
+import javax.inject.Inject
 
 /**
  * Created by Entreco on 02/12/2017.
  */
-class ScoreEstimator {
+class ScoreEstimator @Inject constructor() {
 
     fun guess(scored: Int, singles: Boolean): Turn {
         return if (singles) guessSingle(scored) else guessThree(scored)
@@ -241,5 +243,13 @@ class ScoreEstimator {
             0 -> Turn(Dart.ZERO, Dart.ZERO, Dart.ZERO)
             else -> Turn()
         }
+    }
+
+    fun atDouble(turn: Turn, required: Score): Int {
+        // TODO: Tests for this one, it's crucial for correct stats
+        if (required.score > 170) return 0
+        if (required.score > 100) return 1
+        if (required.score > 40) return 1
+        return 0
     }
 }

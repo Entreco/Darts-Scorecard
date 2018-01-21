@@ -16,12 +16,22 @@ import javax.inject.Inject
  */
 class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: FetchGameStatsUsecase) : BaseViewModel(), GameLoadedNotifier<Play01Response> {
 
-    private lateinit var teams: Array<Team>
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
+    private lateinit var teams: Array<Team>
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {
         initializeStats(teams)
-        fetchGameStatsUsecase.exec(FetchGameStatsRequest(info.game.id, info.teamIds), {}, {})
+        fetchGameStatsUsecase.exec(FetchGameStatsRequest(info.game.id, info.teamIds),
+                { response ->
+                    teams.forEachIndexed { index, team ->
+                        val stats = team.players.mapNotNull {
+                            response.stats[it.id]
+                        }
+
+                        teamStats[index]?.append(stats)
+                    }
+                },
+                {})
     }
 
     private fun initializeStats(teams: Array<Team>) {

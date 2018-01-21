@@ -1,11 +1,8 @@
 package nl.entreco.dartsscorecard.play.stats
 
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.ScoreEstimator
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -17,8 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TeamStatModelTest {
 
-    @Mock private lateinit var mockTeam : Team
-    private var givenTurns: Array<Turn> = emptyArray()
+    @Mock
+    private lateinit var mockTeam: Team
     private lateinit var subject: TeamStatModel
 
     @Test
@@ -33,25 +30,9 @@ class TeamStatModelTest {
         thenStatsAreEmpty()
     }
 
-    @Test
-    fun `it should populate stats with prefilled turns`() {
-        givenTurns(180, 180)
-        givenSubject("Pjotr")
-        thenStatsAreNotEmpty()
-    }
-
     private fun givenSubject(name: String) {
         whenever(mockTeam.toString()).thenReturn(name)
         subject = TeamStatModel(mockTeam)
-    }
-
-    private fun givenTurns(vararg scores: Int) {
-        val turns = mutableListOf<Turn>()
-        scores.forEach { scored ->
-            turns.add(ScoreEstimator().guess(scored, true))
-        }
-
-        givenTurns = turns.toTypedArray()
     }
 
     private fun thenStatsAreEmpty() {
@@ -59,13 +40,6 @@ class TeamStatModelTest {
         assertEquals(TeamStatModel.empty, subject.n180.get().toString())
         assertEquals(TeamStatModel.empty, subject.n140.get().toString())
         assertEquals(TeamStatModel.empty, subject.n100.get().toString())
-    }
-
-    private fun thenStatsAreNotEmpty() {
-        assertNotEquals(TeamStatModel.empty, subject.avg.get())
-        assertNotEquals(TeamStatModel.empty, subject.n180.get())
-        assertNotEquals(TeamStatModel.empty, subject.n140.get())
-        assertNotEquals(TeamStatModel.empty, subject.n100.get())
     }
 
     private fun thenNameIs(expectedName: String) {

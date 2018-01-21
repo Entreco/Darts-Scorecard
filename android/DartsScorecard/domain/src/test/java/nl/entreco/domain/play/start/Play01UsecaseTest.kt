@@ -109,7 +109,7 @@ class Play01UsecaseTest {
 
     private fun whenStoringTurn(turn: Turn) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
-        expectedTurnMeta = TurnMeta(1,2, Score(), 3)
+        expectedTurnMeta = TurnMeta(1,2, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta)
     }
 

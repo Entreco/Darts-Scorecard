@@ -68,7 +68,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private fun storeTurn(turn: Turn, by: Player) {
         val turnRequest = StoreTurnRequest(by.id, game.id, turn)
         val score = game.previousScore()
-        val turnMeta = TurnMeta(by.id, 0, score, 0)
+        val turnMeta = TurnMeta(by.id, 0, score)
         playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta)
     }
 
