@@ -109,7 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="BREAKS MADE" />
+                    android:text="@string/live_breaks_made" />
 
                 <TextView
                     style="@style/Main.Value"
@@ -136,7 +136,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="DOUBLE SUCCESS" />
+                    android:text="@string/live_double_success" />
 
                 <TextView
                     style="@style/Main.Value"
@@ -163,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="HIGHEST OUT" />
+                    android:text="@string/live_highest_out" />
 
                 <TextView
                     style="@style/Main.Value"
@@ -190,7 +190,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="180s"
+                    android:text="@string/live_180s"
                     android:textAllCaps="false" />
 
                 <TextView
@@ -218,7 +218,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="140+" />
+                    android:text="@string/live_140s" />
 
                 <TextView
                     style="@style/Main.Value"
@@ -245,7 +245,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="100+" />
+                    android:text="@string/live_100s" />
 
                 <TextView
                     style="@style/Main.Value"
@@ -272,7 +272,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="AVERAGE" />
+                    android:text="@string/live_average" />
 
                 <TextView
                     style="@style/Main.Value"

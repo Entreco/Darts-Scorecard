@@ -21,4 +21,10 @@ class LocalStatRepository(db: DscDatabase, private val mapper: StatMapper) : Sta
     override fun fetchAllForPlayer(playerId: Long): Map<Long, Stat> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun fetchStat(turnId: Long, metaId: Long): Stat {
+        val turnTable = turnDao.fetchById(turnId)
+        val metaTable = metaDao.fetchById(metaId)
+        return mapper.to(turnTable, metaTable)
+    }
 }

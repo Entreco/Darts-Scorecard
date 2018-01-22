@@ -9,18 +9,21 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.listeners.StatListener
 import javax.inject.Inject
 
 /**
  * Created by entreco on 12/01/2018.
  */
 class Play01Listeners @Inject constructor() {
-    internal val playerListeners = mutableListOf<PlayerListener>()
     internal val scoreListeners = mutableListOf<ScoreListener>()
+    internal val statListeners = mutableListOf<StatListener>()
+    internal val playerListeners = mutableListOf<PlayerListener>()
     internal val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
 
-    fun registerListeners(scoreListener: ScoreListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
+    fun registerListeners(scoreListener: ScoreListener, statListener: StatListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
         addScoreListener(scoreListener)
+        addStatListener(statListener)
         addSpecialEventListener(specialEventListener)
         playerListeners.forEach {
             addPlayerListener(it)
@@ -49,6 +52,13 @@ class Play01Listeners @Inject constructor() {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
                 scoreListeners.add(scoreListener)
+            }
+        }
+    }
+    private fun addStatListener(statListener: StatListener) {
+        synchronized(statListeners) {
+            if (!statListeners.contains(statListener)) {
+                statListeners.add(statListener)
             }
         }
     }
@@ -84,6 +94,12 @@ class Play01Listeners @Inject constructor() {
     private fun notifyNextPlayer(next: Next) {
         synchronized(playerListeners) {
             playerListeners.forEach { it.onNext(next) }
+        }
+    }
+
+    fun onStatsUpdated(turnId: Long, metaId: Long) {
+        synchronized(statListeners){
+            statListeners.forEach { it.onStatsChange(turnId, metaId) }
         }
     }
 }

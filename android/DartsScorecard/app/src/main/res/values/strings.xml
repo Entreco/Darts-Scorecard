@@ -44,6 +44,13 @@
 
     <!-- Match Stats -->
     <string name="match_stats">Match Statistics</string>
+    <string name="live_breaks_made">Breaks Made</string>
+    <string name="live_double_success">Double Success</string>
+    <string name="live_highest_out">Highest Out</string>
+    <string name="live_180s">180\'s</string>
+    <string name="live_140s">140+</string>
+    <string name="live_100s">100+</string>
+    <string name="live_average">average</string>
 
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>

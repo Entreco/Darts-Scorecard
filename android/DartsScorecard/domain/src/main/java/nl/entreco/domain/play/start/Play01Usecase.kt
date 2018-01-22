@@ -21,15 +21,15 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
         retrieveTeams(req, done, fail)
     }
 
-    fun storeTurnAndMeta(req: StoreTurnRequest, turnMeta: TurnMeta) {
+    fun storeTurnAndMeta(req: StoreTurnRequest, turnMeta: TurnMeta, done: (Long,Long)->Unit) {
         storeTurnUsecase.exec(req,
-                onStoreTurnSuccess(req.gameId, turnMeta),
+                onStoreTurnSuccess(req.gameId, turnMeta, done),
                 onFailed("Storing Turn failed ${req.turn}"))
     }
 
-    private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta) = { response: StoreTurnResponse ->
+    private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta, done: (Long, Long)->Unit) = { response: StoreTurnResponse ->
         val metaRequest = StoreMetaRequest(response.turnId, gameId, response.turn, turnMeta)
-        storeMetaUsecase.exec(metaRequest, onFailed("Storing Stat failed $turnMeta"))
+        storeMetaUsecase.exec(metaRequest, done, onFailed("Storing Stat failed $turnMeta"))
     }
 
     private fun onFailed(msg: String) = { err: Throwable ->

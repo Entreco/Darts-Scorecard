@@ -17,6 +17,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$architectureComponents"
     kapt "android.arch.persistence.room:compiler:$architectureComponents"
 
+
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"

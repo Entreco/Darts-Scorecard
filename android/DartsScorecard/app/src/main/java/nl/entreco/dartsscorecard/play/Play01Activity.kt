@@ -56,7 +56,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun resumeGame() {
-        viewModel.registerListeners(scoreViewModel, inputViewModel, scoreViewModel, inputViewModel)
+        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel, inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

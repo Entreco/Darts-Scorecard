@@ -3,7 +3,7 @@ package nl.entreco.domain.model
 /**
  * Created by entreco on 16/01/2018.
  */
-data class Stat(val totalScore: Int, val nDarts: Int, val n180: Int, val n140: Int, val n100: Int, val nAtCheckout: Int, val nCheckouts : Int, val nBreaks : Int, val highest: List<Int>, val highestCo: List<Int>) {
+data class Stat(val playerId: Long, val totalScore: Int, val nDarts: Int, val n180: Int, val n140: Int, val n100: Int, val nAtCheckout: Int, val nCheckouts : Int, val nBreaks : Int, val highest: List<Int>, val highestCo: List<Int>) {
     operator fun plus(stat: Stat?): Stat {
         stat?.let {
             val high = scoreList(stat)

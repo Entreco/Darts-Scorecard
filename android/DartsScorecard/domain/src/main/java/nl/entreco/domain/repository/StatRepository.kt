@@ -13,4 +13,7 @@ interface StatRepository {
 
     @WorkerThread
     fun fetchAllForPlayer(playerId: Long): Map<Long, Stat>
+
+    @WorkerThread
+    fun fetchStat(turnId: Long, metaId: Long): Stat
 }

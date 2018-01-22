@@ -31,7 +31,7 @@ class StatMapper {
         val checkout = if (didFinish(t, meta)) 1 else 0
         val highCo = if (didFinish(t, meta)) listOf(t.total()) else listOf(0)
         val breaks = 0 // TODO: How to measure breaks
-        return Stat(t.total(), t.dartsUsed(), n180, n140, n100, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
+        return Stat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
     }
 
     private fun didFinish(t: Turn, meta: MetaTable) =

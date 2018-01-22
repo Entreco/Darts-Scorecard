@@ -15,11 +15,12 @@ class StoreMetaUsecase @Inject constructor(
         private val scoreEstimator: ScoreEstimator,
         bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(req: StoreMetaRequest, fail: (Throwable) -> Unit) {
+    fun exec(req: StoreMetaRequest, done: (Long, Long) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
 
             val atDouble = scoreEstimator.atDouble(req.turn, req.turnMeta.score)
-            metaRepository.create(req.turnId, req.gameId, req.turnMeta, atDouble)
+            val metaId = metaRepository.create(req.turnId, req.gameId, req.turnMeta, atDouble)
+            onUi { done(req.turnId, metaId) }
         }, fail)
     }
 }
