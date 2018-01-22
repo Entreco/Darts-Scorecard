@@ -1,7 +1,6 @@
 package nl.entreco.domain.play
 
 import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import javax.inject.Inject
 
@@ -245,11 +244,17 @@ class ScoreEstimator @Inject constructor() {
         }
     }
 
-    fun atDouble(turn: Turn, required: Score): Int {
-        // TODO: Tests for this one, it's crucial for correct stats
-        if (required.score > 170) return 0
-        if (required.score > 100) return 1
-        if (required.score > 40) return 1
-        return 0
+    fun atDouble(turn: Turn, required: Int): Int {
+        if (required > 170) return 0
+        var outs = find(required)
+        outs += find(required - turn.d1.points())
+        outs += find(required - turn.d1.points() - turn.d2.points())
+        return outs
+    }
+
+    private val range = 40 downTo 2 step 2
+    private fun find(required: Int): Int {
+        return if(range.contains(required) || required==50) 1
+        else 0
     }
 }

@@ -35,4 +35,10 @@ class MetaTable {
 
     @ColumnInfo(name = "atco")
     var atCheckout: Int = 0
+
+    @ColumnInfo(name = "started")
+    var started: Int = 0
+
+    @ColumnInfo(name = "break")
+    var breakMade: Int = 0
 }

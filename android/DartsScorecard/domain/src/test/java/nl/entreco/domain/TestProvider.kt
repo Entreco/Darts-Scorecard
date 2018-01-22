@@ -40,6 +40,14 @@ class TestProvider {
         return teams
     }
 
+    fun player1(): Player {
+        return player1
+    }
+
+    fun player2(): Player {
+        return player2
+    }
+
     fun team1(): Team {
         return team1
     }

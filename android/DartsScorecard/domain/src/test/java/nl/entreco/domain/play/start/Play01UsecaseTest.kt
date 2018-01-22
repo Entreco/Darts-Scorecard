@@ -26,7 +26,7 @@ class Play01UsecaseTest {
     private val startIndex = 2
     private val numLegs = 3
     private val numSets = 10
-    private val req: Play01Request = Play01Request(gameId, teamIds , startScore, startIndex, numLegs, numSets)
+    private val req: Play01Request = Play01Request(gameId, teamIds, startScore, startIndex, numLegs, numSets)
 
     private val teamOkCaptor = argumentCaptor<(RetrieveTeamsResponse) -> Unit>()
     private val gameOkCaptor = argumentCaptor<(RetrieveGameResponse) -> Unit>()
@@ -34,16 +34,28 @@ class Play01UsecaseTest {
     private val storeOkCaptor = argumentCaptor<(StoreTurnResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
-    @Mock private lateinit var done: (Play01Response) -> Unit
-    @Mock private lateinit var fail: (Throwable) -> Unit
-    @Mock private lateinit var mockGameUc: RetrieveGameUsecase
-    @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
-    @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
-    @Mock private lateinit var mockTurnUc: StoreTurnUsecase
-    @Mock private lateinit var mockStatsUc: StoreMetaUsecase
-    @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
-    @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockGame: Game
+    @Mock
+    private lateinit var done: (Play01Response) -> Unit
+    @Mock
+    private lateinit var fail: (Throwable) -> Unit
+    @Mock
+    private lateinit var mockGameUc: RetrieveGameUsecase
+    @Mock
+    private lateinit var mockTurnsUc: RetrieveTurnsUsecase
+    @Mock
+    private lateinit var mockTeamUc: RetrieveTeamsUsecase
+    @Mock
+    private lateinit var mockTurnUc: StoreTurnUsecase
+    @Mock
+    private lateinit var mockStatsUc: StoreMetaUsecase
+    @Mock
+    private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
+    @Mock
+    private lateinit var mockLogger: Logger
+    @Mock
+    private lateinit var mockGame: Game
+    @Mock
+    private lateinit var mockDone: (Long, Long) -> Unit
     private val mockTurns = emptyList<Pair<Long, Turn>>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
     private lateinit var expectedTurnMeta: TurnMeta
@@ -109,16 +121,16 @@ class Play01UsecaseTest {
 
     private fun whenStoringTurn(turn: Turn) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
-        expectedTurnMeta = TurnMeta(1,2, Score())
-        subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta)
+        expectedTurnMeta = TurnMeta(1, 2, Score())
+        subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
     }
 
-    private fun whenStoringTurnSucceeds(id: Long){
+    private fun whenStoringTurnSucceeds(id: Long) {
         verify(mockTurnUc).exec(eq(expectedTurnRequest), storeOkCaptor.capture(), any())
         storeOkCaptor.lastValue.invoke(StoreTurnResponse(id, expectedTurnRequest.turn))
     }
 
-    private fun whenStoringTurnFails(err: Throwable){
+    private fun whenStoringTurnFails(err: Throwable) {
         verify(mockTurnUc).exec(eq(expectedTurnRequest), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
@@ -157,7 +169,7 @@ class Play01UsecaseTest {
         failCaptor.firstValue.invoke(Throwable("cant retrieve game"))
     }
 
-    private fun whenGameIsFinished(){
+    private fun whenGameIsFinished() {
         givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
         subject.markGameAsFinished(givenMarkFinishRequest)
     }
@@ -174,12 +186,12 @@ class Play01UsecaseTest {
         verify(mockMarkUc).exec(givenMarkFinishRequest)
     }
 
-    private fun thenErrorIsLogged(){
+    private fun thenErrorIsLogged() {
         verify(mockLogger).w(any())
     }
 
     private fun thenStatsAreStored() {
-        verify(mockStatsUc).exec(any(), any())
+        verify(mockStatsUc).exec(any(), any(), any())
     }
 
 }

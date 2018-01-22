@@ -18,7 +18,7 @@ class StoreMetaUsecase @Inject constructor(
     fun exec(req: StoreMetaRequest, done: (Long, Long) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
 
-            val atDouble = scoreEstimator.atDouble(req.turn, req.turnMeta.score)
+            val atDouble = scoreEstimator.atDouble(req.turn, req.turnMeta.score.score)
             val metaId = metaRepository.create(req.turnId, req.gameId, req.turnMeta, atDouble)
             onUi { done(req.turnId, metaId) }
         }, fail)

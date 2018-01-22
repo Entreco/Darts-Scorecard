@@ -12,16 +12,18 @@ class MetaMapper : Mapper<TurnMeta, MetaTable> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun from(gameId: Long, turnId: Long, stat: TurnMeta, atDouble: Int): MetaTable {
+    fun from(gameId: Long, turnId: Long, turnMeta: TurnMeta, atDouble: Int): MetaTable {
         val table = MetaTable()
         table.turnId = turnId
         table.gameId = gameId
-        table.playerId = stat.playerId
-        table.legNumber = stat.score.leg
-        table.setNumber = stat.score.set
-        table.turnInLeg = stat.turnNumber
-        table.score = stat.score.score
+        table.playerId = turnMeta.playerId
+        table.legNumber = turnMeta.score.leg
+        table.setNumber = turnMeta.score.set
+        table.turnInLeg = turnMeta.turnNumber
+        table.score = turnMeta.score.score
         table.atCheckout = atDouble
+        table.started = if (turnMeta.started) 1 else 0
+        table.breakMade = if (turnMeta.breakMade) 1 else 0
         return table
     }
 }

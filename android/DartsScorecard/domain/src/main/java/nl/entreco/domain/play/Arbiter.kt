@@ -18,10 +18,12 @@ class Arbiter(initial: Score) {
     private val legs = mutableListOf<Array<Score>>()
     private val sets = mutableListOf<MutableList<Array<Score>>>()
     private var previousScore = Score()
+    private var turnCounter = 0
 
     fun start(startIndex: Int, teams: Array<Team>): Next {
         this.turnHandler = TurnHandler(startIndex, teams)
         this.scores = Array(teams.size, { scoreSettings.score().copy() })
+        this.turnCounter = 0
         return turnHandler.start(scores[0])
     }
 
@@ -33,6 +35,8 @@ class Arbiter(initial: Score) {
             ERR -> return turnHandler.next(scores).copy(state = State.ERR_REQUIRES_DOUBLE)
             BUST -> return turnHandler.next(scores).copy(state = State.ERR_BUST)
         }
+
+        turnCounter++
 
         if (gameShotAndTheMatch(teamIndex)) return Next(State.MATCH, next.team, teamIndex, next.player, scores[teamIndex])
         if (requiresNewSet(teamIndex)) return playerForNewSet()
@@ -122,5 +126,9 @@ class Arbiter(initial: Score) {
 
     fun getPreviousScore(): Score {
         return previousScore
+    }
+
+    fun getTurnCount(): Int{
+        return turnCounter
     }
 }
