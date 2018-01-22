@@ -1,11 +1,13 @@
 package nl.entreco.dartsscorecard.play.stats
 
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.start.Play01Response
+import nl.entreco.domain.play.stats.FetchGameStatUsecase
 import nl.entreco.domain.play.stats.FetchGameStatsUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -20,6 +22,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class MatchStatViewModelTest {
 
     @Mock private lateinit var mockFetchGameStatsUsecase : FetchGameStatsUsecase
+    @Mock private lateinit var mockFetchGameStatUsecase : FetchGameStatUsecase
+    @Mock private lateinit var mockLogger : Logger
     @Mock private lateinit var mockGame : Game
     @Mock private lateinit var mockResponse : Play01Response
     private lateinit var subject: MatchStatViewModel
@@ -56,7 +60,7 @@ class MatchStatViewModelTest {
     private fun givenSubjectLoaded() {
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn("1|2")
-        subject = MatchStatViewModel(mockFetchGameStatsUsecase)
+        subject = MatchStatViewModel(mockFetchGameStatsUsecase,mockFetchGameStatUsecase,mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 

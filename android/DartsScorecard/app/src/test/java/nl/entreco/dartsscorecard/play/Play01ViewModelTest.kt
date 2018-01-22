@@ -11,6 +11,7 @@ import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.listeners.StatListener
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
@@ -33,16 +34,26 @@ class Play01ViewModelTest {
     private lateinit var req: Play01Request
     private lateinit var givenTeamScoreListeners: List<TeamScoreListener>
 
-    @Mock private lateinit var mockNext: Next
-    @Mock private lateinit var mockGame: Game
-    @Mock private lateinit var mockScoreSettings: ScoreSettings
-    @Mock private lateinit var mockScore: Score
-    @Mock private lateinit var mockRequest: Play01Request
-    @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
-    @Mock private lateinit var mock01Listeners: Play01Listeners
-    @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
-    @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
+    @Mock
+    private lateinit var mockNext: Next
+    @Mock
+    private lateinit var mockGame: Game
+    @Mock
+    private lateinit var mockScoreSettings: ScoreSettings
+    @Mock
+    private lateinit var mockScore: Score
+    @Mock
+    private lateinit var mockRequest: Play01Request
+    @Mock
+    private lateinit var mockPlayGameUsecase: Play01Usecase
+    @Mock
+    private lateinit var mock01Listeners: Play01Listeners
+    @Mock
+    private lateinit var mockLogger: Logger
+    @Mock
+    private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
+    @Mock
+    private lateinit var mockTeamScoreListener: TeamScoreListener
 
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -226,9 +237,10 @@ class Play01ViewModelTest {
 
     private fun whenRegisteringListeners() {
         val mockScoreListener = mock<ScoreListener>()
+        val mockStatListener = mock<StatListener>()
         val mockSpecialEventListener = mock<SpecialEventListener<*>>()
         val mockPlayerListener = mock<PlayerListener>()
-        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockPlayerListener)
+        subject.registerListeners(mockScoreListener, mockStatListener, mockSpecialEventListener, mockPlayerListener)
     }
 
     private fun thenScoresAre(expected: Array<Score>) {
@@ -256,6 +268,6 @@ class Play01ViewModelTest {
     }
 
     private fun thenPlay01ListenersAreRegistered() {
-        verify(mock01Listeners).registerListeners(any(), any(), any())
+        verify(mock01Listeners).registerListeners(any(), any(), any(), any())
     }
 }

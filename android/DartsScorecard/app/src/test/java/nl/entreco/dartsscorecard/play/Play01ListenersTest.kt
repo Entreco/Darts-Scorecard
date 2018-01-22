@@ -12,6 +12,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.listeners.StatListener
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,6 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ListenersTest {
 
     @Mock private lateinit var mockScoreListener: ScoreListener
+    @Mock private lateinit var mockStatListener: StatListener
     @Mock private lateinit var mockSpecialEventListener: SpecialEventListener<*>
     @Mock private lateinit var mockPlayerListener: PlayerListener
     private lateinit var subject : Play01Listeners
@@ -82,6 +84,14 @@ class Play01ListenersTest {
     }
 
     @Test
+    fun `it should notify stat listeners when stats change`() {
+        givenSubject()
+        whenRegisteringListeners()
+        whenStatsChange()
+        thenStatListenersAreNotifiedOfDartThrown()
+    }
+
+    @Test
     fun `it should notify score listeners when dart thrown`() {
         givenSubject()
         whenRegisteringListeners()
@@ -118,7 +128,7 @@ class Play01ListenersTest {
     }
 
     private fun whenRegisteringListeners() {
-        subject.registerListeners(mockScoreListener, mockSpecialEventListener, mockPlayerListener, mockPlayerListener)
+        subject.registerListeners(mockScoreListener, mockStatListener, mockSpecialEventListener, mockPlayerListener, mockPlayerListener)
     }
 
     private fun whenLetsPlayDarts() {
@@ -127,6 +137,10 @@ class Play01ListenersTest {
         whenever(mockGame.next).thenReturn(mockNext)
         whenever(mockGame.scores).thenReturn(givenScores)
         subject.onLetsPlayDarts(mockGame, listOf(teamScoreListener1, teamScoreListener2))
+    }
+
+    private fun whenStatsChange() {
+        subject.onStatsUpdated(34, 44)
     }
 
     private fun whenDartThrown() {
@@ -169,6 +183,10 @@ class Play01ListenersTest {
 
     private fun thenScoreListenersAreNotifiedOfDartThrown() {
         verify(mockScoreListener).onDartThrown(any(), any())
+    }
+    
+    private fun thenStatListenersAreNotifiedOfDartThrown() {
+        verify(mockStatListener).onStatsChange(any(), any())
     }
 
     private fun thenSpecialEventListenersAreNotified() {

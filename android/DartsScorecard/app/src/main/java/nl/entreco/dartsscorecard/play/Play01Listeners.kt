@@ -42,12 +42,17 @@ class Play01Listeners @Inject constructor() {
         }
     }
 
+    fun onStatsUpdated(turnId: Long, metaId: Long) {
+        synchronized(statListeners){
+            statListeners.forEach { it.onStatsChange(turnId, metaId) }
+        }
+    }
+
     fun onTurnSubmitted(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         notifyAboutSpecialEvents(next, turn, by, scores)
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
-
     private fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
@@ -55,6 +60,7 @@ class Play01Listeners @Inject constructor() {
             }
         }
     }
+
     private fun addStatListener(statListener: StatListener) {
         synchronized(statListeners) {
             if (!statListeners.contains(statListener)) {
@@ -94,12 +100,6 @@ class Play01Listeners @Inject constructor() {
     private fun notifyNextPlayer(next: Next) {
         synchronized(playerListeners) {
             playerListeners.forEach { it.onNext(next) }
-        }
-    }
-
-    fun onStatsUpdated(turnId: Long, metaId: Long) {
-        synchronized(statListeners){
-            statListeners.forEach { it.onStatsChange(turnId, metaId) }
         }
     }
 }
