@@ -42,8 +42,8 @@ class MetaMapperTest {
         assertEquals(givenScore.score, result.score)
         assertEquals(givenTurnNumber, result.turnInLeg)
         assertEquals(givenAtDouble, result.atCheckout)
-        assertEquals(1, result.started)
-        assertEquals(1, result.breakMade)
+        assertEquals(true, result.started)
+        assertEquals(true, result.breakMade)
     }
 
     @Test(expected = NotImplementedError::class)

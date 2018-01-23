@@ -29,8 +29,8 @@ class StatMapper {
         val n140 = if (t.total() in 140..179) 1 else 0
         val n100 = if (t.total() in 100..139) 1 else 0
         val checkout = if (didFinish(t, meta)) 1 else 0
-        val highCo = if (didFinish(t, meta)) listOf(t.total()) else emptyList()
-        val breaks = if(meta.breakMade) 1 else 0
+        val highCo = if (didFinish(t, meta)) listOf(t.total()) else listOf(-1)
+        val breaks = if (meta.breakMade) 1 else 0
         return Stat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
     }
 
