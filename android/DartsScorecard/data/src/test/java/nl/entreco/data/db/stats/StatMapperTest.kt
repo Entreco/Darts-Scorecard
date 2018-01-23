@@ -5,6 +5,7 @@ import nl.entreco.data.db.meta.MetaTable
 import nl.entreco.data.db.turn.TurnMapper
 import nl.entreco.data.db.turn.TurnTable
 import nl.entreco.domain.model.*
+import nl.entreco.domain.play.ScoreEstimator
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -22,6 +23,7 @@ class StatMapperTest {
     private val turnMapper = TurnMapper()
     private val metaMapper = MetaMapper()
     private lateinit var expectedStats: Map<Long, Stat>
+    private val scoreEstimator = ScoreEstimator()
 
     @Test
     fun `it should calculate correct stats for player1 first turn`() {
@@ -72,8 +74,49 @@ class StatMapperTest {
         givenTurns(`180`(), `180`(), `100`(), `41`())
         whenConverting()
 
-        thenCheckOutIs(1, Double.POSITIVE_INFINITY)
+        thenCheckOutIs(1, 1.0)
         thenHighestCheckOutIs(1, 41)
+    }
+
+    @Test
+    fun `it should calculate correct Doubles for player1`() {
+        givenSubject()
+        givenPlayers(1)
+        givenTurns(`180`(), `180`(), `100`(), `41`())
+        whenConverting()
+
+        thenAtDoubleIs(1, 1)
+    }
+
+    @Test
+    fun `it should calculate correct Doubles for player1 - multiple`() {
+        givenSubject()
+        givenPlayers(1)
+        givenTurns(`180`(), `180`(), `60`(), `60`(), Turn(Dart.SINGLE_1, Dart.ZERO, Dart.ZERO))
+        whenConverting()
+
+        thenAtDoubleIs(1, 2)
+    }
+
+    @Test
+    fun `it should calculate correct breaksMade for player1`() {
+        givenSubject()
+        givenPlayers(1)
+        givenTurns(`180`(), `180`(), `100`(), `41`())
+        whenConverting()
+
+        thenBreaksMadeIs(1, 0)
+    }
+
+    @Test
+    fun `it should calculate correct breaksMade for player2`() {
+        givenSubject()
+        givenPlayers(1, 2)
+        givenTurns(`60`(), `180`(), `60`(), `180`(), `60`(), `141`())
+        whenConverting()
+
+        thenBreaksMadeIs(1, 0)
+        thenBreaksMadeIs(2, 1)
     }
 
     private fun givenSubject() {
@@ -92,16 +135,20 @@ class StatMapperTest {
     private fun givenTurns(vararg turns: Turn) {
         val metaTables = mutableListOf<MetaTable>()
         val turnTables = mutableListOf<TurnTable>()
+        var starter = true
+        val starterId = id(0)
 
         turns.forEachIndexed { index, turn ->
             val playerId = id(index)
             turnTables.add(toTable(playerId, turn))
 
-            val score = givenScores[playerId]!!
-            score -= turn
+            val startScore = givenScores[playerId]!!
+            val atDouble = scoreEstimator.atDouble(turn, startScore.score)
+            startScore -= turn
 
-            val meta = TurnMeta(id(index), index, score)
-            metaTables.add(toTable(playerId, meta))
+            val meta = TurnMeta(id(index), index, startScore, starter, startScore.score ==0 && playerId != starterId)
+            metaTables.add(toTable(playerId, atDouble, meta))
+            starter = false
         }
         givenTurns = turnTables
         givenMetas = metaTables
@@ -143,7 +190,16 @@ class StatMapperTest {
         assertEquals(expected, expectedStats[playerId]!!.highestCo[0])
     }
 
+    private fun thenAtDoubleIs(playerId: Long, expected: Int) {
+        assertEquals(expected, expectedStats[playerId]!!.nAtCheckout)
+    }
+
+    private fun thenBreaksMadeIs(playerId: Long, expected: Int) {
+        assertEquals(expected, expectedStats[playerId]!!.nBreaks)
+    }
+
     private fun `180`(): Turn = Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20)
+    private fun `141`(): Turn = Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_12)
     private fun `100`(): Turn = Turn(Dart.TRIPLE_20, Dart.SINGLE_20, Dart.SINGLE_20)
     private fun `60`(): Turn = Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20)
     private fun `41`(): Turn = Turn(Dart.SINGLE_1, Dart.DOUBLE_20)
@@ -156,7 +212,7 @@ class StatMapperTest {
         return turnMapper.from(gameId, id, turn)
     }
 
-    private fun toTable(turnId: Long, meta: TurnMeta): MetaTable {
-        return metaMapper.from(gameId, turnId, meta, 0)
+    private fun toTable(turnId: Long, atDouble: Int, meta: TurnMeta): MetaTable {
+        return metaMapper.from(gameId, turnId, meta, atDouble)
     }
 }

@@ -34,27 +34,19 @@ class Play01ViewModelTest {
     private lateinit var req: Play01Request
     private lateinit var givenTeamScoreListeners: List<TeamScoreListener>
 
-    @Mock
-    private lateinit var mockNext: Next
-    @Mock
-    private lateinit var mockGame: Game
-    @Mock
-    private lateinit var mockScoreSettings: ScoreSettings
-    @Mock
-    private lateinit var mockScore: Score
-    @Mock
-    private lateinit var mockRequest: Play01Request
-    @Mock
-    private lateinit var mockPlayGameUsecase: Play01Usecase
-    @Mock
-    private lateinit var mock01Listeners: Play01Listeners
-    @Mock
-    private lateinit var mockLogger: Logger
-    @Mock
-    private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
-    @Mock
-    private lateinit var mockTeamScoreListener: TeamScoreListener
+    @Mock private lateinit var mockNext: Next
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockScoreSettings: ScoreSettings
+    @Mock private lateinit var mockScore: Score
+    @Mock private lateinit var mockRequest: Play01Request
+    @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
+    @Mock private lateinit var mock01Listeners: Play01Listeners
+    @Mock private lateinit var mockLogger: Logger
+    @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
+    @Mock private lateinit var mockGameLoadedNotifier: GameLoadedNotifier<Play01Response>
+    @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
 
+    private val metaDoneCaptor = argumentCaptor<(Long, Long) -> Unit>()
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
@@ -157,6 +149,13 @@ class Play01ViewModelTest {
     }
 
     @Test
+    fun `it should notify gameLoadedNotifiers when UiIsReady`() {
+        givenGameAndRequest(mockGameLoadedNotifier)
+        whenLoadingOk()
+        thenGameLoadedNotifiersAreNotified()
+    }
+
+    @Test
     fun `it should mark game finished when state == MATCH`() {
         givenFullyLoadedMockGame()
         whenNextStateIs(State.MATCH)
@@ -168,6 +167,28 @@ class Play01ViewModelTest {
         givenGameLoadedOk()
         whenNextStateIs(State.START)
         thenGameIsNotMarkedAsFinished()
+    }
+
+    @Test
+    fun `it should store Turn after Turn is Handled`() {
+        givenFullyLoadedMockGame()
+        givenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.TEST_D250))
+        thenTurnIsStored()
+    }
+
+    @Test
+    fun `it should store TurnMeta after Turn is Handled`() {
+        givenFullyLoadedMockGame()
+        givenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.TEST_D250))
+        thenTurnMetaIsStored()
+    }
+
+    @Test
+    fun `it should notify statListeners when Turn & TurnMeta are stored successfully`() {
+        givenFullyLoadedMockGame()
+        givenTurnSubmitted(Turn(Dart.SINGLE_1, Dart.TEST_D250))
+        whenTurnMetaIsStoredSuccessfully()
+        thenStatListenersAreNotified()
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
@@ -220,6 +241,16 @@ class Play01ViewModelTest {
         }
     }
 
+    private fun givenTurnSubmitted(vararg turns: Turn) {
+        whenever(mockNext.state).thenReturn(State.START)
+        whenever(mockGame.previousScore()).thenReturn(mockScore)
+        whenever(mockGame.next).thenReturn(mockNext)
+        whenever(mockGame.id).thenReturn(gameId)
+        for (turn in turns) {
+            subject.onTurnSubmitted(turn, Player(""))
+        }
+    }
+
     private fun whenDartThrown(vararg turns: Turn) {
         for (turn in turns) {
             subject.onDartThrown(turn, Player(""))
@@ -241,6 +272,11 @@ class Play01ViewModelTest {
         val mockSpecialEventListener = mock<SpecialEventListener<*>>()
         val mockPlayerListener = mock<PlayerListener>()
         subject.registerListeners(mockScoreListener, mockStatListener, mockSpecialEventListener, mockPlayerListener)
+    }
+
+    private fun whenTurnMetaIsStoredSuccessfully() {
+        verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), metaDoneCaptor.capture())
+        metaDoneCaptor.lastValue.invoke(1,2)
     }
 
     private fun thenScoresAre(expected: Array<Score>) {
@@ -269,5 +305,20 @@ class Play01ViewModelTest {
 
     private fun thenPlay01ListenersAreRegistered() {
         verify(mock01Listeners).registerListeners(any(), any(), any(), any())
+    }
+
+    private fun thenGameLoadedNotifiersAreNotified() {
+        verify(mockGameLoadedNotifier).onLoaded(eq(givenTeams), eq(givenScores), any(), isNull())
+    }
+    private fun thenTurnIsStored() {
+        verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), any())
+    }
+
+    private fun thenTurnMetaIsStored() {
+        verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), any())
+    }
+
+    private fun thenStatListenersAreNotified() {
+        verify(mock01Listeners).onStatsUpdated(1,2)
     }
 }
