@@ -44,39 +44,53 @@ class TeamStatModel(team: Team, private val stats: MutableList<Stat> = mutableLi
     }
 
     private fun updateBreaksMade() {
-        val g = stats.sumBy { it.nBreaks }
-        breaks.set("$g")
+        val value = stats.sumBy { it.nBreaks }
+        breaks.set("$value")
     }
 
     private fun updateDoublePercentage() {
-        val f1 = stats.sumBy { it.nCheckouts }
-        val f2 = stats.sumBy { it.nAtCheckout }
-        co.set("%.2f".format(f1 / f2.toDouble()) + "%")
+        val aggregator = stats.sumBy { it.nCheckouts }
+        val denominator = stats.sumBy { it.nAtCheckout }
+
+        when (denominator) {
+            0 -> co.set(empty)
+            else -> co.set("%.2f".format(aggregator / denominator.toDouble() * 100) + "%")
+        }
     }
 
     private fun updateHighestCheckout() {
-        val e = stats.maxBy { it.highestCo[0] }?.highestCo?.first()
-        hCo.set("$e")
+        val value = stats
+                .filter { it.highestCo.isNotEmpty() }
+                .maxBy { it.highestCo[0] }
+                ?.highestCo?.firstOrNull()
+        when (value) {
+            null -> hCo.set(empty)
+            else -> hCo.set("$value")
+        }
     }
 
     private fun update100s() {
-        val d = stats.sumBy { it.n100 }
-        n100.set("$d")
+        val value = stats.sumBy { it.n100 }
+        n100.set("$value")
     }
 
     private fun update140s() {
-        val c = stats.sumBy { it.n140 }
-        n140.set("$c")
+        val value = stats.sumBy { it.n140 }
+        n140.set("$value")
     }
 
     private fun update180s() {
-        val b = stats.sumBy { it.n180 }
-        n180.set("$b")
+        val value = stats.sumBy { it.n180 }
+        n180.set("$value")
     }
 
     private fun updateAverage() {
-        val a1 = stats.sumBy { it.totalScore }
-        val a2 = stats.sumBy { it.nDarts }
-        avg.set("%.2f".format(a1 / a2.toDouble() * 3))
+        val aggregator = stats.sumBy { it.totalScore }
+        val denominator = stats.sumBy { it.nDarts }
+
+        when (denominator) {
+            0 -> avg.set(empty)
+            else -> avg.set("%.2f".format(aggregator / denominator.toDouble() * 3))
+        }
     }
 }

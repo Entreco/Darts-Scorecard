@@ -142,11 +142,12 @@ class StatMapperTest {
             val playerId = id(index)
             turnTables.add(toTable(playerId, turn))
 
-            val startScore = givenScores[playerId]!!
-            val atDouble = scoreEstimator.atDouble(turn, startScore.score)
-            startScore -= turn
+            val score = givenScores[playerId]!!
+            val previousScore = score.copy()
+            val atDouble = scoreEstimator.atDouble(turn, score.score)
+            score -= turn
 
-            val meta = TurnMeta(id(index), index, startScore, starter, startScore.score ==0 && playerId != starterId)
+            val meta = TurnMeta(id(index), index, previousScore, starter, score.score ==0 && playerId != starterId)
             metaTables.add(toTable(playerId, atDouble, meta))
             starter = false
         }
