@@ -10,7 +10,7 @@ import nl.entreco.domain.model.players.Team
 class TeamStatModel(team: Team, private val stats: MutableList<Stat> = mutableListOf()) {
 
     companion object {
-        const val empty = "-"
+        const val empty = "--"
     }
 
     val name = ObservableField<String>(team.toString())
@@ -30,7 +30,9 @@ class TeamStatModel(team: Team, private val stats: MutableList<Stat> = mutableLi
 
     fun append(updates: List<Stat>) {
         updates.forEach { stats.add(it) }
-        update()
+        if (stats.isNotEmpty()) {
+            update()
+        }
     }
 
     private fun update() {

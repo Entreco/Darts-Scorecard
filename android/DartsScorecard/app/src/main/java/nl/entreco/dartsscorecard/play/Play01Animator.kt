@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
+import android.os.Handler
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
 import android.view.ViewPropertyAnimator
@@ -87,10 +88,15 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         })
 
         expand()
+        Handler().postDelayed({ collapse() }, 100)
     }
 
     private fun expand() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun collapse() {
+        behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {

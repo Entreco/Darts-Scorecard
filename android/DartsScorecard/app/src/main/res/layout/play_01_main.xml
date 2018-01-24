@@ -78,7 +78,8 @@
                     style="@style/Main.Score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4-1" />
+                    android:text="@string/vs"
+                    tools:text="VS"/>
 
                 <TextView
                     android:id="@+id/name2"
