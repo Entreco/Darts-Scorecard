@@ -48,21 +48,21 @@ class TeamStatModelTest {
     fun `it should update stats (no average)`() {
         givenSubject("Team name")
         whenUpdating(Stat(1,0,0,4,5, 6, 15, 5, 9, listOf(10), listOf(11)))
-        thenStatsAre("-", "4", "5", "6", "11", "33.33%", "9")
+        thenStatsAre("--", "4", "5", "6", "11", "33.33%", "9")
     }
 
     @Test
     fun `it should update stats (no percentage)`() {
         givenSubject("Team name")
         whenUpdating(Stat(1,2,3,4,5, 6, 0, 0, 9, listOf(10), listOf(11)))
-        thenStatsAre("2.00", "4", "5", "6", "11", "-", "9")
+        thenStatsAre("2.00", "4", "5", "6", "11", "--", "9")
     }
 
     @Test
     fun `it should update stats (no high checkout)`() {
         givenSubject("Team name")
         whenUpdating(Stat(1,2,3,4,5, 6, 0, 0, 9, emptyList(), emptyList()))
-        thenStatsAre("2.00", "4", "5", "6", "-", "-", "9")
+        thenStatsAre("2.00", "4", "5", "6", "--", "--", "9")
     }
 
     private fun givenSubject(name: String) {

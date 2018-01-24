@@ -80,14 +80,14 @@ class MatchStatViewModelTest {
     fun `it should have empty avg when loaded`() {
         givenTeams("hein", "henk")
         givenSubjectLoaded()
-        thenAveragesAre("-", "-")
+        thenAveragesAre("--", "--")
     }
 
     @Test
     fun `it should have empty 180s when loaded`() {
         givenTeams("hein", "henk")
         givenSubjectLoaded()
-        thenNumberOf180sIs("-", "-")
+        thenNumberOf180sIs("--", "--")
     }
 
     @Test
@@ -211,6 +211,6 @@ class MatchStatViewModelTest {
     }
 
     private fun thenTeamStat180IsEmpty(index: Int) {
-        assertEquals("-", subject.teamStats[index]?.n180?.get())
+        assertEquals("--", subject.teamStats[index]?.n180?.get())
     }
 }
