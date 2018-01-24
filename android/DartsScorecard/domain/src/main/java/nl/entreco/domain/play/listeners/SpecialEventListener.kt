@@ -1,6 +1,5 @@
 package nl.entreco.domain.play.listeners
 
-import android.util.Log
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.State
@@ -21,7 +20,6 @@ interface SpecialEventListener<in T : SpecialEvent> {
         handleThrown(turn)
 
         if (playing501(scores)) {
-            Log.w("COCO", "playing01 $by")
             handleNineDarter(turn, scores, next, by)
         }
     }

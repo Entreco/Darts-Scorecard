@@ -54,6 +54,13 @@ class Play01ListenersTest {
     }
 
     @Test
+    fun `it should register stat listener`() {
+        givenSubject()
+        whenRegisteringListeners()
+        thenStatListenersAreAdded()
+    }
+
+    @Test
     fun `it should register player listener`() {
         givenSubject()
         whenRegisteringListeners()
@@ -160,6 +167,11 @@ class Play01ListenersTest {
     private fun thenSpecialEventListenerIsAdded() {
         assertEquals(1, subject.specialEventListeners.size)
         assertEquals(mockSpecialEventListener, subject.specialEventListeners[0])
+    }
+
+    private fun thenStatListenersAreAdded() {
+        assertEquals(1, subject.statListeners.size)
+        assertEquals(mockStatListener, subject.statListeners[0])
     }
 
     private fun thenPlayerListenersAreAdded() {

@@ -46,7 +46,7 @@ class NineDartEventListenerTest : SpecialEventListenerTest() {
         turns.forEach {
             score -= it.total()
             subject.onScored(it, score)
-            assertTrue("not possible score:$score with turns: $turns",subject.wasPossible())
+            assertTrue("not possible score:$score with turns: $turns", subject.wasPossible())
         }
     }
 
@@ -71,10 +71,6 @@ class NineDartEventListenerTest : SpecialEventListenerTest() {
             val team = Team(arrayOf(player))
             val next = Next(State.NORMAL, team, 0, player, scores[0])
             onSpecialEvent(next, turn, player, scores)
-        }
-
-        fun wasNotified(): Boolean {
-            return check.get()
         }
 
         fun wasPossible(): Boolean {

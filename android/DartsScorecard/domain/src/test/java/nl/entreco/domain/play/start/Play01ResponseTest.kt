@@ -1,7 +1,6 @@
 package nl.entreco.domain.play.start
 
 import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
@@ -20,8 +19,6 @@ class Play01ResponseTest {
     @Mock private lateinit var mockSettings: ScoreSettings
     @Mock private lateinit var mockTeam1: Team
     @Mock private lateinit var mockTeam2: Team
-    @Mock private lateinit var mockTurn1: Turn
-    @Mock private lateinit var mockTurn2: Turn
 
     @Test
     fun `it should report equals on same instance`() {

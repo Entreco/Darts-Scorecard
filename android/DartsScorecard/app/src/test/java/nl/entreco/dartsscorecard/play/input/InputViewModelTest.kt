@@ -3,8 +3,6 @@ package nl.entreco.dartsscorecard.play.input
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
-import nl.entreco.domain.Analytics
-import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.NoPlayer
 import nl.entreco.domain.model.players.Player
@@ -26,8 +24,6 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class InputViewModelTest {
-    @Mock lateinit var mockAnalytics: Analytics
-    @Mock lateinit var mockLogger: Logger
     @InjectMocks private lateinit var subject: InputViewModel
 
     @Mock private lateinit var mockListener: InputListener
