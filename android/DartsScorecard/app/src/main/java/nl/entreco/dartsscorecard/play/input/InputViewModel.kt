@@ -33,6 +33,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     val special = ObservableField<SpecialEvent?>()
     val required = ObservableField<Score>()
     val dartsLeft = ObservableInt()
+    val resumeDescription = ObservableInt(R.string.game_on)
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -148,6 +149,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         toggle.set(false)
         required.set(next.requiredScore)
         nextDescription.set(descriptionFromNext(next))
+        resumeDescription.set(resumeDescriptionFromNext(next))
         current.set(next.player)
         turn = Turn()
         dartsLeft.set(turn.dartsLeft())
@@ -160,6 +162,16 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
             State.SET -> R.string.to_throw_first
             State.MATCH -> R.string.game_shot_and_match
             else -> R.string.to_throw
+        }
+    }
+
+    private fun resumeDescriptionFromNext(next: Next): Int {
+        return when (next.state) {
+            State.START -> R.string.game_on
+            State.LEG -> R.string.tap_to_resume
+            State.SET -> R.string.tap_to_resume
+            State.MATCH -> R.string.game_shot_and_match
+            else -> R.string.tap_to_resume
         }
     }
 

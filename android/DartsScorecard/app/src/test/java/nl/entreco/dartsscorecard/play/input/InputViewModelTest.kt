@@ -59,6 +59,11 @@ class InputViewModelTest {
     }
 
     @Test
+    fun `it should have 'game on' description of the resume button`() {
+        assertEquals(R.string.game_on, subject.resumeDescription.get())
+    }
+
+    @Test
     fun `it should have empty specialEvent initially`() {
         assertEquals(null, subject.special.get())
     }

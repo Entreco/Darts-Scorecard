@@ -92,7 +92,7 @@
                 android:layout_toStartOf="@id/input_score"
                 android:text="@{viewModel.nextDescription}" />
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/input_resume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,8 +104,9 @@
                 android:translationX="-500dp">
 
                 <include
-                    layout="@layout/include_resume" />
-            </LinearLayout>
+                    layout="@layout/include_resume"
+                    app:message="@{viewModel.resumeDescription}"/>
+            </FrameLayout>
 
         </RelativeLayout>
 
