@@ -2,7 +2,7 @@ package nl.entreco.domain.model
 
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**

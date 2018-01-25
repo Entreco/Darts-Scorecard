@@ -5,10 +5,10 @@ import android.widget.SeekBar
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
-import nl.entreco.domain.setup.usecase.FetchSettingsResponse
-import nl.entreco.domain.setup.usecase.StorePreferredSettingsUsecase
-import nl.entreco.domain.setup.usecase.StoreSettingsRequest
+import nl.entreco.domain.setup.settings.FetchPreferredSettingsUsecase
+import nl.entreco.domain.setup.settings.FetchSettingsResponse
+import nl.entreco.domain.setup.settings.StorePreferredSettingsUsecase
+import nl.entreco.domain.setup.settings.StoreSettingsRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

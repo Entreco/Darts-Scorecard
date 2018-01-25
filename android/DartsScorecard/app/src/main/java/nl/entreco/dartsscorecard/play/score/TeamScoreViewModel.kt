@@ -7,33 +7,41 @@ import android.os.Handler
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishRequest
+import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.domain.play.listeners.events.NineDartEvent
 import java.util.concurrent.Future
 
 /**
  * Created by Entreco on 22/11/2017.
  */
-class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinishUsecase: GetFinishUsecase, private val handler: Handler = Handler(), starter: Boolean) : BaseViewModel() {
+class TeamScoreViewModel(val team: Team, startScore: Score,
+                         private val getFinishUsecase: GetFinishUsecase,
+                         private val handler: Handler = Handler(),
+                         starter: Boolean) : BaseViewModel(), TeamScoreListener {
 
     val finish = ObservableField<String>("")
+    val nineDarter = ObservableBoolean(false)
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
 
+    private var isNineDarterStillPossible = true
     private var finishFuture: Future<*>? = null
 
     fun turnUpdate(next: Next) {
+        updateNineDarter(next)
         updateLegStarter(next)
         updateCurrentTeam(next)
     }
 
     fun scored(input: Score, by: Player) {
-        this.score.set(input.copy())
+        score.set(input.copy())
         removeScoredBadgeAfter(100)
         calculateFinish(input, by)
     }
@@ -57,9 +65,23 @@ class TeamScoreViewModel(val team: Team, startScore: Score, private val getFinis
         }
     }
 
+    private fun updateNineDarter(next: Next) {
+        if (next.state == State.LEG || next.state == State.SET || next.state == State.START) {
+            isNineDarterStillPossible = true
+            nineDarter.set(false)
+        }
+    }
+
+    override fun onNineDartEvent(event: NineDartEvent) {
+        if (team.contains(event.by())) {
+            nineDarter.set(event.isPossible() && isNineDarterStillPossible)
+            isNineDarterStillPossible = event.isPossible()
+        }
+    }
+
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         finishFuture?.cancel(true)
-        finishFuture = getFinishUsecase.calculate(input, turn, player.prefs.favoriteDouble, { finish.set(it) })
+        finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble), { finish.set(it.finish) })
     }
 
     private fun removeScoredBadgeAfter(duration: Long) {

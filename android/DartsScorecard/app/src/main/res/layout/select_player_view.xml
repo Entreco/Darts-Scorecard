@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="@layout/activity_setup_01">
 
     <data>
@@ -55,7 +54,7 @@
             android:layout_alignParentEnd="true"
             android:entries="@{entries}"
             android:onItemSelected="@{(adapter,i,index,l) -> player.onTeamSelected(adapter, index)}"
-            android:selectedItemPosition="@={player.teamIndex}"/>
+            android:selectedItemPosition="@={player.teamIndex}" />
     </RelativeLayout>
 
 </layout>

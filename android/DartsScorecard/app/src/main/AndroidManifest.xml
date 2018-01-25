@@ -25,8 +25,7 @@
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
             android:name=".setup.edit.EditPlayerActivity"
-            android:parentActivityName=".setup.Setup01Activity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".play.Play01Activity"
             android:parentActivityName=".launch.LaunchActivity" />

@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="@layout/play_01_input">
+
+    <data>
+        <variable
+            name="message"
+            type="Integer" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
 
     <View
         android:layout_width="0dp"
@@ -11,22 +23,25 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:contentDescription="@null"
         android:src="@drawable/ic_arrow_start" />
 
     <TextView
         style="@style/Input.Resume"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/tap_to_resume" />
+        android:text="@{safeUnbox(message)}" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:rotation="180"
+        android:contentDescription="@null"
         android:src="@drawable/ic_arrow_start" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-</merge>
+    </LinearLayout>
+</layout>

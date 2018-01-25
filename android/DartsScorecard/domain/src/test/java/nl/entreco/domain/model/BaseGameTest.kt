@@ -8,7 +8,8 @@ import org.junit.Assert
  */
 abstract class BaseGameTest(val subject: Game = Game(0, TestProvider().arbiter())) {
 
-    private val teams = TestProvider().teams()
+    protected val testProvider = TestProvider()
+    private val teams = testProvider.teams()
     private val startIndex = TestProvider().startIndex()
 
     protected fun whenDartsThrown(vararg turns: Turn) {
@@ -29,4 +30,5 @@ abstract class BaseGameTest(val subject: Game = Game(0, TestProvider().arbiter()
 
     protected fun sixty() = Turn(Dart.SINGLE_20, Dart.SINGLE_20, Dart.SINGLE_20)
     protected fun oneEighty() = Turn(Dart.TRIPLE_20, Dart.TRIPLE_20, Dart.TRIPLE_20)
+    protected fun oneFourOne() = Turn(Dart.TRIPLE_20, Dart.TRIPLE_19, Dart.DOUBLE_12)
 }

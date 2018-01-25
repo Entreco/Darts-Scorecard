@@ -1,12 +1,12 @@
 package nl.entreco.domain.play.listeners
 
-import nl.entreco.domain.play.listeners.events.ThrownEvent
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.listeners.events.ThrownEvent
 import org.junit.Assert
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicBoolean
@@ -15,14 +15,6 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Created by Entreco on 10/12/2017.
  */
 class ThrownEventListenerTest : SpecialEventListenerTest() {
-
-    @Test
-    fun `it should notify when darts where thrown`() {
-        val subject = ThrownEventListener()
-        subject.onThrown(`180`())
-        Assert.assertTrue(subject.wasNotified())
-        Assert.assertEquals("T20 T20 T20", subject.describe())
-    }
 
     @Test
     fun `it should notify about throw when busting`() {

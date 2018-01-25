@@ -1,8 +1,7 @@
 package nl.entreco.domain.model.players
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Created by Entreco on 16/12/2017.

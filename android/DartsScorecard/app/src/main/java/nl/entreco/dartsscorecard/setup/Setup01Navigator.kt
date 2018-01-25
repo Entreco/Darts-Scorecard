@@ -9,14 +9,14 @@ import nl.entreco.dartsscorecard.setup.edit.EditPlayerActivity
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.repository.RetrieveGameRequest
+import nl.entreco.domain.setup.game.CreateGameResponse
 
 /**
  * Created by Entreco on 02/01/2018.
  */
 class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
 
-    fun launch(req: RetrieveGameRequest) {
+    fun launch(req: CreateGameResponse) {
         Play01Activity.startGame(activity, req)
         activity.finish()
     }
@@ -47,9 +47,9 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
 
             if (isNewPlayer(index)) {
 
-                if(suggestion.isEmpty()){
+                if (suggestion.isEmpty()) {
                     callback.onPlayerAdded(playerName)
-                } else if(suggestion == "Player 1"){
+                } else if (suggestion == "Player 1") {
                     callback.onPlayerAdded(suggestion)
                 }
 
@@ -83,7 +83,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         fun cancelPlayerResponse(request: Intent): Intent {
             val response = Intent()
             response.putExtra(EXTRA_SUGGESTION, request.getStringExtra(EXTRA_SUGGESTION))
-            response.putExtra(EXTRA_PLAYER_NAME, "")
+            response.putExtra(EXTRA_PLAYER_NAME, request.getStringExtra(EXTRA_SUGGESTION))
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
             return response

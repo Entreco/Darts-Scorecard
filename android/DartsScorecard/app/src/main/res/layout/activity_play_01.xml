@@ -13,12 +13,16 @@
             type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
 
         <variable
+            name="statViewModel"
+            type="nl.entreco.dartsscorecard.play.stats.MatchStatViewModel" />
+
+        <variable
             name="scoreViewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
         <variable
             name="finishUsecase"
-            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
+            type="nl.entreco.domain.play.finish.GetFinishUsecase" />
 
         <variable
             name="animator"
@@ -28,32 +32,36 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:loading="@{viewModel.loading}">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/crowd"/>
 
         <include
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_setup_01" />
 
-        <RelativeLayout
+        <include
+            android:id="@+id/includeMain"
+            layout="@layout/play_01_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/input_peek_height"
+            android:layout_marginEnd="@dimen/def"
+            android:layout_marginStart="@dimen/def"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:viewModel="@{statViewModel}" />
 
-            <include
-                android:id="@+id/includeMain"
-                layout="@layout/play_01_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/includeScore"
-                android:layout_marginEnd="@dimen/def"
-                android:layout_marginStart="@dimen/def" />
-
-            <include
-                android:id="@+id/includeScore"
-                layout="@layout/play_01_score"
-                app:finishUsecase="@{finishUsecase}"
-                app:viewModel="@{scoreViewModel}" />
-        </RelativeLayout>
+        <include
+            android:id="@+id/includeScore"
+            layout="@layout/play_01_score"
+            app:finishUsecase="@{finishUsecase}"
+            app:viewModel="@{scoreViewModel}" />
 
         <include
             android:id="@+id/includeInput"

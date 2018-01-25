@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.settings.ScoreSettings
 
 
@@ -23,12 +23,14 @@ abstract class ScoreBindings {
             recyclerView.adapter = adapter
             adapter.clear()
 
+            val listeners = mutableListOf<TeamScoreListener>()
             teams.forEachIndexed { index, team ->
                 val vm = TeamScoreViewModel(team, scores[index], finishUsecase, starter = scoreSettings.teamStartIndex == index)
                 adapter.addItem(vm)
+                listeners.add(vm)
             }
 
-            uiCallback?.onLetsPlayDarts()
+            uiCallback?.onLetsPlayDarts(listeners)
         }
 
         @JvmStatic

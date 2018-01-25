@@ -12,14 +12,13 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.repository.CreateGameRequest
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 18/11/2017.
  */
-class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadable, ScoreListener, PlayerListener {
+class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
@@ -28,17 +27,19 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
-    override fun startWith(teams: Array<Team>, scores: Array<Score>, create: CreateGameRequest, uiCallback: UiCallback) {
+    override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: ScoreSettings, uiCallback: UiCallback?) {
         this.uiCallback.set(uiCallback)
-        this.scoreSettings.set(ScoreSettings(create.startScore, create.numLegs, create.numSets, create.startIndex))
+        this.scoreSettings.set(info)
+        this.scores.clear()
         this.scores.addAll(scores)
+        this.teams.clear()
         this.teams.addAll(teams)
-        this.numSets.set(create.numSets)
+        this.numSets.set(info.numSets)
     }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {
         logger.d("NoNICE", "1:$scores by:$by")
-        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, by); }
+        scores.forEachIndexed { index, score -> adapter.teamAtIndexScored(index, score, by) }
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {

@@ -51,4 +51,27 @@
         <item name="android:background">@drawable/score_hint</item>
         <item name="android:textColor">?attr/scoreText</item>
     </style>
+
+    <style name="Score.Finish">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:paddingEnd">@dimen/def</item>
+        <item name="android:gravity">end</item>
+        <item name="android:background">@drawable/score_hint</item>
+        <item name="android:textColor">?attr/scoreText</item>
+    </style>
+
+    <style name="Score.Nine">
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:paddingStart">@dimen/def</item>
+        <item name="android:paddingEnd">@dimen/def</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/score_nine</item>
+        <item name="android:textColor">?attr/colorNineDart</item>
+    </style>
+
+    <style name="Score.CurrentTeam">
+        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:src">@drawable/ic_current_team</item>
+    </style>
 </resources>

@@ -3,8 +3,9 @@ package nl.entreco.data.setup.repository
 import android.content.SharedPreferences
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.setup.usecase.FetchSettingsResponse
-import nl.entreco.domain.setup.usecase.StoreSettingsRequest
+import nl.entreco.data.prefs.SharedPreferenceRepo
+import nl.entreco.domain.setup.settings.FetchSettingsResponse
+import nl.entreco.domain.setup.settings.StoreSettingsRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +35,7 @@ class SharedPreferenceRepoTest {
     @Test
     fun storePreferredSetup() {
         givenSubject()
-        whenStoringPreferredSetup(StoreSettingsRequest(1,2,3,4,5))
+        whenStoringPreferredSetup(StoreSettingsRequest(1, 2, 3, 4, 5))
         thenCorrectValuesAreStored()
     }
 

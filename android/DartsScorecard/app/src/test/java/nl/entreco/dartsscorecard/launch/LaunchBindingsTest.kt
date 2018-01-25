@@ -4,15 +4,10 @@ import android.view.View
 import android.view.ViewPropertyAnimator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.TeamIdsString
-import org.junit.Test
-
-import org.junit.Assert.*
+import nl.entreco.domain.setup.game.CreateGameResponse
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -23,9 +18,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LaunchBindingsTest {
 
-    @Mock private lateinit var mockView : View
-    @Mock private lateinit var mockAnimator : ViewPropertyAnimator
-    private val givenRequest = RetrieveGameRequest(33, TeamIdsString("1|2"), CreateGameRequest(1,2,3,4))
+    @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockAnimator: ViewPropertyAnimator
+    private val givenRequest = CreateGameResponse(33, "1|2", 1, 2, 3, 4)
 
     @Before
     fun setUp() {

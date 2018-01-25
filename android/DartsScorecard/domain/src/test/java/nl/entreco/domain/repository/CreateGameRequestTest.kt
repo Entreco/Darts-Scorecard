@@ -1,5 +1,6 @@
 package nl.entreco.domain.repository
 
+import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -23,10 +23,11 @@ class TestProvider {
             table.startIndex = startIndex
             table.startScore = startScore
             table.teams = teamstring
+            table.finished = false
             return table
         }
 
-        fun createTurn(game: Long, d1: Int, d2: Int, d3: Int, m1: Int, m2: Int, m3: Int, darts: Int): TurnTable {
+        fun createTurn(game: Long, d1: Int, d2: Int, d3: Int, m1: Int, m2: Int, m3: Int, darts: Int, player: Long): TurnTable {
             val table = TurnTable()
             table.d1 = d1
             table.d2 = d2
@@ -36,6 +37,7 @@ class TestProvider {
             table.m3 = m3
             table.game = game
             table.numDarts = darts
+            table.player = player
             return table
         }
 

@@ -35,8 +35,11 @@ class Setup01Activity : ViewModelActivity() {
         binding.settingsViewModel = settingsViewModel
         binding.navigator = navigator
 
-        navigator.onAddNewPlayer(0)
         initToolbar(toolbar(binding), R.string.title_setup)
+
+        if (savedInstanceState == null) {
+            navigator.onAddNewPlayer(0)
+        }
     }
 
     private fun toolbar(binding: ActivitySetup01Binding): Toolbar {
