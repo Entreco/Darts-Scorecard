@@ -3,3 +3,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/Entreco/Darts-Scorecard/badge.svg?branch=develop)](https://coveralls.io/github/Entreco/Darts-Scorecard?branch=develop)
 
 # Darts-Scorecard
+
+Open source darts score app, for tracking your scores.
+
