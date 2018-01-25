@@ -1,59 +1,84 @@
 package nl.entreco.dartsscorecard.play
 
+import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.dartsscorecard.play.score.GameLoadable
+import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
+import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.Logger
-import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Next
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.play.listeners.InputListener
-import nl.entreco.domain.play.listeners.PlayerListener
-import nl.entreco.domain.play.listeners.ScoreListener
-import nl.entreco.domain.play.listeners.SpecialEventListener
-import nl.entreco.domain.play.usecase.Play01Usecase
-import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.StoreTurnRequest
+import nl.entreco.domain.play.listeners.*
+import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
+import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.play.start.Play01Response
+import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.play.stats.StoreTurnRequest
+import nl.entreco.domain.play.stats.UndoTurnRequest
+import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
+class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val gameListeners: Play01Listeners, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
-    // Lazy to keep state
+    val loading = ObservableBoolean(true)
     private lateinit var game: Game
-    private val playerListeners = mutableListOf<PlayerListener>()
-    private val scoreListeners = mutableListOf<ScoreListener>()
-    private val specialEventListeners = mutableListOf<SpecialEventListener<*>>()
+    private lateinit var request: Play01Request
+    private lateinit var load: GameLoadedNotifier<ScoreSettings>
+    private lateinit var loaders: Array<GameLoadedNotifier<Play01Response>>
 
-    fun load(request: RetrieveGameRequest, load: GameLoadable) {
-        playGameUsecase.loadGameAndStart(request,
-                { game, teams ->
-                    this.game = game
-                    load.startWith(teams, game.scores, request.create, this)
+    fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
+        this.request = request
+        this.load = load
+        this.loaders = arrayOf(*loaders)
+        this.playGameUsecase.loadGameAndStart(request,
+                { response ->
+                    this.game = response.game
+                    load.onLoaded(response.teams, game.scores, response.settings, this)
+                    loaders.forEach {
+                        it.onLoaded(response.teams, game.scores, response, null)
+                    }
                 },
                 { err -> logger.e("err: $err") })
     }
 
-    override fun onLetsPlayDarts() {
-        notifyNextPlayer(game.next)
-        notifyScoreChanged(game.scores, game.next.player)
+    fun registerListeners(scoreListener: ScoreListener, statListener: StatListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
+        gameListeners.registerListeners(scoreListener, statListener, specialEventListener, *playerListeners)
+    }
+
+    override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
+        this.gameListeners.onLetsPlayDarts(game, listeners)
+        this.loading.set(false)
+    }
+
+    override fun onUndo() {
+        loading.set(true)
+        playGameUsecase.undoLastTurn(UndoTurnRequest(game.id), undoSuccess(), undoFailed())
+    }
+
+    private fun undoFailed(): (Throwable) -> Unit {
+        return { err ->
+            logger.w("Undo failed! -> $err")
+        }
+    }
+
+    private fun undoSuccess(): (UndoTurnResponse) -> Unit {
+        return {
+            logger.i("Undo done! -> go to Let's Play Darts Function")
+            load(request, load, *loaders)
+        }
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {
-        notifyDartThrown(turn, by)
+        this.gameListeners.onDartThrown(turn, by)
     }
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
         handleTurn(turn, by)
-        storeTurn(turn)
-    }
-
-    private fun storeTurn(turn: Turn) {
-        playGameUsecase.storeTurn(StoreTurnRequest(game.id, turn))
+        storeTurn(turn, by)
     }
 
     private fun handleTurn(turn: Turn, by: Player) {
@@ -62,56 +87,29 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val next = game.next
         val scores = game.scores
 
-        notifyAboutSpecialEvents(next, turn, by, scores)
-        notifyScoreChanged(scores, by)
-        notifyNextPlayer(next)
+        handleGameFinished(next, game.id)
+        notifyListeners(next, turn, by, scores)
     }
 
-    fun addScoreListener(scoreListener: ScoreListener) {
-        synchronized(scoreListeners) {
-            if (!scoreListeners.contains(scoreListener)) {
-                scoreListeners.add(scoreListener)
-            }
+    private fun storeTurn(turn: Turn, by: Player) {
+        val turnRequest = StoreTurnRequest(by.id, game.id, turn)
+        val score = game.previousScore()
+        val started = game.isNewMatchLegOrSet()
+        val turnCounter = game.getTurnCount()
+        val breakMade = game.wasBreakMade(by)
+        val turnMeta = TurnMeta(by.id, turnCounter, score, started, breakMade)
+        playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta, { turnId, metaId ->
+            gameListeners.onStatsUpdated(turnId, metaId)
+        })
+    }
+
+    private fun handleGameFinished(next: Next, gameId: Long) {
+        if (next.state == State.MATCH) {
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
         }
     }
 
-    fun addPlayerListener(playerListener: PlayerListener) {
-        synchronized(playerListeners) {
-            if (!playerListeners.contains(playerListener)) {
-                playerListeners.add(playerListener)
-            }
-        }
-    }
-
-    fun addSpecialEventListener(specialEventListener: SpecialEventListener<*>) {
-        synchronized(specialEventListener) {
-            if (!specialEventListeners.contains(specialEventListener)) {
-                specialEventListeners.add(specialEventListener)
-            }
-        }
-    }
-
-    private fun notifyScoreChanged(scores: Array<Score>, by: Player) {
-        synchronized(scoreListeners) {
-            scoreListeners.forEach { it.onScoreChange(scores, by) }
-        }
-    }
-
-    private fun notifyDartThrown(turn: Turn, by: Player) {
-        synchronized(scoreListeners) {
-            scoreListeners.forEach { it.onDartThrown(turn, by) }
-        }
-    }
-
-    private fun notifyAboutSpecialEvents(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
-        synchronized(specialEventListeners) {
-            specialEventListeners.forEach { it.onSpecialEvent(next, turn, by, scores) }
-        }
-    }
-
-    private fun notifyNextPlayer(next: Next) {
-        synchronized(playerListeners) {
-            playerListeners.forEach { it.onNext(next) }
-        }
+    private fun notifyListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
+        gameListeners.onTurnSubmitted(next, turn, by, scores)
     }
 }

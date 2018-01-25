@@ -4,7 +4,7 @@ import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.DscLogger
-import nl.entreco.dartsscorecard.analytics.FirebaseAnalytics
+import nl.entreco.data.analytics.FirebaseAnalytics
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before

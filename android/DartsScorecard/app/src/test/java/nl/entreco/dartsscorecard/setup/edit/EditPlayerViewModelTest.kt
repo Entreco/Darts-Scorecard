@@ -4,8 +4,9 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.setup.usecase.CreatePlayerUsecase
-import nl.entreco.domain.setup.usecase.FetchExistingPlayersUsecase
+import nl.entreco.domain.setup.players.CreatePlayerUsecase
+import nl.entreco.domain.setup.players.FetchExistingPlayersResponse
+import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -23,7 +24,7 @@ class EditPlayerViewModelTest {
     @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
     @Mock private lateinit var mockView: TextView
     @Mock private lateinit var mockNavigator: EditPlayerNavigator
-    private val doneCaptor = argumentCaptor<(List<Player>) -> Unit>()
+    private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
     private lateinit var subject: EditPlayerViewModel
     private lateinit var expectedPlayers: MutableList<Player>
@@ -127,7 +128,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun whenFetchingSucceeds() {
-        doneCaptor.lastValue.invoke(expectedPlayers)
+        doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(expectedPlayers))
     }
 
     private fun whenFetchingPlayersFails(err: Throwable) {

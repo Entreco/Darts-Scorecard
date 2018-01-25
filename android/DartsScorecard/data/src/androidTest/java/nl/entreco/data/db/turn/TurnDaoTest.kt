@@ -3,11 +3,12 @@ package nl.entreco.data.db.turn
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import nl.entreco.data.DscDatabase
 import nl.entreco.data.TestProvider
+import nl.entreco.data.db.DscDatabase
 import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -57,12 +58,12 @@ class TurnDaoTest {
     }
 
     private fun createTurn(d1: Int, d2: Int, d3: Int, m1: Int, m2: Int, m3: Int, darts: Int) {
-        val turn = TestProvider.createTurn(givenGame, d1, d2, d3, m1, m2, m3, darts)
+        val turn = TestProvider.createTurn(givenGame, d1, d2, d3, m1, m2, m3, darts, 33)
         turnDao.create(turn)
     }
 
     private fun givenTurn(d1: Int, d2: Int, d3: Int) {
-        givenTurn = TestProvider.createTurn(1, d1, d2, d3, 1, 2, 3, 3)
+        givenTurn = TestProvider.createTurn(1, d1, d2, d3, 1, 2, 3, 3, 18)
     }
 
     private fun whenStoringTurn() {
@@ -72,6 +73,7 @@ class TurnDaoTest {
     private fun verifyTurn(expected: Int, turnTable: TurnTable) {
         val actual = (0 until turnTable.numDarts).sumBy { score(turnTable, it) * multiplier(turnTable, it) }
         assertEquals(expected, actual)
+        assertTrue(turnTable.id >= 0)
     }
 
     private fun score(turnTable: TurnTable, dart: Int): Int {

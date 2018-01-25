@@ -5,11 +5,11 @@ import android.databinding.ObservableInt
 import android.widget.AdapterView
 import android.widget.SeekBar
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.repository.CreateGameRequest
-import nl.entreco.domain.setup.usecase.FetchPreferredSettingsUsecase
-import nl.entreco.domain.setup.usecase.FetchSettingsResponse
-import nl.entreco.domain.setup.usecase.StorePreferredSettingsUsecase
-import nl.entreco.domain.setup.usecase.StoreSettingsRequest
+import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.domain.setup.settings.FetchPreferredSettingsUsecase
+import nl.entreco.domain.setup.settings.FetchSettingsResponse
+import nl.entreco.domain.setup.settings.StorePreferredSettingsUsecase
+import nl.entreco.domain.setup.settings.StoreSettingsRequest
 import javax.inject.Inject
 
 /**

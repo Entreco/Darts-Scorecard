@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="48dp"
+        app:behavior_peekHeight="@dimen/input_peek_height"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <!-- Turn Bar -->
@@ -92,7 +92,7 @@
                 android:layout_toStartOf="@id/input_score"
                 android:text="@{viewModel.nextDescription}" />
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/input_resume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,8 +104,9 @@
                 android:translationX="-500dp">
 
                 <include
-                    layout="@layout/include_resume" />
-            </LinearLayout>
+                    layout="@layout/include_resume"
+                    app:message="@{viewModel.resumeDescription}"/>
+            </FrameLayout>
 
         </RelativeLayout>
 
@@ -200,6 +201,7 @@
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 app:accent="true"
+                android:onClick="@{() -> viewModel.onUndoPressed(listener)}"
                 app:hint="@string/undo" />
 
         </GridLayout>

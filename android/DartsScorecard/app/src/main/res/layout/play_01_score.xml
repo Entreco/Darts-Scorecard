@@ -11,14 +11,15 @@
 
         <variable
             name="finishUsecase"
-            type="nl.entreco.domain.play.usecase.GetFinishUsecase" />
+            type="nl.entreco.domain.play.finish.GetFinishUsecase" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/scoreSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- Header -->
         <LinearLayout
@@ -60,19 +61,17 @@
         </LinearLayout>
 
         <!-- TeamScoreView's -->
-        <android.support.v7.widget.RecyclerView
+        <nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
             android:id="@+id/teamContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="40dp"
-            app:layout_constraintTop_toBottomOf="@id/header"
             app:adapter="@{viewModel.adapter}"
-            app:finishUsecase="@{finishUsecase}"
-            app:teams="@{viewModel.teams}"
-            app:scores="@{viewModel.scores}"
-            app:scoreSettings="@{viewModel.scoreSettings}"
-            app:uiCallback="@{viewModel.uiCallback}"
             app:currentTeam="@{viewModel.currentTeam}"
+            app:finishUsecase="@{finishUsecase}"
+            app:scoreSettings="@{viewModel.scoreSettings}"
+            app:scores="@{viewModel.scores}"
+            app:teams="@{viewModel.teams}"
+            app:uiCallback="@{viewModel.uiCallback}"
             tools:listitem="@layout/team_score_view" />
 
         <!-- Footer -->
@@ -82,15 +81,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/score_footer"
             android:orientation="horizontal"
-            android:padding="@dimen/xsmall"
-            app:layout_constraintTop_toBottomOf="@id/teamContainer">
+            android:padding="@dimen/xsmall">
 
             <TextView
                 style="@style/Score.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="?attr/match_description" />
-        </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </LinearLayout>
 </layout>

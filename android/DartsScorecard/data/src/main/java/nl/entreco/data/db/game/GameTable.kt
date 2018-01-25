@@ -27,4 +27,7 @@ class GameTable {
     @ColumnInfo(name = "teams")
     var teams: String = ""
 
+    @ColumnInfo(name = "finished")
+    var finished: Boolean = false
+
 }

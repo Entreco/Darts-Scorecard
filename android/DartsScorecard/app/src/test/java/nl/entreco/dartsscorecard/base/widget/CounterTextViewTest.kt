@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
-import org.junit.Assert.*
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

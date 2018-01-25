@@ -1,7 +1,7 @@
 package nl.entreco.domain.play
 
 import nl.entreco.domain.model.Turn
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**

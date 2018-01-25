@@ -6,6 +6,7 @@ import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,6 +25,11 @@ class ArbiterTest {
         subject = Arbiter(Score()).apply {
             start(0, teams)
         }
+    }
+
+    @Test
+    fun `it should create TurnHandler`() {
+        assertNotNull(subject.turnHandler)
     }
 
     @Test

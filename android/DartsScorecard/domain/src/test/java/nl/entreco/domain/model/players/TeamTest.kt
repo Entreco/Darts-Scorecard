@@ -41,4 +41,14 @@ class TeamTest{
     fun `it should not contain player3`() {
         assertFalse(subject.contains(player3))
     }
+
+    @Test
+    fun `it should contain player with id 0`() {
+        assertTrue(subject.contains(0L))
+    }
+
+    @Test
+    fun `it should NOT contain player with id 1`() {
+        assertFalse(subject.contains(1L))
+    }
 }

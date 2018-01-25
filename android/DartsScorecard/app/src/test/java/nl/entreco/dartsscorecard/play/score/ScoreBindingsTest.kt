@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.usecase.GetFinishUsecase
+import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,7 +39,7 @@ class ScoreBindingsTest {
     fun `it should notify adapter when all teams have been added`() {
         ScoreBindings.addTeams(mockRecyclerView, mockScoreAdapter, givenTeams, givenScores, givenScoreSettings, mockGetFinishUsecase, mockUiCallback)
         verify(mockScoreAdapter, times(givenTeams.size)).addItem(any())
-        verify(mockUiCallback).onLetsPlayDarts()
+        verify(mockUiCallback).onLetsPlayDarts(any())
     }
 
     @Test

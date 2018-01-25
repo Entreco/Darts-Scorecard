@@ -51,6 +51,10 @@ class Team(val players: Array<Player> = emptyArray()) {
         else players[0]
     }
 
+    fun contains(playerId: Long): Boolean {
+        return players.map { it.id }.contains(playerId)
+    }
+
     fun contains(player: Player): Boolean {
         return players.contains(player)
     }

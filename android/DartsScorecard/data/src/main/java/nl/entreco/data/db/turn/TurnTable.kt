@@ -13,19 +13,21 @@ class TurnTable {
     var id: Long = 0
 
     @ColumnInfo(name = "d1")
-    var d1: Int = 0
+    var d1: Int = -1
     @ColumnInfo(name = "d2")
-    var d2: Int = 0
+    var d2: Int = -1
     @ColumnInfo(name = "d3")
-    var d3: Int = 0
+    var d3: Int = -1
     @ColumnInfo(name = "m1")
-    var m1: Int = 0
+    var m1: Int = -1
     @ColumnInfo(name = "m2")
-    var m2: Int = 0
+    var m2: Int = -1
     @ColumnInfo(name = "m3")
-    var m3: Int = 0
+    var m3: Int = -1
     @ColumnInfo(name = "numDarts")
-    var numDarts: Int = 0
+    var numDarts: Int = -1
     @ColumnInfo(name = "game")
-    var game: Long = 0
+    var game: Long = -1
+    @ColumnInfo(name = "player")
+    var player: Long = -1
 }

@@ -6,14 +6,17 @@
     <dimen name="large">16dp</dimen>
     <dimen name="xlarge">32dp</dimen>
 
+    <dimen name="icon_size_default">24dp</dimen>
+    <dimen name="icon_size_large">48dp</dimen>
+
     <dimen name="setup_width">80dp</dimen>
     <dimen name="score_name_w">300</dimen>
     <dimen name="score_leg_w">42</dimen>
     <dimen name="score_set_w">42</dimen>
     <dimen name="score_pts_w">54</dimen>
 
-    <dimen name="icon_size_default">24dp</dimen>
-    <dimen name="icon_size_large">48dp</dimen>
 
     <dimen name="input_side_bar">60dp</dimen>
+    <dimen name="input_peek_height">48dp</dimen>
+    <dimen name="current_team_width">6dp</dimen>
 </resources>

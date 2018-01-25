@@ -5,18 +5,14 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
+import nl.entreco.domain.model.*
+import nl.entreco.domain.model.players.NoPlayer
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.model.Dart
-import nl.entreco.domain.model.Next
-import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Turn
-import nl.entreco.domain.model.players.NoPlayer
-import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.model.State
-import nl.entreco.domain.model.players.Team
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -30,8 +26,9 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class InputViewModelTest {
-    @Mock lateinit var mockAnalytics: Analytics
-    @Mock lateinit var mockLogger: Logger
+
+    @Mock private lateinit var logger: Logger
+    @Mock private lateinit var analytics: Analytics
     @InjectMocks private lateinit var subject: InputViewModel
 
     @Mock private lateinit var mockListener: InputListener
@@ -59,6 +56,11 @@ class InputViewModelTest {
     @Test
     fun `it should have empty description of the next player`() {
         assertEquals(R.string.empty, subject.nextDescription.get())
+    }
+
+    @Test
+    fun `it should have 'game on' description of the resume button`() {
+        assertEquals(R.string.game_on, subject.resumeDescription.get())
     }
 
     @Test
@@ -117,6 +119,12 @@ class InputViewModelTest {
     }
 
     @Test
+    fun `it should call undo on Listener`() {
+        whenPressingUndo()
+        verify(mockListener).onUndo()
+    }
+
+    @Test
     fun `it should NOT submit Turn when hint pressed, but no player is throwing`() {
         whenPressingHint(0)
         verify(mockListener, never()).onTurnSubmitted(any(), any())
@@ -152,7 +160,6 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
 
-
     @Test
     fun `it should submit Bust when hint pressed in single Mode`() {
         givenPlayer("player1")
@@ -160,6 +167,7 @@ class InputViewModelTest {
         whenPressingHint(-1)
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
+
 
     @Test
     fun `it should submit Darts when 'throw' is pressed`() {
@@ -295,6 +303,10 @@ class InputViewModelTest {
 
     private fun whenPressingBack() {
         subject.back()
+    }
+
+    private fun whenPressingUndo() {
+        subject.onUndoPressed(mockListener)
     }
 
     private fun whenLongPressingBack() {

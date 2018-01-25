@@ -14,9 +14,10 @@ import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.domain.play.usecase.GetFinishUsecase
-import nl.entreco.domain.repository.RetrieveGameRequest
-import nl.entreco.domain.repository.TeamIdsString
+import nl.entreco.dartsscorecard.play.stats.MatchStatViewModel
+import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.setup.game.CreateGameResponse
 
 class Play01Activity : ViewModelActivity() {
 
@@ -24,6 +25,7 @@ class Play01Activity : ViewModelActivity() {
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
+    private val statViewModel: MatchStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class Play01Activity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
+        binding.statViewModel = statViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
@@ -45,7 +48,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun initGame() {
-        viewModel.load(retrieveSetup(intent), scoreViewModel)
+        viewModel.load(retrieveSetup(intent), scoreViewModel, statViewModel)
     }
 
     private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
@@ -53,10 +56,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun resumeGame() {
-        viewModel.addScoreListener(scoreViewModel)
-        viewModel.addPlayerListener(scoreViewModel)
-        viewModel.addPlayerListener(inputViewModel)
-        viewModel.addSpecialEventListener(inputViewModel)
+        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel, inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -73,18 +73,24 @@ class Play01Activity : ViewModelActivity() {
 
     companion object {
         @JvmStatic
-        fun retrieveSetup(intent: Intent): RetrieveGameRequest {
-            return RetrieveGameRequest(intent.getLongExtra("gameId", -1),
-                    TeamIdsString(intent.getStringExtra("teamIds")),
-                    intent.getParcelableExtra("exec"))
+        fun retrieveSetup(intent: Intent): Play01Request {
+            return Play01Request(intent.getLongExtra("gameId", -1),
+                    intent.getStringExtra("teamIds"),
+                    intent.getIntExtra("startScore", -1),
+                    intent.getIntExtra("startIndex", -1),
+                    intent.getIntExtra("legs", -1),
+                    intent.getIntExtra("sets", -1))
         }
 
         @JvmStatic
-        fun startGame(context: Context, retrieve: RetrieveGameRequest) {
+        fun startGame(context: Context, create: CreateGameResponse) {
             val intent = Intent(context, Play01Activity::class.java)
-            intent.putExtra("gameId", retrieve.gameId)
-            intent.putExtra("teamIds", retrieve.teamIds.toString())
-            intent.putExtra("exec", retrieve.create)
+            intent.putExtra("gameId", create.gameId)
+            intent.putExtra("teamIds", create.teamIds)
+            intent.putExtra("startScore", create.startScore)
+            intent.putExtra("startIndex", create.startIndex)
+            intent.putExtra("legs", create.numLegs)
+            intent.putExtra("sets", create.numSets)
             context.startActivity(intent)
         }
     }
