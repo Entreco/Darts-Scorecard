@@ -21,6 +21,9 @@ interface GameRepository {
     @WorkerThread
     fun finish(id: Long)
 
+    @WorkerThread
+    fun undoFinish(id: Long)
+
     @Throws
     @WorkerThread
     fun fetchBy(id: Long): Game

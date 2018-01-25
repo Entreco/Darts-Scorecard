@@ -12,8 +12,5 @@ interface StatRepository {
     fun fetchAllForGame(gameId: Long): Map<Long, Stat>
 
     @WorkerThread
-    fun fetchAllForPlayer(playerId: Long): Map<Long, Stat>
-
-    @WorkerThread
     fun fetchStat(turnId: Long, metaId: Long): Stat
 }

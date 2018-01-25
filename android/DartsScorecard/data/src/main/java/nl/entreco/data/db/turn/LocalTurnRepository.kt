@@ -25,4 +25,9 @@ class LocalTurnRepository(db: DscDatabase, private val mapper: TurnMapper) : Tur
         turnsInGame.forEach { map.add(Pair(it.player, mapper.to(it))) }
         return map
     }
+
+    @WorkerThread
+    override fun undo(gameId: Long): Int {
+        return turnDao.undoLast(gameId)
+    }
 }

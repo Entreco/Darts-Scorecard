@@ -22,4 +22,7 @@ interface MetaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(stat: MetaTable): Long
+
+    @Query("DELETE FROM TurnMeta WHERE game = :gameId AND id = (SELECT MAX(id) FROM TurnMeta)")
+    fun undoLast(gameId: Long): Int
 }

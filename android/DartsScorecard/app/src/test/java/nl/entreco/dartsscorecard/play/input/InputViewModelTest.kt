@@ -119,6 +119,12 @@ class InputViewModelTest {
     }
 
     @Test
+    fun `it should call undo on Listener`() {
+        whenPressingUndo()
+        verify(mockListener).onUndo()
+    }
+
+    @Test
     fun `it should NOT submit Turn when hint pressed, but no player is throwing`() {
         whenPressingHint(0)
         verify(mockListener, never()).onTurnSubmitted(any(), any())
@@ -154,7 +160,6 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
 
-
     @Test
     fun `it should submit Bust when hint pressed in single Mode`() {
         givenPlayer("player1")
@@ -162,6 +167,7 @@ class InputViewModelTest {
         whenPressingHint(-1)
         verify(mockListener).onTurnSubmitted(any(), eq(givenPlayer))
     }
+
 
     @Test
     fun `it should submit Darts when 'throw' is pressed`() {
@@ -297,6 +303,10 @@ class InputViewModelTest {
 
     private fun whenPressingBack() {
         subject.back()
+    }
+
+    private fun whenPressingUndo() {
+        subject.onUndoPressed(mockListener)
     }
 
     private fun whenLongPressingBack() {

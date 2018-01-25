@@ -49,6 +49,12 @@ class LocalTurnRepositoryTest {
         thenFetchIsCalledOnDao()
     }
 
+    @Test
+    fun `it should undo`() {
+        subject.undo(5)
+        verify(mockTurnDao).undoLast(5)
+    }
+
     private fun givenTurn(turn: Turn) {
         givenTurn = turn
         expectedTable = TurnMapper().from(gameId, playerId, givenTurn)

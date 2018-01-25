@@ -43,4 +43,9 @@ class LocalMetaRepositoryTest {
         verify(mockMetaDao).create(mockTable)
     }
 
+    @Test
+    fun `it should undo`() {
+        subject.undo(5)
+        verify(mockMetaDao).undoLast(5)
+    }
 }

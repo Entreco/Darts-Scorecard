@@ -10,6 +10,7 @@ import nl.entreco.domain.play.listeners.events.*
 /**
  * Created by Entreco on 05/12/2017.
  */
+@Suppress("UNCHECKED_CAST")
 interface SpecialEventListener<in T : SpecialEvent> {
 
     fun handle(event: T)

@@ -5,10 +5,10 @@ import com.nhaarman.mockito_kotlin.isA
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.game.LocalGameRepository
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameMapper
 import nl.entreco.data.db.game.GameTable
+import nl.entreco.data.db.game.LocalGameRepository
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -74,6 +74,13 @@ class LocalGameRepositoryTest {
         thenUpdateGamesIsCalledOnDao()
     }
 
+    @Test
+    fun `it should unmark game as finished`() {
+        givenExistingGames(1)
+        whenUnFinishingGame(1)
+        thenUndoFinishIsCalledOnDao()
+    }
+
     private fun givenExistingGames(){
         val table = GameTable()
         table.startIndex = 0
@@ -113,6 +120,10 @@ class LocalGameRepositoryTest {
         subject.finish(gameId)
     }
 
+    private fun whenUnFinishingGame(gameId: Long) {
+        subject.undoFinish(gameId)
+    }
+
     private fun thenFetchAllIsCalledOnDao() {
         verify(mockGameDao).fetchAll()
     }
@@ -123,5 +134,9 @@ class LocalGameRepositoryTest {
 
     private fun thenUpdateGamesIsCalledOnDao(){
         verify(mockGameDao).updateGames(isA())
+    }
+
+    private fun thenUndoFinishIsCalledOnDao(){
+        verify(mockGameDao).undoFinish(isA())
     }
 }

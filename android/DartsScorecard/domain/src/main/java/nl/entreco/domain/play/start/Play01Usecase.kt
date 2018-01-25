@@ -14,6 +14,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                                         private val retrieveTeamsUsecase: RetrieveTeamsUsecase,
                                         private val storeTurnUsecase: StoreTurnUsecase,
                                         private val storeMetaUsecase: StoreMetaUsecase,
+                                        private val undoTurnUsecase: UndoTurnUsecase,
                                         private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase,
                                         private val logger: Logger) {
 
@@ -27,6 +28,14 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                 onFailed("Storing Turn failed ${req.turn}"))
     }
 
+    fun undoLastTurn(req: UndoTurnRequest, done: (UndoTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
+        undoTurnUsecase.exec(req, done , fail)
+    }
+
+    fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
+        markGameAsFinishedUsecase.exec(finishRequest)
+    }
+
     private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta, done: (Long, Long) -> Unit) = { response: StoreTurnResponse ->
         val metaRequest = StoreMetaRequest(response.turnId, gameId, response.turn, turnMeta)
         storeMetaUsecase.exec(metaRequest, done, onFailed("Storing Stat failed $turnMeta"))
@@ -34,10 +43,6 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
 
     private fun onFailed(msg: String) = { err: Throwable ->
         logger.w("$msg (${err.localizedMessage})")
-    }
-
-    fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
-        markGameAsFinishedUsecase.exec(finishRequest)
     }
 
     private fun retrieveTeams(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {

@@ -48,6 +48,7 @@ class Arbiter(initial: Score) {
     }
 
     private fun playerForNewLeg() = turnHandler.nextLeg(scores)
+
     private fun playerForNewSet() = turnHandler.nextSet(scores)
 
     private fun gameShotAndTheMatch(currentPlayer: Int): Boolean {
@@ -109,9 +110,9 @@ class Arbiter(initial: Score) {
             else -> BUST
         }
     }
-
     private fun legFinished(currentPlayer: Int) = scores[currentPlayer].legFinished()
     private fun setFinished(currentPlayer: Int) = scores[currentPlayer].setFinished()
+
     private fun matchFinished(currentPlayer: Int) = scores[currentPlayer].matchFinished()
 
     fun getScores(): Array<Score> {

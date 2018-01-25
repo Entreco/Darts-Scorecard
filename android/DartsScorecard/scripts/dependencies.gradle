@@ -34,11 +34,11 @@ ext.versionName = { ->
 
 
 ext {
-    kotlinVersion = '1.2.20'
+    kotlinVersion = '1.2.21'
     gradleVersion = '3.0.1'
     gmsVersion = '3.1.1'
     dexCountVersion = '0.8.2'
-    detektVersion = '1.0.0.RC6-1'
+    detektVersion = '1.0.0.RC6-2'
     jacocoCoverageVersion = '0.4.0'
     coverallsVersion = '2.8.2'
 

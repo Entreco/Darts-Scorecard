@@ -5,18 +5,17 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.stats.StoreMetaUsecase
-import nl.entreco.domain.play.stats.StoreTurnRequest
-import nl.entreco.domain.play.stats.StoreTurnResponse
-import nl.entreco.domain.play.stats.StoreTurnUsecase
+import nl.entreco.domain.play.stats.*
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by Entreco on 17/12/2017.
  */
+@RunWith(MockitoJUnitRunner::class)
 class Play01UsecaseTest {
 
     private val gameId: Long = 42
@@ -34,30 +33,22 @@ class Play01UsecaseTest {
     private val storeOkCaptor = argumentCaptor<(StoreTurnResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
-    @Mock
-    private lateinit var done: (Play01Response) -> Unit
-    @Mock
-    private lateinit var fail: (Throwable) -> Unit
-    @Mock
-    private lateinit var mockGameUc: RetrieveGameUsecase
-    @Mock
-    private lateinit var mockTurnsUc: RetrieveTurnsUsecase
-    @Mock
-    private lateinit var mockTeamUc: RetrieveTeamsUsecase
-    @Mock
-    private lateinit var mockTurnUc: StoreTurnUsecase
-    @Mock
-    private lateinit var mockStatsUc: StoreMetaUsecase
-    @Mock
-    private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
-    @Mock
-    private lateinit var mockLogger: Logger
-    @Mock
-    private lateinit var mockGame: Game
-    @Mock
-    private lateinit var mockDone: (Long, Long) -> Unit
+    @Mock private lateinit var done: (Play01Response) -> Unit
+    @Mock private lateinit var fail: (Throwable) -> Unit
+    @Mock private lateinit var mockGameUc: RetrieveGameUsecase
+    @Mock private lateinit var mockTurnsUc: RetrieveTurnsUsecase
+    @Mock private lateinit var mockTeamUc: RetrieveTeamsUsecase
+    @Mock private lateinit var mockTurnUc: StoreTurnUsecase
+    @Mock private lateinit var mockStatsUc: StoreMetaUsecase
+    @Mock private lateinit var mockUndo: UndoTurnUsecase
+    @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
+    @Mock private lateinit var mockLogger: Logger
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockDone: (Long, Long) -> Unit
+
     private val mockTurns = emptyList<Pair<Long, Turn>>()
     private lateinit var expectedTurnRequest: StoreTurnRequest
+    private lateinit var expectedUndoRequest: UndoTurnRequest
     private lateinit var expectedTurnMeta: TurnMeta
     private lateinit var givenMarkFinishRequest: MarkGameAsFinishedRequest
 
@@ -65,8 +56,7 @@ class Play01UsecaseTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockMarkUc, mockLogger)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockLogger)
     }
 
     @Test
@@ -117,6 +107,12 @@ class Play01UsecaseTest {
     fun markGameAsFinished() {
         whenGameIsFinished()
         thenGameIsMarkedAsFinished()
+    }
+
+    @Test
+    fun `it should undo last turn`() {
+        whenUndoLastTurn()
+        thenUndoUsecaseIsExecuted()
     }
 
     private fun whenStoringTurn(turn: Turn) {
@@ -173,6 +169,10 @@ class Play01UsecaseTest {
         givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
         subject.markGameAsFinished(givenMarkFinishRequest)
     }
+    private fun whenUndoLastTurn() {
+        expectedUndoRequest = UndoTurnRequest(1)
+        subject.undoLastTurn(expectedUndoRequest, {}, {})
+    }
 
     private fun thenGameIsStarted() {
         verify(mockGame).start(2, teams)
@@ -192,6 +192,10 @@ class Play01UsecaseTest {
 
     private fun thenStatsAreStored() {
         verify(mockStatsUc).exec(any(), any(), any())
+    }
+
+    private fun thenUndoUsecaseIsExecuted() {
+        verify(mockUndo).exec(eq(expectedUndoRequest), any(), any())
     }
 
 }

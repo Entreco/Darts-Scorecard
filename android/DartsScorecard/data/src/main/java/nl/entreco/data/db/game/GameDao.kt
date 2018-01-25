@@ -17,6 +17,9 @@ interface GameDao {
     @Update
     fun updateGames(vararg games: GameTable)
 
+    @Update
+    fun undoFinish(vararg games: GameTable)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(game: GameTable): Long
 }

@@ -13,4 +13,7 @@ interface TurnRepository {
 
     @WorkerThread
     fun store(gameId: Long, playerId: Long, turn: Turn): Long
+
+    @WorkerThread
+    fun undo(gameId: Long): Int
 }

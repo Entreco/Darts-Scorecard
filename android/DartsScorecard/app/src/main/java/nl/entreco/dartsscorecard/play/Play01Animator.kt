@@ -1,12 +1,15 @@
 package nl.entreco.dartsscorecard.play
 
-import android.os.Handler
+import android.databinding.BindingAdapter
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.CoordinatorLayout
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import kotlin.math.max
 import kotlin.math.sqrt
@@ -88,15 +91,10 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         })
 
         expand()
-        Handler().postDelayed({ collapse() }, 100)
     }
 
     private fun expand() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    private fun collapse() {
-        behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
@@ -117,5 +115,23 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                 return true
             }
         })
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("loading")
+        fun showLoading(view: CoordinatorLayout, loading: Boolean) {
+            if(loading) {
+                val loadingView = LayoutInflater.from(view.context).inflate(R.layout.play_01_loading, view, false)
+                view.addView(loadingView)
+                loadingView.animate().alpha(1F).start()
+            } else {
+                val count = view.childCount - 1
+                val loadingView = view.getChildAt(count)
+                loadingView.animate().alpha(0F)
+                        .withEndAction { view.removeView(loadingView) }
+                        .start()
+            }
+        }
     }
 }

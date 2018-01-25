@@ -28,6 +28,7 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
         return gameDao.create(table)
     }
 
+    @WorkerThread
     override fun finish(id: Long) {
         val gameTable = gameDao.fetchBy(id)!!
         gameTable.finished = true
@@ -35,11 +36,21 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     }
 
     @WorkerThread
+    override fun undoFinish(id: Long) {
+        val gameTable = gameDao.fetchBy(id)!!
+        gameTable.finished = false
+        gameDao.undoFinish(gameTable)
+    }
+
+    @Throws
+    @WorkerThread
     override fun fetchBy(id: Long): Game {
-        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
+        val gameTable = gameDao.fetchBy(id)
+                ?: throw IllegalStateException("Game $id does not exist")
         return mapper.to(gameTable)
     }
 
+    @Throws
     @WorkerThread
     override fun fetchLatest(): FetchLatestGameResponse {
         val allUnfinishedGames = gameDao.fetchAll().filter { !it.finished }

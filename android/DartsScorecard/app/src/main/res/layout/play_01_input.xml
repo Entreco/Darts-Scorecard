@@ -201,6 +201,7 @@
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
                 app:accent="true"
+                android:onClick="@{() -> viewModel.onUndoPressed(listener)}"
                 app:hint="@string/undo" />
 
         </GridLayout>

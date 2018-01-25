@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
+import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
@@ -13,6 +14,8 @@ import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
+import nl.entreco.domain.play.stats.UndoTurnRequest
+import nl.entreco.domain.play.stats.UndoTurnResponse
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
@@ -21,10 +24,17 @@ import javax.inject.Inject
  */
 class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val gameListeners: Play01Listeners, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
+    val loading = ObservableBoolean(true)
     private lateinit var game: Game
+    private lateinit var request: Play01Request
+    private lateinit var load: GameLoadedNotifier<ScoreSettings>
+    private lateinit var loaders: Array<GameLoadedNotifier<Play01Response>>
 
     fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
-        playGameUsecase.loadGameAndStart(request,
+        this.request = request
+        this.load = load
+        this.loaders = arrayOf(*loaders)
+        this.playGameUsecase.loadGameAndStart(request,
                 { response ->
                     this.game = response.game
                     load.onLoaded(response.teams, game.scores, response.settings, this)
@@ -41,6 +51,25 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
         this.gameListeners.onLetsPlayDarts(game, listeners)
+        this.loading.set(false)
+    }
+
+    override fun onUndo() {
+        loading.set(true)
+        playGameUsecase.undoLastTurn(UndoTurnRequest(game.id), undoSuccess(), undoFailed())
+    }
+
+    private fun undoFailed(): (Throwable) -> Unit {
+        return { err ->
+            logger.w("Undo failed! -> $err")
+        }
+    }
+
+    private fun undoSuccess(): (UndoTurnResponse) -> Unit {
+        return {
+            logger.i("Undo done! -> go to Let's Play Darts Function")
+            load(request, load, *loaders)
+        }
     }
 
     override fun onDartThrown(turn: Turn, by: Player) {

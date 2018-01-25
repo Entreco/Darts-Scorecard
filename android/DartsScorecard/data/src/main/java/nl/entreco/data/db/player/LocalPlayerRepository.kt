@@ -27,11 +27,13 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTa
         return mapper.to(table)
     }
 
+    @WorkerThread
     override fun fetchByName(name: String): Player? {
         val table = playerDao.fetchByName(name) ?: return null
         return mapper.to(table)
     }
 
+    @WorkerThread
     override fun fetchAll(): List<Player> {
         val table = playerDao.fetchAll()
         return mapper.to(table)

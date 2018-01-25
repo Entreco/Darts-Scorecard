@@ -91,6 +91,11 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         submit(scored, listener)
     }
 
+    fun onUndoPressed(listener: InputListener){
+        listener.onUndo()
+        clearScoreInput()
+    }
+
     private fun submit(scored: Int, listener: InputListener, singles: Boolean = toggle.get()) {
         if (gameIsFinished()) return
 

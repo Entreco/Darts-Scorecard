@@ -43,7 +43,7 @@ class Play01Listeners @Inject constructor() {
     }
 
     fun onStatsUpdated(turnId: Long, metaId: Long) {
-        synchronized(statListeners){
+        synchronized(statListeners) {
             statListeners.forEach { it.onStatsChange(turnId, metaId) }
         }
     }
@@ -53,6 +53,7 @@ class Play01Listeners @Inject constructor() {
         notifyScoreChanged(scores, by)
         notifyNextPlayer(next)
     }
+
     private fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {

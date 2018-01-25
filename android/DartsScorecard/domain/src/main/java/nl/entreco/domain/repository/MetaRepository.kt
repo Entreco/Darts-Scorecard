@@ -9,5 +9,8 @@ import nl.entreco.domain.model.TurnMeta
 interface MetaRepository {
     @Throws
     @WorkerThread
-    fun create(turnId: Long, gameId: Long, stat: TurnMeta, atDouble: Int): Long
+    fun create(turnId: Long, gameId: Long, meta: TurnMeta, atDouble: Int): Long
+
+    @WorkerThread
+    fun undo(gameId: Long): Int
 }

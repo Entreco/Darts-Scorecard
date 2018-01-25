@@ -18,4 +18,7 @@ interface TurnDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(turn: TurnTable): Long
+
+    @Query("DELETE FROM Turn WHERE game = :gameId AND id = (SELECT MAX(id) FROM Turn)")
+    fun undoLast(gameId: Long): Int
 }

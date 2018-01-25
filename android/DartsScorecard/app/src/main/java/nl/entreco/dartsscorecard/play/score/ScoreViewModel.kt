@@ -30,7 +30,9 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: ScoreSettings, uiCallback: UiCallback?) {
         this.uiCallback.set(uiCallback)
         this.scoreSettings.set(info)
+        this.scores.clear()
         this.scores.addAll(scores)
+        this.teams.clear()
         this.teams.addAll(teams)
         this.numSets.set(info.numSets)
     }

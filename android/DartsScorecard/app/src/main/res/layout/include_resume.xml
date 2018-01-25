@@ -30,7 +30,7 @@
         style="@style/Input.Resume"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@{message}" />
+        android:text="@{safeUnbox(message)}" />
 
     <ImageView
         android:layout_width="wrap_content"

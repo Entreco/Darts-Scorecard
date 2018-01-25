@@ -22,7 +22,7 @@ class LocalStatRepositoryTest {
     @Mock private lateinit var mockMapper: StatMapper
     @Mock private lateinit var mockTurnDao: TurnDao
     @Mock private lateinit var mockMetaDao: MetaDao
-    private lateinit var subject : LocalStatRepository
+    private lateinit var subject: LocalStatRepository
 
     @Before
     fun setUp() {
@@ -32,7 +32,7 @@ class LocalStatRepositoryTest {
     private fun givenSubject() {
         whenever(mockDb.turnDao()).thenReturn(mockTurnDao)
         whenever(mockDb.metaDao()).thenReturn(mockMetaDao)
-        subject= LocalStatRepository(mockDb, mockMapper)
+        subject = LocalStatRepository(mockDb, mockMapper)
     }
 
     @Test
@@ -43,14 +43,9 @@ class LocalStatRepositoryTest {
         verify(mockMapper).to(anyList(), anyList())
     }
 
-    @Test(expected = NotImplementedError::class)
-    fun fetchAllForPlayer() {
-        subject.fetchAllForPlayer(4)
-    }
-
     @Test
     fun fetchStat() {
-        subject.fetchStat(12,14)
+        subject.fetchStat(12, 14)
         verify(mockTurnDao).fetchById(12)
         verify(mockMetaDao).fetchById(14)
     }

@@ -24,18 +24,19 @@ class MatchStatViewModel @Inject constructor(
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
     private lateinit var teams: Array<Team>
 
-    private fun initializeStats(teams: Array<Team>) {
-        this.teams = teams
-        teams.forEachIndexed { index, team ->
-            teamStats[index] = TeamStatModel(team)
-        }
-    }
-
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {
         initializeStats(teams)
         fetchGameStatsUsecase.exec(FetchGameStatsRequest(info.game.id, info.teamIds),
                 onStatsFetched(teams),
                 onStatsFailed())
+    }
+
+    private fun initializeStats(teams: Array<Team>) {
+        this.teamStats.clear()
+        this.teams = teams
+        teams.forEachIndexed { index, team ->
+            teamStats[index] = TeamStatModel(team)
+        }
     }
 
     private fun onStatsFetched(teams: Array<Team>): (FetchGameStatsResponse) -> Unit {
