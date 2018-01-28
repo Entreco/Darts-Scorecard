@@ -15,11 +15,7 @@ import javax.inject.Inject
 /**
  * Created by entreco on 11/01/2018.
  */
-class MatchStatViewModel @Inject constructor(
-        private val fetchGameStatsUsecase: FetchGameStatsUsecase,
-        private val fetchGameStatUsecase: FetchGameStatUsecase,
-        private val logger: Logger
-) : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
+class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: FetchGameStatsUsecase, private val fetchGameStatUsecase: FetchGameStatUsecase, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
 
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
     private lateinit var teams: Array<Team>

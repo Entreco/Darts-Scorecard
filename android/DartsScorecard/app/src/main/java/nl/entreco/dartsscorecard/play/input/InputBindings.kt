@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.input
 import android.databinding.BindingAdapter
 import android.support.design.widget.FloatingActionButton
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.play.listeners.events.BustEvent
@@ -52,6 +53,15 @@ abstract class InputBindings {
                     view.isActivated = false
                 }
             }
+        }
+
+
+        @JvmStatic
+        @BindingAdapter("ask4finish")
+        fun showAsk4Finish(view: View, shouldAsk: Boolean) {
+            view.visibility = if (shouldAsk) View.VISIBLE else View.GONE
+            view.pivotY = if (shouldAsk) 0F else view.height.toFloat()
+            view.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).scaleY(if (shouldAsk) 1F else 0F).start()
         }
 
 

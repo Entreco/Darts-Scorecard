@@ -34,6 +34,7 @@ class MetaMapperTest {
     @Test
     fun from() {
         val result = subject.from(givenGameId, givenTurnId, givenMeta, givenAtDouble)
+        assertEquals(0, result.id)
         assertEquals(givenTurnId, result.turnId)
         assertEquals(givenGameId, result.gameId)
         assertEquals(givenPlayerId, result.playerId)

@@ -97,4 +97,17 @@ class InputBindingsTest {
         verify(mockTextView).text = "yeah"
     }
 
+    @Test
+    fun showAsk4Finish_true() {
+        whenever(mockAnimator.setInterpolator(any())).thenReturn(mockAnimator)
+        InputBindings.showAsk4Finish(mockTextView, true)
+        verify(mockAnimator).scaleY(1F)
+    }
+
+    @Test
+    fun showAsk4Finish_false() {
+        whenever(mockAnimator.setInterpolator(any())).thenReturn(mockAnimator)
+        InputBindings.showAsk4Finish(mockTextView, false)
+        verify(mockAnimator).scaleY(0F)
+    }
 }

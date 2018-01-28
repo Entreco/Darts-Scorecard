@@ -9,6 +9,9 @@
     <string name="valid_player_characters" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 0123456789.@</string>
     <string name="score_180" translatable="false">180</string>
     <string name="nine_darts" translatable="false">9</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
     <string-array name="x01">
         <item>101</item>
         <item>201</item>

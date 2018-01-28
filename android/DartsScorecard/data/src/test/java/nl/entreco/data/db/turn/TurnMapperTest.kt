@@ -42,7 +42,9 @@ class TurnMapperTest {
     }
 
     private fun whenConvertingFromAndTo(turn: Turn) {
-        expectedTurn = subject.to(subject.from(gameId, playerId, turn))
+        val from = subject.from(gameId, playerId, turn)
+        assertEquals(0, from.id)
+        expectedTurn = subject.to(from)
         assertEquals("turn: $turn exp:$expectedTurn",turn, expectedTurn)
     }
 

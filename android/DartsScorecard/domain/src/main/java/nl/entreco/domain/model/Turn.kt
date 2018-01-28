@@ -67,4 +67,26 @@ data class Turn (internal val d1: Dart = Dart.NONE, internal val d2: Dart = Dart
     fun lastIsDouble(): Boolean {
         return last().isDouble()
     }
+
+    fun hasZeros(): Boolean{
+        return numZeros() > 0
+    }
+
+    fun numZeros(): Int{
+        var zeros = 0
+        if(d1 == Dart.ZERO) zeros++
+        if(d2 == Dart.ZERO) zeros++
+        if(d3 == Dart.ZERO) zeros++
+        return zeros
+    }
+
+    fun setDartsUsedForFinish(used: Int) : Turn{
+        if(dartsUsed() - numZeros() > used) throw IllegalStateException("Darts Mismatch! used darts($used), but thrown $d1, $d2, $d3")
+        return when(used) {
+            1 -> Turn(d3)
+            2 -> Turn(d1, d3)
+            3 -> Turn(d1, d2, d3)
+            else -> throw IllegalStateException("Darts Mismatch! used darts($used), but thrown $d1, $d2, $d3")
+        }
+    }
 }
