@@ -18,11 +18,11 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
     }
 
     fun get(): Int {
-        return prefs.getInt("curStyle", Style.PDC.style)
+        return prefs.getInt("curStyle", Style.PDC_2018.style)
     }
 
     fun switch() {
-        val curStyle = prefs.getInt("curStyle", Style.PDC.style)
+        val curStyle = prefs.getInt("curStyle", Style.PDC_2018.style)
         prefs.edit().putInt("curStyle", swap(curStyle)).apply()
         activity.recreate()
     }
