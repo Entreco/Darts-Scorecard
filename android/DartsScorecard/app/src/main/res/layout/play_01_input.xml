@@ -263,7 +263,8 @@
             android:elevation="120dp"
             android:orientation="vertical"
             android:animateLayoutChanges="true"
-            app:ask4finish="@{viewModel.finalTurn != null}">
+            app:ask4finish="@{viewModel.finalTurn != null}"
+            fab:visibility="gone">
 
             <TextView
                 style="@style/Input.Score"
