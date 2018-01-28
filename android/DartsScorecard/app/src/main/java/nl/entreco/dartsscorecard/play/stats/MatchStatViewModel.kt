@@ -33,14 +33,14 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
 
     fun onTeamStat0Selected(adapter: AdapterView<*>, index: Int){
         val resolved = adapter.getItemAtPosition(index).toString()
-        val selected = teams.indexOfFirst { it.toString() == resolved }
+        val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team0.set(teamStats[selected])
         team0Index.set(selected)
     }
 
     fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int){
         val resolved = adapter.getItemAtPosition(index).toString()
-        val selected = teams.indexOfFirst { it.toString() == resolved }
+        val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team1.set(teamStats[selected])
         team1Index.set(selected)
     }
@@ -54,7 +54,9 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
 
     private fun initializeStats(teams: Array<Team>) {
         this.teamStats.clear()
+        this.teamEntries.clear()
         this.teams = teams
+
         teams.forEachIndexed { index, team ->
             teamStats[index] = TeamStatModel(team)
         }
