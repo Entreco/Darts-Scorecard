@@ -10,8 +10,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -262,9 +261,11 @@ class MatchStatViewModelTest {
 
     private fun thenTeam0IndexIs(index: Int) {
         assertEquals(index, subject.team0Index.get())
+        assertTrue(index in 0 until givenTeams.size)
     }
 
     private fun thenTeam1IndexIs(index: Int) {
         assertEquals(index, subject.team1Index.get())
+        assertTrue(index in 0 until givenTeams.size)
     }
 }
