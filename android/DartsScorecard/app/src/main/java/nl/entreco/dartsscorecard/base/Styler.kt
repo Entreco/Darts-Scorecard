@@ -13,6 +13,7 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
 
     enum class Style(@StyleRes val style: Int) {
         PDC_2018(R.style.Pdc_2018),
+        BDO_2018(R.style.Bdo_2018),
         BDO(R.style.Bdo),
         PDC(R.style.Pdc);
     }
@@ -29,7 +30,8 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
 
     private fun swap(style: Int): Int {
         return when (style) {
-            R.style.Pdc_2018 -> Style.BDO.style
+            R.style.Pdc_2018 -> Style.BDO_2018.style
+            R.style.Bdo_2018 -> Style.BDO.style
             R.style.Bdo -> Style.PDC.style
             else -> Style.PDC_2018.style
         }

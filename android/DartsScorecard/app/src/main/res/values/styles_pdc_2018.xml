@@ -12,13 +12,14 @@
     <color name="pdc_2018_black_dark">#13120E</color>
 
     <style name="Pdc_2018" parent="AppTheme">
+        <item name="gradient_angle">270</item>
         <item name="match_description">@string/pdc_match</item>
         <item name="colorAccent">@color/pdc_2018_green_dark</item>
         <item name="highlightColor">#22FFFFFF</item>
         <item name="statBorderColor">@android:color/transparent</item>
         <item name="colorOneEighty">@color/pdc_2018_yellow</item>
         <item name="colorNineDart">@color/black</item>
-        <item name="launchText">@color/black</item>
+        <item name="launchText">@color/white</item>
         <item name="nameText">@color/black</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/white</item>
@@ -27,6 +28,8 @@
         <item name="inputToggle">@color/pdc_2018_green_dark</item>
         <item name="grad_score_header_start">@color/pdc_2018_black_light</item>
         <item name="grad_score_header_stop">@color/pdc_2018_black_dark</item>
+        <item name="grad_score_footer_start">@color/pdc_2018_black_light</item>
+        <item name="grad_score_footer_stop">@color/pdc_2018_black_dark</item>
         <item name="grad_score_name_start">@color/pdc_2018_white_light</item>
         <item name="grad_score_name_stop">@color/pdc_2018_white_dark</item>
         <item name="grad_score_start">@color/pdc_2018_green_dark</item>
