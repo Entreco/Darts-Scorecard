@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.stats
 
+import android.widget.AdapterView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
@@ -26,6 +27,7 @@ class MatchStatViewModelTest {
     @Mock private lateinit var mockFetchGameStatUsecase: FetchGameStatUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockAdapterView: AdapterView<*>
     @Mock private lateinit var mockResponse: Play01Response
     private lateinit var subject: MatchStatViewModel
     private var givenGameId: Long = 1003
@@ -33,7 +35,7 @@ class MatchStatViewModelTest {
     private var givenTeams: Array<Team> = emptyArray()
     private var givenScores: Array<Score> = emptyArray()
     private var givenExistingStats: Map<Long, Stat> = emptyMap()
-    private var givenUpdatedStat: Stat = Stat(1,2,3,4,5,6,7,8,9, emptyList(), emptyList())
+    private var givenUpdatedStat: Stat = Stat(1, 2, 3, 4, 5, 6, 7, 8, 9, emptyList(), emptyList())
 
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchGameStatResponse) -> Unit>()
@@ -102,7 +104,7 @@ class MatchStatViewModelTest {
     fun `it should update stats, when stat fetch succeeds`() {
         givenTeams("1", "2")
         givenSubjectLoaded()
-        givenUpdatedStat(1,180)
+        givenUpdatedStat(1, 180)
         whenStatsChangeSucceeds()
         thenTeamStat180IsEmpty(0)
     }
@@ -112,6 +114,36 @@ class MatchStatViewModelTest {
         givenSubjectLoaded()
         whenStatsChangeFails(RuntimeException("do'h"))
         thenErrorIsLogged()
+    }
+
+    @Test
+    fun `it should update team0 when selected`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat0Selected(1)
+        thenTeam0IndexIs(1)
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun `it should NOT update team0 when invalid index selected`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat0Selected(-1)
+    }
+
+    @Test
+    fun `it should update team1 when selected`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat1Selected(1)
+        thenTeam1IndexIs(1)
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun `it should NOT update team1 when invalid index selected`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat0Selected(1000)
     }
 
     private fun givenSubjectLoaded() {
@@ -139,7 +171,7 @@ class MatchStatViewModelTest {
         givenExistingStats = existing
     }
 
-    private fun givenUpdatedStat(playerId: Long, value: Int){
+    private fun givenUpdatedStat(playerId: Long, value: Int) {
         givenUpdatedStat = givenUpdatedStat.copy(playerId = playerId, n180 = value)
     }
 
@@ -156,12 +188,12 @@ class MatchStatViewModelTest {
     }
 
     private fun whenStatsChange() {
-        subject.onStatsChange(1,2)
+        subject.onStatsChange(1, 2)
     }
 
     private fun whenStatsChangeSucceeds() {
-        val turnId : Long = 1
-        val metaId : Long = 20000
+        val turnId: Long = 1
+        val metaId: Long = 20000
         val req = FetchGameStatRequest(turnId, metaId)
         val response = FetchGameStatResponse(givenUpdatedStat)
         subject.onStatsChange(turnId, metaId)
@@ -170,12 +202,26 @@ class MatchStatViewModelTest {
     }
 
     private fun whenStatsChangeFails(err: Throwable) {
-        subject.onStatsChange(8,9)
+        subject.onStatsChange(8, 9)
         verify(mockFetchGameStatUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
 
-    private fun thenStatIsFetched(){
+    private fun whenTeamStat0Selected(index: Int) {
+        if (index in 0 until givenTeams.size) {
+            whenever(mockAdapterView.getItemAtPosition(index)).thenReturn(givenTeams[index].toString())
+        } else {
+            whenever(mockAdapterView.getItemAtPosition(index)).thenReturn(null)
+        }
+        subject.onTeamStat0Selected(mockAdapterView, index)
+    }
+
+    private fun whenTeamStat1Selected(index: Int) {
+        whenever(mockAdapterView.getItemAtPosition(index)).thenReturn(givenTeams[index].toString())
+        subject.onTeamStat1Selected(mockAdapterView, index)
+    }
+
+    private fun thenStatIsFetched() {
         verify(mockFetchGameStatUsecase).exec(any(), any(), any())
     }
 
@@ -212,5 +258,13 @@ class MatchStatViewModelTest {
 
     private fun thenTeamStat180IsEmpty(index: Int) {
         assertEquals("--", subject.teamStats[index]?.n180?.get())
+    }
+
+    private fun thenTeam0IndexIs(index: Int) {
+        assertEquals(index, subject.team0Index.get())
+    }
+
+    private fun thenTeam1IndexIs(index: Int) {
+        assertEquals(index, subject.team1Index.get())
     }
 }
