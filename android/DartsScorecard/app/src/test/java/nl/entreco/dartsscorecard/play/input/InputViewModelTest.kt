@@ -13,8 +13,7 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -272,6 +271,26 @@ class InputViewModelTest {
         assertEquals("should be: 'to throw first'", R.string.to_throw_first, subject.nextDescription.get())
     }
 
+    @Test
+    fun `it should ask for finish if not in singles mode`() {
+        givenPlayer("1", 30, State.NORMAL)
+        givenSingleMode(true)
+        whenPressingSubmit(0)
+        whenPressingSubmit(0)
+        whenPressingSubmit(30)
+        thenFinalTurnIsStillEmpty()
+    }
+
+    @Test
+    fun `it should NOT ask for finish when in finish mode`() {
+        givenPlayer("1", 30, State.NORMAL)
+        givenSingleMode(false)
+        whenPressingSubmit(0)
+        whenPressingSubmit(0)
+        whenPressingSubmit(30)
+        thenFinalTurnIsSet()
+    }
+
     private fun givenPlayer(playerName: String, pts: Int = 501, state: State = State.NORMAL) {
         givenPlayer = Player(playerName)
         givenRequiredScore = Score(pts, 0, 0)
@@ -342,5 +361,11 @@ class InputViewModelTest {
 
     private fun thenRequiredIs(required: Int) {
         assertEquals(required, subject.required.get().score)
+    }
+    private fun thenFinalTurnIsStillEmpty() {
+        assertNull(subject.finalTurn.get())
+    }
+    private fun thenFinalTurnIsSet() {
+        assertNotNull(subject.finalTurn.get())
     }
 }
