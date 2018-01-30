@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.launch
 import android.content.Context
 import android.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
@@ -26,6 +27,10 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
         if (request != null) {
             Play01Activity.startGame(context, request)
         }
+    }
+
+    fun onBetaPressed(context: Context) {
+        BetaActivity.launch(context)
     }
 
     fun retrieveLatestGame() {

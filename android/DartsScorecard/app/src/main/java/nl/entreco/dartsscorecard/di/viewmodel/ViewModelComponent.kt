@@ -1,7 +1,8 @@
 package nl.entreco.dartsscorecard.di.viewmodel
 
-import android.app.Activity
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.di.beta.BetaComponent
+import nl.entreco.dartsscorecard.di.beta.BetaModule
 import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.dartsscorecard.di.play.Play01Component
@@ -21,10 +22,10 @@ import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
     (GameDbModule::class), (PlayerDbModule::class), (TurnDbModule::class),
     (MetaDbModule::class), (StatDbModule::class)])
 interface ViewModelComponent {
-    fun inject(activity: Activity)
 
     // Where can this be used
     fun plus(module: LaunchModule): LaunchComponent
+    fun plus(module: BetaModule): BetaComponent
     fun plus(module: Setup01Module): Setup01Component
     fun plus(module: EditPlayerModule): EditPlayerComponent
     fun plus(module: Play01Module): Play01Component

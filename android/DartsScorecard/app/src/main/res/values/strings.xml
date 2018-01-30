@@ -20,6 +20,12 @@
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
     <string name="title_setup">Configure 01 Game</string>
+    <string name="title_beta">Beta Features</string>
+
+    <!-- Launch -->
+    <string name="resume_x01">@string/resume</string>
+    <string name="play_x01">Start new 01</string>
+    <string name="beta">Beta</string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>

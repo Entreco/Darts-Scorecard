@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_margin="@dimen/def"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:background="@color/bdo_red_dark"
+            android:src="@drawable/crowd"
+            android:scaleType="centerCrop"
+            android:layout_height="140dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@drawable/beta_gradient"/>
+
+        <TextView
+            android:layout_above="@id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="16dp"
+            android:textSize="14sp"
+            android:text="DONATE"/>
+
+        <TextView
+            android:layout_above="@id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="7k / 10k"/>
+
+        <FrameLayout
+            android:layout_alignBottom="@id/preview"
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/bdo_gray_light"
+            android:layout_height="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/pdc_green_light"
+            android:transformPivotX="0dp"
+            android:scaleX="0.78"
+            android:layout_height="4dp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_below="@id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="roboto"
+            android:padding="16dp"
+            android:textSize="30sp"
+            android:text="Cast to TV"/>
+
+    </RelativeLayout>
+</layout>

@@ -21,6 +21,9 @@
         </activity>
         <activity android:name=".launch.LaunchActivity" />
         <activity
+            android:name=".beta.BetaActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
             android:name=".setup.Setup01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
