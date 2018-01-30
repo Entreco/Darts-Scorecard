@@ -141,7 +141,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     }
 
     private fun askForDartsAtFinish(turn: Turn, score: Score?, listener: InputListener) {
-        if (turn.total() == score?.score && turn.hasZeros()) {
+        if (turn.total() == score?.score && turn.hasZeros() && !toggle.get()) {
             finalTurn.set(turn)
         } else {
             done(turn, listener)

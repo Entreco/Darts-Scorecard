@@ -25,6 +25,7 @@ import javax.inject.Inject
 class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase, private val gameListeners: Play01Listeners, private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
+    val finished = ObservableBoolean(false)
     private lateinit var game: Game
     private lateinit var request: Play01Request
     private lateinit var load: GameLoadedNotifier<ScoreSettings>
@@ -52,6 +53,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
         this.gameListeners.onLetsPlayDarts(game, listeners)
         this.loading.set(false)
+        this.finished.set(false)
     }
 
     override fun onUndo() {
@@ -104,7 +106,9 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     private fun handleGameFinished(next: Next, gameId: Long) {
-        if (next.state == State.MATCH) {
+        val gameFinished = next.state == State.MATCH
+        finished.set(gameFinished)
+        if (gameFinished) {
             playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
         }
     }

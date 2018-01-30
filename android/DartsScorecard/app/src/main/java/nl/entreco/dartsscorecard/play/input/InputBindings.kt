@@ -60,7 +60,7 @@ abstract class InputBindings {
         @BindingAdapter("ask4finish")
         fun showAsk4Finish(view: View, shouldAsk: Boolean) {
             view.visibility = if (shouldAsk) View.VISIBLE else View.GONE
-            view.pivotY = if (shouldAsk) 0F else view.height.toFloat()
+            view.pivotY = view.height.toFloat()
             view.animate().setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).scaleY(if (shouldAsk) 1F else 0F).start()
         }
 
