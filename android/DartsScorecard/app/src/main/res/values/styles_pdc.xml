@@ -11,6 +11,7 @@
     <color name="pdc_black_dark">#010000</color>
 
     <style name="Pdc" parent="AppTheme">
+        <item name="gradient_angle">270</item>
         <item name="match_description">@string/pdc_match</item>
         <item name="colorAccent">@color/pdc_green_light</item>
         <item name="highlightColor">#EEEEEE</item>
@@ -26,6 +27,8 @@
         <item name="inputToggle">@color/pdc_red_dark</item>
         <item name="grad_score_header_start">@color/pdc_black_light</item>
         <item name="grad_score_header_stop">@color/pdc_black_dark</item>
+        <item name="grad_score_footer_start">@color/pdc_black_light</item>
+        <item name="grad_score_footer_stop">@color/pdc_black_dark</item>
         <item name="grad_score_name_start">@color/pdc_white_light</item>
         <item name="grad_score_name_stop">@color/pdc_white_dark</item>
         <item name="grad_score_start">@color/pdc_red_dark</item>

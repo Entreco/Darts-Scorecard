@@ -29,7 +29,7 @@
     </style>
 
     <style name="Main.Player">
-        <item name="android:background">@drawable/stat_player</item>
+        <item name="android:background">@drawable/spinner_player</item>
         <item name="android:padding">@dimen/xsmall</item>
         <item name="android:paddingStart">@dimen/def</item>
         <item name="android:paddingEnd">@dimen/def</item>

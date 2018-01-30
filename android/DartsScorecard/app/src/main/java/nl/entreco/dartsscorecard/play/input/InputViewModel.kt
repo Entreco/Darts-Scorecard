@@ -32,6 +32,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     val hintProvider = ObservableField<HintKeyProvider>(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
     val required = ObservableField<Score>()
+    val finalTurn = ObservableField<Turn?>()
     val dartsLeft = ObservableInt()
     val resumeDescription = ObservableInt(R.string.game_on)
 
@@ -64,7 +65,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         scoredTxt.set(scoredTxt.get().dropLast(1))
     }
 
-    fun clear() : Boolean {
+    fun clear(): Boolean {
         scoredTxt.set("")
         return true
     }
@@ -91,7 +92,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         submit(scored, listener)
     }
 
-    fun onUndoPressed(listener: InputListener){
+    fun onUndoPressed(listener: InputListener) {
         listener.onUndo()
         clearScoreInput()
     }
@@ -136,10 +137,27 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     }
 
     private fun submitScore(turn: Turn, listener: InputListener) {
-        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
+        askForDartsAtFinish(turn, required.get(), listener)
+    }
 
+    private fun askForDartsAtFinish(turn: Turn, score: Score?, listener: InputListener) {
+        if (turn.total() == score?.score && turn.hasZeros()) {
+            finalTurn.set(turn)
+        } else {
+            done(turn, listener)
+        }
+    }
+
+    fun onFinishWith(dartsUsed: Int, listener: InputListener) {
+        val turn = finalTurn.get()?.setDartsUsedForFinish(dartsUsed)!!
+        done(turn, listener)
+    }
+
+    private fun done(turn: Turn, listener: InputListener) {
+        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
         this.scoredTxt.set(turn.total().toString())
         this.analytics.trackAchievement("scored: $turn")
+        clearScoreInput()
     }
 
     private fun clearScoreInput() {
@@ -156,6 +174,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         nextDescription.set(descriptionFromNext(next))
         resumeDescription.set(resumeDescriptionFromNext(next))
         current.set(next.player)
+        finalTurn.set(null)
         turn = Turn()
         dartsLeft.set(turn.dartsLeft())
     }

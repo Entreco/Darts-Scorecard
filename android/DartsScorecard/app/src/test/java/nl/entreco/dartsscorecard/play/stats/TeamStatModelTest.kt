@@ -20,6 +20,11 @@ class TeamStatModelTest {
     private lateinit var subject: TeamStatModel
 
     @Test
+    fun `empty should be double dashes`() {
+        assertEquals("--", TeamStatModel.empty)
+    }
+
+    @Test
     fun `it should update stats at the start`() {
         subject = TeamStatModel(mockTeam, mutableListOf(Stat(1,2,3,4,5, 6, 15, 5, 9, listOf(10), listOf(11))))
         thenStatsAre("2.00", "4", "5", "6", "11", "33.33%", "9")

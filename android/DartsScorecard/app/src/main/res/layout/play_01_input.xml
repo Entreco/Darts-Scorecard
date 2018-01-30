@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/tools"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:fab="http://schemas.android.com/tools">
 
     <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <import
+            alias="Dart"
+            type="nl.entreco.domain.model.Dart" />
 
         <variable
             name="viewModel"
@@ -105,7 +112,7 @@
 
                 <include
                     layout="@layout/include_resume"
-                    app:message="@{viewModel.resumeDescription}"/>
+                    app:message="@{viewModel.resumeDescription}" />
             </FrameLayout>
 
         </RelativeLayout>
@@ -200,8 +207,8 @@
 
             <nl.entreco.dartsscorecard.play.input.InputWidget
                 style="@style/InputNumber"
-                app:accent="true"
                 android:onClick="@{() -> viewModel.onUndoPressed(listener)}"
+                app:accent="true"
                 app:hint="@string/undo" />
 
         </GridLayout>
@@ -222,8 +229,7 @@
                 style="@style/Input.Mini"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}"
-                tools:text="hoi" />
+                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/input_toggle"
@@ -249,6 +255,61 @@
             app:numDarts="@{viewModel.dartsLeft}"
             fab:fabSize="normal"
             fab:useCompatPadding="true" />
+
+        <!-- Ask 4 Finish -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/panel"
+            android:elevation="120dp"
+            android:orientation="vertical"
+            android:padding="@dimen/def"
+            app:ask4finish="@{viewModel.finalTurn != null}">
+
+            <TextView
+                style="@style/Input.Score"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/score_header"
+                android:gravity="center"
+                android:text="@string/darts_used"
+                android:textSize="18sp" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="@{viewModel.finalTurn.first() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.first() == Dart.ZERO}"
+                android:onClick="@{() -> viewModel.onFinishWith(1, listener)}"
+                android:text="@string/one" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="@{viewModel.finalTurn.second() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.second() == Dart.ZERO}"
+                android:onClick="@{() -> viewModel.onFinishWith(2, listener)}"
+                android:text="@string/two" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onFinishWith(3, listener)}"
+                android:text="@string/three" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>

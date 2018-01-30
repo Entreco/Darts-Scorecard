@@ -1,6 +1,6 @@
 package nl.entreco.domain.model
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 
 /**
@@ -148,5 +148,21 @@ class TurnTest {
         assertEquals("10 T20 D15", Turn(Dart.SINGLE_10, Dart.TRIPLE_20, Dart.DOUBLE_15).asFinish())
         assertEquals("BULL", Turn(Dart.BULL).asFinish())
         assertEquals("S.BULL BULL", Turn(Dart.SINGLE_BULL, Dart.BULL).asFinish())
+    }
+
+
+    @Test
+    fun `it should return false for turns without zeros`() {
+        assertTrue(Turn(Dart.ZERO).hasZeros())
+        assertTrue(Turn(Dart.ZERO, Dart.DOUBLE_1).hasZeros())
+        assertTrue(Turn(Dart.ZERO, Dart.DOUBLE_1, Dart.SINGLE_2).hasZeros())
+    }
+
+    @Test
+    fun `it should return true for turns with zeros`() {
+        assertFalse(Turn().hasZeros())
+        assertFalse(Turn(Dart.DOUBLE_1).hasZeros())
+        assertFalse(Turn(Dart.DOUBLE_1, Dart.SINGLE_2).hasZeros())
+        assertFalse(Turn(Dart.DOUBLE_1, Dart.SINGLE_14, Dart.SINGLE_3).hasZeros())
     }
 }

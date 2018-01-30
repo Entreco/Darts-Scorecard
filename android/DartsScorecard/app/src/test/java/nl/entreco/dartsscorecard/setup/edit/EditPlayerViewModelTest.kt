@@ -1,9 +1,11 @@
 package nl.entreco.dartsscorecard.setup.edit
 
+import android.content.Context
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.setup.players.CreatePlayerResponse
 import nl.entreco.domain.setup.players.CreatePlayerUsecase
 import nl.entreco.domain.setup.players.FetchExistingPlayersResponse
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
@@ -23,8 +25,11 @@ class EditPlayerViewModelTest {
     @Mock private lateinit var mockCreateUsecase: CreatePlayerUsecase
     @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
     @Mock private lateinit var mockView: TextView
+    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockNavigator: EditPlayerNavigator
+    @Mock private lateinit var mockPlayer: Player
     private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
+    private val createDoneCaptor = argumentCaptor<(CreatePlayerResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
     private lateinit var subject: EditPlayerViewModel
     private lateinit var expectedPlayers: MutableList<Player>
@@ -91,6 +96,15 @@ class EditPlayerViewModelTest {
     }
 
     @Test
+    fun `it should add Players whos name contains substring`() {
+        givenExistingPlayers("Piet", "Heintje", "Coco")
+        givenSubject("Player 1")
+        whenFetchingSucceeds()
+        whenTypingLetters("t")
+        thenFilteredPlayersContains("Piet", "Heintje")
+    }
+
+    @Test
     fun `it should create player when 'Done'`() {
         givenExistingPlayers("Remco", "EmReCo", "Re")
         givenSubject("Player 1")
@@ -98,8 +112,28 @@ class EditPlayerViewModelTest {
         thenPlayerIsCreated()
     }
 
+
     @Test
-    fun `it should NOT create player if it already exists when 'Done'`() {
+    fun `it should navigate when player created succeeds`() {
+        givenExistingPlayers("Remco", "EmReCo", "Re")
+        givenSubject("Player 1")
+        whenPressingImeAction("Henk", EditorInfo.IME_ACTION_DONE)
+        whenPlayerIsCreated()
+        thenNavigateWithSelectedPlayer()
+    }
+
+    @Test(expected = NullPointerException::class) // Meaning Toast.makeText( is called)
+    fun `it should NOT navigate when player creation fails`() {
+        whenever(mockView.context).thenReturn(mockContext)
+        givenExistingPlayers("Remco", "EmReCo", "Re")
+        givenSubject("Player 1")
+        whenPressingImeAction("Willem", EditorInfo.IME_ACTION_DONE)
+        whenPlayerIsNotCreated(RuntimeException("Unable to create Player"))
+        thenNotNavigateWithSelectedPlayer()
+    }
+
+    @Test
+    fun `it should NOT create player if it already exists when 'Done' pressed`() {
         givenExistingPlayers("plaYer 1")
         givenSubject("Player 1")
         whenFetchingSucceeds()
@@ -108,7 +142,7 @@ class EditPlayerViewModelTest {
     }
 
     @Test
-    fun `it should NOT create player when 'Go'`() {
+    fun `it should NOT create player when 'Go' pressed`() {
         givenExistingPlayers("Remco", "EmReCo", "Re")
         givenSubject("Player 1")
         whenPressingImeAction("Willem", EditorInfo.IME_ACTION_GO)
@@ -156,12 +190,30 @@ class EditPlayerViewModelTest {
         assertEquals(players.size, subject.filteredPlayers.size)
     }
 
+    private fun whenPlayerIsCreated() {
+        verify(mockCreateUsecase).exec(any(), createDoneCaptor.capture(), any())
+        createDoneCaptor.lastValue.invoke(CreatePlayerResponse(mockPlayer))
+    }
+
+    private fun whenPlayerIsNotCreated(err: Throwable) {
+        verify(mockCreateUsecase).exec(any(), any(), failCaptor.capture())
+        failCaptor.lastValue.invoke(err)
+    }
+
     private fun thenPlayerIsCreated() {
         verify(mockCreateUsecase).exec(any(), any(), any())
     }
 
     private fun thenPlayerIsNotCreated() {
         verifyZeroInteractions(mockCreateUsecase)
+    }
+
+    private fun thenNavigateWithSelectedPlayer() {
+        verify(mockNavigator).onSelected(any())
+    }
+
+    private fun thenNotNavigateWithSelectedPlayer() {
+        verifyZeroInteractions(mockNavigator)
     }
 
 }
