@@ -33,7 +33,9 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:loading="@{viewModel.loading}">
+        app:loading="@{viewModel.loading}"
+        app:animator="@{animator}"
+        app:finished="@{viewModel.finished}">
 
         <ImageView
             android:layout_width="match_parent"

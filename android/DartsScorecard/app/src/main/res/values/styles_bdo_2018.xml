@@ -6,9 +6,12 @@
     <color name="bdo_2018_gray_light">#383A38</color>
     <color name="bdo_2018_gray_dark">#010000</color>
     <color name="bdo_2018_red">#C90040</color>
+    <color name="bdo_2018_red_dark">#700319</color>
     <color name="bdo_2018_header">#D0D3D1</color>
 
     <style name="Bdo_2018" parent="AppTheme">
+        <item name="colorPrimary">@color/bdo_2018_red</item>
+        <item name="colorPrimaryDark">@color/bdo_2018_red_dark</item>
         <item name="gradient_angle">0</item>
         <item name="match_description">@string/bdo_match</item>
         <item name="colorAccent">@color/bdo_2018_red</item>
