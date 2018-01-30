@@ -60,7 +60,7 @@ class StylerTest {
     fun `it should swap to BDO style`() {
         givenStyle(Styler.Style.PDC_2018.style)
         val actualStyle = whenSwapping()
-        assertEquals(R.style.Bdo, actualStyle)
+        assertEquals(R.style.Bdo_2018, actualStyle)
     }
 
     @Test
