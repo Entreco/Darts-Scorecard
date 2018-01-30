@@ -9,6 +9,7 @@
     <color name="bdo_red_dark">#760A10</color>
 
     <style name="Bdo" parent="AppTheme">
+        <item name="gradient_angle">270</item>
         <item name="match_description">@string/bdo_match</item>
         <item name="colorAccent">@color/bdo_red_dark</item>
         <item name="highlightColor">@color/white</item>
@@ -24,6 +25,8 @@
         <item name="inputToggle">@color/bdo_yellow_accent</item>
         <item name="grad_score_header_start">@color/bdo_yellow_light</item>
         <item name="grad_score_header_stop">@color/bdo_yellow_dark</item>
+        <item name="grad_score_footer_start">@color/bdo_yellow_light</item>
+        <item name="grad_score_footer_stop">@color/bdo_yellow_dark</item>
         <item name="grad_score_name_start">@color/bdo_gray_light</item>
         <item name="grad_score_name_stop">@color/bdo_gray_dark</item>
         <item name="grad_score_start">@color/bdo_gray_light</item>

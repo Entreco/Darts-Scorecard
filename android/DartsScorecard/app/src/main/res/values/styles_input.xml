@@ -56,6 +56,19 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="InputAsk4Darts" parent="@android:style/Widget.Material.Light.Button.Borderless">
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/xsmall</item>
+        <item name="android:minWidth">0dip</item>
+        <item name="android:minHeight">0dip</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@drawable/input_number</item>
+    </style>
+
     <style name="InputNumberHint">
         <item name="android:alpha">.5</item>
         <item name="android:textColor">?attr/nameText</item>

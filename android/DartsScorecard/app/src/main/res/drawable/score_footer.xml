@@ -3,9 +3,9 @@
     <item>
         <shape>
             <gradient
-                android:angle="-90"
-                android:endColor="?attr/grad_score_header_stop"
-                android:startColor="?attr/grad_score_header_start" />
+                android:angle="?attr/gradient_angle"
+                android:endColor="?attr/grad_score_footer_stop"
+                android:startColor="?attr/grad_score_footer_start" />
             <corners android:bottomLeftRadius="@dimen/def" android:bottomRightRadius="@dimen/def" />
         </shape>
     </item>

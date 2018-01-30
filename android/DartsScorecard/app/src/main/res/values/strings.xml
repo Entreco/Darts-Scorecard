@@ -43,6 +43,9 @@
     <string name="game_on">Game on</string>
     <string name="game_shot_and_match">Game shot, and the match</string>
 
+    <!-- Input -->
+    <string name="darts_used">How many darts did you use?</string>
+
     <!-- Match Stats -->
     <string name="match_stats">Match Statistics</string>
     <string name="live_breaks_made">Breaks Made</string>

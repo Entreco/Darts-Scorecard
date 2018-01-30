@@ -64,14 +64,27 @@
                 android:layout_below="@id/players"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/name1"
-                    style="@style/Main.Player"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center|end"
-                    android:text="@{viewModel.teamStats[0].name}" />
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/name1"
+                        style="@style/Main.Player"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center|end"
+                        android:text="@{viewModel.team0.name}" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0"
+                        android:entries="@{viewModel.teamEntries}"
+                        android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onTeamStat0Selected(adapter,index)}"
+                        android:selectedItemPosition="@={viewModel.team0Index}"  />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/score"
@@ -79,16 +92,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/vs"
-                    tools:text="VS"/>
+                    tools:text="VS" />
 
-                <TextView
-                    android:id="@+id/name2"
-                    style="@style/Main.Player"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center|start"
-                    android:text="@{viewModel.teamStats[1].name}" />
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/name2"
+                        style="@style/Main.Player"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center|start"
+                        android:text="@{viewModel.team1.name}" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0"
+                        android:entries="@{viewModel.teamEntries}"
+                        android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onTeamStat1Selected(adapter,index)}"
+                        android:selectedItemPosition="@={viewModel.team1Index}" />
+                </FrameLayout>
             </LinearLayout>
 
             <!-- Stats -->
@@ -103,7 +129,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].breaks.toString()}" />
+                    android:text="@{viewModel.team0.breaks.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -116,7 +142,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].breaks.toString()}" />
+                    android:text="@{viewModel.team1.breaks.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,7 +156,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].co.toString()}"  />
+                    android:text="@{viewModel.team0.co.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -143,7 +169,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].co.toString()}"  />
+                    android:text="@{viewModel.team1.co.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +183,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].hCo.toString()}" />
+                    android:text="@{viewModel.team0.hCo.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -170,7 +196,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].hCo.toString()}" />
+                    android:text="@{viewModel.team1.hCo.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -184,7 +210,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].n180.toString()}" />
+                    android:text="@{viewModel.team0.n180.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -198,7 +224,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].n180.toString()}" />
+                    android:text="@{viewModel.team1.n180.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -212,7 +238,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].n140.toString()}" />
+                    android:text="@{viewModel.team0.n140.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -225,7 +251,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].n140.toString()}" />
+                    android:text="@{viewModel.team1.n140.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -239,7 +265,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].n100.toString()}" />
+                    android:text="@{viewModel.team0.n100.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -252,7 +278,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].n100.toString()}" />
+                    android:text="@{viewModel.team1.n100.toString()}" />
             </LinearLayout>
 
             <LinearLayout
@@ -266,7 +292,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[0].avg.toString()}" />
+                    android:text="@{viewModel.team0.avg.toString()}" />
 
                 <TextView
                     style="@style/Main.Stat"
@@ -279,7 +305,7 @@
                     style="@style/Main.Value"
                     android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.teamStats[1].avg.toString()}" />
+                    android:text="@{viewModel.team1.avg.toString()}" />
             </LinearLayout>
 
             <TextView
