@@ -93,8 +93,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         expand()
     }
 
-    private fun expand() {
+    internal fun expand() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    internal fun collapse(){
+        behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
@@ -131,6 +135,14 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                 loadingView.animate().alpha(0F)
                         .withEndAction { view.removeView(loadingView) }
                         .start()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("finished", "animator")
+        fun showGameFinished(view: CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
+            if(finished){
+                animator?.collapse()
             }
         }
     }
