@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.R
@@ -24,6 +25,7 @@ class BetaActivity : ViewModelActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding = DataBindingUtil.setContentView<ActivityBetaBinding>(this, R.layout.activity_beta)
         binding.viewModel = viewModel
 
@@ -33,12 +35,18 @@ class BetaActivity : ViewModelActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.fetch(adapter)
+        viewModel.subscribe(this, adapter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.unsubscribe(this)
     }
 
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
     }
 

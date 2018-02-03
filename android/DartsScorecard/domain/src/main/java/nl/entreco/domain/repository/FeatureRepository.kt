@@ -8,5 +8,5 @@ import nl.entreco.domain.beta.Feature
  */
 interface FeatureRepository {
     @WorkerThread
-    fun fetchAll(): List<Feature>
+    fun fetchAll(onChange: (List<Feature>)->Unit): List<Feature>
 }

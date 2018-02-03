@@ -3,79 +3,94 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="feature"
-            type="nl.entreco.domain.beta.Feature" />
+            type="nl.entreco.dartsscorecard.beta.BetaModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:layout_margin="@dimen/def"
+        android:background="@drawable/beta_bg"
         android:elevation="4dp">
 
         <ImageView
             android:id="@+id/preview"
             android:layout_width="match_parent"
-            android:background="@color/bdo_red_dark"
-            bind:imageUrl="@{feature.image}"
+            android:layout_height="180dp"
+            android:background="@drawable/beta_bg"
+            android:outlineProvider="background"
             android:scaleType="centerCrop"
-            android:layout_height="140dp" />
+            android:src="@drawable/crowd"
+            bind:imageUrl="@{feature.image}" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="@drawable/beta_gradient"/>
+            android:layout_height="180dp"
+            android:background="@drawable/beta_gradient" />
 
         <TextView
-            android:layout_above="@id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_below="@id/progress"
             android:fontFamily="sans-serif-condensed"
-            android:padding="16dp"
-            android:textSize="14sp"
-            android:text="DONATE"/>
+            android:padding="@dimen/def"
+            android:text="VOTE"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
 
         <TextView
-            android:layout_above="@id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:padding="16dp"
+            android:layout_below="@id/progress"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:text="@{@string/number(feature.required)}"/>
+            android:padding="@dimen/def"
+            android:text="@{@string/number(feature.goal)}"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
 
         <FrameLayout
-            android:layout_alignBottom="@id/preview"
             android:id="@+id/progress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/bdo_gray_light"
-            android:layout_height="4dp" />
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/preview">
 
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/pdc_green_light"
-            android:transformPivotX="0dp"
-            android:scaleX="0.78"
-            android:layout_height="4dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/small"
+                android:background="@color/bdo_gray_light" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/small"
+                android:background="@color/pdc_green_light"
+                android:scaleX="@{feature.progress}"
+                android:transformPivotX="0dp" />
         </FrameLayout>
 
         <TextView
-            android:id="@+id/description"
-            android:layout_below="@id/progress"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="roboto"
-            android:padding="16dp"
-            android:textSize="30sp"
-            android:text="@{feature.title}"/>
+            android:paddingEnd="@dimen/def"
+            android:paddingStart="@dimen/def"
+            android:text="@{feature.title}"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/progress"
+            android:fontFamily="roboto"
+            android:padding="@dimen/def"
+            android:text="@{feature.description}"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 </layout>

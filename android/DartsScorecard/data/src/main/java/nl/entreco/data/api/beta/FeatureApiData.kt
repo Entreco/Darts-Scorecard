@@ -1,30 +1,26 @@
 package nl.entreco.data.api.beta
 
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
 
 /**
  * Created by entreco on 03/02/2018.
  */
+@IgnoreExtraProperties
 class FeatureApiData {
 
-//    {
-//        "description" : "Allow to cast games on your TV",
-//        "img" : "https://codelabs.developers.google.com/codelabs/cast-videos-android/img/b799bd87a0e579aa.png",
-//        "required" : 10000,
-//        "title" : "Cast to TV",
-//        "votes" : {
-//        "remco" : 5
-//    }
-
-    @SerializedName("description")
+    @PropertyName("description")
     val description: String = ""
 
-    @SerializedName("img")
-    val image: String = ""
+    @PropertyName("img")
+    val img: String = ""
 
-    @SerializedName("title")
+    @PropertyName("title")
     val title: String = ""
 
-    @SerializedName("required")
+    @PropertyName("required")
     val required: Int = 0
+
+    @PropertyName("votes")
+    val votes: Int = 0
 }

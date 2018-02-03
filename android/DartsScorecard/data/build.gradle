@@ -15,8 +15,9 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$firebase"
     implementation "com.google.firebase:firebase-database:$firebase"
     implementation "com.android.support:appcompat-v7:$support"
-    implementation "android.arch.persistence.room:runtime:$architectureComponents"
-    kapt "android.arch.persistence.room:compiler:$architectureComponents"
+    implementation "android.arch.lifecycle:livedata:$architecture"
+    implementation "android.arch.persistence.room:runtime:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
 
 
     implementation "com.google.code.gson:gson:$gson"
