@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <data></data>
+    <data>
+        <variable
+            name="feature"
+            type="nl.entreco.domain.beta.Feature" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +19,7 @@
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:background="@color/bdo_red_dark"
-            android:src="@drawable/crowd"
+            bind:imageUrl="@{feature.image}"
             android:scaleType="centerCrop"
             android:layout_height="140dp" />
 
@@ -42,7 +47,7 @@
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:text="7k / 10k"/>
+            android:text="@{@string/number(feature.required)}"/>
 
         <FrameLayout
             android:layout_alignBottom="@id/preview"
@@ -70,7 +75,7 @@
             android:fontFamily="roboto"
             android:padding="16dp"
             android:textSize="30sp"
-            android:text="Cast to TV"/>
+            android:text="@{feature.title}"/>
 
     </RelativeLayout>
 </layout>

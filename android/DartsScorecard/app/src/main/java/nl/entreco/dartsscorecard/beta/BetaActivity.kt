@@ -31,9 +31,14 @@ class BetaActivity : ViewModelActivity() {
         initRecyclerView(binding)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetch(adapter)
+    }
+
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
         recyclerView.adapter = adapter
     }
 

@@ -2,13 +2,14 @@ package nl.entreco.dartsscorecard.beta
 
 import android.support.v7.widget.RecyclerView
 import nl.entreco.dartsscorecard.databinding.BetaViewBinding
+import nl.entreco.domain.beta.Feature
 
 /**
  * Created by entreco on 30/01/2018.
  */
 class BetaView(private val binding: BetaViewBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind() {
-//        binding.viewModel = teamScoreViewModel
+    fun bind(feature: Feature) {
+        binding.feature = feature
         binding.executePendingBindings()
     }
 }

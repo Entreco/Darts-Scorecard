@@ -11,6 +11,7 @@ import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
 import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
+import nl.entreco.dartsscorecard.di.viewmodel.api.FeatureApiModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.*
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
 
@@ -20,7 +21,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
 @ActivityScope
 @Subcomponent(modules = [(ViewModelModule::class), (ThreadingModule::class),
     (GameDbModule::class), (PlayerDbModule::class), (TurnDbModule::class),
-    (MetaDbModule::class), (StatDbModule::class)])
+    (MetaDbModule::class), (StatDbModule::class), (FeatureApiModule::class)])
 interface ViewModelComponent {
 
     // Where can this be used
