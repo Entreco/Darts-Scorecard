@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,11 +17,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/def"
-        android:background="@drawable/beta_bg"
-        android:onClick="@{() -> collapser.vote(feature)}"
-        android:elevation="4dp">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/preview"
@@ -38,24 +36,15 @@
             android:background="@drawable/beta_gradient" />
 
         <TextView
-            android:background="?android:attr/selectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/progress"
-            android:fontFamily="sans-serif-condensed"
-            android:padding="@dimen/def"
-            android:text="VOTE"
-            android:textSize="18sp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/progress"
+            android:layout_above="@id/progress"
             android:fontFamily="sans-serif-condensed"
             android:padding="@dimen/def"
             android:text="@{@string/number(feature.goal)}"
-            android:textColor="@color/gray"
+            tools:text="@string/number"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <FrameLayout
@@ -92,12 +81,10 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/progress"
+            android:layout_below="@id/progress"
             android:fontFamily="roboto"
-            android:maxLines="3"
             android:padding="@dimen/def"
-            android:text="@{feature.description}"
-            android:textColor="@color/white" />
+            android:text="@{feature.description}" />
 
     </RelativeLayout>
 </layout>

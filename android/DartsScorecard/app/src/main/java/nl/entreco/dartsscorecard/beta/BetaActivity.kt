@@ -5,12 +5,11 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
-import nl.entreco.dartsscorecard.di.beta.BetaAdapter
 import nl.entreco.dartsscorecard.di.beta.BetaComponent
 import nl.entreco.dartsscorecard.di.beta.BetaModule
 
@@ -22,12 +21,16 @@ class BetaActivity : ViewModelActivity() {
     private val component: BetaComponent by componentProvider { it.plus(BetaModule()) }
     private val viewModel: BetaViewModel by viewModelProvider { component.viewModel() }
     private val adapter: BetaAdapter by lazy { component.adapter() }
+    private lateinit var collapsible: Collapsible
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = DataBindingUtil.setContentView<ActivityBetaBinding>(this, R.layout.activity_beta)
+        collapsible = Collapsible(binding)
         binding.viewModel = viewModel
+        binding.collapsible = collapsible
+        adapter.collapsible = collapsible
 
         initToolbar(toolbar(binding), R.string.title_beta)
         initRecyclerView(binding)
@@ -45,13 +48,19 @@ class BetaActivity : ViewModelActivity() {
 
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
+        recyclerView.layoutManager = GridLayoutManager(binding.root.context!!, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
+
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
     }
 
     private fun toolbar(binding: ActivityBetaBinding): Toolbar {
         return binding.includeToolbar?.toolbar!!
+    }
+
+    override fun onBackPressed() {
+        collapsible.onBackPressed() ?: super.onBackPressed()
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.di.beta
 
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.beta.BetaAdapter
 import nl.entreco.dartsscorecard.beta.BetaViewModel
 
 /**

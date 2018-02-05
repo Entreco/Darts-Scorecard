@@ -2,6 +2,8 @@ package nl.entreco.dartsscorecard.beta
 
 import android.databinding.BindingAdapter
 import android.net.Uri
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 
@@ -13,9 +15,18 @@ class BetaBindings {
         @JvmStatic
         @BindingAdapter("imageUrl")
         fun loadImage(view: ImageView, url: String?) {
-            Picasso.with(view.context)
-                    .load(Uri.parse(url))
-                    .into(view)
+            url?.let {
+                Picasso.with(view.context)
+                        .load(Uri.parse(it))
+                        .into(view)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("progress")
+        fun animateProgress(view: View, progress: Float) {
+            view.pivotX = 0F
+            view.animate().scaleX(progress).setDuration(1000).setStartDelay(350).setInterpolator(AccelerateDecelerateInterpolator()).start()
         }
     }
 }

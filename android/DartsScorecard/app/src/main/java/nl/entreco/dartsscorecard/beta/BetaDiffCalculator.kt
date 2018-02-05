@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.di.beta
+package nl.entreco.dartsscorecard.beta
 
 import android.support.v7.util.DiffUtil
 import nl.entreco.domain.beta.Feature
@@ -22,6 +22,7 @@ class BetaDiffCalculator(private val old: List<Feature>, private val new: List<F
         return oldItem.description == newItem.description &&
                 oldItem.image == newItem.image &&
                 oldItem.required == newItem.required &&
+                oldItem.votes == newItem.votes &&
                 oldItem.title == newItem.title
     }
 }

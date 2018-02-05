@@ -1,7 +1,7 @@
 package nl.entreco.data.api.beta
 
-import com.google.firebase.database.IgnoreExtraProperties
-import com.google.firebase.database.PropertyName
+import com.google.firebase.firestore.IgnoreExtraProperties
+import com.google.firebase.firestore.PropertyName
 
 /**
  * Created by entreco on 03/02/2018.
@@ -12,15 +12,15 @@ class FeatureApiData {
     @PropertyName("description")
     val description: String = ""
 
-    @PropertyName("img")
-    val img: String = ""
+    @PropertyName("image")
+    val image: String = ""
 
     @PropertyName("title")
     val title: String = ""
 
-    @PropertyName("required")
-    val required: Int = 0
+    @PropertyName("goal")
+    val goal: Int = 0
 
-    @PropertyName("votes")
-    val votes: Int = 0
+    @PropertyName("count")
+    val count: Int = 0
 }

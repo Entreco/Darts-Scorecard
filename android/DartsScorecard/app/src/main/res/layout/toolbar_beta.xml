@@ -5,18 +5,64 @@
     <data />
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/betaAppbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleGravity="start"
+            app:collapsedTitleTextAppearance="@style/TitleCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="start"
+            app:expandedTitleTextAppearance="@style/TitleExpanded"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                android:background="@drawable/beta_header"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:padding="@dimen/def"
+                android:shadowColor="@color/white"
+                android:shadowDx="0.2"
+                android:shadowDy="0.2"
+                android:text="@string/beta_header"
+                android:textAllCaps="true"
+                android:textColor="?attr/nameText"
+                android:textSize="36sp"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:padding="@dimen/def"
+                android:shadowColor="@color/white"
+                android:shadowDx="0.2"
+                android:shadowDy="0.2"
+                android:text="@string/beta_tagline"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="11sp" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 </layout>

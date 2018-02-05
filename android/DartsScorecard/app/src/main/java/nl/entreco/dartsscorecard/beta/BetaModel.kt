@@ -19,6 +19,9 @@ class BetaModel(feature: Feature) {
     val image = ObservableField<String>(feature.image)
 
     private fun format(value: Int): String {
-        return "${value / 1000.0}k"
+        return when{
+            value < 1000 -> "$value"
+            else -> "${value / 1000}k"
+        }
     }
 }

@@ -43,7 +43,7 @@ dependencies {
     implementation "com.android.support:design:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "com.google.android.gms:play-services-ads:$firebase"
-    implementation "com.google.firebase:firebase-database:$firebase"
+    implementation "com.google.firebase:firebase-firestore:$firebase"
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.squareup.picasso:picasso:$picasso"

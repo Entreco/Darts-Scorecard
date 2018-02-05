@@ -11,17 +11,21 @@ import javax.inject.Inject
  */
 class FetchFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(req: FetchFeaturesRequest, done: (List<Feature>) -> Unit, fail: (Throwable) -> Unit) {
+    fun subscribe(done: (List<Feature>) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
 
-            val response = repo.fetchAll { handle(it, done) }
+            val response = repo.subscribe { handle(it, done) }
             handle(response, done)
 
         }, fail)
     }
 
+    fun unsubscribe() {
+        repo.unsubscribe()
+    }
+
     private fun handle(response: List<Feature>, done: (List<Feature>) -> Unit) {
-        val sort = response.sortedBy { it.votes / it.required }
+        val sort = response.sortedBy { 1.0 - (it.votes.toDouble() / (it.required.toDouble() + 0.0000001)) }
         onUi { done(sort) }
     }
 }

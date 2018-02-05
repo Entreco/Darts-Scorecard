@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.di.application
 
 import android.arch.persistence.room.Room
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.App
@@ -27,12 +28,20 @@ class AppModule(val app: App) {
     }
 
     @Provides
+    @ApplicationScope
     fun provideLogger(): Logger {
         return DscLogger("Dsc")
     }
 
     @Provides
+    @ApplicationScope
     fun provideDb(app: App): DscDatabase {
         return Room.databaseBuilder(app, DscDatabase::class.java, DscDatabase.name).build()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 }
