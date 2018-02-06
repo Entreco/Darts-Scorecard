@@ -22,7 +22,6 @@ class Collapsible(binding: ActivityBetaBinding) {
     init {
 
         appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-
             val perc = abs(verticalOffset / appBarLayout.totalScrollRange.toFloat())
             toolbar.animate().alpha(perc).setDuration(0).start()
         }
