@@ -49,7 +49,7 @@ class BetaBindingsTest {
     fun `animateProgress negative`() {
         setupMocking()
         BetaBindings.animateProgress(mockView, 0.5F, 0.8F)
-        verify(mockView).scaleX = 0.8F
+        verify(mockView).scaleX = 0.5F
     }
 
     private fun setupContextMocking() {
