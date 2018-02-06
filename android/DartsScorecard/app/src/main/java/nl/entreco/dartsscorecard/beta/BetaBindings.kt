@@ -24,8 +24,9 @@ class BetaBindings {
 
         @JvmStatic
         @BindingAdapter("progress")
-        fun animateProgress(view: View, progress: Float) {
+        fun animateProgress(view: View, oldProgress: Float, progress: Float) {
             view.pivotX = 0F
+            view.scaleX = oldProgress
             view.animate().scaleX(progress).setDuration(1000).setStartDelay(350).setInterpolator(AccelerateDecelerateInterpolator()).start()
         }
     }

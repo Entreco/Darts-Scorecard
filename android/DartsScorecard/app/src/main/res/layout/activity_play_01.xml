@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/crowd"/>
+            android:src="@drawable/play01_bg_image"/>
 
         <include
             android:id="@+id/includeToolbar"

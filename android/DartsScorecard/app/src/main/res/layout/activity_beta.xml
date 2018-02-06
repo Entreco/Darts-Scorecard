@@ -10,8 +10,8 @@
             type="nl.entreco.dartsscorecard.beta.BetaViewModel" />
 
         <variable
-            name="collapsible"
-            type="nl.entreco.dartsscorecard.beta.Collapsible" />
+            name="animator"
+            type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -51,8 +51,8 @@
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <include layout="@layout/include_beta_detail"
-                app:feature="@{collapsible.selectedFeature}"
-                app:collapser="@{collapsible}"/>
+                app:feature="@{animator.selectedFeature}"
+                app:collapser="@{animator}"/>
 
         </LinearLayout>
 

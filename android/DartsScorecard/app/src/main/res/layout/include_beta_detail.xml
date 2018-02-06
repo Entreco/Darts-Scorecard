@@ -12,7 +12,7 @@
 
         <variable
             name="collapser"
-            type="nl.entreco.dartsscorecard.beta.Collapsible" />
+            type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
 
     <RelativeLayout
@@ -27,7 +27,7 @@
             android:background="@drawable/beta_bg"
             android:outlineProvider="background"
             android:scaleType="centerCrop"
-            android:src="@drawable/crowd"
+            android:src="@drawable/beta_header_image"
             bind:imageUrl="@{feature.image}" />
 
         <View

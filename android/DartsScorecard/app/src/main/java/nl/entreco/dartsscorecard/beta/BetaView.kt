@@ -8,9 +8,9 @@ import nl.entreco.domain.beta.Feature
  * Created by entreco on 03/02/2018.
  */
 class BetaView(private val binding: BetaViewBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(feature: Feature, collapsible: Collapsible?) {
+    fun bind(feature: Feature, betaAnimator: BetaAnimator?) {
         binding.feature = BetaModel(feature)
-        binding.collapser = collapsible
+        binding.collapser = betaAnimator
         binding.executePendingBindings()
     }
 }

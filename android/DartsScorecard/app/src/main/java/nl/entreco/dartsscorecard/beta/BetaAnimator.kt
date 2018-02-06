@@ -10,7 +10,7 @@ import kotlin.math.max
 /**
  * Created by entreco on 04/02/2018.
  */
-class Collapsible(binding: ActivityBetaBinding) {
+class BetaAnimator(binding: ActivityBetaBinding) {
 
     val selectedFeature = ObservableField<BetaModel>()
 

@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <bitmap android:src="@drawable/splash_bg_2" />
+        <bitmap android:src="@drawable/splash_bg" />
     </item>
 
     <item>

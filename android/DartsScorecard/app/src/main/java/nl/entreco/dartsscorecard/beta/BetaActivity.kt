@@ -21,16 +21,16 @@ class BetaActivity : ViewModelActivity() {
     private val component: BetaComponent by componentProvider { it.plus(BetaModule()) }
     private val viewModel: BetaViewModel by viewModelProvider { component.viewModel() }
     private val adapter: BetaAdapter by lazy { component.adapter() }
-    private lateinit var collapsible: Collapsible
+    private lateinit var animator: BetaAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = DataBindingUtil.setContentView<ActivityBetaBinding>(this, R.layout.activity_beta)
-        collapsible = Collapsible(binding)
+        animator = BetaAnimator(binding)
         binding.viewModel = viewModel
-        binding.collapsible = collapsible
-        adapter.collapsible = collapsible
+        binding.animator = animator
+        adapter.betaAnimator = animator
 
         initToolbar(toolbar(binding), R.string.title_beta)
         initRecyclerView(binding)
@@ -60,7 +60,7 @@ class BetaActivity : ViewModelActivity() {
     }
 
     override fun onBackPressed() {
-        collapsible.onBackPressed() ?: super.onBackPressed()
+        animator.onBackPressed() ?: super.onBackPressed()
     }
 
     companion object {

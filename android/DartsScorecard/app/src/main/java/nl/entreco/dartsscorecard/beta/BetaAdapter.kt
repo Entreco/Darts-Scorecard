@@ -18,7 +18,7 @@ import javax.inject.Inject
 class BetaAdapter @Inject constructor() : TestableAdapter<BetaView>(), Observer<List<Feature>> {
 
     private val items: MutableList<Feature> = mutableListOf()
-    var collapsible: Collapsible? = null
+    var betaAnimator: BetaAnimator? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BetaView {
         val inflater = LayoutInflater.from(parent?.context)
@@ -31,7 +31,7 @@ class BetaAdapter @Inject constructor() : TestableAdapter<BetaView>(), Observer<
     }
 
     override fun onBindViewHolder(holder: BetaView?, position: Int) {
-        holder?.bind(items[position], collapsible)
+        holder?.bind(items[position], betaAnimator)
     }
 
     override fun onChanged(features: List<Feature>?) {
