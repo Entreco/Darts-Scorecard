@@ -7,20 +7,20 @@ import android.databinding.ObservableBoolean
 import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.FetchFeaturesUsecase
+import nl.entreco.domain.beta.SubscribeToFeaturesUsecase
 import javax.inject.Inject
 
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaViewModel @Inject constructor(private val fetchFeaturesUsecase: FetchFeaturesUsecase) : BaseViewModel() {
+class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: SubscribeToFeaturesUsecase) : BaseViewModel() {
 
     val isRefreshing = ObservableBoolean(false)
     private val features: MutableLiveData<List<Feature>> = MutableLiveData()
 
     fun refresh(refreshing: Boolean) {
         isRefreshing.set(refreshing)
-        fetchFeaturesUsecase.subscribe({
+        subscribeToFeaturesUsecase.subscribe({
             Log.d("Features", "features: $it")
             features.value = it
             isRefreshing.set(false)
@@ -34,6 +34,6 @@ class BetaViewModel @Inject constructor(private val fetchFeaturesUsecase: FetchF
 
     fun unsubscribe(owner: LifecycleOwner) {
         features.removeObservers(owner)
-        fetchFeaturesUsecase.unsubscribe()
+        subscribeToFeaturesUsecase.unsubscribe()
     }
 }

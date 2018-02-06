@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * Created by entreco on 03/02/2018.
  */
-class FetchFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+class SubscribeToFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
     fun subscribe(done: (List<Feature>) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

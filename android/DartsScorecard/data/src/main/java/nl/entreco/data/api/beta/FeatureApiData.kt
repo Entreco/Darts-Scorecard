@@ -9,7 +9,7 @@ import com.google.firebase.firestore.PropertyName
  */
 @Keep
 @IgnoreExtraProperties
-class FeatureApiData {
+internal class FeatureApiData {
 
     @PropertyName("description")
     val description: String = ""

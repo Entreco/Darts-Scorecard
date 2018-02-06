@@ -4,6 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import nl.entreco.data.api.beta.RemoteFeatureRepository
+import nl.entreco.domain.Logger
 import nl.entreco.domain.repository.FeatureRepository
 
 /**
@@ -13,7 +14,7 @@ import nl.entreco.domain.repository.FeatureRepository
 class FeatureApiModule {
 
     @Provides
-    fun provideFbDb(db: FirebaseFirestore): FeatureRepository {
-        return RemoteFeatureRepository(db)
+    fun provideFbDb(db: FirebaseFirestore, logger: Logger): FeatureRepository {
+        return RemoteFeatureRepository(db, logger)
     }
 }
