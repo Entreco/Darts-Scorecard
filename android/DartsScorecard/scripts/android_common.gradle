@@ -33,4 +33,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-v4:$support"
+        resolutionStrategy.force "com.android.support:appcompat-v7:$support"
+        resolutionStrategy.force "com.android.support:support-media-compat:$support"
+    }
 }
