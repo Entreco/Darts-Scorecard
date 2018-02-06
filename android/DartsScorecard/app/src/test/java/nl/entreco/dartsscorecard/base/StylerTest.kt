@@ -42,7 +42,6 @@ class StylerTest {
         assertEquals(R.style.Bdo, subject.get())
     }
 
-
     @Test
     fun `it should return 'PDC_2018' style`() {
         givenStyle(Styler.Style.PDC_2018.style)
@@ -50,24 +49,37 @@ class StylerTest {
     }
 
     @Test
-    fun `it should swap to PDC style`() {
-        givenStyle(Styler.Style.BDO.style)
-        val actualStyle = whenSwapping()
-        assertEquals(R.style.Pdc, actualStyle)
+    fun `it should return 'BDO_2018' style`() {
+        givenStyle(Styler.Style.BDO_2018.style)
+        assertEquals(R.style.Bdo_2018, subject.get())
     }
 
     @Test
-    fun `it should swap to BDO style`() {
+    fun `it should swap to PDC_2018 style`() {
+        givenStyle(Styler.Style.BDO.style)
+        val actualStyle = whenSwapping()
+        assertEquals(R.style.Pdc_2018, actualStyle)
+    }
+
+    @Test
+    fun `it should swap to BDO_2018 style`() {
         givenStyle(Styler.Style.PDC_2018.style)
         val actualStyle = whenSwapping()
         assertEquals(R.style.Bdo_2018, actualStyle)
     }
 
     @Test
-    fun `it should swap to PDC_2018 style`() {
+    fun `it should swap to PDC style`() {
         givenStyle(Styler.Style.PDC.style)
         val actualStyle = whenSwapping()
-        assertEquals(R.style.Pdc_2018, actualStyle)
+        assertEquals(R.style.Bdo, actualStyle)
+    }
+
+    @Test
+    fun `it should swap to BDO style`() {
+        givenStyle(Styler.Style.PDC.style)
+        val actualStyle = whenSwapping()
+        assertEquals(R.style.Bdo, actualStyle)
     }
 
     private fun givenStyle(@StyleRes style: Int) {
