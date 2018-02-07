@@ -39,9 +39,11 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
     override fun submitVote(featureId: String, amount: Int) {
         val feature = featureRef.document(featureId)
         db.runTransaction { transaction ->
+            val max = transaction.get(feature).getLong("goal")
             val count = transaction.get(feature).getLong("count") + amount
-            transaction.update(feature, "count", count)
-
+            if (count <= max) {
+                transaction.update(feature, "count", count)
+            }
         }
     }
 

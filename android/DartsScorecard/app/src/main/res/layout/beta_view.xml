@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
 
         <variable
             name="feature"
@@ -19,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/def"
         android:background="@drawable/beta_bg"
-        android:onClick="@{() -> animator.vote(feature)}"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:onClick="@{() -> animator.vote(feature)}">
 
         <ImageView
             android:id="@+id/preview"
@@ -38,14 +42,15 @@
             android:background="@drawable/beta_gradient" />
 
         <TextView
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/progress"
-            android:fontFamily="sans-serif-condensed"
+            android:background="?android:attr/selectableItemBackground"
+            android:fontFamily="sans-serif-smallcaps"
             android:padding="@dimen/def"
-            android:text="VOTE"
-            android:textSize="18sp" />
+            android:text="@string/vote"
+            android:textSize="18sp"
+            android:visibility="@{feature.votable ? View.VISIBLE : View.INVISIBLE}" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +78,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/small"
                 android:background="@color/pdc_green_light"
-                android:scaleX="0"
                 app:progress="@{feature.progress}" />
         </FrameLayout>
 
@@ -98,6 +102,15 @@
             android:padding="@dimen/def"
             android:text="@{feature.description}"
             android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@null"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_started"
+            android:elevation="6dp"
+            android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

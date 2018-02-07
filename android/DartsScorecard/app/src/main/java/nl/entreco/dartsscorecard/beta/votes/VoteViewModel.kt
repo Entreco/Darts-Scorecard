@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.beta.votes
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaAnimator
@@ -17,27 +18,42 @@ import javax.inject.Inject
 class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVoteUsecase, private val analytics: Analytics) : BaseViewModel(), BetaAnimator.Toggler {
 
     val feature = ObservableField<BetaModel>()
+    val didAlreadyVote = ObservableBoolean(false)
+    val votes = mutableListOf<String>()
 
     override fun onFeatureSelected(feature: BetaModel) {
         this.feature.set(feature)
+        this.didAlreadyVote.set(votes.contains(feature.feature.ref))
         this.analytics.trackAchievement("viewed Feature ${feature.title.get()}")
     }
 
-    fun submitVote(amount: Int) {
-        val oldFeature = feature.get().feature
-        feature.set(BetaModel(oldFeature.copy(votes = oldFeature.votes + amount)))
-        submitVoteUsecase.exec(SubmitVoteRequest(this.feature.get().feature.ref, amount), onVoteSuccess(oldFeature), onVoteFailed(oldFeature))
-    }
+    override fun onFeatureClosed() {}
 
-    private fun onVoteSuccess(oldFeature: Feature): (SubmitVoteResponse) -> Unit {
-        return {
-            analytics.trackAchievement("voted Feature ${oldFeature.title}")
+    fun submitVote(amount: Int) {
+        val betaModel = feature.get()
+        val currentFeature = betaModel.feature
+        if (allowedToVote(betaModel, currentFeature)) {
+            feature.set(BetaModel(currentFeature.copy(votes = currentFeature.votes + amount)))
+            votes.add(currentFeature.ref)
+            submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))
         }
     }
 
-    private fun onVoteFailed(oldFeature: Feature): (Throwable) -> Unit {
+    private fun allowedToVote(betaModel: BetaModel, currentFeature: Feature) =
+            betaModel.votable.get() && !votes.contains(currentFeature.ref)
+
+    private fun onVoteSuccess(voted: Feature): (SubmitVoteResponse) -> Unit {
         return {
-            feature.set(BetaModel(oldFeature))
+            analytics.trackAchievement("voted Feature ${voted.title}")
+            didAlreadyVote.set(true)
+        }
+    }
+
+    private fun onVoteFailed(voted: Feature): (Throwable) -> Unit {
+        return {
+            feature.set(BetaModel(voted))
+            votes.remove(voted.ref)
+            didAlreadyVote.set(false)
         }
     }
 }

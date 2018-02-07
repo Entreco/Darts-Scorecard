@@ -27,6 +27,13 @@
     <string name="play_x01">Start new 01</string>
     <string name="beta">Beta</string>
 
+    <!-- Beta -->
+    <string name="vote">VOTE</string>
+    <string name="number_votes">%1$s VOTES</string>
+    <string name="thanks_for_voting">No, you are awesome! \u1F44A</string>
+    <string name="voting_disclaimer">You can vote again (or make a donation)</string>
+    <string name="votes_explained">&lt;p>%1$s&lt;/p>&lt;p>Once this feature has &lt;b>%2$s&lt;/b> votes, development will start.&lt;/p></string>
+
     <!-- Setup -->
     <string name="select_players">Select Players</string>
     <string name="choose_player_name">Choose player name</string>

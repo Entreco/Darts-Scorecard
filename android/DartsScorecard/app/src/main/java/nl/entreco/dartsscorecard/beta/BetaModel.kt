@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.beta
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableFloat
 import nl.entreco.domain.beta.Feature
@@ -10,8 +11,9 @@ import nl.entreco.domain.beta.Feature
 class BetaModel(val feature: Feature) {
 
     private val count = format(feature.votes)
-    private val total = format(feature.required)
+    val total = format(feature.required)
 
+    val votable = ObservableBoolean(feature.votes < feature.required)
     val title = ObservableField<String>(feature.title)
     val description = ObservableField<String>(feature.description)
     val goal = ObservableField<String>("$count / $total")
