@@ -58,7 +58,7 @@ before_deploy:
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 $APP_NAME _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
   --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --out
-  _${APP_NAME} ${APP_NAME}
+  ${APP_NAME} _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify ${APP_NAME}
 deploy:
   provider: releases
