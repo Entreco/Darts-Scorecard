@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.launch
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import nl.entreco.dartsscorecard.R
@@ -21,9 +22,10 @@ class LaunchActivity : ViewModelActivity() {
     private val viewModel: LaunchViewModel by viewModelProvider { component.viewModel() }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        window.decorView.systemUiVisibility += View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.decorView.systemUiVisibility += View.SYSTEM_UI_FLAG_FULLSCREEN
+//        window.decorView.systemUiVisibility += View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//        window.decorView.systemUiVisibility += View.SYSTEM_UI_FLAG_FULLSCREEN
         window.decorView.systemUiVisibility += View.SYSTEM_UI_FLAG_LOW_PROFILE
+        window.statusBarColor = Color.BLACK
         super.onWindowFocusChanged(hasFocus)
     }
 

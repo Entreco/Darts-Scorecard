@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.databinding.ObservableBoolean
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.beta.SubscribeToFeaturesUsecase
@@ -21,7 +20,6 @@ class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: 
     fun refresh(refreshing: Boolean) {
         isRefreshing.set(refreshing)
         subscribeToFeaturesUsecase.subscribe({
-            Log.d("Features", "features: $it")
             features.value = it
             isRefreshing.set(false)
         }, {})

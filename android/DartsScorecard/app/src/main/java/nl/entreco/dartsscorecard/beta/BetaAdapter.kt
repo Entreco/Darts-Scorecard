@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.beta
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.support.v7.util.DiffUtil
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
@@ -35,10 +34,8 @@ class BetaAdapter @Inject constructor() : TestableAdapter<BetaView>(), Observer<
     }
 
     override fun onChanged(features: List<Feature>?) {
-        Log.d("Features", "features: $features")
         if (features != null) {
             val diff = DiffUtil.calculateDiff(BetaDiffCalculator(items, features))
-            Log.d("Features", "diff: $diff")
             items.clear()
             items.addAll(features)
             diff.dispatchUpdatesTo(this)
