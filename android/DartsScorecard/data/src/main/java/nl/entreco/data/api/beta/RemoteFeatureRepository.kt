@@ -11,7 +11,7 @@ import nl.entreco.domain.repository.FeatureRepository
 /**
  * Created by entreco on 03/02/2018.
  */
-class RemoteFeatureRepository(db: FirebaseFirestore, private val logger: Logger) : FeatureRepository, EventListener<QuerySnapshot> {
+class RemoteFeatureRepository(private val db: FirebaseFirestore, private val logger: Logger) : FeatureRepository, EventListener<QuerySnapshot> {
     private val featureRef = db.collection("features")
     private val listener = featureRef.addSnapshotListener(this)
     internal var onChange: (List<Feature>) -> Unit = {}
@@ -27,17 +27,26 @@ class RemoteFeatureRepository(db: FirebaseFirestore, private val logger: Logger)
 
         p0?.documents?.forEach { doc ->
             val feature = doc.toObject(FeatureApiData::class.java)
-            features[doc.id] = Feature(feature.title, feature.description, feature.image, feature.goal, feature.count)
+            features[doc.id] = Feature(doc.id, feature.title, feature.description, feature.image, feature.goal, feature.count)
         }.also { onChange(ArrayList<Feature>(features.values)) }
-    }
-
-    override fun unsubscribe() {
-        this.onChange = {}
-        this.listener.remove()
     }
 
     override fun subscribe(onChange: (List<Feature>) -> Unit): List<Feature> {
         this.onChange = onChange
         return ArrayList<Feature>(features.values)
+    }
+
+    override fun submitVote(featureId: String, amount: Int) {
+        val feature = featureRef.document(featureId)
+        db.runTransaction { transaction ->
+            val count = transaction.get(feature).getLong("count") + amount
+            transaction.update(feature, "count", count)
+
+        }
+    }
+
+    override fun unsubscribe() {
+        this.onChange = {}
+        this.listener.remove()
     }
 }

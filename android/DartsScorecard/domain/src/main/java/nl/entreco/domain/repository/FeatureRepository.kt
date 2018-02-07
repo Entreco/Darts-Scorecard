@@ -10,5 +10,9 @@ interface FeatureRepository {
     @WorkerThread
     fun subscribe(onChange: (List<Feature>)->Unit): List<Feature>
 
+    @WorkerThread
     fun unsubscribe()
+
+    @WorkerThread
+    fun submitVote(featureId: String, amount: Int)
 }

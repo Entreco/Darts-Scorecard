@@ -10,7 +10,7 @@
             type="nl.entreco.dartsscorecard.beta.BetaModel" />
 
         <variable
-            name="collapser"
+            name="animator"
             type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/def"
         android:background="@drawable/beta_bg"
-        android:onClick="@{() -> collapser.vote(feature)}"
+        android:onClick="@{() -> animator.vote(feature)}"
         android:elevation="4dp">
 
         <ImageView

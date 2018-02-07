@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="feature"
-            type="nl.entreco.dartsscorecard.beta.BetaModel" />
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.beta.votes.VoteViewModel" />
 
-        <variable
-            name="collapser"
-            type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
 
     <RelativeLayout
@@ -28,7 +25,7 @@
             android:outlineProvider="background"
             android:scaleType="centerCrop"
             android:src="@drawable/beta_header_image"
-            bind:imageUrl="@{feature.image}" />
+            bind:imageUrl="@{viewModel.feature.image}" />
 
         <View
             android:layout_width="match_parent"
@@ -38,14 +35,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_above="@id/progress"
+            android:layout_alignParentEnd="true"
             android:fontFamily="sans-serif-condensed"
             android:padding="@dimen/def"
-            android:text="@{@string/number(feature.goal)}"
-            tools:text="@string/number"
+            android:text="@{@string/number(viewModel.feature.goal)}"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/number" />
 
         <FrameLayout
             android:id="@+id/progress"
@@ -63,7 +60,7 @@
                 android:layout_height="@dimen/small"
                 android:background="@color/pdc_green_light"
                 android:scaleX="0"
-                app:progress="@{feature.progress}" />
+                app:progress="@{viewModel.feature.progress}" />
         </FrameLayout>
 
         <TextView
@@ -73,7 +70,7 @@
             android:fontFamily="roboto"
             android:paddingEnd="@dimen/def"
             android:paddingStart="@dimen/def"
-            android:text="@{feature.title}"
+            android:text="@{viewModel.feature.title}"
             android:textColor="@color/white"
             android:textSize="30sp" />
 
@@ -84,7 +81,33 @@
             android:layout_below="@id/progress"
             android:fontFamily="roboto"
             android:padding="@dimen/def"
-            android:text="@{feature.description}" />
+            android:text="@{viewModel.feature.description}" />
+
+
+        <LinearLayout
+            android:layout_below="@id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/def"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Help us stay motivated to complete this feature"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.submitVote(1)}"
+                android:text="VOTE"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DONATE"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>

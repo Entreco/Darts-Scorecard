@@ -7,7 +7,7 @@ import nl.entreco.domain.beta.Feature
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaModel(feature: Feature) {
+class BetaModel(val feature: Feature) {
 
     private val count = format(feature.votes)
     private val total = format(feature.required)

@@ -8,7 +8,7 @@ import org.junit.Test
  * Created by entreco on 06/02/2018.
  */
 class BetaModelTest{
-    private val feature = Feature("title", "description", "http://url.com", 10000, 500)
+    private val feature = Feature("reference","title", "description", "http://url.com", 10000, 500)
     private val subject = BetaModel(feature)
 
     @Test

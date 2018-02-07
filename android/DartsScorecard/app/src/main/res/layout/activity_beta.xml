@@ -10,6 +10,10 @@
             type="nl.entreco.dartsscorecard.beta.BetaViewModel" />
 
         <variable
+            name="voteViewModel"
+            type="nl.entreco.dartsscorecard.beta.votes.VoteViewModel" />
+
+        <variable
             name="animator"
             type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
@@ -50,9 +54,9 @@
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-            <include layout="@layout/include_beta_detail"
-                app:feature="@{animator.selectedFeature}"
-                app:collapser="@{animator}"/>
+            <include
+                layout="@layout/include_beta_detail"
+                app:viewModel="@{voteViewModel}" />
 
         </LinearLayout>
 
