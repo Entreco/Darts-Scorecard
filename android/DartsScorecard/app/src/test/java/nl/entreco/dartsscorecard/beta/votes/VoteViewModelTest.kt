@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.beta.BetaModel
 import nl.entreco.domain.Analytics
+import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.beta.SubmitVoteUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -22,20 +23,21 @@ class VoteViewModelTest {
     @Mock private lateinit var mockObservableField : ObservableField<String>
     @Mock private lateinit var mockVoteUsecase : SubmitVoteUsecase
     @Mock private lateinit var mockAnalytics : Analytics
-    @Mock private lateinit var mockFeature: BetaModel
+    @Mock private lateinit var mockFeature: Feature
+    @Mock private lateinit var mockModel: BetaModel
     private lateinit var subject: VoteViewModel
 
     @Test
     fun `it should set selected feature in field`() {
         givenSubject()
-        whenFeatureSelected(mockFeature)
-        thenSelectedFeatureIs(mockFeature)
+        whenFeatureSelected(mockModel)
+        thenSelectedFeatureIs(mockModel)
     }
 
     @Test
     fun `it should track achievement when feature selected`() {
         givenSubject()
-        whenFeatureSelected(mockFeature)
+        whenFeatureSelected(mockModel)
         thenAchievementIsTracked()
     }
 
@@ -45,7 +47,9 @@ class VoteViewModelTest {
 
     private fun whenFeatureSelected(feature: BetaModel) {
         whenever(mockObservableField.get()).thenReturn("Feature Title")
-        whenever(mockFeature.title).thenReturn(mockObservableField)
+        whenever(mockFeature.ref).thenReturn("reference")
+        whenever(mockModel.feature).thenReturn(mockFeature)
+        whenever(mockModel.title).thenReturn(mockObservableField)
         subject.onFeatureSelected(feature)
     }
 

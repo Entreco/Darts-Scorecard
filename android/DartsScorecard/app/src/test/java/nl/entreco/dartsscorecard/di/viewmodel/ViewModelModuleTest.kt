@@ -28,11 +28,6 @@ class ViewModelModuleTest {
 
     @Test
     fun context() {
-        assertNotNull(subject.application(mockApp))
-    }
-
-    @Test
-    fun application() {
         assertNotNull(subject.context())
         assertEquals(mockActivity, subject.context())
     }
