@@ -20,7 +20,7 @@ import nl.entreco.dartsscorecard.di.beta.BetaModule
  */
 class BetaActivity : ViewModelActivity() {
 
-    private val component: BetaComponent by componentProvider { it.plus(BetaModule()) }
+    private val component: BetaComponent by componentProvider { it.plus(BetaModule(lifecycle)) }
     private val viewModel: BetaViewModel by viewModelProvider { component.viewModel() }
     private val votesViewModel: VoteViewModel by viewModelProvider { component.votes() }
     private val donateViewModel: DonateViewModel by viewModelProvider { component.donate() }
