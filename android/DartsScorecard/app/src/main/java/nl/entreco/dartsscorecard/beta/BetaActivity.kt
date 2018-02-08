@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
+import nl.entreco.dartsscorecard.beta.donate.DonateViewModel
 import nl.entreco.dartsscorecard.beta.votes.VoteViewModel
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
 import nl.entreco.dartsscorecard.di.beta.BetaComponent
@@ -22,6 +23,7 @@ class BetaActivity : ViewModelActivity() {
     private val component: BetaComponent by componentProvider { it.plus(BetaModule()) }
     private val viewModel: BetaViewModel by viewModelProvider { component.viewModel() }
     private val votesViewModel: VoteViewModel by viewModelProvider { component.votes() }
+    private val donateViewModel: DonateViewModel by viewModelProvider { component.donate() }
     private val adapter: BetaAdapter by lazy { component.adapter() }
     private lateinit var animator: BetaAnimator
 
@@ -32,6 +34,7 @@ class BetaActivity : ViewModelActivity() {
         animator = BetaAnimator(binding)
         binding.viewModel = viewModel
         binding.voteViewModel = votesViewModel
+        binding.donateViewModel = donateViewModel
         binding.animator = animator
 
         animator.toggler = votesViewModel

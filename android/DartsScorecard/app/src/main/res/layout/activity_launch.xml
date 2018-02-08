@@ -58,14 +58,6 @@
             android:onClick="@{() -> viewModel.onBetaPressed(context)}"
             android:text="@string/beta" />
 
-        <Button
-            android:id="@+id/launch_stats"
-            style="@style/Launch.Btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_stats"
-            android:text="Stats" />
-
         <TextView
             style="@style/Launch.Powered"
             android:layout_width="match_parent"

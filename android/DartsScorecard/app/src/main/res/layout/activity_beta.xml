@@ -14,6 +14,10 @@
             type="nl.entreco.dartsscorecard.beta.votes.VoteViewModel" />
 
         <variable
+            name="donateViewModel"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+
+        <variable
             name="animator"
             type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
     </data>
@@ -55,7 +59,8 @@
 
             <include
                 layout="@layout/include_beta_detail"
-                app:viewModel="@{voteViewModel}" />
+                app:viewModel="@{voteViewModel}"
+                app:donateViewModel="@{donateViewModel}"/>
 
         </LinearLayout>
 

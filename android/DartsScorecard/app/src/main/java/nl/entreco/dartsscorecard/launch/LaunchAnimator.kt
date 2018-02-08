@@ -18,13 +18,11 @@ class LaunchAnimator(binding: ActivityLaunchBinding) {
     private val btn1 = binding.launchResume.also(buttonStart(0))
     private val btn2 = binding.launchPlay.also(buttonStart(1))
     private val btn3 = binding.launchPlayers.also(buttonStart(2))
-    private val btn4 = binding.launchStats.also(buttonStart(3))
 
     init {
         buttonAnimation(btn1, 0)
         buttonAnimation(btn2, 1)
         buttonAnimation(btn3, 2)
-        buttonAnimation(btn4, 3)
 
         lets.animate().translationX(0F).setDuration(250).setInterpolator(AccelerateDecelerateInterpolator()).start()
         play.animate().translationX(0F).setStartDelay(250).setDuration(250).setInterpolator(AccelerateDecelerateInterpolator()).start()

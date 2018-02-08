@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="total"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/def"
+        android:paddingStart="@dimen/def"
+        tools:showIn="@layout/include_beta_detail">
+
+        <TextView
+            android:id="@+id/explain"
+            style="@style/Beta.Explain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textWithTags="@{@string/votes_explained(total)}"
+            tools:text="@string/votes_explained" />
+
+        <Button
+            style="@style/Beta.DonateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="10 VOTES" />
+
+        <Button
+            style="@style/Beta.DonateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="50 VOTES" />
+
+        <Button
+            style="@style/Beta.DonateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="100 VOTES" />
+
+    </LinearLayout>
+</layout>
