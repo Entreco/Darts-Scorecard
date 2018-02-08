@@ -28,6 +28,7 @@
     <style name="Beta.Explain">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/gray</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="Beta.DonateBtn" parent="Base.Widget.AppCompat.Button">

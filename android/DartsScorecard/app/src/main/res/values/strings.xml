@@ -75,6 +75,7 @@
 
     <!-- Errors -->
     <string name="err_unable_to_create_player">Unable to create player.</string>
+    <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
