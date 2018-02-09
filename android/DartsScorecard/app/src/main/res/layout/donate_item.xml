@@ -6,6 +6,10 @@
         <variable
             name="donation"
             type="nl.entreco.domain.beta.Donation" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
     </data>
 
     <Button
@@ -13,5 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@{donation.title}" />
+        android:enabled="@{!viewModel.loading}"
+        android:onClick="@{() -> viewModel.onDonate(donation)}"
+        android:text="@{@string/donation_button(donation.title, donation.price)}" />
 </layout>

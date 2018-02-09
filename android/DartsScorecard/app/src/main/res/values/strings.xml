@@ -30,7 +30,8 @@
     <!-- Beta -->
     <string name="vote">VOTE</string>
     <string name="number_votes">%1$s VOTES</string>
-    <string name="thanks_for_voting">No, you are awesome! \u1F44A</string>
+    <string name="donation_button">%1$s %2$s</string>
+    <string name="donation_thanks">Thanks! You are AWESOME!</string>
     <string name="voting_disclaimer">You can vote again (or make a donation)</string>
     <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p></string>
 

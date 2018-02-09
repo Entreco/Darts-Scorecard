@@ -3,10 +3,7 @@ package nl.entreco.dartsscorecard.play
 import android.databinding.BindingAdapter
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.CoordinatorLayout
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewPropertyAnimator
-import android.view.ViewTreeObserver
+import android.view.*
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.R
@@ -124,7 +121,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     companion object {
         @JvmStatic
         @BindingAdapter("loading")
-        fun showLoading(view: CoordinatorLayout, loading: Boolean) {
+        fun showLoading(view: ViewGroup, loading: Boolean) {
             if(loading) {
                 val loadingView = LayoutInflater.from(view.context).inflate(R.layout.play_01_loading, view, false)
                 view.addView(loadingView)

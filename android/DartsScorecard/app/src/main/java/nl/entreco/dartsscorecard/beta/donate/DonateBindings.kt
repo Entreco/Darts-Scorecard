@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.DonateItemBinding
 import nl.entreco.domain.beta.Donation
@@ -16,24 +17,27 @@ class DonateBindings {
     companion object {
 
         @JvmStatic
-        @BindingAdapter("donations")
-        fun addDonations(viewGroup: ViewGroup, donations: List<Donation>?) {
+        @BindingAdapter("donations", "viewModel")
+        fun addDonations(viewGroup: ViewGroup, donations: List<Donation>?, viewModel: DonateViewModel?) {
             val inflater = LayoutInflater.from(viewGroup.context)
-            clearPreviousViewsIfEmpty(viewGroup, donations)
-            addNewViews(donations, inflater, viewGroup)
+            clearPreviousViewsIfEmpty(viewGroup)
+            addNewViews(donations, viewModel, inflater, viewGroup)
         }
 
-        private fun addNewViews(donations: List<Donation>?, inflater: LayoutInflater?, viewGroup: ViewGroup) {
-            donations?.forEach { donation ->
-                val binding = DataBindingUtil.inflate<DonateItemBinding>(inflater, R.layout.donate_item, viewGroup, true)
-                binding.donation = donation
+        private fun addNewViews(donations: List<Donation>?, viewModel: DonateViewModel?, inflater: LayoutInflater?, viewGroup: ViewGroup) {
+            if (viewModel != null) {
+                donations?.forEach { donation ->
+                    val binding = DataBindingUtil.inflate<DonateItemBinding>(inflater, R.layout.donate_item, viewGroup, true)
+                    binding.donation = donation
+                    binding.viewModel = viewModel
+                }
             }
         }
 
-        internal fun clearPreviousViewsIfEmpty(viewGroup: ViewGroup, donations: List<Donation>?) {
-            if(donations != null && donations.isNotEmpty()){
-                (1 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
-            }
+        internal fun clearPreviousViewsIfEmpty(viewGroup: ViewGroup) {
+            val count = (0 until viewGroup.childCount).count { viewGroup.getChildAt(it) is TextView }
+            if (count == 0) (0 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
+            else (1 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
         }
     }
 }

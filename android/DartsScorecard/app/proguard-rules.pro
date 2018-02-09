@@ -30,3 +30,6 @@
 # Okio
 -dontwarn okio.**
 -dontnote okio.**
+
+# Billing
+-keep class com.android.vending.billing.**
