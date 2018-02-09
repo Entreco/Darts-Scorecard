@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="donateViewModel"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.beta.votes.VoteViewModel" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/preview"
+                    style="@style/BetaHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    bind:imageUrl="@{viewModel.feature.image}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/beta_header_height"
+                    android:background="@drawable/beta_gradient" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/Beta.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.feature.title}" />
+
+                <TextView
+                    style="@style/Beta.Votes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/progress"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@{@string/number_votes(viewModel.feature.goal)}"
+                    tools:text="@string/number" />
+
+                <ImageView
+                    style="@style/BetaVotable"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/votable_banner_height"
+                    android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}" />
+
+                <FrameLayout
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/preview">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/small"
+                        android:background="@color/bdo_gray_light" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/small"
+                        android:background="@color/pdc_green_light"
+                        android:scaleX="0.01"
+                        app:progress="@{viewModel.feature.progress}" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/Beta.Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progress"
+                    android:text="@{viewModel.feature.description}"
+                    tools:text="@string/votes_explained" />
+
+                <include
+                    layout="@layout/include_beta_donate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/description"
+                    app:total="@{viewModel.feature.total}"
+                    app:viewModel="@{donateViewModel}" />
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/voteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="@{viewModel.didAlreadyVote ? .5f : 1.0f}"
+            android:onClick="@{() -> viewModel.submitVote(1)}"
+            android:src="@drawable/ic_like"
+            android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
+            app:elevation="@dimen/elevation"
+            app:fabSize="normal"
+            app:layout_anchor="@id/preview"
+            app:layout_anchorGravity="end|bottom"
+            app:useCompatPadding="true" />
+
+        <include
+            layout="@layout/play_01_loading"
+            android:visibility="@{donateViewModel.loading ? View.VISIBLE : View.GONE}" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

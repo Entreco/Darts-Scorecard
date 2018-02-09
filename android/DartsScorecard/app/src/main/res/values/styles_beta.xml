@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Beta">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:padding">@dimen/def</item>
+    </style>
+
+    <style name="Beta.Title">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Beta.Votes">
+        <item name="android:textSize">24sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Beta.Description">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:padding">@dimen/xlarge</item>
+    </style>
+
+    <style name="Beta.Explain">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Beta.DonateBtn" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/launch_btn</item>
+        <item name="android:textColor">?attr/launchText</item>
+        <item name="android:layout_marginTop">@dimen/small</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_margin">@dimen/def</item>
+    </style>
+
+    <style name="BetaHeader">
+        <item name="android:contentDescription">@null</item>
+        <item name="android:src">@drawable/beta_header_image</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="BetaVotable">
+        <item name="android:background">@null</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:src">@drawable/ic_started</item>
+        <item name="android:scaleType">fitEnd</item>
+        <item name="android:elevation">@dimen/elevation</item>
+    </style>
+
+
+</resources>

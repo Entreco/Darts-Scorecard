@@ -5,6 +5,7 @@
     <dimen name="def">8dp</dimen>
     <dimen name="large">16dp</dimen>
     <dimen name="xlarge">32dp</dimen>
+    <dimen name="elevation">6dp</dimen>
 
     <dimen name="icon_size_default">24dp</dimen>
     <dimen name="icon_size_large">48dp</dimen>
@@ -19,4 +20,6 @@
     <dimen name="input_side_bar">60dp</dimen>
     <dimen name="input_peek_height">48dp</dimen>
     <dimen name="current_team_width">6dp</dimen>
+    <dimen name="votable_banner_height">110dp</dimen>
+    <dimen name="beta_header_height">180dp</dimen>
 </resources>

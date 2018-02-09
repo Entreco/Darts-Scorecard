@@ -19,3 +19,17 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepattributes Signature
+
+# Google Play Services
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
+-dontnote com.google.android.gms.**
+
+# Okio
+-dontwarn okio.**
+-dontnote okio.**
+
+# Billing
+-keep class com.android.vending.billing.**

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="feature"
+            type="nl.entreco.dartsscorecard.beta.BetaModel" />
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.beta.BetaAnimator" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/def"
+        android:background="@drawable/beta_bg"
+        android:elevation="4dp"
+        android:onClick="@{() -> animator.vote(feature)}">
+
+        <ImageView
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/beta_bg"
+            android:outlineProvider="background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/beta_header_image"
+            bind:imageUrl="@{feature.image}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/beta_gradient" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress"
+            android:background="?android:attr/selectableItemBackground"
+            android:fontFamily="sans-serif-smallcaps"
+            android:padding="@dimen/def"
+            android:text="@string/vote"
+            android:textSize="18sp"
+            android:visibility="@{feature.votable ? View.VISIBLE : View.INVISIBLE}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/progress"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="@dimen/def"
+            android:text="@{@string/number(feature.goal)}"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+        <FrameLayout
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/preview">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/small"
+                android:background="@color/bdo_gray_light" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/small"
+                android:background="@color/pdc_green_light"
+                app:progress="@{feature.progress}" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="roboto"
+            android:paddingEnd="@dimen/def"
+            android:paddingStart="@dimen/def"
+            android:text="@{feature.title}"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/progress"
+            android:fontFamily="roboto"
+            android:maxLines="3"
+            android:padding="@dimen/def"
+            android:text="@{feature.description}"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@null"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_started"
+            android:elevation="6dp"
+            android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
+
+    </RelativeLayout>
+</layout>

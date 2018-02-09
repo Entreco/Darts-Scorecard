@@ -291,6 +291,30 @@ class InputViewModelTest {
         thenFinalTurnIsSet()
     }
 
+    @Test
+    fun `it should submit turn when asking for darts reported 1 dart used`() {
+        givenPlayer("1", 2, State.NORMAL)
+        whenPressingSubmit(2)
+        subject.onFinishWith(1, mockListener)
+        verify(mockListener).onTurnSubmitted(any(), any())
+    }
+
+    @Test
+    fun `it should submit turn when asking for darts reported 2 darts used`() {
+        givenPlayer("1", 2, State.NORMAL)
+        whenPressingSubmit(2)
+        subject.onFinishWith(2, mockListener)
+        verify(mockListener).onTurnSubmitted(any(), any())
+    }
+
+    @Test
+    fun `it should submit turn when asking for darts reported 3 darts used`() {
+        givenPlayer("1", 2, State.NORMAL)
+        whenPressingSubmit(2)
+        subject.onFinishWith(3, mockListener)
+        verify(mockListener).onTurnSubmitted(any(), any())
+    }
+
     private fun givenPlayer(playerName: String, pts: Int = 501, state: State = State.NORMAL) {
         givenPlayer = Player(playerName)
         givenRequiredScore = Score(pts, 0, 0)

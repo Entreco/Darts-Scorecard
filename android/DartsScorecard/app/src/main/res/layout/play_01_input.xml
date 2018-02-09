@@ -286,8 +286,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:alpha="@{viewModel.finalTurn.first() == Dart.ZERO ? 1F : .2F}"
-                android:enabled="@{viewModel.finalTurn.first() == Dart.ZERO}"
+                android:alpha="@{viewModel.finalTurn.second() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.second() == Dart.ZERO}"
                 android:onClick="@{() -> viewModel.onFinishWith(1, listener)}"
                 android:text="@string/one" />
 
@@ -296,8 +296,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:alpha="@{viewModel.finalTurn.second() == Dart.ZERO ? 1F : .2F}"
-                android:enabled="@{viewModel.finalTurn.second() == Dart.ZERO}"
+                android:alpha="@{viewModel.finalTurn.third() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.third() == Dart.ZERO}"
                 android:onClick="@{() -> viewModel.onFinishWith(2, listener)}"
                 android:text="@string/two" />
 

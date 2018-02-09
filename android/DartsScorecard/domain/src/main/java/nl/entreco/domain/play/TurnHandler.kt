@@ -24,7 +24,7 @@ class TurnHandler(private val teamStartIndex: Int = 0, private var teams: Array<
     private fun teamIndex() = teams.indexOf(team())
 
     fun start(required: Score = Score()): Next {
-        if (teams.isEmpty()) throw IllegalStateException("cannot exec without teams! turnHandler.teams = Array<Team>")
+        if (teams.isEmpty()) throw IllegalStateException("cannot subscribe without teams! turnHandler.teams = Array<Team>")
         turns = 0
         legs = 0
         sets = 0
@@ -56,7 +56,7 @@ class TurnHandler(private val teamStartIndex: Int = 0, private var teams: Array<
     }
 
     private fun check() {
-        if (teams.isEmpty()) throw IllegalStateException("cannot exec without teams! turnHandler.teams = Array<Team>")
+        if (teams.isEmpty()) throw IllegalStateException("cannot subscribe without teams! turnHandler.teams = Array<Team>")
         if (turns < 0) throw IllegalStateException("not started")
     }
 

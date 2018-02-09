@@ -24,4 +24,8 @@
         <item>901</item>
         <item>1001</item>
     </string-array>
+
+    <!-- BETA -->
+    <string name="beta_header" translatable="false">STAND UP\nIF YOU \u2764 DARTS</string>
+    <string name="beta_tagline" translatable="false">Most popular features, will be developed first</string>
 </resources>
