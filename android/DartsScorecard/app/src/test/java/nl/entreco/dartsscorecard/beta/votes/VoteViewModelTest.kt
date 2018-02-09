@@ -7,7 +7,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.beta.BetaModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.SubmitVoteUsecase
+import nl.entreco.domain.beta.vote.SubmitVoteUsecase
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

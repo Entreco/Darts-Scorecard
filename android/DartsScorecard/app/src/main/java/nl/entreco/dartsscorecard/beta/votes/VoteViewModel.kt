@@ -7,9 +7,9 @@ import nl.entreco.dartsscorecard.beta.BetaAnimator
 import nl.entreco.dartsscorecard.beta.BetaModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.SubmitVoteRequest
-import nl.entreco.domain.beta.SubmitVoteResponse
-import nl.entreco.domain.beta.SubmitVoteUsecase
+import nl.entreco.domain.beta.vote.SubmitVoteRequest
+import nl.entreco.domain.beta.vote.SubmitVoteResponse
+import nl.entreco.domain.beta.vote.SubmitVoteUsecase
 import javax.inject.Inject
 
 /**

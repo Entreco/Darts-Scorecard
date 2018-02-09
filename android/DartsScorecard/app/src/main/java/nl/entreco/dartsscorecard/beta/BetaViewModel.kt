@@ -6,7 +6,7 @@ import android.arch.lifecycle.Observer
 import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.SubscribeToFeaturesUsecase
+import nl.entreco.domain.beta.connect.SubscribeToFeaturesUsecase
 import javax.inject.Inject
 
 /**

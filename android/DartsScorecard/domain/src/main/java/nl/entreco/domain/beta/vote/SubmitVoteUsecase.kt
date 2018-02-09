@@ -1,4 +1,4 @@
-package nl.entreco.domain.beta
+package nl.entreco.domain.beta.vote
 
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background

@@ -6,14 +6,18 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableArrayList
 import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.beta.ConnectToBillingUsecase
 import nl.entreco.domain.beta.Donation
+import nl.entreco.domain.beta.connect.ConnectToBillingUsecase
+import nl.entreco.domain.beta.donations.FetchDonationsResponse
+import nl.entreco.domain.beta.donations.FetchDonationsUsecase
 import javax.inject.Inject
 
 /**
  * Created by entreco on 08/02/2018.
  */
-class DonateViewModel @Inject constructor(private val lifeCycle: Lifecycle, private val connectToBillingUsecase: ConnectToBillingUsecase) : BaseViewModel(), LifecycleObserver {
+class DonateViewModel @Inject constructor(private val lifeCycle: Lifecycle,
+                                          private val connectToBillingUsecase: ConnectToBillingUsecase,
+                                          private val fetchDonationsUsecase: FetchDonationsUsecase) : BaseViewModel(), LifecycleObserver {
 
     init {
         lifeCycle.addObserver(this)
@@ -21,9 +25,9 @@ class DonateViewModel @Inject constructor(private val lifeCycle: Lifecycle, priv
 
     val donations = ObservableArrayList<Donation>()
 
-    private fun onDonationsSuccess(): (List<Donation>) -> Unit = { result ->
+    private fun onDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->
         donations.clear()
-        donations.addAll(result)
+        donations.addAll(result.donations)
     }
 
     private fun onDonationsFailed(): (Throwable) -> Unit = {
@@ -33,7 +37,7 @@ class DonateViewModel @Inject constructor(private val lifeCycle: Lifecycle, priv
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun bind() {
         connectToBillingUsecase.bind { connected ->
-            connectToBillingUsecase.exec(onDonationsSuccess(), onDonationsFailed())
+            fetchDonationsUsecase.exec(onDonationsSuccess(), onDonationsFailed())
         }
     }
 

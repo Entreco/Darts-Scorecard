@@ -1,8 +1,11 @@
-package nl.entreco.domain.beta
+package nl.entreco.domain.beta.vote
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.beta.vote.SubmitVoteRequest
+import nl.entreco.domain.beta.vote.SubmitVoteResponse
+import nl.entreco.domain.beta.vote.SubmitVoteUsecase
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.FeatureRepository

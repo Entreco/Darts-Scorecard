@@ -19,7 +19,7 @@ class DonateBindings {
         @BindingAdapter("donations")
         fun addDonations(viewGroup: ViewGroup, donations: List<Donation>?) {
             val inflater = LayoutInflater.from(viewGroup.context)
-            clearPreviousViews(viewGroup)
+            clearPreviousViewsIfEmpty(viewGroup, donations)
             addNewViews(donations, inflater, viewGroup)
         }
 
@@ -30,8 +30,10 @@ class DonateBindings {
             }
         }
 
-        internal fun clearPreviousViews(viewGroup: ViewGroup) {
-            (1 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
+        internal fun clearPreviousViewsIfEmpty(viewGroup: ViewGroup, donations: List<Donation>?) {
+            if(donations != null && donations.isNotEmpty()){
+                (1 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
+            }
         }
     }
 }

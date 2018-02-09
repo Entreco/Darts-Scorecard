@@ -1,9 +1,10 @@
-package nl.entreco.domain.beta
+package nl.entreco.domain.beta.connect
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.FeatureRepository

@@ -1,6 +1,7 @@
-package nl.entreco.domain.beta
+package nl.entreco.domain.beta.connect
 
 import nl.entreco.domain.BaseUsecase
+import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
 import nl.entreco.domain.repository.FeatureRepository

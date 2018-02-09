@@ -1,4 +1,4 @@
-package nl.entreco.domain.beta
+package nl.entreco.domain.beta.connect
 
 import android.support.annotation.UiThread
 import nl.entreco.domain.BaseUsecase
@@ -21,12 +21,5 @@ class ConnectToBillingUsecase @Inject constructor(private val billingRepository:
     @UiThread
     fun unbind() {
         billingRepository.unbind()
-    }
-
-    fun exec(done: (List<Donation>)->Unit, fail: (Throwable) -> Unit){
-        onBackground({
-            val donations = billingRepository.fetchDonations()
-            onUi { done(donations) }
-        }, fail)
     }
 }
