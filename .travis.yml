@@ -57,7 +57,7 @@ before_deploy:
 - cd app/build/outputs/apk/release
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 $APP_NAME _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
-  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --in $_{APP_NAME} --out $APP_NAME
+  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --in _${APP_NAME} --out $APP_NAME
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify $APP_NAME
 deploy:
   provider: releases
