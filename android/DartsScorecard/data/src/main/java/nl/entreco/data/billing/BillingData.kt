@@ -37,15 +37,15 @@ class FetchDonationsData {
         return skuBundle
     }
 
-    fun contains(it: Donation): Boolean {
-        return listOfProducts().contains(it.sku)
+    fun contains(sku: String): Boolean {
+        return listOfProducts().contains(sku)
     }
 
     fun type(): String {
         return type
     }
 
-    fun getVotes(productId: String?): Int {
+    fun getVotes(productId: String): Int {
         return listOfDonations().first { it.productId == productId }.votes
     }
 }

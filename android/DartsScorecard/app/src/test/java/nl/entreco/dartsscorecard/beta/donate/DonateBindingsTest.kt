@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.beta.donate
 
 import android.view.ViewGroup
+import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.beta.Donation
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -15,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class DonateBindingsTest{
 
-    @Mock private lateinit var mockDonation : Donation
     @Mock private lateinit var mockViewGroup : ViewGroup
 
     @Test
@@ -32,9 +31,9 @@ class DonateBindingsTest{
     fun `it should remove empty View when list is empty`() {
         whenever(mockViewGroup.childCount).thenReturn(0)
         DonateBindings.clearPreviousViewsIfEmpty(mockViewGroup)
-        verify(mockViewGroup).removeViewAt(0)
+        verify(mockViewGroup, never()).removeViewAt(0)
     }
-    
+
     @Test
     fun `it should remove empty View when list has 1 item`() {
         whenever(mockViewGroup.childCount).thenReturn(2)

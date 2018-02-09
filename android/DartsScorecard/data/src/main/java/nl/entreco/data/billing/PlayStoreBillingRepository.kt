@@ -50,7 +50,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
                 val votes = donations.getVotes(productId)
 
                 Donation(json.getString("title"), json.getString("description"), productId, price, votes)
-            }.filter { donations.contains(it) }
+            }.filter { donations.contains(it.sku) }
         } else {
             throw Throwable("Unable to retrieve donations, $bundle")
         }
