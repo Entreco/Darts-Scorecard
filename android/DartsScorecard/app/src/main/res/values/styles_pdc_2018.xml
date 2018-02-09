@@ -12,8 +12,8 @@
     <color name="pdc_2018_black_dark">#13120E</color>
 
     <style name="Pdc_2018" parent="AppTheme">
-        <item name="colorPrimary">@color/pdc_2018_green_light</item>
-        <item name="colorPrimaryDark">#126408</item>
+        <item name="colorPrimary">@color/pdc_2018_red_light</item>
+        <item name="colorPrimaryDark">@color/pdc_2018_red_dark</item>
         <item name="gradient_angle">270</item>
         <item name="match_description">@string/pdc_match</item>
         <item name="colorAccent">@color/pdc_2018_green_dark</item>

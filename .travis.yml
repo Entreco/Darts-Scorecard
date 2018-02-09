@@ -39,7 +39,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_c5c67234e863_key -iv $encrypted_c5c67234e863_iv
   -in android/DartsScorecard/scripts/dsc_keystore.enc -out android/DartsScorecard/scripts/dsc_keystore
   -d
-- openssl aes-256-cbc -K $encrypted_cba7e26bfac2_key -iv $encrypted_cba7e26bfac2_iv -in android/DartsScorecard/app/google-services.json.enc -out android/DartsScorecard/app/google-services.json -d
+- openssl aes-256-cbc -K $encrypted_5b6e56c7f62f_key -iv $encrypted_5b6e56c7f62f_iv -in android/DartsScorecard/app/google-services.json.enc -out android/DartsScorecard/app/google-services.json -d
   
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -57,13 +57,12 @@ before_deploy:
 - cd app/build/outputs/apk/release
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 $APP_NAME _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
-  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --out
-  _${APP_NAME} _${APP_NAME}
-- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify _${APP_NAME}
+  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --in _${APP_NAME} --out $APP_NAME
+- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner verify $APP_NAME
 deploy:
   provider: releases
   file: 
-  - _${APP_NAME}
+  - $APP_NAME
   - $TRAVIS_BUILD_DIR/android/DartsScorecard/app/build/outputs/mapping/release/mapping.txt
   api_key: $apikey
   skip_cleanup: true

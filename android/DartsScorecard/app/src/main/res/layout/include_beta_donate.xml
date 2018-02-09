@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/include_beta_detail">
+
+    <data>
+
+        <variable
+            name="total"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+    </data>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/def"
+            app:donations="@{viewModel.donations}"
+            app:viewModel="@{viewModel}">
+
+            <TextView
+                android:id="@+id/explain"
+                style="@style/Beta.Explain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:textWithTags="@{@string/votes_explained(total)}"
+                tools:text="@string/votes_explained" />
+
+            <TextView
+                style="@style/Beta.Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:text="@string/err_unable_to_donate" />
+
+        </LinearLayout>
+</layout>

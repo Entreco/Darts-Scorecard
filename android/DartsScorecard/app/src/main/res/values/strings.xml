@@ -20,6 +20,20 @@
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
     <string name="title_setup">Configure 01 Game</string>
+    <string name="title_beta">Beta Features</string>
+
+    <!-- Launch -->
+    <string name="resume_x01">@string/resume</string>
+    <string name="play_x01">Start new 01</string>
+    <string name="beta">Beta</string>
+
+    <!-- Beta -->
+    <string name="vote">VOTE</string>
+    <string name="number_votes">%1$s VOTES</string>
+    <string name="donation_button">%1$s %2$s</string>
+    <string name="donation_thanks">Thanks! You are AWESOME!</string>
+    <string name="voting_disclaimer">You can vote again (or make a donation)</string>
+    <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p></string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>
@@ -62,6 +76,7 @@
 
     <!-- Errors -->
     <string name="err_unable_to_create_player">Unable to create player.</string>
+    <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
