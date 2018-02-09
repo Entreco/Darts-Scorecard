@@ -32,6 +32,7 @@ class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: 
 
     fun unsubscribe(owner: LifecycleOwner) {
         features.removeObservers(owner)
+        features.value = emptyList()
         subscribeToFeaturesUsecase.unsubscribe()
     }
 }

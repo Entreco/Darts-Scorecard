@@ -22,16 +22,16 @@ class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
 
 class FetchDonationsData {
 
-    private fun listOfDonations() : List<BillingData>{
-//        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes())
-        return listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable())
+    private fun listOfDonations(): List<BillingData> {
+        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes())
+//        return listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable())
     }
 
-    private fun listOfProducts() : List<String>{
+    private fun listOfProducts(): List<String> {
         return listOfDonations().map { it.productId }
     }
 
-    fun skuBundle() : Bundle {
+    fun skuBundle(): Bundle {
         val skuBundle = Bundle()
         skuBundle.putStringArrayList("ITEM_ID_LIST", ArrayList(listOfProducts()))
         return skuBundle
@@ -46,11 +46,11 @@ class FetchDonationsData {
     }
 
     fun getVotes(productId: String?): Int {
-        return listOfDonations().first{ it.productId == productId }.votes
+        return listOfDonations().first { it.productId == productId }.votes
     }
 }
 
-class MakeDonationData(private val donation: Donation){
+class MakeDonationData(private val donation: Donation) {
 
     fun sku(): String {
         return donation.sku
@@ -61,7 +61,7 @@ class MakeDonationData(private val donation: Donation){
     }
 
     fun payload(): String {
-        return (0..100).joinToString { chars[Random().nextInt(chars.size -1)].toString() }
+        return (0..100).joinToString { chars[Random().nextInt(chars.size - 1)].toString() }
     }
 }
 

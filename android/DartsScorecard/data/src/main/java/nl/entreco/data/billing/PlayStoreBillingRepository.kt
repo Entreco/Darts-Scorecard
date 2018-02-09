@@ -17,7 +17,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
 
     private val BILLING_RESPONSE_RESULT_OK = 0
 
-    private val apiVersion = 3
+    private val apiVersion = 5
     private val packageName = context.packageName
 
     @UiThread

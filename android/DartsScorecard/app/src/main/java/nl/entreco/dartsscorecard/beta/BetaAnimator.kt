@@ -53,11 +53,13 @@ class BetaAnimator(binding: ActivityBetaBinding) {
         behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    fun vote(feature: BetaModel) {
-        appBar.setExpanded(false, true)
-        appBar.isEnabled = false
-        behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-        toggler?.onFeatureSelected(feature)
+    fun vote(model: BetaModel) {
+        if(model.title.get() != null) {
+            appBar.setExpanded(false, true)
+            appBar.isEnabled = false
+            behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+            toggler?.onFeatureSelected(model)
+        }
     }
 
     fun onBackPressed(): Boolean? {

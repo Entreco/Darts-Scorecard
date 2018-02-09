@@ -39,6 +39,7 @@
         <item name="android:padding">@dimen/def</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:layout_margin">@dimen/def</item>
     </style>
 
     <style name="BetaHeader">

@@ -21,7 +21,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="@dimen/def"
-            android:animateLayoutChanges="true"
             app:donations="@{viewModel.donations}"
             app:viewModel="@{viewModel}">
 

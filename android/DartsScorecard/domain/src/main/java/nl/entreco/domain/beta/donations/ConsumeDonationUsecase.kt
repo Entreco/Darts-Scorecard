@@ -1,6 +1,5 @@
 package nl.entreco.domain.beta.donations
 
-import android.util.Log
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
@@ -19,7 +18,6 @@ class ConsumeDonationUsecase @Inject constructor(private val billingRepository: 
             val token = json.getString("purchaseToken")
             val productId = json.getString("productId")
             val result = billingRepository.consume(token)
-            Log.w("DONATE", "exec usecase: $json $result")
             onUi { done(ConsumeDonationResponse(result, productId)) }
         }, fail)
     }

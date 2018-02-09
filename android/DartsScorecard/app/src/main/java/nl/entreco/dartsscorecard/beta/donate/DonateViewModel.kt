@@ -9,6 +9,7 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.connect.ConnectToBillingUsecase
 import nl.entreco.domain.beta.donations.*
@@ -22,18 +23,22 @@ class DonateViewModel @Inject constructor(
         private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchDonationsUsecase: FetchDonationsUsecase,
         private val makeDonation: MakeDonationUsecase,
-        private val consumeDonation: ConsumeDonationUsecase) : BaseViewModel(), LifecycleObserver {
+        private val consumeDonation: ConsumeDonationUsecase,
+        private val analytics: Analytics) : BaseViewModel(), LifecycleObserver {
 
     init {
         donateCallback.lifeCycle().addObserver(this)
+        analytics.trackViewDonations()
     }
 
+    private var productId : String = ""
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
 
     fun onDonate(donation: Donation) {
         loading.set(true)
-        makeDonation.exec(MakeDonationRequest(donation), onStartMakeDonation(), { err -> loading.set(false) })
+        productId = donation.sku
+        makeDonation.exec(MakeDonationRequest(donation), onStartMakeDonation(), onStartMakeDonationFailed())
     }
 
     private fun onStartMakeDonation(): (MakeDonationResponse) -> Unit = { response ->
@@ -47,25 +52,41 @@ class DonateViewModel @Inject constructor(
         consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature), onConsumeDonationSuccess(), onConsumeDonationFailed())
     }
 
-    fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
-        Log.w("DONATE", "onMakeDonationFailed: $resultCode $data")
+
+    private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
+        analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
         loading.set(false)
+        productId = ""
     }
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
         if (response.resultCode == RESULT_OK) {
-            donateCallback.onDonationMade(donationWithId(response))
+            val donation = donationWithId(response)
+            analytics.trackPurchase(donation)
+            donateCallback.onDonationMade(donation)
         } else {
-            Log.w("DONATE", "onConsumeDonation !RESULT_OK: $response")
+            analytics.trackPurchaseFailed(response.productId, "Consume failed")
         }
         loading.set(false)
+        productId = ""
     }
+
+    private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
+        Log.w("DONATE", "consumeFailed: $it")
+        analytics.trackPurchaseFailed(productId, "Consume failed")
+        loading.set(false)
+        productId = ""
+    }
+
 
     private fun donationWithId(response: ConsumeDonationResponse) =
             donations.first { it.sku == response.productId }
 
-    private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
-        Log.w("DONATE", "consumeFailed: $it")
+    fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
+        Log.w("DONATE", "onMakeDonationFailed: $resultCode $data")
+        analytics.trackPurchaseFailed(productId, "ActivityResult failed")
+        loading.set(false)
+        productId = ""
     }
 
     private fun onFetchDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.di.beta
 
-import android.arch.lifecycle.Lifecycle
+import nl.entreco.dartsscorecard.beta.donate.DonateCallback
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,10 +13,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BetaModuleTest{
 
-    @Mock private lateinit var mockLifecycle : Lifecycle
+    @Mock private lateinit var mockDonateCallback : DonateCallback
 
     @Test
     fun `it should not be null`() {
-        Assert.assertNotNull(BetaModule(mockLifecycle))
+        Assert.assertNotNull(BetaModule(mockDonateCallback))
     }
 }
