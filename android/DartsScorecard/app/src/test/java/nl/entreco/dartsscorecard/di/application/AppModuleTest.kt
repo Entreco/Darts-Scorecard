@@ -47,4 +47,9 @@ class AppModuleTest {
     fun provideDatabase() {
         assertNotNull(subject.provideDb(mockApp))
     }
+
+    @Test(expected = IllegalStateException::class)
+    fun provideFireStore() {
+        assertNotNull(subject.provideFireStore())
+    }
 }

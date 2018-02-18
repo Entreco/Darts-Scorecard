@@ -31,7 +31,7 @@ class DonateViewModel @Inject constructor(
         analytics.trackViewDonations()
     }
 
-    private var productId : String = ""
+    internal var productId : String = ""
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
 

@@ -5,6 +5,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
@@ -67,6 +68,12 @@ class LaunchViewModelTest {
     }
 
     @Test
+    fun `it should launch Beta when 'onBeta' is pressed`() {
+        whenOnBetaIsClicked()
+        thenBetaIsLaunched()
+    }
+
+    @Test
     fun `it should launch Play01 when 'onResume' is pressed`() {
         givenTeamsAndStartScore("remco|eva", 501)
         givenResumedGame()
@@ -114,6 +121,10 @@ class LaunchViewModelTest {
         subject.onNewGamePressed(mockContext)
     }
 
+    private fun whenOnBetaIsClicked() {
+        subject.onBetaPressed(mockContext)
+    }
+
     private fun whenOnResumeIsClicked() {
         subject.onResumePressed(mockContext)
     }
@@ -130,6 +141,13 @@ class LaunchViewModelTest {
         try {
             verify(Setup01Activity).launch(mockContext)
         } catch (ignore: NotAMockException) {
+        }
+    }
+
+    private fun thenBetaIsLaunched(){
+        try {
+            verify(BetaActivity).launch(mockContext)
+        } catch (ignore: NotAMockException){
         }
     }
 

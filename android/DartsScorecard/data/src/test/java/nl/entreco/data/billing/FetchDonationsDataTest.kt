@@ -47,7 +47,7 @@ class FetchDonationsDataTest {
     fun `should return zero for weird ones (blank)`() {
         assertEquals(0, FetchDonationsData().getVotes(" "))
     }
-    
+
     @Test(expected = NoSuchElementException::class)
     fun `should return zero for weird ones (not found)`() {
         assertEquals(0, FetchDonationsData().getVotes("some weird sku"))
