@@ -1,14 +1,13 @@
 package nl.entreco.dartsscorecard.beta.donate
 
+import android.app.Activity
 import android.arch.lifecycle.Lifecycle
+import android.content.Intent
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.connect.ConnectToBillingUsecase
-import nl.entreco.domain.beta.donations.ConsumeDonationUsecase
-import nl.entreco.domain.beta.donations.FetchDonationsUsecase
-import nl.entreco.domain.beta.donations.MakeDonationResponse
-import nl.entreco.domain.beta.donations.MakeDonationUsecase
+import nl.entreco.domain.beta.donations.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +29,8 @@ class DonateViewModelTest {
     @Mock private lateinit var mockAnalytics : Analytics
     private lateinit var subject : DonateViewModel
 
-    private val doneCaptor = argumentCaptor<(MakeDonationResponse)->Unit>()
+    private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse)->Unit>()
+    private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse)->Unit>()
     private val failCaptor = argumentCaptor<(Throwable)->Unit>()
 
     @Test
@@ -87,9 +87,85 @@ class DonateViewModelTest {
         thenProductIdIs("")
     }
 
+    @Test
+    fun `it should consume donation when donation made`() {
+        givenSubject()
+        whenDonationMade()
+        thenConsumeUsecaseIsExecuted()
+    }
+
+    @Test
+    fun `it should set loading(false) when consuming donation succeeds`() {
+        givenSubject()
+        whenConsumingDonationSucceeds("id1")
+        thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should clear ProductId when consuming donation succeeds`() {
+        givenSubject()
+        whenConsumingDonationSucceeds("id2")
+        thenProductIdIs("")
+    }
+
+    @Test
+    fun `it should notify callback when consuming donation succeeds`() {
+        givenSubject()
+        givenDonation("id3")
+        whenConsumingDonationSucceeds("id3")
+        thenCallbackIsNotifiedOfSuccess()
+    }
+
+    @Test
+    fun `it should trackPurchase when consuming donation succeeds`() {
+        givenSubject()
+        givenDonation("id4")
+        whenConsumingDonationSucceeds("id4")
+        thenPurchaseIsTracked()
+    }
+
+    @Test
+    fun `it should set loading(false) when consuming donation fails`() {
+        givenSubject()
+        whenConsumingDonationFails()
+        thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should clear ProductId when consuming donation fails`() {
+        givenSubject()
+        whenConsumingDonationFails()
+        thenProductIdIs("")
+    }
+
+    @Test
+    fun `it should track Purchase Failed when consuming donation fails`() {
+        givenSubject()
+        whenConsumingDonationFails(RuntimeException("Google play services not installed"))
+        thenPurchaseFailedIstracked()
+    }
+
+    @Test
+    fun `it should set loading(false) when consuming donation fails (err)`() {
+        givenSubject()
+        whenConsumingDonationFails(RuntimeException("Google play services not installed"))
+        thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should clear Productid when consuming donation fails (err)`() {
+        givenSubject()
+        whenConsumingDonationFails(RuntimeException("Google play services not installed"))
+        thenProductIdIs("")
+    }
+
     private fun givenSubject() {
         whenever(mockDonateCallback.lifeCycle()).thenReturn(mockLifecycle)
         subject = DonateViewModel(mockDonateCallback, mockConnectToBillingUsecase, mockFetchDonationsUsecase, mockMakeDonationsUsecase, mockConsumeDonationUsecase, mockAnalytics)
+    }
+
+    private fun givenDonation(productId: String) {
+        subject.donations.add(Donation("title", "desc", productId, "price", 3))
     }
 
     private fun whenMakingDonation(sku: String) {
@@ -99,14 +175,40 @@ class DonateViewModelTest {
 
     private fun whenMakingDonationSucceeds(sku: String) {
         whenMakingDonation(sku)
-        verify(mockMakeDonationsUsecase).exec(any(), doneCaptor.capture(), any())
+        verify(mockMakeDonationsUsecase).exec(any(), doneMakeCaptor.capture(), any())
         val response = mock<MakeDonationResponse>()
-        doneCaptor.lastValue.invoke(response)
+        doneMakeCaptor.lastValue.invoke(response)
     }
 
     private fun whenMakingDonationFails(err: Throwable) {
         whenMakingDonation("some sku")
         verify(mockMakeDonationsUsecase).exec(any(), any(), failCaptor.capture())
+        failCaptor.lastValue.invoke(err)
+    }
+
+    private fun whenDonationMade() {
+        val intent = mock<Intent>(){
+            on { getStringExtra("INAPP_PURCHASE_DATA") } doReturn "Purchase data"
+            on { getStringExtra("INAPP_DATA_SIGNATURE") } doReturn "Signature"
+        }
+        subject.onMakeDonationSuccess(intent)
+    }
+
+    private fun whenConsumingDonationSucceeds(productId: String) {
+        whenDonationMade()
+        verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_OK, productId))
+    }
+
+    private fun whenConsumingDonationFails() {
+        whenDonationMade()
+        verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_CANCELED,"productid"))
+    }
+
+    private fun whenConsumingDonationFails(err: Throwable) {
+        whenDonationMade()
+        verify(mockConsumeDonationUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
 
@@ -133,5 +235,21 @@ class DonateViewModelTest {
 
     private fun thenCallbackIsNotified() {
         verify(mockDonateCallback).makeDonation(any())
+    }
+
+    private fun thenConsumeUsecaseIsExecuted() {
+        verify(mockConsumeDonationUsecase).exec(any(), any(), any())
+    }
+
+    private fun thenCallbackIsNotifiedOfSuccess() {
+        verify(mockDonateCallback).onDonationMade(any())
+    }
+
+    private fun thenPurchaseIsTracked() {
+        verify(mockAnalytics).trackPurchase(any())
+    }
+
+    private fun thenPurchaseFailedIstracked() {
+        verify(mockAnalytics).trackPurchaseFailed(any(),eq("Consume failed"))
     }
 }

@@ -31,7 +31,7 @@ class DonateViewModel @Inject constructor(
         analytics.trackViewDonations()
     }
 
-    internal var productId : String = ""
+    internal var productId: String = ""
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
 
@@ -60,15 +60,20 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
-        if (response.resultCode == RESULT_OK) {
-            val donation = donationWithId(response)
-            analytics.trackPurchase(donation)
-            donateCallback.onDonationMade(donation)
-        } else {
-            analytics.trackPurchaseFailed(response.productId, "Consume failed")
+        when(response.resultCode){
+            RESULT_OK -> donationDone(response)
+            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed")
         }
+
         loading.set(false)
         productId = ""
+    }
+
+    private fun donationDone(response: ConsumeDonationResponse) {
+        donationWithId(response)?.let { donation ->
+            analytics.trackPurchase(donation)
+            donateCallback.onDonationMade(donation)
+        }
     }
 
     private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
@@ -79,8 +84,8 @@ class DonateViewModel @Inject constructor(
     }
 
 
-    private fun donationWithId(response: ConsumeDonationResponse) =
-            donations.first { it.sku == response.productId }
+    private fun donationWithId(response: ConsumeDonationResponse): Donation? =
+            donations.firstOrNull { it.sku == response.productId }
 
     fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
         Log.w("DONATE", "onMakeDonationFailed: $resultCode $data")
