@@ -29,14 +29,43 @@ class DonateViewModelTest {
     @Mock private lateinit var mockAnalytics : Analytics
     private lateinit var subject : DonateViewModel
 
+    private val fetchDoneCaptor = argumentCaptor<(Boolean)->Unit>()
     private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse)->Unit>()
     private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse)->Unit>()
     private val failCaptor = argumentCaptor<(Throwable)->Unit>()
 
     @Test
-    fun `it should fetch donations`() {
+    fun `it should register observer`() {
         givenSubject()
         itShouldAddObserver()
+    }
+
+    @Test
+    fun `it should unregister observer`() {
+        givenSubject()
+        whenDestroyIsCalled()
+        itShouldRemoveObserver()
+    }
+
+    @Test
+    fun `it should fetch donations when fetching binding to billing succeeds`() {
+        givenSubject()
+        whenFetchingDonationsSucceeds()
+        thenDonationsAreFetched()
+    }
+
+    @Test
+    fun `it should NOT fetch donations when fetching binding to billing fails`() {
+        givenSubject()
+        whenFetchingDonationsFails()
+        thenDonationsAreNotFetched()
+    }
+
+    @Test
+    fun `it should do it when unbinding from billing`() {
+        givenSubject()
+        whenUnbinding()
+        thenBillingIsUnbinded()
     }
 
     @Test
@@ -78,6 +107,27 @@ class DonateViewModelTest {
         givenSubject()
         whenMakingDonationFails(RuntimeException("Alas"))
         thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should set loading(false) when make donation fails`() {
+        givenSubject()
+        whenMakingDonationFails()
+        thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should clear ProductId when make donation fails`() {
+        givenSubject()
+        whenMakingDonationFails()
+        thenProductIdIs("")
+    }
+
+    @Test
+    fun `it should track Purchase Failed when make donation fails`() {
+        givenSubject()
+        whenMakingDonationFails()
+        thenPurchaseFailedIstracked("ActivityResult failed")
     }
 
     @Test
@@ -142,7 +192,7 @@ class DonateViewModelTest {
     fun `it should track Purchase Failed when consuming donation fails`() {
         givenSubject()
         whenConsumingDonationFails(RuntimeException("Google play services not installed"))
-        thenPurchaseFailedIstracked()
+        thenPurchaseFailedIstracked("Consume failed")
     }
 
     @Test
@@ -187,11 +237,16 @@ class DonateViewModelTest {
     }
 
     private fun whenDonationMade() {
-        val intent = mock<Intent>(){
+        val intent = mock<Intent>{
             on { getStringExtra("INAPP_PURCHASE_DATA") } doReturn "Purchase data"
             on { getStringExtra("INAPP_DATA_SIGNATURE") } doReturn "Signature"
         }
         subject.onMakeDonationSuccess(intent)
+    }
+
+    private fun whenMakingDonationFails() {
+        val intent = mock<Intent>()
+        subject.onMakeDonationFailed(Activity.RESULT_CANCELED, intent)
     }
 
     private fun whenConsumingDonationSucceeds(productId: String) {
@@ -211,10 +266,32 @@ class DonateViewModelTest {
         verify(mockConsumeDonationUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
+    private fun whenFetchingDonationsSucceeds() {
+        subject.bind()
+        verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
+        fetchDoneCaptor.lastValue.invoke(true)
+    }
+    private fun whenFetchingDonationsFails() {
+        subject.bind()
+        verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
+        fetchDoneCaptor.lastValue.invoke(false)
+    }
+
+    private fun whenDestroyIsCalled() {
+        subject.destroy()
+    }
+
+    private fun whenUnbinding() {
+        subject.unbind()
+    }
 
     private fun itShouldAddObserver() {
         verify(mockDonateCallback).lifeCycle()
         verify(mockLifecycle).addObserver(subject)
+    }
+
+    private fun itShouldRemoveObserver() {
+        verify(mockLifecycle).removeObserver(subject)
     }
 
     private fun itShouldTrackViewingDonations() {
@@ -227,6 +304,14 @@ class DonateViewModelTest {
 
     private fun thenProductIdIs(expected: String) {
         assertEquals(expected, subject.productId)
+    }
+
+    private fun thenDonationsAreFetched(){
+        verify(mockFetchDonationsUsecase).exec(any(), any())
+    }
+
+    private fun thenDonationsAreNotFetched(){
+        verifyZeroInteractions(mockFetchDonationsUsecase)
     }
 
     private fun thenUsecaseIsExecuted() {
@@ -249,7 +334,11 @@ class DonateViewModelTest {
         verify(mockAnalytics).trackPurchase(any())
     }
 
-    private fun thenPurchaseFailedIstracked() {
-        verify(mockAnalytics).trackPurchaseFailed(any(),eq("Consume failed"))
+    private fun thenPurchaseFailedIstracked(step: String) {
+        verify(mockAnalytics).trackPurchaseFailed(any(),eq(step))
+    }
+
+    private fun thenBillingIsUnbinded() {
+        verify(mockConnectToBillingUsecase).unbind()
     }
 }
