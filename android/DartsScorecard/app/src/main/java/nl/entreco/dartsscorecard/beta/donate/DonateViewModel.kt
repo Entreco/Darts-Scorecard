@@ -49,7 +49,10 @@ class DonateViewModel @Inject constructor(
         Log.w("DONATE", "onMakeDonationSuccess: $data")
         val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
         val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-        consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature), onConsumeDonationSuccess(), onConsumeDonationFailed())
+
+        consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
+                onConsumeDonationSuccess(),
+                onConsumeDonationFailed())
     }
 
 
@@ -60,7 +63,7 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
-        when(response.resultCode){
+        when (response.resultCode) {
             RESULT_OK -> donationDone(response)
             else -> analytics.trackPurchaseFailed(response.productId, "Consume failed")
         }
