@@ -20,9 +20,6 @@ internal data class FeatureApiData(
         @PropertyName("title")
         val title: String,
 
-        @PropertyName("remco")
-        val remco: String?,
-
         @PropertyName("goal")
         val goal: Int,
 

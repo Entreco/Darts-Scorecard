@@ -58,6 +58,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val nextTeam = (request.startIndex+1)%teams.size
         revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams,nextTeam),
                 { response ->
+                    this.request = this.request.copy(gameId = response.game.id, startIndex = nextTeam)
                     this.game = response.game
                     this.teams = response.teams
                     this.load.onLoaded(response.teams, game.scores, response.settings, this)
