@@ -55,7 +55,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     override fun onRevanche() {
-        revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams,2),
+        val nextTeam = (request.startIndex+1)%teams.size
+        revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams,nextTeam),
                 { response ->
                     this.game = response.game
                     load.onLoaded(response.teams, game.scores, response.settings, this)
