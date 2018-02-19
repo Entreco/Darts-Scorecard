@@ -21,6 +21,10 @@ class RevancheUsecase @Inject constructor(
             val id = gameRepository.create(teams, score, index, legs, sets)
             val game = gameRepository.fetchBy(id)
             val scoreSettings = ScoreSettings(score, legs, sets, index)
+
+            //
+            game.start(index, request.teams)
+
             onUi{ done(RevancheResponse(game, scoreSettings, request.teams, teams)) }
         }, fail)
     }

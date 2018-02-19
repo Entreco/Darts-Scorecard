@@ -32,10 +32,17 @@ class RevancheUsecaseTest {
     private val team2 = Team()
 
     @Test
-    fun recreateGameAndStart() {
+    fun `it should create new game`() {
         givenSubject()
         whenTakingRevanche()
         thenNewGameIsCreated()
+    }
+
+    @Test
+    fun `it should start newly created game`() {
+        givenSubject()
+        whenTakingRevanche()
+        thenNewGameIsStarted()
     }
 
     @Test
@@ -76,6 +83,10 @@ class RevancheUsecaseTest {
 
     private fun thenNewGameIsCreated() {
         verify(mockDone).invoke(any())
+    }
+
+    private fun thenNewGameIsStarted() {
+        verify(mockGame).start(any(), any())
     }
 
     private fun thenErrorIsReported() {

@@ -46,8 +46,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                 { response ->
                     this.game = response.game
                     this.teams = response.teams
-                    load.onLoaded(response.teams, game.scores, response.settings, this)
-                    loaders.forEach {
+                    this.load.onLoaded(response.teams, game.scores, response.settings, this)
+                    this.loaders.forEach {
                         it.onLoaded(response.teams, game.scores, response, null)
                     }
                 },
@@ -59,8 +59,9 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams,nextTeam),
                 { response ->
                     this.game = response.game
-                    load.onLoaded(response.teams, game.scores, response.settings, this)
-                    loaders.forEach {
+                    this.teams = response.teams
+                    this.load.onLoaded(response.teams, game.scores, response.settings, this)
+                    this.loaders.forEach {
                         val playResponse = Play01Response(response.game, response.settings, response.teams, response.teamIds)
                         it.onLoaded(response.teams, game.scores, playResponse, null)
                     }

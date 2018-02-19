@@ -29,7 +29,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
     }
 
     fun undoLastTurn(req: UndoTurnRequest, done: (UndoTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
-        undoTurnUsecase.exec(req, done , fail)
+        undoTurnUsecase.exec(req, done, fail)
     }
 
     fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
@@ -65,7 +65,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                     gameResponse.game.start(playRequest.startIndex, teamResponse.teams)
 
                     /**
-                     *  TODO: This 'prepares' the game for resuming.
+                     *  <b>This 'prepares' the game for resuming.</b>
                      *  It makes sure all Scores are correctly applied,
                      *  but also causes Play01ViewModel to have to ask Game
                      *  for properties related to Stats only
@@ -73,7 +73,6 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                      *  <b>CON</b> -> Game is responsible for tracking Stats - related - stuff
                      */
                     response.turns.forEach { gameResponse.game.handle(it.second) }
-                    /** END OF TO DO */
 
                     val scoreSettings = ScoreSettings(playRequest.startScore, playRequest.numLegs, playRequest.numSets, playRequest.startIndex)
                     done.invoke(Play01Response(gameResponse.game, scoreSettings, teamResponse.teams, playRequest.teamIds))
