@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
+import com.google.gson.GsonBuilder
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
 import nl.entreco.domain.repository.BillingRepository
-import org.json.JSONObject
 
 /**
  * Created by entreco on 08/02/2018.
@@ -17,6 +17,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
 
     private val BILLING_RESPONSE_RESULT_OK = 0
 
+    private val gson by lazy { GsonBuilder().create() }
     private val apiVersion = 5
     private val packageName = context.packageName
 
@@ -38,18 +39,15 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
     override fun fetchDonations(): List<Donation> {
 
         val donations = FetchDonationsData()
-        val bundle = service.getService()?.run {
-            getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
-        }
+        val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
 
         return if (bundle?.getInt("RESPONSE_CODE") == BILLING_RESPONSE_RESULT_OK) {
-            bundle.getStringArrayList("DETAILS_LIST").mapNotNull { response ->
-                val json = JSONObject(response)
-                val productId = json.getString("productId")
-                val price = json.getString("price")
-                val votes = donations.getVotes(productId)
 
-                Donation(json.getString("title"), json.getString("description"), productId, price, votes)
+            bundle.getStringArrayList("DETAILS_LIST").mapNotNull { response ->
+                val donation = gson.fromJson(response, DonationApiData::class.java)
+                val votes = donations.getVotes(donation.productId)
+
+                Donation(donation.title, donation.description, donation.productId, donation.price, votes)
             }.filter { donations.contains(it.sku) }
         } else {
             throw Throwable("Unable to retrieve donations, $bundle")

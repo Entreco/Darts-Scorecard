@@ -7,32 +7,36 @@ import org.junit.Test
  * Created by entreco on 06/02/2018.
  */
 class FeatureApiDataTest {
-
-    private val subject = FeatureApiData()
+    private val description = "description"
+    private val image = "some.image/com"
+    private val title = "Some title"
+    private val goal = 100
+    private val count = 50
+    private val subject = FeatureApiData(description, image, title, goal, count)
 
     @Test
     fun `description is empty initially`() {
-        assertEquals("", subject.description)
+        assertEquals(description, subject.description)
     }
 
     @Test
     fun `image is empty initially`() {
-        assertEquals("", subject.image)
+        assertEquals(image, subject.image)
     }
 
     @Test
     fun `title is empty initially`() {
-        assertEquals("", subject.title)
+        assertEquals(title, subject.title)
     }
 
     @Test
     fun `goal is zero initially`() {
-        assertEquals(0, subject.goal)
+        assertEquals(goal, subject.goal)
     }
 
     @Test
     fun `count is zero initially`() {
-        assertEquals(0, subject.count)
+        assertEquals(count, subject.count)
     }
 
 }
