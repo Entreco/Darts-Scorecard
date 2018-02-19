@@ -10,4 +10,5 @@ interface InputListener {
     fun onUndo()
     fun onDartThrown(turn: Turn, by: Player)
     fun onTurnSubmitted(turn: Turn, by: Player)
+    fun onRevanche()
 }

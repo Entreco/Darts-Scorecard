@@ -118,6 +118,6 @@ class SubscribeToFeaturesUsecaseTest {
     }
 
     private fun f(title: String, required: Int, votes: Int): Feature {
-        return Feature("reference", title, "desc", "image", required, votes)
+        return Feature("reference", title, "desc", "image", "",required, votes)
     }
 }

@@ -19,6 +19,7 @@ class BetaModel(val feature: Feature) {
     val goal = ObservableField<String>("$count / $total")
     val progress = ObservableFloat(((feature.votes.toFloat() / feature.required.toFloat())))
     val image = ObservableField<String>(feature.image)
+    val updates = ObservableField<String>(feature.updates)
 
     private fun format(value: Int): String {
         return when{

@@ -34,6 +34,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:background="@color/white">
 
                 <ImageView
@@ -103,8 +104,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/description"
+                    android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
                     app:total="@{viewModel.feature.total}"
                     app:viewModel="@{donateViewModel}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/description"
+                    android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}"
+                    android:text="@{viewModel.feature.updates}" />
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
 

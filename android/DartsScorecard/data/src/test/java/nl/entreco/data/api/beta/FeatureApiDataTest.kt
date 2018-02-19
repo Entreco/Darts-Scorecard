@@ -12,7 +12,7 @@ class FeatureApiDataTest {
     private val title = "Some title"
     private val goal = 100
     private val count = 50
-    private val subject = FeatureApiData(description, image, title, goal, count)
+    private val subject = FeatureApiData(description, image, title, "", goal, count)
 
     @Test
     fun `description is empty initially`() {
@@ -27,6 +27,11 @@ class FeatureApiDataTest {
     @Test
     fun `title is empty initially`() {
         assertEquals(title, subject.title)
+    }
+
+    @Test
+    fun `feature is empty initially`() {
+        assertEquals("", subject.remco)
     }
 
     @Test

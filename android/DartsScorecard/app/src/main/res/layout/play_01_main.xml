@@ -83,7 +83,7 @@
                         android:alpha="0"
                         android:entries="@{viewModel.teamEntries}"
                         android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onTeamStat0Selected(adapter,index)}"
-                        android:selectedItemPosition="@={viewModel.team0Index}"  />
+                        android:selectedItemPosition="@={viewModel.team0Index}" />
                 </FrameLayout>
 
                 <TextView

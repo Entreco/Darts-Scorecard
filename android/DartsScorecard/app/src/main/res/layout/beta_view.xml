@@ -67,7 +67,8 @@
             android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/preview">
+            android:layout_alignBottom="@id/preview"
+            android:visibility="@{feature.votable ? View.VISIBLE: View.GONE}">
 
             <View
                 android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.databinding.ObservableInt
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
@@ -68,6 +69,13 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     fun clear(): Boolean {
         scoredTxt.set("")
         return true
+    }
+
+    fun onResume(animator: Play01Animator, listener: InputListener){
+        animator.expand()
+        if(resumeDescription.get() == R.string.game_shot_and_match){
+            listener.onRevanche()
+        }
     }
 
     fun entered(score: Int) {

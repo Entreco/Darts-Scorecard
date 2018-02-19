@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.input
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
@@ -30,6 +31,7 @@ class InputViewModelTest {
     @Mock private lateinit var analytics: Analytics
     @InjectMocks private lateinit var subject: InputViewModel
 
+    @Mock private lateinit var mockAnimator: Play01Animator
     @Mock private lateinit var mockListener: InputListener
     @Mock private lateinit var mockInput: TextView
 
@@ -315,6 +317,22 @@ class InputViewModelTest {
         verify(mockListener).onTurnSubmitted(any(), any())
     }
 
+    @Test
+    fun `it should take revanche when game,shot and match`() {
+        givenResumeState(R.string.game_shot_and_match)
+        whenOnResumePressed()
+        thenExpandIsCalled()
+        andRevancheIsCalled()
+    }
+
+    @Test
+    fun `it should NOT take revanche when NOT game,shot and match`() {
+        givenResumeState(R.string.game_on)
+        whenOnResumePressed()
+        thenExpandIsCalled()
+        andRevancheIsNotCalled()
+    }
+
     private fun givenPlayer(playerName: String, pts: Int = 501, state: State = State.NORMAL) {
         givenPlayer = Player(playerName)
         givenRequiredScore = Score(pts, 0, 0)
@@ -342,6 +360,10 @@ class InputViewModelTest {
 
     private fun givenSingleMode(singleMode: Boolean) {
         subject.toggle.set(singleMode)
+    }
+
+    private fun givenResumeState(stateResource: Int) {
+        subject.resumeDescription.set(stateResource)
     }
 
     private fun whenPressingBack() {
@@ -375,6 +397,10 @@ class InputViewModelTest {
         whenPressingSubmit(scored)
     }
 
+    private fun whenOnResumePressed() {
+        subject.onResume(mockAnimator, mockListener)
+    }
+
     private fun thenScoredTxtIs(expected: String) {
         assertEquals(expected, subject.scoredTxt.get())
     }
@@ -386,10 +412,24 @@ class InputViewModelTest {
     private fun thenRequiredIs(required: Int) {
         assertEquals(required, subject.required.get().score)
     }
+
     private fun thenFinalTurnIsStillEmpty() {
         assertNull(subject.finalTurn.get())
     }
+
     private fun thenFinalTurnIsSet() {
         assertNotNull(subject.finalTurn.get())
+    }
+
+    private fun thenExpandIsCalled() {
+        verify(mockAnimator).expand()
+    }
+
+    private fun andRevancheIsCalled() {
+        verify(mockListener).onRevanche()
+    }
+
+    private fun andRevancheIsNotCalled() {
+        verify(mockListener, never()).onRevanche()
     }
 }
