@@ -1,6 +1,5 @@
 package nl.entreco.data.analytics
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -10,20 +9,20 @@ import nl.entreco.domain.beta.Donation
 /**
  * Created by Entreco on 15/11/2017.
  */
-@SuppressLint("MissingPermission")
 class FirebaseAnalytics(context: Context) : Analytics {
 
     private val fb by lazy { FirebaseAnalytics.getInstance(context) }
 
     override fun trackAchievement(achievementId: String) {
-        fb.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, Bundle().apply { putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID, achievementId) })
+        fb.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, Bundle().apply {
+            putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID, achievementId)
+        })
     }
 
     override fun trackViewDonations() {
-        fb.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, Bundle()
-                .apply {
-                    putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "donations")
-                })
+        fb.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST, Bundle().apply {
+            putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "donations")
+        })
     }
 
     override fun trackPurchase(donation: Donation) {

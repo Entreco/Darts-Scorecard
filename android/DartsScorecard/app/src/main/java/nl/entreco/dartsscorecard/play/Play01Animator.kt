@@ -77,14 +77,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                 inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
             }
 
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        inputResume.setOnClickListener { expand() }
-                    }
-                    else -> inputResume.setOnClickListener(null)
-                }
-            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {}
         })
 
         expand()

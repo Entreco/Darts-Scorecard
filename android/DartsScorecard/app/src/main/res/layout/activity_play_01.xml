@@ -69,7 +69,8 @@
             android:id="@+id/includeInput"
             layout="@layout/play_01_input"
             app:listener="@{viewModel}"
-            app:viewModel="@{inputViewModel}" />
+            app:viewModel="@{inputViewModel}"
+            app:animator="@{animator}"/>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

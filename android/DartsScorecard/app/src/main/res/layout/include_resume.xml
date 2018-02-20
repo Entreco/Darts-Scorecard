@@ -4,6 +4,7 @@
     tools:showIn="@layout/play_01_input">
 
     <data>
+
         <variable
             name="message"
             type="Integer" />
@@ -14,33 +15,33 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_arrow_start" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_arrow_start" />
 
-    <TextView
-        style="@style/Input.Resume"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@{safeUnbox(message)}" />
+        <TextView
+            style="@style/Input.Resume"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@{safeUnbox(message)}" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:rotation="180"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_arrow_start" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:rotation="180"
+            android:src="@drawable/ic_arrow_start" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 </layout>
