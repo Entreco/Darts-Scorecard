@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/preview"
-            android:visibility="@{feature.votable ? View.VISIBLE: View.GONE}">
+            android:visibility="@{feature.votable ? View.VISIBLE: View.INVISIBLE}">
 
             <View
                 android:layout_width="match_parent"
@@ -108,9 +108,9 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@null"
+            android:elevation="6dp"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_started"
-            android:elevation="6dp"
             android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>

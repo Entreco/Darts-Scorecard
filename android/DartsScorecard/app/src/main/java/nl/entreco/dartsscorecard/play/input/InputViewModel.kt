@@ -71,9 +71,9 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         return true
     }
 
-    fun onResume(animator: Play01Animator, listener: InputListener){
+    fun onResume(animator: Play01Animator, listener: InputListener) {
         animator.expand()
-        if(resumeDescription.get() == R.string.game_shot_and_match){
+        if (resumeDescription.get() == R.string.game_shot_and_match) {
             listener.onRevanche()
         }
     }

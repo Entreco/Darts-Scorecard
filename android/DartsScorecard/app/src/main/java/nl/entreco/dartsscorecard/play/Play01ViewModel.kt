@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase,
                                           private val revancheUsecase: RevancheUsecase,
                                           private val gameListeners: Play01Listeners,
+                                          private val dialogHelper: DialogHelper,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -55,19 +57,21 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     override fun onRevanche() {
-        val nextTeam = (request.startIndex+1)%teams.size
-        revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams,nextTeam),
-                { response ->
-                    this.request = this.request.copy(gameId = response.game.id, startIndex = nextTeam)
-                    this.game = response.game
-                    this.teams = response.teams
-                    this.load.onLoaded(response.teams, game.scores, response.settings, this)
-                    this.loaders.forEach {
-                        val playResponse = Play01Response(response.game, response.settings, response.teams, response.teamIds)
-                        it.onLoaded(response.teams, game.scores, playResponse, null)
-                    }
-                },
-                { err -> logger.e("err: $err") })
+        dialogHelper.revanche(request.startIndex, teams) { startIndex ->
+            val nextTeam = (startIndex) % teams.size
+            revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams, nextTeam),
+                    { response ->
+                        this.request = this.request.copy(gameId = response.game.id, startIndex = nextTeam)
+                        this.game = response.game
+                        this.teams = response.teams
+                        this.load.onLoaded(response.teams, game.scores, response.settings, this)
+                        this.loaders.forEach {
+                            val playResponse = Play01Response(response.game, response.settings, response.teams, response.teamIds)
+                            it.onLoaded(response.teams, game.scores, playResponse, null)
+                        }
+                    },
+                    { err -> logger.e("err: $err") })
+        }
     }
 
     fun registerListeners(scoreListener: ScoreListener, statListener: StatListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {

@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
@@ -28,6 +29,7 @@ class Play01ViewModelRevancheTest {
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
     @Mock private lateinit var mockLoadNotifier: GameLoadedNotifier<ScoreSettings>
+    @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockScoreSettings: ScoreSettings
@@ -40,6 +42,7 @@ class Play01ViewModelRevancheTest {
     private lateinit var subject: Play01ViewModel
 
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
+    private val selectCaptor = argumentCaptor<(Int) -> Unit>()
 
     @Test
     fun `it should create new game when taking revanche`() {
@@ -49,7 +52,7 @@ class Play01ViewModelRevancheTest {
     }
 
     private fun givenFullyLoadedSubject() {
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockDialogHelper, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))
@@ -57,9 +60,12 @@ class Play01ViewModelRevancheTest {
 
     private fun whenTakingRevanche() {
         subject.onRevanche()
+        verify(mockDialogHelper).revanche(any(), any(), selectCaptor.capture())
+        selectCaptor.lastValue.invoke(0)
     }
 
     private fun thenRevancheUsecaseIsExecuted() {
         verify(mockRevancheUsecase).recreateGameAndStart(any(), revancheCaptor.capture(), any())
+        revancheCaptor.lastValue.invoke(RevancheResponse(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))
     }
 }

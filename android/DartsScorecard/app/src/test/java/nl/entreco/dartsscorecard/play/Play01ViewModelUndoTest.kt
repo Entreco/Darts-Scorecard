@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
@@ -32,6 +33,7 @@ class Play01ViewModelUndoTest{
     @Mock private lateinit var mockPlay01Usecase: Play01Usecase
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
+    @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     private lateinit var subject : Play01ViewModel
 
@@ -66,7 +68,7 @@ class Play01ViewModelUndoTest{
         whenever(mockGame.id).thenReturn(5)
         whenever(mockResponse.game).thenReturn(mockGame)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockDialogHelper, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)
