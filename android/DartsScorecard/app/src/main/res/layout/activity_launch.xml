@@ -73,5 +73,14 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_entreco_black_bg" />
 
+        <TextView
+            style="@style/Launch.Powered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="0dp"
+            android:alpha="0.4"
+            android:text="@string/version" />
+
     </LinearLayout>
 </layout>
