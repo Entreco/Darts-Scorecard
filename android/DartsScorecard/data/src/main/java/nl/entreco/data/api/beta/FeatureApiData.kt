@@ -9,20 +9,23 @@ import com.google.firebase.firestore.PropertyName
  */
 @Keep
 @IgnoreExtraProperties
-internal data class FeatureApiData(
+internal class FeatureApiData {
 
         @PropertyName("description")
-        val description: String,
+        val description: String = ""
 
         @PropertyName("image")
-        val image: String,
+        val image: String = ""
 
         @PropertyName("title")
-        val title: String,
+        val title: String = ""
+
+        @PropertyName("progress")
+        val progress: String? = ""
 
         @PropertyName("goal")
-        val goal: Int,
+        val goal: Int = 0
 
         @PropertyName("count")
-        val count: Int
-)
+        val count: Int = 0
+}
