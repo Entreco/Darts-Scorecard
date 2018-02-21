@@ -63,3 +63,5 @@ release/
 
 **/dig/web/
 **/lint-report\.html
+
+store/recordings/

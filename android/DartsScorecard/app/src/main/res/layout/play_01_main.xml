@@ -36,24 +36,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
+                android:layout_marginBottom="-16dp"
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
-
-                <ImageView
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player1"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_player1" />
-
-                <ImageView
+                    android:background="@drawable/profile_bg"
+                    android:src="@drawable/ic_no_profile" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player2"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_player2" />
+                    android:src="@drawable/ic_no_profile" />
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <!-- Results -->

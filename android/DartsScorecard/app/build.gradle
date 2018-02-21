@@ -47,6 +47,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "de.hdodenhof:circleimageview:$circleImageView"
 
     // Test
     testImplementation "junit:junit:$junit"
