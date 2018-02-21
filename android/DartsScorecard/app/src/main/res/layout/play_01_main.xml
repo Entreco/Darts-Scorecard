@@ -39,28 +39,35 @@
                 android:layout_marginBottom="-16dp"
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
+
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@null"
                     android:background="@drawable/profile_bg"
+                    android:contentDescription="@null"
+                    android:onClick="@{(view) -> viewModel.gotoTeam0(view)}"
                     android:src="@drawable/ic_no_profile" />
+
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
+                    android:onClick="@{(view) -> viewModel.gotoTeam1(view)}"
                     android:src="@drawable/ic_no_profile" />
+
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"

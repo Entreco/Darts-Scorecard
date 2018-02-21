@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.profile.ProfileViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/include_appbar"
+                layout="@layout/toolbar_profile" />
+
+            <include
+                android:id="@+id/float_header_view"
+                layout="@layout/profile_header_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/scrollView"
+                app:layout_behavior="nl.entreco.dartsscorecard.profile.ProfileHeaderBehaviour" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.design.widget.CoordinatorLayout>
+    </RelativeLayout>
+</layout>

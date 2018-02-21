@@ -4,10 +4,12 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableArrayMap
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.view.View
 import android.widget.AdapterView
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.dartsscorecard.profile.ProfileActivity
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
@@ -31,18 +33,26 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
 
     private lateinit var teams: Array<Team>
 
-    fun onTeamStat0Selected(adapter: AdapterView<*>, index: Int){
+    fun onTeamStat0Selected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString()
         val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team0.set(teamStats[selected])
         team0Index.set(selected)
     }
 
-    fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int){
+    fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString()
         val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team1.set(teamStats[selected])
         team1Index.set(selected)
+    }
+
+    fun gotoTeam0(view: View) {
+        ProfileActivity.launch(view.context)
+    }
+
+    fun gotoTeam1(view: View) {
+        ProfileActivity.launch(view.context)
     }
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {
@@ -63,7 +73,7 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
 
         teamEntries.addAll(teams.map { it.toString().capitalize() })
         team0Index.set(0)
-        team1Index.set(if(teams.size > 1) 1 else 0)
+        team1Index.set(if (teams.size > 1) 1 else 0)
     }
 
     private fun onStatsFetched(teams: Array<Team>): (FetchGameStatsResponse) -> Unit {
