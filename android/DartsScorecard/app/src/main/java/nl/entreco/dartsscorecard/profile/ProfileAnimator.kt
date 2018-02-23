@@ -44,8 +44,8 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
             val textSize = (start - end) * (1 - percentage) + end
             Log.w("HAHA", "w:$width perc: $percentage = ${-(width-20)*percentage}")
             expandedName.animate()
-                    .translationX( -(width-120)*percentage)
-                    .translationY( -120 * percentage)
+                    .translationX( -width*percentage)
+                    .translationY(-expandedName.top * percentage)
                     .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
                     .setDuration(0).start()
 
