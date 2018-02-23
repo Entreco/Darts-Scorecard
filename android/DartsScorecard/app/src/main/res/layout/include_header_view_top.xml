@@ -13,6 +13,7 @@
         android:id="@+id/toolbar_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/def"
         android:orientation="horizontal">
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="end"
-            android:background="@drawable/profile_bg"
+            android:background="@drawable/profile_bg_top"
             android:contentDescription="@null"
             android:fitsSystemWindows="true"
             android:src="@drawable/ic_no_profile"
