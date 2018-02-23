@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ProfileImage"></style>
+
+    <style name="ProfileName">
+        <item name="android:textSize">40sp</item>
+        <item name="android:padding">@dimen/def</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ProfileTagline" parent="ProfileName">
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">@dimen/small</item>
+    </style>
+</resources>

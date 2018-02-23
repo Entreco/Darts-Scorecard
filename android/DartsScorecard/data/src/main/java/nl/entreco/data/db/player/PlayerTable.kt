@@ -17,4 +17,7 @@ class PlayerTable {
 
     @ColumnInfo(name = "fav")
     var fav: String = ""
+
+    @ColumnInfo(name = "image")
+    var image: String = ""
 }

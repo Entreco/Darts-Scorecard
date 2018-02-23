@@ -9,9 +9,4 @@ import android.widget.LinearLayout
  */
 class ProfileHeaderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
-    fun setTextSize(translationOffset: Any) {
-        // TODO: Set Text Size
-    }
-
-}
+) : LinearLayout(context, attrs, defStyleAttr)

@@ -48,11 +48,11 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
     }
 
     fun gotoTeam0(view: View) {
-        ProfileActivity.launch(view.context)
+        ProfileActivity.launch(view.context, teams[0])
     }
 
     fun gotoTeam1(view: View) {
-        ProfileActivity.launch(view.context)
+        ProfileActivity.launch(view.context, teams[1])
     }
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {

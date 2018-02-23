@@ -8,6 +8,9 @@
             name="viewModel"
             type="nl.entreco.dartsscorecard.profile.ProfileViewModel" />
 
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.profile.ProfileAnimator" />
     </data>
 
     <RelativeLayout
@@ -20,15 +23,8 @@
 
             <include
                 android:id="@+id/include_appbar"
-                layout="@layout/toolbar_profile" />
-
-            <include
-                android:id="@+id/float_header_view"
-                layout="@layout/profile_header_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/scrollView"
-                app:layout_behavior="nl.entreco.dartsscorecard.profile.ProfileHeaderBehaviour" />
+                layout="@layout/toolbar_profile"
+                app:profile="@{viewModel.profile}" />
 
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/scrollView"

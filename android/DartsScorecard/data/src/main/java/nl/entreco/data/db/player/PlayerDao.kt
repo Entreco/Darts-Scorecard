@@ -16,6 +16,9 @@ interface PlayerDao {
     @Query("SELECT * FROM Player WHERE id = :id")
     fun fetchById(id: Long): PlayerTable?
 
+    @Query("SELECT * FROM Player WHERE id IN(:ids)")
+    fun fetchAllById(ids: LongArray): List<PlayerTable>
+
     @Query("SELECT * FROM Player WHERE name = :name")
     fun fetchByName(name: String): PlayerTable?
 

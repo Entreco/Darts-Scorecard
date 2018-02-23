@@ -59,6 +59,9 @@
     <string name="game_shot_and_match">Revanche?</string>
     <string name="select_starting_team">Select Team to throw first</string>
 
+    <!-- Profile -->
+    <string name="favourite_double">Favourite double %1$s</string>
+
     <!-- Input -->
     <string name="darts_used">How many darts did you use?</string>
 
