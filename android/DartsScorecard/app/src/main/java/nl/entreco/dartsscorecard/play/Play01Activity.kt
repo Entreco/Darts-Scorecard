@@ -38,6 +38,7 @@ class Play01Activity : ViewModelActivity() {
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
+        binding.navigator = Play01Navigator(this)
 
         if (savedInstanceState == null) {
             initGame()

@@ -1,15 +1,18 @@
 package nl.entreco.dartsscorecard.profile
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.view.View
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.domain.model.players.Team
+
 
 /**
  * Created by entreco on 21/02/2018.
@@ -34,10 +37,12 @@ class ProfileActivity : ViewModelActivity() {
     companion object {
         private const val EXTRA_TEAM_IDS = "EXTRA_TEAM_IDS"
         @JvmStatic
-        fun launch(context: Context, team: Team) {
-            val intent = Intent(context, ProfileActivity::class.java)
+        fun launch(activity: Activity, view: View, team: Team) {
+            val intent = Intent(activity, ProfileActivity::class.java)
             intent.putExtra(EXTRA_TEAM_IDS, team.players.map { it.id }.toLongArray())
-            context.startActivity(intent)
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
+            activity.startActivity(intent, options.toBundle())
         }
 
         fun idsFromIntent(intent: Intent): LongArray {

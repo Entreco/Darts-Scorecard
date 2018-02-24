@@ -15,7 +15,6 @@
         android:id="@+id/toolbar_header_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         android:orientation="vertical"
         android:padding="@dimen/def">
 
@@ -33,14 +32,16 @@
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:src="@drawable/ic_no_profile"
+                android:transitionName="profile"
                 app:profileImage="@{profile.image}" />
         </FrameLayout>
 
         <TextView
             android:id="@+id/name"
             style="@style/ProfileName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="@{profile.name}"
             tools:text="@string/app_name" />
 
@@ -49,8 +50,8 @@
             android:layout_height="wrap_content">
 
             <TextView
-                style="@style/ProfileTagline"
                 android:id="@+id/fav_double"
+                style="@style/ProfileTagline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -4,12 +4,10 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableArrayMap
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.view.View
 import android.widget.AdapterView
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.dartsscorecard.profile.ProfileActivity
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
@@ -40,19 +38,19 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
         team0Index.set(selected)
     }
 
+    fun team0(): Team {
+        return team0.get().team
+    }
+
+    fun team1(): Team {
+        return team1.get().team
+    }
+
     fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString()
         val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team1.set(teamStats[selected])
         team1Index.set(selected)
-    }
-
-    fun gotoTeam0(view: View) {
-        ProfileActivity.launch(view.context, teams[0])
-    }
-
-    fun gotoTeam1(view: View) {
-        ProfileActivity.launch(view.context, teams[1])
     }
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {

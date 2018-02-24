@@ -7,7 +7,7 @@ import nl.entreco.domain.model.players.Team
 /**
  * Created by entreco on 11/01/2018.
  */
-class TeamStatModel(team: Team, private val stats: MutableList<Stat> = mutableListOf()) {
+class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutableListOf()) {
 
     companion object {
         const val empty = "--"

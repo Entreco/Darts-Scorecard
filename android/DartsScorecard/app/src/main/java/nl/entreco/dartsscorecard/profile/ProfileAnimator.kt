@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.profile
 
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
@@ -19,6 +18,7 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
     private val expandedHeader = binding.includeAppbar?.includeHeaderView?.toolbarHeaderView!!
     private val expandedImage = binding.includeAppbar?.includeHeaderView?.image!!
     private val expandedName: TextView = binding.includeAppbar?.includeHeaderView?.name!!
+    private val expandedDouble: TextView = binding.includeAppbar?.includeHeaderView?.favDouble!!
     private val collapsedName: TextView = binding.includeAppbar?.includeHeaderViewTop?.name!!
     private val collapsedImage = binding.includeAppbar?.includeHeaderViewTop?.image!!
 
@@ -42,12 +42,14 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
                     .setDuration(0).start()
 
             val textSize = (start - end) * (1 - percentage) + end
-            Log.w("HAHA", "w:$width perc: $percentage = ${-(width-20)*percentage}")
+
             expandedName.animate()
-                    .translationX( -width*percentage)
-                    .translationY(-expandedName.top * percentage)
+                    .translationX(-expandedName.x * percentage)
+                    .translationY(-expandedName.y * percentage)
                     .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
                     .setDuration(0).start()
+
+            expandedDouble.animate().alpha(1 - percentage).setDuration(0).start()
 
             if (percentage == 1f && isHideToolbarView) {
                 collapsedHeader.visibility = View.VISIBLE

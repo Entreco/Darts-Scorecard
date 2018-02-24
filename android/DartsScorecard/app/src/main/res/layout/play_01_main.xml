@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.stats.MatchStatViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.play.Play01Navigator" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -51,8 +55,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
-                    android:onClick="@{(view) -> viewModel.gotoTeam0(view)}"
-                    android:src="@drawable/ic_no_profile" />
+                    android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team0())}"
+                    android:src="@drawable/ic_no_profile"
+                    android:transitionName="profile" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
@@ -65,8 +70,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
-                    android:onClick="@{(view) -> viewModel.gotoTeam1(view)}"
-                    android:src="@drawable/ic_no_profile" />
+                    android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team1())}"
+                    android:src="@drawable/ic_no_profile"
+                    android:transitionName="profile" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
