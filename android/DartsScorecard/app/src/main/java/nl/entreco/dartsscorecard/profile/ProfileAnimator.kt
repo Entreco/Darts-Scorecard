@@ -27,7 +27,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val expandedDouble: TextView = binding.includeAppbar?.includeHeaderView?.favDouble!!
     private val collapsedName: TextView = binding.includeAppbar?.includeHeaderViewTop?.name!!
     private val collapsedImage = binding.includeAppbar?.includeHeaderViewTop?.image!!
-    private val fab = binding.fab!!
+    private val fab = binding.fab
 
     init {
         val start = expandedName.textSize
@@ -42,7 +42,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
             val orig: Double by lazy { height.toFloat() / expandedImage.height.toDouble() }
 
             animateImage(percentage, orig, width)
-            animateTitle(start, end, percentage)
+            animateTitle(start, end, width, percentage)
             animateFavDouble(percentage)
             animateFab(percentage)
 
@@ -74,10 +74,10 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
                 .setDuration(0).start()
     }
 
-    private fun animateTitle(start: Float, end: Float, percentage: Float) {
+    private fun animateTitle(start: Float, end: Float, width: Int, percentage: Float) {
         val textSize = (start - end) * (1 - percentage) + end
         expandedName.animate()
-                .translationX(-collapsedName.x * percentage)
+                .translationX(-width * percentage)
                 .translationY(-expandedName.y * percentage / 2)
                 .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
                 .setDuration(0).start()
