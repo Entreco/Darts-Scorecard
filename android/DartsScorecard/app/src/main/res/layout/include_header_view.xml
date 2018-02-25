@@ -33,6 +33,8 @@
                 android:fitsSystemWindows="true"
                 android:src="@drawable/ic_no_profile"
                 android:transitionName="profile"
+                android:outlineProvider="background"
+                android:elevation="@dimen/def"
                 app:profileImage="@{profile.image}" />
         </FrameLayout>
 

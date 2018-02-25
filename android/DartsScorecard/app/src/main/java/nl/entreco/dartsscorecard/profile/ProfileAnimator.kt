@@ -1,8 +1,14 @@
 package nl.entreco.dartsscorecard.profile
 
+import android.transition.Transition
+import android.transition.TransitionInflater
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.Window
+import android.view.animation.AccelerateInterpolator
 import android.widget.TextView
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import kotlin.math.abs
 import kotlin.math.max
@@ -10,7 +16,7 @@ import kotlin.math.max
 /**
  * Created by entreco on 23/02/2018.
  */
-class ProfileAnimator(binding: ActivityProfileBinding) {
+class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInflater, window: Window) {
 
     private var isHideToolbarView = false
     private val appBar = binding.includeAppbar?.profileAppbar!!
@@ -21,6 +27,7 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
     private val expandedDouble: TextView = binding.includeAppbar?.includeHeaderView?.favDouble!!
     private val collapsedName: TextView = binding.includeAppbar?.includeHeaderViewTop?.name!!
     private val collapsedImage = binding.includeAppbar?.includeHeaderViewTop?.image!!
+    private val fab = binding.fab!!
 
     init {
         val start = expandedName.textSize
@@ -34,22 +41,10 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
             val height by lazy { collapsedImage.height }
             val orig: Double by lazy { height.toFloat() / expandedImage.height.toDouble() }
 
-            val scale = max(1.0 - percentage, orig).toFloat()
-            expandedImage.animate()
-                    .translationX(width * percentage)
-                    .scaleX(scale)
-                    .scaleY(scale)
-                    .setDuration(0).start()
-
-            val textSize = (start - end) * (1 - percentage) + end
-
-            expandedName.animate()
-                    .translationX(-expandedName.x * percentage)
-                    .translationY(-expandedName.y * percentage)
-                    .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
-                    .setDuration(0).start()
-
-            expandedDouble.animate().alpha(1 - percentage).setDuration(0).start()
+            animateImage(percentage, orig, width)
+            animateTitle(start, end, percentage)
+            animateFavDouble(percentage)
+            animateFab(percentage)
 
             if (percentage == 1f && isHideToolbarView) {
                 collapsedHeader.visibility = View.VISIBLE
@@ -62,5 +57,72 @@ class ProfileAnimator(binding: ActivityProfileBinding) {
                 isHideToolbarView = !isHideToolbarView
             }
         }
+
+        setupEnterAnimation(inflater, window, binding.root)
+    }
+
+    private fun animateFab(percentage: Float) {
+        fab.animate().scaleX(1 - percentage).scaleY(1 - percentage).alpha(1 - percentage).setDuration(0).start()
+    }
+
+    private fun animateImage(percentage: Float, orig: Double, width: Int) {
+        val scale = max(1.0 - percentage, orig).toFloat()
+        expandedImage.animate()
+                .translationX(width * percentage)
+                .scaleX(scale)
+                .scaleY(scale)
+                .setDuration(0).start()
+    }
+
+    private fun animateTitle(start: Float, end: Float, percentage: Float) {
+        val textSize = (start - end) * (1 - percentage) + end
+        expandedName.animate()
+                .translationX(-collapsedName.x * percentage)
+                .translationY(-expandedName.y * percentage / 2)
+                .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
+                .setDuration(0).start()
+    }
+
+    private fun animateFavDouble(percentage: Float) {
+        expandedDouble.animate().alpha(1 - percentage).setDuration(0).start()
+    }
+
+    private fun setupEnterAnimation(inflater: TransitionInflater, window: Window, root: View) {
+        val transition = inflater.inflateTransition(R.transition.change_bound_with_arc)
+        transition.duration = 100
+        window.sharedElementEnterTransition = transition
+        transition.addListener(object : Transition.TransitionListener {
+            override fun onTransitionEnd(transition: Transition?) {
+                animateRevealShow(root)
+            }
+
+            override fun onTransitionResume(transition: Transition?) {
+            }
+
+            override fun onTransitionPause(transition: Transition?) {
+            }
+
+            override fun onTransitionCancel(transition: Transition?) {
+            }
+
+            override fun onTransitionStart(transition: Transition?) {
+                root.visibility = View.INVISIBLE
+            }
+        })
+    }
+
+    private fun animateRevealShow(root: View) {
+        val cx = (expandedImage.left + expandedImage.right) / 2
+        val cy = (expandedImage.top + expandedImage.bottom) / 2
+        revealActivity(root, cx, cy)
+    }
+
+    private fun revealActivity(root: View, x: Int, y: Int) {
+        val radius = max(root.width * 1.0, root.height * 1.1).toFloat()
+        val circularReveal = ViewAnimationUtils.createCircularReveal(root, x, y, 0F, radius)
+        circularReveal.duration = 200
+        circularReveal.interpolator = AccelerateInterpolator()
+        root.visibility = View.VISIBLE
+        circularReveal.start()
     }
 }

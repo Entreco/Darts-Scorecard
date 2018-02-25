@@ -116,6 +116,18 @@
 
             </android.support.v4.widget.NestedScrollView>
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/def"
+                android:background="?attr/colorEditProfile"
+                android:src="@drawable/ic_like"
+                app:elevation="@dimen/def"
+                app:fabSize="normal"
+                app:layout_anchor="@id/scrollView"
+                app:layout_anchorGravity="end" />
+
         </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>
 </layout>

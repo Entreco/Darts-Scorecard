@@ -12,6 +12,7 @@
     <style name="Bdo_2018" parent="AppTheme">
         <item name="colorPrimary">@color/bdo_2018_red</item>
         <item name="colorPrimaryDark">@color/bdo_2018_red_dark</item>
+        <item name="colorEditProfile">@color/white</item>
         <item name="gradient_angle">0</item>
         <item name="match_description">@string/bdo_match</item>
         <item name="colorAccent">@color/bdo_2018_red</item>

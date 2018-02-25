@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.transition.TransitionInflater
 import android.view.View
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
@@ -26,7 +27,7 @@ class ProfileActivity : ViewModelActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this, R.layout.activity_profile)
         binding.viewModel = viewModel
-        binding.animator = ProfileAnimator(binding)
+        binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
     }
 
     override fun onResume() {
