@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="profile"
             type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
@@ -20,7 +21,6 @@
             android:layout_height="280dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            android:animateLayoutChanges="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <include
@@ -43,8 +43,8 @@
                     layout="@layout/include_header_view_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:profile="@{profile}"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:profile="@{profile}" />
 
             </android.support.v7.widget.Toolbar>
 
