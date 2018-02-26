@@ -37,11 +37,10 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
             val maxScroll = appBarLayout.totalScrollRange
             val percentage = abs(verticalOffset).toFloat() / maxScroll.toFloat()
             val width = appBarLayout.width / 2
+            val height = appBarLayout.height / 2
+            val orig: Double by lazy { collapsedImage.height.toFloat() / expandedImage.height.toDouble() }
 
-            val height by lazy { collapsedImage.height }
-            val orig: Double by lazy { height.toFloat() / expandedImage.height.toDouble() }
-
-            animateImage(percentage, orig, width)
+            animateImage(percentage, orig, width, height)
             animateTitle(start, end, width, percentage)
             animateFavDouble(percentage)
             animateFab(percentage)
@@ -65,10 +64,10 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
         fab.animate().scaleX(1 - percentage).scaleY(1 - percentage).alpha(1 - percentage).setDuration(0).start()
     }
 
-    private fun animateImage(percentage: Float, orig: Double, width: Int) {
+    private fun animateImage(percentage: Float, orig: Double, width: Int, height: Int) {
         val scale = max(1.0 - percentage, orig).toFloat()
         expandedImage.animate()
-                .translationX(width * percentage)
+                .translationX((width-20) * percentage)
                 .scaleX(scale)
                 .scaleY(scale)
                 .setDuration(0).start()
@@ -77,7 +76,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private fun animateTitle(start: Float, end: Float, width: Int, percentage: Float) {
         val textSize = (start - end) * (1 - percentage) + end
         expandedName.animate()
-                .translationX(-width * percentage)
+                .translationX(-(width - expandedName.width / 2) * percentage)
                 .translationY(-expandedName.y * percentage / 2)
                 .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
                 .setDuration(0).start()
