@@ -28,6 +28,7 @@ class ConsumeDonationUsecaseTest {
 
     private val purchaseData = "{  \n" +
             "   \"purchaseToken\":\"aha\",\n" +
+            "   \"orderId\":\"some order id\",\n" +
             "   \"productId\":\"id\"\n" +
             "}"
 
