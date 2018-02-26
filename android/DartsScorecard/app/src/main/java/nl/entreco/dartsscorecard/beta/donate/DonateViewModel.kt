@@ -28,7 +28,6 @@ class DonateViewModel @Inject constructor(
 
     init {
         donateCallback.lifeCycle().addObserver(this)
-        analytics.trackViewDonations()
     }
 
     internal var productId: String = ""
@@ -38,6 +37,7 @@ class DonateViewModel @Inject constructor(
     fun onDonate(donation: Donation) {
         loading.set(true)
         productId = donation.sku
+        analytics.trackPurchaseStart(donation)
         makeDonation.exec(MakeDonationRequest(donation), onStartMakeDonation(), onStartMakeDonationFailed())
     }
 
@@ -74,7 +74,7 @@ class DonateViewModel @Inject constructor(
 
     private fun donationDone(response: ConsumeDonationResponse) {
         donationWithId(response)?.let { donation ->
-            analytics.trackPurchase(donation)
+            analytics.trackPurchase(donation, response.orderId)
             donateCallback.onDonationMade(donation)
         }
     }

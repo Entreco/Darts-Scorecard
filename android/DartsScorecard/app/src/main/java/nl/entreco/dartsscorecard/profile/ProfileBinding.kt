@@ -17,8 +17,7 @@ class ProfileBinding {
                 if (path != null && path.isNotBlank()) {
                     view.setImageURI(Uri.parse(path))
                 }
-            } catch (oops: Exception) {
-            }
+            } catch (oops: Exception) { }
         }
     }
 }

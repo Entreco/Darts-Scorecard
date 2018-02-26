@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.beta.votes
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaAnimator
 import nl.entreco.dartsscorecard.beta.BetaModel
@@ -29,10 +28,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
         this.analytics.trackAchievement("viewed Feature ${feature.title.get()}")
     }
 
-    override fun onFeatureClosed() {}
-
-    fun submitDonation(donation: Donation){
-        Log.w("DONATE", "submitDonation: $donation")
+    fun submitDonation(donation: Donation) {
         submitVote(donation.votes)
     }
 
@@ -42,6 +38,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
         if (allowedToVote(betaModel, currentFeature)) {
             feature.set(BetaModel(currentFeature.copy(votes = currentFeature.votes + amount)))
             votes.add(currentFeature.ref)
+            analytics.trackViewFeature(currentFeature)
             submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))
         }
     }

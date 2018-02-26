@@ -20,19 +20,19 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class DonateViewModelTest {
 
-    @Mock private lateinit var mockLifecycle : Lifecycle
-    @Mock private lateinit var mockDonateCallback : DonateCallback
-    @Mock private lateinit var mockConnectToBillingUsecase : ConnectToBillingUsecase
-    @Mock private lateinit var mockFetchDonationsUsecase : FetchDonationsUsecase
-    @Mock private lateinit var mockMakeDonationsUsecase : MakeDonationUsecase
-    @Mock private lateinit var mockConsumeDonationUsecase : ConsumeDonationUsecase
-    @Mock private lateinit var mockAnalytics : Analytics
-    private lateinit var subject : DonateViewModel
+    @Mock private lateinit var mockLifecycle: Lifecycle
+    @Mock private lateinit var mockDonateCallback: DonateCallback
+    @Mock private lateinit var mockConnectToBillingUsecase: ConnectToBillingUsecase
+    @Mock private lateinit var mockFetchDonationsUsecase: FetchDonationsUsecase
+    @Mock private lateinit var mockMakeDonationsUsecase: MakeDonationUsecase
+    @Mock private lateinit var mockConsumeDonationUsecase: ConsumeDonationUsecase
+    @Mock private lateinit var mockAnalytics: Analytics
+    private lateinit var subject: DonateViewModel
 
-    private val fetchDoneCaptor = argumentCaptor<(Boolean)->Unit>()
-    private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse)->Unit>()
-    private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse)->Unit>()
-    private val failCaptor = argumentCaptor<(Throwable)->Unit>()
+    private val fetchDoneCaptor = argumentCaptor<(Boolean) -> Unit>()
+    private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse) -> Unit>()
+    private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse) -> Unit>()
+    private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     @Test
     fun `it should register observer`() {
@@ -66,12 +66,6 @@ class DonateViewModelTest {
         givenSubject()
         whenUnbinding()
         thenBillingIsUnbinded()
-    }
-
-    @Test
-    fun `it should track viewing donations`() {
-        givenSubject()
-        itShouldTrackViewingDonations()
     }
 
     @Test
@@ -237,7 +231,7 @@ class DonateViewModelTest {
     }
 
     private fun whenDonationMade() {
-        val intent = mock<Intent>{
+        val intent = mock<Intent> {
             on { getStringExtra("INAPP_PURCHASE_DATA") } doReturn "Purchase data"
             on { getStringExtra("INAPP_DATA_SIGNATURE") } doReturn "Signature"
         }
@@ -252,13 +246,13 @@ class DonateViewModelTest {
     private fun whenConsumingDonationSucceeds(productId: String) {
         whenDonationMade()
         verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
-        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_OK, productId))
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_OK, productId, "orderId"))
     }
 
     private fun whenConsumingDonationFails() {
         whenDonationMade()
         verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
-        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_CANCELED,"productid"))
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_CANCELED, "productid", "orderId"))
     }
 
     private fun whenConsumingDonationFails(err: Throwable) {
@@ -266,11 +260,13 @@ class DonateViewModelTest {
         verify(mockConsumeDonationUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
+
     private fun whenFetchingDonationsSucceeds() {
         subject.bind()
         verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
         fetchDoneCaptor.lastValue.invoke(true)
     }
+
     private fun whenFetchingDonationsFails() {
         subject.bind()
         verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
@@ -295,7 +291,7 @@ class DonateViewModelTest {
     }
 
     private fun itShouldTrackViewingDonations() {
-        verify(mockAnalytics).trackViewDonations()
+        verify(mockAnalytics).trackViewFeature(any())
     }
 
     private fun thenLoadingIs(expected: Boolean) {
@@ -306,11 +302,11 @@ class DonateViewModelTest {
         assertEquals(expected, subject.productId)
     }
 
-    private fun thenDonationsAreFetched(){
+    private fun thenDonationsAreFetched() {
         verify(mockFetchDonationsUsecase).exec(any(), any())
     }
 
-    private fun thenDonationsAreNotFetched(){
+    private fun thenDonationsAreNotFetched() {
         verifyZeroInteractions(mockFetchDonationsUsecase)
     }
 
@@ -331,11 +327,11 @@ class DonateViewModelTest {
     }
 
     private fun thenPurchaseIsTracked() {
-        verify(mockAnalytics).trackPurchase(any())
+        verify(mockAnalytics).trackPurchase(any(), any())
     }
 
     private fun thenPurchaseFailedIstracked(step: String) {
-        verify(mockAnalytics).trackPurchaseFailed(any(),eq(step))
+        verify(mockAnalytics).trackPurchaseFailed(any(), eq(step))
     }
 
     private fun thenBillingIsUnbinded() {

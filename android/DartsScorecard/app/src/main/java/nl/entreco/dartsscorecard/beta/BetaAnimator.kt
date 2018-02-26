@@ -21,7 +21,6 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
     interface Toggler {
         fun onFeatureSelected(feature: BetaModel)
-        fun onFeatureClosed()
     }
 
     init {
@@ -41,9 +40,8 @@ class BetaAnimator(binding: ActivityBetaBinding) {
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState){
+                when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        toggler?.onFeatureClosed()
                         appBar.isEnabled = true
                     }
                 }
@@ -54,7 +52,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     }
 
     fun vote(model: BetaModel) {
-        if(model.title.get() != null) {
+        if (model.title.get() != null) {
             appBar.setExpanded(false, true)
             appBar.isEnabled = false
             behaviour.state = BottomSheetBehavior.STATE_EXPANDED

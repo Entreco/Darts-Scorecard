@@ -2,6 +2,7 @@ package nl.entreco.data.analytics
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -16,6 +17,12 @@ class FirebaseAnalyticsTest {
     @Test
     fun `it should track events`() {
         givenSubject()
+    }
+
+    @Test
+    fun `it should parse price with ,`() {
+        givenSubject()
+        assertEquals(12.50, subject.parsePrice("12,50"), 0.01)
     }
 
     private fun givenSubject() {

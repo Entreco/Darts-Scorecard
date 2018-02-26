@@ -164,7 +164,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     private fun done(turn: Turn, listener: InputListener) {
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
         this.scoredTxt.set(turn.total().toString())
-        this.analytics.trackAchievement("scored: $turn")
+        this.analytics.trackScore("scored: $turn", turn.total())
         clearScoreInput()
     }
 
