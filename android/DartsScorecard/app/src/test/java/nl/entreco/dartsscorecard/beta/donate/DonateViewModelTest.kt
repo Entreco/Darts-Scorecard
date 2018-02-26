@@ -29,7 +29,8 @@ class DonateViewModelTest {
     @Mock private lateinit var mockAnalytics: Analytics
     private lateinit var subject: DonateViewModel
 
-    private val fetchDoneCaptor = argumentCaptor<(Boolean) -> Unit>()
+    private val bindDoneCaptor = argumentCaptor<(Boolean) -> Unit>()
+    private val fetchDoneCaptor = argumentCaptor<(FetchDonationsResponse) -> Unit>()
     private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse) -> Unit>()
     private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -48,17 +49,31 @@ class DonateViewModelTest {
     }
 
     @Test
-    fun `it should fetch donations when fetching binding to billing succeeds`() {
+    fun `it should fetch donations when binding to billing succeeds`() {
         givenSubject()
-        whenFetchingDonationsSucceeds()
+        whenBindingSucceeds()
         thenDonationsAreFetched()
     }
 
     @Test
-    fun `it should NOT fetch donations when fetching binding to billing fails`() {
+    fun `it should NOT fetch donations when binding to billing fails`() {
+        givenSubject()
+        whenBindingFails()
+        thenDonationsAreNotFetched()
+    }
+
+    @Test
+    fun `it should clear donations when fetching donations succeeds`() {
+        givenSubject()
+        whenFetchingDonationsSucceeds(emptyList())
+        thenDonationsAre(emptyList())
+    }
+
+    @Test
+    fun `it should track failed when fetching donations fails`() {
         givenSubject()
         whenFetchingDonationsFails()
-        thenDonationsAreNotFetched()
+        thenPurchaseFailedIstracked("FetchDonations failed")
     }
 
     @Test
@@ -186,7 +201,7 @@ class DonateViewModelTest {
     fun `it should track Purchase Failed when consuming donation fails`() {
         givenSubject()
         whenConsumingDonationFails(RuntimeException("Google play services not installed"))
-        thenPurchaseFailedIstracked("Consume failed")
+        thenPurchaseFailedIstracked("ConsumeDonation failed")
     }
 
     @Test
@@ -261,16 +276,28 @@ class DonateViewModelTest {
         failCaptor.lastValue.invoke(err)
     }
 
-    private fun whenFetchingDonationsSucceeds() {
+    private fun whenBindingSucceeds() {
         subject.bind()
-        verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
-        fetchDoneCaptor.lastValue.invoke(true)
+        verify(mockConnectToBillingUsecase).bind(bindDoneCaptor.capture())
+        bindDoneCaptor.lastValue.invoke(true)
+    }
+
+    private fun whenBindingFails() {
+        subject.bind()
+        verify(mockConnectToBillingUsecase).bind(bindDoneCaptor.capture())
+        bindDoneCaptor.lastValue.invoke(false)
+    }
+
+    private fun whenFetchingDonationsSucceeds(list: List<Donation>) {
+        whenBindingSucceeds()
+        verify(mockFetchDonationsUsecase).exec(fetchDoneCaptor.capture(), any())
+        fetchDoneCaptor.lastValue.invoke(FetchDonationsResponse(list))
     }
 
     private fun whenFetchingDonationsFails() {
-        subject.bind()
-        verify(mockConnectToBillingUsecase).bind(fetchDoneCaptor.capture())
-        fetchDoneCaptor.lastValue.invoke(false)
+        whenBindingSucceeds()
+        verify(mockFetchDonationsUsecase).exec(any(), failCaptor.capture())
+        failCaptor.lastValue.invoke(RuntimeException("Unable to fetch donations"))
     }
 
     private fun whenDestroyIsCalled() {
@@ -336,5 +363,9 @@ class DonateViewModelTest {
 
     private fun thenBillingIsUnbinded() {
         verify(mockConnectToBillingUsecase).unbind()
+    }
+
+    private fun thenDonationsAre(expected: List<Donation>) {
+        assertEquals(expected.size, subject.donations.size)
     }
 }

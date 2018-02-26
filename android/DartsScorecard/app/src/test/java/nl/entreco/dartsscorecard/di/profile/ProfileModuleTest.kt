@@ -11,4 +11,9 @@ class ProfileModuleTest {
     fun `should not be null`() {
         assertNotNull(ProfileModule())
     }
+
+    @Test
+    fun `it should provide mapper`() {
+        assertNotNull(ProfileModule().provideMapper())
+    }
 }

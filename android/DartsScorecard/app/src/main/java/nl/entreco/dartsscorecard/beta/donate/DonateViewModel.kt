@@ -7,7 +7,6 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Intent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
@@ -46,7 +45,6 @@ class DonateViewModel @Inject constructor(
     }
 
     fun onMakeDonationSuccess(data: Intent?) {
-        Log.w("DONATE", "onMakeDonationSuccess: $data")
         val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
         val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
 
@@ -80,8 +78,7 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
-        Log.w("DONATE", "consumeFailed: $it")
-        analytics.trackPurchaseFailed(productId, "Consume failed")
+        analytics.trackPurchaseFailed(productId, "ConsumeDonation failed")
         loading.set(false)
         productId = ""
     }
@@ -91,7 +88,6 @@ class DonateViewModel @Inject constructor(
             donations.firstOrNull { it.sku == response.productId }
 
     fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
-        Log.w("DONATE", "onMakeDonationFailed: $resultCode $data")
         analytics.trackPurchaseFailed(productId, "ActivityResult failed")
         loading.set(false)
         productId = ""
@@ -103,7 +99,7 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
-        Log.w("DONATE", "donationFailed: $it")
+        analytics.trackPurchaseFailed(productId, "FetchDonations failed")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
