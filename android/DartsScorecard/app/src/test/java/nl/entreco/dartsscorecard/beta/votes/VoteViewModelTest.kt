@@ -101,7 +101,7 @@ class VoteViewModelTest {
     }
 
     private fun givenDonation() {
-        givenDonation = Donation("title", "desc", "sku", "price", 10)
+        givenDonation = Donation("title", "desc", "sku", "price", 10, )
     }
 
 

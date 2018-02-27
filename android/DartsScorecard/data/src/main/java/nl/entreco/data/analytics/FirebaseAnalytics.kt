@@ -6,8 +6,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.Feature
-import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 
 
 /**
@@ -53,8 +51,8 @@ class FirebaseAnalytics(context: Context) : Analytics {
         val ecommerceBundle = toBundle(donation)
         ecommerceBundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, orderId)
         ecommerceBundle.putString(FirebaseAnalytics.Param.AFFILIATION, "Entreco - DartsApp")
-        ecommerceBundle.putDouble(FirebaseAnalytics.Param.VALUE, parsePrice(donation.price))
-        ecommerceBundle.putString(FirebaseAnalytics.Param.CURRENCY, parseCurrency(donation.price))
+        ecommerceBundle.putDouble(FirebaseAnalytics.Param.VALUE, formatMicros(donation.priceMicros))
+        ecommerceBundle.putString(FirebaseAnalytics.Param.CURRENCY, donation.priceCurrencyCode)
 
         fb.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, ecommerceBundle)
     }
@@ -68,14 +66,6 @@ class FirebaseAnalytics(context: Context) : Analytics {
                 })
     }
 
-    internal fun parsePrice(price: String): Double {
-        return DecimalFormat("###.##", DecimalFormatSymbols.getInstance()).parse(price).toDouble()
-    }
-
-    internal fun parseCurrency(price: String): String {
-        return "EUR"
-    }
-
     private fun toBundle(donation: Donation): Bundle {
         val product = Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_ID, donation.sku) // ITEM_ID or ITEM_NAME is required
@@ -83,8 +73,8 @@ class FirebaseAnalytics(context: Context) : Analytics {
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Donations")
             putString(FirebaseAnalytics.Param.ITEM_VARIANT, donation.price)
             putString(FirebaseAnalytics.Param.ITEM_BRAND, "Entreco")
-            putDouble(FirebaseAnalytics.Param.PRICE, parsePrice(donation.price))
-            putString(FirebaseAnalytics.Param.CURRENCY, parseCurrency(donation.price)) // Item-level currency unused today
+            putDouble(FirebaseAnalytics.Param.PRICE, formatMicros(donation.priceMicros))
+            putString(FirebaseAnalytics.Param.CURRENCY, donation.priceCurrencyCode) // Item-level currency unused today
             putLong(FirebaseAnalytics.Param.QUANTITY, donation.votes.toLong())
         }
 
@@ -94,5 +84,13 @@ class FirebaseAnalytics(context: Context) : Analytics {
         val ecommerceBundle = Bundle()
         ecommerceBundle.putParcelableArrayList("items", items)
         return ecommerceBundle
+    }
+
+    internal fun formatMicros(priceMicros: String): Double {
+        return try {
+            priceMicros.toDouble() / 1000000
+        } catch (invalidFormat: NumberFormatException) {
+            0.0
+        }
     }
 }

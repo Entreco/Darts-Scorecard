@@ -20,5 +20,11 @@ internal data class DonationApiData(
         var title: String,
 
         @SerializedName("description")
-        var description: String
+        var description: String,
+
+        @SerializedName("price_currency_code")
+        var priceCurrencyCode: String,
+
+        @SerializedName("price_amount_micros")
+        var priceAmountMicros: String
 )
