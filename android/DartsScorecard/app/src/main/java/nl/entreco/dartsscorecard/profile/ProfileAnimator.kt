@@ -37,10 +37,9 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
             val maxScroll = appBarLayout.totalScrollRange
             val percentage = abs(verticalOffset).toFloat() / maxScroll.toFloat()
             val width = appBarLayout.width / 2
-            val height = appBarLayout.height / 2
             val orig: Double by lazy { collapsedImage.height.toFloat() / expandedImage.height.toDouble() }
 
-            animateImage(percentage, orig, width, height)
+            animateImage(percentage, orig, width)
             animateTitle(start, end, width, percentage)
             animateFavDouble(percentage)
             animateFab(percentage)
@@ -64,10 +63,10 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
         fab.animate().scaleX(1 - percentage).scaleY(1 - percentage).alpha(1 - percentage).setDuration(0).start()
     }
 
-    private fun animateImage(percentage: Float, orig: Double, width: Int, height: Int) {
+    private fun animateImage(percentage: Float, orig: Double, width: Int) {
         val scale = max(1.0 - percentage, orig).toFloat()
         expandedImage.animate()
-                .translationX((width-20) * percentage)
+                .translationX((width - 20) * percentage)
                 .scaleX(scale)
                 .scaleY(scale)
                 .setDuration(0).start()

@@ -11,6 +11,10 @@
         <variable
             name="animator"
             type="nl.entreco.dartsscorecard.profile.ProfileAnimator" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.ProfileNavigator" />
     </data>
 
     <RelativeLayout
@@ -24,7 +28,8 @@
             <include
                 android:id="@+id/include_appbar"
                 layout="@layout/toolbar_profile"
-                app:profile="@{viewModel.profile}" />
+                app:profile="@{viewModel.profile}"
+                app:navigator="@{navigator}"/>
 
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/scrollView"

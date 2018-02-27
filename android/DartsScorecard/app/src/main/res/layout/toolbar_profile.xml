@@ -7,6 +7,11 @@
         <variable
             name="profile"
             type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.ProfileNavigator" />
+
     </data>
 
     <android.support.design.widget.AppBarLayout
@@ -29,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax"
-                app:profile="@{profile}" />
+                app:profile="@{profile}"
+                app:navigator="@{navigator}"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

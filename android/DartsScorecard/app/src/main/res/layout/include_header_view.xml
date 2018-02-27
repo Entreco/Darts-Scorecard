@@ -9,6 +9,10 @@
         <variable
             name="profile"
             type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.ProfileNavigator" />
     </data>
 
     <nl.entreco.dartsscorecard.profile.ProfileHeaderView
@@ -30,11 +34,12 @@
                 android:layout_gravity="center"
                 android:background="@drawable/profile_bg"
                 android:contentDescription="@null"
+                android:elevation="@dimen/def"
                 android:fitsSystemWindows="true"
+                android:onClick="@{() -> navigator.onChooseImage(profile)}"
+                android:outlineProvider="background"
                 android:src="@drawable/ic_no_profile"
                 android:transitionName="profile"
-                android:outlineProvider="background"
-                android:elevation="@dimen/def"
                 app:profileImage="@{profile.image}" />
         </FrameLayout>
 
@@ -44,25 +49,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:onClick="@{() -> navigator.onChangeName(profile)}"
             android:text="@{profile.name}"
             tools:text="@string/app_name" />
 
-        <FrameLayout
+        <TextView
+            android:id="@+id/fav_double"
+            style="@style/ProfileTagline"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/fav_double"
-                style="@style/ProfileTagline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@{@string/favourite_double(profile.fav)}"
-                tools:text="@string/favourite_double" />
-
-        </FrameLayout>
-
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{@string/favourite_double(profile.fav)}"
+            tools:text="@string/favourite_double" />
 
     </nl.entreco.dartsscorecard.profile.ProfileHeaderView>
 </layout>

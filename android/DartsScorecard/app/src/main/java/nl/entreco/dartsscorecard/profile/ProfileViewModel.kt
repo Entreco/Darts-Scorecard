@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.profile
 
+import android.content.Intent
 import android.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.profile.fetch.FetchProfileRequest
@@ -17,6 +18,13 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     fun fetchProfile(playerIds: LongArray) {
         if (profile.get() == null) {
             fetchProfileUsecase.exec(FetchProfileRequest(playerIds), onProfileSuccess(), onProfileFailed())
+        }
+    }
+
+    fun showImageForProfile(data: Intent?) {
+        if (profile.get() != null) {
+            // Update Profile Usecase
+            profile.get().image.set(data?.data.toString())
         }
     }
 
