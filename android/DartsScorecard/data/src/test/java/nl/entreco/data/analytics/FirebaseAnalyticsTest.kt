@@ -23,6 +23,11 @@ class FirebaseAnalyticsTest{
     }
 
     @Test
+    fun `it should track score`() {
+        subject.trackScore("T20", 60)
+    }
+
+    @Test
     fun `it should parse price with ','`() {
         assertEquals(7.99, subject.formatMicros("7990000"), 0.01)
     }

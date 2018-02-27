@@ -17,6 +17,7 @@ class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: 
     val isRefreshing = ObservableBoolean(false)
     private val features: MutableLiveData<List<Feature>> = MutableLiveData()
 
+
     fun refresh(refreshing: Boolean) {
         isRefreshing.set(refreshing)
         subscribeToFeaturesUsecase.subscribe({

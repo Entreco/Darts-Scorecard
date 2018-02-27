@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:onRefreshListener="@{() -> viewModel.refresh(true)}"
+            tools:visibility="gone"
             app:refreshing="@{viewModel.isRefreshing}">
 
             <android.support.v7.widget.RecyclerView
@@ -46,7 +47,6 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/beta_view" />
         </android.support.v4.widget.SwipeRefreshLayout>
-
 
         <LinearLayout
             android:id="@+id/sheet"
@@ -59,8 +59,8 @@
 
             <include
                 layout="@layout/include_beta_detail"
-                app:viewModel="@{voteViewModel}"
-                app:donateViewModel="@{donateViewModel}"/>
+                app:donateViewModel="@{donateViewModel}"
+                app:viewModel="@{voteViewModel}" />
 
         </LinearLayout>
 

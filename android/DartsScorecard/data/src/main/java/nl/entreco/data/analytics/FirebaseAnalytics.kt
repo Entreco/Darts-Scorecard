@@ -16,7 +16,7 @@ class FirebaseAnalytics(context: Context) : Analytics {
     private val fb by lazy { FirebaseAnalytics.getInstance(context) }
 
     override fun trackScore(scored: String, total: Int) {
-        fb.logEvent("Scored", Bundle().apply {
+        fb.logEvent("scored", Bundle().apply {
             putString(FirebaseAnalytics.Param.SCORE, scored)
             putInt(FirebaseAnalytics.Param.VALUE, total)
         })

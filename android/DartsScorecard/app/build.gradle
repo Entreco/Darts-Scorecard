@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -48,6 +49,9 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.squareup.picasso:picasso:$picasso"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
+    implementation ("com.crashlytics.sdk.android:crashlytics:$crash"){
+        transitive = true
+    }
 
     // Test
     testImplementation "junit:junit:$junit"
