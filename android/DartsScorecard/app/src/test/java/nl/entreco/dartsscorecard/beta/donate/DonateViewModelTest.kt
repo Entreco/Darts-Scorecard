@@ -224,11 +224,11 @@ class DonateViewModelTest {
     }
 
     private fun givenDonation(productId: String) {
-        subject.donations.add(Donation("title", "desc", productId, "price", 3, ))
+        subject.donations.add(Donation("title", "desc", productId, "price", 3, "EUR", "7900000"))
     }
 
     private fun whenMakingDonation(sku: String) {
-        val donation = Donation("donation", "desc", sku, "price", 4, )
+        val donation = Donation("donation", "desc", sku, "price", 4, "asf", "122222")
         subject.onDonate(donation)
     }
 
