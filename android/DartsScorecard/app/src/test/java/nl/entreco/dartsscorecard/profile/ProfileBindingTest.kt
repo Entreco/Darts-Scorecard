@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.profile
 import android.net.Uri
 import android.widget.ImageView
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Test
@@ -21,7 +22,7 @@ class ProfileBindingTest {
     @Test
     fun loadProfileImage_normal() {
         ProfileBinding.loadProfileImage(mockImageView, "content://some.location")
-        verify(mockImageView).setImageURI(Uri.parse("content://some.location"))
+        verify(mockImageView, atLeastOnce()).setImageURI(Uri.parse("content://some.location"))
     }
 
     @Test

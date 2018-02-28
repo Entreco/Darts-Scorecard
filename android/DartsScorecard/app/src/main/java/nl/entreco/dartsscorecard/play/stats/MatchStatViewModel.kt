@@ -76,8 +76,11 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
         teamEntries.addAll(teams.map { it.toString().capitalize() })
         team0Index.set(0)
         team1Index.set(if (teams.size > 1) 1 else 0)
-        team0Image.set(teams[0].players[0].image)
-        team1Image.set(if (teams.size > 1) teams[1].players[0].image else teams[0].players[0].image)
+
+        if(teams.isNotEmpty()) {
+            team0Image.set(teams[0].players[0].image)
+            team1Image.set(if (teams.size > 1) teams[1].players[0].image else teams[0].players[0].image)
+        }
     }
 
     private fun onStatsFetched(teams: Array<Team>): (FetchGameStatsResponse) -> Unit {

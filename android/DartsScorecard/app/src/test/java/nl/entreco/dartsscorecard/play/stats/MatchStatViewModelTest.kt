@@ -110,6 +110,7 @@ class MatchStatViewModelTest {
 
     @Test
     fun `it should log error, when stat fetch fails`() {
+        givenTeams("1", "2")
         givenSubjectLoaded()
         whenStatsChangeFails(RuntimeException("do'h"))
         thenErrorIsLogged()
