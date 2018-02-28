@@ -15,6 +15,7 @@ class ProfileBinding {
         fun loadProfileImage(view: ImageView, path: String?) {
             try {
                 if (path != null && path.isNotBlank()) {
+                    view.setImageURI(null)
                     view.setImageURI(Uri.parse(path))
                 }
             } catch (oops: Exception) { }

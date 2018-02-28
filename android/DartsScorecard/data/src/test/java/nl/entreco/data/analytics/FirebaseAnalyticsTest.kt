@@ -22,7 +22,7 @@ class FirebaseAnalyticsTest{
         givenSubject()
     }
 
-    @Test
+    @Test(expected = NullPointerException::class)
     fun `it should track score`() {
         subject.trackScore("T20", 60)
     }

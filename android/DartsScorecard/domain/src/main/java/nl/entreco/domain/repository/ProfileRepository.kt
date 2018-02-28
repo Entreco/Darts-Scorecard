@@ -10,4 +10,7 @@ interface ProfileRepository {
 
     @WorkerThread
     fun fetchAll(players: LongArray): List<Profile>
+
+    @WorkerThread
+    fun update(id: Long, name: String?, image: String?, double: String?): Profile
 }

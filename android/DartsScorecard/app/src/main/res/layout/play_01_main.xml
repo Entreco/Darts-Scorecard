@@ -56,7 +56,7 @@
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
                     android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team0())}"
-                    android:src="@drawable/ic_no_profile"
+                    app:profileImage="@{viewModel.team0Image}"
                     android:transitionName="profile" />
 
                 <android.support.v4.widget.Space
@@ -71,7 +71,7 @@
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
                     android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team1())}"
-                    android:src="@drawable/ic_no_profile"
+                    app:profileImage="@{viewModel.team1Image}"
                     android:transitionName="profile" />
 
                 <android.support.v4.widget.Space

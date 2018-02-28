@@ -8,6 +8,7 @@ import nl.entreco.domain.model.TurnMeta
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -38,7 +39,7 @@ class LocalMetaRepositoryTest {
 
     @Test
     fun `it should use metaDao when creating meta`() {
-        whenever(mockMapper.from(any(), any(), any(), any())).thenReturn(mockTable)
+        whenever(mockMapper.from(anyLong(), anyLong(), any(), any())).thenReturn(mockTable)
         subject.create(1, 3, mockMeta, 5)
         verify(mockMetaDao).create(mockTable)
     }
