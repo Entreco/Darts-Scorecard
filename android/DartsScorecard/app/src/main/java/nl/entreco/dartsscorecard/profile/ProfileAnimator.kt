@@ -1,14 +1,11 @@
 package nl.entreco.dartsscorecard.profile
 
-import android.transition.Transition
 import android.transition.TransitionInflater
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.Window
-import android.view.animation.AccelerateInterpolator
 import android.widget.TextView
-import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.base.RevealAnimator
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import kotlin.math.abs
 import kotlin.math.max
@@ -23,11 +20,13 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val collapsedHeader = binding.includeAppbar?.includeHeaderViewTop?.toolbarHeaderView!!
     private val expandedHeader = binding.includeAppbar?.includeHeaderView?.toolbarHeaderView!!
     private val expandedImage = binding.includeAppbar?.includeHeaderView?.image!!
-    private val expandedName: TextView = binding.includeAppbar?.includeHeaderView?.name!!
+    private val expandedName: TextView = binding.includeAppbar?.includeHeaderView?.profileHeaderName!!
     private val expandedDouble: TextView = binding.includeAppbar?.includeHeaderView?.favDouble!!
     private val collapsedName: TextView = binding.includeAppbar?.includeHeaderViewTop?.name!!
     private val collapsedImage = binding.includeAppbar?.includeHeaderViewTop?.image!!
     private val fab = binding.fab
+
+    private val revealAnimator = RevealAnimator(expandedImage)
 
     init {
         val start = expandedName.textSize
@@ -56,7 +55,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
             }
         }
 
-        setupEnterAnimation(inflater, window, binding.root)
+        revealAnimator.setupEnterAnimation(inflater, window, binding.root)
     }
 
     private fun animateFab(percentage: Float) {
@@ -83,44 +82,5 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
 
     private fun animateFavDouble(percentage: Float) {
         expandedDouble.animate().alpha(1 - percentage).setDuration(0).start()
-    }
-
-    private fun setupEnterAnimation(inflater: TransitionInflater, window: Window, root: View) {
-        val transition = inflater.inflateTransition(R.transition.change_bound_with_arc)
-        transition.duration = 100
-        window.sharedElementEnterTransition = transition
-        transition.addListener(object : Transition.TransitionListener {
-            override fun onTransitionEnd(transition: Transition?) {
-                animateRevealShow(root)
-            }
-
-            override fun onTransitionResume(transition: Transition?) {
-            }
-
-            override fun onTransitionPause(transition: Transition?) {
-            }
-
-            override fun onTransitionCancel(transition: Transition?) {
-            }
-
-            override fun onTransitionStart(transition: Transition?) {
-                root.visibility = View.INVISIBLE
-            }
-        })
-    }
-
-    private fun animateRevealShow(root: View) {
-        val cx = (expandedImage.left + expandedImage.right) / 2
-        val cy = (expandedImage.top + expandedImage.bottom) / 2
-        revealActivity(root, cx, cy)
-    }
-
-    private fun revealActivity(root: View, x: Int, y: Int) {
-        val radius = max(root.width * 1.0, root.height * 1.1).toFloat()
-        val circularReveal = ViewAnimationUtils.createCircularReveal(root, x, y, 0F, radius)
-        circularReveal.duration = 200
-        circularReveal.interpolator = AccelerateInterpolator()
-        root.visibility = View.VISIBLE
-        circularReveal.start()
     }
 }

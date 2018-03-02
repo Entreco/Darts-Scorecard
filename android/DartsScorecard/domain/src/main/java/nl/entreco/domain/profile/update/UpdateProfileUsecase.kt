@@ -37,6 +37,8 @@ class UpdateProfileUsecase @Inject constructor(
     }
 
     private fun copyImageToPrivateAppData(imageUri: String?, size: Float): String? {
+        if (imageUri == null || size == 0F) return imageUri
+
         return try {
             val originalUri = Uri.parse(imageUri)
             val output = File(context.filesDir, originalUri.lastPathSegment)

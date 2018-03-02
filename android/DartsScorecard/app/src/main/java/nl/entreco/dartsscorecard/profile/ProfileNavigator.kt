@@ -12,11 +12,7 @@ class ProfileNavigator @Inject constructor(private val activity: ProfileActivity
         ProfileActivity.selectImage(activity)
     }
 
-    fun onChangeName(profile: PlayerProfile) {
-
-    }
-
-    fun onChangeFavouriteDouble(profile: PlayerProfile){
-
+    fun onEditProfile(profile: PlayerProfile) {
+        ProfileActivity.selectName(activity, profile.name.get(), profile.fav.get())
     }
 }

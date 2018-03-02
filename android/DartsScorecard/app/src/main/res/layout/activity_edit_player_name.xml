@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameViewModel" />
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameAnimator" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_setup_01" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                style="@style/EditPlayer.Hdr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_player_name" />
+
+            <FrameLayout
+                android:id="@+id/editArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary">
+
+
+                <!--suppress AndroidUnknownAttribute -->
+                <EditText
+                    style="@style/EditPlayer.Edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_player_name_hint"
+                    android:imeActionId="6"
+                    android:imeOptions="actionDone"
+                    android:text="@{viewModel.name}"
+                    android:visibility="@{viewModel.isTyping ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone"
+                    app:showKeyboard="@{viewModel.isTyping}" />
+
+                <TextView
+                    style="@style/ProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@{viewModel.name}"
+                    android:padding="@dimen/def"
+                    android:transitionName="profileName"
+                    android:visibility="@{viewModel.isTyping ? View.GONE : View.VISIBLE}" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/EditPlayer.Middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_existing_player" />
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

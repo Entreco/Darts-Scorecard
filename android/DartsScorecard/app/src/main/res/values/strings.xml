@@ -19,6 +19,7 @@
 
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
+    <string name="title_edit_player">Edit Player</string>
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
 
@@ -61,6 +62,8 @@
 
     <!-- Profile -->
     <string name="favourite_double">Favourite double %1$s</string>
+    <string name="edit_player_name_hint">Player name</string>
+    <string name="eidt_player_name">Update player name</string>
 
     <!-- Input -->
     <string name="darts_used">How many darts did you use?</string>

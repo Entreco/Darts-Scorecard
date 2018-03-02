@@ -7,6 +7,8 @@ import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
+import nl.entreco.dartsscorecard.di.profile.EditPlayerNameComponent
+import nl.entreco.dartsscorecard.di.profile.EditPlayerNameModule
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
@@ -33,4 +35,5 @@ interface ViewModelComponent {
     fun plus(module: EditPlayerModule): EditPlayerComponent
     fun plus(module: Play01Module): Play01Component
     fun plus(module: ProfileModule): ProfileComponent
+    fun plus(module: EditPlayerNameModule): EditPlayerNameComponent
 }

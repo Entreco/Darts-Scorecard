@@ -16,6 +16,6 @@
 
     <style name="ProfileTagline" parent="ProfileName">
         <item name="android:textSize">18sp</item>
-        <item name="android:padding">@dimen/small</item>
+        <item name="android:padding">@dimen/def</item>
     </style>
 </resources>

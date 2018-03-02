@@ -44,13 +44,13 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/profileHeaderName"
             style="@style/ProfileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="@{() -> navigator.onChangeName(profile)}"
             android:text="@{profile.name}"
+            android:transitionName="profileName"
             tools:text="@string/app_name" />
 
         <TextView
@@ -59,7 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:onClick="@{() -> navigator.onChangeFavouriteDouble(profile)}"
             android:singleLine="true"
             android:text="@{@string/favourite_double(profile.fav)}"
             tools:text="@string/favourite_double" />

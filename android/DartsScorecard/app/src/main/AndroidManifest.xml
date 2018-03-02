@@ -37,6 +37,9 @@
         <activity
             android:name=".profile.ProfileActivity"
             android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".profile.edit.EditPlayerNameActivity"
+            android:parentActivityName=".profile.ProfileActivity" />
 
     </application>
 
