@@ -37,7 +37,6 @@ class UpdateProfileUsecaseTest {
     }
 
     private fun givenSubject() {
-        whenever(mockContext.contentResolver).thenReturn(mockContentResolver)
         subject = UpdateProfileUsecase(mockContext, mockProfileService, bg, fg)
     }
 
