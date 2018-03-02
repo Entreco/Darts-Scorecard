@@ -28,7 +28,7 @@ class EditPlayerNameActivity : ViewModelActivity() {
         viewModel.playerName(intent.getStringExtra(EXTRA_NAME))
         viewModel.favouriteDouble(intent.getStringExtra(EXTRA_FAV))
 
-        initToolbar(toolbar(binding), R.string.title_edit_player)
+        initToolbar(toolbar(binding), R.string.title_edit_profile)
     }
 
     private fun toolbar(binding: ActivityEditPlayerNameBinding): Toolbar {

@@ -19,7 +19,7 @@
 
     <!-- Title -->
     <string name="title_select_player">Select Player</string>
-    <string name="title_edit_player">Edit Player</string>
+    <string name="title_edit_profile">Edit Profile</string>
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
 
