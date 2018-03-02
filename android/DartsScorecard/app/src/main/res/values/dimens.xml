@@ -24,10 +24,12 @@
     <dimen name="beta_header_height">180dp</dimen>
 
     <!-- Profile Header -->
+    <dimen name="header_profile_toolbar_height">260dp</dimen>
     <dimen name="header_view_start_margin_left">16dp</dimen>
     <dimen name="header_view_end_margin_left">40dp</dimen>
     <dimen name="header_view_end_margin_right">14dp</dimen>
     <dimen name="header_view_start_margin_bottom">14dp</dimen>
     <dimen name="header_view_start_text_size">32sp</dimen>
     <dimen name="header_view_end_text_size">18sp</dimen>
+    <dimen name="header_profile_pic_size">120dp</dimen>
 </resources>

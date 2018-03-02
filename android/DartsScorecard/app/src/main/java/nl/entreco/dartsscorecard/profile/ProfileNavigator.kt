@@ -13,5 +13,10 @@ class ProfileNavigator @Inject constructor(private val activity: ProfileActivity
     }
 
     fun onChangeName(profile: PlayerProfile) {
+
+    }
+
+    fun onChangeFavouriteDouble(profile: PlayerProfile){
+
     }
 }

@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.profile
 
 import android.content.Intent
 import android.databinding.ObservableField
+import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.profile.fetch.FetchProfileRequest
 import nl.entreco.domain.profile.fetch.FetchProfileResponse
@@ -25,12 +26,12 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         }
     }
 
-    fun showImageForProfile(data: Intent?) {
+    fun showImageForProfile(data: Intent?, size: Float) {
         val currentProfile = profile.get()
         if (currentProfile != null) {
             // Update Profile Usecase
             currentProfile.image.set(data?.data.toString())
-            updateProfileUsecase.exec(UpdateProfileRequest(currentProfile.id, null, null, image = data?.data.toString()), onProfileUpdated(), onProfileFailed())
+            updateProfileUsecase.exec(UpdateProfileRequest(currentProfile.id, null, null, image = data?.data.toString(), size = size), onProfileUpdated(), onProfileFailed())
         }
     }
 
@@ -42,6 +43,8 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         this.profile.set(PlayerProfile(profile.profiles[0]))
     }
 
-    private fun onProfileFailed(): (Throwable) -> Unit = {}
+    private fun onProfileFailed(): (Throwable) -> Unit = {
+        Log.d("FAIL", "onProfileFailed: $it")
+    }
 
 }

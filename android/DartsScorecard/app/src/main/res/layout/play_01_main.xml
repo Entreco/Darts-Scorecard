@@ -51,8 +51,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/header_profile_pic_size"
+                    android:layout_height="@dimen/header_profile_pic_size"
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
                     android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team0())}"
@@ -66,8 +66,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/player2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/header_profile_pic_size"
+                    android:layout_height="@dimen/header_profile_pic_size"
                     android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
                     android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team1())}"
