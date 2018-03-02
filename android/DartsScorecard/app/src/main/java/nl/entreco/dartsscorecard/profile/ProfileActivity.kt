@@ -58,9 +58,8 @@ class ProfileActivity : ViewModelActivity() {
 
         @JvmStatic
         fun selectImage(activity: Activity) {
-            val pickPhoto = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            val pickPhoto = Intent(Intent.ACTION_PICK)
             pickPhoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-//            pickPhoto.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
             pickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             pickPhoto.type = "image/*"
             activity.startActivityForResult(pickPhoto, REQUESRT_CHOOSE_IMAGE)//one can be replaced with any action code

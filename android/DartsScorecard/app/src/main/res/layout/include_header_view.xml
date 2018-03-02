@@ -59,9 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:onClick="@{() -> navigator.onChangeFavouriteDouble(profile)}"
             android:singleLine="true"
             android:text="@{@string/favourite_double(profile.fav)}"
-            android:onClick="@{() -> navigator.onChangeFavouriteDouble(profile)}"
             tools:text="@string/favourite_double" />
 
     </nl.entreco.dartsscorecard.profile.ProfileHeaderView>

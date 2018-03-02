@@ -2,7 +2,6 @@ package nl.entreco.domain.profile.update
 
 import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
@@ -54,7 +53,6 @@ class UpdateProfileUsecase @Inject constructor(
     }
 
     private fun copyStream(originalUri: Uri?, output: File) {
-        contentResolver.takePersistableUriPermission(originalUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         contentResolver.openInputStream(originalUri).use { input ->
             FileOutputStream(output).use { output ->
                 input.copyTo(output)
@@ -62,7 +60,7 @@ class UpdateProfileUsecase @Inject constructor(
         }
     }
 
-    private fun resize(output: File, size: Float) : Bitmap {
+    private fun resize(output: File, size: Float): Bitmap {
         val bitmap = BitmapFactory.decodeFile(output.absolutePath)
         val width = bitmap.width
         val height = bitmap.height

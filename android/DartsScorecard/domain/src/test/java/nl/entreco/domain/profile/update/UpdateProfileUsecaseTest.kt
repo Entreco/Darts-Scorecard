@@ -1,6 +1,5 @@
 package nl.entreco.domain.profile.update
 
-import android.content.ContentResolver
 import android.content.Context
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -21,13 +20,12 @@ class UpdateProfileUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockContentResolver: ContentResolver
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockProfile: Profile
     @Mock private lateinit var mockDone: (UpdateProfileResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
     @Mock private lateinit var mockProfileService: ProfileRepository
-    private lateinit var subject : UpdateProfileUsecase
+    private lateinit var subject: UpdateProfileUsecase
 
     @Test
     fun `it should return updatedProfile on success`() {
