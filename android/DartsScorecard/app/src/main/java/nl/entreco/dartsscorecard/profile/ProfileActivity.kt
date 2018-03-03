@@ -31,6 +31,7 @@ class ProfileActivity : ViewModelActivity() {
         binding.viewModel = viewModel
         binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
         binding.navigator = ProfileNavigator(this)
+
         viewModel.fetchProfile(idsFromIntent(intent))
     }
 
@@ -38,7 +39,7 @@ class ProfileActivity : ViewModelActivity() {
         if (requestCode == REQUEST_CODE_CHANGE_IMAGE && resultCode == Activity.RESULT_OK) {
             viewModel.showImageForProfile(data, resources.getDimension(R.dimen.header_profile_pic_size))
         } else if (requestCode == REQUEST_CODE_CHANGE_NAME && resultCode == Activity.RESULT_OK) {
-            viewModel.showNameForProfile(data?.getStringExtra(EXTRA_UPDATED_NAME)!!)
+            viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getStringExtra(EditPlayerNameActivity.EXTRA_FAV)!!)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

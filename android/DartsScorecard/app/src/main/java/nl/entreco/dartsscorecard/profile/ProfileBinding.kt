@@ -17,13 +17,7 @@ class ProfileBinding {
             try {
                 if (path != null && path.isNotBlank()) {
                     val uri = Uri.parse(path)
-//                    view.context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     view.setImageURI(uri)
-//                    Picasso.with(view.context).load(uri)
-//                            .error(R.drawable.ic_no_profile)
-//                            .resize(100, 100)
-//                            .centerCrop()
-//                            .into(view)
                 }
             } catch (oops: Exception) {
                 view.setImageResource(R.drawable.ic_no_profile)

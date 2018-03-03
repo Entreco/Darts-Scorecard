@@ -17,6 +17,14 @@
             name="animator"
             type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameAnimator" />
 
+        <variable
+            name="window"
+            type="android.view.Window" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameNavigator" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -30,8 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:animateLayoutChanges="true"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <TextView
@@ -52,20 +60,21 @@
                     style="@style/EditPlayer.Edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:afterTextChanged="@{(editable) -> viewModel.onNameChanged(editable)}"
                     android:hint="@string/edit_player_name_hint"
                     android:imeActionId="6"
                     android:imeOptions="actionDone"
+                    android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
                     android:text="@{viewModel.name}"
-                    android:visibility="@{viewModel.isTyping ? View.VISIBLE : View.GONE}"
-                    tools:visibility="gone"
-                    app:showKeyboard="@{viewModel.isTyping}" />
+                    app:showKeyboard="@{viewModel.isTyping}"
+                    app:window="@{window}" />
 
                 <TextView
                     style="@style/ProfileName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@{viewModel.name}"
                     android:padding="@dimen/def"
+                    android:text="@{viewModel.name}"
                     android:transitionName="profileName"
                     android:visibility="@{viewModel.isTyping ? View.GONE : View.VISIBLE}" />
             </FrameLayout>
@@ -74,7 +83,38 @@
                 style="@style/EditPlayer.Middle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_existing_player" />
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="@string/edit_player_double" />
+
+            <RelativeLayout
+                style="@style/Setup.Entry"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+                <TextView
+                    style="@style/Setup.Entry.Txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/edit_player_double" />
+
+                <TextView
+                    style="@style/Setup.Entry.Spinner"
+                    android:layout_width="@dimen/setup_width"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:text="@{viewModel.favDouble}" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Setup.Spinner"
+                    android:layout_width="@dimen/setup_width"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:entries="@array/fav_doubles"
+                    android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onFavouriteDoubleSelected(adapter,index)}"
+                    android:selectedItemPosition="@={viewModel.favDoubleIndex}" />
+            </RelativeLayout>
 
         </LinearLayout>
 

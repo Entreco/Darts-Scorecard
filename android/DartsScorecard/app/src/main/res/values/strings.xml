@@ -63,7 +63,8 @@
     <!-- Profile -->
     <string name="favourite_double">Favourite double %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
-    <string name="eidt_player_name">Update player name</string>
+    <string name="edit_player_name">Update player name</string>
+    <string name="edit_player_double">Favourite double</string>
 
     <!-- Input -->
     <string name="darts_used">How many darts did you use?</string>
@@ -85,6 +86,8 @@
     <!-- Errors -->
     <string name="err_unable_to_create_player">Unable to create player.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
+    <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
+    <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
