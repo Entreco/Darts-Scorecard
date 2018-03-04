@@ -37,14 +37,14 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:onRefreshListener="@{() -> viewModel.refresh(true)}"
-            tools:visibility="gone"
-            app:refreshing="@{viewModel.isRefreshing}">
+            app:refreshing="@{viewModel.isRefreshing}"
+            tools:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/beta_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutAnimation="@anim/item_animate_from_bottom"
+                android:layoutAnimation="@anim/layout_animation_from_bottom"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/beta_view" />
         </android.support.v4.widget.SwipeRefreshLayout>
