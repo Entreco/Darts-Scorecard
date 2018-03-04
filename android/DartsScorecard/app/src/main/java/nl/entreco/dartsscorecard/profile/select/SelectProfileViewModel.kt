@@ -11,16 +11,16 @@ import javax.inject.Inject
  */
 class SelectProfileViewModel @Inject constructor(private val fetchExistingPlayersUsecase: FetchExistingPlayersUsecase) : BaseViewModel() {
 
+    fun fetchPlayers(adapter: SelectProfileAdapter) {
+        if (adapter.itemCount <= 0) {
+            fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFetchFailed())
+        }
+    }
+
     private fun onFetchSuccess(adapter: SelectProfileAdapter): (FetchExistingPlayersResponse) -> Unit = { response ->
         val profiles = response.players.map { Profile(it.name, it.id, it.image ?: "", it.prefs) }
         adapter.setItems(profiles)
     }
 
     private fun onFetchFailed(): (Throwable) -> Unit = { err -> }
-
-    fun fetchPlayers(adapter: SelectProfileAdapter) {
-        if (adapter.itemCount <= 0) {
-            fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFetchFailed())
-        }
-    }
 }

@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.setup.players
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -40,12 +39,6 @@ class PlayerAdapterTest {
         givenPlayer("cor")
         subject.onBindViewHolder(mockPlayerViewHolder, 0)
         verify(mockPlayerViewHolder).bind(any(), eq(mockEditor), any(), eq(0))
-    }
-
-    @Test
-    fun `it should NOT bind when item is null`() {
-        subject.onBindViewHolder(null, 0)
-        verifyZeroInteractions(mockPlayerViewHolder)
     }
 
     @Test

@@ -1,6 +1,8 @@
 package nl.entreco.dartsscorecard.profile.edit
 
+import android.app.Activity
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +28,7 @@ class EditPlayerNameNavigatorTest {
     @Test
     fun onDoneEditing() {
         subject.onDoneEditing("name", "double")
-        verify(mockActivity).setResult(any())
+        verify(mockActivity).setResult(eq(Activity.RESULT_OK), any())
         verify(mockActivity).finishAfterTransition()
     }
 

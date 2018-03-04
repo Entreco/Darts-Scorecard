@@ -14,7 +14,8 @@ import kotlin.math.max
  */
 class RevealAnimator(private val target: View) {
 
-    fun setupEnterAnimation(inflater: TransitionInflater, window: Window, root: View) {
+    fun setupEnterAnimation(inflater: TransitionInflater?, window: Window, root: View) {
+        if(inflater == null) return
         val transition = inflater.inflateTransition(R.transition.change_bound_with_arc)
         transition.duration = 100
         window.sharedElementEnterTransition = transition
@@ -38,7 +39,8 @@ class RevealAnimator(private val target: View) {
         })
     }
 
-    fun setupExitAnimation(inflater: TransitionInflater, window: Window, root: View) {
+    fun setupExitAnimation(inflater: TransitionInflater?, window: Window, root: View) {
+        if(inflater == null) return
         val transition = inflater.inflateTransition(R.transition.change_bound_with_arc)
         transition.duration = 100
         window.sharedElementExitTransition = transition
