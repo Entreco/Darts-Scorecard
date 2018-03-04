@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.profile
+package nl.entreco.dartsscorecard.profile.view
 
 import android.content.Intent
 import android.databinding.ObservableField

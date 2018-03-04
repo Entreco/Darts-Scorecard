@@ -13,4 +13,5 @@ interface Analytics {
     fun trackPurchase(donation: Donation, orderId: String)
     fun trackPurchaseFailed(productId: String, step: String)
     fun trackScore(scored: String, total: Int)
+    fun setFavDoubleProperty(favouriteDouble: String)
 }

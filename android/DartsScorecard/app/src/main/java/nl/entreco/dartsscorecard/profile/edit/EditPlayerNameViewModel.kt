@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
 import javax.inject.Inject
@@ -19,6 +20,7 @@ import javax.inject.Inject
  * Created by entreco on 02/03/2018.
  */
 class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
+                                                  private val analytics: Analytics,
                                                   fetchExistingPlayersUsecase: FetchExistingPlayersUsecase) : BaseViewModel() {
 
     val isTyping = ObservableBoolean(false)
@@ -71,6 +73,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         val resolved = adapter.getItemAtPosition(index).toString()
         favDoubleIndex.set(index)
         favDouble.set(resolved)
+        analytics.setFavDoubleProperty(resolved)
     }
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNameNavigator): Boolean {

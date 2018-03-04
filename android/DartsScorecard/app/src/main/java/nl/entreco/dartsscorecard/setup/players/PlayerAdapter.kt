@@ -15,15 +15,15 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     private val items = mutableListOf<PlayerViewModel>()
     private val teams = mutableListOf<Int>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
-        val inflater = LazyInflater(parent?.context!!).inflater
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectPlayerView {
+        val inflater = LazyInflater(parent.context).inflater
         val binding = DataBindingUtil.inflate<SelectPlayerViewBinding>(inflater, R.layout.select_player_view, parent, false)
         return SelectPlayerView(binding)
     }
 
     @Synchronized
-    override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
-        holder?.bind(items[position], editor, teams, position)
+    override fun onBindViewHolder(holder: SelectPlayerView, position: Int) {
+        holder.bind(items[position], editor, teams, position)
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +38,7 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     }
 
     override fun onPlayerAdded(playerName: String) {
-        val viewModel = PlayerViewModel(items.size + 1, playerName)
+        val viewModel = PlayerViewModel(items.size + 1)
         items.add(viewModel)
         updateTeamCount()
         tryNotifyItemInserted(itemCount)

@@ -44,6 +44,7 @@
                 android:id="@+id/beta_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layoutAnimation="@anim/item_animate_from_bottom"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/beta_view" />
         </android.support.v4.widget.SwipeRefreshLayout>

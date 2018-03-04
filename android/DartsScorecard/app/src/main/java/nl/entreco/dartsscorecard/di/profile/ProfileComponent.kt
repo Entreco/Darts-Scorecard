@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.di.profile
 
 import dagger.Subcomponent
-import nl.entreco.dartsscorecard.profile.ProfileViewModel
+import nl.entreco.dartsscorecard.profile.view.ProfileViewModel
 
 /**
  * Created by entreco on 21/02/2018.

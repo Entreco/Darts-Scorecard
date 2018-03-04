@@ -24,7 +24,7 @@ class BetaActivityTest {
     val subject = spy(BetaActivity())
 
     @Test
-    fun `should start Play01Activity`() {
+    fun `should start BetaActivity`() {
         BetaActivity.launch(mockContext)
         verify(mockContext).startActivity(any())
     }

@@ -6,11 +6,11 @@
 
         <variable
             name="profile"
-            type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
+            type="nl.entreco.dartsscorecard.profile.view.PlayerProfile" />
 
         <variable
             name="navigator"
-            type="nl.entreco.dartsscorecard.profile.ProfileNavigator" />
+            type="nl.entreco.dartsscorecard.profile.view.ProfileNavigator" />
 
     </data>
 

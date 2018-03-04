@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.profile.view.ProfileBinding
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

@@ -35,11 +35,14 @@
             android:name=".play.Play01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
-            android:name=".profile.ProfileActivity"
+            android:name=".profile.select.SelectProfileActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".profile.view.ProfileActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
             android:name=".profile.edit.EditPlayerNameActivity"
-            android:parentActivityName=".profile.ProfileActivity" />
+            android:parentActivityName=".profile.view.ProfileActivity" />
 
     </application>
 

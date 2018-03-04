@@ -18,4 +18,15 @@
         <item name="android:textSize">18sp</item>
         <item name="android:padding">@dimen/def</item>
     </style>
+
+    <style name="SelectProfileName" parent="ProfileName">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="SelectProfileTagline" parent="ProfileTagline">
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">start</item>
+        <item name="android:padding">@dimen/xsmall</item>
+    </style>
 </resources>

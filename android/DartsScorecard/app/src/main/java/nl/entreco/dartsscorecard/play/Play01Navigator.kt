@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import android.view.View
-import nl.entreco.dartsscorecard.profile.ProfileActivity
+import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import nl.entreco.domain.model.players.Team
 import javax.inject.Inject
 

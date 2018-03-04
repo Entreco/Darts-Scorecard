@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.profile
 import android.transition.TransitionInflater
 import android.view.Window
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
+import nl.entreco.dartsscorecard.profile.view.ProfileAnimator
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

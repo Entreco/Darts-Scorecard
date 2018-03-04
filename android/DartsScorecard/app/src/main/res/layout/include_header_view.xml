@@ -8,14 +8,14 @@
 
         <variable
             name="profile"
-            type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
+            type="nl.entreco.dartsscorecard.profile.view.PlayerProfile" />
 
         <variable
             name="navigator"
-            type="nl.entreco.dartsscorecard.profile.ProfileNavigator" />
+            type="nl.entreco.dartsscorecard.profile.view.ProfileNavigator" />
     </data>
 
-    <nl.entreco.dartsscorecard.profile.ProfileHeaderView
+    <nl.entreco.dartsscorecard.profile.view.ProfileHeaderView
         android:id="@+id/toolbar_header_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,5 +63,5 @@
             android:text="@{@string/favourite_double(profile.fav)}"
             tools:text="@string/favourite_double" />
 
-    </nl.entreco.dartsscorecard.profile.ProfileHeaderView>
+    </nl.entreco.dartsscorecard.profile.view.ProfileHeaderView>
 </layout>

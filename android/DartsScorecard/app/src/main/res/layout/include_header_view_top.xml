@@ -6,10 +6,10 @@
     <data>
         <variable
             name="profile"
-            type="nl.entreco.dartsscorecard.profile.PlayerProfile" />
+            type="nl.entreco.dartsscorecard.profile.view.PlayerProfile" />
     </data>
 
-    <nl.entreco.dartsscorecard.profile.ProfileHeaderView
+    <nl.entreco.dartsscorecard.profile.view.ProfileHeaderView
         android:id="@+id/toolbar_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,5 +38,5 @@
             android:src="@drawable/ic_no_profile"
             app:profileImage="@{profile.image}" />
 
-    </nl.entreco.dartsscorecard.profile.ProfileHeaderView>
+    </nl.entreco.dartsscorecard.profile.view.ProfileHeaderView>
 </layout>

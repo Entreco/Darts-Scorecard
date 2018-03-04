@@ -28,6 +28,10 @@ class FirebaseAnalytics(context: Context) : Analytics {
         })
     }
 
+    override fun setFavDoubleProperty(favouriteDouble: String) {
+        fb.setUserProperty("fav_double", favouriteDouble)
+    }
+
     override fun trackViewFeature(feature: Feature) {
         fb.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "feature")

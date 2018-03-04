@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.profile
+package nl.entreco.dartsscorecard.profile.view
 
 import android.databinding.BindingAdapter
 import android.net.Uri

@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
+import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.RetrieveLatestGameUsecase
@@ -27,6 +28,10 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
         if (request != null) {
             Play01Activity.startGame(context, request)
         }
+    }
+
+    fun onProfilePressed(context: Context){
+        SelectProfileActivity.launch(context)
     }
 
     fun onBetaPressed(context: Context) {

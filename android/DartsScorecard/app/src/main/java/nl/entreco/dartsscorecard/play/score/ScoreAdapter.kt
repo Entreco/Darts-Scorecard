@@ -18,14 +18,14 @@ class ScoreAdapter @Inject constructor() : TestableAdapter<TeamScoreView>() {
 
     private val items = mutableListOf<TeamScoreViewModel>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TeamScoreView {
-        val inflater = LazyInflater(parent?.context!!).inflater
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamScoreView {
+        val inflater = LazyInflater(parent.context).inflater
         val binding = DataBindingUtil.inflate<TeamScoreViewBinding>(inflater, R.layout.team_score_view, parent, false)
         return TeamScoreView(binding)
     }
 
-    override fun onBindViewHolder(holder: TeamScoreView?, position: Int) {
-        holder?.bind(items[position])
+    override fun onBindViewHolder(holder: TeamScoreView, position: Int) {
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {

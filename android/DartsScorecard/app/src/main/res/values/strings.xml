@@ -18,6 +18,7 @@
     <string name="save">Save</string>
 
     <!-- Title -->
+    <string name="title_select_profile">Select Profile</string>
     <string name="title_select_player">Select Player</string>
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_setup">Configure 01 Game</string>
@@ -26,6 +27,7 @@
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
+    <string name="profiles">Manage Profiles</string>
     <string name="beta">Beta</string>
 
     <!-- Beta -->
