@@ -49,7 +49,7 @@ class CreateGameUsecaseTest {
 
     private fun whenStartIsCalled() {
         subject.exec(setup, teamString, mockOk, mockFail)
-        verify(mockGameRepository).create(eq(teamString.toString()), eq(501), eq(0), eq(3), eq(2))
+        verify(mockGameRepository).create(eq(teamString), eq(501), eq(0), eq(3), eq(2))
     }
 
     private fun thenGameIsStarted() {

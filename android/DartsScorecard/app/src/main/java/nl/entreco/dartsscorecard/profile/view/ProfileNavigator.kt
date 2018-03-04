@@ -8,7 +8,7 @@ import javax.inject.Inject
  */
 class ProfileNavigator @Inject constructor(private val activity: ProfileActivity) {
 
-    fun onChooseImage(profile: PlayerProfile) {
+    fun onChooseImage() {
         ProfileActivity.selectImage(activity)
     }
 

@@ -36,7 +36,7 @@
                 android:contentDescription="@null"
                 android:elevation="@dimen/def"
                 android:fitsSystemWindows="true"
-                android:onClick="@{() -> navigator.onChooseImage(profile)}"
+                android:onClick="@{() -> navigator.onChooseImage()}"
                 android:outlineProvider="background"
                 android:src="@drawable/ic_no_profile"
                 android:transitionName="profile"

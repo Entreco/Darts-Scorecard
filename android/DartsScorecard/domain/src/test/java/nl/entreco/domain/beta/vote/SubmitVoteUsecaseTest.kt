@@ -3,9 +3,6 @@ package nl.entreco.domain.beta.vote
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.beta.vote.SubmitVoteRequest
-import nl.entreco.domain.beta.vote.SubmitVoteResponse
-import nl.entreco.domain.beta.vote.SubmitVoteUsecase
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.FeatureRepository
@@ -23,10 +20,10 @@ class SubmitVoteUsecaseTest {
     private val bg = TestBackground()
     private val fg = TestForeground()
 
-    @Mock private lateinit var mockDone: (SubmitVoteResponse)->Unit
-    @Mock private lateinit var mockFail: (Throwable)->Unit
+    @Mock private lateinit var mockDone: (SubmitVoteResponse) -> Unit
+    @Mock private lateinit var mockFail: (Throwable) -> Unit
     @Mock private lateinit var mockFeatureRepository: FeatureRepository
-    private lateinit var subject : SubmitVoteUsecase
+    private lateinit var subject: SubmitVoteUsecase
 
     @Test
     fun `it should report result when voting succeeds`() {
