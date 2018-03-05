@@ -31,6 +31,18 @@ class SelectProfileViewModelTest {
     private val profileCaptor = argumentCaptor<List<Profile>>()
 
     @Test
+    fun `it should set isLoading initially`() {
+        givenSubject()
+        thenLoadingIs(true)
+    }
+
+    @Test
+    fun `it should NOT set isEmpty initially`() {
+        givenSubject()
+        thenEmptys(false)
+    }
+
+    @Test
     fun `it should set Profiles on the Adapter when fetching players succeeds`() {
         givenMockPlayer()
         givenSubject()
@@ -39,9 +51,17 @@ class SelectProfileViewModelTest {
     }
 
     @Test
-    fun `it should do nothing when fetching players fails`() {
+    fun `it should set isLoading(false) when fetching players fails`() {
         givenSubject()
         whenFetchingPlayersFails()
+        thenLoadingIs(false)
+    }
+
+    @Test
+    fun `it should set isEmpty(true) when fetching players fails`() {
+        givenSubject()
+        whenFetchingPlayersFails()
+        thenEmptys(true)
     }
 
     private fun givenSubject() {
@@ -55,12 +75,12 @@ class SelectProfileViewModelTest {
         whenever(mockPlayer.prefs).thenReturn(PlayerPrefs(20))
     }
 
-
     private fun whenFetchingPlayersSucceeds(vararg players: Player) {
         subject.fetchPlayers(mockAdapter)
         verify(mockFetchUsecase).exec(doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(players.toList()))
     }
+
 
     private fun whenFetchingPlayersFails() {
         subject.fetchPlayers(mockAdapter)
@@ -71,5 +91,13 @@ class SelectProfileViewModelTest {
     private fun thenProfilesAreSet(expected: Int) {
         verify(mockAdapter).setItems(profileCaptor.capture())
         assertEquals(expected, profileCaptor.lastValue.size)
+    }
+
+    private fun thenLoadingIs(expected: Boolean) {
+        assertEquals(expected, subject.isLoading.get())
+    }
+
+    private fun thenEmptys(expected: Boolean) {
+        assertEquals(expected, subject.isEmpty.get())
     }
 }

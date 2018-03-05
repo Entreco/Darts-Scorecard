@@ -20,7 +20,8 @@ class SelectProfileActivity : ViewModelActivity() {
 
     private val component: SelectProfileComponent by componentProvider { it.plus(SelectProfileModule()) }
     private val viewModel: SelectProfileViewModel by viewModelProvider { component.viewModel() }
-    private val adapter: SelectProfileAdapter by lazy { SelectProfileAdapter() }
+    private val navigator: SelectProfileNavigator by lazy { SelectProfileNavigator(this) }
+    private val adapter: SelectProfileAdapter by lazy { SelectProfileAdapter(navigator) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

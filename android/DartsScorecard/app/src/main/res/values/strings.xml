@@ -91,6 +91,7 @@
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
+    <string name="err_no_players_yet">No Profiles yet. Play a Game, or create players using the + button</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>

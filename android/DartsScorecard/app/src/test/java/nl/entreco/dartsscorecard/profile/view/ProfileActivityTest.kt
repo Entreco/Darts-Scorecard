@@ -30,10 +30,10 @@ class ProfileActivityTest {
         Assert.assertNotNull(subject)
     }
 
-    @Test(expected = NullPointerException::class)
+    @Test
     fun launch() {
-        ProfileActivity.launch(mockActivity, mockView, mockTeam)
-        verify(mockActivity).startActivityForResult(any(), eq(1222))
+        ProfileActivity.launch(mockActivity, mockView, longArrayOf(1,2))
+        verify(mockActivity).startActivity(any(), isNull())
     }
 
     @Test

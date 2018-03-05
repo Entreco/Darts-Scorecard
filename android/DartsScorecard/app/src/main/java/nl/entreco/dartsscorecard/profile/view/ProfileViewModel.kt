@@ -40,7 +40,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         if (currentProfile != null) {
             // Update Profile Usecase
             currentProfile.name.set(name)
-            currentProfile.fav.set("$double")
+            currentProfile.fav.set(double)
             updateProfileUsecase.exec(UpdateProfileRequest(currentProfile.id, name, "$double", null, 0F), onProfileUpdated(), onProfileFailed())
         }
     }

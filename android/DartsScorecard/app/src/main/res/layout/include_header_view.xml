@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@{@string/favourite_double(profile.fav)}"
+            app:profileDouble="@{profile.fav}"
             tools:text="@string/favourite_double" />
 
     </nl.entreco.dartsscorecard.profile.view.ProfileHeaderView>

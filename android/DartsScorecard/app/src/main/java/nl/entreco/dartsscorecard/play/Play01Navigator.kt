@@ -11,6 +11,7 @@ import javax.inject.Inject
 class Play01Navigator @Inject constructor(private val activity: Play01Activity) {
 
     fun gotoTeamProfile(view: View, team: Team) {
-        ProfileActivity.launch(activity, view, team)
+        val teams = team.players.map { it.id }.toLongArray()
+        ProfileActivity.launch(activity, view, teams)
     }
 }

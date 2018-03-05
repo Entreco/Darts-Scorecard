@@ -5,6 +5,10 @@
 
     <data>
 
+        <import
+            alias="View"
+            type="android.view.View" />
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.profile.select.SelectProfileViewModel" />
@@ -12,11 +16,28 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <include
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_select_profile" />
+
+        <include
+            layout="@layout/play_01_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            style="@style/ProfileTagline"
+            android:padding="@dimen/xlarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isEmpty ? View.VISIBLE : View.GONE}"
+            android:text="@string/err_no_players_yet"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/profileRecyclerView"
@@ -28,6 +49,17 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/profile_view" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/def"
+            android:tint="@color/white"
+            android:src="@drawable/ic_add_profile"
+            android:layout_gravity="bottom|center_horizontal"
+            app:backgroundTint="?attr/colorEditProfile"
+            app:elevation="@dimen/def"
+            app:fabSize="normal" />
 
     </android.support.design.widget.CoordinatorLayout>
 

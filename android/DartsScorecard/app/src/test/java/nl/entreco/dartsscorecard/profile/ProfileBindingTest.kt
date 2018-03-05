@@ -1,11 +1,10 @@
 package nl.entreco.dartsscorecard.profile
 
-import android.net.Uri
 import android.widget.ImageView
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.view.ProfileBinding
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +22,7 @@ class ProfileBindingTest {
     @Test
     fun loadProfileImage_normal() {
         ProfileBinding.loadProfileImage(mockImageView, "content://some.location")
-        verify(mockImageView, atLeastOnce()).setImageURI(Uri.parse("content://some.location"))
+        verify(mockImageView).setImageResource(R.drawable.ic_no_profile)
     }
 
     @Test

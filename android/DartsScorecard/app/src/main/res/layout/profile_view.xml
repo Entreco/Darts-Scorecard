@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,11 +10,16 @@
             name="profile"
             type="nl.entreco.dartsscorecard.profile.select.ProfileModel" />
 
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.select.SelectProfileNavigator" />
+
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> navigator.onProfileSelected(profileImage, profile)}"
         android:padding="@dimen/def">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -23,10 +28,11 @@
             android:layout_height="@dimen/icon_size_large"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/small"
-            android:background="@drawable/ic_no_profile"
+            android:background="@drawable/profile_bg_xsmall"
             android:scaleType="centerCrop"
-            app:civ_border_width="2dp"
+            android:transitionName="profile"
             app:civ_border_color="?attr/colorPrimary"
+            app:civ_border_width="2dp"
             bind:profileImage="@{profile.image}" />
 
         <LinearLayout
@@ -50,7 +56,7 @@
                 style="@style/SelectProfileTagline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{@string/favourite_double(profile.fav)}"
+                app:profileDouble="@{profile.fav}"
                 tools:text="@string/app_name" />
         </LinearLayout>
 

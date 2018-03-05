@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.profile.view
 
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import nl.entreco.domain.profile.Profile
 
 /**
@@ -8,7 +9,7 @@ import nl.entreco.domain.profile.Profile
  */
 class PlayerProfile(profile: Profile) {
     val id = profile.id
-    val fav = ObservableField<String>("${profile.prefs.favoriteDouble}")
+    val fav = ObservableInt(profile.prefs.favoriteDouble)
     val name = ObservableField<String>(profile.name)
     val image = ObservableField<String>(profile.image)
 }

@@ -11,7 +11,7 @@ import nl.entreco.domain.profile.Profile
 /**
  * Created by entreco on 04/03/2018.
  */
-class SelectProfileAdapter : TestableAdapter<ProfileView>() {
+class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : TestableAdapter<ProfileView>() {
 
     private val items: MutableList<Profile> = mutableListOf()
 
@@ -22,7 +22,7 @@ class SelectProfileAdapter : TestableAdapter<ProfileView>() {
     }
 
     override fun onBindViewHolder(holder: ProfileView, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], navigator)
     }
 
     override fun getItemCount(): Int {

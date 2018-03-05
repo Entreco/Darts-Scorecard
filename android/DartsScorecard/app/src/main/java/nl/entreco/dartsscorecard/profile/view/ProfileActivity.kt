@@ -14,7 +14,6 @@ import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
-import nl.entreco.domain.model.players.Team
 
 
 /**
@@ -39,7 +38,7 @@ class ProfileActivity : ViewModelActivity() {
         if (requestCode == REQUEST_CODE_CHANGE_IMAGE && resultCode == Activity.RESULT_OK) {
             viewModel.showImageForProfile(data, resources.getDimension(R.dimen.header_profile_pic_size))
         } else if (requestCode == REQUEST_CODE_CHANGE_NAME && resultCode == Activity.RESULT_OK) {
-            viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0)!!)
+            viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0))
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -50,9 +49,9 @@ class ProfileActivity : ViewModelActivity() {
         private const val REQUEST_CODE_CHANGE_NAME = 1223
 
         @JvmStatic
-        fun launch(activity: Activity, view: View, team: Team) {
+        fun launch(activity: Activity, view: View, teams: LongArray) {
             val intent = Intent(activity, ProfileActivity::class.java)
-            intent.putExtra(EXTRA_TEAM_IDS, team.players.map { it.id }.toLongArray())
+            intent.putExtra(EXTRA_TEAM_IDS, teams)
 
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
             activity.startActivity(intent, options.toBundle())
@@ -68,9 +67,9 @@ class ProfileActivity : ViewModelActivity() {
         }
 
         @JvmStatic
-        fun selectName(activity: Activity, name: String, fav: String) {
+        fun selectName(activity: Activity, name: String, fav: Int) {
             val view = activity.findViewById<TextView>(R.id.profileHeaderName)
-            val pickName = EditPlayerNameActivity.launch(activity, name, fav)
+            val pickName = EditPlayerNameActivity.launch(activity, name, activity.resources.getStringArray(R.array.fav_doubles)[fav])
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
             activity.startActivityForResult(pickName, REQUEST_CODE_CHANGE_NAME, options.toBundle())//one can be replaced with any action code
         }
