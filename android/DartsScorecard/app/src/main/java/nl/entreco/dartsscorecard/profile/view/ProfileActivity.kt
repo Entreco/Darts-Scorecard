@@ -45,7 +45,6 @@ class ProfileActivity : ViewModelActivity() {
     }
 
     companion object {
-        private const val EXTRA_UPDATED_NAME = "EXTRA_UPDATED_NAME"
         private const val EXTRA_TEAM_IDS = "EXTRA_TEAM_IDS"
         private const val REQUEST_CODE_CHANGE_IMAGE = 1222
         private const val REQUEST_CODE_CHANGE_NAME = 1223
