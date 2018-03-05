@@ -15,6 +15,7 @@ class ProfileBinding {
         @BindingAdapter("profileImage")
         fun loadProfileImage(view: ImageView, path: String?) {
             try {
+                view.setImageURI(null)
                 if (path != null && path.isNotBlank()) {
                     val uri = Uri.parse(path)
                     view.setImageURI(uri)

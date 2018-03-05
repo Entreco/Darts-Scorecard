@@ -19,23 +19,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val teamSheet = binding.includeScore?.teamContainer!!
     private val inputSheet = binding.includeInput?.inputSheet!!
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.includeScore?.scoreSheet!!,
-            binding.includeInput?.fab!!,
-            binding.includeMain?.mainSheet!!,
-            binding.includeMain.player1,
-            binding.includeMain.player2,
-            binding.includeMain.name1,
-            binding.includeMain.name2,
-            binding.includeMain.score,
-            binding.includeMain.stat1,
-            binding.includeMain.stat2,
-            binding.includeMain.stat3,
-            binding.includeMain.stat4,
-            binding.includeMain.stat5,
-            binding.includeMain.stat6,
-            binding.includeMain.stat7,
-            binding.includeMain.version,
-            binding.includeInput.inputResume)
+    private val animator = Play01AnimatorHandler(binding.includeScore?.scoreSheet!!, binding.includeInput?.fab!!, binding.includeMain?.mainSheet!!, binding.includeMain.player1, binding.includeMain.player2, binding.includeMain.name1, binding.includeMain.name2, binding.includeMain.score, binding.includeMain.stat1, binding.includeMain.stat2, binding.includeMain.stat3, binding.includeMain.stat4, binding.includeMain.stat5, binding.includeMain.stat6, binding.includeMain.stat7, binding.includeMain.version, binding.includeInput.inputResume)
 
     init {
 
@@ -103,11 +87,11 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     }
 
     internal class Play01AnimatorHandler(private val scoreSheet: View, private val fab: View, private val mainSheet: View,
-                                private val player1: View, private val player2: View,
-                                private val name1: View, private val name2: View, private val score: View,
-                                private val stat1: View, private val stat2: View, private val stat3: View,
-                                private val stat4: View, private val stat5: View, private val stat6: View,
-                                private val stat7: View, private val version: View, private val inputResume: View) {
+                                         private val player1: View, private val player2: View,
+                                         private val name1: View, private val name2: View, private val score: View,
+                                         private val stat1: View, private val stat2: View, private val stat3: View,
+                                         private val stat4: View, private val stat5: View, private val stat6: View,
+                                         private val stat7: View, private val version: View, private val inputResume: View) {
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel

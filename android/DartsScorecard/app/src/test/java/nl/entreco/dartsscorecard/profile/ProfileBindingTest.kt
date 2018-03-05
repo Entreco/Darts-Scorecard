@@ -33,6 +33,12 @@ class ProfileBindingTest {
     }
 
     @Test
+    fun loadProfileImage_empty() {
+        ProfileBinding.loadProfileImage(mockImageView, "")
+        verify(mockImageView, never()).setImageURI(any())
+    }
+
+    @Test
     fun loadProfileImage_null() {
         ProfileBinding.loadProfileImage(mockImageView, null)
         verify(mockImageView, never()).setImageURI(any())
