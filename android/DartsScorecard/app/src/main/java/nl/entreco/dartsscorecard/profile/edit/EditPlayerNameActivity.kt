@@ -62,7 +62,7 @@ class EditPlayerNameActivity : ViewModelActivity() {
             return intent
         }
 
-        fun result(desiredName: String, desiredDouble: String?): Intent {
+        fun result(desiredName: String, desiredDouble: Int): Intent {
             val intent = Intent()
             intent.putExtra(EXTRA_NAME, desiredName)
             intent.putExtra(EXTRA_FAV, desiredDouble)

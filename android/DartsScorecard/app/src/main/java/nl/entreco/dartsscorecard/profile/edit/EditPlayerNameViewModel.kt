@@ -88,7 +88,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     fun onDone(navigator: EditPlayerNameNavigator): Boolean {
         isTyping.set(false)
 
-        val desiredDouble = favDouble.get()
+        val desiredDouble = favDoubleIndex.get()
         val desiredName = name.get().toLowerCase()
         val existing = allPlayers.findLast {
             it.name.toLowerCase() == desiredName

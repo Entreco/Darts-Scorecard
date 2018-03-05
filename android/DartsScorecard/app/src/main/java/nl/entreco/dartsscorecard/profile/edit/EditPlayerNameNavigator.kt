@@ -12,7 +12,7 @@ class EditPlayerNameNavigator(private val activity: EditPlayerNameActivity) {
         return true
     }
 
-    fun onDoneEditing(desiredName: String, desiredDouble: String?) : Boolean {
+    fun onDoneEditing(desiredName: String, desiredDouble: Int) : Boolean {
         val data = EditPlayerNameActivity.result(desiredName, desiredDouble)
         activity.setResult(Activity.RESULT_OK, data)
         activity.finishAfterTransition()

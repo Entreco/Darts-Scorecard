@@ -34,14 +34,21 @@ class UpdateProfileUsecaseTest {
         thenProfileIsReported()
     }
 
+    @Test
+    fun `it should return updated profile after success`() {
+        givenSubject()
+        whenUpdatingProfileSucceeds(image = "img.jpg")
+        thenProfileIsReported()
+    }
+
     private fun givenSubject() {
         subject = UpdateProfileUsecase(mockContext, mockProfileService, bg, fg)
     }
 
-    private fun whenUpdatingProfileSucceeds(name: String) {
-        whenever(mockProfileService.update(12, name, "image", "12")).thenReturn(mockProfile)
-        subject.exec(UpdateProfileRequest(12, name, "12", "image", 200F), mockDone, mockFail)
-        verify(mockProfileService).update(12, name, "image", "12")
+    private fun whenUpdatingProfileSucceeds(name: String = "name", image: String = "image") {
+        whenever(mockProfileService.update(12, name, image, "12")).thenReturn(mockProfile)
+        subject.exec(UpdateProfileRequest(12, name, "12", image, 200F), mockDone, mockFail)
+        verify(mockProfileService).update(12, name, image, "12")
     }
 
     private fun thenProfileIsReported() {

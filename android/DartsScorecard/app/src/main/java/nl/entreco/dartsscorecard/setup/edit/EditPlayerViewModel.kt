@@ -108,6 +108,6 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun onCreateFailed(view: View): (Throwable) -> Unit = {
-        Toast.makeText(view.context, R.string.err_unable_to_create_player, Toast.LENGTH_SHORT).show()
+        Toast.makeText(view.context, R.string.err_unable_to_update_profiler, Toast.LENGTH_SHORT).show()
     }
 }

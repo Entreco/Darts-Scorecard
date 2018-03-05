@@ -27,7 +27,7 @@ class EditPlayerNameNavigatorTest {
 
     @Test
     fun onDoneEditing() {
-        subject.onDoneEditing("name", "double")
+        subject.onDoneEditing("name", 0)
         verify(mockActivity).setResult(eq(Activity.RESULT_OK), any())
         verify(mockActivity).finishAfterTransition()
     }

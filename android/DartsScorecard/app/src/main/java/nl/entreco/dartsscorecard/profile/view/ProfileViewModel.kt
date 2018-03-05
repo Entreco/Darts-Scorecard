@@ -35,13 +35,13 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         }
     }
 
-    fun showNameForProfile(name: String, double: String){
+    fun showNameForProfile(name: String, double: Int){
         val currentProfile = profile.get()
         if (currentProfile != null) {
             // Update Profile Usecase
             currentProfile.name.set(name)
-            currentProfile.fav.set(double)
-            updateProfileUsecase.exec(UpdateProfileRequest(currentProfile.id, name, double, null, 0F), onProfileUpdated(), onProfileFailed())
+            currentProfile.fav.set("$double")
+            updateProfileUsecase.exec(UpdateProfileRequest(currentProfile.id, name, "$double", null, 0F), onProfileUpdated(), onProfileFailed())
         }
     }
 
