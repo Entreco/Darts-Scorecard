@@ -1,9 +1,11 @@
 package nl.entreco.dartsscorecard.profile.view
 
 import android.app.Activity
+import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.model.players.Team
 import org.junit.Assert
 import org.junit.Assert.assertNotNull
@@ -22,6 +24,7 @@ class ProfileActivityTest {
     @Mock private lateinit var mockTeam: Team
     @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockResources: Resources
     @Mock private lateinit var mockActivity: Activity
     val subject = spy(ProfileActivity())
 
@@ -41,11 +44,14 @@ class ProfileActivityTest {
         assertNotNull(ProfileActivity.selectImage(mockActivity))
     }
 
+
     @Test
     fun selectName() {
+        whenever(mockResources.getStringArray(R.array.fav_doubles)).thenReturn(arrayOf("1", "2"))
+        whenever(mockActivity.resources).thenReturn(mockResources)
         whenever(mockTextView.transitionName).thenReturn("transition")
         whenever(mockActivity.findViewById<TextView>(any())).thenReturn(mockTextView)
-        assertNotNull(ProfileActivity.selectName(mockActivity, "some name", "some double"))
+        assertNotNull(ProfileActivity.selectName(mockActivity, "some name", 1))
     }
 
 }
