@@ -5,6 +5,7 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.os.Handler
+import android.support.annotation.StringRes
 import android.text.Editable
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
@@ -15,6 +16,10 @@ import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
 import javax.inject.Inject
+
+private val ERR_EMPTY = 0
+private val ERR_DUPLICATE = 1
+private val NAME_OK = 2
 
 /**
  * Created by entreco on 02/03/2018.
@@ -65,7 +70,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         return try {
             context.resources.getStringArray(R.array.fav_doubles).indexOf(fav)
         } catch (unknownFavDouble: Exception) {
-            0
+            ERR_EMPTY
         }
     }
 
@@ -93,13 +98,25 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         val existing = allPlayers.findLast {
             it.name.toLowerCase() == desiredName
         }
-        if (existing == null || desiredName == initialProfileName) {
-            return navigator.onDoneEditing(desiredName, desiredDouble)
-        } else {
-            isTyping.set(true)
-            errorMsg.set(R.string.err_player_already_exists)
+
+        return when(isValidName(existing, desiredName)){
+            -1 -> navigator.onDoneEditing(desiredName, desiredDouble)
+            ERR_EMPTY -> handleError(R.string.err_player_name_is_empty)
+            1 -> handleError(R.string.err_player_already_exists)
+            else -> handleError(R.string.err_unable_to_create_player)
         }
-        return false
+    }
+
+    private fun handleError(@StringRes msg: Int): Boolean {
+        isTyping.set(true)
+        errorMsg.set(msg)
+        return true
+    }
+
+    private fun isValidName(existing: Player?, desiredName: String) : Int {
+        if(desiredName.isNotEmpty())  return ERR_EMPTY
+        else if (existing == null || desiredName == initialProfileName) return ERR_DUPLICATE
+        return NAME_OK
     }
 
     private fun donePressed(action: Int) = action == EditorInfo.IME_ACTION_DONE

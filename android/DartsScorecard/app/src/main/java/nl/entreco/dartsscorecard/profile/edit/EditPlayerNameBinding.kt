@@ -2,6 +2,8 @@ package nl.entreco.dartsscorecard.profile.edit
 
 import android.content.Context
 import android.databinding.BindingAdapter
+import android.support.annotation.StringRes
+import android.support.design.widget.TextInputLayout
 import android.transition.TransitionInflater
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
@@ -26,6 +28,16 @@ class EditPlayerNameBinding {
             } else {
                 revealAnimator.setupExitAnimation(TransitionInflater.from(view.context), window, view)
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("error")
+        fun showError(view: TextInputLayout, @StringRes msg: Int) {
+            if(msg >0 ) {
+                view.error = view.context.getString(msg)
+            } else {
+                view.error = ""
             }
         }
     }
