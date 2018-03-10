@@ -13,7 +13,6 @@
     </style>
     <style name="EditPlayer.Edit">
         <item name="android:textSize">46sp</item>
-        <item name="android:padding">@dimen/def</item>
         <item name="android:inputType">textNoSuggestions|textVisiblePassword</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">?attr/nameText</item>

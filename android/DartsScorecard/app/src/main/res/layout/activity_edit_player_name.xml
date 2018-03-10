@@ -54,36 +54,39 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary">
 
-                <android.support.design.widget.TextInputLayout
-                    style="@style/EditPlayer.Input"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:errorEnabled="true"
-                    app:error="@{viewModel.errorMsg}">
-
-                    <android.support.design.widget.TextInputEditText
-                        style="@style/EditPlayer.Edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:afterTextChanged="@{(editable) -> viewModel.onNameChanged(editable)}"
-                        android:hint="@string/edit_player_name_hint"
-                        android:imeActionId="6"
-                        android:imeOptions="actionDone"
-                        android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
-                        android:text="@{viewModel.name}"
-                        app:showKeyboard="@{viewModel.isTyping}"
-                        app:window="@{window}"/>
-
-                </android.support.design.widget.TextInputLayout>
-
                 <TextView
                     style="@style/ProfileName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/def"
                     android:text="@{viewModel.name}"
-                    android:transitionName="profileName"
-                    android:visibility="@{viewModel.isTyping ? View.GONE : View.VISIBLE}" />
+                    android:transitionName="profileName" />
+
+                <android.support.design.widget.TextInputLayout
+                    style="@style/EditPlayer.Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/def"
+                    app:error="@{viewModel.errorMsg}"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        style="@style/EditPlayer.Edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:afterTextChanged="@{(editable) -> viewModel.onNameChanged(editable)}"
+                        android:hint="@string/edit_player_name_hint"
+                        android:imeActionId="6"
+                        android:imeOptions="actionDone"
+                        android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
+                        android:text="@{viewModel.name}"
+                        android:textAllCaps="true"
+                        app:showKeyboard="@{viewModel.isTyping}"
+                        app:window="@{window}" />
+
+                </android.support.design.widget.TextInputLayout>
+
             </FrameLayout>
 
             <TextView

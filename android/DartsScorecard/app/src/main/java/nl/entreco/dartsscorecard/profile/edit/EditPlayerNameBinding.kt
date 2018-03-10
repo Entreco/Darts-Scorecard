@@ -26,7 +26,6 @@ class EditPlayerNameBinding {
                 view.selectAll()
                 imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
             } else {
-                revealAnimator.setupExitAnimation(TransitionInflater.from(view.context), window, view)
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
         }

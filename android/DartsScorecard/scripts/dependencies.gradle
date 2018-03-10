@@ -38,7 +38,7 @@ ext {
     gradleVersion = '3.0.1'
     gmsVersion = '3.1.2'
     dexCountVersion = '0.8.2'
-    detektVersion = '1.0.0.RC6-2'
+    detektVersion = '1.0.0.RC6-3'
     jacocoCoverageVersion = '0.4.0'
     coverallsVersion = '2.8.2'
     fabricVersion = '1.25.1'

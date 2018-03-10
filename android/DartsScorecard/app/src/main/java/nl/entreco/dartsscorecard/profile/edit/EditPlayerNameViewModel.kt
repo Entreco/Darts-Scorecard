@@ -53,7 +53,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     }
 
     fun playerName(playerName: String, fav: String, context: Context) {
-        initialProfileName = playerName
+        initialProfileName = playerName.toLowerCase()
         favDouble.set(fav)
         favDoubleIndex.set(toIndex(fav, context))
         name.set(playerName)
@@ -63,7 +63,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     }
 
     fun onNameChanged(editable: Editable) {
-        name.set(editable.toString())
+        name.set(editable.toString().toLowerCase())
     }
 
     private fun toIndex(fav: String, context: Context): Int {
@@ -100,9 +100,9 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         }
 
         return when(isValidName(existing, desiredName)){
-            -1 -> navigator.onDoneEditing(desiredName, desiredDouble)
+            NAME_OK-> navigator.onDoneEditing(desiredName, desiredDouble)
             ERR_EMPTY -> handleError(R.string.err_player_name_is_empty)
-            1 -> handleError(R.string.err_player_already_exists)
+            ERR_DUPLICATE -> handleError(R.string.err_player_already_exists)
             else -> handleError(R.string.err_unable_to_create_player)
         }
     }
@@ -114,8 +114,8 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     }
 
     private fun isValidName(existing: Player?, desiredName: String) : Int {
-        if(desiredName.isNotEmpty())  return ERR_EMPTY
-        else if (existing == null || desiredName == initialProfileName) return ERR_DUPLICATE
+        if(desiredName.isEmpty())  return ERR_EMPTY
+        else if (existing != null && desiredName != initialProfileName) return ERR_DUPLICATE
         return NAME_OK
     }
 
