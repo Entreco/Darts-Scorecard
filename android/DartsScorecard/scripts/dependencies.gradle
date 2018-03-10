@@ -36,7 +36,7 @@ ext.versionName = { ->
 ext {
     kotlinVersion = '1.2.30'
     gradleVersion = '3.0.1'
-    gmsVersion = '3.1.2'
+    gmsVersion = '3.2.0'
     dexCountVersion = '0.8.2'
     detektVersion = '1.0.0.RC6-3'
     jacocoCoverageVersion = '0.4.0'
@@ -60,7 +60,7 @@ ext {
             firebase = '11.8.0',
             picasso = '2.5.1',
             circleImageView = '2.2.0',
-            crash = '2.9.0@aar',
+            crash = '2.9.1@aar',
             gson = '2.8.2',
             junit = '4.12',
             mockito = '2.12.0',

@@ -9,28 +9,27 @@ apply from: '../scripts/coverage.gradle'
 apply from: '../scripts/android_common.gradle'
 
 android {
-
     def config = rootProject.extensions.getByName("ext")
     defaultConfig {
         applicationId "nl.entreco.dartsscorecard"
         resValue "string", "version", "${config.versionName}"
     }
-
     buildTypes {
+        debug {
+            applicationIdSuffix ".dev"
+        }
         release {
             shrinkResources true
         }
     }
-
     dataBinding {
         enabled = true
     }
 }
 
 dependencies {
-
-    implementation project(":domain")
-    implementation project(":data")
+    implementation project(':domain')
+    implementation project(':data')
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -49,7 +48,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.squareup.picasso:picasso:$picasso"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
-    implementation ("com.crashlytics.sdk.android:crashlytics:$crash"){
+    implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
         transitive = true
     }
 
