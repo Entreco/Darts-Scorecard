@@ -62,7 +62,7 @@ class PlayerViewModelTest {
     }
 
     private fun givenSubject(index: Int) {
-        subject = PlayerViewModel(index)
+        subject = PlayerViewModel(-1, index)
     }
 
     private fun whenTeamIndexSelected(expectedIndex: Int) {

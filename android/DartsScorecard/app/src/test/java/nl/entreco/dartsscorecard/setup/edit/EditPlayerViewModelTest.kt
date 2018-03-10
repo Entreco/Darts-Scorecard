@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.content.Context
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
@@ -25,7 +24,6 @@ class EditPlayerViewModelTest {
     @Mock private lateinit var mockCreateUsecase: CreatePlayerUsecase
     @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
     @Mock private lateinit var mockView: TextView
-    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockNavigator: EditPlayerNavigator
     @Mock private lateinit var mockPlayer: Player
     private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
@@ -72,7 +70,7 @@ class EditPlayerViewModelTest {
         whenTypingLetters("Re")
         thenFilteredPlayersContains("Remco", "EmReCo", "Re")
     }
-    
+
     @Test
     fun `it should filter list with when typing "Rec" `() {
         givenExistingPlayers("Remco", "EmReCo", "Re")
@@ -122,9 +120,8 @@ class EditPlayerViewModelTest {
         thenNavigateWithSelectedPlayer()
     }
 
-    @Test(expected = NullPointerException::class) // Meaning Toast.makeText( is called)
+    @Test
     fun `it should NOT navigate when player creation fails`() {
-        whenever(mockView.context).thenReturn(mockContext)
         givenExistingPlayers("Remco", "EmReCo", "Re")
         givenSubject("Player 1")
         whenPressingImeAction("Willem", EditorInfo.IME_ACTION_DONE)
@@ -157,7 +154,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun givenSubject(suggestedName: String) {
-        subject = EditPlayerViewModel(mockCreateUsecase, suggestedName, mockFetchUsecase)
+        subject = EditPlayerViewModel(mockCreateUsecase, LongArray(0), suggestedName, mockFetchUsecase)
         verify(mockFetchUsecase).exec(doneCaptor.capture(), failCaptor.capture())
     }
 
@@ -174,7 +171,6 @@ class EditPlayerViewModelTest {
     }
 
     private fun whenPressingImeAction(typed: String, action: Int) {
-        whenever(mockView.rootView).thenReturn(mockView)
         whenever(mockView.text).thenReturn(typed)
         subject.onActionDone(mockView, action, mockNavigator)
     }

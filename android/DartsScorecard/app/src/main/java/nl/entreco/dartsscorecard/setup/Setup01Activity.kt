@@ -38,7 +38,7 @@ class Setup01Activity : ViewModelActivity() {
         initToolbar(toolbar(binding), R.string.title_setup)
 
         if (savedInstanceState == null) {
-            navigator.onAddNewPlayer(0)
+            navigator.onAddNewPlayer(0, emptyList())
         }
     }
 

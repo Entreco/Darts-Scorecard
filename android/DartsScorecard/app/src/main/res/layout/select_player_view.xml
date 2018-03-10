@@ -22,6 +22,10 @@
         <variable
             name="entries"
             type="List&lt;Integer&gt;" />
+
+        <variable
+            name="others"
+            type="List&lt;Long&gt;" />
     </data>
 
     <RelativeLayout
@@ -36,7 +40,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/teamIndex"
             android:gravity="start"
-            android:onClick="@{() -> editor.onEditPlayer(positionInList, player)}"
+            android:onClick="@{() -> editor.onEditPlayer(positionInList, player, others)}"
             android:text="@{player.name}" />
 
         <TextView

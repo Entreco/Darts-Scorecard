@@ -21,20 +21,21 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         activity.finish()
     }
 
-    override fun onEditPlayer(position: Int, player: PlayerViewModel) {
-        editPlayerRequest(activity, player.name.get(), player.teamIndex.get(), position)
+    override fun onEditPlayer(position: Int, player: PlayerViewModel, otherPlayers: List<Long>) {
+        editPlayerRequest(activity, player.name.get(), player.teamIndex.get(), position, otherPlayers)
     }
 
-    override fun onAddNewPlayer(index: Int) {
-        val vm = PlayerViewModel(index + 1)
-        editPlayerRequest(activity, vm.name.get(), vm.teamIndex.get(), POSITION_NONE)
+    override fun onAddNewPlayer(index: Int, otherPlayers: List<Long>) {
+        val vm = PlayerViewModel(-1,index + 1)
+        editPlayerRequest(activity, vm.name.get(), vm.teamIndex.get(), POSITION_NONE, otherPlayers)
     }
 
-    private fun editPlayerRequest(activity: Activity, suggestion: CharSequence, teamIndex: Int, positionInList: Int) {
+    private fun editPlayerRequest(activity: Activity, suggestion: CharSequence, teamIndex: Int, positionInList: Int, otherPlayers: List<Long>) {
         val request = Intent(activity, EditPlayerActivity::class.java)
         request.putExtra(EXTRA_SUGGESTION, suggestion)
         request.putExtra(EXTRA_TEAM_INDEX, teamIndex)
         request.putExtra(EXTRA_POSITION_IN_LIST, positionInList)
+        request.putExtra(EXTRA_OTHER_PLAYERS, otherPlayers.toLongArray())
         activity.startActivityForResult(request, REQUEST_CODE)
     }
 
@@ -42,19 +43,20 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null) {
             val suggestion = data.getStringExtra(EXTRA_SUGGESTION)
             val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)
+            val playerId = data.getLongExtra(EXTRA_PLAYER_ID, -1)
             val teamIndex = data.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE)
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
 
             if (isNewPlayer(index)) {
 
                 if (suggestion.isEmpty()) {
-                    callback.onPlayerAdded(playerName)
+                    callback.onPlayerAdded(playerName, playerId)
                 } else if (suggestion == "Player 1") {
-                    callback.onPlayerAdded(suggestion)
+                    callback.onPlayerAdded(suggestion, playerId)
                 }
 
             } else {
-                callback.onPlayerEdited(index, teamIndex, playerName)
+                callback.onPlayerEdited(index, teamIndex, playerName, playerId)
             }
         }
     }
@@ -67,13 +69,16 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         internal const val EXTRA_SUGGESTION = "suggestion"
         internal const val EXTRA_TEAM_INDEX = "teamIndex"
         internal const val EXTRA_POSITION_IN_LIST = "positionInList"
+        internal const val EXTRA_OTHER_PLAYERS = "otherPlayers"
         internal const val EXTRA_PLAYER_NAME = "playerName"
+        internal const val EXTRA_PLAYER_ID = "playerId"
 
         @JvmStatic
         fun editPlayerResponse(player: Player, request: Intent): Intent {
             val response = Intent()
             response.putExtra(EXTRA_SUGGESTION, "")
             response.putExtra(EXTRA_PLAYER_NAME, player.name)
+            response.putExtra(EXTRA_PLAYER_ID, player.id)
             response.putExtra(EXTRA_TEAM_INDEX, request.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE))
             response.putExtra(EXTRA_POSITION_IN_LIST, request.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE))
             return response
