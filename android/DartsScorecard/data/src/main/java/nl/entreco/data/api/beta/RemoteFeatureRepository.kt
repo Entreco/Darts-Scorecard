@@ -48,6 +48,8 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
             val count = transaction.get(feature).getLong("count") + amount
             if (count <= max) {
                 transaction.update(feature, "count", count)
+            } else {
+                transaction.update(feature, "count", max)
             }
         }
     }

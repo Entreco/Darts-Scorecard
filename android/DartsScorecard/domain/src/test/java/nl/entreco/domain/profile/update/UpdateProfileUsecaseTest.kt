@@ -1,11 +1,12 @@
 package nl.entreco.domain.profile.update
 
-import android.content.Context
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.profile.Profile
+import nl.entreco.domain.repository.ImageRepository
 import nl.entreco.domain.repository.ProfileRepository
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,10 +21,10 @@ class UpdateProfileUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockProfile: Profile
     @Mock private lateinit var mockDone: (UpdateProfileResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
+    @Mock private lateinit var mockImageRepository: ImageRepository
     @Mock private lateinit var mockProfileService: ProfileRepository
     private lateinit var subject: UpdateProfileUsecase
 
@@ -41,11 +42,19 @@ class UpdateProfileUsecaseTest {
         thenProfileIsReported()
     }
 
+    @Test
+    fun `it should use ImageRepository for updating image`() {
+        givenSubject()
+        whenUpdatingProfileSucceeds(image = "img.jpg")
+        thenImageServiceIsUsed("img.jpg")
+    }
+
     private fun givenSubject() {
-        subject = UpdateProfileUsecase(mockContext, mockProfileService, bg, fg)
+        subject = UpdateProfileUsecase(mockImageRepository, mockProfileService, bg, fg)
     }
 
     private fun whenUpdatingProfileSucceeds(name: String = "name", image: String = "image") {
+        whenever(mockImageRepository.copyImageToPrivateAppData(any(), any())).thenReturn(image)
         whenever(mockProfileService.update(12, name, image, "12")).thenReturn(mockProfile)
         subject.exec(UpdateProfileRequest(12, name, "12", image, 200F), mockDone, mockFail)
         verify(mockProfileService).update(12, name, image, "12")
@@ -53,6 +62,10 @@ class UpdateProfileUsecaseTest {
 
     private fun thenProfileIsReported() {
         verify(mockDone).invoke(UpdateProfileResponse(mockProfile))
+    }
+
+    private fun thenImageServiceIsUsed(expected: String) {
+        verify(mockImageRepository).copyImageToPrivateAppData(expected, 200F)
     }
 
 }

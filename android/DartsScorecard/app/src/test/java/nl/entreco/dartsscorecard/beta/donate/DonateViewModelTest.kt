@@ -156,14 +156,14 @@ class DonateViewModelTest {
     @Test
     fun `it should set loading(false) when consuming donation succeeds`() {
         givenSubject()
-        whenConsumingDonationSucceeds("id1")
+        whenConsumingDonationSucceeds("id1", 0)
         thenLoadingIs(false)
     }
 
     @Test
     fun `it should clear ProductId when consuming donation succeeds`() {
         givenSubject()
-        whenConsumingDonationSucceeds("id2")
+        whenConsumingDonationSucceeds("id2", 0)
         thenProductIdIs("")
     }
 
@@ -171,7 +171,7 @@ class DonateViewModelTest {
     fun `it should notify callback when consuming donation succeeds`() {
         givenSubject()
         givenDonation("id3")
-        whenConsumingDonationSucceeds("id3")
+        whenConsumingDonationSucceeds("id3", 0)
         thenCallbackIsNotifiedOfSuccess()
     }
 
@@ -179,7 +179,7 @@ class DonateViewModelTest {
     fun `it should trackPurchase when consuming donation succeeds`() {
         givenSubject()
         givenDonation("id4")
-        whenConsumingDonationSucceeds("id4")
+        whenConsumingDonationSucceeds("id4", 0)
         thenPurchaseIsTracked()
     }
 
@@ -257,16 +257,16 @@ class DonateViewModelTest {
         subject.onMakeDonationFailed()
     }
 
-    private fun whenConsumingDonationSucceeds(productId: String) {
+    private fun whenConsumingDonationSucceeds(productId: String, responseCode: Int) {
         whenDonationMade()
         verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
-        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_OK, productId, "orderId"))
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(responseCode, productId, "orderId"))
     }
 
     private fun whenConsumingDonationFails() {
         whenDonationMade()
         verify(mockConsumeDonationUsecase).exec(any(), doneConsumeCaptor.capture(), any())
-        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(Activity.RESULT_CANCELED, "productid", "orderId"))
+        doneConsumeCaptor.lastValue.invoke(ConsumeDonationResponse(-1, "productid", "orderId"))
     }
 
     private fun whenConsumingDonationFails(err: Throwable) {

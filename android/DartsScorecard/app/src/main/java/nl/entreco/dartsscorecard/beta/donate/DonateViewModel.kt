@@ -64,8 +64,8 @@ class DonateViewModel @Inject constructor(
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
         when (response.resultCode) {
-            RESULT_OK -> donationDone(response)
-            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed")
+            0 -> donationDone(response)
+            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
         }
 
         loading.set(false)
