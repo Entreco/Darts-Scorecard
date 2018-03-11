@@ -65,3 +65,5 @@ release/
 **/lint-report\.html
 
 store/recordings/
+
+\.DS_Store
