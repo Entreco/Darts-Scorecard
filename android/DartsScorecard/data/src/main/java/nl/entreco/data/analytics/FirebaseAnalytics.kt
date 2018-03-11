@@ -35,7 +35,7 @@ class FirebaseAnalytics(context: Context) : Analytics {
     override fun trackViewFeature(feature: Feature) {
         fb.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "feature")
-            putInt(FirebaseAnalytics.Param.QUANTITY, 1)
+            putInt(FirebaseAnalytics.Param.QUANTITY, feature.votes)
             putString(FirebaseAnalytics.Param.ITEM_NAME, feature.title)
             putString(FirebaseAnalytics.Param.ITEM_ID, feature.ref)
         })

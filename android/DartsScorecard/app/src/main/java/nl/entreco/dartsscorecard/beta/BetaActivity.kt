@@ -96,7 +96,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
         Log.w("DONATE", "onActivityResult: $requestCode, $data")
         when {
             donateOk(requestCode, resultCode, data) -> donateViewModel.onMakeDonationSuccess(data)
-            requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed(resultCode, data)
+            requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed()
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
@@ -122,6 +122,6 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
         }
 
         private fun donateOk(requestCode: Int, resultCode: Int, data: Intent?) =
-                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra("RESPONSE_CODE", 0) != 0
+                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra("RESPONSE_CODE", -1) == 0
     }
 }

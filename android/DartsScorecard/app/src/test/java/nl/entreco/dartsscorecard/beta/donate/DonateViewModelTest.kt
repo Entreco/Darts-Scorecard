@@ -254,8 +254,7 @@ class DonateViewModelTest {
     }
 
     private fun whenMakingDonationFails() {
-        val intent = mock<Intent>()
-        subject.onMakeDonationFailed(Activity.RESULT_CANCELED, intent)
+        subject.onMakeDonationFailed()
     }
 
     private fun whenConsumingDonationSucceeds(productId: String) {

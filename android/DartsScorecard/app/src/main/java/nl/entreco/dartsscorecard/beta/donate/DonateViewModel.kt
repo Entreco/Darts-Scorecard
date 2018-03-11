@@ -47,10 +47,13 @@ class DonateViewModel @Inject constructor(
     fun onMakeDonationSuccess(data: Intent?) {
         val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
         val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-
-        consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
-                onConsumeDonationSuccess(),
-                onConsumeDonationFailed())
+        if(purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
+        else {
+            analytics.trackAchievement("Donation $data")
+            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
+                    onConsumeDonationSuccess(),
+                    onConsumeDonationFailed())
+        }
     }
 
 
@@ -87,7 +90,7 @@ class DonateViewModel @Inject constructor(
     private fun donationWithId(response: ConsumeDonationResponse): Donation? =
             donations.firstOrNull { it.sku == response.productId }
 
-    fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
+    fun onMakeDonationFailed() {
         analytics.trackPurchaseFailed(productId, "ActivityResult failed")
         loading.set(false)
         productId = ""
