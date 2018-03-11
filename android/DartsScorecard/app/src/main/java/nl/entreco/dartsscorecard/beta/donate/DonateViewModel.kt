@@ -56,7 +56,6 @@ class DonateViewModel @Inject constructor(
         }
     }
 
-
     private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
         analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
         loading.set(false)

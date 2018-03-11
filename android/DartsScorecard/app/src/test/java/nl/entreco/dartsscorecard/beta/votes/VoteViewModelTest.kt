@@ -48,43 +48,43 @@ class VoteViewModelTest {
 
     @Test
     fun `it should submit vote when submitting Donation`() {
-        givenDonation()
+        givenDonation(1)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonation(1)
+        whenSubmittingDonation()
         thenVoteIsSubmitted()
     }
 
     @Test
     fun `it should trackAchievement when voting success`() {
-        givenDonation()
+        givenDonation(5)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonationSucceeds(1)
+        whenSubmittingDonationSucceeds()
         thenAchievementIsTracked()
     }
 
     @Test
     fun `it should set 'didAlreadyVote(true)' when voting success`() {
-        givenDonation()
+        givenDonation(2)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonationSucceeds(1)
+        whenSubmittingDonationSucceeds()
         thenDidAlreadyVoteIs(true)
     }
 
     @Test
     fun `it should track 'View Feature' when voting success`() {
-        givenDonation()
+        givenDonation(1)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonationSucceeds(1)
+        whenSubmittingDonationSucceeds()
         thenViewFeatureIsTracked()
     }
 
     @Test
     fun `it should remove votes when voting fails`() {
-        givenDonation()
+        givenDonation(1)
         givenSubject()
         whenFeatureSelected(mockModel)
         whenSubmittingDonationFails(1)
@@ -93,15 +93,15 @@ class VoteViewModelTest {
 
     @Test
     fun `it should set 'didAlreadyVote(false)' when voting fails`() {
-        givenDonation()
+        givenDonation(10)
         givenSubject()
         whenFeatureSelected(mockModel)
         whenSubmittingDonationFails(1)
         thenDidAlreadyVoteIs(false)
     }
 
-    private fun givenDonation() {
-        givenDonation = Donation("title", "desc", "sku", "price", 10, "e", "12222")
+    private fun givenDonation(amount: Int) {
+        givenDonation = Donation("title", "desc", "sku", "price", amount, "e", "12222")
     }
 
 
@@ -116,12 +116,12 @@ class VoteViewModelTest {
         subject.onFeatureSelected(feature)
     }
 
-    private fun whenSubmittingDonation(amount: Int) {
+    private fun whenSubmittingDonation() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
         subject.submitDonation(givenDonation)
     }
 
-    private fun whenSubmittingDonationSucceeds(amount: Int) {
+    private fun whenSubmittingDonationSucceeds() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
 
         subject.submitDonation(givenDonation)
@@ -161,6 +161,10 @@ class VoteViewModelTest {
 
     private fun thenViewFeatureIsTracked() {
         verify(mockAnalytics).trackViewFeature(any())
+    }
+
+    private fun thenFeatureCountIsUpdated(){
+
     }
 
 }

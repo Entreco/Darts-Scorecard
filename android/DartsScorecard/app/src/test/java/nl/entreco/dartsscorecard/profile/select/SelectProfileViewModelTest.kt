@@ -43,6 +43,14 @@ class SelectProfileViewModelTest {
     }
 
     @Test
+    fun `it should isEmpty when fetching players succeeds with empty list`() {
+        givenMockPlayer()
+        givenSubject()
+        whenFetchingPlayersSucceeds()
+        thenEmptys(true)
+    }
+
+    @Test
     fun `it should set Profiles on the Adapter when fetching players succeeds`() {
         givenMockPlayer()
         givenSubject()

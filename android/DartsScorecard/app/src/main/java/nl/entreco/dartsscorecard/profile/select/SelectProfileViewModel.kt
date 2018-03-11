@@ -24,10 +24,11 @@ class SelectProfileViewModel @Inject constructor(private val fetchExistingPlayer
     private fun onFetchSuccess(adapter: SelectProfileAdapter): (FetchExistingPlayersResponse) -> Unit = { response ->
         isLoading.set(false)
         val profiles = response.players.map { Profile(it.name, it.id, it.image ?: "", it.prefs) }
+        isEmpty.set(profiles.isEmpty())
         adapter.setItems(profiles)
     }
 
-    private fun onFetchFailed(): (Throwable) -> Unit = { err ->
+    private fun onFetchFailed(): (Throwable) -> Unit = { _ ->
         isLoading.set(false)
         isEmpty.set(true)
     }
