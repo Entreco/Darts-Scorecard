@@ -54,7 +54,7 @@
             style="@style/Launch.Btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_manage_profile"
+            android:drawableEnd="@drawable/ic_profile"
             android:onClick="@{() -> viewModel.onProfilePressed(context)}"
             android:text="@string/profiles" />
 
