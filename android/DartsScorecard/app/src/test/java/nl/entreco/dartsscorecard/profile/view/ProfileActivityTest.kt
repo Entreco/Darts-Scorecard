@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import nl.entreco.domain.model.players.Team
 import org.junit.Assert
 import org.junit.Assert.assertNotNull
@@ -36,14 +37,13 @@ class ProfileActivityTest {
     @Test
     fun launch() {
         ProfileActivity.launch(mockActivity, mockView, longArrayOf(1,2))
-        verify(mockActivity).startActivity(any(), isNull())
+        verify(mockActivity).startActivityForResult(any(), eq(SelectProfileActivity.REQUEST_CODE_VIEW), isNull())
     }
 
     @Test
     fun selectImage() {
         assertNotNull(ProfileActivity.selectImage(mockActivity))
     }
-
 
     @Test
     fun selectName() {

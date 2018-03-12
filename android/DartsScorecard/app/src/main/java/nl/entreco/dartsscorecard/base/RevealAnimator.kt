@@ -14,27 +14,29 @@ import kotlin.math.max
  */
 class RevealAnimator(private val target: View) {
 
-    fun setupEnterAnimation(inflater: TransitionInflater?, window: Window, root: View) {
-        if(inflater == null) return
-        val transition = inflater.inflateTransition(R.transition.change_bound_with_arc)
-        transition.duration = 100
-        window.sharedElementEnterTransition = transition
-        transition.addListener(object : Transition.TransitionListener {
+    fun setupEnterAnimation(inflater: TransitionInflater?, window: Window, root: View, reverse: Boolean = true) {
+        if (inflater == null) return
+        val boundsTransition = inflater.inflateTransition(R.transition.change_bound_with_arc)
+        boundsTransition.duration = 100
+        window.sharedElementEnterTransition = boundsTransition
+        boundsTransition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition?) {
-                animateRevealShow(root)
+                if (!reverse) {
+                    animateRevealShow(root)
+                }
+                boundsTransition.removeListener(this)
             }
 
-            override fun onTransitionResume(transition: Transition?) {
-            }
+            override fun onTransitionResume(transition: Transition?) {}
 
-            override fun onTransitionPause(transition: Transition?) {
-            }
+            override fun onTransitionPause(transition: Transition?) {}
 
-            override fun onTransitionCancel(transition: Transition?) {
-            }
+            override fun onTransitionCancel(transition: Transition?) {}
 
             override fun onTransitionStart(transition: Transition?) {
-                root.visibility = View.INVISIBLE
+                if (!reverse) {
+                    root.visibility = View.INVISIBLE
+                }
             }
         })
     }

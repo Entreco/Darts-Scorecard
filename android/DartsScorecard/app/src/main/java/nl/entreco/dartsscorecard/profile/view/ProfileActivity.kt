@@ -14,6 +14,7 @@ import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
+import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 
 
 /**
@@ -23,6 +24,7 @@ class ProfileActivity : ViewModelActivity() {
 
     private val component: ProfileComponent by componentProvider { it.plus(ProfileModule()) }
     private val viewModel: ProfileViewModel by viewModelProvider { component.viewModel() }
+    private var madeChanges = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +38,20 @@ class ProfileActivity : ViewModelActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CHANGE_IMAGE && resultCode == Activity.RESULT_OK) {
+            madeChanges = true
             viewModel.showImageForProfile(data, resources.getDimension(R.dimen.header_profile_pic_size))
         } else if (requestCode == REQUEST_CODE_CHANGE_NAME && resultCode == Activity.RESULT_OK) {
+            madeChanges = true
             viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0))
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onBackPressed() {
+        if(madeChanges){
+            setResult(Activity.RESULT_OK)
+        }
+        super.onBackPressed()
     }
 
     companion object {
@@ -49,12 +60,12 @@ class ProfileActivity : ViewModelActivity() {
         private const val REQUEST_CODE_CHANGE_NAME = 1223
 
         @JvmStatic
-        fun launch(activity: Activity, view: View, teams: LongArray) {
+        fun launch(activity: Activity, view: View, teams: LongArray){
             val intent = Intent(activity, ProfileActivity::class.java)
             intent.putExtra(EXTRA_TEAM_IDS, teams)
 
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
-            activity.startActivity(intent, options.toBundle())
+            activity.startActivityForResult(intent, SelectProfileActivity.REQUEST_CODE_VIEW, options.toBundle())
         }
 
         @JvmStatic
@@ -63,7 +74,7 @@ class ProfileActivity : ViewModelActivity() {
             pickPhoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             pickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             pickPhoto.type = "image/*"
-            activity.startActivityForResult(pickPhoto, REQUEST_CODE_CHANGE_IMAGE)//one can be replaced with any action code
+            activity.startActivityForResult(pickPhoto, REQUEST_CODE_CHANGE_IMAGE)
         }
 
         @JvmStatic

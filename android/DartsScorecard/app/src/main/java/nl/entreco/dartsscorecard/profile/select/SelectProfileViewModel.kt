@@ -17,8 +17,14 @@ class SelectProfileViewModel @Inject constructor(private val fetchExistingPlayer
 
     fun fetchPlayers(adapter: SelectProfileAdapter) {
         if (adapter.itemCount <= 0) {
-            fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFetchFailed())
+            reload(adapter)
         }
+    }
+
+    fun reload(adapter: SelectProfileAdapter){
+        isLoading.set(true)
+        isEmpty.set(false)
+        fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFetchFailed())
     }
 
     private fun onFetchSuccess(adapter: SelectProfileAdapter): (FetchExistingPlayersResponse) -> Unit = { response ->

@@ -30,6 +30,7 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : Test
     }
 
     fun setItems(profiles: List<Profile>) {
+        items.clear()
         items.addAll(profiles)
         tryNotifyItemRangeChanged(0, profiles.size)
     }

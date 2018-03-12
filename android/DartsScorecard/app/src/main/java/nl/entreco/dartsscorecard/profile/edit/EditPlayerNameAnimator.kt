@@ -15,6 +15,6 @@ class EditPlayerNameAnimator(binding: ActivityEditPlayerNameBinding, inflater: T
     private val revealAnimator = RevealAnimator(editArea)
 
     init {
-        revealAnimator.setupEnterAnimation(inflater, window, editArea)
+        revealAnimator.setupEnterAnimation(inflater, window, editArea, false)
     }
 }

@@ -72,6 +72,13 @@ class SelectProfileViewModelTest {
         thenEmptys(true)
     }
 
+    @Test
+    fun `it should reload items when reloading`() {
+        givenSubject()
+        whenReloading()
+        thenLoadingIs(true)
+    }
+
     private fun givenSubject() {
         subject = SelectProfileViewModel(mockFetchUsecase)
     }
@@ -89,11 +96,15 @@ class SelectProfileViewModelTest {
         doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(players.toList()))
     }
 
-
     private fun whenFetchingPlayersFails() {
         subject.fetchPlayers(mockAdapter)
         verify(mockFetchUsecase).exec(any(), failCaptor.capture())
         failCaptor.lastValue.invoke(RuntimeException("Unable to fetch players"))
+    }
+
+
+    private fun whenReloading() {
+        subject.reload(mockAdapter)
     }
 
     private fun thenProfilesAreSet(expected: Int) {

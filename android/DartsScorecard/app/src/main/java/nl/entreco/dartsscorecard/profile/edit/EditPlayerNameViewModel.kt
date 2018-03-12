@@ -33,8 +33,8 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     val favDouble = ObservableField<String>()
     val favDoubleIndex = ObservableInt()
     val errorMsg = ObservableInt()
-    private lateinit var initialProfileName: String
-    private val allPlayers = emptyList<Player>().toMutableList()
+    internal lateinit var initialProfileName: String
+    internal val allPlayers = emptyList<Player>().toMutableList()
 
     init {
         fetchExistingPlayersUsecase.exec(
