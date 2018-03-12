@@ -43,7 +43,13 @@ class LocalImageRepository(private val context: Context, private val contentReso
     }
 
     private fun resize(output: File, size: Float): Bitmap {
-        val bitmap = BitmapFactory.decodeFile(output.absolutePath)
+        val boundsOnly = BitmapFactory.Options()
+        boundsOnly.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(output.absolutePath, boundsOnly)
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = determineSampleSize(boundsOnly, 1, size)
+        val bitmap = BitmapFactory.decodeFile(output.absolutePath, options)
         val width = bitmap.width
         val height = bitmap.height
 
@@ -56,5 +62,13 @@ class LocalImageRepository(private val context: Context, private val contentReso
         tmp.recycle()
         bitmap.recycle()
         return resized
+    }
+
+    private fun determineSampleSize(options: BitmapFactory.Options, startScale: Int, size: Float) : Int{
+        var scale = startScale
+        while (options.outWidth / scale / 2 >= size && options.outHeight / scale / 2 >= size) {
+            scale *= 2
+        }
+        return scale
     }
 }
