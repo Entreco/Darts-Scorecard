@@ -7,12 +7,12 @@ import android.app.Activity
  */
 class EditPlayerNameNavigator(private val activity: EditPlayerNameActivity) {
 
-    fun onCancel() : Boolean{
+    fun onCancel(): Boolean {
         activity.onBackPressed()
         return true
     }
 
-    fun onDoneEditing(desiredName: String, desiredDouble: Int) : Boolean {
+    fun onDoneEditing(desiredName: String, desiredDouble: Int): Boolean {
         val data = EditPlayerNameActivity.result(desiredName, desiredDouble)
         activity.setResult(Activity.RESULT_OK, data)
         activity.finishAfterTransition()

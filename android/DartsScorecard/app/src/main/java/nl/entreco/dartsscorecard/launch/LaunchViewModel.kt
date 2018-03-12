@@ -30,7 +30,7 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
         }
     }
 
-    fun onProfilePressed(context: Context){
+    fun onProfilePressed(context: Context) {
         SelectProfileActivity.launch(context)
     }
 

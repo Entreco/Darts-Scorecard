@@ -83,7 +83,7 @@ class LocalPlayerRepositoryTest {
 
     @Test
     fun `it should fetch all existing players`() {
-        givenPlayerWith(1,2,3)
+        givenPlayerWith(1, 2, 3)
         whenFetchingAll()
         thenPlayersAreRetrieved(3)
     }

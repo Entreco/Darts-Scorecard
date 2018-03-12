@@ -16,7 +16,7 @@ class PlayerDbModule {
 
     @Provides
     @ActivityScope
-    fun providePlayerMapper():PlayerMapper {
+    fun providePlayerMapper(): PlayerMapper {
         return PlayerMapper()
     }
 

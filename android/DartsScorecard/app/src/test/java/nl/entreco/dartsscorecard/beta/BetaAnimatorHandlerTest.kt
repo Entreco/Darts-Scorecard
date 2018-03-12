@@ -18,7 +18,7 @@ class BetaAnimatorHandlerTest {
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
     @Mock private lateinit var mockAppBar: AppBarLayout
     @Mock private lateinit var view: View
-    private lateinit var subject : BetaAnimator.BetaAnimatorHandler
+    private lateinit var subject: BetaAnimator.BetaAnimatorHandler
 
     @Test
     fun onOffsetChanged() {

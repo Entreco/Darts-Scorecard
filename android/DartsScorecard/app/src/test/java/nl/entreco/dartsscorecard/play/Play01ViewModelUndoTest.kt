@@ -22,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 25/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class Play01ViewModelUndoTest{
+class Play01ViewModelUndoTest {
 
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockRequest: Play01Request
@@ -35,12 +35,12 @@ class Play01ViewModelUndoTest{
     @Mock private lateinit var mockGameListeners: Play01Listeners
     @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
-    private lateinit var subject : Play01ViewModel
+    private lateinit var subject: Play01ViewModel
 
     private val undoRequestCaptor = argumentCaptor<UndoTurnRequest>()
-    private val load = argumentCaptor<(Play01Response)->Unit>()
-    private val done = argumentCaptor<(UndoTurnResponse)->Unit>()
-    private val fail = argumentCaptor<(Throwable)->Unit>()
+    private val load = argumentCaptor<(Play01Response) -> Unit>()
+    private val done = argumentCaptor<(UndoTurnResponse) -> Unit>()
+    private val fail = argumentCaptor<(Throwable) -> Unit>()
 
     @Test
     fun `it should execute undoUsecase when undo pressed`() {
@@ -81,7 +81,7 @@ class Play01ViewModelUndoTest{
     private fun whenUndoUsecaseSucceeds() {
         subject.onUndo()
         verify(mockPlay01Usecase).undoLastTurn(undoRequestCaptor.capture(), done.capture(), fail.capture())
-        done.lastValue.invoke(UndoTurnResponse(1,2))
+        done.lastValue.invoke(UndoTurnResponse(1, 2))
     }
 
     private fun whenUndoUsecaseFails(err: Throwable) {

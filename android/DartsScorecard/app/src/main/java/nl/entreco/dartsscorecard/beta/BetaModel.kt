@@ -22,7 +22,7 @@ class BetaModel(val feature: Feature) {
     val updates = ObservableField<String>(feature.updates)
 
     private fun format(value: Int): String {
-        return when{
+        return when {
             value < 1000 -> "$value"
             else -> "${value / 1000}k"
         }

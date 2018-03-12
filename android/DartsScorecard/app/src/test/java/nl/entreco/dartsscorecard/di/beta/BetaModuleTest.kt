@@ -14,11 +14,11 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 07/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class BetaModuleTest{
+class BetaModuleTest {
 
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockBillingConnection: BillingServiceConnection
-    @Mock private lateinit var mockDonateCallback : DonateCallback
+    @Mock private lateinit var mockDonateCallback: DonateCallback
 
     @Test
     fun `it should not be null`() {

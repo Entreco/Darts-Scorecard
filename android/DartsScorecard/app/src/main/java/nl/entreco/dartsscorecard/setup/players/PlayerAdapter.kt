@@ -49,7 +49,7 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
         return items.toTypedArray()
     }
 
-    fun entries(): List<Long>{
+    fun entries(): List<Long> {
         return items.map { it.playerId.get() }
     }
 

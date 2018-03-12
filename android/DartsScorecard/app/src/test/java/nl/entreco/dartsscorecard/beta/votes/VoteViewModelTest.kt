@@ -163,7 +163,7 @@ class VoteViewModelTest {
         verify(mockAnalytics).trackViewFeature(any())
     }
 
-    private fun thenFeatureCountIsUpdated(){
+    private fun thenFeatureCountIsUpdated() {
 
     }
 

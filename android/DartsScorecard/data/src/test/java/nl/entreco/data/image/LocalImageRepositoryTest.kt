@@ -2,9 +2,8 @@ package nl.entreco.data.image
 
 import android.content.ContentResolver
 import android.content.Context
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -17,8 +16,8 @@ class LocalImageRepositoryTest {
 
     @Mock private lateinit var mockContentResolver: ContentResolver
     @Mock private lateinit var mockContext: Context
-    private lateinit var subject : LocalImageRepository
-    private var actualResult : String? = null
+    private lateinit var subject: LocalImageRepository
+    private var actualResult: String? = null
 
     @Test
     fun `it should scale image`() {

@@ -21,7 +21,7 @@ class SelectProfileViewModel @Inject constructor(private val fetchExistingPlayer
         }
     }
 
-    fun reload(adapter: SelectProfileAdapter){
+    fun reload(adapter: SelectProfileAdapter) {
         isLoading.set(true)
         isEmpty.set(false)
         fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFetchFailed())

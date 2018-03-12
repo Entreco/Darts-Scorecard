@@ -280,7 +280,7 @@ class Play01ViewModelTest {
 
     private fun whenTurnMetaIsStoredSuccessfully() {
         verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), metaDoneCaptor.capture())
-        metaDoneCaptor.lastValue.invoke(1,2)
+        metaDoneCaptor.lastValue.invoke(1, 2)
     }
 
     private fun thenScoresAre(expected: Array<Score>) {
@@ -314,6 +314,7 @@ class Play01ViewModelTest {
     private fun thenGameLoadedNotifiersAreNotified() {
         verify(mockGameLoadedNotifier).onLoaded(eq(givenTeams), eq(givenScores), any(), isNull())
     }
+
     private fun thenTurnIsStored() {
         verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), any())
     }
@@ -323,6 +324,6 @@ class Play01ViewModelTest {
     }
 
     private fun thenStatListenersAreNotified() {
-        verify(mock01Listeners).onStatsUpdated(1,2)
+        verify(mock01Listeners).onStatsUpdated(1, 2)
     }
 }

@@ -9,5 +9,5 @@ import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameViewModel
 @ProfileScope
 @Subcomponent(modules = [(EditPlayerNameModule::class)])
 interface EditPlayerNameComponent {
-    fun viewModel() : EditPlayerNameViewModel
+    fun viewModel(): EditPlayerNameViewModel
 }

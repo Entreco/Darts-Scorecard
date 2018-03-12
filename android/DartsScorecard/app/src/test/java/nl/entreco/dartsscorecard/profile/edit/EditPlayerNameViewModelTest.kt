@@ -26,11 +26,11 @@ class EditPlayerNameViewModelTest {
     @Mock private lateinit var mockAnalytics: Analytics
     @Mock private lateinit var mockFetchExistinPlayersUsecase: FetchExistingPlayersUsecase
 
-    private lateinit var subject : EditPlayerNameViewModel
+    private lateinit var subject: EditPlayerNameViewModel
     private var givenExistingPlayers = emptyList<Player>()
 
-    private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse)->Unit>()
-    private val failCaptor = argumentCaptor<(Throwable)->Unit>()
+    private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
+    private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
     @Test
     fun `it should fetch existing players on init`() {
@@ -99,9 +99,7 @@ class EditPlayerNameViewModelTest {
     }
 
 
-    private fun thenExistingPlayersAreFetched() {
-
-    }
+    private fun thenExistingPlayersAreFetched() {}
 
     private fun thenAllPlayersCountIs(expected: Int) {
         assertEquals(expected, subject.allPlayers.size)

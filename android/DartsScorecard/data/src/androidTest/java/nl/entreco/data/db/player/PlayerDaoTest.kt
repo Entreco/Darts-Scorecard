@@ -3,8 +3,8 @@ package nl.entreco.data.db.player
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.TestProvider
+import nl.entreco.data.db.DscDatabase
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

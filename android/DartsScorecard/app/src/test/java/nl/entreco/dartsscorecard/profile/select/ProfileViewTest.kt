@@ -23,7 +23,7 @@ class ProfileViewTest {
     @Mock private lateinit var mockProfile: Profile
     @Mock private lateinit var mockNavigator: SelectProfileNavigator
     @Mock private lateinit var mockBinding: ProfileViewBinding
-    private lateinit var subject : ProfileView
+    private lateinit var subject: ProfileView
 
     private val profileCaptor = argumentCaptor<ProfileModel>()
 

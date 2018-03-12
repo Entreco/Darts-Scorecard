@@ -3,10 +3,8 @@ package nl.entreco.dartsscorecard.setup.edit
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import android.widget.Toast
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Player
@@ -58,7 +56,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameStartsWith(text: CharSequence): List<Player> {
-        val keep = allPlayers.filter { it.name.toLowerCase().startsWith(text.toString().toLowerCase()) && !otherPlayers.contains(it.id)}
+        val keep = allPlayers.filter { it.name.toLowerCase().startsWith(text.toString().toLowerCase()) && !otherPlayers.contains(it.id) }
         keep.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(0, it)
@@ -71,7 +69,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameContains(text: CharSequence): List<Player> {
-        val typos = allPlayers.filter { it.name.toLowerCase().contains(text.toString().toLowerCase())  && !otherPlayers.contains(it.id) }
+        val typos = allPlayers.filter { it.name.toLowerCase().contains(text.toString().toLowerCase()) && !otherPlayers.contains(it.id) }
         typos.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(it)
@@ -81,7 +79,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun removeOthers(keep: List<Player>, typos: List<Player>) {
-        val remove = allPlayers.filter { !keep.contains(it) && !typos.contains(it)  && !otherPlayers.contains(it.id)}
+        val remove = allPlayers.filter { !keep.contains(it) && !typos.contains(it) && !otherPlayers.contains(it.id) }
         remove.forEach {
             if (filteredPlayers.contains(it)) {
                 filteredPlayers.remove(it)
@@ -108,7 +106,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         return false
     }
 
-    private fun isAlreadyPlaying(existing: Player, desiredName:String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase()
+    private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase()
 
     private fun isNewPlayer(existing: Player?) = existing == null
 

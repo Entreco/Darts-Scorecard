@@ -18,7 +18,7 @@ class LocalProfileRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockPlayerDao: PlayerDao
-    private lateinit var subject : LocalProfileRepository
+    private lateinit var subject: LocalProfileRepository
     private lateinit var mapper: ProfileMapper
 
     @Before

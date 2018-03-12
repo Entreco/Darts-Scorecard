@@ -12,5 +12,5 @@ import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 @Component(modules = [(AppModule::class)])
 interface AppComponent {
     fun inject(app: App)
-    fun plus(sub: ViewModelModule) : ViewModelComponent
+    fun plus(sub: ViewModelModule): ViewModelComponent
 }

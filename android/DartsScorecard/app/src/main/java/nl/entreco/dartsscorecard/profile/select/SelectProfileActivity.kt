@@ -49,7 +49,7 @@ class SelectProfileActivity : ViewModelActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == REQUEST_CODE_VIEW && resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE_VIEW && resultCode == Activity.RESULT_OK) {
             viewModel.reload(adapter)
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -57,7 +57,7 @@ class SelectProfileActivity : ViewModelActivity() {
 
     companion object {
         const val REQUEST_CODE_VIEW = 1111
-        fun launch(context: Context){
+        fun launch(context: Context) {
             val intent = Intent(context, SelectProfileActivity::class.java)
             context.startActivity(intent)
         }

@@ -39,15 +39,15 @@ class ProfileMapperTest {
 
     @Test(expected = IllegalStateException::class)
     fun `it should throw if trying to update incorrect player (mismatch in ids)`() {
-        subject.from(12, PlayerTable(),"name")
+        subject.from(12, PlayerTable(), "name")
     }
-    
+
     @Test
     fun `it should set name if non-null`() {
         val table = PlayerTable()
         table.id = 12
 
-        val actual = subject.from(12, table,"name")
+        val actual = subject.from(12, table, "name")
         assertEquals(12, actual.id)
         assertEquals("name", actual.name)
     }

@@ -64,7 +64,7 @@ class LocalImageRepository(private val context: Context, private val contentReso
         return resized
     }
 
-    private fun determineSampleSize(options: BitmapFactory.Options, startScale: Int, size: Float) : Int{
+    private fun determineSampleSize(options: BitmapFactory.Options, startScale: Int, size: Float): Int {
         var scale = startScale
         while (options.outWidth / scale / 2 >= size && options.outHeight / scale / 2 >= size) {
             scale *= 2

@@ -23,12 +23,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class StylerTest {
 
-    @Mock private lateinit var mockPrefs : SharedPreferences
-    @Mock private lateinit var mockEditor : SharedPreferences.Editor
-    @Mock private lateinit var mockActivity : Activity
-    @InjectMocks private lateinit var subject : Styler
+    @Mock private lateinit var mockPrefs: SharedPreferences
+    @Mock private lateinit var mockEditor: SharedPreferences.Editor
+    @Mock private lateinit var mockActivity: Activity
+    @InjectMocks private lateinit var subject: Styler
 
-    @Captor private lateinit var styleCaptor : ArgumentCaptor<Int>
+    @Captor private lateinit var styleCaptor: ArgumentCaptor<Int>
 
     @Test
     fun `it should return 'PDC' style`() {

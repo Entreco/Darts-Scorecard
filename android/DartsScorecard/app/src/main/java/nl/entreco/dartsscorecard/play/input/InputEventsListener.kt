@@ -9,7 +9,7 @@ import nl.entreco.domain.play.listeners.events.SpecialEvent
  * Created by Entreco on 06/12/2017.
  */
 interface InputEventsListener : SpecialEventListener<SpecialEvent> {
-    
+
     override fun handle(event: SpecialEvent) {
         when (event) {
             is BustEvent -> onBustEvent(event)

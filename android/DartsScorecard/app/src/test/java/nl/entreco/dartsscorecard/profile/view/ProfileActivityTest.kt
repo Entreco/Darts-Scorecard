@@ -36,7 +36,7 @@ class ProfileActivityTest {
 
     @Test
     fun launch() {
-        ProfileActivity.launch(mockActivity, mockView, longArrayOf(1,2))
+        ProfileActivity.launch(mockActivity, mockView, longArrayOf(1, 2))
         verify(mockActivity).startActivityForResult(any(), eq(SelectProfileActivity.REQUEST_CODE_VIEW), isNull())
     }
 

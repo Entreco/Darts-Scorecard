@@ -158,14 +158,14 @@ class LaunchViewModelTest {
     private fun thenSelectProfileIsLaunched() {
         try {
             verify(SelectProfileActivity).launch(mockContext)
-        } catch (ignore: NotAMockException){
+        } catch (ignore: NotAMockException) {
         }
     }
 
-    private fun thenBetaIsLaunched(){
+    private fun thenBetaIsLaunched() {
         try {
             verify(BetaActivity).launch(mockContext)
-        } catch (ignore: NotAMockException){
+        } catch (ignore: NotAMockException) {
         }
     }
 

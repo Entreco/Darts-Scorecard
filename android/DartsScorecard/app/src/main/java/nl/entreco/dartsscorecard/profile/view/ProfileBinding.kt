@@ -33,7 +33,7 @@ class ProfileBinding {
             try {
                 val double = view.context.resources.getStringArray(R.array.fav_doubles)[favDouble?.toInt()!!]
                 view.text = view.context.getString(R.string.favourite_double, double)
-            } catch(oops: Exception){
+            } catch (oops: Exception) {
                 val double = view.context.resources.getStringArray(R.array.fav_doubles)[0]
                 view.text = view.context.getString(R.string.favourite_double, double)
             }
@@ -45,7 +45,7 @@ class ProfileBinding {
             try {
                 val double = view.context.resources.getStringArray(R.array.fav_doubles)[favDouble!!]
                 view.text = view.context.getString(R.string.favourite_double, double)
-            } catch(oops: Exception){
+            } catch (oops: Exception) {
                 val double = view.context.resources.getStringArray(R.array.fav_doubles)[0]
                 view.text = view.context.getString(R.string.favourite_double, double)
             }

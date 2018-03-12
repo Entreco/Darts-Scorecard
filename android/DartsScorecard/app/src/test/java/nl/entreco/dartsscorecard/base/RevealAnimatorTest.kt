@@ -21,12 +21,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class RevealAnimatorTest {
 
-    @Mock private lateinit var mockWindow : Window
-    @Mock private lateinit var mockTransition : Transition
-    @Mock private lateinit var mockInflater : TransitionInflater
-    @Mock private lateinit var mockBinding : ActivityEditPlayerNameBinding
-    @Mock private lateinit var mockView : View
-    private lateinit var subject : RevealAnimator
+    @Mock private lateinit var mockWindow: Window
+    @Mock private lateinit var mockTransition: Transition
+    @Mock private lateinit var mockInflater: TransitionInflater
+    @Mock private lateinit var mockBinding: ActivityEditPlayerNameBinding
+    @Mock private lateinit var mockView: View
+    private lateinit var subject: RevealAnimator
 
     @Before
     fun setUp() {

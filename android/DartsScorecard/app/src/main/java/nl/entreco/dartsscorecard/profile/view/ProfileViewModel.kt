@@ -35,7 +35,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         }
     }
 
-    fun showNameForProfile(name: String, double: Int){
+    fun showNameForProfile(name: String, double: Int) {
         val currentProfile = profile.get()
         if (currentProfile != null) {
             // Update Profile Usecase

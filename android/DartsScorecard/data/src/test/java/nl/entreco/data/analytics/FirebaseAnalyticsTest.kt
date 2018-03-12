@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 27/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class FirebaseAnalyticsTest{
+class FirebaseAnalyticsTest {
 
     @Mock private lateinit var mockContext: Context
     private lateinit var subject: FirebaseAnalytics

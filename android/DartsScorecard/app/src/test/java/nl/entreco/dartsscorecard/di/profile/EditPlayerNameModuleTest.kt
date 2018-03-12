@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * Created by entreco on 02/03/2018.
  */
-class EditPlayerNameModuleTest{
+class EditPlayerNameModuleTest {
     @Test
     fun `it should be created`() {
         assertNotNull(EditPlayerNameModule())

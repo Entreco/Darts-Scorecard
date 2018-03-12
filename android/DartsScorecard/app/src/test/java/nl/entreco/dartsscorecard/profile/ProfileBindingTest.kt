@@ -17,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ProfileBindingTest {
 
-    @Mock private lateinit var mockImageView : ImageView
+    @Mock private lateinit var mockImageView: ImageView
 
     @Test
     fun loadProfileImage_normal() {

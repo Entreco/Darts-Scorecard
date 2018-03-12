@@ -17,7 +17,7 @@ class SelectProfileNavigatorTest {
 
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockActivity: SelectProfileActivity
-    private lateinit var subject : SelectProfileNavigator
+    private lateinit var subject: SelectProfileNavigator
 
     @Test(expected = NotAMockException::class)
     fun onProfileSelected() {

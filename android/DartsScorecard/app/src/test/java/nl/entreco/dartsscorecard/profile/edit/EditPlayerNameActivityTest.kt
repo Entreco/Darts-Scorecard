@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 04/03/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class EditPlayerNameActivityTest{
+class EditPlayerNameActivityTest {
 
     @Mock private lateinit var mockActivity: EditPlayerNameActivity
 

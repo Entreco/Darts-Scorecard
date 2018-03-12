@@ -26,7 +26,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun onAddNewPlayer(index: Int, otherPlayers: List<Long>) {
-        val vm = PlayerViewModel(-1,index + 1)
+        val vm = PlayerViewModel(-1, index + 1)
         editPlayerRequest(activity, vm.name.get(), vm.teamIndex.get(), POSITION_NONE, otherPlayers)
     }
 

@@ -81,7 +81,7 @@ class LocalGameRepositoryTest {
         thenUndoFinishIsCalledOnDao()
     }
 
-    private fun givenExistingGames(){
+    private fun givenExistingGames() {
         val table = GameTable()
         table.startIndex = 0
         table.startScore = 5
@@ -93,7 +93,7 @@ class LocalGameRepositoryTest {
         whenever(mockGameDao.fetchAll()).thenReturn(games)
     }
 
-    private fun givenExistingGames(id: Long){
+    private fun givenExistingGames(id: Long) {
         val table = GameTable()
         table.startIndex = 0
         table.startScore = 5
@@ -104,7 +104,7 @@ class LocalGameRepositoryTest {
         whenever(mockGameDao.fetchBy(id)).thenReturn(table)
     }
 
-    private fun givenNoGames(){
+    private fun givenNoGames() {
         whenever(mockGameDao.fetchAll()).thenReturn(emptyList())
     }
 
@@ -112,7 +112,7 @@ class LocalGameRepositoryTest {
         subject.fetchLatest()
     }
 
-    private fun whenFetchingByUid(id: Long){
+    private fun whenFetchingByUid(id: Long) {
         subject.fetchBy(id)
     }
 
@@ -132,11 +132,11 @@ class LocalGameRepositoryTest {
         verify(mockGameDao).fetchBy(any())
     }
 
-    private fun thenUpdateGamesIsCalledOnDao(){
+    private fun thenUpdateGamesIsCalledOnDao() {
         verify(mockGameDao).updateGames(isA())
     }
 
-    private fun thenUndoFinishIsCalledOnDao(){
+    private fun thenUndoFinishIsCalledOnDao() {
         verify(mockGameDao).undoFinish(isA())
     }
 }

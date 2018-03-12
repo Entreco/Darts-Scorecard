@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
@@ -47,7 +46,7 @@ class DonateViewModel @Inject constructor(
     fun onMakeDonationSuccess(data: Intent?) {
         val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
         val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-        if(purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
+        if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
         else {
             analytics.trackAchievement("Donation $data")
             consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),

@@ -26,7 +26,7 @@ class ProfileNavigatorTest {
     @Mock private lateinit var mockResources: Resources
     @Mock private lateinit var mockPlayerProfile: PlayerProfile
     @Mock private lateinit var mockActivity: ProfileActivity
-    private lateinit var subject : ProfileNavigator
+    private lateinit var subject: ProfileNavigator
 
     @Before
     fun setUp() {

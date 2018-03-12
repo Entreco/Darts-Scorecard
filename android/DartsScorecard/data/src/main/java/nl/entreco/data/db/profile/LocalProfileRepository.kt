@@ -22,7 +22,8 @@ class LocalProfileRepository(db: DscDatabase, private val mapper: Mapper<PlayerT
 
     @WorkerThread
     override fun update(id: Long, name: String?, image: String?, double: String?): Profile {
-        val player = playerDao.fetchById(id) ?: throw IllegalStateException("Profile does not exist $id")
+        val player = playerDao.fetchById(id)
+                ?: throw IllegalStateException("Profile does not exist $id")
         val table = mapper.from(id, player, name, image, double)
         playerDao.update(table)
         return mapper.to(table)

@@ -24,10 +24,10 @@ class SelectProfileViewModelTest {
     @Mock private lateinit var mockPlayer: Player
     @Mock private lateinit var mockAdapter: SelectProfileAdapter
     @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
-    private lateinit var subject : SelectProfileViewModel
+    private lateinit var subject: SelectProfileViewModel
 
-    private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse)->Unit>()
-    private val failCaptor = argumentCaptor<(Throwable)->Unit>()
+    private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
+    private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
     private val profileCaptor = argumentCaptor<List<Profile>>()
 
     @Test

@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class SelectProfileAdapterTest {
 
     @Mock private lateinit var mockNavigator: SelectProfileNavigator
-    private lateinit var subject : SelectProfileAdapter
+    private lateinit var subject: SelectProfileAdapter
 
     @Test
     fun `it should set items (0)`() {

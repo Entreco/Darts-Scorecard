@@ -11,7 +11,7 @@ import org.junit.Test
  */
 class ProfileModelTest {
 
-    private lateinit var subject : ProfileModel
+    private lateinit var subject: ProfileModel
 
     @Before
     fun setUp() {

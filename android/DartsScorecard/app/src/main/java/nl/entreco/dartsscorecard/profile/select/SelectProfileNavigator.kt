@@ -9,7 +9,7 @@ import javax.inject.Inject
  */
 class SelectProfileNavigator @Inject constructor(private val activity: SelectProfileActivity) {
 
-    fun onProfileSelected(view: View, profile: ProfileModel){
+    fun onProfileSelected(view: View, profile: ProfileModel) {
         val id = longArrayOf(profile.id)
         ProfileActivity.launch(activity, view, id)
     }

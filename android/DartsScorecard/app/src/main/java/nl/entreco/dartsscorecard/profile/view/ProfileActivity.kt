@@ -48,7 +48,7 @@ class ProfileActivity : ViewModelActivity() {
     }
 
     override fun onBackPressed() {
-        if(madeChanges){
+        if (madeChanges) {
             setResult(Activity.RESULT_OK)
         }
         super.onBackPressed()
@@ -60,7 +60,7 @@ class ProfileActivity : ViewModelActivity() {
         private const val REQUEST_CODE_CHANGE_NAME = 1223
 
         @JvmStatic
-        fun launch(activity: Activity, view: View, teams: LongArray){
+        fun launch(activity: Activity, view: View, teams: LongArray) {
             val intent = Intent(activity, ProfileActivity::class.java)
             intent.putExtra(EXTRA_TEAM_IDS, teams)
 

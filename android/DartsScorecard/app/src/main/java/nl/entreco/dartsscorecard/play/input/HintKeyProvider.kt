@@ -17,7 +17,7 @@ class HintKeyProvider(singles: Boolean) {
     val hint0: String = if (singles) "25" else "140"
 
     fun getHintForKey(hint: Int): String {
-        return when(hint){
+        return when (hint) {
             -1 -> "0" // Bust
             0 -> hint0
             1 -> hint1

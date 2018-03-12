@@ -13,9 +13,9 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 08/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class DonateBindingsTest{
+class DonateBindingsTest {
 
-    @Mock private lateinit var mockViewGroup : ViewGroup
+    @Mock private lateinit var mockViewGroup: ViewGroup
 
     @Test
     fun `it should clear previous views when list is NOT empty`() {

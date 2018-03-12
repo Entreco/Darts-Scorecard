@@ -15,7 +15,7 @@ interface Mapper<in F, out T> {
     }
 
     fun from(id: Long, table: PlayerTable, name: String? = null, image: String? = null, double: String? = null): PlayerTable {
-        if(id != table.id) throw IllegalStateException("Trying to update wrong Profile ($id, $table)")
+        if (id != table.id) throw IllegalStateException("Trying to update wrong Profile ($id, $table)")
         name?.let { table.name = it }
         double?.let { table.fav = it }
         image?.let { table.image = it }

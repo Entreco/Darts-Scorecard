@@ -10,10 +10,10 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 08/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class LaunchAnimatorTest{
+class LaunchAnimatorTest {
 
-    @Mock private lateinit var mockBinding : ActivityLaunchBinding
-    private lateinit var subject : LaunchAnimator
+    @Mock private lateinit var mockBinding: ActivityLaunchBinding
+    private lateinit var subject: LaunchAnimator
 
     @Test(expected = NullPointerException::class)
     fun `it should animate`() {

@@ -99,8 +99,8 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
             it.name.toLowerCase() == desiredName
         }
 
-        return when(isValidName(existing, desiredName)){
-            NAME_OK-> navigator.onDoneEditing(desiredName, desiredDouble)
+        return when (isValidName(existing, desiredName)) {
+            NAME_OK -> navigator.onDoneEditing(desiredName, desiredDouble)
             ERR_EMPTY -> handleError(R.string.err_player_name_is_empty)
             ERR_DUPLICATE -> handleError(R.string.err_player_already_exists)
             else -> handleError(R.string.err_unable_to_create_player)
@@ -113,8 +113,8 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         return true
     }
 
-    private fun isValidName(existing: Player?, desiredName: String) : Int {
-        if(desiredName.isEmpty())  return ERR_EMPTY
+    private fun isValidName(existing: Player?, desiredName: String): Int {
+        if (desiredName.isEmpty()) return ERR_EMPTY
         else if (existing != null && desiredName != initialProfileName) return ERR_DUPLICATE
         return NAME_OK
     }

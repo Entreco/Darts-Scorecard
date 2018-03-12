@@ -29,15 +29,15 @@ class Play01ListenersTest {
     @Mock private lateinit var mockStatListener: StatListener
     @Mock private lateinit var mockSpecialEventListener: SpecialEventListener<*>
     @Mock private lateinit var mockPlayerListener: PlayerListener
-    private lateinit var subject : Play01Listeners
+    private lateinit var subject: Play01Listeners
 
-    @Mock private lateinit var mockGame : Game
-    @Mock private lateinit var mockNext : Next
-    @Mock private lateinit var mockTurn : Turn
-    @Mock private lateinit var mockPlayer : Player
-    private lateinit var givenScores : Array<Score>
-    @Mock private lateinit var teamScoreListener1 : TeamScoreListener
-    @Mock private lateinit var teamScoreListener2 : TeamScoreListener
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockNext: Next
+    @Mock private lateinit var mockTurn: Turn
+    @Mock private lateinit var mockPlayer: Player
+    private lateinit var givenScores: Array<Score>
+    @Mock private lateinit var teamScoreListener1: TeamScoreListener
+    @Mock private lateinit var teamScoreListener2: TeamScoreListener
 
     @Test
     fun `it should register score listener`() {
@@ -196,7 +196,7 @@ class Play01ListenersTest {
     private fun thenScoreListenersAreNotifiedOfDartThrown() {
         verify(mockScoreListener).onDartThrown(any(), any())
     }
-    
+
     private fun thenStatListenersAreNotifiedOfDartThrown() {
         verify(mockStatListener).onStatsChange(any(), any())
     }
