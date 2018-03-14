@@ -6,11 +6,14 @@ import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.SoundRepository
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by entreco on 14/03/2018.
  */
+@RunWith(MockitoJUnitRunner::class)
 class MasterCallerTest {
 
     private val bg = TestBackground()
@@ -23,21 +26,35 @@ class MasterCallerTest {
     @Test
     fun `it should play sound using sound repo`() {
         givenSubject()
-        whenPlayingSound(Fx01())
-        thenRepositoryIsUsed()
+        whenPlayingSound(1)
+        thenRepositoryIsUsed(Fx01())
+    }
+
+    @Test
+    fun `it should release SoundRepo when stopping`() {
+        givenSubject()
+        whenStopping()
+        thenRepositoryIsReleased()
     }
 
     private fun givenSubject() {
         subject = MasterCaller(mockLogger, mockSoundRepository, bg, fg)
     }
 
-    private fun whenPlayingSound(sound: Sound) {
-        subject.play(MasterCallerRequest(sound))
+    private fun whenPlayingSound(scored: Int) {
+        subject.play(MasterCallerRequest(scored))
+    }
+
+    private fun whenStopping() {
+        subject.stop()
+    }
+
+    private fun thenRepositoryIsUsed(sound: Sound) {
         verify(mockSoundRepository).play(sound)
     }
 
-    private fun thenRepositoryIsUsed() {
-
+    private fun thenRepositoryIsReleased() {
+        verify(mockSoundRepository).release()
     }
 
 }

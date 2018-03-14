@@ -48,6 +48,11 @@ class Play01Activity : ViewModelActivity() {
         resumeGame()
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.stop()
+    }
+
     private fun initGame() {
         viewModel.load(retrieveSetup(intent), scoreViewModel, statViewModel)
     }

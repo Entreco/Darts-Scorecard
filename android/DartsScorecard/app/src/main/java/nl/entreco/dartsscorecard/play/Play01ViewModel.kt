@@ -12,6 +12,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.*
 import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.MasterCallerRequest
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
@@ -121,6 +122,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
+        notifyMasterCaller(turn.total())
     }
 
     private fun storeTurn(turn: Turn, by: Player) {
@@ -145,5 +147,13 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private fun notifyListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         gameListeners.onTurnSubmitted(next, turn, by, scores)
+    }
+
+    private fun notifyMasterCaller(scored: Int){
+        masterCaller.play(MasterCallerRequest(if(scored == 0) 0 else 1))
+    }
+
+    fun stop() {
+        masterCaller.stop()
     }
 }

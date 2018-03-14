@@ -77,6 +77,13 @@ class Play01ViewModelTest {
     }
 
     @Test
+    fun `it should stop mastercaller on stop`() {
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockLogger)
+        subject.stop()
+        verify(mockMasterCaller).stop()
+    }
+
+    @Test
     fun `it should not notify ui when game was NOT loaded`() {
         givenGameAndRequest()
         whenLoadingFails(Throwable("something goes wrong"))

@@ -16,7 +16,7 @@ class MasterCaller @Inject constructor(private val logger: Logger,
 
     fun play(request: MasterCallerRequest){
         onBackground({
-            soundRepository.play(request.sound)
+            soundRepository.play(request.toSound())
         }, onEnqueueFailed(request))
     }
 
@@ -24,5 +24,9 @@ class MasterCaller @Inject constructor(private val logger: Logger,
         return {
             logger.e("Error enqueing sound $request")
         }
+    }
+
+    fun stop() {
+        onBackground({ soundRepository.release()}, {})
     }
 }
