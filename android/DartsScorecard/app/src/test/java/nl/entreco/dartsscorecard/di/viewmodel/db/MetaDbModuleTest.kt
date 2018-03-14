@@ -12,10 +12,10 @@ import org.mockito.MockitoAnnotations
 /**
  * Created by entreco on 24/01/2018.
  */
-class MetaDbModuleTest{
-    @Mock private lateinit var mockDb : DscDatabase
-    @Mock private lateinit var mockMapper : MetaMapper
-    private lateinit var subject : MetaDbModule
+class MetaDbModuleTest {
+    @Mock private lateinit var mockDb: DscDatabase
+    @Mock private lateinit var mockMapper: MetaMapper
+    private lateinit var subject: MetaDbModule
 
     @Before
     fun setUp() {

@@ -6,8 +6,8 @@ import org.junit.Test
 /**
  * Created by Entreco on 10/12/2017.
  */
-class HintKeyProviderTest{
-    private lateinit var subject : HintKeyProvider
+class HintKeyProviderTest {
+    private lateinit var subject: HintKeyProvider
 
     @Test
     fun `it should provide normal hints`() {

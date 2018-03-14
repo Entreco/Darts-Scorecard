@@ -1,13 +1,11 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Intent
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
-import android.util.Log
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
@@ -28,7 +26,6 @@ class DonateViewModel @Inject constructor(
 
     init {
         donateCallback.lifeCycle().addObserver(this)
-        analytics.trackViewDonations()
     }
 
     internal var productId: String = ""
@@ -38,6 +35,7 @@ class DonateViewModel @Inject constructor(
     fun onDonate(donation: Donation) {
         loading.set(true)
         productId = donation.sku
+        analytics.trackPurchaseStart(donation)
         makeDonation.exec(MakeDonationRequest(donation), onStartMakeDonation(), onStartMakeDonationFailed())
     }
 
@@ -46,15 +44,16 @@ class DonateViewModel @Inject constructor(
     }
 
     fun onMakeDonationSuccess(data: Intent?) {
-        Log.w("DONATE", "onMakeDonationSuccess: $data")
         val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
         val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-
-        consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
-                onConsumeDonationSuccess(),
-                onConsumeDonationFailed())
+        if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
+        else {
+            analytics.trackAchievement("Donation $data")
+            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
+                    onConsumeDonationSuccess(),
+                    onConsumeDonationFailed())
+        }
     }
-
 
     private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
         analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
@@ -64,8 +63,8 @@ class DonateViewModel @Inject constructor(
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
         when (response.resultCode) {
-            RESULT_OK -> donationDone(response)
-            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed")
+            0 -> donationDone(response)
+            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
         }
 
         loading.set(false)
@@ -74,14 +73,13 @@ class DonateViewModel @Inject constructor(
 
     private fun donationDone(response: ConsumeDonationResponse) {
         donationWithId(response)?.let { donation ->
-            analytics.trackPurchase(donation)
+            analytics.trackPurchase(donation, response.orderId)
             donateCallback.onDonationMade(donation)
         }
     }
 
     private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
-        Log.w("DONATE", "consumeFailed: $it")
-        analytics.trackPurchaseFailed(productId, "Consume failed")
+        analytics.trackPurchaseFailed(productId, "ConsumeDonation failed")
         loading.set(false)
         productId = ""
     }
@@ -90,8 +88,7 @@ class DonateViewModel @Inject constructor(
     private fun donationWithId(response: ConsumeDonationResponse): Donation? =
             donations.firstOrNull { it.sku == response.productId }
 
-    fun onMakeDonationFailed(resultCode: Int, data: Intent?) {
-        Log.w("DONATE", "onMakeDonationFailed: $resultCode $data")
+    fun onMakeDonationFailed() {
         analytics.trackPurchaseFailed(productId, "ActivityResult failed")
         loading.set(false)
         productId = ""
@@ -103,7 +100,7 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
-        Log.w("DONATE", "donationFailed: $it")
+        analytics.trackPurchaseFailed(productId, "FetchDonations failed")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

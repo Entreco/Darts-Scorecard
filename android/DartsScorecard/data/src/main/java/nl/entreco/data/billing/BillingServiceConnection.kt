@@ -10,8 +10,8 @@ import com.android.vending.billing.IInAppBillingService
  */
 class BillingServiceConnection : ServiceConnection {
 
-    private var service : IInAppBillingService? = null
-    private var callback : (Boolean)->Unit = {}
+    private var service: IInAppBillingService? = null
+    private var callback: (Boolean) -> Unit = {}
 
     override fun onServiceDisconnected(name: ComponentName?) {
         this.service = null
@@ -23,11 +23,11 @@ class BillingServiceConnection : ServiceConnection {
         this.callback(true)
     }
 
-    fun setCallback(done: (Boolean)->Unit){
+    fun setCallback(done: (Boolean) -> Unit) {
         this.callback = done
     }
 
-    fun getService() : IInAppBillingService? {
+    fun getService(): IInAppBillingService? {
         return service
     }
 }

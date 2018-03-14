@@ -19,8 +19,8 @@ class PlayersObserverTest {
     @Test
     fun `it should notify callback onItemRangeInserted`() {
         givenSubject()
-        whenItemRangeInserted(1,1)
-        thenCallbackIsNotified(1,1)
+        whenItemRangeInserted(1, 1)
+        thenCallbackIsNotified(1, 1)
     }
 
     @Test
@@ -60,16 +60,16 @@ class PlayersObserverTest {
     }
 
     private fun whenItemRangeChanged() {
-        subject.onItemRangeChanged(2,4)
+        subject.onItemRangeChanged(2, 4)
     }
 
     private fun whenItemRangeMoved() {
-        subject.onItemRangeMoved(2,4, 3)
+        subject.onItemRangeMoved(2, 4, 3)
     }
 
 
     private fun whenItemRangeRemoved() {
-        subject.onItemRangeRemoved(2,4)
+        subject.onItemRangeRemoved(2, 4)
     }
 
     private fun whenOnChanged() {

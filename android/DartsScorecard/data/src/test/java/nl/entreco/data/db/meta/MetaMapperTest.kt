@@ -15,20 +15,20 @@ import org.mockito.junit.MockitoJUnitRunner
 class MetaMapperTest {
 
     @Mock
-    private lateinit var mockTurnMeta : TurnMeta
+    private lateinit var mockTurnMeta: TurnMeta
 
-    private val givenGameId : Long = 32
-    private val givenTurnId : Long = 1688
-    private val givenAtDouble : Int = 800
+    private val givenGameId: Long = 32
+    private val givenTurnId: Long = 1688
+    private val givenAtDouble: Int = 800
 
 
-    private val givenPlayerId : Long = 33
-    private val givenTurnNumber : Int = 11
-    private val givenScore : Score = Score(102, 4, 5)
+    private val givenPlayerId: Long = 33
+    private val givenTurnNumber: Int = 11
+    private val givenScore: Score = Score(102, 4, 5)
     private val givenStarted = true
     private val givenBreakMade = true
 
-    private val givenMeta : TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenScore, givenStarted, givenBreakMade)
+    private val givenMeta: TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenScore, givenStarted, givenBreakMade)
     private val subject = MetaMapper()
 
     @Test

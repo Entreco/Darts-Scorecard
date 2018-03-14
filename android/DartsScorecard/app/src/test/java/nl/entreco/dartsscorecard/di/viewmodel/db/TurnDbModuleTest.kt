@@ -14,8 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TurnDbModuleTest {
 
-    @Mock private lateinit var mockDb : DscDatabase
-    @Mock private lateinit var mockMapper : TurnMapper
+    @Mock private lateinit var mockDb: DscDatabase
+    @Mock private lateinit var mockMapper: TurnMapper
 
     @Test
     fun `it should provideTurnMapper`() {

@@ -16,26 +16,10 @@ import kotlin.math.sqrt
  */
 class Play01Animator(binding: ActivityPlay01Binding) {
 
-    private val fab = binding.includeInput?.fab!!
-    private val scoreSheet = binding.includeScore?.scoreSheet!!
     private val teamSheet = binding.includeScore?.teamContainer!!
     private val inputSheet = binding.includeInput?.inputSheet!!
-    private val inputResume = binding.includeInput?.inputResume!!
-    private val mainSheet = binding.includeMain?.mainSheet!!
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val stat1 = binding.includeMain?.stat1!!
-    private val stat2 = binding.includeMain?.stat2!!
-    private val stat3 = binding.includeMain?.stat3!!
-    private val stat4 = binding.includeMain?.stat4!!
-    private val stat5 = binding.includeMain?.stat5!!
-    private val stat6 = binding.includeMain?.stat6!!
-    private val stat7 = binding.includeMain?.stat7!!
-    private val name1 = binding.includeMain?.name1!!
-    private val name2 = binding.includeMain?.name2!!
-    private val score = binding.includeMain?.score!!
-    private val player1 = binding.includeMain?.player1!!
-    private val player2 = binding.includeMain?.player2!!
-    private val version = binding.includeMain?.version!!
+    private val animator = Play01AnimatorHandler(binding.includeScore?.scoreSheet!!, binding.includeInput?.fab!!, binding.includeMain?.mainSheet!!, binding.includeMain.player1, binding.includeMain.player2, binding.includeMain.name1, binding.includeMain.name2, binding.includeMain.score, binding.includeMain.stat1, binding.includeMain.stat2, binding.includeMain.stat3, binding.includeMain.stat4, binding.includeMain.stat5, binding.includeMain.stat6, binding.includeMain.stat7, binding.includeMain.version, binding.includeInput.inputResume)
 
     init {
 
@@ -43,38 +27,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
         behaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-                // Slide Out ScoreViewModel
-                scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
-
-                // Scale Fab Out Bottom/Top
-                fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
-
-                // Fade In MainSheet
-                mainSheet.animate().alpha(1 - sqrt(slideOffset)).setDuration(0).start()
-                mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
-
-                // Fly In Players
-                player1.animate().translationX(slideOffset * -player1.width / 3).setDuration(0).start()
-                player2.animate().translationX(slideOffset * player2.width / 3).setDuration(0).start()
-                name1.animate().translationX(slideOffset * -name1.width).setDuration(0).start()
-                name2.animate().translationX(slideOffset * name2.width).setDuration(0).start()
-                score.animate().alpha(1 - slideOffset).scaleX(1 - slideOffset).scaleY(1 - slideOffset).setDuration(0).start()
-
-                // Fly In stats
-                animateState(stat1.animate(), 1, slideOffset)
-                animateState(stat2.animate(), 2, slideOffset)
-                animateState(stat3.animate(), 3, slideOffset)
-                animateState(stat4.animate(), 4, slideOffset)
-                animateState(stat5.animate(), 5, slideOffset)
-                animateState(stat6.animate(), 6, slideOffset)
-                animateState(stat7.animate(), 7, slideOffset)
-
-                // Also, Fly In Version
-                animateState(version.animate(), 8, slideOffset)
-
-                // Show Resume
-                inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
+                animator.onSlide(slideOffset)
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {}
@@ -87,12 +40,8 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    internal fun collapse(){
+    internal fun collapse() {
         behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
-
-    private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
-        anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
     }
 
     private fun calculateHeightForScoreView(binding: ActivityPlay01Binding) {
@@ -115,7 +64,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         @JvmStatic
         @BindingAdapter("loading")
         fun showLoading(view: ViewGroup, loading: Boolean) {
-            if(loading) {
+            if (loading) {
                 val loadingView = LayoutInflater.from(view.context).inflate(R.layout.play_01_loading, view, false)
                 view.addView(loadingView)
                 loadingView.animate().alpha(1F).start()
@@ -131,9 +80,55 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         @JvmStatic
         @BindingAdapter("finished", "animator")
         fun showGameFinished(view: CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
-            if(finished){
+            if (finished) {
                 animator?.collapse()
             }
+        }
+    }
+
+    internal class Play01AnimatorHandler(private val scoreSheet: View, private val fab: View, private val mainSheet: View,
+                                         private val player1: View, private val player2: View,
+                                         private val name1: View, private val name2: View, private val score: View,
+                                         private val stat1: View, private val stat2: View, private val stat3: View,
+                                         private val stat4: View, private val stat5: View, private val stat6: View,
+                                         private val stat7: View, private val version: View, private val inputResume: View) {
+
+        fun onSlide(slideOffset: Float) {
+            // Slide Out ScoreViewModel
+            scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+
+            // Scale Fab Out Bottom/Top
+            fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
+
+            // Fade In MainSheet
+            mainSheet.animate().alpha(1 - sqrt(slideOffset)).setDuration(0).start()
+            mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
+
+            // Fly In Players
+            player1.animate().translationX(slideOffset * -player1.width / 3).setDuration(0).start()
+            player2.animate().translationX(slideOffset * player2.width / 3).setDuration(0).start()
+            name1.animate().translationX(slideOffset * -name1.width).setDuration(0).start()
+            name2.animate().translationX(slideOffset * name2.width).setDuration(0).start()
+            score.animate().alpha(1 - slideOffset).scaleX(1 - slideOffset).scaleY(1 - slideOffset).setDuration(0).start()
+
+            // Fly In stats
+            animateState(stat1.animate(), 1, slideOffset)
+            animateState(stat2.animate(), 2, slideOffset)
+            animateState(stat3.animate(), 3, slideOffset)
+            animateState(stat4.animate(), 4, slideOffset)
+            animateState(stat5.animate(), 5, slideOffset)
+            animateState(stat6.animate(), 6, slideOffset)
+            animateState(stat7.animate(), 7, slideOffset)
+
+            // Also, Fly In Version
+            animateState(version.animate(), 8, slideOffset)
+
+            // Show Resume
+            inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
+        }
+
+        private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
+            anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
         }
     }
 }

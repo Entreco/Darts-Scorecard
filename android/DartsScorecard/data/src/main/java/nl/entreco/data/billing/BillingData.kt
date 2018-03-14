@@ -15,6 +15,7 @@ internal val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/:".t
 class Donate10Votes : BillingData("10_feature_votes", 10)
 class Donate50Votes : BillingData("50_feature_votes", 50)
 class Donate100Votes : BillingData("100_feature_votes", 100)
+class Donate500Votes : BillingData("500_feature_votes", 500)
 class DonateTestPurchased : BillingData("android.test.purchased", 10)
 class DonateTestCancelled : BillingData("android.test.canceled", 10)
 class DonateTestRefunded : BillingData("android.test.refunded", 10)
@@ -23,7 +24,7 @@ class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
 class FetchDonationsData {
 
     private fun listOfDonations(): List<BillingData> {
-        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes())
+        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes(), Donate500Votes())
 //        return listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable())
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <padding android:top="@dimen/xsmall" android:right="@dimen/xsmall" android:left="@dimen/xsmall" android:bottom="@dimen/xsmall" />
+            <size android:width="120dp" android:height="120dp" />
+            <gradient android:type="linear" android:startColor="?attr/grad_score_hint_start" android:endColor="?attr/grad_score_hint_stop" android:angle="90"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <gradient android:type="linear" android:startColor="?attr/grad_score_name_start" android:endColor="?attr/grad_score_name_stop" />
+        </shape>
+    </item>
+</layer-list>

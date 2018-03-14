@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 @RunWith(MockitoJUnitRunner::class)
 class TeamScoreListenerTest {
 
-    @Mock private lateinit var mockPlayer : Player
+    @Mock private lateinit var mockPlayer: Player
     private val subject = TeamScoreListenerForTesting()
 
     @Test

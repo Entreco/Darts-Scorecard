@@ -33,6 +33,7 @@ class BetaBindings {
             view.animate().scaleX(progress).setDuration(1000).setStartDelay(350).setInterpolator(AccelerateDecelerateInterpolator()).start()
         }
 
+        @Suppress("DEPRECATION")
         @JvmStatic
         @BindingAdapter("textWithTags")
         fun setTextWithTags(view: TextView, message: String) {

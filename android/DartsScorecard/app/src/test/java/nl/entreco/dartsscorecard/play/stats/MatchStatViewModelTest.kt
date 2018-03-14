@@ -110,9 +110,26 @@ class MatchStatViewModelTest {
 
     @Test
     fun `it should log error, when stat fetch fails`() {
+        givenTeams("1", "2")
         givenSubjectLoaded()
         whenStatsChangeFails(RuntimeException("do'h"))
         thenErrorIsLogged()
+    }
+
+    @Test
+    fun `it should return team 0`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat0Selected(1)
+        assertNotNull(whenTeam0Requested())
+    }
+
+    @Test
+    fun `it should return team 1`() {
+        givenTeams("piet", "henk")
+        givenSubjectLoaded()
+        whenTeamStat1Selected(1)
+        assertNotNull(whenTeam1Requested())
     }
 
     @Test
@@ -218,6 +235,14 @@ class MatchStatViewModelTest {
     private fun whenTeamStat1Selected(index: Int) {
         whenever(mockAdapterView.getItemAtPosition(index)).thenReturn(givenTeams[index].toString())
         subject.onTeamStat1Selected(mockAdapterView, index)
+    }
+
+    private fun whenTeam0Requested() {
+        subject.team0()
+    }
+
+    private fun whenTeam1Requested() {
+        subject.team1()
     }
 
     private fun thenStatIsFetched() {

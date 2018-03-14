@@ -36,14 +36,14 @@ class Setup01NavigatorTest {
     fun `it should start EditPlayerActivity when editing player`() {
         givenEditRequest()
         givenSubject()
-        subject.onEditPlayer(0, mockPlayerViewModel)
+        subject.onEditPlayer(0, mockPlayerViewModel, emptyList())
         verify(mockActivity).startActivityForResult(any(), eq(1002))
     }
 
     @Test
     fun `it should add new player with index`() {
         givenSubject()
-        subject.onAddNewPlayer(2)
+        subject.onAddNewPlayer(2, emptyList())
         verify(mockActivity).startActivityForResult(any(), eq(1002))
     }
 
@@ -52,7 +52,7 @@ class Setup01NavigatorTest {
         givenIntentData("", "what's my name", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
-        verify(mockCallback).onPlayerAdded("what's my name")
+        verify(mockCallback).onPlayerAdded("what's my name", 0)
     }
 
     @Test
@@ -60,7 +60,7 @@ class Setup01NavigatorTest {
         givenIntentData("Player 1", "", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
-        verify(mockCallback).onPlayerAdded("Player 1")
+        verify(mockCallback).onPlayerAdded("Player 1", 0)
     }
 
     @Test
@@ -68,7 +68,7 @@ class Setup01NavigatorTest {
         givenIntentData("suggestion", "", POSITION_NONE, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
-        verify(mockCallback, never()).onPlayerAdded(any())
+        verify(mockCallback, never()).onPlayerAdded(any(), any())
     }
 
     @Test
@@ -76,7 +76,7 @@ class Setup01NavigatorTest {
         givenIntentData("suggestion", "no hables names", POSITION_NONE, POSITION_NONE + 2)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
-        verify(mockCallback).onPlayerEdited(POSITION_NONE + 2, POSITION_NONE, "no hables names")
+        verify(mockCallback).onPlayerEdited(POSITION_NONE + 2, POSITION_NONE, "no hables names", 0)
     }
 
     @Test

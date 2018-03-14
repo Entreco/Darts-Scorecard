@@ -23,8 +23,9 @@ class ConsumeDonationUsecase @Inject constructor(private val billingRepository: 
             val json = gson.fromJson(req.purchaseData, ConsumeData::class.java)
             val token = json.purchaseToken!!
             val productId = json.productId!!
+            val orderId = json.orderId!!
             val result = billingRepository.consume(token)
-            onUi { done(ConsumeDonationResponse(result, productId)) }
+            onUi { done(ConsumeDonationResponse(result, productId, orderId)) }
         }, fail)
     }
 
@@ -33,5 +34,7 @@ class ConsumeDonationUsecase @Inject constructor(private val billingRepository: 
         var purchaseToken: String? = null
         @SerializedName("productId")
         var productId: String? = null
+        @SerializedName("orderId")
+        var orderId: String? = null
     }
 }

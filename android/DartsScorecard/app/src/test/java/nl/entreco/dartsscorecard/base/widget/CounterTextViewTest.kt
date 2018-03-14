@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations
  */
 class CounterTextViewTest {
 
-    @Mock private lateinit var mockContext : Context
+    @Mock private lateinit var mockContext: Context
 
     @Before
     fun setUp() {

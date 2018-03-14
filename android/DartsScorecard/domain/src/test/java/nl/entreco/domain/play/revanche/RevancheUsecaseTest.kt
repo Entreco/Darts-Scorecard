@@ -22,10 +22,10 @@ class RevancheUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock lateinit var mockDone: (RevancheResponse) -> Unit
-    @Mock lateinit var mockFail: (Throwable) -> Unit
-    @Mock lateinit var mockGame: Game
-    @Mock lateinit var mockGameRepository: GameRepository
+    @Mock private lateinit var mockDone: (RevancheResponse) -> Unit
+    @Mock private lateinit var mockFail: (Throwable) -> Unit
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockGameRepository: GameRepository
     private lateinit var subject: RevancheUsecase
 
     private val team1 = Team()

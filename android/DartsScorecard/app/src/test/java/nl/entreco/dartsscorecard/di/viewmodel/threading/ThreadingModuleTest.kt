@@ -15,8 +15,8 @@ import org.mockito.MockitoAnnotations
  */
 class ThreadingModuleTest {
 
-    @Mock private lateinit var mockHandler : Handler
-    private lateinit var subject : ThreadingModule
+    @Mock private lateinit var mockHandler: Handler
+    private lateinit var subject: ThreadingModule
 
     @Before
     fun setUp() {

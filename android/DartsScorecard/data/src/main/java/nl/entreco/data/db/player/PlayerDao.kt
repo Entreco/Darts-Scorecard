@@ -1,9 +1,6 @@
 package nl.entreco.data.db.player
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 
 /**
  * Created by Entreco on 16/12/2017.
@@ -16,8 +13,14 @@ interface PlayerDao {
     @Query("SELECT * FROM Player WHERE id = :id")
     fun fetchById(id: Long): PlayerTable?
 
+    @Query("SELECT * FROM Player WHERE id IN(:ids)")
+    fun fetchAllById(ids: LongArray): List<PlayerTable>
+
     @Query("SELECT * FROM Player WHERE name = :name")
     fun fetchByName(name: String): PlayerTable?
+
+    @Update
+    fun update(table: PlayerTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(player: PlayerTable): Long

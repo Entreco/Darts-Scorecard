@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nl.entreco.dartsscorecard">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -32,6 +34,15 @@
         <activity
             android:name=".play.Play01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".profile.select.SelectProfileActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".profile.view.ProfileActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".profile.edit.EditPlayerNameActivity"
+            android:parentActivityName=".profile.view.ProfileActivity" />
 
     </application>
 

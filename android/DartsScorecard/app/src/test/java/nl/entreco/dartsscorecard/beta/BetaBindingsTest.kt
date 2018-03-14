@@ -1,9 +1,11 @@
 package nl.entreco.dartsscorecard.beta
 
 import android.content.Context
+import android.text.Html
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.widget.ImageView
+import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
@@ -21,6 +23,7 @@ class BetaBindingsTest {
 
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockImageView: ImageView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
@@ -50,6 +53,14 @@ class BetaBindingsTest {
         setupMocking()
         BetaBindings.animateProgress(mockView, 0.5F, 0.8F)
         verify(mockView).scaleX = 0.5F
+    }
+
+    @Test
+    fun `it should set text with tags`() {
+        val message = "Some html message"
+        BetaBindings.setTextWithTags(mockTextView, message)
+        verify(mockTextView).text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
+
     }
 
     private fun setupContextMocking() {

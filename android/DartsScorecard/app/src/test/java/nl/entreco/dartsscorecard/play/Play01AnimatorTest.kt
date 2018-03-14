@@ -15,12 +15,12 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 25/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class Play01AnimatorTest{
+class Play01AnimatorTest {
 
-    @Mock private lateinit var mockCoordinator : CoordinatorLayout
-    @Mock private lateinit var mockAnimator : Play01Animator
-    @Mock private lateinit var mockContext : Context
-    
+    @Mock private lateinit var mockCoordinator: CoordinatorLayout
+    @Mock private lateinit var mockAnimator: Play01Animator
+    @Mock private lateinit var mockContext: Context
+
     @Test(expected = NullPointerException::class)
     fun `it should add loading view`() {
         whenever(mockCoordinator.context).thenReturn(mockContext)

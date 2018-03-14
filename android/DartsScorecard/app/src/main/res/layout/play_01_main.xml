@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.play.stats.MatchStatViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.play.Play01Navigator" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -36,24 +40,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
+                android:layout_marginBottom="-16dp"
                 android:orientation="horizontal"
                 android:paddingTop="20dp">
 
-                <ImageView
-                    android:id="@+id/player1"
+                <android.support.v4.widget.Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_player1" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
-                <ImageView
-                    android:id="@+id/player2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/player1"
+                    android:layout_width="@dimen/header_profile_pic_size"
+                    android:layout_height="@dimen/header_profile_pic_size"
+                    android:background="@drawable/profile_bg"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_player2" />
+                    android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team0())}"
+                    app:profileImage="@{viewModel.team0Image}"
+                    android:transitionName="profile" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/player2"
+                    android:layout_width="@dimen/header_profile_pic_size"
+                    android:layout_height="@dimen/header_profile_pic_size"
+                    android:background="@drawable/profile_bg"
+                    android:contentDescription="@null"
+                    android:onClick="@{(view) -> navigator.gotoTeamProfile(view, viewModel.team1())}"
+                    app:profileImage="@{viewModel.team1Image}"
+                    android:transitionName="profile" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <!-- Results -->

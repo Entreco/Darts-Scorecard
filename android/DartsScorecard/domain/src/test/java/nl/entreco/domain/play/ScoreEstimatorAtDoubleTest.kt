@@ -86,4 +86,9 @@ class ScoreEstimatorAtDoubleTest {
     fun `it should return 3 for 40 (0,0,D20)`() {
         assertEquals(3, subject.atDouble(Turn(Dart.ZERO, Dart.ZERO, Dart.DOUBLE_20), 40))
     }
+
+    @Test
+    fun `it should return 3 for 50 (0,0,BULL)`() {
+        assertEquals(3, subject.atDouble(Turn(Dart.ZERO, Dart.ZERO, Dart.BULL), 50))
+    }
 }

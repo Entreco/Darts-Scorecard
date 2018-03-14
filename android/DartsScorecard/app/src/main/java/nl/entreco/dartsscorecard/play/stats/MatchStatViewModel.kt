@@ -25,24 +25,36 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
     val team1 = ObservableField<TeamStatModel>()
     val teamEntries = ObservableArrayList<String>()
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
+    val team0Image = ObservableField<String>()
+    val team1Image = ObservableField<String>()
 
     val team0Index = ObservableInt()
     val team1Index = ObservableInt()
 
     private lateinit var teams: Array<Team>
 
-    fun onTeamStat0Selected(adapter: AdapterView<*>, index: Int){
+    fun team0(): Team {
+        return team0.get().team
+    }
+
+    fun team1(): Team {
+        return team1.get().team
+    }
+
+    fun onTeamStat0Selected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString()
         val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team0.set(teamStats[selected])
         team0Index.set(selected)
+        team0Image.set(teams[selected].players[0].image)
     }
 
-    fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int){
+    fun onTeamStat1Selected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString()
         val selected = teams.indexOfFirst { it.toString().toLowerCase() == resolved.toLowerCase() }
         team1.set(teamStats[selected])
         team1Index.set(selected)
+        team1Image.set(teams[selected].players[0].image)
     }
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: Play01Response, uiCallback: UiCallback?) {
@@ -63,7 +75,12 @@ class MatchStatViewModel @Inject constructor(private val fetchGameStatsUsecase: 
 
         teamEntries.addAll(teams.map { it.toString().capitalize() })
         team0Index.set(0)
-        team1Index.set(if(teams.size > 1) 1 else 0)
+        team1Index.set(if (teams.size > 1) 1 else 0)
+
+        if (teams.isNotEmpty()) {
+            team0Image.set(teams[0].players[0].image)
+            team1Image.set(if (teams.size > 1) teams[1].players[0].image else teams[0].players[0].image)
+        }
     }
 
     private fun onStatsFetched(teams: Array<Team>): (FetchGameStatsResponse) -> Unit {

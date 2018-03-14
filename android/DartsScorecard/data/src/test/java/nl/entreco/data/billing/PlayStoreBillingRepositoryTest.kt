@@ -119,7 +119,7 @@ class PlayStoreBillingRepositoryTest {
     }
 
     private fun whenFetchingDonationsSucceeds() {
-        val product = gson.toJson(DonationApiData("10_feature_votes", "price", "title", "desc"))
+        val product = gson.toJson(DonationApiData("10_feature_votes", "price", "title", "desc", "$", "120000"))
 
         whenever(mockBundle.getStringArrayList("DETAILS_LIST")).thenReturn(arrayListOf(product))
         whenever(mockInappBillingService.getSkuDetails(any(), eq(null), any(), any())).thenReturn(mockBundle)
@@ -137,12 +137,12 @@ class PlayStoreBillingRepositoryTest {
         whenever(mockBundle.getParcelable<PendingIntent>("BUY_INTENT")).thenReturn(mockPendingIntent)
         whenever(mockInappBillingService.getBuyIntent(any(), eq(null), any(), any(), any())).thenReturn(mockBundle)
         whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
-        expectedResponse = subject.donate(Donation("ti", "d", "s", "p", 10))
+        expectedResponse = subject.donate(Donation("ti", "d", "s", "p", 10, "GBP", "100000"))
     }
 
     private fun whenDonatingFails() {
         whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
-        subject.donate(Donation("ti", "d", "s", "p", 10))
+        subject.donate(Donation("ti", "d", "s", "p", 10, "EUR", "12212222"))
     }
 
     private fun whenConsumptionSucceeds() {

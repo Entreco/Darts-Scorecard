@@ -17,8 +17,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BillingServiceConnectionTest {
 
-    @Mock private lateinit var mockComponentName : ComponentName
-    @Mock private lateinit var mockService : IBinder
+    @Mock private lateinit var mockComponentName: ComponentName
+    @Mock private lateinit var mockService: IBinder
     @Mock private lateinit var mockCallback: (Boolean) -> Unit
     private val subject = BillingServiceConnection()
 

@@ -19,18 +19,18 @@ class BetaAdapter @Inject constructor() : TestableAdapter<BetaView>(), Observer<
     private val items: MutableList<Feature> = mutableListOf()
     var betaAnimator: BetaAnimator? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BetaView {
-        val inflater = LayoutInflater.from(parent?.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BetaView {
+        val inflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<BetaViewBinding>(inflater, R.layout.beta_view, parent, false)
         return BetaView(binding)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
+    override fun onBindViewHolder(holder: BetaView, position: Int) {
+        holder.bind(items[position], betaAnimator)
     }
 
-    override fun onBindViewHolder(holder: BetaView?, position: Int) {
-        holder?.bind(items[position], betaAnimator)
+    override fun getItemCount(): Int {
+        return items.size
     }
 
     override fun onChanged(features: List<Feature>?) {

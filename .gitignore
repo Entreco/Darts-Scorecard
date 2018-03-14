@@ -63,3 +63,7 @@ release/
 
 **/dig/web/
 **/lint-report\.html
+
+store/recordings/
+
+\.DS_Store

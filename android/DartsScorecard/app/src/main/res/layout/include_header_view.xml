@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/toolbar_profile">
+
+    <data>
+
+        <variable
+            name="profile"
+            type="nl.entreco.dartsscorecard.profile.view.PlayerProfile" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.view.ProfileNavigator" />
+    </data>
+
+    <nl.entreco.dartsscorecard.profile.view.ProfileHeaderView
+        android:id="@+id/toolbar_header_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/def">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/header_profile_pic_size"
+                android:layout_height="@dimen/header_profile_pic_size"
+                android:layout_gravity="center"
+                android:background="@drawable/profile_bg"
+                android:contentDescription="@null"
+                android:elevation="@dimen/def"
+                android:fitsSystemWindows="true"
+                android:onClick="@{() -> navigator.onChooseImage()}"
+                android:outlineProvider="background"
+                android:src="@drawable/ic_no_profile"
+                android:transitionName="profile"
+                app:profileImage="@{profile.image}" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/profileHeaderName"
+            style="@style/ProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{profile.name}"
+            android:transitionName="profileName"
+            tools:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/fav_double"
+            style="@style/ProfileTagline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            app:profileDouble="@{profile.fav}"
+            tools:text="@string/favourite_double" />
+
+    </nl.entreco.dartsscorecard.profile.view.ProfileHeaderView>
+</layout>

@@ -52,7 +52,7 @@ class MakeDonationUsecaseTest{
 
     private fun whenMakingDonationFails(err: Throwable) {
         whenever(mockBillingRepo.donate(any())).thenThrow(err)
-        subject.exec(MakeDonationRequest(Donation("ti", "de", "sk", "pr", 4)), mockDone, mockFail)
+        subject.exec(MakeDonationRequest(Donation("ti", "de", "sk", "pr", 4, "EUR", "7990000")), mockDone, mockFail)
     }
 
     private fun thenSuccessIsReported() {

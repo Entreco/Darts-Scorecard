@@ -7,6 +7,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
+import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.RetrieveLatestGameUsecase
@@ -68,17 +69,23 @@ class LaunchViewModelTest {
     }
 
     @Test
-    fun `it should launch Beta when 'onBeta' is pressed`() {
-        whenOnBetaIsClicked()
-        thenBetaIsLaunched()
-    }
-
-    @Test
     fun `it should launch Play01 when 'onResume' is pressed`() {
         givenTeamsAndStartScore("remco|eva", 501)
         givenResumedGame()
         whenOnResumeIsClicked()
         thenPlay01IsLaunched()
+    }
+
+    @Test
+    fun `it should launch SelectProfile when 'profile' pressed`() {
+        whenOnProfilePressed()
+        thenSelectProfileIsLaunched()
+    }
+
+    @Test
+    fun `it should launch Beta when 'onBeta' is pressed`() {
+        whenOnBetaIsClicked()
+        thenBetaIsLaunched()
     }
 
     private fun givenResumedGame() {
@@ -121,12 +128,16 @@ class LaunchViewModelTest {
         subject.onNewGamePressed(mockContext)
     }
 
-    private fun whenOnBetaIsClicked() {
-        subject.onBetaPressed(mockContext)
-    }
-
     private fun whenOnResumeIsClicked() {
         subject.onResumePressed(mockContext)
+    }
+
+    private fun whenOnProfilePressed() {
+        subject.onProfilePressed(mockContext)
+    }
+
+    private fun whenOnBetaIsClicked() {
+        subject.onBetaPressed(mockContext)
     }
 
     private fun thenGameIsStoredInObservable() {
@@ -144,10 +155,17 @@ class LaunchViewModelTest {
         }
     }
 
-    private fun thenBetaIsLaunched(){
+    private fun thenSelectProfileIsLaunched() {
+        try {
+            verify(SelectProfileActivity).launch(mockContext)
+        } catch (ignore: NotAMockException) {
+        }
+    }
+
+    private fun thenBetaIsLaunched() {
         try {
             verify(BetaActivity).launch(mockContext)
-        } catch (ignore: NotAMockException){
+        } catch (ignore: NotAMockException) {
         }
     }
 

@@ -15,30 +15,31 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     private val items = mutableListOf<PlayerViewModel>()
     private val teams = mutableListOf<Int>()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SelectPlayerView {
-        val inflater = LazyInflater(parent?.context!!).inflater
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectPlayerView {
+        val inflater = LazyInflater(parent.context).inflater
         val binding = DataBindingUtil.inflate<SelectPlayerViewBinding>(inflater, R.layout.select_player_view, parent, false)
         return SelectPlayerView(binding)
     }
 
     @Synchronized
-    override fun onBindViewHolder(holder: SelectPlayerView?, position: Int) {
-        holder?.bind(items[position], editor, teams, position)
+    override fun onBindViewHolder(holder: SelectPlayerView, position: Int) {
+        holder.bind(items[position], editor, teams, entries(), position)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onPlayerEdited(position: Int, teamIndex: Int, playerName: String) {
+    override fun onPlayerEdited(position: Int, teamIndex: Int, playerName: String, playerId: Long) {
         val viewModel = items[position]
+        viewModel.playerId.set(playerId)
         viewModel.name.set(playerName)
         viewModel.teamIndex.set(teamIndex)
         tryNotifyItemChanged(position)
     }
 
-    override fun onPlayerAdded(playerName: String) {
-        val viewModel = PlayerViewModel(items.size + 1, playerName)
+    override fun onPlayerAdded(playerName: String, playerId: Long) {
+        val viewModel = PlayerViewModel(playerId, items.size + 1, playerName)
         items.add(viewModel)
         updateTeamCount()
         tryNotifyItemInserted(itemCount)
@@ -46,6 +47,10 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
 
     fun playersMap(): Array<PlayerViewModel> {
         return items.toTypedArray()
+    }
+
+    fun entries(): List<Long> {
+        return items.map { it.playerId.get() }
     }
 
     @Synchronized
