@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/selected"
-        android:state_selected="true"
+        android:state_checked="true"
         android:drawable="@drawable/ic_mic_on" />
 
     <item

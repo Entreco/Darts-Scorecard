@@ -33,6 +33,26 @@ class SoundMapperTest {
     }
 
     @Test
+    fun `it should map FxStart`() {
+        assertEquals(R.raw.dsc_proletsplaydarts, subject.toRaw(FxStart()))
+    }
+
+    @Test
+    fun `it should map FxLeg`() {
+        assertEquals(R.raw.dsc_proleg, subject.toRaw(FxLeg()))
+    }
+
+    @Test
+    fun `it should map FxSet`() {
+        assertEquals(R.raw.dsc_proset, subject.toRaw(FxSet()))
+    }
+
+    @Test
+    fun `it should map FxMatch`() {
+        assertEquals(R.raw.dsc_progameshot, subject.toRaw(FxMatch()))
+    }
+
+    @Test
     fun `it should map others`() {
         assertEquals(R.raw.dsc_pro2, subject.toRaw(Fx02()))
         assertEquals(R.raw.dsc_pro3, subject.toRaw(Fx03()))

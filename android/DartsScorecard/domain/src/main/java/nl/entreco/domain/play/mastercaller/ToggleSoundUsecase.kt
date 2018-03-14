@@ -17,4 +17,8 @@ class ToggleSoundUsecase @Inject constructor(private val audioPrefRepository: Au
             audioPrefRepository.setMasterCallerEnabled(toggled)
         }, {})
     }
+
+    fun isEnabled(): Boolean {
+        return audioPrefRepository.isMasterCallerEnabled()
+    }
 }

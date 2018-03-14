@@ -1,6 +1,9 @@
 package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
+import android.view.Menu
+import android.view.MenuItem
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
@@ -13,6 +16,7 @@ import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.*
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.MasterCallerRequest
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
@@ -33,6 +37,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val gameListeners: Play01Listeners,
                                           private val masterCaller: MasterCaller,
                                           private val dialogHelper: DialogHelper,
+                                          private val toggleSoundUsecase: ToggleSoundUsecase,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -162,5 +167,14 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     fun stop() {
         masterCaller.stop()
+    }
+
+    fun initToggleMenuItem(menu: Menu?){
+        menu?.findItem(R.id.menu_sound_settings)?.isChecked = toggleSoundUsecase.isEnabled()
+    }
+
+    fun toggleMasterCaller(item: MenuItem) {
+        item.isChecked = !item.isChecked
+        toggleSoundUsecase.toggle()
     }
 }

@@ -9,6 +9,7 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
@@ -27,6 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ViewModelRevancheTest {
 
     @Mock private lateinit var mockPlay01Usecamse: Play01Usecase
+    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -54,7 +56,7 @@ class Play01ViewModelRevancheTest {
     }
 
     private fun givenFullyLoadedSubject() {
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))

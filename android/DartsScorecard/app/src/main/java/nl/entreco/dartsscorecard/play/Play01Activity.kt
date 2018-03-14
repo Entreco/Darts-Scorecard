@@ -70,11 +70,19 @@ class Play01Activity : ViewModelActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        viewModel.initToggleMenuItem(menu)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)
+            }
+            R.id.menu_sound_settings -> {
+                viewModel.toggleMasterCaller(item)
             }
         }
         return super.onOptionsItemSelected(item)

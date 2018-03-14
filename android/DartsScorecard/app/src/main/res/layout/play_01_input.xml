@@ -245,15 +245,6 @@
                 android:checked="@={viewModel.toggle}"
                 android:padding="16dp" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/def"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:src="@drawable/ic_mic"
-                android:onClick="@{(v) -> viewModel.toggleMasterCaller(v)}"/>
-
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sound_settings"
+        android:title="@string/menu_sound_swap"
+        android:icon="@drawable/ic_mic"
+        android:checkable="true" />
 
     <item
         android:id="@+id/menu_play_settings"

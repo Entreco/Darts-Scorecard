@@ -6,6 +6,7 @@ import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
@@ -28,6 +29,7 @@ class Play01ViewModelUndoTest {
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockResponse: Play01Response
+    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>
     @Mock private lateinit var mockLoaders: GameLoadedNotifier<Play01Response>
 
@@ -70,7 +72,7 @@ class Play01ViewModelUndoTest {
         whenever(mockGame.id).thenReturn(5)
         whenever(mockResponse.game).thenReturn(mockGame)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

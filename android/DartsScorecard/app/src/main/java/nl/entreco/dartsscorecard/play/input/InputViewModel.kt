@@ -4,7 +4,6 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
@@ -20,14 +19,12 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 19/11/2017.
  */
 class InputViewModel @Inject constructor(
-        private val toggleSoundUsecase: ToggleSoundUsecase,
         private val analytics: Analytics,
         private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
 
@@ -88,11 +85,6 @@ class InputViewModel @Inject constructor(
         if (oldValue.length < 3) {
             scoredTxt.set(oldValue.plus(score.toString()))
         }
-    }
-
-    fun toggleMasterCaller(view: View){
-        view.isSelected = !view.isSelected
-        toggleSoundUsecase.toggle()
     }
 
     fun onPressedKey(key: Int, listener: InputListener): Boolean {
