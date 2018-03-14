@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.mastercaller
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
@@ -10,12 +10,12 @@ class MasterCallerRequestTest{
 
     @Test
     fun `it should map to 'Fx01' when scoring 1`() {
-        assertEquals(Fx01(), req(1))
+        assertTrue( req(1) is Fx01)
     }
 
     @Test
     fun `it should map to 'None' for unknown scores`() {
-        assertEquals(None(), req(181))
+        assertTrue(req(181) is None)
     }
 
     private fun req(scored: Int) = MasterCallerRequest(scored).toSound()
