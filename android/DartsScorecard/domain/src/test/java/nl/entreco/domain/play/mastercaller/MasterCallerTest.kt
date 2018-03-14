@@ -28,7 +28,7 @@ class MasterCallerTest {
     fun `it should play sound using sound repo`() {
         givenSubject()
         whenPlayingSound(1)
-        thenRepositoryIsUsed(Fx01())
+        thenRepositoryIsUsed()
     }
 
     @Test
