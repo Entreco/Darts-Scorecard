@@ -108,13 +108,14 @@
                     app:total="@{viewModel.feature.total}"
                     app:viewModel="@{donateViewModel}" />
 
-                <TextView
-                    style="@style/Beta.Explain"
+                <include
+                    layout="@layout/include_beta_implementation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/description"
-                    android:text="@{viewModel.feature.updates}"
-                    android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}"
+                    app:feature="@{viewModel.feature}" />
+
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
 

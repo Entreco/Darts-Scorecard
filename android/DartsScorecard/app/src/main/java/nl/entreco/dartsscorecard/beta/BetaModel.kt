@@ -19,12 +19,16 @@ class BetaModel(val feature: Feature) {
     val goal = ObservableField<String>("$count / $total")
     val progress = ObservableFloat(((feature.votes.toFloat() / feature.required.toFloat())))
     val image = ObservableField<String>(feature.image)
-    val updates = ObservableField<String>(feature.updates)
+    val remarks = ObservableField<String>(formatHtml(feature.remarks))
 
     private fun format(value: Int): String {
         return when {
             value < 1000 -> "$value"
             else -> "${value / 1000}k"
         }
+    }
+
+    private fun formatHtml(remarks: String): String {
+        return remarks
     }
 }

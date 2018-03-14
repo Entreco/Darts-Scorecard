@@ -25,8 +25,8 @@ class FeatureApiDataTest {
     }
 
     @Test
-    fun `progress is empty initially`() {
-        assertEquals("", subject.progress)
+    fun `remarks is empty initially`() {
+        assertEquals("", subject.remarks)
     }
 
     @Test
