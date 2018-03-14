@@ -275,6 +275,7 @@
             android:elevation="120dp"
             android:orientation="vertical"
             android:padding="@dimen/def"
+            fab:visibility="gone"
             app:ask4finish="@{viewModel.finalTurn != null}">
 
             <TextView

@@ -5,12 +5,15 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -27,12 +30,15 @@ class Play01ViewModelUndoTest {
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockResponse: Play01Response
+    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
+    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>
     @Mock private lateinit var mockLoaders: GameLoadedNotifier<Play01Response>
 
     @Mock private lateinit var mockPlay01Usecase: Play01Usecase
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
+    @Mock private lateinit var mockMasterCaller: MasterCaller
     @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     private lateinit var subject: Play01ViewModel
@@ -68,7 +74,7 @@ class Play01ViewModelUndoTest {
         whenever(mockGame.id).thenReturn(5)
         whenever(mockResponse.game).thenReturn(mockGame)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockDialogHelper, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

@@ -60,7 +60,13 @@ class BetaBindingsTest {
         val message = "Some html message"
         BetaBindings.setTextWithTags(mockTextView, message)
         verify(mockTextView).text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
+    }
 
+    @Test
+    fun `it should do nothing when text is null`() {
+        val message = null
+        BetaBindings.setTextWithTags(mockTextView, message)
+        verify(mockTextView, never()).text = any()
     }
 
     private fun setupContextMocking() {

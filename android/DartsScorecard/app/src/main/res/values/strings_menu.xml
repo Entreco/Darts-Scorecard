@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_title_swap">Swap Theme</string>
+    <string name="menu_sound_swap">Master Caller</string>
     <string name="menu_title_done">Done</string>
     <string name="menu_title_settings">Settings</string>
 </resources>
