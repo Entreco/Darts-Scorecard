@@ -24,7 +24,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
+class InputViewModel @Inject constructor(
+        private val analytics: Analytics,
+        private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())

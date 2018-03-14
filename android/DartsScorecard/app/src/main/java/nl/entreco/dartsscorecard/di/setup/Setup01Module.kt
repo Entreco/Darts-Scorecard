@@ -6,8 +6,8 @@ import dagger.Provides
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
-import nl.entreco.data.prefs.SharedPreferenceRepo
-import nl.entreco.domain.repository.PreferenceRepository
+import nl.entreco.data.prefs.SharedSetupPrefRepo
+import nl.entreco.domain.repository.SetupPrefRepository
 
 /**
  * Created by Entreco on 20/12/2017.
@@ -32,7 +32,7 @@ class Setup01Module(activity: Setup01Activity) {
 
     @Provides
     @Setup01Scope
-    fun providePreferenceRepo(): PreferenceRepository {
-        return SharedPreferenceRepo(prefs)
+    fun providePreferenceRepo(): SetupPrefRepository {
+        return SharedSetupPrefRepo(prefs)
     }
 }

@@ -20,8 +20,8 @@ internal class FeatureApiData {
     @PropertyName("title")
     val title: String = ""
 
-    @PropertyName("progress")
-    val progress: String? = ""
+    @PropertyName("remarks")
+    val remarks: String? = ""
 
     @PropertyName("goal")
     val goal: Int = 0

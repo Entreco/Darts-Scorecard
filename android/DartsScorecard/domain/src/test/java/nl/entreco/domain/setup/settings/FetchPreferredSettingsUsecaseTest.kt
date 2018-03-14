@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteDatabaseLockedException
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.repository.PreferenceRepository
+import nl.entreco.domain.repository.SetupPrefRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class FetchPreferredSettingsUsecaseTest {
 
     @Mock private lateinit var mockDone: (FetchSettingsResponse) -> Unit
-    @Mock private lateinit var mockPrefRepo: PreferenceRepository
+    @Mock private lateinit var mockPrefRepo: SetupPrefRepository
     private lateinit var subject: FetchPreferredSettingsUsecase
     private val responseCaptor = argumentCaptor<FetchSettingsResponse>()
 

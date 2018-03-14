@@ -1,6 +1,9 @@
 package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
+import android.view.Menu
+import android.view.MenuItem
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
@@ -11,6 +14,9 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.*
+import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.MasterCallerRequest
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
@@ -20,6 +26,7 @@ import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
@@ -29,7 +36,10 @@ import javax.inject.Inject
 class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase,
                                           private val revancheUsecase: RevancheUsecase,
                                           private val gameListeners: Play01Listeners,
+                                          private val masterCaller: MasterCaller,
                                           private val dialogHelper: DialogHelper,
+                                          private val toggleSoundUsecase: ToggleSoundUsecase,
+                                          private val audioPrefRepository: AudioPrefRepository,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -119,6 +129,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
+        notifyMasterCaller(next, turn)
     }
 
     private fun storeTurn(turn: Turn, by: Player) {
@@ -143,5 +154,29 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private fun notifyListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         gameListeners.onTurnSubmitted(next, turn, by, scores)
+    }
+
+    private fun notifyMasterCaller(next: Next, turn: Turn){
+        when(next.state){
+            State.START -> masterCaller.play(MasterCallerRequest(start = true))
+            State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
+            State.SET -> masterCaller.play(MasterCallerRequest(set = true))
+            State.MATCH -> masterCaller.play(MasterCallerRequest(match = true))
+            State.ERR_BUST -> masterCaller.play(MasterCallerRequest(0))
+            else -> masterCaller.play(MasterCallerRequest(turn.total()))
+        }
+    }
+
+    fun stop() {
+        masterCaller.stop()
+    }
+
+    fun initToggleMenuItem(menu: Menu?){
+        menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
+    }
+
+    fun toggleMasterCaller(item: MenuItem) {
+        item.isChecked = !item.isChecked
+        toggleSoundUsecase.toggle()
     }
 }
