@@ -11,6 +11,7 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.*
+import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase,
                                           private val revancheUsecase: RevancheUsecase,
                                           private val gameListeners: Play01Listeners,
+                                          private val masterCaller: MasterCaller,
                                           private val dialogHelper: DialogHelper,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 

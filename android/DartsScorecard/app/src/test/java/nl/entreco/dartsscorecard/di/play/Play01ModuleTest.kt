@@ -25,4 +25,9 @@ class Play01ModuleTest {
     fun `it should provide AlertDialogBuilder`() {
         Play01Module().provideAlertDialogBuilder(mockContext)
     }
+
+    @Test
+    fun `it should provide SoundRepository`() {
+        assertNotNull(Play01Module().provideSoundRepository(mockContext))
+    }
 }
