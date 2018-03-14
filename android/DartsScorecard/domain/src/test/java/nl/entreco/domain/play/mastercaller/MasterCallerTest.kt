@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.mastercaller
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.Logger
 import nl.entreco.domain.common.executors.TestBackground
@@ -49,8 +50,8 @@ class MasterCallerTest {
         subject.stop()
     }
 
-    private fun thenRepositoryIsUsed(sound: Sound) {
-        verify(mockSoundRepository).play(sound)
+    private fun thenRepositoryIsUsed() {
+        verify(mockSoundRepository).play(any())
     }
 
     private fun thenRepositoryIsReleased() {

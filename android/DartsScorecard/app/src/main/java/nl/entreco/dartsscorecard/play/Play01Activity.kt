@@ -48,8 +48,8 @@ class Play01Activity : ViewModelActivity() {
         resumeGame()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         viewModel.stop()
     }
 
