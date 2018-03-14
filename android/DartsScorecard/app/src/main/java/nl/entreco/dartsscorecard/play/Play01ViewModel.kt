@@ -26,6 +26,7 @@ import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
@@ -38,6 +39,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val masterCaller: MasterCaller,
                                           private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
+                                          private val audioPrefRepository: AudioPrefRepository,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -170,7 +172,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     fun initToggleMenuItem(menu: Menu?){
-        menu?.findItem(R.id.menu_sound_settings)?.isChecked = toggleSoundUsecase.isEnabled()
+        menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
     }
 
     fun toggleMasterCaller(item: MenuItem) {

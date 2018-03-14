@@ -20,6 +20,7 @@ import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -35,6 +36,7 @@ class Play01ViewModelMasterCallerTest{
 
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
+    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -94,7 +96,7 @@ class Play01ViewModelMasterCallerTest{
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 
@@ -116,7 +118,7 @@ class Play01ViewModelMasterCallerTest{
     }
 
     private fun whenInitializingToggle(enabled: Boolean) {
-        whenever(mockToggleSoundUsecase.isEnabled()).thenReturn(enabled)
+        whenever(mockAudioPrefs.isMasterCallerEnabled()).thenReturn(enabled)
         whenever(mockMenu.findItem(R.id.menu_sound_settings)).thenReturn(mockMenuItem)
         subject.initToggleMenuItem(mockMenu)
     }

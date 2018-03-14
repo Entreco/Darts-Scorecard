@@ -10,15 +10,10 @@ import javax.inject.Inject
  * Created by entreco on 14/03/2018.
  */
 class ToggleSoundUsecase @Inject constructor(private val audioPrefRepository: AudioPrefRepository,bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
-
     fun toggle(){
         onBackground({
             val toggled = !audioPrefRepository.isMasterCallerEnabled()
             audioPrefRepository.setMasterCallerEnabled(toggled)
         }, {})
-    }
-
-    fun isEnabled(): Boolean {
-        return audioPrefRepository.isMasterCallerEnabled()
     }
 }

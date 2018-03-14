@@ -16,7 +16,7 @@ class SoundMapper {
             is FxStart -> R.raw.dsc_proletsplaydarts
             is FxLeg -> R.raw.dsc_proleg
             is FxSet -> R.raw.dsc_proset
-            is FxMatch -> R.raw.dsc_proletsplaydarts
+            is FxMatch -> R.raw.dsc_progameshot
             is Fx00 -> R.raw.dsc_pro0
             is Fx01 -> R.raw.dsc_pro1
             is Fx02 -> R.raw.dsc_pro2

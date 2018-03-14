@@ -15,6 +15,7 @@ import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,6 +30,7 @@ class Play01ViewModelRevancheTest {
 
     @Mock private lateinit var mockPlay01Usecamse: Play01Usecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
+    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -56,7 +58,7 @@ class Play01ViewModelRevancheTest {
     }
 
     private fun givenFullyLoadedSubject() {
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))

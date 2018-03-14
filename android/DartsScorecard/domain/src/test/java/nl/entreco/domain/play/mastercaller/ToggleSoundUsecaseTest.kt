@@ -39,13 +39,6 @@ class ToggleSoundUsecaseTest {
         thenSoundIs(true)
     }
 
-    @Test
-    fun `it should return current toggle state`() {
-        givenSubject(true)
-        whenIsEnabled()
-        thenPrefsIsChecked()
-    }
-
     private fun givenSubject(enabled: Boolean) {
         whenever(mockAudioPrefs.isMasterCallerEnabled()).thenReturn(enabled)
         subject = ToggleSoundUsecase(mockAudioPrefs, bg, fg)
@@ -55,17 +48,8 @@ class ToggleSoundUsecaseTest {
         subject.toggle()
     }
 
-    private fun whenIsEnabled() {
-        subject.isEnabled()
-    }
-
     private fun thenSoundIs(expected: Boolean) {
         verify(mockAudioPrefs).setMasterCallerEnabled(toggleCaptor.capture())
         assertEquals(expected, toggleCaptor.lastValue)
     }
-
-    private fun thenPrefsIsChecked() {
-        verify(mockAudioPrefs).isMasterCallerEnabled()
-    }
-
 }
