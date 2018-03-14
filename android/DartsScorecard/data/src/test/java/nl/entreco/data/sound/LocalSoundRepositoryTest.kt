@@ -10,6 +10,7 @@ import nl.entreco.data.R
 import nl.entreco.domain.play.mastercaller.Fx00
 import nl.entreco.domain.play.mastercaller.Fx01
 import nl.entreco.domain.play.mastercaller.Sound
+import nl.entreco.domain.repository.AudioPrefRepository
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +27,7 @@ class LocalSoundRepositoryTest {
     private val fx0 = Fx00()
     private val fx1 = Fx01()
 
+    @Mock private lateinit var mockAudioRepo: AudioPrefRepository
     @Mock private lateinit var mockSoundPool: SoundPool
     @Mock private lateinit var mockContext: Context
     private lateinit var subject: LocalSoundRepository
@@ -82,8 +84,17 @@ class LocalSoundRepositoryTest {
         thenSoundIsNotPlayed(fx0)
     }
 
-    private fun givenSubject() {
-        subject = LocalSoundRepository(mockContext, mockSoundPool, SoundMapper())
+    @Test
+    fun `it should not play sound when audio disabled`() {
+        givenSubject(false)
+        whenPlaying(fx0)
+        whenDoneLoading(fx0)
+        thenSoundIsNotPlayed(fx0)
+    }
+
+    private fun givenSubject(enabled: Boolean = true) {
+        whenever(mockAudioRepo.isMasterCallerEnabled()).thenReturn(enabled)
+        subject = LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, SoundMapper())
     }
 
     private fun givenLoadedSounds(vararg sounds: Sound) {

@@ -6,6 +6,10 @@ package nl.entreco.domain.play.mastercaller
 sealed class Sound
 class FxTest : Sound()
 class None : Sound()
+class FxStart : Sound()
+class FxLeg : Sound()
+class FxSet : Sound()
+class FxMatch : Sound()
 class Fx00 : Sound()
 class Fx01 : Sound()
 class Fx02 : Sound()

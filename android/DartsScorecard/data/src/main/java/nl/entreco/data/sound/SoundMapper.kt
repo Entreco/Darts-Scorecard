@@ -13,6 +13,10 @@ class SoundMapper {
     fun toRaw(sound: Sound): Int {
         return when (sound) {
             is None -> 0
+            is FxStart -> R.raw.dsc_proletsplaydarts
+            is FxLeg -> R.raw.dsc_proleg
+            is FxSet -> R.raw.dsc_proset
+            is FxMatch -> R.raw.dsc_proletsplaydarts
             is Fx00 -> R.raw.dsc_pro0
             is Fx01 -> R.raw.dsc_pro1
             is Fx02 -> R.raw.dsc_pro2

@@ -206,5 +206,5 @@ class MasterCallerRequestTest{
         assertTrue(req(181) is None)
     }
 
-    private fun req(scored: Int) = MasterCallerRequest(scored).toSound()
+    private fun req(scored: Int) = MasterCallerRequest(scored = scored).toSound()
 }

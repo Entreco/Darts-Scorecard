@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.input
 
+import android.view.View
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
@@ -14,6 +15,7 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,8 +29,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class InputViewModelTest {
 
+    @Mock private lateinit var mockView: View
     @Mock private lateinit var logger: Logger
     @Mock private lateinit var analytics: Analytics
+    @Mock private lateinit var mockToggleUsecase: ToggleSoundUsecase
     @InjectMocks private lateinit var subject: InputViewModel
 
     @Mock private lateinit var mockAnimator: Play01Animator
@@ -67,6 +71,12 @@ class InputViewModelTest {
     @Test
     fun `it should have empty specialEvent initially`() {
         assertEquals(null, subject.special.get())
+    }
+
+    @Test
+    fun `it should toggle sound`() {
+        subject.toggleMasterCaller(mockView)
+        verify(mockToggleUsecase).toggle()
     }
 
     @Test

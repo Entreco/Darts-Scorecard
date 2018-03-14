@@ -3,6 +3,7 @@ package nl.entreco.data.sound
 import android.content.Context
 import android.media.SoundPool
 import nl.entreco.domain.play.mastercaller.Sound
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.SoundRepository
 import java.util.*
 
@@ -11,6 +12,7 @@ import java.util.*
  */
 class LocalSoundRepository(private val context: Context,
                            private val soundPool: SoundPool,
+                           private val prefs: AudioPrefRepository,
                            private val mapper: SoundMapper) : SoundRepository {
 
     private val priorityNormal = 1
@@ -27,14 +29,15 @@ class LocalSoundRepository(private val context: Context,
     }
 
     override fun play(sound: Sound) {
+        if(!prefs.isMasterCallerEnabled()) return
+
         if (ready.containsKey(sound)) {
             ready[sound]?.let { soundID ->
                 playSoundWithId(soundID)
             }
         } else {
             val res = mapper.toRaw(sound)
-            val soundID = soundPool.load(context, res, priorityNormal)
-            queueSoundWithId(soundID, sound)
+            queueSoundWithId(soundPool.load(context, res, priorityNormal), sound)
         }
     }
 
@@ -42,8 +45,7 @@ class LocalSoundRepository(private val context: Context,
         try {
             soundPool.setOnLoadCompleteListener(null)
             soundPool.release()
-        } catch (ignore: Throwable) {
-        }
+        } catch (ignore: Throwable) { }
     }
 
     internal fun storeSound(soundId: Int) {

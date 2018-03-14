@@ -122,7 +122,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
-        notifyMasterCaller(turn.total())
+        notifyMasterCaller(next, turn)
     }
 
     private fun storeTurn(turn: Turn, by: Player) {
@@ -149,8 +149,15 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         gameListeners.onTurnSubmitted(next, turn, by, scores)
     }
 
-    private fun notifyMasterCaller(scored: Int){
-        masterCaller.play(MasterCallerRequest(scored))
+    private fun notifyMasterCaller(next: Next, turn: Turn){
+        when(next.state){
+            State.START -> masterCaller.play(MasterCallerRequest(start = true))
+            State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
+            State.SET -> masterCaller.play(MasterCallerRequest(set = true))
+            State.MATCH -> masterCaller.play(MasterCallerRequest(match = true))
+            State.ERR_BUST -> masterCaller.play(MasterCallerRequest(0))
+            else -> masterCaller.play(MasterCallerRequest(turn.total()))
+        }
     }
 
     fun stop() {

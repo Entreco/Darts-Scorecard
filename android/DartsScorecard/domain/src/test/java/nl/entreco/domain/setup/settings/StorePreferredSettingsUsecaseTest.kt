@@ -1,7 +1,7 @@
 package nl.entreco.domain.setup.settings
 
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.repository.PreferenceRepository
+import nl.entreco.domain.repository.SetupPrefRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class StorePreferredSettingsUsecaseTest{
-    @Mock private lateinit var mockPrefsRepo : PreferenceRepository
+    @Mock private lateinit var mockPrefsRepo : SetupPrefRepository
     private lateinit var subject : StorePreferredSettingsUsecase
     private val givenRequest = StoreSettingsRequest(11, 12, 13, 14, 15)
 

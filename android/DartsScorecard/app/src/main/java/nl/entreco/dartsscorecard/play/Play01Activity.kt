@@ -21,7 +21,7 @@ import nl.entreco.domain.setup.game.CreateGameResponse
 
 class Play01Activity : ViewModelActivity() {
 
-    private val component: Play01Component by componentProvider { it.plus(Play01Module()) }
+    private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }

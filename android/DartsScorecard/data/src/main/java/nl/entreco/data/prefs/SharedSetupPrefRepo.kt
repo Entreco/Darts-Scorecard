@@ -1,14 +1,14 @@
 package nl.entreco.data.prefs
 
 import android.content.SharedPreferences
-import nl.entreco.domain.repository.PreferenceRepository
+import nl.entreco.domain.repository.SetupPrefRepository
 import nl.entreco.domain.setup.settings.FetchSettingsResponse
 import nl.entreco.domain.setup.settings.StoreSettingsRequest
 
 /**
  * Created by entreco on 04/01/2018.
  */
-class SharedPreferenceRepo(private val prefs: SharedPreferences) : PreferenceRepository {
+class SharedSetupPrefRepo(private val prefs: SharedPreferences) : SetupPrefRepository {
 
     companion object {
         const val PREF_SETS: String = "PREF_sets"
