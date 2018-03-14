@@ -10,14 +10,14 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.mastercaller.*
+import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.MasterCallerRequest
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.settings.ScoreSettings
-import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -49,7 +49,7 @@ class Play01ViewModelMasterCallerTest{
     fun `it should play sound when turn submitted`() {
         givenSubject()
         whenSubmittingTurn(Turn(Dart.DOUBLE_1))
-        thenMasterCallerSays(Fx01())
+        thenMasterCallerSays(2)
     }
 
     private fun givenSubject() {
@@ -79,13 +79,8 @@ class Play01ViewModelMasterCallerTest{
         subject.onTurnSubmitted(turn, Player("George Noble"))
     }
 
-    private fun thenMasterCallerSays(expected: Sound) {
+    private fun thenMasterCallerSays(expected: Int) {
         verify(mockMasterCaller).play(callerCaptor.capture())
-        val actual = callerCaptor.lastValue.toSound()
-        when(expected) {
-            is Fx00 -> assertTrue(actual is Fx00)
-            is Fx01 -> assertTrue(actual is Fx01)
-            else -> fail("expected $expected, but got $actual")
-        }
+        assertEquals(expected, callerCaptor.lastValue.scored)
     }
 }

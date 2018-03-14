@@ -23,11 +23,27 @@ class BetaModelTest {
 
     @Test
     fun `it should set progress`() {
-        assertEquals(0.05, subject.progress.get())
+        assertEquals(0.05F, subject.progress.get())
     }
 
     @Test
     fun `it should format remarks`() {
         assertEquals("<b>remarks</b>", subject.remarks.get())
+    }
+    @Test
+    fun `it should set votable`() {
+        assertEquals(true, subject.votable.get())
+    }
+    @Test
+    fun `it should set description`() {
+        assertEquals("description", subject.description.get())
+    }
+    @Test
+    fun `it should set goal`() {
+        assertEquals("500 / 10k", subject.goal.get())
+    }
+    @Test
+    fun `it should set image`() {
+        assertEquals("http://url.com", subject.image.get())
     }
 }

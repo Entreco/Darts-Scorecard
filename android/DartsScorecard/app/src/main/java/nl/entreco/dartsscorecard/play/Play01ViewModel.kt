@@ -150,7 +150,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     private fun notifyMasterCaller(scored: Int){
-        masterCaller.play(MasterCallerRequest(if(scored == 0) 0 else 1))
+        masterCaller.play(MasterCallerRequest(scored))
     }
 
     fun stop() {
