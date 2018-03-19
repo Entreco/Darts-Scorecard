@@ -24,4 +24,7 @@ interface PlayerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(player: PlayerTable): Long
+
+    @Delete
+    fun delete(table: PlayerTable)
 }

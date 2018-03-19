@@ -29,9 +29,18 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : Test
         return items.size
     }
 
+    fun playerIdAt(position: Int): Long{
+        return items[position].id
+    }
+
     fun setItems(profiles: List<Profile>) {
         items.clear()
         items.addAll(profiles)
         tryNotifyItemRangeChanged(0, profiles.size)
+    }
+
+    fun removeAt(position: Int) {
+        items.removeAt(position)
+        tryNotifyItemRemoved(position)
     }
 }

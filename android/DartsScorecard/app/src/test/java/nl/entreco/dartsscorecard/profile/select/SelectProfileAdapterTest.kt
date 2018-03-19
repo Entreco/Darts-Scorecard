@@ -37,12 +37,24 @@ class SelectProfileAdapterTest {
         thenItemCountIs(2)
     }
 
+    @Test
+    fun `it should remote item`() {
+        givenSubject()
+        whenSettingItems("one", "two")
+        whenRemovingItem(0)
+        thenItemCountIs(1)
+    }
+
     private fun givenSubject() {
         subject = SelectProfileAdapter(mockNavigator)
     }
 
     private fun whenSettingItems(vararg items: String) {
         subject.setItems(items.map { Profile(it, image = "image") })
+    }
+
+    private fun whenRemovingItem(position: Int) {
+        subject.removeAt(position)
     }
 
     private fun thenItemCountIs(expected: Int) {

@@ -88,6 +88,13 @@ class LocalPlayerRepositoryTest {
         thenPlayersAreRetrieved(3)
     }
 
+    @Test
+    fun `it should delete by id`() {
+        givenPlayerWith(2)
+        whenDeletingPlayer(2)
+        thenPlayerIsDeleted(2)
+    }
+
     private fun givenPlayerWith(name: String, double: Int) {
         val table = PlayerTable()
         table.name = name
@@ -108,6 +115,7 @@ class LocalPlayerRepositoryTest {
         val table = PlayerTable()
         table.name = "some name"
         table.fav = "1"
+        table.id = id
         whenever(mockPlayerDao.fetchById(id)).thenReturn(table)
         return table
     }
@@ -124,6 +132,10 @@ class LocalPlayerRepositoryTest {
         expectedPlayers = subject.fetchAll()
     }
 
+    private fun whenDeletingPlayer(id: Long) {
+        subject.deleteById(id)
+    }
+
     private fun thenPlayerIsNotNull() {
         assertNotNull(expectedPlayer)
     }
@@ -135,5 +147,10 @@ class LocalPlayerRepositoryTest {
     private fun thenPlayersAreRetrieved(numPlayers: Int) {
         assertNotNull(expectedPlayers)
         assertEquals(numPlayers, expectedPlayers?.size)
+    }
+
+    private fun thenPlayerIsDeleted(expected: Long) {
+        verify(mockPlayerDao).delete(playerCaptor.capture())
+        assertEquals(expected, playerCaptor.lastValue.id)
     }
 }
