@@ -2,7 +2,8 @@ package nl.entreco.dartsscorecard.profile.view
 
 import android.content.Intent
 import android.databinding.ObservableField
-import android.util.Log
+import android.databinding.ObservableInt
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.profile.fetch.FetchProfileRequest
 import nl.entreco.domain.profile.fetch.FetchProfileResponse
@@ -19,6 +20,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
                                            private val updateProfileUsecase: UpdateProfileUsecase) : BaseViewModel() {
 
     val profile = ObservableField<PlayerProfile>()
+    val errorMsg = ObservableInt()
 
     fun fetchProfile(playerIds: LongArray) {
         if (profile.get() == null) {
@@ -54,7 +56,6 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     }
 
     private fun onProfileFailed(): (Throwable) -> Unit = {
-        Log.d("FAIL", "onProfileFailed: $it")
+        errorMsg.set(R.string.err_unable_to_fetch_players)
     }
-
 }

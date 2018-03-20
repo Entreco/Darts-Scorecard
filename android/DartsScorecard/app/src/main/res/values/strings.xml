@@ -91,7 +91,7 @@
     <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
     <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>
-    <string name="err_unable_to_update_profiler">Unable to update profile.</string>
+    <string name="err_unable_to_update_profile">Unable to update profile.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
