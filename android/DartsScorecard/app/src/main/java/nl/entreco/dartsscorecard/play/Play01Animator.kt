@@ -1,8 +1,10 @@
 package nl.entreco.dartsscorecard.play
 
 import android.databinding.BindingAdapter
+import android.support.annotation.StringRes
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.view.*
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
@@ -74,6 +76,14 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                 loadingView.animate().alpha(0F)
                         .withEndAction { view.removeView(loadingView) }
                         .start()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("snack")
+        fun showSnack(view: View, @StringRes msg: Int){
+            if(msg > 0){
+                Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
             }
         }
 

@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import nl.entreco.dartsscorecard.R
+import kotlin.math.abs
+import kotlin.math.min
 
 /**
  * Created by entreco on 17/03/2018.
@@ -38,6 +40,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
         val deleteIconBottom = deleteIconTop + intrinsicHeight
 
         deleteIcon.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+        deleteIcon.alpha = min(255, abs(dX).toInt())
         deleteIcon.draw(canvas)
 
         super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)

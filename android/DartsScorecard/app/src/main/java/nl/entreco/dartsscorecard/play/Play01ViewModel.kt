@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
@@ -44,6 +45,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     val loading = ObservableBoolean(true)
     val finished = ObservableBoolean(false)
+    val errorMsg = ObservableInt()
     private lateinit var game: Game
     private lateinit var request: Play01Request
     private lateinit var teams: Array<Team>
@@ -63,7 +65,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                         it.onLoaded(response.teams, game.scores, response, null)
                     }
                 },
-                { err -> logger.e("err: $err") })
+                { err ->
+                    logger.e("err: $err")
+                    loading.set(false)
+                    errorMsg.set(R.string.err_unable_to_retrieve_game)
+                })
     }
 
     override fun onRevanche() {
@@ -80,7 +86,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                             it.onLoaded(response.teams, game.scores, playResponse, null)
                         }
                     },
-                    { err -> logger.e("err: $err") })
+                    { err ->
+                        logger.e("err: $err")
+                        loading.set(false)
+                        errorMsg.set(R.string.err_unable_to_revanche)
+                    })
         }
     }
 

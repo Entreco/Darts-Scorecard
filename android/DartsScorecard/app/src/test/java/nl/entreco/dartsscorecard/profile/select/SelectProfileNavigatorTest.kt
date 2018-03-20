@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.profile.select
 
 import android.view.View
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.profile.create.CreateProfileActivity
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,4 +26,9 @@ class SelectProfileNavigatorTest {
         verify(ProfileActivity).launch(mockActivity, mockView, longArrayOf(1))
     }
 
+    @Test(expected = NotAMockException::class)
+    fun onProfileCreate() {
+        subject = SelectProfileNavigator(mockActivity)
+        verify(CreateProfileActivity).launch(mockActivity, mockView)
+    }
 }

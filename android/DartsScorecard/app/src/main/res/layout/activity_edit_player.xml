@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/choose_player_name" />
 
-            <!--suppress AndroidUnknownAttribute -->
             <android.support.design.widget.TextInputLayout
                 style="@style/EditPlayer.Input"
                 android:layout_width="match_parent"
@@ -45,6 +44,7 @@
                 app:error="@{viewModel.errorMsg}"
                 app:errorEnabled="true">
 
+                <!--suppress AndroidUnknownAttribute -->
                 <android.support.design.widget.TextInputEditText
                     style="@style/EditPlayer.Edit"
                     android:layout_width="match_parent"

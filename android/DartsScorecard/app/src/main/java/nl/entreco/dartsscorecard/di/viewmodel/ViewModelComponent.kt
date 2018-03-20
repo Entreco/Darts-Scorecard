@@ -27,12 +27,12 @@ interface ViewModelComponent {
 
     // Where can this be used
     fun plus(module: LaunchModule): LaunchComponent
-
     fun plus(module: BetaModule): BetaComponent
     fun plus(module: Setup01Module): Setup01Component
     fun plus(module: EditPlayerModule): EditPlayerComponent
     fun plus(module: Play01Module): Play01Component
     fun plus(module: SelectProfileModule): SelectProfileComponent
+    fun plus(module: CreateProfileModule): CreateProfileComponent
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: EditPlayerNameModule): EditPlayerNameComponent
 }

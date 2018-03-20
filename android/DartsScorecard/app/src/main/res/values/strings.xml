@@ -18,6 +18,7 @@
     <string name="save">Save</string>
 
     <!-- Title -->
+    <string name="title_create_profile">Create Profile</string>
     <string name="title_select_profile">Select Profile</string>
     <string name="title_select_player">Select Player</string>
     <string name="title_edit_profile">Edit Profile</string>
@@ -86,11 +87,15 @@
     <string name="pdc_match">PDC World Cup - semi finals</string>
 
     <!-- Errors -->
+    <string name="err_player_was_deleted">Cannot view profile of Players that have been deleted.</string>
+    <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
+    <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>
     <string name="err_unable_to_update_profiler">Unable to update profile.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
+    <string name="err_invalid_player_name">Invalid player name</string>
     <string name="err_player_name_is_empty">Please type desired player name</string>
     <string name="err_no_players_yet">No Profiles yet. Play a Game, or create players using the + button</string>
     <string name="err_player_already_in_match">Players is already participating in this match</string>

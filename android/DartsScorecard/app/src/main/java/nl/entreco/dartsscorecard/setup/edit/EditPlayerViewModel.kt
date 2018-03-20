@@ -8,10 +8,7 @@ import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.setup.players.CreatePlayerRequest
-import nl.entreco.domain.setup.players.CreatePlayerResponse
-import nl.entreco.domain.setup.players.CreatePlayerUsecase
-import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
+import nl.entreco.domain.setup.players.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -117,6 +114,10 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun onCreateFailed(): (Throwable) -> Unit = {
-        errorMsg.set(R.string.err_unable_to_create_player)
+        when(it){
+            is PlayerAlreadyExistsException -> errorMsg.set(R.string.err_player_already_exists)
+            is InvalidPlayerNameException -> errorMsg.set(R.string.err_invalid_player_name)
+            else -> errorMsg.set(R.string.err_unable_to_create_player)
+        }
     }
 }

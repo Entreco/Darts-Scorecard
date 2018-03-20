@@ -31,6 +31,7 @@ class SelectProfileActivity : ViewModelActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivitySelectProfileBinding>(this, R.layout.activity_select_profile)
         binding.viewModel = viewModel
+        binding.navigator = navigator
         initToolbar(toolbar(binding), R.string.title_select_profile)
         initRecyclerView(binding)
     }
@@ -51,8 +52,8 @@ class SelectProfileActivity : ViewModelActivity() {
         val swipeToDeleteHelper = ItemTouchHelper(object : SwipeToDeleteCallback(binding.root.context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                adapter.removeAt(position)
                 viewModel.deletePlayerProfile(adapter.playerIdAt(position), adapter)
+                adapter.removeAt(position)
             }
         })
         swipeToDeleteHelper.attachToRecyclerView(recyclerView)
@@ -60,7 +61,7 @@ class SelectProfileActivity : ViewModelActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_VIEW && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_VIEW || requestCode == REQUEST_CODE_CREATE && resultCode == Activity.RESULT_OK) {
             viewModel.reload(adapter)
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -68,6 +69,7 @@ class SelectProfileActivity : ViewModelActivity() {
 
     companion object {
         const val REQUEST_CODE_VIEW = 1111
+        const val REQUEST_CODE_CREATE = 1112
         fun launch(context: Context) {
             val intent = Intent(context, SelectProfileActivity::class.java)
             context.startActivity(intent)
