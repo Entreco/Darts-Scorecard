@@ -29,9 +29,6 @@
 
         <include
             layout="@layout/play_01_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
         <TextView
@@ -60,7 +57,7 @@
             android:layout_margin="@dimen/def"
             android:tint="@color/white"
             android:onClick="@{(v) -> navigator.onCreateProfile(v)}"
-            android:transitionName="createProfile"
+            android:transitionName=""
             android:src="@drawable/ic_add_profile"
             android:layout_gravity="bottom|end"
             app:backgroundTint="?attr/colorEditProfile"

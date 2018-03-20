@@ -18,8 +18,13 @@ class EditPlayerNameActivityTest {
     val subject = spy(EditPlayerNameActivity())
 
     @Test
-    fun `should start EditPlayerNameActivity`() {
+    fun `should start EditPlayerNameActivity launch()`() {
         assertNotNull(EditPlayerNameActivity.launch(mockActivity, "pietje", "20"))
+    }
+
+    @Test
+    fun `should start EditPlayerNameActivity create`() {
+        assertNotNull(EditPlayerNameActivity.launch(mockActivity))
     }
 
 }

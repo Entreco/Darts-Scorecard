@@ -16,6 +16,7 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivitySelectProfileBinding
 import nl.entreco.dartsscorecard.di.profile.SelectProfileComponent
 import nl.entreco.dartsscorecard.di.profile.SelectProfileModule
+import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
 
 /**
  * Created by entreco on 04/03/2018.
@@ -61,8 +62,12 @@ class SelectProfileActivity : ViewModelActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_VIEW || requestCode == REQUEST_CODE_CREATE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_VIEW && resultCode == Activity.RESULT_OK) {
             viewModel.reload(adapter)
+        } else if(requestCode == REQUEST_CODE_CREATE && resultCode == Activity.RESULT_OK){
+            val name = data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!
+            val double = data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0)
+            viewModel.create(adapter, name, double)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

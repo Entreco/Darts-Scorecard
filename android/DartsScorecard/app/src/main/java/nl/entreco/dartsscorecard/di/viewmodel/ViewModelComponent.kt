@@ -32,7 +32,6 @@ interface ViewModelComponent {
     fun plus(module: EditPlayerModule): EditPlayerComponent
     fun plus(module: Play01Module): Play01Component
     fun plus(module: SelectProfileModule): SelectProfileComponent
-    fun plus(module: CreateProfileModule): CreateProfileComponent
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: EditPlayerNameModule): EditPlayerNameComponent
 }

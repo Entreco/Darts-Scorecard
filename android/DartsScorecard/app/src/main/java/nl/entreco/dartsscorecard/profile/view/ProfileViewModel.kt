@@ -23,7 +23,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     val errorMsg = ObservableInt()
 
     fun fetchProfile(playerIds: LongArray) {
-        if (profile.get() == null) {
+        if (profile.get() == null && playerIds.isNotEmpty()) {
             fetchProfileUsecase.exec(FetchProfileRequest(playerIds), onProfileSuccess(), onProfileFailed())
         }
     }
