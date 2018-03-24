@@ -24,6 +24,7 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
         binding.navigator = navigator
 
         container.addView(binding.root)
+        binding.executePendingBindings()
 
         return binding.root
     }

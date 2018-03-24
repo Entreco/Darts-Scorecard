@@ -19,6 +19,6 @@ class MatchStatTransformer : ViewPager.PageTransformer {
 
     private fun transform(page: View, position: Float) {
         val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(page)
-        MatchStatAnimator(binding).transform(position, page.width)
+        MatchStatAnimator(binding).transform(page, position)
     }
 }

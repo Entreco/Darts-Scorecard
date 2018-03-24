@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
+import android.os.Handler
 import android.support.annotation.StringRes
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.CoordinatorLayout
@@ -22,6 +23,7 @@ import kotlin.math.sqrt
  */
 class Play01Animator(binding: ActivityPlay01Binding) {
 
+    private val handler by lazy { Handler() }
     private val pager = binding.includeMain?.statPager!!
     private val teamSheet = binding.includeScore?.teamContainer!!
     private val inputSheet = binding.includeInput?.inputSheet!!
@@ -38,9 +40,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
-                val view = pager.getChildAt(position)
-                val statBinding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
-                animator.onPageSelected(statBinding)
+                setPage(position)
             }
         })
 
@@ -53,6 +53,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         })
 
         expand()
+    }
+
+    private fun setPage(position: Int) {
+        val view = pager.getChildAt(position)
+        val statBinding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
+        animator.onPageSelected(statBinding)
     }
 
     internal fun expand() {
