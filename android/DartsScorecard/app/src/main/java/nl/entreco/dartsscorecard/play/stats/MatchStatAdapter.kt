@@ -15,12 +15,12 @@ import javax.inject.Inject
  */
 class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigator) : PagerAdapter() {
 
-    private lateinit var items : List<TeamStatModel>
+    private val items: MutableList<TeamStatModel> = mutableListOf()
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = DataBindingUtil.inflate<WidgetListStatsBinding>(LayoutInflater.from(container.context), R.layout.widget_list_stats, container, false)
         binding.team0 = items[position]
-        binding.team1 = items[position]
+        binding.team1 = items[(position + 1) % items.size]
         binding.navigator = navigator
 
         container.addView(binding.root)
@@ -29,7 +29,7 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, view: Any) {
-        container.removeView( view as View)
+        container.removeView(view as View)
     }
 
 
@@ -42,7 +42,8 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
     }
 
     fun populate(stats: Map<Int, TeamStatModel>) {
-        items = stats.map { it.value }
+        items.clear()
+        items.addAll(stats.map { it.value })
         notifyDataSetChanged()
     }
 }

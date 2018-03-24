@@ -34,11 +34,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/match_stats" />
 
-            <android.support.v4.view.ViewPager
+            <nl.entreco.dartsscorecard.base.widget.WrapContentViewPager
                 android:id="@+id/statPager"
                 android:layout_below="@id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="200dp"
                 app:adapter="@{viewModel.adapter}"
                 app:stats="@{viewModel.teamStats}" />
 

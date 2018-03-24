@@ -21,7 +21,7 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     val hCo = ObservableField<String>(empty)
     val co = ObservableField<String>(empty)
     val breaks = ObservableField<String>(empty)
-    val image = ObservableField<String>(team.players[0].image)
+    val image = ObservableField<String>(team.imageUrl())
 
     init {
         if (stats.isNotEmpty()) {

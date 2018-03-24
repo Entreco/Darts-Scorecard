@@ -40,12 +40,6 @@ class Team(val players: Array<Player> = emptyArray()) {
         offset++
     }
 
-    override fun toString(): String {
-        return StringBuilder(firstPlayer().name).apply {
-            players.drop(1).forEach { append(" & ").append(it.name) }
-        }.toString()
-    }
-
     private fun firstPlayer(): Player {
         return if (players.isEmpty()) NoPlayer()
         else players[0]
@@ -57,5 +51,15 @@ class Team(val players: Array<Player> = emptyArray()) {
 
     fun contains(player: Player): Boolean {
         return players.contains(player)
+    }
+
+    fun imageUrl(): String? {
+        return players[0].image
+    }
+
+    override fun toString(): String {
+        return StringBuilder(firstPlayer().name).apply {
+            players.drop(1).forEach { append(" & ").append(it.name) }
+        }.toString()
     }
 }

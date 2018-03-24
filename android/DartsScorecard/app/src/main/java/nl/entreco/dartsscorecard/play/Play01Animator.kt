@@ -18,6 +18,7 @@ import kotlin.math.sqrt
  */
 class Play01Animator(binding: ActivityPlay01Binding) {
 
+    private val pager = binding.includeMain?.statPager!!
     private val teamSheet = binding.includeScore?.teamContainer!!
     private val inputSheet = binding.includeInput?.inputSheet!!
     private val behaviour = BottomSheetBehavior.from(inputSheet)

@@ -14,6 +14,7 @@ class MatchStatBinding {
         fun setupViewPager(view: ViewPager, stats: Map<Int, TeamStatModel>, adapter: MatchStatAdapter) {
             adapter.populate(stats)
             view.adapter = adapter
+            view.requestLayout()
         }
     }
 }

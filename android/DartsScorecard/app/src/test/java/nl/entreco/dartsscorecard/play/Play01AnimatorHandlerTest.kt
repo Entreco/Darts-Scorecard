@@ -31,7 +31,7 @@ class Play01AnimatorHandlerTest {
         whenever(mockAnimator.scaleY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.scaleX(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
-        subject = Play01Animator.Play01AnimatorHandler(view, view, view, view, view, view, view, view, view, view, view, view, view, view, view, view, view)
+        subject = Play01Animator.Play01AnimatorHandler(view, view, view, view, view)
     }
 
     @Test
