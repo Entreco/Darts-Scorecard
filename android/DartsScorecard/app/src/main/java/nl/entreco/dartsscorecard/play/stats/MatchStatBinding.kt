@@ -12,9 +12,9 @@ class MatchStatBinding {
         @JvmStatic
         @BindingAdapter("stats", "adapter")
         fun setupViewPager(view: ViewPager, stats: Map<Int, TeamStatModel>, adapter: MatchStatAdapter) {
+            view.setPageTransformer(false, MatchStatTransformer())
             adapter.populate(stats)
             view.adapter = adapter
-            view.requestLayout()
         }
     }
 }

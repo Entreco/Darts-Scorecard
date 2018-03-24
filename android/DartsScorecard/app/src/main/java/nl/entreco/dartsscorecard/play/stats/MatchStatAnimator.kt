@@ -11,19 +11,27 @@ import kotlin.math.max
 class MatchStatAnimator(binding: WidgetListStatsBinding) {
 
 
-    private lateinit var animator: InternalAnimator
+    private var animator: MatchStatAnimatorHandler
 
     init {
-        animator = InternalAnimator(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7)
+        animator = MatchStatAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7)
     }
 
-    class InternalAnimator(private val player1: View, private val player2: View,
-                           private val name1: View, private val name2: View, private val score: View,
-                           private val stat1: View, private val stat2: View, private val stat3: View,
-                           private val stat4: View, private val stat5: View, private val stat6: View,
-                           private val stat7: View) {
+    fun transform(position: Float, pageWidth: Int) {
+        animator.transform(position, pageWidth)
+    }
 
-        fun fly(slideOffset: Float) {
+    fun onSlide(slideOffset: Float) {
+        animator.slide(slideOffset)
+    }
+
+    internal class MatchStatAnimatorHandler(private val player1: View, private val player2: View,
+                                            private val name1: View, private val name2: View, private val score: View,
+                                            private val stat1: View, private val stat2: View, private val stat3: View,
+                                            private val stat4: View, private val stat5: View, private val stat6: View,
+                                            private val stat7: View) {
+
+        fun slide(slideOffset: Float) {
             // Fly In Players
             player1.animate().translationX(slideOffset * -player1.width / 3).setDuration(0).start()
             player2.animate().translationX(slideOffset * player2.width / 3).setDuration(0).start()
@@ -43,6 +51,12 @@ class MatchStatAnimator(binding: WidgetListStatsBinding) {
 
         private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
             anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
+        }
+
+        // [-1. 1] range of position
+        fun transform(position: Float, pageWidth: Int) {
+            player1.animate().translationX((-(1 - position) * 0.5 * pageWidth).toFloat()).setDuration(0).start()
+            player2.animate().translationX(((1 - position) * 0.5 * pageWidth).toFloat()).setDuration(0).start()
         }
 
     }
