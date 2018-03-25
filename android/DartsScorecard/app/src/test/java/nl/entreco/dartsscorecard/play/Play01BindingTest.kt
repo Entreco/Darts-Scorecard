@@ -17,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 25/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class Play01AnimatorTest {
+class Play01BindingTest {
 
     @Mock private lateinit var mockCoordinator: CoordinatorLayout
     @Mock private lateinit var mockAnimator: Play01Animator
@@ -27,29 +27,29 @@ class Play01AnimatorTest {
     @Test(expected = NullPointerException::class)
     fun `it should add loading view`() {
         whenever(mockCoordinator.context).thenReturn(mockContext)
-        Play01Animator.showLoading(mockCoordinator, true)
+        Play01Binding.showLoading(mockCoordinator, true)
         verify(mockCoordinator).addView(any())
     }
 
     @Test
     fun `it should collapse when finished`() {
-        Play01Animator.showGameFinished(mockCoordinator, true, mockAnimator)
+        Play01Binding.showGameFinished(mockCoordinator, true, mockAnimator)
         verify(mockAnimator).collapse()
     }
 
     @Test(expected = NullPointerException::class) // Indicating Snackbar is shown
     fun `it should show snack (with message)`() {
-        Play01Animator.showSnack(mockView, R.string.app_name)
+        Play01Binding.showSnack(mockView, R.string.app_name)
     }
 
     @Test
     fun `it should NOT show snack (empty)`() {
-        Play01Animator.showSnack(mockView, 0)
+        Play01Binding.showSnack(mockView, 0)
     }
 
     @Test
     fun `it should NOT collapse when not finished`() {
-        Play01Animator.showGameFinished(mockCoordinator, false, mockAnimator)
+        Play01Binding.showGameFinished(mockCoordinator, false, mockAnimator)
         verify(mockAnimator, never()).collapse()
     }
 }

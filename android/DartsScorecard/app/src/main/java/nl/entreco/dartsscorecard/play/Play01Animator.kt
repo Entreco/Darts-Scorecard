@@ -1,17 +1,14 @@
 package nl.entreco.dartsscorecard.play
 
-import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
-import android.os.Handler
-import android.support.annotation.StringRes
 import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewPager
-import android.view.*
+import android.view.View
+import android.view.ViewPropertyAnimator
+import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
-import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 import nl.entreco.dartsscorecard.play.stats.MatchStatAnimator
@@ -23,24 +20,16 @@ import kotlin.math.sqrt
  */
 class Play01Animator(binding: ActivityPlay01Binding) {
 
-    private val handler by lazy { Handler() }
     private val pager = binding.includeMain?.statPager!!
-    private val teamSheet = binding.includeScore?.teamContainer!!
     private val inputSheet = binding.includeInput?.inputSheet!!
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.includeScore?.scoreSheet!!, binding.includeInput?.fab!!, binding.includeMain?.mainSheet!!, binding.includeMain.version, binding.includeInput.inputResume)
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore?.scoreSheet!!, binding.includeInput?.fab!!, binding.includeMain?.mainSheet!!, binding.includeMain.version, binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
-
         calculateHeightForScoreView(binding)
-
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
+        pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
-                setPage(position)
+                animator.setPage(position)
             }
         })
 
@@ -55,12 +44,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         expand()
     }
 
-    private fun setPage(position: Int) {
-        val view = pager.getChildAt(position)
-        val statBinding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
-        animator.onPageSelected(statBinding)
-    }
-
     internal fun expand() {
         behaviour.state = BottomSheetBehavior.STATE_EXPANDED
     }
@@ -73,55 +56,15 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         binding.root.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 binding.root.viewTreeObserver.removeOnPreDrawListener(this)
-
-                val input = inputSheet.height
-                val header = binding.root.includeScore.header.height
-                val footer = binding.root.includeScore.footer.height
-                val toolbar = binding.root.includeToolbar.height
-                teamSheet.maxHeight = binding.root.height - toolbar - header - footer - input - 100
-                teamSheet.requestLayout()
+                animator.onPreDraw()
                 return true
             }
         })
     }
 
-    companion object {
-        @JvmStatic
-        @BindingAdapter("loading")
-        fun showLoading(view: ViewGroup, loading: Boolean) {
-            if (loading) {
-                val loadingView = LayoutInflater.from(view.context).inflate(R.layout.play_01_loading, view, false)
-                view.addView(loadingView)
-                loadingView.animate().alpha(1F).start()
-            } else {
-                val count = view.childCount - 1
-                val loadingView = view.getChildAt(count)
-                loadingView.animate().alpha(0F)
-                        .withEndAction { view.removeView(loadingView) }
-                        .start()
-            }
-        }
+    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View, private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View, private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
-        @JvmStatic
-        @BindingAdapter("snack")
-        fun showSnack(view: View, @StringRes msg: Int) {
-            if (msg > 0) {
-                Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("finished", "animator")
-        fun showGameFinished(view: CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
-            if (finished) {
-                animator?.collapse()
-            }
-        }
-    }
-
-    internal class Play01AnimatorHandler(private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View, private val inputResume: View) {
-
-        var statAnimator: MatchStatAnimator? = null
+        private var statAnimator: MatchStatAnimator? = null
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
@@ -147,10 +90,21 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
         }
 
-        fun onPageSelected(binding: WidgetListStatsBinding?) {
+        fun setPage(position: Int) {
+            val view = pager.getChildAt(position)
+            val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
             if (binding != null) {
                 statAnimator = MatchStatAnimator(binding)
             }
+        }
+
+        fun onPreDraw() {
+            val input = inputSheet.height
+            val header = scoreHeader.height
+            val footer = scoreFooter.height
+            val toolbar = toolbar.height
+            teamSheet.maxHeight = root.height - toolbar - header - footer - input - 100
+            teamSheet.requestLayout()
         }
     }
 }

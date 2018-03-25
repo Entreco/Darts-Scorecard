@@ -2,9 +2,7 @@ package nl.entreco.dartsscorecard.play.stats
 
 import android.view.View
 import android.view.ViewPropertyAnimator
-import android.view.animation.AccelerateDecelerateInterpolator
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
-import kotlin.math.abs
 import kotlin.math.max
 
 /**
@@ -57,8 +55,10 @@ class MatchStatAnimator(binding: WidgetListStatsBinding) {
             page.animate().translationX(-position * page.width).setDuration(0).start()
 
             stayPut(score)
-            animateFlip(player1, position)
-            animateFlip(player2, position)
+            animateRoll(player1, position, page.width)
+            animateRoll(player2, position, page.width)
+
+
             animateFly(name1, position, page.width / 2F)
             animateFly(name2, position, page.width / 2F)
 
@@ -80,40 +80,9 @@ class MatchStatAnimator(binding: WidgetListStatsBinding) {
             view.animate().translationX(position * factor).setDuration(0).start()
         }
 
-        private fun animateFlip(view: View, position: Float, delay: Long = 0) {
-            view.z = 10F
-            view.translationZ = 1 - abs(position) * 200
-            view.cameraDistance = 12000F
-            if (position < 0.5 && position > -0.5) {
-                view.visibility = View.VISIBLE
-            } else {
-                view.visibility = View.INVISIBLE
-            }
-
-            if (position <= 0) {
-                view.alpha = 1F
-                view.animate().rotationY(900 * (1 - Math.abs(position) + 1)).setStartDelay(delay).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
-            } else if (position <= 1) {    // (0,1]
-                view.alpha = 1F
-                view.animate().rotationY(-900 * (1 - Math.abs(position) + 1)).setStartDelay(delay).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(0).start()
-            }
-        }
-
-        private fun animateSpin(view: View, position: Float, delay: Long = 0) {
-            view.cameraDistance = 20000F
-            if (position < 0.5 && position > -0.5) {
-                view.visibility = View.VISIBLE
-            } else {
-                view.visibility = View.INVISIBLE
-            }
-
-            if (position <= 0) {
-                view.alpha = 1F
-                view.animate().rotationX((900 * (1 - Math.abs(position) + 1))).setStartDelay(delay).setDuration(0).start()
-            } else if (position <= 1) {    // (0,1]
-                view.alpha = 1F
-                view.animate().rotationX(-900 * (1 - Math.abs(position) + 1)).setStartDelay(delay).setDuration(0).start()
-            }
+        private fun animateRoll(view: View, position: Float, pageWidth: Int) {
+            val x = position * (view.width + ((pageWidth - 2*view.width)/3))
+            view.animate().translationX(x).setDuration(0).start()
         }
     }
 }
