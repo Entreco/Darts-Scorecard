@@ -23,18 +23,17 @@ class LocalImageRepository(private val context: Context, private val contentReso
             val originalUri = Uri.parse(imageUri)
             val output = File(context.filesDir, originalUri.lastPathSegment)
 
-            copyStream(originalUri, output)
-            resize(output, size)
+            copyInput(originalUri, output)
+            copyOutput(output, resize(output, size))
 
             val outputUri = Uri.fromFile(output)
             outputUri.toString()
         } catch (somethingWentWrong: Exception) {
             imageUri
         }
-
     }
 
-    private fun copyStream(originalUri: Uri?, output: File) {
+    private fun copyInput(originalUri: Uri?, output: File) {
         contentResolver.openInputStream(originalUri).use { input ->
             FileOutputStream(output).use { output ->
                 input.copyTo(output)
@@ -42,7 +41,14 @@ class LocalImageRepository(private val context: Context, private val contentReso
         }
     }
 
-    private fun resize(output: File, size: Float): Bitmap {
+    private fun copyOutput(output: File, bmp: Bitmap) {
+        output.outputStream().use {
+            bmp.compress(Bitmap.CompressFormat.JPEG, 75, it)
+            bmp.recycle()
+        }
+    }
+
+    private fun resize(output: File, size: Float) : Bitmap {
         val boundsOnly = BitmapFactory.Options()
         boundsOnly.inJustDecodeBounds = true
         BitmapFactory.decodeFile(output.absolutePath, boundsOnly)
@@ -57,10 +63,12 @@ class LocalImageRepository(private val context: Context, private val contentReso
         val src = Rect(0, 0, width, height)
         val dst = Rect(src.centerX() - shortSide, src.centerY() - shortSide, src.centerX() + shortSide, src.centerY() + shortSide)
         val tmp = Bitmap.createBitmap(bitmap, dst.left, dst.top, dst.width(), dst.height(), null, true)
-        val resized = Bitmap.createScaledBitmap(tmp, size.toInt(), size.toInt(), true)
 
+
+        val resized = Bitmap.createScaledBitmap(tmp, size.toInt(), size.toInt(), true)
         tmp.recycle()
         bitmap.recycle()
+
         return resized
     }
 

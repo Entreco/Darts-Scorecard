@@ -50,11 +50,11 @@ class SelectProfileActivity : ViewModelActivity() {
         val recyclerView = binding.profileRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.isDrawingCacheEnabled = true
         val swipeToDeleteHelper = ItemTouchHelper(object : SwipeToDeleteCallback(binding.root.context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                viewModel.deletePlayerProfile(adapter.playerIdAt(position), adapter)
-                adapter.removeAt(position)
+                viewModel.deletePlayerProfile(position, adapter)
             }
         })
         swipeToDeleteHelper.attachToRecyclerView(recyclerView)

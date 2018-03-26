@@ -77,8 +77,10 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
 
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
+        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(binding.root.context!!, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
 
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
