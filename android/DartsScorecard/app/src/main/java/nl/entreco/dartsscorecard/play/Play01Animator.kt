@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
-import nl.entreco.dartsscorecard.play.stats.MatchStatAnimator
+import nl.entreco.dartsscorecard.play.stats.MatchStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -64,7 +64,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
     internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View, private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View, private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
-        private var statAnimator: MatchStatAnimator? = null
+        private var statAnimator: MatchStatSlideAnimator? = null
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
@@ -94,7 +94,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             val view = pager.getChildAt(position)
             val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
             if (binding != null) {
-                statAnimator = MatchStatAnimator(binding)
+                statAnimator = MatchStatSlideAnimator(binding, pager.getChildAt(position - 1), pager.getChildAt(position + 1))
             }
         }
 

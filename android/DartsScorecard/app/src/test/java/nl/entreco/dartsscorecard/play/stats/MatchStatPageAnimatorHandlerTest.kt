@@ -12,15 +12,15 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * Created by entreco on 25/03/2018.
+ * Created by entreco on 27/03/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class MatchStatAnimatorTest {
+class MatchStatPageAnimatorHandlerTest {
 
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
-    private lateinit var subject: MatchStatAnimator.MatchStatAnimatorHandler
+    private lateinit var subject: MatchStatPageAnimator.MatchStatPageAnimatorHandler
 
     @Test
     fun transform() {
@@ -29,15 +29,8 @@ class MatchStatAnimatorTest {
         verify(mockView, atLeastOnce()).animate()
     }
 
-    @Test
-    fun onSlide() {
-        givenSubject()
-        whenSliding()
-        verify(mockView, atLeastOnce()).animate()
-    }
-
     private fun givenSubject() {
-        subject = MatchStatAnimator.MatchStatAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView)
+        subject = MatchStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, 100F)
     }
 
     private fun whenTransforming() {
@@ -45,17 +38,6 @@ class MatchStatAnimatorTest {
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
         subject.transform(mockView, 0F)
-    }
-
-    private fun whenSliding() {
-        whenever(mockAnimator.translationY(any())).thenReturn(mockAnimator)
-        whenever(mockAnimator.scaleY(any())).thenReturn(mockAnimator)
-        whenever(mockAnimator.scaleX(any())).thenReturn(mockAnimator)
-        whenever(mockAnimator.alpha(any())).thenReturn(mockAnimator)
-        whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
-        whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
-        whenever(mockView.animate()).thenReturn(mockAnimator)
-        subject.slide(0F)
     }
 
 }

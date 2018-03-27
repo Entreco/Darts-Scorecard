@@ -8,7 +8,10 @@ import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 /**
  * Created by entreco on 24/03/2018.
  */
-class MatchStatTransformer : ViewPager.PageTransformer {
+class MatchStatTransformer(size: Float) : ViewPager.PageTransformer {
+
+    private val animator = MatchStatPageAnimator(size)
+
     override fun transformPage(page: View, position: Float) {
         when {
             position < -1 -> page.alpha = 0F
@@ -19,6 +22,6 @@ class MatchStatTransformer : ViewPager.PageTransformer {
 
     private fun transform(page: View, position: Float) {
         val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(page)
-        MatchStatAnimator(binding).transform(page, position)
+        animator.transform(binding, page, position)
     }
 }
