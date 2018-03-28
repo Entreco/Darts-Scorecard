@@ -40,6 +40,7 @@ class Play01AnimatorHandlerTest {
 
     @Test
     fun onSlide() {
+        whenever(mockViewPager.getChildAt(any())).thenReturn(mockView)
         subject.onSlide(100F)
         verify(mockView, atLeastOnce()).animate()
     }
