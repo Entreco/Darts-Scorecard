@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.play.stats
 
 import android.view.View
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
-import kotlin.math.cos
 
 /**
  * Created by entreco on 27/03/2018.
@@ -62,7 +61,8 @@ class MatchStatPageAnimator(private val size: Float) {
         }
 
         private fun animateStat(view: View, position: Float, factor: Float) {
-            val x: Float = factor * cos((position - 1) * 0.5 * Math.PI).toFloat()
+//            val x: Float = factor * cos((position - 1) * 0.5 * Math.PI).toFloat()
+            val x: Float = factor * position
             view.animate().translationX(x).setDuration(0).start()
         }
     }
