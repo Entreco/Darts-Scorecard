@@ -3,7 +3,7 @@
 
     <style name="Launch" />
 
-    <style name="Launch.Btn" parent="Base.Widget.AppCompat.Button">
+    <style name="Launch.Btn" parent="@style/Widget.AppCompat.Button">
         <item name="android:background">@drawable/launch_btn</item>
         <item name="android:textColor">?attr/launchText</item>
         <item name="android:layout_marginTop">@dimen/small</item>

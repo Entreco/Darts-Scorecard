@@ -35,9 +35,6 @@
             android:name=".play.Play01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
-            android:name=".profile.create.CreateProfileActivity"
-            android:parentActivityName=".profile.select.SelectProfileActivity" />
-        <activity
             android:name=".profile.select.SelectProfileActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
