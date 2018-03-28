@@ -21,17 +21,17 @@ class FirebaseAnalyticsInstrumentationTest {
     }
 
     @Test
-    fun `it should track score`() {
+    fun itShouldTrackScore() {
         subject.trackScore("T20", 60)
     }
 
     @Test
-    fun `it should track achievement`() {
+    fun itShouldTrackAchievement() {
         subject.trackAchievement("achievement id")
     }
 
     @Test
-    fun `it should track view feature`() {
+    fun itShouldTrackViewFeature() {
         subject.trackViewFeature(Feature("ref", "ti", "d", "i", "u", 12, 2))
     }
 

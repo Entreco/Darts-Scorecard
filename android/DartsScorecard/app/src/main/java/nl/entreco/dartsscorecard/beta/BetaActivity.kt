@@ -82,8 +82,6 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
-
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
     }
 
     private fun toolbar(binding: ActivityBetaBinding): Toolbar {

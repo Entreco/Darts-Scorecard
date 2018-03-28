@@ -19,11 +19,11 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val appBar = binding.includeAppbar.profileAppbar
     private val expandedImage: View = binding.includeAppbar.includeHeaderView.image
     private val expandedName: TextView = binding.includeAppbar.includeHeaderView.profileHeaderName
-    private val collapsedName: TextView = binding.includeAppbar.includeHeaderViewTop.name
+    private val collapsedName: TextView = binding.includeAppbar.includeHeaderViewTop.nameTop
 
-    private val animator = ProfileAnimatorHandler(binding.includeAppbar.includeHeaderViewTop.image,
+    private val animator = ProfileAnimatorHandler(binding.includeAppbar.includeHeaderViewTop.imageTop,
             binding.includeAppbar.includeHeaderView.image,
-            binding.includeAppbar.includeHeaderViewTop.toolbarHeaderView,
+            binding.includeAppbar.includeHeaderViewTop.toolbarHeaderViewTop,
             binding.includeAppbar.includeHeaderView.toolbarHeaderView, binding.fab, expandedName,
             binding.includeAppbar.includeHeaderView.favDouble)
 

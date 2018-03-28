@@ -315,10 +315,6 @@ class DonateViewModelTest {
         verify(mockLifecycle).removeObserver(subject)
     }
 
-    private fun itShouldTrackViewingDonations() {
-        verify(mockAnalytics).trackViewFeature(any())
-    }
-
     private fun thenLoadingIs(expected: Boolean) {
         assertEquals(expected, subject.loading.get())
     }

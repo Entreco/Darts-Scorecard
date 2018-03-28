@@ -3,11 +3,8 @@
 
     <!-- General Darts -->
     <string name="first_to">First to %1$s</string>
-    <string name="individual">Submit Individual Darts</string>
-    <string name="all">Submit full score</string>
     <string name="single_mode">individual</string>
     <string name="all_mode">total</string>
-    <string name="random">Random</string>
     <string name="set">Set</string>
     <string name="leg">Leg</string>
     <string name="no_score">No Score</string>
@@ -15,7 +12,6 @@
     <string name="undo">Undo</string>
     <string name="tap_to_resume">Tap to Resume</string>
     <string name="resume">Resume</string>
-    <string name="save">Save</string>
 
     <!-- Title -->
     <string name="title_create_profile">Create Profile</string>
@@ -36,7 +32,6 @@
     <string name="number_votes">%1$s VOTES</string>
     <string name="donation_button">%1$s %2$s</string>
     <string name="donation_thanks">Thanks! You are AWESOME!</string>
-    <string name="voting_disclaimer">You can vote again (or make a donation)</string>
     <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p></string>
 
     <!-- Setup -->
@@ -44,7 +39,6 @@
     <string name="choose_player_name">Choose player name</string>
     <string name="choose_existing_player">Or choose existing players</string>
     <string name="team">Team</string>
-    <string name="add_player">Click to add player</string>
     <string name="select_x01_score">Select x01 score</string>
     <string name="start_score">Start score</string>
     <string name="number_of_sets">Number of sets</string>
@@ -66,7 +60,6 @@
     <!-- Profile -->
     <string name="favourite_double">Favourite double %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
-    <string name="edit_player_name">Update player name</string>
     <string name="edit_player_double">Favourite double</string>
 
     <!-- Input -->
@@ -91,7 +84,6 @@
     <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
     <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>
-    <string name="err_unable_to_update_profile">Unable to update profile.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>

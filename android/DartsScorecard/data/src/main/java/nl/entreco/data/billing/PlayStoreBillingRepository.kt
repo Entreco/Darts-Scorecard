@@ -15,7 +15,7 @@ import nl.entreco.domain.repository.BillingRepository
  */
 class PlayStoreBillingRepository(private val context: Context, private val service: BillingServiceConnection) : BillingRepository {
 
-    private val BILLING_RESPONSE_RESULT_OK = 0
+    private val BILLINGRESPONSERESULTOK = 0
 
     private val gson by lazy { GsonBuilder().create() }
     private val apiVersion = 5
@@ -41,7 +41,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
         val donations = FetchDonationsData()
         val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLING_RESPONSE_RESULT_OK) {
+        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
 
             bundle.getStringArrayList("DETAILS_LIST").mapNotNull { response ->
                 val donation = gson.fromJson(response, DonationApiData::class.java)
@@ -61,7 +61,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
             getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
         }
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLING_RESPONSE_RESULT_OK) {
+        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
             val intent: PendingIntent = bundle.getParcelable("BUY_INTENT")
 
             MakeDonationResponse(intent, payload)

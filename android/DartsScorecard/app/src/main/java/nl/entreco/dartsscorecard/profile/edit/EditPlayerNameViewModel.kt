@@ -17,9 +17,9 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
 import javax.inject.Inject
 
-private val ERR_EMPTY = 0
-private val ERR_DUPLICATE = 1
-private val NAME_OK = 2
+private const val ERR_EMPTY = 0
+private const val ERR_DUPLICATE = 1
+private const val NAME_OK = 2
 
 /**
  * Created by entreco on 02/03/2018.
