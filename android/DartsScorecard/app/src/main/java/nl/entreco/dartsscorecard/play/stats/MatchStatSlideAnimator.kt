@@ -12,7 +12,10 @@ import kotlin.math.max
 class MatchStatSlideAnimator(private val view: View, private val left: View?, private val right: View?) {
 
     private val binding by lazy { DataBindingUtil.getBinding<WidgetListStatsBinding>(view)!! }
-    private val animator by lazy { MatchStatSlideAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7) }
+    private val animator by lazy {
+        MatchStatSlideAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score,
+                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7)
+    }
 
     fun onSlide(slideOffset: Float) {
         view.alpha = 1F

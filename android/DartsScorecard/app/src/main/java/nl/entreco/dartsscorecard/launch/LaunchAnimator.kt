@@ -10,13 +10,15 @@ import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
  */
 class LaunchAnimator(binding: ActivityLaunchBinding) {
 
-    private val animator = LaunchAnimatorHandler(binding.includeLaunchHeader.lets, binding.includeLaunchHeader.play, binding.includeLaunchHeader.dart, binding.launchResume, binding.launchPlay, binding.launchPlayers, binding.launchBeta)
+    private val animator = LaunchAnimatorHandler(binding.includeLaunchHeader.lets, binding.includeLaunchHeader.play,
+            binding.includeLaunchHeader.dart, binding.launchResume, binding.launchPlay, binding.launchPlayers, binding.launchBeta)
 
     init {
         animator.init()
     }
 
-    internal class LaunchAnimatorHandler(private val lets: View, private val play: View, private val darts: View, private val btn1: View, private val btn2: View, private val btn3: View, private val btn4: View) {
+    internal class LaunchAnimatorHandler(private val lets: View, private val play: View, private val darts: View,
+                                         private val btn1: View, private val btn2: View, private val btn3: View, private val btn4: View) {
 
         init {
             lets.also { it.translationX = -800F }

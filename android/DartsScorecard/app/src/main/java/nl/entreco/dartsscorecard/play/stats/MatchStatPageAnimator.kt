@@ -12,7 +12,8 @@ class MatchStatPageAnimator(private val size: Float) {
         page.alpha = 1F
 
         val statFactor = page.width - size
-        val animator = MatchStatPageAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7, statFactor)
+        val animator = MatchStatPageAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score,
+                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7, statFactor)
         animator.transform(page, position)
     }
 

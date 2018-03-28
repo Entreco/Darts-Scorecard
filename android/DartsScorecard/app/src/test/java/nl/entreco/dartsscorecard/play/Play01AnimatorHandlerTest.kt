@@ -47,7 +47,7 @@ class Play01AnimatorHandlerTest {
     @Test
     fun setPage() {
         whenever(mockViewPager.getChildAt(0)).thenReturn(mockView)
-        subject.setPage(0)
+        subject.storePositionForAnimator(0)
         verify(mockViewPager).getChildAt(0)
 
     }

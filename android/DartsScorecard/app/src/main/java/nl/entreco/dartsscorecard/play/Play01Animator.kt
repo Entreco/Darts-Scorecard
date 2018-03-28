@@ -21,13 +21,14 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet, binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version, binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet, binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
+            binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
         calculateHeightForScoreView(binding)
         pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
-                animator.setPage(position)
+                animator.storePositionForAnimator(position)
             }
         })
 
@@ -60,15 +61,18 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         })
     }
 
-    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View, private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View, private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
+    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
+                                         private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View,
+                                         private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
-        private var statAnimator: MatchStatSlideAnimator? = null
+        private var animatorPosition: Int = 0
+        private val animators: MutableMap<Int, MatchStatSlideAnimator> = mutableMapOf()
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
             scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
 
-            statAnimator?.onSlide(slideOffset)
+            getAnimatorForPosition(animatorPosition).onSlide(slideOffset)
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
@@ -88,8 +92,13 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
         }
 
-        fun setPage(position: Int) {
-            statAnimator = MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1))
+        fun storePositionForAnimator(position: Int) {
+            animatorPosition = position
+            animators[position] = MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1))
+        }
+
+        private fun getAnimatorForPosition(position: Int): MatchStatSlideAnimator {
+            return animators.getOrDefault(position, MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1)))
         }
 
         fun onPreDraw() {
