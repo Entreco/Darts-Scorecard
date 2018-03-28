@@ -9,6 +9,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 import nl.entreco.dartsscorecard.play.Play01Navigator
 import javax.inject.Inject
+import kotlin.math.max
 
 /**
  * Created by entreco on 24/03/2018.
@@ -33,13 +34,12 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
         container.removeView(view as View)
     }
 
-
     override fun isViewFromObject(view: View, obj: Any): Boolean {
         return view == obj
     }
 
     override fun getCount(): Int {
-        return items.size
+        return if(items.size == 1) 1 else return max(0, items.size - 1)
     }
 
     fun populate(stats: Map<Int, TeamStatModel>) {

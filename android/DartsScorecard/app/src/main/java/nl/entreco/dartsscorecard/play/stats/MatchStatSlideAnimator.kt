@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.stats
 
+import android.databinding.DataBindingUtil
 import android.view.View
 import android.view.ViewPropertyAnimator
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
@@ -8,17 +9,15 @@ import kotlin.math.max
 /**
  * Created by entreco on 24/03/2018.
  */
-class MatchStatSlideAnimator(binding: WidgetListStatsBinding, private val left: View?, private val right: View?) {
+class MatchStatSlideAnimator(private val view: View, private val left: View?, private val right: View?) {
 
-    init {
-        binding.executePendingBindings()
-    }
-
-    private var animator = MatchStatSlideAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7)
+    private val binding by lazy { DataBindingUtil.getBinding<WidgetListStatsBinding>(view)!! }
+    private val animator by lazy { MatchStatSlideAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score, binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7) }
 
     fun onSlide(slideOffset: Float) {
-        left?.alpha = if(slideOffset > 0) 0F else 1F
-        right?.alpha = if(slideOffset > 0) 0F else 1F
+        view.alpha = 1F
+        left?.alpha = if (slideOffset > 0) 0F else 1F
+        right?.alpha = if (slideOffset > 0) 0F else 1F
         animator.slide(slideOffset)
     }
 

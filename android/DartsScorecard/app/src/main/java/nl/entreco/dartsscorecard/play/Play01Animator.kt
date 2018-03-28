@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play
 
-import android.databinding.DataBindingUtil
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.view.ViewPager
 import android.view.View
@@ -10,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
-import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 import nl.entreco.dartsscorecard.play.stats.MatchStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
@@ -91,11 +89,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         }
 
         fun setPage(position: Int) {
-            val view = pager.getChildAt(position)
-            val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(view)
-            if (binding != null) {
-                statAnimator = MatchStatSlideAnimator(binding, pager.getChildAt(position - 1), pager.getChildAt(position + 1))
-            }
+            statAnimator = MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1))
         }
 
         fun onPreDraw() {
