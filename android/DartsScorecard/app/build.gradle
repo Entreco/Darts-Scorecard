@@ -33,7 +33,6 @@ dependencies {
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt "com.android.databinding:compiler:$gradleVersion"
     kapt "android.arch.persistence.room:compiler:$room"
 
     // Implementation
