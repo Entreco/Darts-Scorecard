@@ -11,6 +11,7 @@ import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
+import nl.entreco.dartsscorecard.databinding.ToolbarProfileBinding
 import nl.entreco.dartsscorecard.profile.view.ProfileAnimator
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ProfileAnimatorTest {
 
+    @Mock private lateinit var mockToolbarBinding: ToolbarProfileBinding
     @Mock private lateinit var mockBinding: ActivityProfileBinding
     @Mock private lateinit var mockWindow: Window
     @Mock private lateinit var mockInflater: TransitionInflater
@@ -33,7 +35,7 @@ class ProfileAnimatorTest {
 
     private lateinit var subject: ProfileAnimator
 
-    @Test(expected = KotlinNullPointerException::class)
+    @Test(expected = NullPointerException::class)
     fun `it should animate Profile`() {
         subject = ProfileAnimator(mockBinding, mockInflater, mockWindow)
     }

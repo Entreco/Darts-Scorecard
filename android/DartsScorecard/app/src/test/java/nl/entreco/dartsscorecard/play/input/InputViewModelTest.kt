@@ -412,7 +412,7 @@ class InputViewModelTest {
     }
 
     private fun thenRequiredIs(required: Int) {
-        assertEquals(required, subject.required.get().score)
+        assertEquals(required, subject.required.get()!!.score)
     }
 
     private fun thenFinalTurnIsStillEmpty() {

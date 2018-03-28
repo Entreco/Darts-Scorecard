@@ -43,7 +43,7 @@ class SelectProfileActivity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivitySelectProfileBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     private fun initRecyclerView(binding: ActivitySelectProfileBinding) {

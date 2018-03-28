@@ -22,12 +22,12 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun onEditPlayer(position: Int, player: PlayerViewModel, otherPlayers: List<Long>) {
-        editPlayerRequest(activity, player.name.get(), player.teamIndex.get(), position, otherPlayers)
+        editPlayerRequest(activity, player.name.get()!!, player.teamIndex.get(), position, otherPlayers)
     }
 
     override fun onAddNewPlayer(index: Int, otherPlayers: List<Long>) {
         val vm = PlayerViewModel(-1, index + 1)
-        editPlayerRequest(activity, vm.name.get(), vm.teamIndex.get(), POSITION_NONE, otherPlayers)
+        editPlayerRequest(activity, vm.name.get()!!, vm.teamIndex.get(), POSITION_NONE, otherPlayers)
     }
 
     private fun editPlayerRequest(activity: Activity, suggestion: CharSequence, teamIndex: Int, positionInList: Int, otherPlayers: List<Long>) {

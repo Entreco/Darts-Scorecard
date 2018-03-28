@@ -37,7 +37,7 @@ class EditPlayerNameActivity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivityEditPlayerNameBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     @StringRes

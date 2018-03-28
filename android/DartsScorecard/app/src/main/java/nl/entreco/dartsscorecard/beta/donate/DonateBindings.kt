@@ -24,7 +24,7 @@ class DonateBindings {
             addNewViews(donations, viewModel, inflater, viewGroup)
         }
 
-        private fun addNewViews(donations: List<Donation>?, viewModel: DonateViewModel?, inflater: LayoutInflater?, viewGroup: ViewGroup) {
+        private fun addNewViews(donations: List<Donation>?, viewModel: DonateViewModel?, inflater: LayoutInflater, viewGroup: ViewGroup) {
             if (viewModel != null) {
                 donations?.forEach { donation ->
                     val binding = DataBindingUtil.inflate<DonateItemBinding>(inflater, R.layout.donate_item, viewGroup, true)

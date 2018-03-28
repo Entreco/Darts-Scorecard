@@ -13,6 +13,6 @@ class ProfileNavigator @Inject constructor(private val activity: ProfileActivity
     }
 
     fun onEditProfile(profile: PlayerProfile) {
-        ProfileActivity.selectName(activity, profile.name.get(), profile.fav.get())
+        ProfileActivity.selectName(activity, profile.name.get()!!, profile.fav.get())
     }
 }

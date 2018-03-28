@@ -21,7 +21,7 @@ class MatchStatTransformer(size: Float) : ViewPager.PageTransformer {
     }
 
     private fun transform(page: View, position: Float) {
-        val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(page)
+        val binding = DataBindingUtil.getBinding<WidgetListStatsBinding>(page)!!
         animator.transform(binding, page, position)
     }
 }

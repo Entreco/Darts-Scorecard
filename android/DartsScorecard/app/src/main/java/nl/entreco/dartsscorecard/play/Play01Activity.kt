@@ -59,7 +59,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     private fun resumeGame() {

@@ -33,7 +33,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
     }
 
     fun submitVote(amount: Int) {
-        val betaModel = feature.get()
+        val betaModel = feature.get()!!
         val currentFeature = betaModel.feature
         if (allowedToVote(betaModel, currentFeature)) {
             feature.set(BetaModel(currentFeature.copy(votes = currentFeature.votes + amount)))

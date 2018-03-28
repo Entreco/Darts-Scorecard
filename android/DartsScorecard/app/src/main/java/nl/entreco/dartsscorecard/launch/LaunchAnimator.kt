@@ -11,9 +11,9 @@ import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
  */
 class LaunchAnimator(binding: ActivityLaunchBinding) {
 
-    private val lets = binding.includeLaunchHeader?.lets!!.also { it.translationX = -800F }
-    private val play = binding.includeLaunchHeader?.play!!.also { it.translationX = 800F }
-    private val darts = binding.includeLaunchHeader?.dart!!.also { it.translationX = -800F }
+    private val lets = binding.includeLaunchHeader.lets.also { it.translationX = -800F }
+    private val play = binding.includeLaunchHeader.play.also { it.translationX = 800F }
+    private val darts = binding.includeLaunchHeader.dart.also { it.translationX = -800F }
 
     private val btn1 = binding.launchResume.also(buttonStart(0))
     private val btn2 = binding.launchPlay.also(buttonStart(1))

@@ -37,7 +37,7 @@ class EditPlayerActivity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

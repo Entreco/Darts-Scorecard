@@ -16,13 +16,13 @@ import kotlin.math.max
  */
 class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInflater, window: Window) {
 
-    private val appBar = binding.includeAppbar?.profileAppbar!!
-    private val expandedImage: View = binding.includeAppbar?.includeHeaderView?.image!!
-    private val expandedName: TextView = binding.includeAppbar?.includeHeaderView?.profileHeaderName!!
-    private val collapsedName: TextView = binding.includeAppbar?.includeHeaderViewTop?.name!!
+    private val appBar = binding.includeAppbar.profileAppbar
+    private val expandedImage: View = binding.includeAppbar.includeHeaderView.image
+    private val expandedName: TextView = binding.includeAppbar.includeHeaderView.profileHeaderName
+    private val collapsedName: TextView = binding.includeAppbar.includeHeaderViewTop.name
 
-    private val animator = ProfileAnimatorHandler(binding.includeAppbar?.includeHeaderViewTop?.image!!,
-            binding.includeAppbar.includeHeaderView?.image!!,
+    private val animator = ProfileAnimatorHandler(binding.includeAppbar.includeHeaderViewTop.image,
+            binding.includeAppbar.includeHeaderView.image,
             binding.includeAppbar.includeHeaderViewTop.toolbarHeaderView,
             binding.includeAppbar.includeHeaderView.toolbarHeaderView, binding.fab, expandedName,
             binding.includeAppbar.includeHeaderView.favDouble)

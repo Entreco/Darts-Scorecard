@@ -78,7 +78,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(binding.root.context!!, 2)
+        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
@@ -87,7 +87,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
     }
 
     private fun toolbar(binding: ActivityBetaBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onBackPressed() {

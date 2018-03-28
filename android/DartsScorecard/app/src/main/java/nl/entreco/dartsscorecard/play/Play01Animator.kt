@@ -20,10 +20,10 @@ import kotlin.math.sqrt
  */
 class Play01Animator(binding: ActivityPlay01Binding) {
 
-    private val pager = binding.includeMain?.statPager!!
-    private val inputSheet = binding.includeInput?.inputSheet!!
+    private val pager = binding.includeMain.statPager
+    private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore?.scoreSheet!!, binding.includeInput?.fab!!, binding.includeMain?.mainSheet!!, binding.includeMain.version, binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet, binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version, binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
         calculateHeightForScoreView(binding)

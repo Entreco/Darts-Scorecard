@@ -33,7 +33,7 @@ class Play01Binding {
         @JvmStatic
         @BindingAdapter("snack")
         fun showSnack(view: View, @StringRes msg: Int) {
-            if (msg > 0) {
+            if (msg != 0) {
                 Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show()
             }
         }
