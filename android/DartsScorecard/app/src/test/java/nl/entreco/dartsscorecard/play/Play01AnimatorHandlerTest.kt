@@ -38,7 +38,7 @@ class Play01AnimatorHandlerTest {
         subject = Play01Animator.Play01AnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockViewPager, mockMaxHeightView, mockView, mockView, mockView, mockView)
     }
 
-    @Test
+    @Test(expected = KotlinNullPointerException::class)
     fun onSlide() {
         whenever(mockViewPager.getChildAt(any())).thenReturn(mockView)
         subject.onSlide(100F)

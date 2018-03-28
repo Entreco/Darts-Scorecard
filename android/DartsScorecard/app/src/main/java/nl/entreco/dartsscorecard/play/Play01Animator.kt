@@ -72,7 +72,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             // Slide Out ScoreViewModel
             scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
 
-            getAnimatorForPosition(animatorPosition).onSlide(slideOffset)
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
@@ -86,6 +85,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
             // Show Resume
             inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
+
+            // Animate Stats
+            getAnimatorForPosition(animatorPosition).onSlide(slideOffset)
         }
 
         private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
