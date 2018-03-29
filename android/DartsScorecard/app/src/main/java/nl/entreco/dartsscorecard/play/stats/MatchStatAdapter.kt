@@ -23,10 +23,10 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
         binding.team0 = items[position]
         binding.team1 = items[(position + 1) % items.size]
         binding.navigator = navigator
-
-        container.addView(binding.root)
+        binding.root.tag = position
         binding.executePendingBindings()
 
+        container.addView(binding.root)
         return binding.root
     }
 

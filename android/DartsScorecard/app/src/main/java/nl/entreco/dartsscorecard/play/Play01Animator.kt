@@ -25,7 +25,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
-        calculateHeightForScoreView(binding)
+        animator.calculateHeightForScoreView()
         pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 animator.storePositionForAnimator(position)
@@ -51,22 +51,13 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    private fun calculateHeightForScoreView(binding: ActivityPlay01Binding) {
-        binding.root.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                binding.root.viewTreeObserver.removeOnPreDrawListener(this)
-                animator.onPreDraw()
-                return true
-            }
-        })
-    }
-
     internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
                                          private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View,
                                          private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
         private var animatorPosition: Int = 0
-        private val animators: MutableMap<Int, MatchStatSlideAnimator> = mutableMapOf()
+        internal var animator: MatchStatSlideAnimator? = null
+        private val lock = Object()
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
@@ -87,29 +78,46 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
 
             // Animate Stats
-            getAnimatorForPosition(animatorPosition).onSlide(slideOffset)
-        }
-
-        private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
-            anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
+            getAnimatorForPosition(animatorPosition)?.onSlide(slideOffset)
         }
 
         fun storePositionForAnimator(position: Int) {
-            animatorPosition = position
-            animators[position] = MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1))
+            synchronized(lock) {
+                animatorPosition = position
+                animator = null
+            }
         }
 
-        private fun getAnimatorForPosition(position: Int): MatchStatSlideAnimator {
-            return animators.getOrDefault(position, MatchStatSlideAnimator(pager.getChildAt(position), pager.getChildAt(position - 1), pager.getChildAt(position + 1)))
+        fun calculateHeightForScoreView() {
+            root.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    root.viewTreeObserver.removeOnPreDrawListener(this)
+                    handlePreDraw()
+                    return true
+                }
+            })
         }
 
-        fun onPreDraw() {
+        fun handlePreDraw() {
             val input = inputSheet.height
             val header = scoreHeader.height
             val footer = scoreFooter.height
             val toolbar = toolbar.height
             teamSheet.maxHeight = root.height - toolbar - header - footer - input - 100
             teamSheet.requestLayout()
+        }
+
+        private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
+            anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
+        }
+
+        private fun getAnimatorForPosition(position: Int): MatchStatSlideAnimator? {
+            synchronized(lock) {
+                if (animator == null) {
+                    animator = MatchStatSlideAnimator(pager.findViewWithTag(position), pager.findViewWithTag(position - 1), pager.findViewWithTag(position + 1))
+                }
+                return animator
+            }
         }
     }
 }

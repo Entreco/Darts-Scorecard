@@ -15,7 +15,6 @@ class MatchStatBinding {
         fun setupViewPager(view: ViewPager, stats: Map<Int, TeamStatModel>, adapter: MatchStatAdapter) {
             adapter.populate(stats)
             view.setPageTransformer(false, MatchStatTransformer(view.context.resources.getDimension(R.dimen.match_stat_width)))
-            view.offscreenPageLimit = 2
             view.adapter = adapter
             view.setCurrentItem(0, true)
         }

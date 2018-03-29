@@ -8,6 +8,7 @@ import com.nhaarman.mockito_kotlin.atLeastOnce
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,22 +41,20 @@ class Play01AnimatorHandlerTest {
 
     @Test(expected = KotlinNullPointerException::class)
     fun onSlide() {
-        whenever(mockViewPager.getChildAt(any())).thenReturn(mockView)
+        whenever(mockViewPager.findViewWithTag<View>(any())).thenReturn(mockView)
         subject.onSlide(100F)
         verify(mockView, atLeastOnce()).animate()
     }
 
     @Test
     fun setPage() {
-        whenever(mockViewPager.getChildAt(0)).thenReturn(mockView)
         subject.storePositionForAnimator(0)
-        verify(mockViewPager).getChildAt(0)
-
+        assertNull(subject.animator)
     }
 
     @Test
     fun onPreDraw() {
-        subject.onPreDraw()
+        subject.handlePreDraw()
         verify(mockMaxHeightView).requestLayout()
     }
 }
