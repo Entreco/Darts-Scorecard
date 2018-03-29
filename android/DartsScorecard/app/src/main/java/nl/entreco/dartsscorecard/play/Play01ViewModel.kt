@@ -128,7 +128,6 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
         handleTurn(turn, by)
-        storeTurn(turn, by)
     }
 
     private fun handleTurn(turn: Turn, by: Player) {
@@ -140,10 +139,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
+        storeTurn(turn, by, next)
     }
 
-    private fun storeTurn(turn: Turn, by: Player) {
-        val turnRequest = StoreTurnRequest(by.id, game.id, turn)
+    private fun storeTurn(turn: Turn, by: Player, next: Next) {
+        val turnRequest = StoreTurnRequest(by.id, game.id, turn, next.state)
         val score = game.previousScore()
         val started = game.isNewMatchLegOrSet()
         val turnCounter = game.getTurnCount()

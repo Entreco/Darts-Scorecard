@@ -115,8 +115,8 @@ class Play01UsecaseTest {
         thenUndoUsecaseIsExecuted()
     }
 
-    private fun whenStoringTurn(turn: Turn) {
-        expectedTurnRequest = StoreTurnRequest(0, gameId, turn)
+    private fun whenStoringTurn(turn: Turn, state : State = State.NORMAL) {
+        expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
         expectedTurnMeta = TurnMeta(1, 2, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
     }
