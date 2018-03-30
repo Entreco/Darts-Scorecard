@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class Play01ActivityTest {
     @Test
-    fun `it should have correct package name`() {
+    fun itShouldHaveCorrectPackageName() {
         val appContext = InstrumentationRegistry.getTargetContext()
         assertEquals("nl.entreco.dartsscorecard", appContext.packageName)
     }

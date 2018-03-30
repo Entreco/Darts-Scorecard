@@ -11,7 +11,8 @@ class EditPlayerModuleTest {
     @Test
     fun `it should provideSuggestedName`() {
         val name = "suggestion"
-        assertEquals(name, EditPlayerModule(name).provideSuggestedName())
+        val others = LongArray(0)
+        assertEquals(name, EditPlayerModule(name, others).provideSuggestedName())
     }
 
 }

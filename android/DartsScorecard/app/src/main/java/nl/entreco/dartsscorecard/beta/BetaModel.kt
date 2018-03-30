@@ -10,20 +10,23 @@ import nl.entreco.domain.beta.Feature
  */
 class BetaModel(val feature: Feature) {
 
-    private val count = format(feature.votes)
     val total = format(feature.required)
-
     val votable = ObservableBoolean(feature.votes < feature.required)
     val title = ObservableField<String>(feature.title)
     val description = ObservableField<String>(feature.description)
-    val goal = ObservableField<String>("$count / $total")
+    val goal = ObservableField<String>("${feature.votes} / $total")
     val progress = ObservableFloat(((feature.votes.toFloat() / feature.required.toFloat())))
     val image = ObservableField<String>(feature.image)
+    val remarks = ObservableField<String>(formatHtml(feature.remarks))
 
     private fun format(value: Int): String {
-        return when{
+        return when {
             value < 1000 -> "$value"
             else -> "${value / 1000}k"
         }
+    }
+
+    private fun formatHtml(remarks: String): String {
+        return remarks
     }
 }

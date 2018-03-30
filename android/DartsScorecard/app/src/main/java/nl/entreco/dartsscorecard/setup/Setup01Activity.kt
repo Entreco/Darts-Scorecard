@@ -38,12 +38,12 @@ class Setup01Activity : ViewModelActivity() {
         initToolbar(toolbar(binding), R.string.title_setup)
 
         if (savedInstanceState == null) {
-            navigator.onAddNewPlayer(0)
+            navigator.onAddNewPlayer(0, emptyList())
         }
     }
 
     private fun toolbar(binding: ActivitySetup01Binding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

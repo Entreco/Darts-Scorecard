@@ -55,7 +55,7 @@ class AdViewModelTest {
         subject.onAdLoaded()
     }
 
-    private fun whenOnAdFailed(err:Int) {
+    private fun whenOnAdFailed(err: Int) {
         subject.onAdFailed(err)
     }
 

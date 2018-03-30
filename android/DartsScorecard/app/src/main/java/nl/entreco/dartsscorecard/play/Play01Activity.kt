@@ -21,12 +21,13 @@ import nl.entreco.domain.setup.game.CreateGameResponse
 
 class Play01Activity : ViewModelActivity() {
 
-    private val component: Play01Component by componentProvider { it.plus(Play01Module()) }
+    private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: MatchStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
+    private val navigator: Play01Navigator by lazy { component.navigator() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class Play01Activity : ViewModelActivity() {
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
+        binding.navigator = navigator
 
         if (savedInstanceState == null) {
             initGame()
@@ -47,12 +49,17 @@ class Play01Activity : ViewModelActivity() {
         resumeGame()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stop()
+    }
+
     private fun initGame() {
         viewModel.load(retrieveSetup(intent), scoreViewModel, statViewModel)
     }
 
     private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     private fun resumeGame() {
@@ -64,11 +71,19 @@ class Play01Activity : ViewModelActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        viewModel.initToggleMenuItem(menu)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)
+            }
+            R.id.menu_sound_settings -> {
+                viewModel.toggleMasterCaller(item)
             }
         }
         return super.onOptionsItemSelected(item)

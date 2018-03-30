@@ -51,4 +51,9 @@ class TeamTest{
     fun `it should NOT contain player with id 1`() {
         assertFalse(subject.contains(1L))
     }
+
+    @Test
+    fun `it should NOT have image initially`() {
+        assertNull(subject.imageUrl())
+    }
 }

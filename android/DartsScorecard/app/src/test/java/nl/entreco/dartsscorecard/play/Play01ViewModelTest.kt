@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.domain.Logger
@@ -12,10 +13,14 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.listeners.StatListener
+import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.domain.setup.game.CreateGameRequest
 import org.junit.Assert.assertArrayEquals
@@ -39,8 +44,13 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockScoreSettings: ScoreSettings
     @Mock private lateinit var mockScore: Score
     @Mock private lateinit var mockRequest: Play01Request
+    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
+    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
+    @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
+    @Mock private lateinit var mockMasterCaller: MasterCaller
+    @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
     @Mock private lateinit var mockGameLoadedNotifier: GameLoadedNotifier<Play01Response>
@@ -68,6 +78,13 @@ class Play01ViewModelTest {
         givenGameAndRequest()
         whenLoadingOk()
         thenUiIsReady()
+    }
+
+    @Test
+    fun `it should stop mastercaller on stop`() {
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
+        subject.stop()
+        verify(mockMasterCaller).stop()
     }
 
     @Test
@@ -195,12 +212,12 @@ class Play01ViewModelTest {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
-        subject = Play01ViewModel(mockPlayGameUsecase, mock01Listeners, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase,mockAudioPrefs, mockLogger)
         subject.load(req, mockCreatedNotifier, *loaders)
     }
 
     private fun givenFullyLoadedMockGame() {
-        subject = Play01ViewModel(mockPlayGameUsecase, mock01Listeners, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, mockScoreSettings, givenTeams, teamIds))
@@ -276,7 +293,7 @@ class Play01ViewModelTest {
 
     private fun whenTurnMetaIsStoredSuccessfully() {
         verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), metaDoneCaptor.capture())
-        metaDoneCaptor.lastValue.invoke(1,2)
+        metaDoneCaptor.lastValue.invoke(1, 2)
     }
 
     private fun thenScoresAre(expected: Array<Score>) {
@@ -310,6 +327,7 @@ class Play01ViewModelTest {
     private fun thenGameLoadedNotifiersAreNotified() {
         verify(mockGameLoadedNotifier).onLoaded(eq(givenTeams), eq(givenScores), any(), isNull())
     }
+
     private fun thenTurnIsStored() {
         verify(mockPlayGameUsecase).storeTurnAndMeta(any(), any(), any())
     }
@@ -319,6 +337,6 @@ class Play01ViewModelTest {
     }
 
     private fun thenStatListenersAreNotified() {
-        verify(mock01Listeners).onStatsUpdated(1,2)
+        verify(mock01Listeners).onStatsUpdated(1, 2)
     }
 }

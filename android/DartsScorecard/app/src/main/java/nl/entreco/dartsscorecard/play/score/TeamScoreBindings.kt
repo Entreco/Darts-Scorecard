@@ -22,7 +22,7 @@ import nl.entreco.dartsscorecard.base.widget.CounterTextView
 abstract class TeamScoreBindings {
     companion object {
 
-        private val DEFAULT_ANIMATION_TIME: Long = 150
+        private const val DEFAULT_ANIMATION_TIME: Long = 150
 
         @JvmStatic
         @BindingAdapter("score")

@@ -1,9 +1,6 @@
 package nl.entreco.data.api.beta
 
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import nl.entreco.domain.Logger
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.repository.FeatureRepository
@@ -26,9 +23,17 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
         features.clear()
 
         p0?.documents?.forEach { doc ->
-            val feature = doc.toObject(FeatureApiData::class.java)
-            features[doc.id] = Feature(doc.id, feature.title, feature.description, feature.image, feature.goal, feature.count)
+            convertToFeature(doc)
         }.also { onChange(ArrayList<Feature>(features.values)) }
+    }
+
+    private fun convertToFeature(doc: DocumentSnapshot) {
+        try {
+            val feature = doc.toObject(FeatureApiData::class.java)
+            features[doc.id] = Feature(doc.id, feature.title, feature.description, feature.image, feature.remarks ?: "", feature.goal, feature.count)
+        } catch (oops: Exception) {
+            logger.e("Unable to convert snapshot to feature( $doc ) $oops")
+        }
     }
 
     override fun subscribe(onChange: (List<Feature>) -> Unit): List<Feature> {
@@ -43,6 +48,8 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
             val count = transaction.get(feature).getLong("count") + amount
             if (count <= max) {
                 transaction.update(feature, "count", count)
+            } else {
+                transaction.update(feature, "count", max)
             }
         }
     }

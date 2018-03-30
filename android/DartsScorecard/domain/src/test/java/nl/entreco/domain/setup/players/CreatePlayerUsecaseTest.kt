@@ -3,6 +3,7 @@ package nl.entreco.domain.setup.players
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -42,6 +43,14 @@ class CreatePlayerUsecaseTest {
     }
 
     @Test
+    fun `it should report Error when player already exists`() {
+        givenExistingPlayers("remco")
+        givenSubject()
+        whenCreatingSucceeds("Remco", 16)
+        thenErrorIsReported()
+    }
+
+    @Test
     fun `it should report Error when creating fails`() {
         givenSubject()
         whenCreatingFails("2", 100)
@@ -64,6 +73,10 @@ class CreatePlayerUsecaseTest {
 
     private fun givenSubject() {
         subject = CreatePlayerUsecase(mockRepo, bg, fg)
+    }
+
+    private fun givenExistingPlayers(vararg names: String) {
+        whenever(mockRepo.fetchAll()).thenReturn(names.map { Player(it, 15) })
     }
 
     private fun whenCreatingSucceeds(name: String, double: Int) {

@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_sound_settings"
+        android:checkable="true"
+        android:title="@string/menu_sound_swap" />
+
+    <item
         android:id="@+id/menu_play_settings"
         android:title="@string/menu_title_swap" />
 </menu>

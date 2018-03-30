@@ -14,7 +14,7 @@ import nl.entreco.domain.repository.FeatureRepository
 class FeatureApiModule {
 
     @Provides
-    fun provideFbDb(db: FirebaseFirestore, logger: Logger): FeatureRepository {
+    fun provideRemoteFeatureRepository(db: FirebaseFirestore, logger: Logger): FeatureRepository {
         return RemoteFeatureRepository(db, logger)
     }
 }

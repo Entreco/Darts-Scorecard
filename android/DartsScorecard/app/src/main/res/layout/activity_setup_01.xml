@@ -29,7 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_setup_01" android:id="@+id/includeToolbar" />
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_setup_01" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"

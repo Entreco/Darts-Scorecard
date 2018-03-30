@@ -33,6 +33,7 @@
             android:background="@drawable/beta_bg"
             android:outlineProvider="background"
             android:scaleType="centerCrop"
+            android:contentDescription="@null"
             android:src="@drawable/beta_header_image"
             bind:imageUrl="@{feature.image}" />
 
@@ -67,7 +68,8 @@
             android:id="@+id/progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/preview">
+            android:layout_alignBottom="@id/preview"
+            android:visibility="@{feature.votable ? View.VISIBLE: View.INVISIBLE}">
 
             <View
                 android:layout_width="match_parent"
@@ -107,9 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@null"
+            android:elevation="6dp"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_started"
-            android:elevation="6dp"
+            android:contentDescription="@null"
             android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>

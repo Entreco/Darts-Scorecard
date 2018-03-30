@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.di.viewmodel.threading
 
 import android.os.Handler
+import android.os.Looper
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
@@ -29,6 +30,6 @@ class ThreadingModule {
     @Provides
     @ActivityScope
     fun provideHandler(): Handler {
-        return Handler()
+        return Handler(Looper.myLooper())
     }
 }

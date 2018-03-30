@@ -16,11 +16,10 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:collapsedTitleGravity="start"
-            app:collapsedTitleTextAppearance="@style/TitleCollapsed"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="start"
             app:expandedTitleTextAppearance="@style/TitleExpanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,8 +41,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_gravity="bottom"
+                android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:padding="@dimen/def"
                 android:shadowColor="@color/white"

@@ -47,17 +47,4 @@ class TestProvider {
     fun player2(): Player {
         return player2
     }
-
-    fun team1(): Team {
-        return team1
-    }
-
-    fun team2(): Team {
-        return team1
-    }
-
-    fun team3(): Team {
-        return team1
-    }
-
 }

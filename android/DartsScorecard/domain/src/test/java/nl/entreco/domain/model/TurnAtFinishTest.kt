@@ -47,4 +47,14 @@ class TurnAtFinishTest{
     fun `it should throw if impossible combination (3 in 1)`() {
         estimator.guess(3, false).setDartsUsedForFinish(1)
     }
+
+    @Test(expected = IllegalStateException::class)
+    fun `it should throw for nonsense number of darts used (negative)`() {
+        estimator.guess(20, false).setDartsUsedForFinish(-1)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `it should throw for nonsense number of darts used (gt 3)`() {
+        estimator.guess(20, false).setDartsUsedForFinish(4)
+    }
 }

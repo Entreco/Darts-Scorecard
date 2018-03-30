@@ -11,9 +11,9 @@ import org.junit.Test
 class TurnMapperTest {
 
     private val subject = TurnMapper()
-    private val gameId : Long = 1011
-    private val playerId : Long = 42
-    private lateinit var expectedTurn : Turn
+    private val gameId: Long = 1011
+    private val playerId: Long = 42
+    private lateinit var expectedTurn: Turn
 
     @Test
     fun `converting back and forth should return Turn()`() {
@@ -45,7 +45,7 @@ class TurnMapperTest {
         val from = subject.from(gameId, playerId, turn)
         assertEquals(0, from.id)
         expectedTurn = subject.to(from)
-        assertEquals("turn: $turn exp:$expectedTurn",turn, expectedTurn)
+        assertEquals("turn: $turn exp:$expectedTurn", turn, expectedTurn)
     }
 
 }

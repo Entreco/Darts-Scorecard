@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="profile"
+            type="nl.entreco.dartsscorecard.profile.view.PlayerProfile" />
+    </data>
+
+    <nl.entreco.dartsscorecard.profile.view.ProfileHeaderView
+        android:id="@+id/toolbar_header_view_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/def"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/name_top"
+            style="@style/ProfileName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@{profile.name}"
+            android:textSize="18sp"
+            tools:text="@string/app_name" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_top"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:background="@drawable/profile_bg_top"
+            android:contentDescription="@null"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/ic_no_profile"
+            app:profileImage="@{profile.image}" />
+
+    </nl.entreco.dartsscorecard.profile.view.ProfileHeaderView>
+</layout>

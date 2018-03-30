@@ -28,12 +28,13 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginTop="?android:attr/actionBarSize"
             android:fillViewport="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:background="@color/white">
 
                 <ImageView
@@ -41,6 +42,7 @@
                     style="@style/BetaHeader"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
+                    android:contentDescription="@null"
                     bind:imageUrl="@{viewModel.feature.image}" />
 
                 <View
@@ -68,6 +70,7 @@
                     style="@style/BetaVotable"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/votable_banner_height"
+                    android:contentDescription="@null"
                     android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout
@@ -103,8 +106,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/description"
+                    android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
                     app:total="@{viewModel.feature.total}"
                     app:viewModel="@{donateViewModel}" />
+
+                <include
+                    layout="@layout/include_beta_implementation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/description"
+                    android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}"
+                    app:feature="@{viewModel.feature}" />
+
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
 

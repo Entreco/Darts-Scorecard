@@ -3,6 +3,7 @@ package nl.entreco.domain.play.start
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.domain.model.players.DeletedPlayer
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.PlayerRepository
@@ -29,7 +30,11 @@ class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: Pla
             val playerSplit = it.split(",")
             playerSplit.forEach {
                 val dbPlayer = playerRepository.fetchById(it.toLong())
-                players.add(dbPlayer!!)
+                if(dbPlayer == null){
+                    players.add(DeletedPlayer())
+                } else {
+                    players.add(dbPlayer)
+                }
             }
 
             teams.add(Team(players.toTypedArray()))

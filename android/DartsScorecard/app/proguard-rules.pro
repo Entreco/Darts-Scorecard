@@ -22,6 +22,11 @@
 
 -keepattributes Signature
 
+# Crashlytics
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+
 # Google Play Services
 -keep public class com.google.android.gms.* { public *; }
 -dontwarn com.google.android.gms.**

@@ -28,21 +28,26 @@
             name="animator"
             type="nl.entreco.dartsscorecard.play.Play01Animator" />
 
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.play.Play01Navigator" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:loading="@{viewModel.loading}"
         app:animator="@{animator}"
-        app:finished="@{viewModel.finished}">
+        app:snack="@{viewModel.errorMsg}"
+        app:finished="@{viewModel.finished}"
+        app:loading="@{viewModel.loading}">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/play01_bg_image"/>
+            android:src="@drawable/play01_bg_image" />
 
         <include
             android:id="@+id/includeToolbar"
@@ -57,6 +62,7 @@
             android:layout_marginEnd="@dimen/def"
             android:layout_marginStart="@dimen/def"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:navigator="@{navigator}"
             app:viewModel="@{statViewModel}" />
 
         <include
@@ -68,6 +74,7 @@
         <include
             android:id="@+id/includeInput"
             layout="@layout/play_01_input"
+            app:animator="@{animator}"
             app:listener="@{viewModel}"
             app:viewModel="@{inputViewModel}" />
 

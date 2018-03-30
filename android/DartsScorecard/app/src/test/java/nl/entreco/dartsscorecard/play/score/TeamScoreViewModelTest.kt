@@ -34,7 +34,7 @@ class TeamScoreViewModelTest {
     @Mock private lateinit var mockHandler: Handler
     @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
     private val finishRequestCaptor = argumentCaptor<GetFinishRequest>()
-    private val finishResponseCaptor = argumentCaptor<(GetFinishResponse)->Unit>()
+    private val finishResponseCaptor = argumentCaptor<(GetFinishResponse) -> Unit>()
 
     @Test
     fun `when leg finished by other team, it should be false`() {
@@ -93,7 +93,7 @@ class TeamScoreViewModelTest {
     fun `it should update 'scored' when player in this team threw`() {
         givenTeamScoreViewModel(true)
         whenThrowing(Turn(), playerFromMyTeam)
-        assertEquals(givenTurn.total(), subject.score.get().score - subject.scored.get())
+        assertEquals(givenTurn.total(), subject.score.get()!!.score - subject.scored.get())
     }
 
     @Test
@@ -202,7 +202,7 @@ class TeamScoreViewModelTest {
         assertEquals(expected, subject.nineDarter.get())
     }
 
-    private fun thenNineDarterIsNotUpdated(){
+    private fun thenNineDarterIsNotUpdated() {
         assertEquals(false, subject.nineDarter.get())
     }
 }

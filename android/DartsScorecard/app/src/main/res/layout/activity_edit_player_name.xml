@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameViewModel" />
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameAnimator" />
+
+        <variable
+            name="window"
+            type="android.view.Window" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.profile.edit.EditPlayerNameNavigator" />
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_setup_01" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                style="@style/EditPlayer.Hdr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_player_name" />
+
+            <FrameLayout
+                android:id="@+id/editArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary">
+
+                <TextView
+                    style="@style/ProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/def"
+                    android:text="@{viewModel.name}"
+                    android:transitionName="profileName" />
+
+                <android.support.design.widget.TextInputLayout
+                    style="@style/EditPlayer.Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/def"
+                    app:error="@{viewModel.errorMsg}"
+                    app:errorEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        style="@style/EditPlayer.Edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:afterTextChanged="@{(editable) -> viewModel.onNameChanged(editable)}"
+                        android:hint="@string/edit_player_name_hint"
+                        android:imeActionId="6"
+                        android:imeOptions="actionDone"
+                        android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
+                        android:text="@{viewModel.name}"
+                        android:textAllCaps="true"
+                        app:showKeyboard="@{viewModel.isTyping}"
+                        app:window="@{window}" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </FrameLayout>
+
+            <TextView
+                style="@style/EditPlayer.Middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="@string/edit_player_double" />
+
+            <RelativeLayout
+                style="@style/Setup.Entry"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+                <TextView
+                    style="@style/Setup.Entry.Txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/edit_player_double" />
+
+                <TextView
+                    style="@style/Setup.Entry.Spinner"
+                    android:layout_width="@dimen/setup_width"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:text="@{viewModel.favDouble}" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Setup.Spinner"
+                    android:layout_width="@dimen/setup_width"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:entries="@array/fav_doubles"
+                    android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onFavouriteDoubleSelected(adapter,index)}"
+                    android:selectedItemPosition="@={viewModel.favDoubleIndex}" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

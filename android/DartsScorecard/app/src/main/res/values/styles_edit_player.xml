@@ -8,12 +8,13 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
+    <style name="EditPlayer.Input">
+        <item name="android:background">@drawable/score_name</item>
+    </style>
     <style name="EditPlayer.Edit">
         <item name="android:textSize">46sp</item>
-        <item name="android:padding">@dimen/def</item>
         <item name="android:inputType">textNoSuggestions|textVisiblePassword</item>
         <item name="android:singleLine">true</item>
-        <item name="android:background">@drawable/score_name</item>
         <item name="android:textColor">?attr/nameText</item>
         <item name="android:digits">@string/valid_player_characters</item>
         <item name="android:focusable">true</item>

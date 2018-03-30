@@ -23,4 +23,7 @@ interface PlayerRepository {
     @Throws
     @WorkerThread
     fun fetchAll(): List<Player>
+
+    @WorkerThread
+    fun deleteById(id: Long)
 }

@@ -7,6 +7,7 @@ import android.databinding.ObservableInt
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
@@ -23,7 +24,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 19/11/2017.
  */
-class InputViewModel @Inject constructor(private val analytics: Analytics, private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
+class InputViewModel @Inject constructor(
+        private val analytics: Analytics,
+        private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
@@ -62,7 +65,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     }
 
     fun back() {
-        scoredTxt.set(scoredTxt.get().dropLast(1))
+        scoredTxt.set(scoredTxt.get()!!.dropLast(1))
     }
 
     fun clear(): Boolean {
@@ -70,15 +73,22 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
         return true
     }
 
+    fun onResume(animator: Play01Animator, listener: InputListener) {
+        animator.expand()
+        if (resumeDescription.get() == R.string.game_shot_and_match) {
+            listener.onRevanche()
+        }
+    }
+
     fun entered(score: Int) {
-        val oldValue = scoredTxt.get()
+        val oldValue = scoredTxt.get()!!
         if (oldValue.length < 3) {
             scoredTxt.set(oldValue.plus(score.toString()))
         }
     }
 
     fun onPressedKey(key: Int, listener: InputListener): Boolean {
-        val score = parseScore(hintProvider.get().getHintForKey(key))
+        val score = parseScore(hintProvider.get()!!.getHintForKey(key))
         if (key == -1) { // Bust
             submit(score, listener, false)
         } else {
@@ -156,7 +166,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     private fun done(turn: Turn, listener: InputListener) {
         listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
         this.scoredTxt.set(turn.total().toString())
-        this.analytics.trackAchievement("scored: $turn")
+        this.analytics.trackScore("scored: $turn", turn.total())
         clearScoreInput()
     }
 
@@ -200,7 +210,7 @@ class InputViewModel @Inject constructor(private val analytics: Analytics, priva
     }
 
     private fun didFinishLeg(): Boolean {
-        return required.get().score == turn.total()
+        return required.get()!!.score == turn.total()
     }
 
     private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH

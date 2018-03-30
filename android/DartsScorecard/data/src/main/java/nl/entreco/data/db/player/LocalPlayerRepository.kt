@@ -38,4 +38,10 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTa
         val table = playerDao.fetchAll()
         return mapper.to(table)
     }
+
+    @WorkerThread
+    override fun deleteById(id: Long) {
+        val table = playerDao.fetchById(id)!!
+        playerDao.delete(table)
+    }
 }

@@ -18,6 +18,7 @@ class SelectPlayerViewTest {
     @Mock private lateinit var mockBinding: SelectPlayerViewBinding
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockEntries: MutableList<Int>
+    @Mock private lateinit var mockOthers: List<Long>
     @Mock private lateinit var mockEditor: PlayerEditor
     @Mock private lateinit var mockPlayerViewModel: PlayerViewModel
     private val mockPositionInList = 42
@@ -60,6 +61,6 @@ class SelectPlayerViewTest {
     }
 
     private fun whenBinding() {
-        subject.bind(mockPlayerViewModel, mockEditor, mockEntries, mockPositionInList)
+        subject.bind(mockPlayerViewModel, mockEditor, mockEntries, mockOthers, mockPositionInList)
     }
 }

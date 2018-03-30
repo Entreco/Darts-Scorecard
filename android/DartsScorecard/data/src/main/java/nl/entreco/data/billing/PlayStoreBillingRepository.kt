@@ -5,18 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
+import com.google.gson.GsonBuilder
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
 import nl.entreco.domain.repository.BillingRepository
-import org.json.JSONObject
 
 /**
  * Created by entreco on 08/02/2018.
  */
 class PlayStoreBillingRepository(private val context: Context, private val service: BillingServiceConnection) : BillingRepository {
 
-    private val BILLING_RESPONSE_RESULT_OK = 0
+    private val BILLINGRESPONSERESULTOK = 0
 
+    private val gson by lazy { GsonBuilder().create() }
     private val apiVersion = 5
     private val packageName = context.packageName
 
@@ -38,18 +39,15 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
     override fun fetchDonations(): List<Donation> {
 
         val donations = FetchDonationsData()
-        val bundle = service.getService()?.run {
-            getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
-        }
+        val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLING_RESPONSE_RESULT_OK) {
+        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
+
             bundle.getStringArrayList("DETAILS_LIST").mapNotNull { response ->
-                val json = JSONObject(response)
-                val productId = json.getString("productId")
-                val price = json.getString("price")
-                val votes = donations.getVotes(productId)
+                val donation = gson.fromJson(response, DonationApiData::class.java)
+                val votes = donations.getVotes(donation.productId)
 
-                Donation(json.getString("title"), json.getString("description"), productId, price, votes)
+                Donation(donation.title, donation.description, donation.productId, donation.price, votes, donation.priceCurrencyCode, donation.priceAmountMicros)
             }.filter { donations.contains(it.sku) }
         } else {
             throw Throwable("Unable to retrieve donations, $bundle")
@@ -63,7 +61,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
             getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
         }
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLING_RESPONSE_RESULT_OK) {
+        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
             val intent: PendingIntent = bundle.getParcelable("BUY_INTENT")
 
             MakeDonationResponse(intent, payload)

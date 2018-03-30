@@ -40,4 +40,10 @@ abstract class TestableAdapter<T : RecyclerView.ViewHolder?> : RecyclerView.Adap
         } catch (ignore: NullPointerException) {
         }
     }
+    protected fun tryNotifyItemRemoved(position: Int) {
+        try {
+            notifyItemRemoved(position)
+        } catch (ignore: NullPointerException) {
+        }
+    }
 }

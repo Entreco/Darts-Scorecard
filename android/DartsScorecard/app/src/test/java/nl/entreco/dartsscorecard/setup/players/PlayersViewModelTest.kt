@@ -99,7 +99,7 @@ class PlayersViewModelTest {
 
     private fun createMap(vararg players: TeamPlayer): Array<PlayerViewModel> {
         return players.toList().map {
-            PlayerViewModel(it.index, it.name)
+            PlayerViewModel(-1, it.index, it.name)
         }.toTypedArray()
     }
 }

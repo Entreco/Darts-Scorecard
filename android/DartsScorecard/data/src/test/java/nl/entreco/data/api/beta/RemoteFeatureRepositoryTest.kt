@@ -22,9 +22,9 @@ class RemoteFeatureRepositoryTest {
     @Mock private lateinit var mockDb: FirebaseFirestore
     @Mock private lateinit var mockReference: CollectionReference
     @Mock private lateinit var mockLogger: Logger
-    private lateinit var subject : RemoteFeatureRepository
+    private lateinit var subject: RemoteFeatureRepository
 
-    private lateinit var results : List<Feature>
+    private lateinit var results: List<Feature>
 
     @Test
     fun `subscribe should return empty list initially`() {

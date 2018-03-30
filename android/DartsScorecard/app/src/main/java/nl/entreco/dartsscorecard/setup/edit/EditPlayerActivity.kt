@@ -9,13 +9,14 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerBinding
 import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
 import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
+import nl.entreco.dartsscorecard.setup.Setup01Navigator
 
 /**
  * Created by Entreco on 02/01/2018.
  */
 class EditPlayerActivity : ViewModelActivity() {
 
-    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName())) }
+    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers())) }
     private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
     private val navigator: EditPlayerNavigator by lazy { EditPlayerNavigator(this) }
 
@@ -28,11 +29,15 @@ class EditPlayerActivity : ViewModelActivity() {
     }
 
     private fun getSuggestedName(): String {
-        return intent.getStringExtra("suggestion")
+        return intent.getStringExtra(Setup01Navigator.EXTRA_SUGGESTION)
+    }
+
+    private fun otherPlayers(): LongArray {
+        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_PLAYERS)
     }
 
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

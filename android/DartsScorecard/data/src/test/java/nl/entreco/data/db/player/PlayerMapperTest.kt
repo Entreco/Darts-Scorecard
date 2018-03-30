@@ -15,6 +15,12 @@ class PlayerMapperTest {
         subject.to(table)
     }
 
+    @Test(expected = IllegalStateException::class)
+    fun `should throw exception when invalid favourite double`() {
+        val table = givenPlayer(fav = 22)
+        subject.to(table)
+    }
+
     @Test
     fun `should create Game when valid table`() {
         val table = givenPlayer("henk", 12)

@@ -22,28 +22,19 @@ class ScoreEstimator @Inject constructor() {
             50 -> Turn(Dart.BULL)
             48 -> Turn(Dart.TRIPLE_16)
             45 -> Turn(Dart.TRIPLE_15)
-//            44 -> Not possible
-//            43 -> Not possible
             42 -> Turn(Dart.TRIPLE_14)
-//            41 -> Not possible
             40 -> Turn(Dart.DOUBLE_20)
-//            39 -> Not possible
             38 -> Turn(Dart.DOUBLE_19)
-//            37 -> Not possible
             36 -> Turn(Dart.DOUBLE_18)
-//            25 -> Not possible
             34 -> Turn(Dart.DOUBLE_17)
             33 -> Turn(Dart.TRIPLE_11)
             32 -> Turn(Dart.DOUBLE_16)
-//            31 -> Not possible
             30 -> Turn(Dart.DOUBLE_15)
-//            29 -> Not possible
             28 -> Turn(Dart.DOUBLE_14)
             27 -> Turn(Dart.TRIPLE_9)
             26 -> Turn(Dart.DOUBLE_13)
             25 -> Turn(Dart.SINGLE_BULL)
             24 -> Turn(Dart.DOUBLE_12)
-//            23 -> Not possible
             22 -> Turn(Dart.DOUBLE_11)
             21 -> Turn(Dart.TRIPLE_7)
             20 -> Turn(Dart.DOUBLE_10)
@@ -189,7 +180,7 @@ class ScoreEstimator @Inject constructor() {
             53 -> Turn(Dart.SINGLE_13, Dart.DOUBLE_20, Dart.ZERO) //"13 D20"
             52 -> Turn(Dart.TRIPLE_12, Dart.DOUBLE_8, Dart.ZERO) //"T12 D8"
             51 -> Turn(Dart.SINGLE_11, Dart.DOUBLE_20, Dart.ZERO) //"11 D20"
-            50 -> Turn(Dart.ZERO, Dart.BULL, Dart.ZERO) //"BULL" // Special case
+            50 -> Turn(Dart.BULL, Dart.ZERO, Dart.ZERO) //"BULL" // Special case
             49 -> Turn(Dart.SINGLE_9, Dart.DOUBLE_20, Dart.ZERO) //"9 D20"
             48 -> Turn(Dart.SINGLE_16, Dart.DOUBLE_16, Dart.ZERO) //"16 D16"
             47 -> Turn(Dart.SINGLE_15, Dart.DOUBLE_16, Dart.ZERO) //"15 D16"

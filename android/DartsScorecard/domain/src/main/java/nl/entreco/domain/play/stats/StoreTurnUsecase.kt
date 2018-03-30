@@ -3,6 +3,9 @@ package nl.entreco.domain.play.stats
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository
 import javax.inject.Inject
 
@@ -13,7 +16,7 @@ class StoreTurnUsecase @Inject constructor(private val turnRepository: TurnRepos
                                            bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
     fun exec(req: StoreTurnRequest, done: (StoreTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val turnId = turnRepository.store(req.gameId, req.playerId, req.turn)
+            val turnId = turnRepository.store(req.gameId, req.playerId, if(req.state != State.ERR_BUST) req.turn else Turn(Dart.ZERO, Dart.ZERO, Dart.ZERO))
             onUi { done(StoreTurnResponse(turnId, req.turn)) }
         }, fail)
     }

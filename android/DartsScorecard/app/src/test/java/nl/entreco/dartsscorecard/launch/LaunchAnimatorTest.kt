@@ -1,6 +1,11 @@
 package nl.entreco.dartsscorecard.launch
 
-import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
+import android.view.View
+import android.view.ViewPropertyAnimator
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.atLeastOnce
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -10,17 +15,31 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 08/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class LaunchAnimatorTest{
+class LaunchAnimatorTest {
 
-    @Mock private lateinit var mockBinding : ActivityLaunchBinding
-    private lateinit var subject : LaunchAnimator
+    @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockAnimator: ViewPropertyAnimator
+    private lateinit var subject: LaunchAnimator.LaunchAnimatorHandler
 
-    @Test(expected = NullPointerException::class)
+    @Test
     fun `it should animate`() {
         givenSubject()
+        whenInitializing()
+        verify(mockView, atLeastOnce()).animate()
     }
 
     private fun givenSubject() {
-        subject = LaunchAnimator(mockBinding)
+        whenever(mockAnimator.alpha(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setInterpolator(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setStartDelay(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.translationY(any())).thenReturn(mockAnimator)
+        whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
+        whenever(mockView.animate()).thenReturn(mockAnimator)
+        subject = LaunchAnimator.LaunchAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView)
+    }
+
+    private fun whenInitializing() {
+        subject.init()
     }
 }

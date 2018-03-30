@@ -7,7 +7,6 @@ import org.junit.Test
  * Created by entreco on 06/02/2018.
  */
 class FeatureApiDataTest {
-
     private val subject = FeatureApiData()
 
     @Test
@@ -23,6 +22,11 @@ class FeatureApiDataTest {
     @Test
     fun `title is empty initially`() {
         assertEquals("", subject.title)
+    }
+
+    @Test
+    fun `remarks is empty initially`() {
+        assertEquals("", subject.remarks)
     }
 
     @Test

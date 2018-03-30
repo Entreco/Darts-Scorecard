@@ -23,12 +23,12 @@ class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUs
         fetchPrefs.exec { preferred.set(it) }
     }
 
-    val startScoreIndex = ObservableInt(preferred.get().score)
-    val min = preferred.get().min
-    val max = preferred.get().max
+    val startScoreIndex = ObservableInt(preferred.get()!!.score)
+    val min = preferred.get()!!.min
+    val max = preferred.get()!!.max
     val startScore = ObservableInt()
-    val numSets = ObservableInt(preferred.get().sets)
-    val numLegs = ObservableInt(preferred.get().legs)
+    val numSets = ObservableInt(preferred.get()!!.sets)
+    val numLegs = ObservableInt(preferred.get()!!.legs)
 
     fun onStartScoreSelected(adapter: AdapterView<*>, index: Int) {
         val resolved = adapter.getItemAtPosition(index).toString().toInt()

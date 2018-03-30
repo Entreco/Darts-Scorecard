@@ -25,28 +25,20 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@color/white">
 
         <include
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_beta" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/beta_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_animation_from_bottom"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:onRefreshListener="@{() -> viewModel.refresh(true)}"
-            app:refreshing="@{viewModel.isRefreshing}">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/beta_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/beta_view" />
-        </android.support.v4.widget.SwipeRefreshLayout>
-
+            tools:listitem="@layout/beta_view" />
 
         <LinearLayout
             android:id="@+id/sheet"
@@ -59,8 +51,8 @@
 
             <include
                 layout="@layout/include_beta_detail"
-                app:viewModel="@{voteViewModel}"
-                app:donateViewModel="@{donateViewModel}"/>
+                app:donateViewModel="@{donateViewModel}"
+                app:viewModel="@{voteViewModel}" />
 
         </LinearLayout>
 

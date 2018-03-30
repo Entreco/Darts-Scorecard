@@ -12,6 +12,7 @@ class BillingDataTest {
         assertEquals("10_feature_votes", Donate10Votes().productId)
         assertEquals("50_feature_votes", Donate50Votes().productId)
         assertEquals("100_feature_votes", Donate100Votes().productId)
+        assertEquals("500_feature_votes", Donate500Votes().productId)
     }
 
     @Test
@@ -19,6 +20,7 @@ class BillingDataTest {
         assertEquals(10, Donate10Votes().votes)
         assertEquals(50, Donate50Votes().votes)
         assertEquals(100, Donate100Votes().votes)
+        assertEquals(500, Donate500Votes().votes)
     }
 
 }

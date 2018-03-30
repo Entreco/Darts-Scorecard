@@ -33,13 +33,16 @@ class BetaBindings {
             view.animate().scaleX(progress).setDuration(1000).setStartDelay(350).setInterpolator(AccelerateDecelerateInterpolator()).start()
         }
 
+        @Suppress("DEPRECATION")
         @JvmStatic
         @BindingAdapter("textWithTags")
-        fun setTextWithTags(view: TextView, message: String) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                view.text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                view.text = Html.fromHtml(message)
+        fun setTextWithTags(view: TextView, message: String?) {
+            if(message != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    view.text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
+                } else {
+                    view.text = Html.fromHtml(message)
+                }
             }
         }
     }

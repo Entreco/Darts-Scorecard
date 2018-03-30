@@ -15,6 +15,10 @@ class CreatePlayerUsecase @Inject constructor(private var playerRepository: Play
     fun exec(req: CreatePlayerRequest, done: (CreatePlayerResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val validLowercaseName = getValidLowerCaseName(req.name)
+            val existingPlayers = playerRepository.fetchAll().map { getValidLowerCaseName(it.name) }
+            if(existingPlayers.contains(validLowercaseName)){
+                onUi { fail(PlayerAlreadyExistsException("$validLowercaseName already exists")) }
+            }
             val playerId = playerRepository.create(validLowercaseName, req.double)
             onUi { done(CreatePlayerResponse(Player(validLowercaseName, playerId, PlayerPrefs(req.double)))) }
         }, fail)
