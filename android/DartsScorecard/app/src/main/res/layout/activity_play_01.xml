@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:animator="@{animator}"
+        app:snack="@{viewModel.errorMsg}"
         app:finished="@{viewModel.finished}"
         app:loading="@{viewModel.loading}">
 

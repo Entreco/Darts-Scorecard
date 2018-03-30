@@ -13,8 +13,7 @@ class SharedAudioPrefRepo(private val prefs: SharedPreferences) : AudioPrefRepos
     }
 
     override fun isMasterCallerEnabled(): Boolean {
-        val enabled = prefs.getBoolean(PREF_MASTER_CALLER, false)
-        return enabled
+        return prefs.getBoolean(PREF_MASTER_CALLER, false)
     }
 
     override fun setMasterCallerEnabled(enabled: Boolean) {

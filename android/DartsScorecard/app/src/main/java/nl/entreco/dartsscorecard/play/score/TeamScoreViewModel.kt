@@ -48,8 +48,8 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
 
     fun threw(turn: Turn, player: Player) {
         if (team.contains(player)) {
-            scored.set(this.score.get().score - turn.total())
-            calculateFinish(this.score.get(), player, turn)
+            scored.set(this.score.get()!!.score - turn.total())
+            calculateFinish(this.score.get()!!, player, turn)
         }
     }
 

@@ -19,7 +19,6 @@
         android:padding="@dimen/def">
 
         <TextView
-            android:id="@+id/explain"
             style="@style/Beta.Explain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

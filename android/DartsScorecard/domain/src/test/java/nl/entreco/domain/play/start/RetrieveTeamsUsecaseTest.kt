@@ -3,8 +3,11 @@ package nl.entreco.domain.play.start
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.model.players.DeletedPlayer
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -25,6 +28,7 @@ class RetrieveTeamsUsecaseTest {
     @Mock private lateinit var mockPlayer: Player
 
     private lateinit var subject: RetrieveTeamsUsecase
+    private val retrieveCaptor = argumentCaptor<RetrieveTeamsResponse>()
 
     @Before
     fun setUp() {
@@ -41,6 +45,13 @@ class RetrieveTeamsUsecaseTest {
     }
 
     @Test
+    fun `it should add 'DeletedPlayer' if player id cannot be found`() {
+        givenNonExistingPlayer()
+        whenExecuting()
+        thenDeletedPlayerIsReturned()
+    }
+
+    @Test
     fun `it should fail if some players cannot be retrieved`() {
         givenPlayersWithIds("")
         whenExecuting()
@@ -51,6 +62,11 @@ class RetrieveTeamsUsecaseTest {
     private fun givenPlayersWithIds(teams: String) {
         teamIds = teams
         whenever(mockPlayerRepository.fetchById(any())).thenReturn(mockPlayer)
+    }
+
+    private fun givenNonExistingPlayer() {
+        teamIds = "1,2"
+        whenever(mockPlayerRepository.fetchById(any())).thenReturn(null)
     }
 
     private fun whenExecuting() {
@@ -73,6 +89,12 @@ class RetrieveTeamsUsecaseTest {
 
     private fun thenFailedIsInvoked() {
         verify(fail).invoke(isA())
+    }
+
+    private fun thenDeletedPlayerIsReturned() {
+        verify(ok).invoke(retrieveCaptor.capture())
+        assertEquals(1, retrieveCaptor.lastValue.teams.filter { it.contains(0) }.size)
+        assertTrue(retrieveCaptor.lastValue.teams[0].players[0] is DeletedPlayer)
     }
 
 }

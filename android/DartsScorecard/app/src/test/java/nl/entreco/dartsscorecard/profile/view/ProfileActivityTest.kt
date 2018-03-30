@@ -7,7 +7,6 @@ import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
-import nl.entreco.domain.model.players.Team
 import org.junit.Assert
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -20,9 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class ProfileActivityTest {
-
-
-    @Mock private lateinit var mockTeam: Team
+    
     @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockResources: Resources

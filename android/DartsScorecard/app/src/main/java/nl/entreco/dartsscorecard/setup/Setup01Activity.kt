@@ -43,7 +43,7 @@ class Setup01Activity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivitySetup01Binding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

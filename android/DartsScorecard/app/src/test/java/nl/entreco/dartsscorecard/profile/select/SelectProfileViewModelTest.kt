@@ -7,8 +7,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.profile.Profile
-import nl.entreco.domain.setup.players.FetchExistingPlayersResponse
-import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
+import nl.entreco.domain.setup.players.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,12 +22,15 @@ class SelectProfileViewModelTest {
 
     @Mock private lateinit var mockPlayer: Player
     @Mock private lateinit var mockAdapter: SelectProfileAdapter
+    @Mock private lateinit var mockCreateUsecase: CreatePlayerUsecase
     @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
+    @Mock private lateinit var mockDeleteUsecase: DeletePlayerUsecase
     private lateinit var subject: SelectProfileViewModel
 
     private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
     private val profileCaptor = argumentCaptor<List<Profile>>()
+    private val deleteCaptor = argumentCaptor<(DeletePlayerResponse)->Unit>()
 
     @Test
     fun `it should set isLoading initially`() {
@@ -79,8 +81,29 @@ class SelectProfileViewModelTest {
         thenLoadingIs(true)
     }
 
+    @Test
+    fun `it should reload when deleting player succeeds`() {
+        givenSubject()
+        whenDeletingPlayer()
+        // TODO: Verify loader or something
+    }
+
+    @Test
+    fun `it should report error when deleting player fails`() {
+        givenSubject()
+        whenDeletingPlayer()
+        // TODO: Verify loader or something
+    }
+
+    @Test
+    fun `it should create player`() {
+        givenSubject()
+        whenCreatingPlayerSucceeds("Pietje")
+        thenLoadingIs(true)
+    }
+
     private fun givenSubject() {
-        subject = SelectProfileViewModel(mockFetchUsecase)
+        subject = SelectProfileViewModel(mockCreateUsecase, mockFetchUsecase, mockDeleteUsecase)
     }
 
     private fun givenMockPlayer() {
@@ -102,9 +125,18 @@ class SelectProfileViewModelTest {
         failCaptor.lastValue.invoke(RuntimeException("Unable to fetch players"))
     }
 
-
     private fun whenReloading() {
         subject.reload(mockAdapter)
+    }
+
+    private fun whenDeletingPlayer() {
+        subject.deletePlayerProfile(12, mockAdapter)
+        verify(mockDeleteUsecase).delete(any(), deleteCaptor.capture(), any())
+        deleteCaptor.lastValue.invoke(DeletePlayerResponse(12))
+    }
+
+    private fun whenCreatingPlayerSucceeds(name: String) {
+        subject.create(mockAdapter, name, 16)
     }
 
     private fun thenProfilesAreSet(expected: Int) {

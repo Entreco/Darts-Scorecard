@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
@@ -44,6 +45,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     val loading = ObservableBoolean(true)
     val finished = ObservableBoolean(false)
+    val errorMsg = ObservableInt()
     private lateinit var game: Game
     private lateinit var request: Play01Request
     private lateinit var teams: Array<Team>
@@ -63,7 +65,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                         it.onLoaded(response.teams, game.scores, response, null)
                     }
                 },
-                { err -> logger.e("err: $err") })
+                { err ->
+                    logger.e("err: $err")
+                    loading.set(false)
+                    errorMsg.set(R.string.err_unable_to_retrieve_game)
+                })
     }
 
     override fun onRevanche() {
@@ -80,7 +86,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                             it.onLoaded(response.teams, game.scores, playResponse, null)
                         }
                     },
-                    { err -> logger.e("err: $err") })
+                    { err ->
+                        logger.e("err: $err")
+                        loading.set(false)
+                        errorMsg.set(R.string.err_unable_to_revanche)
+                    })
         }
     }
 
@@ -118,7 +128,6 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     override fun onTurnSubmitted(turn: Turn, by: Player) {
         handleTurn(turn, by)
-        storeTurn(turn, by)
     }
 
     private fun handleTurn(turn: Turn, by: Player) {
@@ -130,10 +139,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
+        storeTurn(turn, by, next)
     }
 
-    private fun storeTurn(turn: Turn, by: Player) {
-        val turnRequest = StoreTurnRequest(by.id, game.id, turn)
+    private fun storeTurn(turn: Turn, by: Player, next: Next) {
+        val turnRequest = StoreTurnRequest(by.id, game.id, turn, next.state)
         val score = game.previousScore()
         val started = game.isNewMatchLegOrSet()
         val turnCounter = game.getTurnCount()

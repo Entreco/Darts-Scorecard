@@ -1,12 +1,14 @@
 package nl.entreco.dartsscorecard.di.viewmodel.api
 
-import com.nhaarman.mockito_kotlin.mock
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.Logger
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.exceptions.base.MockitoException
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -16,10 +18,12 @@ import org.mockito.junit.MockitoJUnitRunner
 class FeatureApiModuleTest {
 
     @Mock private lateinit var mockLogger: Logger
+    @Mock private lateinit var mockStore: FirebaseFirestore
+    @Mock private lateinit var mockFeatureRef: CollectionReference
 
-    @Test(expected = MockitoException::class)
+    @Test
     fun provideFbDb() {
-        assertNotNull(FeatureApiModule().provideRemoteFeatureRepository(mock(), mockLogger))
+        whenever(mockStore.collection(any())).thenReturn(mockFeatureRef)
+        assertNotNull(FeatureApiModule().provideRemoteFeatureRepository(mockStore, mockLogger))
     }
-
 }

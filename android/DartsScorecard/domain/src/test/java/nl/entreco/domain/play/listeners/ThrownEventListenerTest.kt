@@ -19,7 +19,7 @@ class ThrownEventListenerTest : SpecialEventListenerTest() {
     @Test
     fun `it should notify about throw when busting`() {
         val subject = ThrownEventListener()
-        subject.onThrown(`bust`())
+        subject.onThrown(bust())
         Assert.assertTrue(subject.wasNotified())
         Assert.assertEquals("test_501 test_501 test_501", subject.describe())
     }

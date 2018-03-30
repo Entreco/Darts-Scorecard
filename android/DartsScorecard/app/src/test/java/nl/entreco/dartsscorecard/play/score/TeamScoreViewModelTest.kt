@@ -93,7 +93,7 @@ class TeamScoreViewModelTest {
     fun `it should update 'scored' when player in this team threw`() {
         givenTeamScoreViewModel(true)
         whenThrowing(Turn(), playerFromMyTeam)
-        assertEquals(givenTurn.total(), subject.score.get().score - subject.scored.get())
+        assertEquals(givenTurn.total(), subject.score.get()!!.score - subject.scored.get())
     }
 
     @Test

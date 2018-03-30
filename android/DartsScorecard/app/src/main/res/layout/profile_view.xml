@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> navigator.onProfileSelected(profileImage, profile)}"
+        android:background="?selectableItemBackground"
         android:padding="@dimen/def">
 
         <de.hdodenhof.circleimageview.CircleImageView

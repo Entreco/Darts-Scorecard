@@ -67,3 +67,5 @@ release/
 store/recordings/
 
 \.DS_Store
+
+store/

@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: RetrieveLatestGameUsecase) : BaseViewModel() {
 
-    val resumedGame = ObservableField<CreateGameResponse?>(null)
+    val resumedGame = ObservableField<CreateGameResponse?>()
 
     fun onNewGamePressed(context: Context) {
         Setup01Activity.launch(context)

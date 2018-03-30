@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play.input
 
-import android.view.View
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
@@ -28,7 +27,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class InputViewModelTest {
 
-    @Mock private lateinit var mockView: View
     @Mock private lateinit var logger: Logger
     @Mock private lateinit var analytics: Analytics
     @InjectMocks private lateinit var subject: InputViewModel
@@ -412,7 +410,7 @@ class InputViewModelTest {
     }
 
     private fun thenRequiredIs(required: Int) {
-        assertEquals(required, subject.required.get().score)
+        assertEquals(required, subject.required.get()!!.score)
     }
 
     private fun thenFinalTurnIsStillEmpty() {

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
 import android.view.Menu
@@ -30,13 +31,22 @@ class EditPlayerNameActivity : ViewModelActivity() {
         binding.viewModel = viewModel
         binding.window = window
         binding.navigator = navigator
-        initToolbar(toolbar(binding), R.string.title_edit_profile)
+        initToolbar(toolbar(binding), title())
 
         viewModel.playerName(intent.getStringExtra(EXTRA_NAME), intent.getStringExtra(EXTRA_FAV), this)
     }
 
     private fun toolbar(binding: ActivityEditPlayerNameBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
+    }
+
+    @StringRes
+    private fun title() : Int {
+        return if(intent.getBooleanExtra(EXTRA_CREATE, false)){
+            R.string.title_create_profile
+        } else {
+            R.string.title_edit_profile
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,10 +65,20 @@ class EditPlayerNameActivity : ViewModelActivity() {
     companion object {
         const val EXTRA_NAME = "EXTRA_NAME"
         const val EXTRA_FAV = "EXTRA_FAV"
+        const val EXTRA_CREATE = "EXTRA_CREATE"
         fun launch(activity: Activity, name: String, fav: String): Intent {
             val intent = Intent(activity, EditPlayerNameActivity::class.java)
             intent.putExtra(EXTRA_NAME, name)
             intent.putExtra(EXTRA_FAV, fav)
+            intent.putExtra(EXTRA_CREATE, false)
+            return intent
+        }
+
+        fun launch(activity: Activity): Intent {
+            val intent = Intent(activity, EditPlayerNameActivity::class.java)
+            intent.putExtra(EXTRA_NAME, "")
+            intent.putExtra(EXTRA_FAV, "")
+            intent.putExtra(EXTRA_CREATE, true)
             return intent
         }
 

@@ -34,8 +34,8 @@ ext.versionName = { ->
 
 
 ext {
-    kotlinVersion = '1.2.30'
-    gradleVersion = '3.0.1'
+    kotlinVersion = '1.2.31'
+    gradleVersion = '3.1.0'
     gmsVersion = '3.2.0'
     dexCountVersion = '0.8.2'
     detektVersion = '1.0.0.RC6-3'
@@ -55,9 +55,9 @@ ext {
             support = '27.1.0',
             daggerVersion = '2.13',
             constraint = '1.0.2',
-            architecture = '1.1.0',
+            architecture = '1.1.1',
             room = '1.0.0',
-            firebase = '11.8.0',
+            firebase = '12.0.1',
             picasso = '2.5.1',
             circleImageView = '2.2.0',
             crash = '2.9.1@aar',

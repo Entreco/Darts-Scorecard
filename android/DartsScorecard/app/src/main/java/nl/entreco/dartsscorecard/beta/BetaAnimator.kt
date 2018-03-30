@@ -13,9 +13,9 @@ import kotlin.math.max
  */
 class BetaAnimator(binding: ActivityBetaBinding) {
 
-    private val behaviour: BottomSheetBehavior<View> = BottomSheetBehavior.from(binding.sheet)!!
-    private val appBar = binding.includeToolbar?.betaAppbar!!
-    private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar?.toolbar!!, binding.sheet, binding.sheet.voteFab)
+    private val behaviour: BottomSheetBehavior<View> = BottomSheetBehavior.from(binding.sheet)
+    private val appBar = binding.includeToolbar.betaAppbar
+    private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar.toolbar, binding.sheet, binding.sheet.voteFab)
     internal var toggler: Toggler? = null
 
     interface Toggler {

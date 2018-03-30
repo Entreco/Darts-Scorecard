@@ -18,7 +18,7 @@ abstract class InputBindings {
 
 
     companion object {
-        private val DEFAULT_ANIMATION_TIME: Long = 150
+        private const val DEFAULT_ANIMATION_TIME: Long = 150
         @JvmStatic
         @BindingAdapter("scoreInput")
         fun showScore(view: TextView, scoreInput: String) {

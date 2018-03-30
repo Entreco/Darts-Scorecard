@@ -33,7 +33,7 @@ class EditPlayerNameBinding {
         @JvmStatic
         @BindingAdapter("error")
         fun showError(view: TextInputLayout, @StringRes msg: Int) {
-            if (msg > 0) {
+            if (msg != 0) {
                 view.error = view.context.getString(msg)
             } else {
                 view.error = ""

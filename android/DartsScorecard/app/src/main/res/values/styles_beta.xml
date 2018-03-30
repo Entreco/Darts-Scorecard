@@ -31,7 +31,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Beta.DonateBtn" parent="Base.Widget.AppCompat.Button">
+    <style name="Beta.DonateBtn" parent="@style/Widget.AppCompat.Button">
         <item name="android:background">@drawable/launch_btn</item>
         <item name="android:textColor">?attr/launchText</item>
         <item name="android:layout_marginTop">@dimen/small</item>

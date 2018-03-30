@@ -7,6 +7,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.sound.SoundMapper
 import nl.entreco.domain.repository.AudioPrefRepository
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,6 +30,11 @@ class Play01ModuleTest {
     @Test
     fun `it should not be null`() {
         assertNotNull(subject())
+    }
+
+    @Test
+    fun `it should provide Play01Activity`() {
+        assertEquals(mockActivity, subject().provide01Activity())
     }
 
     @Test(expected = NullPointerException::class)

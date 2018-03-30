@@ -2,6 +2,7 @@ package nl.entreco.domain.play.mastercaller
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.Logger
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
@@ -32,6 +33,13 @@ class MasterCallerTest {
     }
 
     @Test
+    fun `it should log error when playing sound throws`() {
+        givenSubject()
+        whenPlayingSoundThrows()
+        thenErrorIsLogged()
+    }
+
+    @Test
     fun `it should release SoundRepo when stopping`() {
         givenSubject()
         whenStopping()
@@ -46,12 +54,21 @@ class MasterCallerTest {
         subject.play(MasterCallerRequest(scored))
     }
 
+    private fun whenPlayingSoundThrows() {
+        whenever(mockSoundRepository.play(any())).thenThrow(RuntimeException("audio not available"))
+        subject.play(MasterCallerRequest(300))
+    }
+
     private fun whenStopping() {
         subject.stop()
     }
 
     private fun thenRepositoryIsUsed() {
         verify(mockSoundRepository).play(any())
+    }
+
+    private fun thenErrorIsLogged() {
+        verify(mockLogger).e(any())
     }
 
     private fun thenRepositoryIsReleased() {

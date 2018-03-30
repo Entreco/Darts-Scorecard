@@ -4,10 +4,9 @@
     android:duration="500"
     android:interpolator="@android:interpolator/linear_out_slow_in"
     tools:targetApi="lollipop">
-    <changeBounds>
-        <arcMotion
-            android:maximumAngle="90"
-            android:minimumHorizontalAngle="90"
-            android:minimumVerticalAngle="0"/>
-    </changeBounds>
+    <changeBounds />
+    <arcMotion
+        android:maximumAngle="90"
+        android:minimumHorizontalAngle="90"
+        android:minimumVerticalAngle="0" />
 </transitionSet>

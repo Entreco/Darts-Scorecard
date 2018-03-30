@@ -9,7 +9,6 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.beta.connect.SubscribeToFeaturesUsecase
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,20 +45,6 @@ class BetaViewModelTest {
     }
 
     @Test
-    fun `it should set refreshing(true) when refreshing`() {
-        givenSubject()
-        whenRefreshing(true)
-        thenRefreshingIs(true)
-    }
-
-    @Test
-    fun `it should set refreshing(false) when refreshing`() {
-        givenSubject()
-        whenRefreshing(false)
-        thenRefreshingIs(false)
-    }
-
-    @Test
     fun `it should store Features when fetching features succeeds`() {
         givenSubject()
         whenFetchingFeaturesSucceeds()
@@ -86,13 +71,9 @@ class BetaViewModelTest {
         subject.unsubscribe(mockOwner)
     }
 
-    private fun whenRefreshing(refresh: Boolean) {
-        subject.refresh(refresh)
-    }
-
     private fun whenFetchingFeaturesSucceeds() {
         expectedFeatureList = listOf(Feature("ref", "title", "desc", "img", "", 3, 1))
-        subject.refresh(true)
+        subject.refresh()
         verify(mockSubscribeToFeaturesUsecase).subscribe(doneCaptor.capture(), any())
         try {
             doneCaptor.lastValue.invoke(expectedFeatureList)
@@ -101,7 +82,7 @@ class BetaViewModelTest {
     }
 
     private fun whenFetchingFeaturesFails(err: Throwable) {
-        subject.refresh(true)
+        subject.refresh()
         verify(mockSubscribeToFeaturesUsecase).subscribe(any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
@@ -112,10 +93,6 @@ class BetaViewModelTest {
 
     private fun thenUnsubscribeIsCalled() {
         verify(mockSubscribeToFeaturesUsecase).unsubscribe()
-    }
-
-    private fun thenRefreshingIs(expected: Boolean) {
-        assertEquals(expected, subject.isRefreshing.get())
     }
 
     private fun thenFeatureListIsEmpty() {

@@ -17,7 +17,8 @@ abstract class ScoreBindings {
     companion object {
         @JvmStatic
         @BindingAdapter("adapter", "teams", "scores", "scoreSettings", "finishUsecase", "uiCallback", requireAll = true)
-        fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings, finishUsecase: GetFinishUsecase, uiCallback: UiCallback?) {
+        fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings,
+                     finishUsecase: GetFinishUsecase, uiCallback: UiCallback?) {
 
             if (teams.size != scores.size) {
                 throw IllegalStateException("state mismatch, scores.size != teams.size! -> was this game already started?")

@@ -87,7 +87,7 @@ class VoteViewModelTest {
         givenDonation(1)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonationFails(1)
+        whenSubmittingDonationFails()
         thenVotesDoesNotContain("ref")
     }
 
@@ -96,7 +96,7 @@ class VoteViewModelTest {
         givenDonation(10)
         givenSubject()
         whenFeatureSelected(mockModel)
-        whenSubmittingDonationFails(1)
+        whenSubmittingDonationFails()
         thenDidAlreadyVoteIs(false)
     }
 
@@ -130,7 +130,7 @@ class VoteViewModelTest {
         doneCaptor.lastValue.invoke(SubmitVoteResponse(true))
     }
 
-    private fun whenSubmittingDonationFails(amount: Int) {
+    private fun whenSubmittingDonationFails() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
 
         subject.submitDonation(givenDonation)
@@ -162,9 +162,4 @@ class VoteViewModelTest {
     private fun thenViewFeatureIsTracked() {
         verify(mockAnalytics).trackViewFeature(any())
     }
-
-    private fun thenFeatureCountIsUpdated() {
-
-    }
-
 }

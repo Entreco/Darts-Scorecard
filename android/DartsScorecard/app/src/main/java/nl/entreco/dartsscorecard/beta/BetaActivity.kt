@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.widget.Toast
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
@@ -77,15 +76,15 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
 
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
-        recyclerView.layoutManager = GridLayoutManager(binding.root.context!!, 2)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
-
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
     }
 
     private fun toolbar(binding: ActivityBetaBinding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     override fun onBackPressed() {
@@ -93,7 +92,6 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.w("DONATE", "onActivityResult: $requestCode, $data")
         when {
             donateOk(requestCode, resultCode, data) -> donateViewModel.onMakeDonationSuccess(data)
             requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed()

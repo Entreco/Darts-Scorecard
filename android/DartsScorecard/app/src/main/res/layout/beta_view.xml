@@ -33,6 +33,7 @@
             android:background="@drawable/beta_bg"
             android:outlineProvider="background"
             android:scaleType="centerCrop"
+            android:contentDescription="@null"
             android:src="@drawable/beta_header_image"
             bind:imageUrl="@{feature.image}" />
 
@@ -111,6 +112,7 @@
             android:elevation="6dp"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_started"
+            android:contentDescription="@null"
             android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>

@@ -65,7 +65,7 @@ class InputViewModel @Inject constructor(
     }
 
     fun back() {
-        scoredTxt.set(scoredTxt.get().dropLast(1))
+        scoredTxt.set(scoredTxt.get()!!.dropLast(1))
     }
 
     fun clear(): Boolean {
@@ -81,14 +81,14 @@ class InputViewModel @Inject constructor(
     }
 
     fun entered(score: Int) {
-        val oldValue = scoredTxt.get()
+        val oldValue = scoredTxt.get()!!
         if (oldValue.length < 3) {
             scoredTxt.set(oldValue.plus(score.toString()))
         }
     }
 
     fun onPressedKey(key: Int, listener: InputListener): Boolean {
-        val score = parseScore(hintProvider.get().getHintForKey(key))
+        val score = parseScore(hintProvider.get()!!.getHintForKey(key))
         if (key == -1) { // Bust
             submit(score, listener, false)
         } else {
@@ -210,7 +210,7 @@ class InputViewModel @Inject constructor(
     }
 
     private fun didFinishLeg(): Boolean {
-        return required.get().score == turn.total()
+        return required.get()!!.score == turn.total()
     }
 
     private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH

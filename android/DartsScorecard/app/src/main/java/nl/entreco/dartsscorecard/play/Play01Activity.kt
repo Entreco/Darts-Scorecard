@@ -27,6 +27,7 @@ class Play01Activity : ViewModelActivity() {
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: MatchStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
+    private val navigator: Play01Navigator by lazy { component.navigator() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class Play01Activity : ViewModelActivity() {
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
-        binding.navigator = Play01Navigator(this)
+        binding.navigator = navigator
 
         if (savedInstanceState == null) {
             initGame()
@@ -58,7 +59,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun toolbar(binding: ActivityPlay01Binding): Toolbar {
-        return binding.includeToolbar?.toolbar!!
+        return binding.includeToolbar.toolbar
     }
 
     private fun resumeGame() {

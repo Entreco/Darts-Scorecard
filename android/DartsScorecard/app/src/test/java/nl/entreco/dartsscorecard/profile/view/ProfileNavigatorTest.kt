@@ -42,7 +42,7 @@ class ProfileNavigatorTest {
 
     @Test(expected = NotAMockException::class)
     fun onEditProfile() {
-        whenever(mockPlayerProfile.name).thenReturn(ObservableField<String>("Remco"))
+        whenever(mockPlayerProfile.name).thenReturn(ObservableField("Remco"))
         whenever(mockPlayerProfile.fav).thenReturn(ObservableInt(1))
         whenever(mockTextView.transitionName).thenReturn("transition")
         whenever(mockActivity.findViewById<TextView>(any())).thenReturn(mockTextView)

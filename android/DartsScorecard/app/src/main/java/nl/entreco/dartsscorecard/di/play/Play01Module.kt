@@ -17,9 +17,15 @@ import nl.entreco.domain.repository.SoundRepository
  * Created by Entreco on 14/11/2017.
  */
 @Module
-class Play01Module(activity: Play01Activity) {
+class Play01Module(private val activity: Play01Activity) {
 
     private val prefs = activity.getSharedPreferences("audio", Context.MODE_PRIVATE)
+
+    @Provides
+    @Play01Scope
+    fun provide01Activity() : Play01Activity {
+        return activity
+    }
 
     @Provides
     @Play01Scope
