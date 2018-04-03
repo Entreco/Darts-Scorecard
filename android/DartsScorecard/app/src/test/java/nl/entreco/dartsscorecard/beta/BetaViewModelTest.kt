@@ -72,7 +72,7 @@ class BetaViewModelTest {
     }
 
     private fun whenFetchingFeaturesSucceeds() {
-        expectedFeatureList = listOf(Feature("ref", "title", "desc", "img", "", 3, 1))
+        expectedFeatureList = listOf(Feature("ref", "title", "desc", "img", "", 3, 1, ""))
         subject.refresh()
         verify(mockSubscribeToFeaturesUsecase).subscribe(doneCaptor.capture(), any())
         try {

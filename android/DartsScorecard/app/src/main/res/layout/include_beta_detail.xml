@@ -41,7 +41,7 @@
                     android:id="@+id/preview"
                     style="@style/BetaHeader"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="@dimen/beta_header_height"
                     android:contentDescription="@null"
                     bind:imageUrl="@{viewModel.feature.image}" />
 
@@ -72,6 +72,16 @@
                     android:layout_height="@dimen/votable_banner_height"
                     android:contentDescription="@null"
                     android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}" />
+
+                <ImageView
+                    android:layout_width="@dimen/beta_header_height"
+                    android:layout_height="@dimen/beta_header_height"
+                    android:padding="@dimen/xlarge"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_play_video"
+                    android:scaleType="fitCenter"
+                    android:visibility="@{viewModel.showVideo}"
+                    android:onClick="@{(v) -> viewModel.launchVideo(v)}"/>
 
                 <FrameLayout
                     android:id="@+id/progress"
