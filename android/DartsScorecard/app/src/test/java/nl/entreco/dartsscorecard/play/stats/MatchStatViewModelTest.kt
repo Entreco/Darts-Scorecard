@@ -7,6 +7,7 @@ import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Stat
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
 import org.junit.Assert.assertEquals
@@ -25,6 +26,7 @@ class MatchStatViewModelTest {
     @Mock private lateinit var mockAdapter: MatchStatAdapter
     @Mock private lateinit var mockFetchGameStatsUsecase: FetchGameStatsUsecase
     @Mock private lateinit var mockFetchGameStatUsecase: FetchGameStatUsecase
+    @Mock private lateinit var mockArchiveStatsUsecase: ArchiveStatsUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockResponse: Play01Response
@@ -121,7 +123,7 @@ class MatchStatViewModelTest {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn(givenTeamIds)
-        subject = MatchStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockLogger)
+        subject = MatchStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveStatsUsecase, mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 

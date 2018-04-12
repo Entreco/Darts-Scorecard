@@ -183,7 +183,7 @@ class Play01ViewModelTest {
     fun `it should archive stats when game finished`() {
         givenFullyLoadedMockGame()
         whenNextStateIs(State.MATCH)
-        thenGameStatsAreArchived()
+        thenStatListenersAreNotifiedOfGameFinished()
     }
 
     @Test
@@ -323,10 +323,6 @@ class Play01ViewModelTest {
         verify(mockPlayGameUsecase).markGameAsFinished(MarkGameAsFinishedRequest(gameId))
     }
 
-    private fun thenGameStatsAreArchived() {
-        verify(mockPlayGameUsecase).archiveStats(ArchiveStatsRequest(gameId))
-    }
-
     private fun thenGameIsNotMarkedAsFinished() {
         verify(mockPlayGameUsecase, never()).markGameAsFinished(any())
     }
@@ -349,5 +345,9 @@ class Play01ViewModelTest {
 
     private fun thenStatListenersAreNotified() {
         verify(mock01Listeners).onStatsUpdated(1, 2)
+    }
+
+    private fun thenStatListenersAreNotifiedOfGameFinished() {
+        verify(mock01Listeners).onGameFinished(gameId)
     }
 }

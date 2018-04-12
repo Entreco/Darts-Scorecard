@@ -160,7 +160,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         finished.set(gameFinished)
         if (gameFinished) {
             playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
-            playGameUsecase.archiveStats(ArchiveStatsRequest(gameId))
+            gameListeners.onGameFinished(gameId)
         }
     }
 

@@ -5,4 +5,5 @@ package nl.entreco.domain.play.listeners
  */
 interface StatListener {
     fun onStatsChange(turnId: Long, metaId: Long)
+    fun onGameFinished(gameId: Long)
 }

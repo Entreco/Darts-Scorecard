@@ -44,7 +44,6 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockStatsUc: StoreMetaUsecase
     @Mock private lateinit var mockUndo: UndoTurnUsecase
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
-    @Mock private lateinit var mockArchive: ArchiveStatsUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockDone: (Long, Long) -> Unit
@@ -59,7 +58,7 @@ class Play01UsecaseTest {
 
     @Before
     fun setUp() {
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockArchive, mockLogger)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockLogger)
     }
 
     @Test
@@ -117,13 +116,7 @@ class Play01UsecaseTest {
         whenUndoLastTurn()
         thenUndoUsecaseIsExecuted()
     }
-
-    @Test
-    fun archiveStats() {
-        whenArchivingStats()
-        thenStatsAreArchived()
-    }
-
+    
     private fun whenStoringTurn(turn: Turn, state: State = State.NORMAL) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
         expectedTurnMeta = TurnMeta(1, 2, Score())
@@ -184,10 +177,6 @@ class Play01UsecaseTest {
         subject.undoLastTurn(expectedUndoRequest, {}, {})
     }
 
-    private fun whenArchivingStats() {
-        subject.archiveStats(ArchiveStatsRequest(12))
-    }
-
     private fun thenGameIsStarted() {
         verify(mockGame).start(2, teams)
     }
@@ -211,9 +200,4 @@ class Play01UsecaseTest {
     private fun thenUndoUsecaseIsExecuted() {
         verify(mockUndo).exec(eq(expectedUndoRequest), any(), any())
     }
-
-    private fun thenStatsAreArchived() {
-        verify(mockArchive).exec(any(), any(), any())
-    }
-
 }

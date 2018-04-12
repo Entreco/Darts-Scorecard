@@ -7,6 +7,8 @@ import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.archive.ArchiveStatsRequest
+import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.listeners.StatListener
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
@@ -16,8 +18,12 @@ import javax.inject.Inject
  * Created by entreco on 11/01/2018.
  */
 class MatchStatViewModel @Inject constructor(
-        val adapter: MatchStatAdapter, private val fetchGameStatsUsecase: FetchGameStatsUsecase,
-        private val fetchGameStatUsecase: FetchGameStatUsecase, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
+        val adapter: MatchStatAdapter,
+        private val fetchGameStatsUsecase: FetchGameStatsUsecase,
+        private val fetchGameStatUsecase: FetchGameStatUsecase,
+        private val archiveStatsUsecase: ArchiveStatsUsecase,
+        private val logger: Logger)
+    : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
 
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
 
@@ -63,5 +69,9 @@ class MatchStatViewModel @Inject constructor(
                 teamStats[teamIndex]?.append(listOf(response.stat))
             }
         }
+    }
+
+    override fun onGameFinished(gameId: Long) {
+        archiveStatsUsecase.exec(ArchiveStatsRequest(gameId, teams.joinToString { it.toString() }, emptyMap()), {}, {})
     }
 }
