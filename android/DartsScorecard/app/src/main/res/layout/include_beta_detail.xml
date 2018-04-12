@@ -73,16 +73,6 @@
                     android:contentDescription="@null"
                     android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}" />
 
-                <ImageView
-                    android:layout_width="@dimen/beta_header_height"
-                    android:layout_height="@dimen/beta_header_height"
-                    android:padding="@dimen/xlarge"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_play_video"
-                    android:scaleType="fitCenter"
-                    android:visibility="@{viewModel.showVideo}"
-                    android:onClick="@{(v) -> viewModel.launchVideo(v)}"/>
-
                 <FrameLayout
                     android:id="@+id/progress"
                     android:layout_width="match_parent"
@@ -111,11 +101,25 @@
                     android:text="@{viewModel.feature.description}"
                     tools:text="@string/votes_explained" />
 
+                <TextView
+                    android:id="@+id/video"
+                    style="@style/Beta.Description"
+                    android:padding="@dimen/small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/description"
+                    android:drawableEnd="@drawable/ic_play_video"
+                    android:layout_centerHorizontal="true"
+                    android:drawableTint="@color/gray"
+                    android:onClick="@{(v) -> viewModel.launchVideo(v)}"
+                    app:textWithTags="@{@string/beta_video}"
+                    android:visibility="@{viewModel.showVideo}" />
+
                 <include
                     layout="@layout/include_beta_donate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/description"
+                    android:layout_below="@id/video"
                     android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
                     app:total="@{viewModel.feature.total}"
                     app:viewModel="@{donateViewModel}" />
@@ -124,7 +128,7 @@
                     layout="@layout/include_beta_implementation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/description"
+                    android:layout_below="@id/video"
                     android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}"
                     app:feature="@{viewModel.feature}" />
 

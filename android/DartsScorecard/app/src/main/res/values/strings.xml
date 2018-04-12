@@ -33,6 +33,7 @@
     <string name="donation_button">%1$s %2$s</string>
     <string name="donation_thanks">Thanks! You are AWESOME!</string>
     <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p></string>
+    <string name="beta_video">&lt;b>Watch the video&lt;/b></string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>

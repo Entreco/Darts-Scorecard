@@ -52,7 +52,7 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            support = '27.1.0',
+            support = '27.1.1',
             daggerVersion = '2.13',
             constraint = '1.0.2',
             architecture = '1.1.1',
