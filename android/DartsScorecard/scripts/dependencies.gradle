@@ -35,7 +35,7 @@ ext.versionName = { ->
 
 ext {
     kotlinVersion = '1.2.31'
-    gradleVersion = '3.1.0'
+    gradleVersion = '3.1.1'
     gmsVersion = '3.2.0'
     dexCountVersion = '0.8.2'
     detektVersion = '1.0.0.RC6-3'
