@@ -14,6 +14,7 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.archive.ArchiveStatsRequest
 import nl.entreco.domain.play.listeners.*
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.MasterCallerRequest
@@ -159,6 +160,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         finished.set(gameFinished)
         if (gameFinished) {
             playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+            playGameUsecase.archiveStats(ArchiveStatsRequest(gameId))
         }
     }
 

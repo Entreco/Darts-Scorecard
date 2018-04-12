@@ -5,6 +5,8 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.archive.ArchiveStatsRequest
+import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.stats.*
 import org.junit.Before
 import org.junit.Test
@@ -42,6 +44,7 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockStatsUc: StoreMetaUsecase
     @Mock private lateinit var mockUndo: UndoTurnUsecase
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
+    @Mock private lateinit var mockArchive: ArchiveStatsUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockDone: (Long, Long) -> Unit
@@ -56,7 +59,7 @@ class Play01UsecaseTest {
 
     @Before
     fun setUp() {
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockLogger)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockArchive, mockLogger)
     }
 
     @Test
@@ -115,7 +118,13 @@ class Play01UsecaseTest {
         thenUndoUsecaseIsExecuted()
     }
 
-    private fun whenStoringTurn(turn: Turn, state : State = State.NORMAL) {
+    @Test
+    fun archiveStats() {
+        whenArchivingStats()
+        thenStatsAreArchived()
+    }
+
+    private fun whenStoringTurn(turn: Turn, state: State = State.NORMAL) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
         expectedTurnMeta = TurnMeta(1, 2, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
@@ -169,9 +178,14 @@ class Play01UsecaseTest {
         givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
         subject.markGameAsFinished(givenMarkFinishRequest)
     }
+
     private fun whenUndoLastTurn() {
         expectedUndoRequest = UndoTurnRequest(1)
         subject.undoLastTurn(expectedUndoRequest, {}, {})
+    }
+
+    private fun whenArchivingStats() {
+        subject.archiveStats(ArchiveStatsRequest(12))
     }
 
     private fun thenGameIsStarted() {
@@ -196,6 +210,10 @@ class Play01UsecaseTest {
 
     private fun thenUndoUsecaseIsExecuted() {
         verify(mockUndo).exec(eq(expectedUndoRequest), any(), any())
+    }
+
+    private fun thenStatsAreArchived() {
+        verify(mockArchive).exec(any(), any(), any())
     }
 
 }

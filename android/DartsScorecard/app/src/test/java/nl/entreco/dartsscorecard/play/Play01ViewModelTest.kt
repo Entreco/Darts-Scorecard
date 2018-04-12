@@ -9,6 +9,7 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
+import nl.entreco.domain.play.archive.ArchiveStatsRequest
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
@@ -66,7 +67,6 @@ class Play01ViewModelTest {
     private val givenArbiter: Arbiter = Arbiter(Score(createGameRequest.startScore))
     private val gameId: Long = 1002
     private val teamIds = "1|2"
-
 
     @Before
     fun setUp() {
@@ -177,6 +177,13 @@ class Play01ViewModelTest {
         givenFullyLoadedMockGame()
         whenNextStateIs(State.MATCH)
         thenGameIsMarkedAsFinished()
+    }
+
+    @Test
+    fun `it should archive stats when game finished`() {
+        givenFullyLoadedMockGame()
+        whenNextStateIs(State.MATCH)
+        thenGameStatsAreArchived()
     }
 
     @Test
@@ -314,6 +321,10 @@ class Play01ViewModelTest {
 
     private fun thenGameIsMarkedAsFinished() {
         verify(mockPlayGameUsecase).markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+    }
+
+    private fun thenGameStatsAreArchived() {
+        verify(mockPlayGameUsecase).archiveStats(ArchiveStatsRequest(gameId))
     }
 
     private fun thenGameIsNotMarkedAsFinished() {

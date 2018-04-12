@@ -2,6 +2,8 @@ package nl.entreco.domain.play.start
 
 import nl.entreco.domain.Logger
 import nl.entreco.domain.model.TurnMeta
+import nl.entreco.domain.play.archive.ArchiveStatsRequest
+import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.stats.*
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
@@ -16,6 +18,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                                         private val storeMetaUsecase: StoreMetaUsecase,
                                         private val undoTurnUsecase: UndoTurnUsecase,
                                         private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase,
+                                        private val archiveStatsUsecase: ArchiveStatsUsecase,
                                         private val logger: Logger) {
 
     fun loadGameAndStart(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
@@ -77,5 +80,9 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                     val scoreSettings = ScoreSettings(playRequest.startScore, playRequest.numLegs, playRequest.numSets, playRequest.startIndex)
                     done.invoke(Play01Response(gameResponse.game, scoreSettings, teamResponse.teams, playRequest.teamIds))
                 }, { err -> fail(err) })
+    }
+
+    fun archiveStats(archiveStatsRequest: ArchiveStatsRequest) {
+        archiveStatsUsecase.exec(archiveStatsRequest, {}, {})
     }
 }
