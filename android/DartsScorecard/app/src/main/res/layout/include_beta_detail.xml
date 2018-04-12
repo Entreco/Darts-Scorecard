@@ -111,6 +111,7 @@
                     android:drawableEnd="@drawable/ic_play_video"
                     android:layout_centerHorizontal="true"
                     android:drawableTint="@color/gray"
+                    android:drawablePadding="@dimen/small"
                     android:onClick="@{(v) -> viewModel.launchVideo(v)}"
                     app:textWithTags="@{@string/beta_video}"
                     android:visibility="@{viewModel.showVideo}" />
