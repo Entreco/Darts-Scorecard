@@ -5,4 +5,4 @@ import android.app.PendingIntent
 /**
  * Created by entreco on 09/02/2018.
  */
-data class MakeDonationResponse(val intent: PendingIntent, val payload: String)
+class MakeDonationResponse(val intent: PendingIntent, val payload: String)

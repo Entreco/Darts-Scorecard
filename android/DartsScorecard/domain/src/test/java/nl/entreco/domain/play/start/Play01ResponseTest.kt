@@ -29,7 +29,7 @@ class Play01ResponseTest {
     @Test
     fun `it should report equals on new instance`() {
         val response1 = Play01Response(mockGame, mockSettings, arrayOf(mockTeam1, mockTeam2), "")
-        val response2 = Play01Response(mockGame, mockSettings, arrayOf(mockTeam1, mockTeam2),"")
+        val response2 = Play01Response(mockGame, mockSettings, arrayOf(mockTeam1, mockTeam2), "")
         assertEquals(response1, response2)
     }
 

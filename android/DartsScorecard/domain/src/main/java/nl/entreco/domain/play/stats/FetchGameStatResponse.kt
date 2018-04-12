@@ -5,4 +5,4 @@ import nl.entreco.domain.model.Stat
 /**
  * Created by entreco on 22/01/2018.
  */
-data class FetchGameStatResponse(val stat: Stat)
+ class FetchGameStatResponse(val stat: Stat)

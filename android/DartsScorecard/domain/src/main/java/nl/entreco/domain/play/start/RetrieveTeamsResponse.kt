@@ -6,7 +6,7 @@ import java.util.*
 /**
  * Created by entreco on 06/01/2018.
  */
-data class RetrieveTeamsResponse(val teams: Array<Team>) {
+ class RetrieveTeamsResponse(val teams: Array<Team>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
