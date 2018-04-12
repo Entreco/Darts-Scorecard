@@ -6,7 +6,7 @@ import nl.entreco.domain.model.Turn
 /**
  * Created by entreco on 06/01/2018.
  */
-data class GetFinishRequest(val score: Score, val turn: Turn, private val favDouble: Int) {
+class GetFinishRequest(val score: Score, val turn: Turn, private val favDouble: Int) {
     fun score(): Int {
         return score.score
     }
