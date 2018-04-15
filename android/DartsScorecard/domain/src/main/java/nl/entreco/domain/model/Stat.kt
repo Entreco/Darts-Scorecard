@@ -3,7 +3,8 @@ package nl.entreco.domain.model
 /**
  * Created by entreco on 16/01/2018.
  */
-data class Stat(val playerId: Long, val totalScore: Int, val nDarts: Int, val n180: Int, val n140: Int, val n100: Int, val nAtCheckout: Int, val nCheckouts : Int, val nBreaks : Int, val highest: List<Int>, val highestCo: List<Int>) {
+data class Stat(val playerId: Long, val totalScore: Int, val nDarts: Int, val n180: Int, val n140: Int, val n100: Int,  val n60: Int, val n20: Int,
+                val nAtCheckout: Int, val nCheckouts : Int, val nBreaks : Int, val highest: List<Int>, val highestCo: List<Int>) {
 
     operator fun plus(stat: Stat?): Stat {
         stat?.let {
@@ -14,6 +15,8 @@ data class Stat(val playerId: Long, val totalScore: Int, val nDarts: Int, val n1
                     n180 = n180 + stat.n180,
                     n140 = n140 + stat.n140,
                     n100 = n100 + stat.n100,
+                    n60 = n60 + stat.n60,
+                    n20 = n20 + stat.n20,
                     nAtCheckout = nAtCheckout + stat.nAtCheckout,
                     nCheckouts = nCheckouts + stat.nCheckouts,
                     nBreaks = nBreaks + stat.nBreaks,

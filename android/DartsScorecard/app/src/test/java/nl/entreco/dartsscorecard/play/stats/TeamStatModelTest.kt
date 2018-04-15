@@ -26,8 +26,8 @@ class TeamStatModelTest {
 
     @Test
     fun `it should update stats at the start`() {
-        subject = TeamStatModel(mockTeam, mutableListOf(Stat(1, 2, 3, 4, 5, 6, 15, 5, 9, listOf(10), listOf(11))))
-        thenStatsAre("2.00", "4", "5", "6", "11", "33.33%", "9")
+        subject = TeamStatModel(mockTeam, mutableListOf(Stat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11))))
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
     @Test
@@ -45,29 +45,29 @@ class TeamStatModelTest {
     @Test
     fun `it should update stats (normal case)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 15, 5, 9, listOf(10), listOf(11)))
-        thenStatsAre("2.00", "4", "5", "6", "11", "33.33%", "9")
+        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
     @Test
     fun `it should update stats (no average)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 0, 0, 4, 5, 6, 15, 5, 9, listOf(10), listOf(11)))
-        thenStatsAre("--", "4", "5", "6", "11", "33.33%", "9")
+        whenUpdating(Stat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        thenStatsAre("--", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
     @Test
     fun `it should update stats (no percentage)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 0, 0, 9, listOf(10), listOf(11)))
-        thenStatsAre("2.00", "4", "5", "6", "11", "--", "9")
+        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, listOf(10), listOf(11)))
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "--", "9")
     }
 
     @Test
     fun `it should update stats (no high checkout)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 0, 0, 9, emptyList(), emptyList()))
-        thenStatsAre("2.00", "4", "5", "6", "--", "--", "9")
+        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, emptyList(), emptyList()))
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "--", "--", "9")
     }
 
     private fun givenSubject(name: String) {
@@ -84,21 +84,23 @@ class TeamStatModelTest {
         assertEquals(TeamStatModel.empty, subject.n180.get().toString())
         assertEquals(TeamStatModel.empty, subject.n140.get().toString())
         assertEquals(TeamStatModel.empty, subject.n100.get().toString())
+        assertEquals(TeamStatModel.empty, subject.n60.get().toString())
+        assertEquals(TeamStatModel.empty, subject.n20.get().toString())
     }
 
     private fun thenNameIs(expectedName: String) {
         assertEquals(expectedName, subject.name.get())
     }
 
-    private fun thenStatsAre(avg: String, n180: String, n140: String, n100: String, highestCheckout: String, checkoutPercentage: String, numberOfBreaks: String) {
+    private fun thenStatsAre(avg: String, n180: String, n140: String, n100: String, n60: String, n20: String, highestCheckout: String, checkoutPercentage: String, numberOfBreaks: String) {
         assertEquals(avg, subject.avg.get())
         assertEquals(n180, subject.n180.get())
         assertEquals(n140, subject.n140.get())
         assertEquals(n100, subject.n100.get())
+        assertEquals(n60, subject.n60.get())
+        assertEquals(n20, subject.n20.get())
         assertEquals(highestCheckout, subject.hCo.get())
         assertEquals(checkoutPercentage, subject.co.get())
         assertEquals(numberOfBreaks, subject.breaks.get())
-
-
     }
 }

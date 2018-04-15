@@ -13,7 +13,8 @@ class MatchStatPageAnimator(private val size: Float) {
 
         val statFactor = page.width - size
         val animator = MatchStatPageAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score,
-                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7, statFactor)
+                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7,
+                binding.stat8, binding.stat9, statFactor)
         animator.transform(page, position)
     }
 
@@ -21,7 +22,8 @@ class MatchStatPageAnimator(private val size: Float) {
                                                 private val name1: View, private val name2: View, private val score: View,
                                                 private val stat1: View, private val stat2: View, private val stat3: View,
                                                 private val stat4: View, private val stat5: View, private val stat6: View,
-                                                private val stat7: View, private val statFactor: Float) {
+                                                private val stat7: View, private val stat8: View, private val stat9: View,
+                                                private val statFactor: Float) {
 
         // [-1. 1] range of position
         fun transform(page: View, position: Float) {
@@ -47,6 +49,8 @@ class MatchStatPageAnimator(private val size: Float) {
             animateStat(stat5, position, statFactor)
             animateStat(stat6, position, statFactor)
             animateStat(stat7, position, statFactor)
+            animateStat(stat8, position, statFactor)
+            animateStat(stat9, position, statFactor)
         }
 
         private fun stayPut(view: View) {

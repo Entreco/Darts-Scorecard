@@ -21,7 +21,7 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = DataBindingUtil.inflate<WidgetListStatsBinding>(LayoutInflater.from(container.context), R.layout.widget_list_stats, container, false)
         binding.team0 = items[position]
-        binding.team1 = items[(position + 1) % items.size]
+        binding.team1 = if(items.size >= 2) items[(position + 1) % items.size] else null
         binding.navigator = navigator
         binding.root.tag = position
         binding.executePendingBindings()

@@ -18,6 +18,8 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     val n180 = ObservableField<String>(empty)
     val n140 = ObservableField<String>(empty)
     val n100 = ObservableField<String>(empty)
+    val n60 = ObservableField<String>(empty)
+    val n20 = ObservableField<String>(empty)
     val hCo = ObservableField<String>(empty)
     val co = ObservableField<String>(empty)
     val breaks = ObservableField<String>(empty)
@@ -41,6 +43,8 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
         update180s()
         update140s()
         update100s()
+        update60s()
+        update20s()
         updateHighestCheckout()
         updateDoublePercentage()
         updateBreaksMade()
@@ -70,6 +74,15 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
             null -> hCo.set(empty)
             else -> hCo.set("$value")
         }
+    }
+
+    private fun update20s() {
+        val value = stats.sumBy { it.n20 }
+        n20.set("$value")
+    }
+    private fun update60s() {
+        val value = stats.sumBy { it.n60 }
+        n60.set("$value")
     }
 
     private fun update100s() {

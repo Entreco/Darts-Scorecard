@@ -74,6 +74,8 @@
     <string name="live_180s">180\'s</string>
     <string name="live_140s">140+</string>
     <string name="live_100s">100+</string>
+    <string name="live_60s">60+</string>
+    <string name="live_20s">20+</string>
     <string name="live_average">average</string>
 
     <!-- Specific -->

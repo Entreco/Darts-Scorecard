@@ -28,10 +28,12 @@ class StatMapper {
         val n180 = if (t.total() == 180) 1 else 0
         val n140 = if (t.total() in 140..179) 1 else 0
         val n100 = if (t.total() in 100..139) 1 else 0
+        val n60 = if (t.total() in 60..99) 1 else 0
+        val n20 = if (t.total() in 20..59) 1 else 0
         val checkout = if (didFinish(t, meta)) 1 else 0
         val highCo = if (didFinish(t, meta)) listOf(t.total()) else emptyList()
         val breaks = if (meta.breakMade) 1 else 0
-        return Stat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
+        return Stat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, n60, n20, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
     }
 
     private fun didFinish(t: Turn, meta: MetaTable) = t.total() == meta.score

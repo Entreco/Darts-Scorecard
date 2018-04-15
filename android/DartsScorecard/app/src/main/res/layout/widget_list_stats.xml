@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="team0"
             type="nl.entreco.dartsscorecard.play.stats.TeamStatModel" />
+
         <variable
             name="team1"
             type="nl.entreco.dartsscorecard.play.stats.TeamStatModel" />
+
         <variable
             name="navigator"
             type="nl.entreco.dartsscorecard.play.Play01Navigator" />
@@ -44,8 +47,8 @@
                 android:background="@drawable/profile_bg"
                 android:contentDescription="@null"
                 android:onClick="@{(view) -> navigator.gotoTeamProfile(view, team0.team)}"
-                app:profileImage="@{team0.image}"
-                android:transitionName="profile" />
+                android:transitionName="profile"
+                app:profileImage="@{team0.image}" />
 
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
@@ -59,13 +62,15 @@
                 android:background="@drawable/profile_bg"
                 android:contentDescription="@null"
                 android:onClick="@{(view) -> navigator.gotoTeamProfile(view, team1.team)}"
-                app:profileImage="@{team1.image}"
-                android:transitionName="profile" />
+                android:transitionName="profile"
+                app:hideIfOneTeam="@{team1 == null}"
+                app:profileImage="@{team1.image}" />
 
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <!-- Results -->
@@ -100,12 +105,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vs"
+                app:hideIfOneTeam="@{team1 == null}"
                 tools:text="VS" />
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:hideIfOneTeam="@{team1 == null}">
 
                 <TextView
                     android:id="@+id/name2"
@@ -146,11 +153,66 @@
                 style="@style/Main.Value"
                 android:layout_width="@dimen/match_stat_width"
                 android:layout_height="wrap_content"
-                android:text="@{team1.avg.toString()}" />
+                android:text="@{team1.avg.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/stat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team0.n20.toString()}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_20s" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.n20.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stat3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team0.n60.toString()}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_60s" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.n60.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stat4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -172,11 +234,12 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.n100.toString()}" />
+                android:text="@{team1.n100.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat3"
+            android:id="@+id/stat5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -198,11 +261,12 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.n140.toString()}" />
+                android:text="@{team1.n140.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat4"
+            android:id="@+id/stat6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -225,11 +289,12 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.n180.toString()}" />
+                android:text="@{team1.n180.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat5"
+            android:id="@+id/stat7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -251,11 +316,12 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.hCo.toString()}" />
+                android:text="@{team1.hCo.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat6"
+            android:id="@+id/stat8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -277,11 +343,12 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.co.toString()}" />
+                android:text="@{team1.co.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat7"
+            android:id="@+id/stat9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -303,7 +370,8 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:text="@{team1.breaks.toString()}" />
+                android:text="@{team1.breaks.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
 

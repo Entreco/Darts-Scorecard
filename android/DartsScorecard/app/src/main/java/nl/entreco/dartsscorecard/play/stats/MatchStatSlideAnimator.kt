@@ -14,7 +14,8 @@ class MatchStatSlideAnimator(private val view: View, private val left: View?, pr
     private val binding by lazy { DataBindingUtil.getBinding<WidgetListStatsBinding>(view)!! }
     private val animator by lazy {
         MatchStatSlideAnimatorHandler(binding.player1, binding.player2, binding.name1, binding.name2, binding.score,
-                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7)
+                binding.stat1, binding.stat2, binding.stat3, binding.stat4, binding.stat5, binding.stat6, binding.stat7,
+                binding.stat8, binding.stat9)
     }
 
     fun onSlide(slideOffset: Float) {
@@ -28,7 +29,7 @@ class MatchStatSlideAnimator(private val view: View, private val left: View?, pr
                                                  private val name1: View, private val name2: View, private val score: View,
                                                  private val stat1: View, private val stat2: View, private val stat3: View,
                                                  private val stat4: View, private val stat5: View, private val stat6: View,
-                                                 private val stat7: View) {
+                                                 private val stat7: View, private val stat8: View, private val stat9: View) {
         fun slide(slideOffset: Float) {
             // Fly In Players
             player1.animate().translationX(slideOffset * -player1.width / 3).setDuration(0).start()
@@ -45,6 +46,8 @@ class MatchStatSlideAnimator(private val view: View, private val left: View?, pr
             animateState(stat5.animate(), 5, slideOffset)
             animateState(stat6.animate(), 6, slideOffset)
             animateState(stat7.animate(), 7, slideOffset)
+            animateState(stat8.animate(), 8, slideOffset)
+            animateState(stat9.animate(), 9, slideOffset)
         }
 
         private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {

@@ -37,7 +37,7 @@ class MatchStatViewModelTest {
     private var givenScores: Array<Score> = emptyArray()
     private var givenExistingStats: Map<Long, Stat> = emptyMap()
 
-    private var givenUpdatedStat: Stat = Stat(1, 2, 3, 4, 5, 6, 7, 8, 9, emptyList(), emptyList())
+    private var givenUpdatedStat: Stat = Stat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2,3,emptyList(), emptyList())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchGameStatResponse) -> Unit>()
 
