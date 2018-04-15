@@ -47,6 +47,16 @@ class StatTest {
         assertEquals(3, n100s(1, 1, 1).n100)
     }
 
+    @Test
+    fun `it should add 60-stats together`() {
+        assertEquals(6, n60s(1, 1, 0, 4).n60)
+    }
+
+    @Test
+    fun `it should add 20-stats together`() {
+        assertEquals(14, n20s(8, 5, 1).n20)
+    }
+
     private fun totalScore(score: Int, vararg scores: Int): Stat {
         var stat = statWith(totalScore = score)
         scores.map { statWith(totalScore = it) }.forEach { stat += it }
@@ -77,9 +87,21 @@ class StatTest {
         return stat
     }
 
+    private fun n60s(dart: Int, vararg darts: Int): Stat {
+        var stat = statWith(n60 = dart)
+        darts.map { statWith(n60 = it) }.forEach { stat += it }
+        return stat
+    }
+
+    private fun n20s(dart: Int, vararg darts: Int): Stat {
+        var stat = statWith(n20 = dart)
+        darts.map { statWith(n20 = it) }.forEach { stat += it }
+        return stat
+    }
+
     private fun statWith(playerId: Long = 0, totalScore: Int = 0, nDarts: Int = 0,
-                         n180: Int = 0, n140: Int = 0, n100: Int = 0, nAtCheckout: Int = 0, nCheckouts: Int = 0,
+                         n180: Int = 0, n140: Int = 0, n100: Int = 0, n60: Int = 0, n20: Int = 0, nAtCheckout: Int = 0, nCheckouts: Int = 0,
                          nBreaks: Int = 0, highest: List<Int> = emptyList(), highestCo: List<Int> = emptyList()): Stat {
-        return Stat(playerId, totalScore, nDarts, n180, n140, n100, nAtCheckout, nCheckouts, nBreaks, highest, highestCo)
+        return Stat(playerId, totalScore, nDarts, n180, n140, n100, n60, n20, nAtCheckout, nCheckouts, nBreaks, highest, highestCo)
     }
 }
