@@ -8,8 +8,11 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdProvider
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
+import nl.entreco.dartsscorecard.di.ad.AdComponent
+import nl.entreco.dartsscorecard.di.ad.AdModule
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
@@ -22,6 +25,8 @@ import nl.entreco.domain.setup.game.CreateGameResponse
 class Play01Activity : ViewModelActivity() {
 
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
+    private val adComponent: AdComponent by componentProvider { it.plus(AdModule(resources)) }
+    private val adProvider: AdProvider by lazy { adComponent.ads() }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
@@ -64,6 +69,7 @@ class Play01Activity : ViewModelActivity() {
 
     private fun resumeGame() {
         viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel, inputViewModel)
+        viewModel.registerAdProvider(adProvider)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

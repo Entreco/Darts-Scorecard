@@ -20,6 +20,6 @@ class App : Application() {
     }
 
     private fun initAdMob() {
-        MobileAds.initialize(this, "ca-app-pub-3793327349392749~1846337901")
+        MobileAds.initialize(this, resources.getString(R.string.app_id))
     }
 }

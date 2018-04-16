@@ -13,8 +13,8 @@
             type="nl.entreco.dartsscorecard.setup.players.PlayersViewModel" />
 
         <variable
-            name="adsViewModel"
-            type="nl.entreco.dartsscorecard.setup.ad.AdViewModel" />
+            name="adProvider"
+            type="nl.entreco.dartsscorecard.ad.AdProvider" />
 
         <variable
             name="settingsViewModel"
@@ -53,7 +53,7 @@
 
                 <include
                     layout="@layout/include_setup_ad"
-                    app:viewModel="@{adsViewModel}" />
+                    app:provider="@{adProvider}" />
 
                 <include
                     layout="@layout/include_setup_settings"

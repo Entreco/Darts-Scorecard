@@ -6,11 +6,13 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdProvider
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivitySetup01Binding
+import nl.entreco.dartsscorecard.di.ad.AdComponent
+import nl.entreco.dartsscorecard.di.ad.AdModule
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
-import nl.entreco.dartsscorecard.setup.ad.AdViewModel
 import nl.entreco.dartsscorecard.setup.players.PlayersViewModel
 import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel
 
@@ -20,9 +22,10 @@ import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel
 class Setup01Activity : ViewModelActivity() {
 
     private val component: Setup01Component by componentProvider { it.plus(Setup01Module(this)) }
+    private val adComponent: AdComponent by componentProvider { it.plus(AdModule(resources)) }
+    private val adProvider: AdProvider by lazy { adComponent.ads() }
     private val viewModel: Setup01ViewModel by viewModelProvider { component.viewModel() }
     private val playersViewModel: PlayersViewModel by viewModelProvider { component.players() }
-    private val adsViewModel: AdViewModel by viewModelProvider { component.ads() }
     private val settingsViewModel: SettingsViewModel by viewModelProvider { component.settings() }
     private val navigator: Setup01Navigator by lazy { Setup01Navigator(this) }
 
@@ -31,7 +34,7 @@ class Setup01Activity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivitySetup01Binding>(this, R.layout.activity_setup_01)
         binding.viewModel = viewModel
         binding.playersViewModel = playersViewModel
-        binding.adsViewModel = adsViewModel
+        binding.adProvider = adProvider
         binding.settingsViewModel = settingsViewModel
         binding.navigator = navigator
 

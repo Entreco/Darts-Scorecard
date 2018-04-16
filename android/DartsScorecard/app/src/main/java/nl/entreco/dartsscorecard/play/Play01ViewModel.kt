@@ -5,6 +5,7 @@ import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdProvider
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
@@ -14,7 +15,6 @@ import nl.entreco.domain.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.archive.ArchiveStatsRequest
 import nl.entreco.domain.play.listeners.*
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.MasterCallerRequest
@@ -52,6 +52,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private lateinit var teams: Array<Team>
     private lateinit var load: GameLoadedNotifier<ScoreSettings>
     private lateinit var loaders: Array<GameLoadedNotifier<Play01Response>>
+
+    private var adProvider: AdProvider? = null
 
     fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
         this.request = request
@@ -99,6 +101,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         gameListeners.registerListeners(scoreListener, statListener, specialEventListener, *playerListeners)
     }
 
+    fun registerAdProvider(provider: AdProvider){
+        adProvider = provider
+    }
+
     override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
         this.gameListeners.onLetsPlayDarts(game, listeners)
         this.loading.set(false)
@@ -140,6 +146,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
+        showInterstitial(next)
         storeTurn(turn, by, next)
     }
 
@@ -168,8 +175,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         gameListeners.onTurnSubmitted(next, turn, by, scores)
     }
 
-    private fun notifyMasterCaller(next: Next, turn: Turn){
-        when(next.state){
+    private fun notifyMasterCaller(next: Next, turn: Turn) {
+        when (next.state) {
             State.START -> masterCaller.play(MasterCallerRequest(start = true))
             State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
             State.SET -> masterCaller.play(MasterCallerRequest(set = true))
@@ -179,11 +186,20 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         }
     }
 
+    private fun showInterstitial(next: Next) {
+        when (next.state) {
+            State.SET -> adProvider?.provideInterstitial()
+            State.MATCH -> adProvider?.provideInterstitial()
+            else -> {
+            }
+        }
+    }
+
     fun stop() {
         masterCaller.stop()
     }
 
-    fun initToggleMenuItem(menu: Menu?){
+    fun initToggleMenuItem(menu: Menu?) {
         menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
     }
 

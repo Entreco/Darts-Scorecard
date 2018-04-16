@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.setup.ad
 
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.ad.AdLoader
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks

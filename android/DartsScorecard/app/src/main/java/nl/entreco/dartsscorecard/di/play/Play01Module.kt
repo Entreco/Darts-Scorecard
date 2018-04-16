@@ -23,7 +23,7 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provide01Activity() : Play01Activity {
+    fun provide01Activity(): Play01Activity {
         return activity
     }
 
@@ -35,13 +35,13 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provideSoundMapper() : SoundMapper {
+    fun provideSoundMapper(): SoundMapper {
         return SoundMapper()
     }
 
     @Provides
     @Play01Scope
-    fun provideAudioPreferences() : AudioPrefRepository {
+    fun provideAudioPreferences(): AudioPrefRepository {
         return SharedAudioPrefRepo(prefs)
     }
 

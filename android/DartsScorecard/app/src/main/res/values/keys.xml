@@ -2,4 +2,5 @@
 <resources>
     <!-- AdMob -->
     <string name="setup_ad_unit_id">ca-app-pub-3793327349392749/2238054293</string>
+    <string name="setup_interstitial_unit_id">ca-app-pub-3793327349392749/9019610403</string>
 </resources>
