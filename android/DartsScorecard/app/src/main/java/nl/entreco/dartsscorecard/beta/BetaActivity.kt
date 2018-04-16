@@ -77,6 +77,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
     private fun initRecyclerView(binding: ActivityBetaBinding) {
         val recyclerView = binding.betaRecyclerView
         recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(20)
         recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.isDrawingCacheEnabled = true
