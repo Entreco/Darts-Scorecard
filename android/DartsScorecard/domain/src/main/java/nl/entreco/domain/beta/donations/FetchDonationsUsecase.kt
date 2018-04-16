@@ -13,7 +13,7 @@ class FetchDonationsUsecase @Inject constructor(private val billingRepository: B
 
     fun exec(done: (FetchDonationsResponse)->Unit, fail: (Throwable) -> Unit){
         onBackground({
-            val donations = billingRepository.fetchDonations().sortedBy { it.priceMicros }
+            val donations = billingRepository.fetchDonations().sortedBy { it.priceMicros.toLong() }
             val sorted = donations.sortedBy { it.price }
             onUi { done(FetchDonationsResponse(sorted)) }
         }, fail)

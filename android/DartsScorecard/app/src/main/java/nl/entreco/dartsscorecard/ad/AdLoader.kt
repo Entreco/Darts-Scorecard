@@ -31,8 +31,6 @@ class AdLoader @Inject constructor(@Named("adId") private val adId: String) : Ad
 
     fun loadAd(view: AdView, adListener: AdListener) {
         listener = adListener
-//        view.adSize = AdSize.SMART_BANNER
-//        view.adUnitId = adId
         view.adListener = this
         view.loadAd(adRequest)
     }
