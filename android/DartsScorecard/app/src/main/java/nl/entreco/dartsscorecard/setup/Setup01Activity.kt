@@ -5,12 +5,13 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import com.google.android.gms.ads.InterstitialAd
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdLoader
 import nl.entreco.dartsscorecard.ad.AdProvider
+import nl.entreco.dartsscorecard.ad.InterstitialLoader
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivitySetup01Binding
-import nl.entreco.dartsscorecard.di.ad.AdComponent
-import nl.entreco.dartsscorecard.di.ad.AdModule
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.setup.players.PlayersViewModel
@@ -21,9 +22,8 @@ import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel
  */
 class Setup01Activity : ViewModelActivity() {
 
+    private val adProvider: AdProvider by lazy { AdProvider(AdLoader(""), InterstitialLoader("", InterstitialAd(this))) }
     private val component: Setup01Component by componentProvider { it.plus(Setup01Module(this)) }
-    private val adComponent: AdComponent by componentProvider { it.plus(AdModule(resources)) }
-    private val adProvider: AdProvider by lazy { adComponent.ads() }
     private val viewModel: Setup01ViewModel by viewModelProvider { component.viewModel() }
     private val playersViewModel: PlayersViewModel by viewModelProvider { component.players() }
     private val settingsViewModel: SettingsViewModel by viewModelProvider { component.settings() }

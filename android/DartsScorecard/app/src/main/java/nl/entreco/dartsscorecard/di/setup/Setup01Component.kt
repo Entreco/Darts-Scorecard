@@ -1,8 +1,6 @@
 package nl.entreco.dartsscorecard.di.setup
 
 import dagger.Subcomponent
-import nl.entreco.dartsscorecard.di.ad.AdComponent
-import nl.entreco.dartsscorecard.di.ad.AdModule
 import nl.entreco.dartsscorecard.setup.Setup01ViewModel
 import nl.entreco.dartsscorecard.setup.players.PlayersViewModel
 import nl.entreco.dartsscorecard.setup.settings.SettingsViewModel

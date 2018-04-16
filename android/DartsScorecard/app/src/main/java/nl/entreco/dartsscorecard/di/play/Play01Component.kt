@@ -1,8 +1,6 @@
 package nl.entreco.dartsscorecard.di.play
 
 import dagger.Subcomponent
-import nl.entreco.dartsscorecard.di.ad.AdComponent
-import nl.entreco.dartsscorecard.di.ad.AdModule
 import nl.entreco.dartsscorecard.play.Play01Navigator
 import nl.entreco.dartsscorecard.play.Play01ViewModel
 import nl.entreco.dartsscorecard.play.input.InputViewModel

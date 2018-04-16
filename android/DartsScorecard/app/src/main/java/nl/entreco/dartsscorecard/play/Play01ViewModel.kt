@@ -42,6 +42,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
+                                          private val adProvider: AdProvider,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -52,8 +53,6 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private lateinit var teams: Array<Team>
     private lateinit var load: GameLoadedNotifier<ScoreSettings>
     private lateinit var loaders: Array<GameLoadedNotifier<Play01Response>>
-
-    private var adProvider: AdProvider? = null
 
     fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
         this.request = request
@@ -99,10 +98,6 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     fun registerListeners(scoreListener: ScoreListener, statListener: StatListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
         gameListeners.registerListeners(scoreListener, statListener, specialEventListener, *playerListeners)
-    }
-
-    fun registerAdProvider(provider: AdProvider){
-        adProvider = provider
     }
 
     override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
@@ -188,8 +183,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private fun showInterstitial(next: Next) {
         when (next.state) {
-            State.SET -> adProvider?.provideInterstitial()
-            State.MATCH -> adProvider?.provideInterstitial()
+            State.START -> adProvider.provideInterstitial()
+            State.LEG -> adProvider.provideInterstitial()
+            State.SET -> adProvider.provideInterstitial()
+            State.MATCH -> adProvider.provideInterstitial()
             else -> {
             }
         }
