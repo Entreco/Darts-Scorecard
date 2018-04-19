@@ -30,7 +30,7 @@ class MatchStatSlideAnimatorTest {
     }
 
     private fun givenSubject() {
-        subject = MatchStatSlideAnimator.MatchStatSlideAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView)
+        subject = MatchStatSlideAnimator.MatchStatSlideAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView)
     }
 
     private fun whenSliding() {

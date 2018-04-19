@@ -303,6 +303,33 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
+                android:text="@{team0.hScore.toString()}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_highest_score" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.hScore.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stat8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
                 android:text="@{team0.hCo.toString()}" />
 
             <TextView
@@ -321,7 +348,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat8"
+            android:id="@+id/stat9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -348,7 +375,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/stat9"
+            android:id="@+id/stat10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

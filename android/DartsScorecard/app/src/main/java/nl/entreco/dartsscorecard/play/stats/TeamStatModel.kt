@@ -20,6 +20,7 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     val n100 = ObservableField<String>(empty)
     val n60 = ObservableField<String>(empty)
     val n20 = ObservableField<String>(empty)
+    val hScore = ObservableField<String>(empty)
     val hCo = ObservableField<String>(empty)
     val co = ObservableField<String>(empty)
     val breaks = ObservableField<String>(empty)
@@ -45,6 +46,7 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
         update100s()
         update60s()
         update20s()
+        updateHighestScore()
         updateHighestCheckout()
         updateDoublePercentage()
         updateBreaksMade()
@@ -65,6 +67,16 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
         }
     }
 
+    private fun updateHighestScore() {
+        val value = stats
+                .filter { it.highest.isNotEmpty() }
+                .maxBy { it.highest[0] }
+                ?.highest?.firstOrNull()
+        when (value) {
+            null -> hScore.set(empty)
+            else -> hScore.set("$value")
+        }
+    }
     private fun updateHighestCheckout() {
         val value = stats
                 .filter { it.highestCo.isNotEmpty() }

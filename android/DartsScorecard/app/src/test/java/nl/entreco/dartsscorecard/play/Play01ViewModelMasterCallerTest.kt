@@ -7,6 +7,7 @@ import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdProvider
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
@@ -39,6 +40,7 @@ class Play01ViewModelMasterCallerTest {
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
+    @Mock private lateinit var mockAdProvider: AdProvider
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -95,7 +97,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 

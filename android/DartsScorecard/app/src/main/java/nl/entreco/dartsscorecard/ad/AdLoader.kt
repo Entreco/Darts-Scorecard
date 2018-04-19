@@ -14,6 +14,7 @@ class AdLoader @Inject constructor(@Named("adId") private val adId: String) : Ad
 
     interface AdListener {
         fun onAdLoaded()
+        fun onAdFailed()
     }
 
     private val adRequest by lazy { AdRequest.Builder().build() }
@@ -26,7 +27,7 @@ class AdLoader @Inject constructor(@Named("adId") private val adId: String) : Ad
 
     override fun onAdFailedToLoad(p0: Int) {
         super.onAdFailedToLoad(p0)
-        listener?.onAdLoaded()
+        listener?.onAdFailed()
     }
 
     fun loadAd(view: AdView, adListener: AdListener) {

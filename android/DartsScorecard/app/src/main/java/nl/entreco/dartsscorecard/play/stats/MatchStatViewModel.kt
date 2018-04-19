@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.stats
 
 import android.databinding.ObservableArrayMap
+import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
@@ -26,6 +27,7 @@ class MatchStatViewModel @Inject constructor(
     : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
 
     val teamStats = ObservableArrayMap<Int, TeamStatModel>()
+    val currentTeam = ObservableInt()
 
     private lateinit var teams: Array<Team>
 
@@ -43,6 +45,7 @@ class MatchStatViewModel @Inject constructor(
         teams.forEachIndexed { index, team ->
             teamStats[index] = TeamStatModel(team)
         }
+        currentTeam.set(0)
     }
 
     private fun onStatsFetched(teams: Array<Team>): (FetchGameStatsResponse) -> Unit {
@@ -67,6 +70,7 @@ class MatchStatViewModel @Inject constructor(
             val teamIndex = teams.indexOfFirst { it.contains(response.stat.playerId) }
             if (teamIndex >= 0) {
                 teamStats[teamIndex]?.append(listOf(response.stat))
+                currentTeam.set(teamIndex)
             }
         }
     }

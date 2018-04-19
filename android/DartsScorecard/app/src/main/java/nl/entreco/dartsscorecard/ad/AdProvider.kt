@@ -16,6 +16,10 @@ class AdProvider @Inject constructor(
             override fun onAdLoaded() {
                 showAd.set(true)
             }
+
+            override fun onAdFailed() {
+                showAd.set(false)
+            }
         })
     }
 

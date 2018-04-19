@@ -43,4 +43,10 @@ class MatchStatBindingTest {
         MatchStatBinding.hideIfOnlyOneTeam(mockView, false)
         verify(mockView).visibility = View.VISIBLE
     }
+
+    @Test
+    fun `it should scroll to currentTeam`() {
+        MatchStatBinding.scrollToCurrentTeam(mockPager, 0)
+        verify(mockPager).setCurrentItem( 0, true)
+    }
 }
