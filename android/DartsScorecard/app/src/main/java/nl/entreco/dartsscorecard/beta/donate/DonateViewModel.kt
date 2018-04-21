@@ -9,7 +9,7 @@ import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.beta.connect.ConnectToBillingUsecase
+import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.domain.beta.donations.*
 import javax.inject.Inject
 

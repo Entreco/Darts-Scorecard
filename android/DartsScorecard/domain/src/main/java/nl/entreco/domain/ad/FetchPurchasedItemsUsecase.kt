@@ -7,15 +7,14 @@ import nl.entreco.domain.repository.BillingRepository
 import javax.inject.Inject
 
 
-class FetchPurchasedItemsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg){
+class FetchPurchasedItemsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(done:(FetchPurchasedItemsResponse)->Unit, fail: (Throwable)->Unit){
+    fun exec(done: (FetchPurchasedItemsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val items = billingRepository.fetchPurchasedItems()
             onUi {
                 done(FetchPurchasedItemsResponse(items.isEmpty()))
             }
-
         }, fail)
     }
 }

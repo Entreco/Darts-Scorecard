@@ -23,7 +23,7 @@ class AdLoaderTest {
 
     @Before
     fun setUp() {
-        subject = AdLoader("id")
+        subject = AdLoader()
     }
 
     @Test

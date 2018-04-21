@@ -5,7 +5,7 @@ import android.content.Intent
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.beta.connect.ConnectToBillingUsecase
+import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.domain.beta.donations.*
 import org.junit.Assert.assertEquals
 import org.junit.Test

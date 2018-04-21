@@ -1,4 +1,4 @@
-package nl.entreco.domain.beta.connect
+package nl.entreco.domain.purchases.connect
 
 import android.support.annotation.UiThread
 import nl.entreco.domain.BaseUsecase

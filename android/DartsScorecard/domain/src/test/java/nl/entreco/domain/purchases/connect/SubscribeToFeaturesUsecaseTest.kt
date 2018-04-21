@@ -1,4 +1,4 @@
-package nl.entreco.domain.beta.connect
+package nl.entreco.domain.purchases.connect
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
