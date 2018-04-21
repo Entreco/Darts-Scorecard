@@ -36,7 +36,7 @@ allprojects {
 
 configurations.all {
     resolutionStrategy {
-        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
         force "com.android.support:appcompat-v7:$support"
         force "com.android.support:design:$support"
         force "com.android.support:appcompat-v7:$support"
