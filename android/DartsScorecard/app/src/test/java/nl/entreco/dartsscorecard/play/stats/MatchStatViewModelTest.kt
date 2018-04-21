@@ -119,6 +119,14 @@ class MatchStatViewModelTest {
         thenErrorIsLogged()
     }
 
+    @Test
+    fun `it should archive stats on game finished`() {
+        givenTeams("barney", "army")
+        givenSubjectLoaded()
+        whenGameFinished()
+        thenStatsAreArchived()
+    }
+
     private fun givenSubjectLoaded() {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
@@ -180,6 +188,10 @@ class MatchStatViewModelTest {
         failCaptor.lastValue.invoke(err)
     }
 
+    private fun whenGameFinished() {
+        subject.onGameFinished(12)
+    }
+
     private fun thenStatIsFetched() {
         verify(mockFetchGameStatUsecase).exec(any(), any(), any())
     }
@@ -217,5 +229,9 @@ class MatchStatViewModelTest {
 
     private fun thenTeamStat180IsEmpty(index: Int) {
         assertEquals("--", subject.teamStats[index]?.n180?.get())
+    }
+
+    private fun thenStatsAreArchived() {
+        verify(mockArchiveStatsUsecase).exec(any(), any(), any())
     }
 }

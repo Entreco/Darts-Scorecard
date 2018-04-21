@@ -56,6 +56,6 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     }
 
     private fun onProfileFailed(): (Throwable) -> Unit = {
-        errorMsg.set(R.string.err_unable_to_fetch_players)
+        this.errorMsg.set(R.string.err_unable_to_fetch_players)
     }
 }

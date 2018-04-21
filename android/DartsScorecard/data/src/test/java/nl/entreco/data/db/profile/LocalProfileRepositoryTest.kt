@@ -3,6 +3,7 @@ package nl.entreco.data.db.profile
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.player.PlayerDao
+import nl.entreco.data.db.player.PlayerTable
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -33,4 +34,14 @@ class LocalProfileRepositoryTest {
         assertNotNull(subject.fetchAll(LongArray(0)))
     }
 
+    @Test
+    fun update() {
+        whenever(mockPlayerDao.fetchById(0)).thenReturn(PlayerTable())
+        assertNotNull(subject.update(0, "name", "image", "20"))
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `update can also throw for non-existing players`() {
+        assertNotNull(subject.update(0, "name", "image", "double"))
+    }
 }

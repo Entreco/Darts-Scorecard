@@ -11,8 +11,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -35,6 +34,7 @@ class PlayStoreBillingRepositoryTest {
     private lateinit var expectedResponse: MakeDonationResponse
     private var expectedConsumtionResponse: Int = 0
     private var expectedDonation = emptyList<Donation>()
+    private var expectedPurchasedItems = emptyList<String>()
 
     private val gson = GsonBuilder().create()
 
@@ -106,6 +106,19 @@ class PlayStoreBillingRepositoryTest {
         whenConsumingFails()
     }
 
+    @Test
+    fun `it should report result when query purchase items succeeds`() {
+        givenSubject()
+        whenFetchingPurchasesSucceeds("item§1", "item 2")
+        assertNotNull(expectedPurchasedItems)
+    }
+
+    @Test(expected = Throwable::class)
+    fun `it should throw exception when query purchase items fails`() {
+        givenSubject()
+        whenFetchingPurchasesFails()
+    }
+
     private fun givenSubject() {
         subject = PlayStoreBillingRepository(mockContext, mockServiceConnection)
     }
@@ -154,6 +167,18 @@ class PlayStoreBillingRepositoryTest {
     private fun whenConsumingFails() {
         whenever(mockServiceConnection.getService()).thenReturn(null)
         subject.consume("token")
+    }
+
+    private fun whenFetchingPurchasesSucceeds(vararg purchases: String) {
+        whenever(mockBundle.getStringArrayList("INAPP_PURCHASE_ITEM_LIST")).thenReturn(ArrayList(purchases.map { it }))
+        whenever(mockInappBillingService.getPurchases(any(), eq(null), eq("inapp"), eq("unused token"))).thenReturn(mockBundle)
+        whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
+        expectedPurchasedItems = subject.fetchPurchasedItems()
+    }
+
+    private fun whenFetchingPurchasesFails() {
+        whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
+        subject.fetchPurchasedItems()
     }
 
     private fun thenCallbackIsSetOnService() {
