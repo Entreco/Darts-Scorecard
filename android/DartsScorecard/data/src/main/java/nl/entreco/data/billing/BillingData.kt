@@ -15,7 +15,9 @@ internal val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/:".t
 class Donate10Votes : BillingData("10_feature_votes", 10)
 class Donate50Votes : BillingData("50_feature_votes", 50)
 class Donate100Votes : BillingData("100_feature_votes", 100)
+class Donate200Votes : BillingData("200_feature_votes", 200)
 class Donate500Votes : BillingData("500_feature_votes", 500)
+class Donate1000Votes : BillingData("1000_feature_votes", 1000)
 class DonateTestPurchased : BillingData("android.test.purchased", 10)
 class DonateTestCancelled : BillingData("android.test.canceled", 10)
 class DonateTestRefunded : BillingData("android.test.refunded", 10)
@@ -24,7 +26,7 @@ class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
 class FetchDonationsData {
 
     private fun listOfDonations(): List<BillingData> {
-        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes(), Donate500Votes())
+        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes(), Donate200Votes(), Donate500Votes(), Donate1000Votes())
 //        return listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable())
     }
 
@@ -63,6 +65,16 @@ class MakeDonationData(private val donation: Donation) {
 
     fun payload(): String {
         return (0..100).joinToString { chars[Random().nextInt(chars.size - 1)].toString() }
+    }
+}
+
+class FetchPurchasesData {
+    fun type(): String {
+        return "inapp"
+    }
+
+    fun token(): String {
+        return "unused token"
     }
 }
 

@@ -23,4 +23,7 @@ interface BillingRepository {
 
     @WorkerThread
     fun consume(token: String): Int
+
+    @WorkerThread
+    fun fetchPurchasedItems(): List<String>
 }

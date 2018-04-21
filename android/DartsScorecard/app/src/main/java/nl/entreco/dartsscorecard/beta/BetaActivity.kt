@@ -7,10 +7,10 @@ import android.content.Intent
 import android.content.IntentSender
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
-import android.widget.Toast
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.beta.donate.DonateCallback
@@ -27,6 +27,7 @@ import nl.entreco.domain.beta.donations.MakeDonationResponse
  */
 class BetaActivity : ViewModelActivity(), DonateCallback {
 
+    private lateinit var binding: ActivityBetaBinding
     private val component: BetaComponent by componentProvider { it.plus(BetaModule(this)) }
     private val viewModel: BetaViewModel by viewModelProvider { component.viewModel() }
     private val votesViewModel: VoteViewModel by viewModelProvider { component.votes() }
@@ -37,7 +38,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityBetaBinding>(this, R.layout.activity_beta)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_beta)
         animator = BetaAnimator(binding)
         binding.viewModel = viewModel
         binding.voteViewModel = votesViewModel
@@ -71,7 +72,14 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
 
     override fun onDonationMade(donation: Donation) {
         votesViewModel.submitDonation(donation)
-        Toast.makeText(this, R.string.donation_thanks, Toast.LENGTH_SHORT).show()
+        showTankYouToast()
+    }
+
+    private fun showTankYouToast() {
+        val snack = Snackbar.make(binding.root, R.string.donation_thanks, Snackbar.LENGTH_INDEFINITE)
+        snack.setAction(R.string.donation_ok, { snack.dismiss() })
+        snack.setActionTextColor(getColor(R.color.colorAccent))
+        snack.show()
     }
 
     private fun initRecyclerView(binding: ActivityBetaBinding) {

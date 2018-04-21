@@ -10,7 +10,7 @@ import javax.inject.Named
 /**
  * Created by Entreco on 29/12/2017.
  */
-class AdLoader @Inject constructor(@Named("adId") private val adId: String) : AdListener() {
+class AdLoader @Inject constructor() : AdListener() {
 
     interface AdListener {
         fun onAdLoaded()
