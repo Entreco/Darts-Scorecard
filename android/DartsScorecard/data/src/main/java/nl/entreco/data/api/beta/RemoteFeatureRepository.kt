@@ -29,7 +29,7 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
 
     private fun convertToFeature(doc: DocumentSnapshot) {
         try {
-            val feature = doc.toObject(FeatureApiData::class.java)
+            val feature = doc.toObject(FeatureApiData::class.java)!!
             features[doc.id] = Feature(doc.id, feature.title, feature.description, feature.image, feature.remarks ?: "", feature.goal, feature.count, feature.video)
         } catch (oops: Exception) {
             logger.e("Unable to convert snapshot to feature( $doc ) $oops")
@@ -44,8 +44,8 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
     override fun submitVote(featureId: String, amount: Int) {
         val feature = featureRef.document(featureId)
         db.runTransaction { transaction ->
-            val max = transaction.get(feature).getLong("goal")
-            val count = transaction.get(feature).getLong("count") + amount
+            val max = transaction.get(feature).getLong("goal")!!
+            val count = amount + transaction.get(feature).getLong("count")!!
             if (count <= max) {
                 transaction.update(feature, "count", count)
             } else {

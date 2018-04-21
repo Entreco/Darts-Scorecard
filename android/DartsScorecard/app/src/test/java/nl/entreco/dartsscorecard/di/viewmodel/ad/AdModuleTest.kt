@@ -21,7 +21,7 @@ class AdModuleTest {
     fun provideInterstialAd() {
         assertNotNull(AdModule().provideInterstialAd(mockContext))
     }
-    
+
     @Test
     fun provideInterstitialUnitId() {
         whenever(mockResources.getString(R.string.setup_interstitial_unit_id)).thenReturn("interstitial id")

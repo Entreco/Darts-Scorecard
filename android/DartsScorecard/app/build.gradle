@@ -36,7 +36,7 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room"
 
     // Implementation
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
