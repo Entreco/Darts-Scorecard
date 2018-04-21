@@ -47,9 +47,19 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
     }
 
     @WorkerThread
-    override fun fetchDonations(): List<Donation> {
-
+    override fun fetchDonationsExclAds(): List<Donation> {
         val donations = FetchDonationsData()
+        return fetchProducts(donations)
+    }
+
+    @WorkerThread
+    override fun fetchDonationsInclAds(): List<Donation> {
+        val donations = FetchDonationsInclAdsData()
+        return fetchProducts(donations)
+    }
+
+    @WorkerThread
+    private fun fetchProducts(donations: InAppProducts): List<Donation> {
         val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
 
         return if (bundle?.getInt(FETCH_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {

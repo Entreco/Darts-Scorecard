@@ -13,8 +13,15 @@ class FetchDonationsUsecase @Inject constructor(private val billingRepository: B
 
     fun exec(done: (FetchDonationsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val donations = billingRepository.fetchDonations().sortedBy { it.priceMicros.toLong() }
-            onUi { done(FetchDonationsResponse(donations)) }
+
+            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
+            if (hasPreviouslyBoughtItems) {
+                val donations = billingRepository.fetchDonationsExclAds().sortedBy { it.priceMicros.toLong() }
+                onUi { done(FetchDonationsResponse(donations, true)) }
+            } else {
+                val donations = billingRepository.fetchDonationsInclAds().sortedBy { it.priceMicros.toLong() }
+                onUi { done(FetchDonationsResponse(donations, false)) }
+            }
         }, fail)
     }
 }

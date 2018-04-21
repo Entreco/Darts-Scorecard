@@ -18,16 +18,22 @@ class Donate100Votes : BillingData("100_feature_votes", 100)
 class Donate200Votes : BillingData("200_feature_votes", 200)
 class Donate500Votes : BillingData("500_feature_votes", 500)
 class Donate1000Votes : BillingData("1000_feature_votes", 1000)
+
+class DonateAds10Votes : BillingData("10_remove_ads_votes", 10)
+class DonateAds50Votes : BillingData("50_remove_ads_votes", 50)
+class DonateAds100Votes : BillingData("100_remove_ads_votes", 100)
+class DonateAds200Votes : BillingData("200_remove_ads_votes", 200)
+class DonateAds500Votes : BillingData("500_remove_ads_votes", 500)
+class DonateAds1000Votes : BillingData("1000_remove_ads_votes", 1000)
+
 class DonateTestPurchased : BillingData("android.test.purchased", 10)
 class DonateTestCancelled : BillingData("android.test.canceled", 10)
 class DonateTestRefunded : BillingData("android.test.refunded", 10)
 class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
 
-class FetchDonationsData {
-
+sealed class InAppProducts(private val billingData: List<BillingData>) {
     private fun listOfDonations(): List<BillingData> {
-        return listOf(Donate10Votes(), Donate50Votes(), Donate100Votes(), Donate200Votes(), Donate500Votes(), Donate1000Votes())
-//        return listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable())
+        return billingData
     }
 
     private fun listOfProducts(): List<String> {
@@ -53,6 +59,11 @@ class FetchDonationsData {
     }
 }
 
+class FetchDonationsInclAdsData : InAppProducts(listOf(DonateAds10Votes(), DonateAds50Votes(), DonateAds100Votes(), DonateAds200Votes(), DonateAds500Votes(), DonateAds1000Votes()))
+class FetchDonationsData : InAppProducts(listOf(Donate10Votes(), Donate50Votes(), Donate100Votes(), Donate200Votes(), Donate500Votes(), Donate1000Votes()))
+class FetchDonationsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
+class FetchDonationsInclAdsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
+
 class MakeDonationData(private val donation: Donation) {
 
     fun sku(): String {
@@ -70,7 +81,7 @@ class MakeDonationData(private val donation: Donation) {
 
 class FetchPurchasesData {
     fun type(): String {
-        return "inapp"
+        return type
     }
 
     fun token(): String {

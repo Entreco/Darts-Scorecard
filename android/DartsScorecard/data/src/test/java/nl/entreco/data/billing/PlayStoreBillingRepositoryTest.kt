@@ -138,12 +138,12 @@ class PlayStoreBillingRepositoryTest {
         whenever(mockInappBillingService.getSkuDetails(any(), eq(null), any(), any())).thenReturn(mockBundle)
         whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
 
-        expectedDonation = subject.fetchDonations()
+        expectedDonation = subject.fetchDonationsExclAds()
     }
 
     private fun whenFetchingDonationsFails() {
         whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
-        subject.fetchDonations()
+        subject.fetchDonationsExclAds()
     }
 
     private fun whenDonationsSucceeds() {

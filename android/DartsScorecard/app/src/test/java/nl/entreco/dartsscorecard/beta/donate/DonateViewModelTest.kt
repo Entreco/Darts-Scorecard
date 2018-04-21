@@ -289,7 +289,7 @@ class DonateViewModelTest {
     private fun whenFetchingDonationsSucceeds(list: List<Donation>) {
         whenBindingSucceeds()
         verify(mockFetchDonationsUsecase).exec(fetchDoneCaptor.capture(), any())
-        fetchDoneCaptor.lastValue.invoke(FetchDonationsResponse(list))
+        fetchDoneCaptor.lastValue.invoke(FetchDonationsResponse(list, true))
     }
 
     private fun whenFetchingDonationsFails() {

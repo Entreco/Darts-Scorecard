@@ -29,6 +29,7 @@ class DonateViewModel @Inject constructor(
     }
 
     internal var productId: String = ""
+    internal var requiresConsumption = true
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
 
@@ -49,9 +50,12 @@ class DonateViewModel @Inject constructor(
         if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
         else {
             analytics.trackAchievement("Donation $data")
-            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
-                    onConsumeDonationSuccess(),
-                    onConsumeDonationFailed())
+
+            if(requiresConsumption) {
+                consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
+                        onConsumeDonationSuccess(),
+                        onConsumeDonationFailed())
+            }
         }
     }
 
@@ -59,6 +63,7 @@ class DonateViewModel @Inject constructor(
         analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
         loading.set(false)
         productId = ""
+        requiresConsumption = false
     }
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
@@ -69,6 +74,7 @@ class DonateViewModel @Inject constructor(
 
         loading.set(false)
         productId = ""
+        requiresConsumption = false
     }
 
     private fun donationDone(response: ConsumeDonationResponse) {
@@ -82,8 +88,8 @@ class DonateViewModel @Inject constructor(
         analytics.trackPurchaseFailed(productId, "ConsumeDonation failed")
         loading.set(false)
         productId = ""
+        requiresConsumption = false
     }
-
 
     private fun donationWithId(response: ConsumeDonationResponse): Donation? =
             donations.firstOrNull { it.sku == response.productId }
@@ -92,14 +98,17 @@ class DonateViewModel @Inject constructor(
         analytics.trackPurchaseFailed(productId, "ActivityResult failed")
         loading.set(false)
         productId = ""
+        requiresConsumption = false
     }
 
     private fun onFetchDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->
+        requiresConsumption = result.needToBeConsumed
         donations.clear()
         donations.addAll(result.donations)
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
+        requiresConsumption = false
         analytics.trackPurchaseFailed(productId, "FetchDonations failed")
     }
 
