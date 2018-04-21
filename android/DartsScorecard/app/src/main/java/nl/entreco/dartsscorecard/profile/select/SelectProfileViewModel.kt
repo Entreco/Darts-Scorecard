@@ -37,7 +37,6 @@ class SelectProfileViewModel @Inject constructor(
 
     fun deletePlayerProfile(position: Int, adapter: SelectProfileAdapter) {
         val player = adapter.playerIdAt(position)
-        adapter.removeAt(position)
         deletePlayerUsecase.delete(DeletePlayerRequest(player), {}, onFailed())
         reload(adapter)
     }

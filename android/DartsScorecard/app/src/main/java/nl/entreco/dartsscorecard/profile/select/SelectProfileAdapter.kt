@@ -1,6 +1,10 @@
 package nl.entreco.dartsscorecard.profile.select
 
 import android.databinding.DataBindingUtil
+import android.support.annotation.NonNull
+import android.support.v7.recyclerview.extensions.AsyncDifferConfig
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
@@ -11,9 +15,7 @@ import nl.entreco.domain.profile.Profile
 /**
  * Created by entreco on 04/03/2018.
  */
-class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : TestableAdapter<ProfileView>() {
-
-    private val items: MutableList<Profile> = mutableListOf()
+class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : ListAdapter<Profile, ProfileView>(diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileView {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,25 +24,24 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : Test
     }
 
     override fun onBindViewHolder(holder: ProfileView, position: Int) {
-        holder.bind(items[position], navigator)
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        holder.bind(getItem(position), navigator)
     }
 
     fun playerIdAt(position: Int): Long {
-        return items[position].id
+        return getItem(position).id
     }
 
     fun setItems(profiles: List<Profile>) {
-        items.clear()
-        items.addAll(profiles)
-        notifyDataSetChanged()
+        submitList(profiles)
+    }
+}
+
+val diff : DiffUtil.ItemCallback<Profile> = object : DiffUtil.ItemCallback<Profile>() {
+    override fun areItemsTheSame(oldItem: Profile?, newItem: Profile?): Boolean {
+        return oldItem?.id == newItem?.id
     }
 
-    fun removeAt(position: Int) {
-        items.removeAt(position)
-        tryNotifyItemRemoved(position)
+    override fun areContentsTheSame(oldItem: Profile?, newItem: Profile?): Boolean {
+        return oldItem == newItem
     }
 }
