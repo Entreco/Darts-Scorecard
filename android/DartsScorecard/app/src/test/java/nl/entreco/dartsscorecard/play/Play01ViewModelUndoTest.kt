@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.dartsscorecard.ad.AdProvider
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.Logger
@@ -31,7 +31,7 @@ class Play01ViewModelUndoTest {
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockResponse: Play01Response
-    @Mock private lateinit var mockAdProvider: AdProvider
+    @Mock private lateinit var mockAdProvider: AdViewModel
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>

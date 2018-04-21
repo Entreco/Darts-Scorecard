@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @ActivityScope
-class AdProvider @Inject constructor(
+class AdViewModel @Inject constructor(
         @ActivityScope private val lifeCycle: Lifecycle,
         @ActivityScope private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
@@ -48,11 +48,6 @@ class AdProvider @Inject constructor(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun bind() {
-        checkIfUserHasPurchasedItems()
-    }
-
     private fun checkIfUserHasPurchasedItems() {
         connectToBillingUsecase.bind { connected ->
             if (connected) {
@@ -71,6 +66,11 @@ class AdProvider @Inject constructor(
         return { err ->
             logger.w("Unable to fetchPurchasedItems, $err")
         }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun bind() {
+        checkIfUserHasPurchasedItems()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

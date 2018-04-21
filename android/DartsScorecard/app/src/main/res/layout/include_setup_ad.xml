@@ -8,8 +8,8 @@
     <data>
 
         <variable
-            name="provider"
-            type="nl.entreco.dartsscorecard.ad.AdProvider" />
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.ad.AdViewModel" />
     </data>
 
     <LinearLayout
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
-        app:showAd="@{provider.showAd}">
+        app:showAd="@{viewModel.showAd}">
 
         <TextView
             style="@style/Setup.Hdr"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             ads:adSize="SMART_BANNER"
             ads:adUnitId="@string/setup_ad_unit_id"
-            app:provider="@{provider}" />
+            app:viewModel="@{viewModel}" />
 
         <!-- Footer -->
         <TextView style="@style/Setup.Ftr" />

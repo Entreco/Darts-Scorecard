@@ -5,7 +5,7 @@ import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdProvider
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
@@ -42,7 +42,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
-                                          private val adProvider: AdProvider,
+                                          private val adViewModel: AdViewModel,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -183,10 +183,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private fun showInterstitial(next: Next) {
         when (next.state) {
-            State.START -> adProvider.provideInterstitial()
-            State.LEG -> adProvider.provideInterstitial()
-            State.SET -> adProvider.provideInterstitial()
-            State.MATCH -> adProvider.provideInterstitial()
+            State.START -> adViewModel.provideInterstitial()
+            State.LEG -> adViewModel.provideInterstitial()
+            State.SET -> adViewModel.provideInterstitial()
+            State.MATCH -> adViewModel.provideInterstitial()
             else -> {
             }
         }

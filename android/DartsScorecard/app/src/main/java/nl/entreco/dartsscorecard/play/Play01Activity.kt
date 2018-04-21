@@ -7,11 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.gms.ads.InterstitialAd
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdLoader
-import nl.entreco.dartsscorecard.ad.AdProvider
-import nl.entreco.dartsscorecard.ad.InterstitialLoader
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.di.play.Play01Component

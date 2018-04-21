@@ -10,9 +10,9 @@ import com.google.android.gms.ads.AdView
 abstract class AdBindings {
     companion object {
         @JvmStatic
-        @BindingAdapter("provider")
-        fun loadAd(view: AdView, provider: AdProvider?) {
-            provider?.provideAdd(view)
+        @BindingAdapter("viewModel")
+        fun loadAd(view: AdView, viewModel: AdViewModel?) {
+            viewModel?.provideAdd(view)
         }
 
         @JvmStatic
