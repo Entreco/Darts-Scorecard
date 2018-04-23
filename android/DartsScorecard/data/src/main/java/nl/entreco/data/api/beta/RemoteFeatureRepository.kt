@@ -1,7 +1,7 @@
 package nl.entreco.data.api.beta
 
 import com.google.firebase.firestore.*
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.repository.FeatureRepository
 

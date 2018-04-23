@@ -4,7 +4,7 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn

@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.ad
 import android.arch.lifecycle.Lifecycle
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase

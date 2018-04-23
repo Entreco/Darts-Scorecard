@@ -7,7 +7,7 @@ import org.junit.Test
 /**
  * Created by entreco on 23/01/2018.
  */
-class StatTest {
+class LiveStatTest {
 
     @Test
     fun `it should handle adding nulls`() {
@@ -57,43 +57,43 @@ class StatTest {
         assertEquals(14, n20s(8, 5, 1).n20)
     }
 
-    private fun totalScore(score: Int, vararg scores: Int): Stat {
+    private fun totalScore(score: Int, vararg scores: Int): LiveStat {
         var stat = statWith(totalScore = score)
         scores.map { statWith(totalScore = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun numDarts(dart: Int, vararg darts: Int): Stat {
+    private fun numDarts(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(nDarts = dart)
         darts.map { statWith(nDarts = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun n180s(dart: Int, vararg darts: Int): Stat {
+    private fun n180s(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(n180 = dart)
         darts.map { statWith(n180 = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun n140s(dart: Int, vararg darts: Int): Stat {
+    private fun n140s(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(n140 = dart)
         darts.map { statWith(n140 = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun n100s(dart: Int, vararg darts: Int): Stat {
+    private fun n100s(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(n100 = dart)
         darts.map { statWith(n100 = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun n60s(dart: Int, vararg darts: Int): Stat {
+    private fun n60s(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(n60 = dart)
         darts.map { statWith(n60 = it) }.forEach { stat += it }
         return stat
     }
 
-    private fun n20s(dart: Int, vararg darts: Int): Stat {
+    private fun n20s(dart: Int, vararg darts: Int): LiveStat {
         var stat = statWith(n20 = dart)
         darts.map { statWith(n20 = it) }.forEach { stat += it }
         return stat
@@ -101,7 +101,7 @@ class StatTest {
 
     private fun statWith(playerId: Long = 0, totalScore: Int = 0, nDarts: Int = 0,
                          n180: Int = 0, n140: Int = 0, n100: Int = 0, n60: Int = 0, n20: Int = 0, nAtCheckout: Int = 0, nCheckouts: Int = 0,
-                         nBreaks: Int = 0, highest: List<Int> = emptyList(), highestCo: List<Int> = emptyList()): Stat {
-        return Stat(playerId, totalScore, nDarts, n180, n140, n100, n60, n20, nAtCheckout, nCheckouts, nBreaks, highest, highestCo)
+                         nBreaks: Int = 0, highest: List<Int> = emptyList(), highestCo: List<Int> = emptyList()): LiveStat {
+        return LiveStat(playerId, totalScore, nDarts, n180, n140, n100, n60, n20, nAtCheckout, nCheckouts, nBreaks, highest, highestCo)
     }
 }

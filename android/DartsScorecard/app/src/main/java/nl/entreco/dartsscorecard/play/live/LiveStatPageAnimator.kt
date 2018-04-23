@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.view.View
 import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
@@ -6,7 +6,7 @@ import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 /**
  * Created by entreco on 27/03/2018.
  */
-class MatchStatPageAnimator(private val size: Float) {
+class LiveStatPageAnimator(private val size: Float) {
 
     fun transform(binding: WidgetListStatsBinding, page: View, position: Float) {
         page.alpha = 1F

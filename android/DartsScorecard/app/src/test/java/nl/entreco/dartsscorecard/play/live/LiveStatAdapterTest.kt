@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +16,12 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 24/03/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class MatchStatAdapterTest {
+class LiveStatAdapterTest {
 
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockContainer: ViewGroup
     @Mock private lateinit var mockNavigator: Play01Navigator
-    private lateinit var subject: MatchStatAdapter
+    private lateinit var subject: LiveStatAdapter
 
     @Before
     fun setUp() {
@@ -61,11 +61,11 @@ class MatchStatAdapterTest {
     }
 
     private fun givenSubject() {
-        subject = MatchStatAdapter(mockNavigator)
+        subject = LiveStatAdapter(mockNavigator)
     }
 
     private fun givenItems(vararg items: Int) {
-        subject.populate(items.map { Pair(it, TeamStatModel(mock())) }.toMap())
+        subject.populate(items.map { Pair(it, TeamLiveStatModel(mock())) }.toMap())
     }
 
     private fun whenInstantiating(position: Int) {

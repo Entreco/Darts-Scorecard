@@ -12,7 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 26/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class StatDbModuleTest {
+class LiveStatDbModuleTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockMapper: StatMapper

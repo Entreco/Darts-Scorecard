@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.DataBindingUtil
 import android.support.v4.view.ViewPager
@@ -8,9 +8,9 @@ import nl.entreco.dartsscorecard.databinding.WidgetListStatsBinding
 /**
  * Created by entreco on 24/03/2018.
  */
-class MatchStatTransformer(size: Float) : ViewPager.PageTransformer {
+class LiveStatTransformer(size: Float) : ViewPager.PageTransformer {
 
-    private val animator = MatchStatPageAnimator(size)
+    private val animator = LiveStatPageAnimator(size)
 
     override fun transformPage(page: View, position: Float) {
         when {

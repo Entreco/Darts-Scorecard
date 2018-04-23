@@ -7,11 +7,11 @@
 
         <variable
             name="team0"
-            type="nl.entreco.dartsscorecard.play.stats.TeamStatModel" />
+            type="nl.entreco.dartsscorecard.play.live.TeamLiveStatModel" />
 
         <variable
             name="team1"
-            type="nl.entreco.dartsscorecard.play.stats.TeamStatModel" />
+            type="nl.entreco.dartsscorecard.play.live.TeamLiveStatModel" />
 
         <variable
             name="navigator"
@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:bigMarginIfOneTeam="@{team1 == null}">
 
 
         <!-- Players -->

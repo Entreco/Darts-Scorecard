@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.model.Stat
+import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.repository.StatRepository
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,12 +16,12 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 24/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class FetchGameStatUsecaseTest {
+class FetchLiveStatUsecaseTest {
 
     @Mock private lateinit var mockStatRepository: StatRepository
     @Mock private lateinit var done: (FetchGameStatResponse) -> Unit
     @Mock private lateinit var fail: (Throwable) -> Unit
-    @Mock private lateinit var mockStat: Stat
+    @Mock private lateinit var mockLiveStat: LiveStat
     private val bg = TestBackground()
     private val fg = TestForeground()
     private lateinit var subject: FetchGameStatUsecase
@@ -60,7 +60,7 @@ class FetchGameStatUsecaseTest {
     }
 
     private fun whenFetchingStatsSucceeds() {
-        whenever(mockStatRepository.fetchStat(givenTurnId, givenMetaId)).thenReturn(mockStat)
+        whenever(mockStatRepository.fetchStat(givenTurnId, givenMetaId)).thenReturn(mockLiveStat)
         val req = FetchGameStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }

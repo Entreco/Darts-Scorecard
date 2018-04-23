@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 24/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class LocalStatRepositoryTest {
+class LocalLiveStatRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockMapper: StatMapper

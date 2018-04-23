@@ -1,9 +1,7 @@
 package nl.entreco.domain.play.start
 
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.TurnMeta
-import nl.entreco.domain.play.archive.ArchiveStatsRequest
-import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.stats.*
 import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject

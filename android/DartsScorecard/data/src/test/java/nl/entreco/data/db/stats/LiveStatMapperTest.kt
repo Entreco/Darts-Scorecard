@@ -12,7 +12,7 @@ import org.junit.Test
 /**
  * Created by entreco on 20/01/2018.
  */
-class StatMapperTest {
+class LiveStatMapperTest {
 
     private lateinit var subject: StatMapper
     private lateinit var givenScores: Map<Long, Score>
@@ -22,7 +22,7 @@ class StatMapperTest {
     private val gameId: Long = 3
     private val turnMapper = TurnMapper()
     private val metaMapper = MetaMapper()
-    private lateinit var expectedStats: Map<Long, Stat>
+    private lateinit var expectedStats: Map<Long, LiveStat>
     private val scoreEstimator = ScoreEstimator()
 
     @Test

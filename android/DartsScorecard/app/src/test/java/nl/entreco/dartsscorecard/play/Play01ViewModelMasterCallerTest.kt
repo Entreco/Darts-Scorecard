@@ -10,7 +10,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team

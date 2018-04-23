@@ -1,4 +1,4 @@
-package nl.entreco.domain
+package nl.entreco.domain.common.log
 
 /**
  * Created by Entreco on 27/11/2017.

@@ -9,7 +9,7 @@ import nl.entreco.dartsscorecard.DscLogger
 import nl.entreco.data.analytics.FirebaseAnalytics
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 
 /**
  * Created by Entreco on 14/11/2017.

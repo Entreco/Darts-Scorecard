@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.play.score
 
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team

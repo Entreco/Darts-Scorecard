@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.view.View
 import android.view.ViewPropertyAnimator
@@ -15,12 +15,12 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 27/03/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class MatchStatPageAnimatorHandlerTest {
+class LiveStatPageAnimatorHandlerTest {
 
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
-    private lateinit var subject: MatchStatPageAnimator.MatchStatPageAnimatorHandler
+    private lateinit var subject: LiveStatPageAnimator.MatchStatPageAnimatorHandler
 
     @Test
     fun transform() {
@@ -30,7 +30,7 @@ class MatchStatPageAnimatorHandlerTest {
     }
 
     private fun givenSubject() {
-        subject = MatchStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView,100F)
+        subject = LiveStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView,100F)
     }
 
     private fun whenTransforming() {

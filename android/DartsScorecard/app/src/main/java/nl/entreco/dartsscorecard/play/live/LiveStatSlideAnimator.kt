@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.DataBindingUtil
 import android.view.View
@@ -9,7 +9,7 @@ import kotlin.math.max
 /**
  * Created by entreco on 24/03/2018.
  */
-class MatchStatSlideAnimator(private val view: View, private val left: View?, private val right: View?) {
+class LiveStatSlideAnimator(private val view: View, private val left: View?, private val right: View?) {
 
     private val binding by lazy { DataBindingUtil.getBinding<WidgetListStatsBinding>(view)!! }
     private val animator by lazy {

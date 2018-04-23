@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.DataBindingUtil
 import android.support.v4.view.PagerAdapter
@@ -14,9 +14,9 @@ import kotlin.math.max
 /**
  * Created by entreco on 24/03/2018.
  */
-class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigator) : PagerAdapter() {
+class LiveStatAdapter @Inject constructor(private val navigator: Play01Navigator) : PagerAdapter() {
 
-    private val items: MutableList<TeamStatModel> = mutableListOf()
+    private val items: MutableList<TeamLiveStatModel> = mutableListOf()
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = DataBindingUtil.inflate<WidgetListStatsBinding>(LayoutInflater.from(container.context), R.layout.widget_list_stats, container, false)
@@ -42,7 +42,7 @@ class MatchStatAdapter @Inject constructor(private val navigator: Play01Navigato
         return if(items.size == 1) 1 else return max(0, items.size - 1)
     }
 
-    fun populate(stats: Map<Int, TeamStatModel>) {
+    fun populate(stats: Map<Int, TeamLiveStatModel>) {
         items.clear()
         items.addAll(stats.map { it.value })
         notifyDataSetChanged()

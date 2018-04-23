@@ -1,13 +1,13 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.ObservableField
-import nl.entreco.domain.model.Stat
+import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Team
 
 /**
  * Created by entreco on 11/01/2018.
  */
-class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutableListOf()) {
+class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveStat> = mutableListOf()) {
 
     companion object {
         const val empty = "--"
@@ -27,14 +27,14 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     val image = ObservableField<String>(team.imageUrl())
 
     init {
-        if (stats.isNotEmpty()) {
+        if (liveStats.isNotEmpty()) {
             update()
         }
     }
 
-    fun append(updates: List<Stat>) {
-        updates.forEach { stats.add(it) }
-        if (stats.isNotEmpty()) {
+    fun append(updates: List<LiveStat>) {
+        updates.forEach { liveStats.add(it) }
+        if (liveStats.isNotEmpty()) {
             update()
         }
     }
@@ -53,13 +53,13 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     }
 
     private fun updateBreaksMade() {
-        val value = stats.sumBy { it.nBreaks }
+        val value = liveStats.sumBy { it.nBreaks }
         breaks.set("$value")
     }
 
     private fun updateDoublePercentage() {
-        val aggregator = stats.sumBy { it.nCheckouts }
-        val denominator = stats.sumBy { it.nAtCheckout }
+        val aggregator = liveStats.sumBy { it.nCheckouts }
+        val denominator = liveStats.sumBy { it.nAtCheckout }
 
         when (denominator) {
             0 -> co.set(empty)
@@ -68,7 +68,7 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     }
 
     private fun updateHighestScore() {
-        val value = stats
+        val value = liveStats
                 .filter { it.highest.isNotEmpty() }
                 .maxBy { it.highest[0] }
                 ?.highest?.firstOrNull()
@@ -78,7 +78,7 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
         }
     }
     private fun updateHighestCheckout() {
-        val value = stats
+        val value = liveStats
                 .filter { it.highestCo.isNotEmpty() }
                 .maxBy { it.highestCo[0] }
                 ?.highestCo?.firstOrNull()
@@ -89,32 +89,32 @@ class TeamStatModel(val team: Team, private val stats: MutableList<Stat> = mutab
     }
 
     private fun update20s() {
-        val value = stats.sumBy { it.n20 }
+        val value = liveStats.sumBy { it.n20 }
         n20.set("$value")
     }
     private fun update60s() {
-        val value = stats.sumBy { it.n60 }
+        val value = liveStats.sumBy { it.n60 }
         n60.set("$value")
     }
 
     private fun update100s() {
-        val value = stats.sumBy { it.n100 }
+        val value = liveStats.sumBy { it.n100 }
         n100.set("$value")
     }
 
     private fun update140s() {
-        val value = stats.sumBy { it.n140 }
+        val value = liveStats.sumBy { it.n140 }
         n140.set("$value")
     }
 
     private fun update180s() {
-        val value = stats.sumBy { it.n180 }
+        val value = liveStats.sumBy { it.n180 }
         n180.set("$value")
     }
 
     private fun updateAverage() {
-        val aggregator = stats.sumBy { it.totalScore }
-        val denominator = stats.sumBy { it.nDarts }
+        val aggregator = liveStats.sumBy { it.totalScore }
+        val denominator = liveStats.sumBy { it.nDarts }
 
         when (denominator) {
             0 -> avg.set(empty)

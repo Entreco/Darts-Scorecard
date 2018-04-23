@@ -3,7 +3,7 @@ package nl.entreco.data.api.beta
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.beta.Feature
 import org.junit.Assert.*
 import org.junit.Ignore

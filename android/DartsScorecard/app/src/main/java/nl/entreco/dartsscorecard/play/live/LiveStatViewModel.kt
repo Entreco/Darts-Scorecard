@@ -1,11 +1,11 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.ObservableArrayMap
 import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.archive.ArchiveStatsRequest
@@ -18,15 +18,15 @@ import javax.inject.Inject
 /**
  * Created by entreco on 11/01/2018.
  */
-class MatchStatViewModel @Inject constructor(
-        val adapter: MatchStatAdapter,
+class LiveStatViewModel @Inject constructor(
+        val adapter: LiveStatAdapter,
         private val fetchGameStatsUsecase: FetchGameStatsUsecase,
         private val fetchGameStatUsecase: FetchGameStatUsecase,
         private val archiveStatsUsecase: ArchiveStatsUsecase,
         private val logger: Logger)
     : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
 
-    val teamStats = ObservableArrayMap<Int, TeamStatModel>()
+    val teamStats = ObservableArrayMap<Int, TeamLiveStatModel>()
     val currentTeam = ObservableInt()
 
     private lateinit var teams: Array<Team>
@@ -43,7 +43,7 @@ class MatchStatViewModel @Inject constructor(
         this.teams = teams
 
         teams.forEachIndexed { index, team ->
-            teamStats[index] = TeamStatModel(team)
+            teamStats[index] = TeamLiveStatModel(team)
         }
         currentTeam.set(0)
     }
@@ -67,9 +67,9 @@ class MatchStatViewModel @Inject constructor(
 
     private fun onStatUpdated(): (FetchGameStatResponse) -> Unit {
         return { response ->
-            val teamIndex = teams.indexOfFirst { it.contains(response.stat.playerId) }
+            val teamIndex = teams.indexOfFirst { it.contains(response.liveStat.playerId) }
             if (teamIndex >= 0) {
-                teamStats[teamIndex]?.append(listOf(response.stat))
+                teamStats[teamIndex]?.append(listOf(response.liveStat))
                 currentTeam.set(teamIndex)
             }
         }

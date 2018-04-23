@@ -1,10 +1,10 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Score
-import nl.entreco.domain.model.Stat
+import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.archive.ArchiveStatsUsecase
@@ -21,23 +21,23 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 14/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class MatchStatViewModelTest {
+class LiveStatViewModelTest {
 
-    @Mock private lateinit var mockAdapter: MatchStatAdapter
+    @Mock private lateinit var mockAdapter: LiveStatAdapter
     @Mock private lateinit var mockFetchGameStatsUsecase: FetchGameStatsUsecase
     @Mock private lateinit var mockFetchGameStatUsecase: FetchGameStatUsecase
     @Mock private lateinit var mockArchiveStatsUsecase: ArchiveStatsUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockResponse: Play01Response
-    private lateinit var subject: MatchStatViewModel
+    private lateinit var subject: LiveStatViewModel
     private var givenGameId: Long = 1003
     private var givenTeamIds: String = "1|2"
     private var givenTeams: Array<Team> = emptyArray()
     private var givenScores: Array<Score> = emptyArray()
-    private var givenExistingStats: Map<Long, Stat> = emptyMap()
+    private var givenExistingStats: Map<Long, LiveStat> = emptyMap()
 
-    private var givenUpdatedStat: Stat = Stat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2,3,emptyList(), emptyList())
+    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2,3,emptyList(), emptyList())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchGameStatResponse) -> Unit>()
 
@@ -131,7 +131,7 @@ class MatchStatViewModelTest {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn(givenTeamIds)
-        subject = MatchStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveStatsUsecase, mockLogger)
+        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveStatsUsecase, mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 
@@ -143,9 +143,9 @@ class MatchStatViewModelTest {
         givenTeams = teams.toTypedArray()
     }
 
-    private fun givenExistingStats(vararg stats: Stat) {
-        val existing = HashMap<Long, Stat>()
-        stats.forEachIndexed { index, stat ->
+    private fun givenExistingStats(vararg liveStats: LiveStat) {
+        val existing = HashMap<Long, LiveStat>()
+        liveStats.forEachIndexed { index, stat ->
             val player = givenTeams[index % givenTeams.size].players[0]
             existing[player.id] = stat
         }
@@ -153,7 +153,7 @@ class MatchStatViewModelTest {
     }
 
     private fun givenUpdatedStat(playerId: Long, value: Int) {
-        givenUpdatedStat = givenUpdatedStat.copy(playerId = playerId, n180 = value)
+        givenUpdatedLiveStat = givenUpdatedLiveStat.copy(playerId = playerId, n180 = value)
     }
 
     private fun whenStatsFetchSucceeds() {
@@ -176,7 +176,7 @@ class MatchStatViewModelTest {
         val turnId: Long = 1
         val metaId: Long = 20000
         val req = FetchGameStatRequest(turnId, metaId)
-        val response = FetchGameStatResponse(givenUpdatedStat)
+        val response = FetchGameStatResponse(givenUpdatedLiveStat)
         subject.onStatsChange(turnId, metaId)
         verify(mockFetchGameStatUsecase).exec(eq(req), statDoneCaptor.capture(), failCaptor.capture())
         statDoneCaptor.lastValue.invoke(response)

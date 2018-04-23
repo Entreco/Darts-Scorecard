@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.domain.model.players.Player

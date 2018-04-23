@@ -1,7 +1,7 @@
-package nl.entreco.dartsscorecard.play.stats
+package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.model.Stat
+import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Team
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -13,20 +13,20 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 13/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class TeamStatModelTest {
+class TeamLiveStatModelTest {
 
     @Mock
     private lateinit var mockTeam: Team
-    private lateinit var subject: TeamStatModel
+    private lateinit var subject: TeamLiveStatModel
 
     @Test
     fun `empty should be double dashes`() {
-        assertEquals("--", TeamStatModel.empty)
+        assertEquals("--", TeamLiveStatModel.empty)
     }
 
     @Test
     fun `it should update stats at the start`() {
-        subject = TeamStatModel(mockTeam, mutableListOf(Stat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11))))
+        subject = TeamLiveStatModel(mockTeam, mutableListOf(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11))))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
@@ -45,47 +45,47 @@ class TeamStatModelTest {
     @Test
     fun `it should update stats (normal case)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
     @Test
     fun `it should update stats (no average)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
         thenStatsAre("--", "4", "5", "6", "2", "3", "11", "33.33%", "9")
     }
 
     @Test
     fun `it should update stats (no percentage)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, listOf(10), listOf(11)))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "--", "9")
     }
 
     @Test
     fun `it should update stats (no high checkout)`() {
         givenSubject("Team name")
-        whenUpdating(Stat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, emptyList(), emptyList()))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, emptyList(), emptyList()))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "--", "--", "9")
     }
 
     private fun givenSubject(name: String) {
         whenever(mockTeam.toString()).thenReturn(name)
-        subject = TeamStatModel(mockTeam)
+        subject = TeamLiveStatModel(mockTeam)
     }
 
-    private fun whenUpdating(stat: Stat) {
-        subject.append(listOf(stat))
+    private fun whenUpdating(liveStat: LiveStat) {
+        subject.append(listOf(liveStat))
     }
 
     private fun thenStatsAreEmpty() {
-        assertEquals(TeamStatModel.empty, subject.avg.get().toString())
-        assertEquals(TeamStatModel.empty, subject.n180.get().toString())
-        assertEquals(TeamStatModel.empty, subject.n140.get().toString())
-        assertEquals(TeamStatModel.empty, subject.n100.get().toString())
-        assertEquals(TeamStatModel.empty, subject.n60.get().toString())
-        assertEquals(TeamStatModel.empty, subject.n20.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.avg.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.n180.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.n140.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.n100.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.n60.get().toString())
+        assertEquals(TeamLiveStatModel.empty, subject.n20.get().toString())
     }
 
     private fun thenNameIs(expectedName: String) {
