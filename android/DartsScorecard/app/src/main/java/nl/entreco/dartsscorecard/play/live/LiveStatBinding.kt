@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.live
 import android.databinding.BindingAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import nl.entreco.dartsscorecard.R
 
@@ -29,11 +30,11 @@ class LiveStatBinding {
 
         @JvmStatic
         @BindingAdapter("bigMarginIfOneTeam")
-        fun bigMarginIfOneTeam(view: View, big: Boolean) {
-            val lporig = view.layoutParams
-            val lp : FrameLayout.LayoutParams = view.layoutParams as FrameLayout.LayoutParams
-            lp.marginStart = if(big) view.resources.getDimension(R.dimen.xxlarge).toInt() else 0
-            lp.marginEnd = if(big) view.resources.getDimension(R.dimen.xxlarge).toInt() else 0
+        fun bigMarginIfOneTeam(view: ViewGroup, big: Boolean) {
+//            val lporig = view.layoutParams
+//            val lp : FrameLayout.LayoutParams = view.layoutParams as FrameLayout.LayoutParams
+//            lp.marginStart = if(big) view.resources.getDimension(R.dimen.xxlarge).toInt() else 0
+//            lp.marginEnd = if(big) view.resources.getDimension(R.dimen.xxlarge).toInt() else 0
 
         }
 

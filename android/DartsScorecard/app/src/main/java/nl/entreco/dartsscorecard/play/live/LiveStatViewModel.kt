@@ -76,9 +76,6 @@ class LiveStatViewModel @Inject constructor(
     }
 
     override fun onGameFinished(gameId: Long) {
-        teamStats.forEach { t, u ->
-            logger.d("archiveStats: $t: $u")
-        }
-        archiveStatsUsecase.exec(ArchiveStatsRequest(gameId, teams.joinToString { it.toString() }, emptyMap()), {}, {})
+        archiveStatsUsecase.exec(ArchiveStatsRequest(gameId), {}, {})
     }
 }

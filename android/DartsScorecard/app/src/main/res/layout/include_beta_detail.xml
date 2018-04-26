@@ -22,14 +22,14 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?android:attr/actionBarSize"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -104,17 +104,17 @@
                 <TextView
                     android:id="@+id/video"
                     style="@style/Beta.Description"
-                    android:padding="@dimen/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/description"
-                    android:drawableEnd="@drawable/ic_play_video"
                     android:layout_centerHorizontal="true"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableEnd="@drawable/ic_play_video"
                     android:drawablePadding="@dimen/small"
+                    android:drawableTint="@color/colorAccent"
                     android:onClick="@{(v) -> viewModel.launchVideo(v)}"
-                    app:textWithTags="@{@string/beta_video}"
-                    android:visibility="@{viewModel.showVideo}" />
+                    android:padding="@dimen/small"
+                    android:visibility="@{viewModel.showVideo}"
+                    app:textWithTags="@{@string/beta_video}" />
 
                 <include
                     layout="@layout/include_beta_donate"
