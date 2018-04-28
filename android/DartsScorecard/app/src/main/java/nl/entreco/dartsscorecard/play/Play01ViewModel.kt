@@ -187,8 +187,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
             State.LEG -> adViewModel.provideInterstitial()
             State.SET -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else -> {
-            }
+            else -> { }
         }
     }
 

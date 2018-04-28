@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">Data</string>
-    <string name="archive_service">Archive Stats Service</string>
-    <string name="channel_name">Archive stats</string>
-    <string name="channel_description">Calculating stats &amp; averages</string>
-    <string name="notif_title">Calculating new stats, averages &amp; hiscores</string>
 </resources>

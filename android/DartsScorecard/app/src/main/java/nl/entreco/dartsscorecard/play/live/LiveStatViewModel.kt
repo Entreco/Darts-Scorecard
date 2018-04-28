@@ -2,14 +2,13 @@ package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.ObservableArrayMap
 import android.databinding.ObservableInt
+import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
 import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.archive.ArchiveStatsRequest
-import nl.entreco.domain.play.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.listeners.StatListener
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
@@ -22,7 +21,7 @@ class LiveStatViewModel @Inject constructor(
         val adapter: LiveStatAdapter,
         private val fetchGameStatsUsecase: FetchGameStatsUsecase,
         private val fetchGameStatUsecase: FetchGameStatUsecase,
-        private val archiveStatsUsecase: ArchiveStatsUsecase,
+        private val archiveServiceLauncher: ArchiveServiceLauncher,
         private val logger: Logger)
     : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
 
@@ -76,6 +75,6 @@ class LiveStatViewModel @Inject constructor(
     }
 
     override fun onGameFinished(gameId: Long) {
-        archiveStatsUsecase.exec(ArchiveStatsRequest(gameId), {}, {})
+        archiveServiceLauncher.launch(gameId)
     }
 }

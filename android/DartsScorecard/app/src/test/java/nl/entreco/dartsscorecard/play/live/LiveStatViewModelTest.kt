@@ -7,7 +7,7 @@ import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.archive.ArchiveStatsUsecase
+import nl.entreco.domain.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
 import org.junit.Assert.assertEquals

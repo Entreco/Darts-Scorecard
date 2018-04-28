@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.archive
+package nl.entreco.domain.archive
 
 
 class ArchiveStatsResponse(val scheduled: Int)

@@ -5,11 +5,12 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableBoolean
 import com.google.android.gms.ads.AdView
+import nl.entreco.dartsscorecard.BuildConfig
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
-import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -31,19 +32,21 @@ class AdViewModel @Inject constructor(
     }
 
     fun provideAdd(view: AdView) {
-        adLoader.loadAd(view, object : AdLoader.AdListener {
-            override fun onAdLoaded() {
-                showAd.set(serveAds.get())
-            }
+        if(!BuildConfig.DEBUG) {
+            adLoader.loadAd(view, object : AdLoader.AdListener {
+                override fun onAdLoaded() {
+                    showAd.set(serveAds.get())
+                }
 
-            override fun onAdFailed() {
-                showAd.set(false)
-            }
-        })
+                override fun onAdFailed() {
+                    showAd.set(false)
+                }
+            })
+        }
     }
 
     fun provideInterstitial() {
-        if (serveAds.get()) {
+        if (!BuildConfig.DEBUG && serveAds.get()) {
             interstitialLoader.showInterstitial()
         }
     }

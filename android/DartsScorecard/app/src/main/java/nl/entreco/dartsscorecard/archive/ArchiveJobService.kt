@@ -1,4 +1,4 @@
-package nl.entreco.data.archive
+package nl.entreco.dartsscorecard.archive
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,14 +6,22 @@ import android.app.NotificationManager
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
-import android.os.SystemClock
 import android.support.v4.app.NotificationCompat
-import nl.entreco.data.R
+import nl.entreco.dartsscorecard.App
+import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher.Companion.EXTRA_GAME_ID
+import nl.entreco.dartsscorecard.di.archive.ArchiveModule
+import nl.entreco.dartsscorecard.di.service.ServiceModule
+import nl.entreco.domain.archive.ArchiveStatsRequest
+import nl.entreco.domain.archive.ArchiveStatsResponse
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ArchiveJobService : JobService() {
+
+    private val app by lazy { application as App }
+    private val component by lazy { app.appComponent.plus(ServiceModule()) }
+    private val archiveStatsUsecase by lazy { component.plus(ArchiveModule()).archive() }
 
     private val CHANNEL_ID = "dsc_archive_channel"
     private val NOTIF_ID = 180
@@ -26,7 +34,8 @@ class ArchiveJobService : JobService() {
                 .setOngoing(true)
                 .setContentTitle(getString(R.string.notif_title))
                 .setSmallIcon(R.drawable.ic_stat_name)
-                .setColor(Color.parseColor("#A4B5CE"))
+                .setColor(getColor(R.color.colorPrimaryDark))
+                .setBadgeIconType(R.mipmap.ic_launcher_foreground)
                 .setLocalOnly(true)
                 .setWhen(System.currentTimeMillis())
                 .setUsesChronometer(true)
@@ -56,29 +65,27 @@ class ArchiveJobService : JobService() {
         isCancelled.set(false)
         isWorking.set(true)
         notificationManager.notify(NOTIF_ID, notif.build())
-        Thread {
-            doInBackground(params)
-        }.start()
+        archiveStatsUsecase.exec(ArchiveStatsRequest(params.extras.getLong(EXTRA_GAME_ID)), onArchiveDone(params), onArchiveFailed(params))
         return isWorking.get()
+    }
+
+    private fun onArchiveDone(params: JobParameters): (ArchiveStatsResponse) -> Unit {
+        return {
+            isWorking.set(false)
+            finish(params)
+        }
+    }
+
+    private fun onArchiveFailed(params: JobParameters): (Throwable) -> Unit {
+        return {
+            finish(params)
+        }
     }
 
     override fun onStopJob(params: JobParameters): Boolean {
         notificationManager.cancel(NOTIF_ID)
         isCancelled.set(true)
         return finish(params)
-    }
-
-    private fun doInBackground(params: JobParameters) {
-        if (isCancelled.get()) {
-            return
-        }
-
-        // Do Actual work
-        SystemClock.sleep(10_000)
-
-
-        isWorking.set(false)
-        finish(params)
     }
 
     private fun finish(params: JobParameters): Boolean {
