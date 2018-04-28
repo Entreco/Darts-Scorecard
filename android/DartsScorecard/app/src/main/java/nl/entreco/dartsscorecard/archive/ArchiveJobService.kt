@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import nl.entreco.dartsscorecard.App
@@ -29,12 +30,13 @@ class ArchiveJobService : JobService() {
     private val isCancelled = AtomicBoolean(false)
 
     private val notificationManager: NotificationManager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+
     private val notif by lazy {
         NotificationCompat.Builder(baseContext, CHANNEL_ID)
                 .setOngoing(true)
                 .setContentTitle(getString(R.string.notif_title))
                 .setSmallIcon(R.drawable.ic_stat_name)
-                .setColor(getColor(R.color.colorPrimaryDark))
+                .setColor(Color.parseColor("#A4B5CE"))
                 .setBadgeIconType(R.mipmap.ic_launcher_foreground)
                 .setLocalOnly(true)
                 .setWhen(System.currentTimeMillis())

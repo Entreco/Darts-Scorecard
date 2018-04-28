@@ -6,8 +6,7 @@ import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.BuildConfig
 import nl.entreco.dartsscorecard.DscLogger
 import nl.entreco.data.analytics.FirebaseAnalytics
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -56,6 +55,10 @@ class AppModuleTest {
 
     @Test
     fun provideDebugMode() {
-        assertTrue(subject.provideDebugMode())
+        if(BuildConfig.DEBUG) {
+            assertTrue(subject.provideDebugMode())
+        } else {
+            assertFalse(subject.provideDebugMode())
+        }
     }
 }
