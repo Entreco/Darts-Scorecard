@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.di.application
 import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.App
+import nl.entreco.dartsscorecard.BuildConfig
 import nl.entreco.dartsscorecard.DscLogger
 import nl.entreco.data.analytics.FirebaseAnalytics
 import org.junit.Assert.assertNotNull
@@ -51,5 +52,10 @@ class AppModuleTest {
     @Test(expected = IllegalStateException::class)
     fun provideFireStore() {
         assertNotNull(subject.provideFireStore())
+    }
+
+    @Test
+    fun provideDebugMode() {
+        assertTrue(subject.provideDebugMode())
     }
 }

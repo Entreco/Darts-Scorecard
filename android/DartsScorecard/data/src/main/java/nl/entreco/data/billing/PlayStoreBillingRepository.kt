@@ -3,7 +3,6 @@ package nl.entreco.data.billing
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
 import com.google.gson.GsonBuilder

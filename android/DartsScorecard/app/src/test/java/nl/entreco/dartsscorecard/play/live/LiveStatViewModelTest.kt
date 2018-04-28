@@ -1,13 +1,13 @@
 package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Game
-import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.LiveStat
+import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.archive.ArchiveStatsUsecase
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
 import org.junit.Assert.assertEquals
@@ -26,7 +26,7 @@ class LiveStatViewModelTest {
     @Mock private lateinit var mockAdapter: LiveStatAdapter
     @Mock private lateinit var mockFetchGameStatsUsecase: FetchGameStatsUsecase
     @Mock private lateinit var mockFetchGameStatUsecase: FetchGameStatUsecase
-    @Mock private lateinit var mockArchiveStatsUsecase: ArchiveStatsUsecase
+    @Mock private lateinit var mockArchiveServiceLauncher: ArchiveServiceLauncher
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockResponse: Play01Response
@@ -37,7 +37,7 @@ class LiveStatViewModelTest {
     private var givenScores: Array<Score> = emptyArray()
     private var givenExistingStats: Map<Long, LiveStat> = emptyMap()
 
-    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2,3,emptyList(), emptyList())
+    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchGameStatResponse) -> Unit>()
 
@@ -131,7 +131,7 @@ class LiveStatViewModelTest {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn(givenTeamIds)
-        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveStatsUsecase, mockLogger)
+        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveServiceLauncher, mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 
@@ -232,6 +232,6 @@ class LiveStatViewModelTest {
     }
 
     private fun thenStatsAreArchived() {
-        verify(mockArchiveStatsUsecase).exec(any(), any(), any())
+        verify(mockArchiveServiceLauncher).launch(any())
     }
 }

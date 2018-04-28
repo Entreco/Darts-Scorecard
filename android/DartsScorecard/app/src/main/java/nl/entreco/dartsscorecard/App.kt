@@ -48,6 +48,8 @@ class App : Application() {
     }
 
     private fun initAdMob() {
-        MobileAds.initialize(this, resources.getString(R.string.app_id))
+        Thread {
+            MobileAds.initialize(this, resources.getString(R.string.app_id))
+        }.start()
     }
 }

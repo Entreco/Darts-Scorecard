@@ -14,6 +14,7 @@ import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
+import javax.inject.Named
 
 @ActivityScope
 class AdViewModel @Inject constructor(
@@ -22,7 +23,8 @@ class AdViewModel @Inject constructor(
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
         private val adLoader: AdLoader,
         private val interstitialLoader: InterstitialLoader,
-        private val logger: Logger) : BaseViewModel(), LifecycleObserver {
+        private val logger: Logger,
+        @Named("debugMode") private val debug: Boolean = BuildConfig.DEBUG) : BaseViewModel(), LifecycleObserver {
 
     val showAd = ObservableBoolean(false)
     private var serveAds = AtomicBoolean(false) // Let's give the user no Ads by default
@@ -32,7 +34,7 @@ class AdViewModel @Inject constructor(
     }
 
     fun provideAdd(view: AdView) {
-        if(!BuildConfig.DEBUG) {
+        if(!debug) {
             adLoader.loadAd(view, object : AdLoader.AdListener {
                 override fun onAdLoaded() {
                     showAd.set(serveAds.get())
@@ -46,7 +48,7 @@ class AdViewModel @Inject constructor(
     }
 
     fun provideInterstitial() {
-        if (!BuildConfig.DEBUG && serveAds.get()) {
+        if (!debug && serveAds.get()) {
             interstitialLoader.showInterstitial()
         }
     }

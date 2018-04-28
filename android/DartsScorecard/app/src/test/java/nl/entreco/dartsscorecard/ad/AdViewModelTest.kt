@@ -108,7 +108,7 @@ class AdViewModelTest {
     }
 
     private fun givenSubject() {
-        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockAdLoader, mockInterstitialLoader, mockLogger)
+        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockAdLoader, mockInterstitialLoader, mockLogger, false)
     }
 
     private fun givenPurchasedItems(purchasedItems: Boolean){
