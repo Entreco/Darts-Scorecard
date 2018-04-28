@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical"
-        app:bigMarginIfOneTeam="@{team1 == null}">
+        android:orientation="vertical">
 
 
         <!-- Players -->
@@ -91,7 +90,7 @@
                     style="@style/Main.Player"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center|end"
+                    app:centerIfOneTeam="@{team1 == null}"
                     android:text="@{team0.name}" />
 
                 <android.support.v7.widget.AppCompatSpinner

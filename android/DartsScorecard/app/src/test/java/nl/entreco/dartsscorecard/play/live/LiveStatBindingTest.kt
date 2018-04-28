@@ -3,7 +3,9 @@ package nl.entreco.dartsscorecard.play.live
 import android.content.Context
 import android.content.res.Resources
 import android.support.v4.view.ViewPager
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -18,6 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LiveStatBindingTest {
 
+    @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockResources: Resources
     @Mock private lateinit var mockContext: Context
@@ -42,6 +45,18 @@ class LiveStatBindingTest {
     fun `it should set Visibility to VISIBLE if hide(false)`() {
         LiveStatBinding.hideIfOnlyOneTeam(mockView, false)
         verify(mockView).visibility = View.VISIBLE
+    }
+
+    @Test
+    fun `it should center text if oneTeam(true)`() {
+        LiveStatBinding.centerIfOnlyOneTeam(mockTextView, true)
+        verify(mockTextView).gravity = Gravity.CENTER
+    }
+
+    @Test
+    fun `it should center | end if oneTeam(false)`() {
+        LiveStatBinding.centerIfOnlyOneTeam(mockTextView, false)
+        verify(mockTextView).gravity = Gravity.CENTER and Gravity.END
     }
 
     @Test
