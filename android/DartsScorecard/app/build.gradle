@@ -51,6 +51,10 @@ dependencies {
         transitive = true
     }
 
+    // Leaks
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
+
     // Test
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"

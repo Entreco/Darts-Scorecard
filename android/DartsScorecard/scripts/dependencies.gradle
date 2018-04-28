@@ -62,6 +62,7 @@ ext {
             circleImageView = '2.2.0',
             crash = '2.9.1@aar',
             gson = '2.8.2',
+            leakCanary = '1.5.4',
             junit = '4.12',
             mockito = '2.12.0',
             mockitoKotlin = '1.5.0',
