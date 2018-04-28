@@ -51,7 +51,10 @@ class Setup01Activity : ViewModelActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_CANCELED && initialLaunch) finish()
+        if(resultCode == Activity.RESULT_CANCELED && initialLaunch){
+            finish()
+            return
+        }
         initialLaunch = false
         navigator.handleResult(requestCode, resultCode, data, playersViewModel.adapter)
     }
