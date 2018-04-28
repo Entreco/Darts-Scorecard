@@ -36,7 +36,7 @@ class LiveStatBinding {
         @JvmStatic
         @BindingAdapter("centerIfOneTeam")
         fun centerIfOnlyOneTeam(view: TextView, oneTeam: Boolean) {
-            view.gravity = if(oneTeam) Gravity.CENTER else Gravity.END and Gravity.CENTER
+            view.gravity = if(oneTeam) Gravity.CENTER else Gravity.END
         }
 
         @JvmStatic

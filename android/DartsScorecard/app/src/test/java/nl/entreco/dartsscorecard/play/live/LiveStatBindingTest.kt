@@ -56,7 +56,7 @@ class LiveStatBindingTest {
     @Test
     fun `it should center | end if oneTeam(false)`() {
         LiveStatBinding.centerIfOnlyOneTeam(mockTextView, false)
-        verify(mockTextView).gravity = Gravity.CENTER and Gravity.END
+        verify(mockTextView).gravity = Gravity.END
     }
 
     @Test
