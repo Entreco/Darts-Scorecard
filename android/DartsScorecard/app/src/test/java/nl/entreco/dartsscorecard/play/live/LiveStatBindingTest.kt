@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.support.v4.view.ViewPager
 import android.view.Gravity
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -21,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class LiveStatBindingTest {
 
     @Mock private lateinit var mockTextView: TextView
+    @Mock private lateinit var mockLayoutParams: RelativeLayout.LayoutParams
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockResources: Resources
     @Mock private lateinit var mockContext: Context
@@ -30,6 +32,7 @@ class LiveStatBindingTest {
     @Test
     fun setupViewPager() {
         whenever(mockContext.resources).thenReturn(mockResources)
+        whenever(mockPager.layoutParams).thenReturn(mockLayoutParams)
         whenever(mockPager.context).thenReturn(mockContext)
         LiveStatBinding.setupViewPager(mockPager, emptyMap(), mockAdapter)
         verify(mockPager).setPageTransformer(any(), any())

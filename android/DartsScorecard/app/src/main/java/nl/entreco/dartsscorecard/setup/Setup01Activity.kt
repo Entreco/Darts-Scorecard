@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.setup
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -25,6 +26,7 @@ class Setup01Activity : ViewModelActivity() {
     private val settingsViewModel: SettingsViewModel by viewModelProvider { component.settings() }
     private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
     private val navigator: Setup01Navigator by lazy { Setup01Navigator(this) }
+    private var initialLaunch = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,7 @@ class Setup01Activity : ViewModelActivity() {
         initToolbar(toolbar(binding), R.string.title_setup)
 
         if (savedInstanceState == null) {
+            initialLaunch = true
             navigator.onAddNewPlayer(0, emptyList())
         }
     }
@@ -48,6 +51,8 @@ class Setup01Activity : ViewModelActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_CANCELED && initialLaunch) finish()
+        initialLaunch = false
         navigator.handleResult(requestCode, resultCode, data, playersViewModel.adapter)
     }
 
