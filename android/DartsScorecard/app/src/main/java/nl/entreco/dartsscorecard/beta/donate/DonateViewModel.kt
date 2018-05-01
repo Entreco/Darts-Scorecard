@@ -9,8 +9,9 @@ import android.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.domain.beta.donations.*
+import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 /**
@@ -29,7 +30,7 @@ class DonateViewModel @Inject constructor(
     }
 
     internal var productId: String = ""
-    internal var requiresConsumption = true
+    internal var requiresConsumption = AtomicBoolean(true)
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
 
@@ -50,12 +51,9 @@ class DonateViewModel @Inject constructor(
         if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
         else {
             analytics.trackAchievement("Donation $data")
-
-            if(requiresConsumption) {
-                consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature),
-                        onConsumeDonationSuccess(),
-                        onConsumeDonationFailed())
-            }
+            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature, requiresConsumption.get()),
+                    onConsumeDonationSuccess(),
+                    onConsumeDonationFailed())
         }
     }
 
@@ -63,18 +61,19 @@ class DonateViewModel @Inject constructor(
         analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
         loading.set(false)
         productId = ""
-        requiresConsumption = false
+        requiresConsumption.set(false)
     }
 
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
         when (response.resultCode) {
-            0 -> donationDone(response)
+            ConsumeDonationResponse.CONSUME_OK -> donationDone(response)
             else -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
         }
 
         loading.set(false)
         productId = ""
-        requiresConsumption = false
+        requiresConsumption.set(false)
+        fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
     }
 
     private fun donationDone(response: ConsumeDonationResponse) {
@@ -88,27 +87,26 @@ class DonateViewModel @Inject constructor(
         analytics.trackPurchaseFailed(productId, "ConsumeDonation failed")
         loading.set(false)
         productId = ""
-        requiresConsumption = false
+        requiresConsumption.set(false)
     }
 
-    private fun donationWithId(response: ConsumeDonationResponse): Donation? =
-            donations.firstOrNull { it.sku == response.productId }
+    private fun donationWithId(response: ConsumeDonationResponse) = donations.firstOrNull { it.sku == response.productId }
 
     fun onMakeDonationFailed() {
         analytics.trackPurchaseFailed(productId, "ActivityResult failed")
         loading.set(false)
         productId = ""
-        requiresConsumption = false
+        requiresConsumption.set(false)
     }
 
     private fun onFetchDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->
-        requiresConsumption = result.needToBeConsumed
+        requiresConsumption.set(result.needToBeConsumed)
         donations.clear()
         donations.addAll(result.donations)
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
-        requiresConsumption = false
+        requiresConsumption.set(false)
         analytics.trackPurchaseFailed(productId, "FetchDonations failed")
     }
 
@@ -130,5 +128,4 @@ class DonateViewModel @Inject constructor(
     fun destroy() {
         donateCallback.lifeCycle().removeObserver(this)
     }
-
 }

@@ -3,6 +3,7 @@ package nl.entreco.domain.beta.donations
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import nl.entreco.domain.BaseUsecase
+import nl.entreco.domain.beta.donations.ConsumeDonationResponse.Companion.CONSUME_OK
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
 import nl.entreco.domain.repository.BillingRepository
@@ -24,7 +25,8 @@ class ConsumeDonationUsecase @Inject constructor(private val billingRepository: 
             val token = json.purchaseToken!!
             val productId = json.productId!!
             val orderId = json.orderId!!
-            val result = billingRepository.consume(token)
+
+            val result = if(req.requiresConsumption) billingRepository.consume(token) else ConsumeDonationResponse.CONSUME_OK
             onUi { done(ConsumeDonationResponse(result, productId, orderId)) }
         }, fail)
     }
