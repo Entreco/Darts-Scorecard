@@ -20,12 +20,16 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class ArchiveJobService : JobService() {
 
+    companion object {
+        private const val CHANNEL_ID = "dsc_archive_channel"
+        private const val NOTIF_ID = 180
+        private const val NOTIF_COLOR = "#A4B5CE"
+    }
+
     private val app by lazy { application as App }
     private val component by lazy { app.appComponent.plus(ServiceModule()) }
     private val archiveStatsUsecase by lazy { component.plus(ArchiveModule()).archive() }
 
-    private val CHANNEL_ID = "dsc_archive_channel"
-    private val NOTIF_ID = 180
     private val isWorking = AtomicBoolean(false)
     private val isCancelled = AtomicBoolean(false)
 
@@ -36,7 +40,7 @@ class ArchiveJobService : JobService() {
                 .setOngoing(true)
                 .setContentTitle(getString(R.string.notif_title))
                 .setSmallIcon(R.drawable.ic_stat_name)
-                .setColor(Color.parseColor("#A4B5CE"))
+                .setColor(Color.parseColor(NOTIF_COLOR))
                 .setBadgeIconType(R.mipmap.ic_launcher_foreground)
                 .setLocalOnly(true)
                 .setWhen(System.currentTimeMillis())
@@ -80,6 +84,7 @@ class ArchiveJobService : JobService() {
 
     private fun onArchiveFailed(params: JobParameters): (Throwable) -> Unit {
         return {
+            isWorking.set(false)
             finish(params)
         }
     }
