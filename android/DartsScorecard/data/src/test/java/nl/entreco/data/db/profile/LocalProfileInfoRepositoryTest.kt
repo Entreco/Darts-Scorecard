@@ -15,18 +15,18 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 26/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class LocalProfileRepositoryTest {
+class LocalProfileInfoRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockPlayerDao: PlayerDao
-    private lateinit var subject: LocalProfileRepository
+    private lateinit var subject: LocalProfileInfoInfoRepository
     private lateinit var mapper: ProfileMapper
 
     @Before
     fun setUp() {
         whenever(mockDb.playerDao()).thenReturn(mockPlayerDao)
         mapper = ProfileMapper()
-        subject = LocalProfileRepository(mockDb, mapper)
+        subject = LocalProfileInfoInfoRepository(mockDb, mapper)
     }
 
     @Test

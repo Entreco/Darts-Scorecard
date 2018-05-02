@@ -9,6 +9,7 @@ import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.profile.Profile
 import nl.entreco.domain.profile.fetch.FetchProfileRequest
 import nl.entreco.domain.profile.fetch.FetchProfileResponse
+import nl.entreco.domain.profile.fetch.FetchProfileStatsUsecase
 import nl.entreco.domain.profile.fetch.FetchProfileUsecase
 import nl.entreco.domain.profile.update.UpdateProfileResponse
 import nl.entreco.domain.profile.update.UpdateProfileUsecase
@@ -29,6 +30,7 @@ class ProfileViewModelTest{
     @Mock private lateinit var mockIntent: Intent
     @Mock private lateinit var mockFetchProfile: FetchProfileUsecase
     @Mock private lateinit var mockUpdateProfile: UpdateProfileUsecase
+    @Mock private lateinit var mockFetchProfileStat: FetchProfileStatsUsecase
     private lateinit var subject: ProfileViewModel
 
     @Before
@@ -47,6 +49,13 @@ class ProfileViewModelTest{
         givenSubject()
         whenFetchingProfiles(1,2)
         thenProfilesAreFetched()
+    }
+
+    @Test
+    fun `it should fetch profile stats when ids provided`() {
+        givenSubject()
+        whenFetchingProfiles(1,2)
+        thenProfilesStatsAreFetched()
     }
 
     @Test
@@ -160,7 +169,7 @@ class ProfileViewModelTest{
     }
 
     private fun givenSubject() {
-        subject = ProfileViewModel(mockFetchProfile, mockUpdateProfile)
+        subject = ProfileViewModel(mockFetchProfile, mockUpdateProfile, mockFetchProfileStat)
     }
 
     private fun whenFetchingProfiles(vararg ids: Long) {
@@ -229,6 +238,10 @@ class ProfileViewModelTest{
 
     private fun thenProfilesAreFetched() {
         verify(mockFetchProfile).exec(any(), any(), any())
+    }
+
+    private fun thenProfilesStatsAreFetched() {
+        verify(mockFetchProfileStat).exec(any(), any(), any())
     }
 
     private fun thenProfilesAreNotFetched() {

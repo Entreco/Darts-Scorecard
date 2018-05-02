@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.stats.LocalStatRepository
-import nl.entreco.data.db.stats.StatMapper
-import nl.entreco.domain.repository.StatRepository
+import nl.entreco.data.db.stats.LocalLiveStatRepository
+import nl.entreco.data.db.stats.LiveStatMapper
+import nl.entreco.domain.repository.LiveStatRepository
 
 /**
  * Created by entreco on 16/01/2018.
@@ -16,13 +16,13 @@ class StatDbModule {
 
     @Provides
     @ActivityScope
-    fun provideStatMapper(): StatMapper {
-        return StatMapper()
+    fun provideStatMapper(): LiveStatMapper {
+        return LiveStatMapper()
     }
 
     @Provides
     @ActivityScope
-    fun provideStatRepository(db: DscDatabase, mapper: StatMapper): StatRepository {
-        return LocalStatRepository(db, mapper)
+    fun provideStatRepository(db: DscDatabase, mapperLive: LiveStatMapper): LiveStatRepository {
+        return LocalLiveStatRepository(db, mapperLive)
     }
 }

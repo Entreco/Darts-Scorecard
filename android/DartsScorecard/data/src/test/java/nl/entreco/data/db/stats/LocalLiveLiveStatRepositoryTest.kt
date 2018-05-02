@@ -16,13 +16,13 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 24/01/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class LocalLiveStatRepositoryTest {
+class LocalLiveLiveStatRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
-    @Mock private lateinit var mockMapper: StatMapper
+    @Mock private lateinit var mockMapperLive: LiveStatMapper
     @Mock private lateinit var mockTurnDao: TurnDao
     @Mock private lateinit var mockMetaDao: MetaDao
-    private lateinit var subject: LocalStatRepository
+    private lateinit var subject: LocalLiveStatRepository
 
     @Before
     fun setUp() {
@@ -32,7 +32,7 @@ class LocalLiveStatRepositoryTest {
     private fun givenSubject() {
         whenever(mockDb.turnDao()).thenReturn(mockTurnDao)
         whenever(mockDb.metaDao()).thenReturn(mockMetaDao)
-        subject = LocalStatRepository(mockDb, mockMapper)
+        subject = LocalLiveStatRepository(mockDb, mockMapperLive)
     }
 
     @Test
@@ -40,7 +40,7 @@ class LocalLiveStatRepositoryTest {
         subject.fetchAllForGame(2)
         verify(mockTurnDao).fetchAll(2)
         verify(mockMetaDao).fetchAll(2)
-        verify(mockMapper).to(anyList(), anyList())
+        verify(mockMapperLive).to(anyList(), anyList())
     }
 
     @Test

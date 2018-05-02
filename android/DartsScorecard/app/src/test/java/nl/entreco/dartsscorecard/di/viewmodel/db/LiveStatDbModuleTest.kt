@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.di.viewmodel.db
 
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.stats.StatMapper
+import nl.entreco.data.db.stats.LiveStatMapper
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class LiveStatDbModuleTest {
 
     @Mock private lateinit var mockDb: DscDatabase
-    @Mock private lateinit var mockMapper: StatMapper
+    @Mock private lateinit var mockMapperLive: LiveStatMapper
 
     @Test
     fun provideStatMapper() {
@@ -24,7 +24,7 @@ class LiveStatDbModuleTest {
 
     @Test
     fun provideStatRepository() {
-        assertNotNull(StatDbModule().provideStatRepository(mockDb, mockMapper))
+        assertNotNull(StatDbModule().provideStatRepository(mockDb, mockMapperLive))
     }
 
 }

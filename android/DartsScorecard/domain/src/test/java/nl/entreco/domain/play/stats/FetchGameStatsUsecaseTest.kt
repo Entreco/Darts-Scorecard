@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.repository.StatRepository
+import nl.entreco.domain.repository.LiveStatRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner::class)
 class FetchGameStatsUsecaseTest{
-    @Mock private lateinit var mockStatRepository: StatRepository
+    @Mock private lateinit var mockLiveStatRepository: LiveStatRepository
     @Mock private lateinit var done: (FetchGameStatsResponse)->Unit
     @Mock private lateinit var fail: (Throwable)->Unit
     private val bg = TestBackground()
@@ -45,7 +45,7 @@ class FetchGameStatsUsecaseTest{
     }
 
     private fun givenSubject() {
-        subject = FetchGameStatsUsecase(mockStatRepository, bg, fg)
+        subject = FetchGameStatsUsecase(mockLiveStatRepository, bg, fg)
     }
 
     private fun whenFetchingStats() {
@@ -54,19 +54,19 @@ class FetchGameStatsUsecaseTest{
     }
 
     private fun whenFetchingStatsSucceeds() {
-        whenever(mockStatRepository.fetchAllForGame(givenGameId)).thenReturn(emptyMap())
+        whenever(mockLiveStatRepository.fetchAllForGame(givenGameId)).thenReturn(emptyMap())
         val req = FetchGameStatsRequest(givenGameId, "")
         subject.exec(req, done, fail)
     }
 
     private fun whenFetchingStatsFails(err: Throwable) {
-        whenever(mockStatRepository.fetchAllForGame(givenGameId)).thenThrow(err)
+        whenever(mockLiveStatRepository.fetchAllForGame(givenGameId)).thenThrow(err)
         val req = FetchGameStatsRequest(givenGameId, "")
         subject.exec(req, done, fail)
     }
 
     private fun thenStatsAreFetched(){
-        verify(mockStatRepository).fetchAllForGame(givenGameId)
+        verify(mockLiveStatRepository).fetchAllForGame(givenGameId)
     }
 
     private fun thenDoneIsInvoked(){

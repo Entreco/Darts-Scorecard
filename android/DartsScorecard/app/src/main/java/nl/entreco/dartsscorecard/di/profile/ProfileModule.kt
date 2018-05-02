@@ -6,11 +6,14 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.profile.LocalProfileRepository
+import nl.entreco.data.db.profile.LocalProfileInfoInfoRepository
+import nl.entreco.data.db.profile.LocalProfileStatRepository
 import nl.entreco.data.db.profile.ProfileMapper
+import nl.entreco.data.db.profile.ProfileStatMapper
 import nl.entreco.data.image.LocalImageRepository
 import nl.entreco.domain.repository.ImageRepository
-import nl.entreco.domain.repository.ProfileRepository
+import nl.entreco.domain.repository.ProfileInfoRepository
+import nl.entreco.domain.repository.ProfileStatRepository
 
 /**
  * Created by entreco on 21/02/2018.
@@ -26,14 +29,26 @@ class ProfileModule {
 
     @Provides
     @ProfileScope
-    fun provideMapper(): ProfileMapper {
+    fun provideProfileMapper(): ProfileMapper {
         return ProfileMapper()
     }
 
     @Provides
     @ProfileScope
-    fun provideProfileRepository(db: DscDatabase, mapper: ProfileMapper): ProfileRepository {
-        return LocalProfileRepository(db, mapper)
+    fun provideProfileStatMapper(): ProfileStatMapper {
+        return ProfileStatMapper()
+    }
+
+    @Provides
+    @ProfileScope
+    fun provideProfileStatRepository(db: DscDatabase, mapper: ProfileStatMapper): ProfileStatRepository {
+        return LocalProfileStatRepository(db, mapper)
+    }
+
+    @Provides
+    @ProfileScope
+    fun provideProfileRepository(db: DscDatabase, mapper: ProfileMapper): ProfileInfoRepository {
+        return LocalProfileInfoInfoRepository(db, mapper)
     }
 
     @Provides

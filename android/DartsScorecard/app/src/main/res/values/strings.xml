@@ -97,6 +97,7 @@
     <string name="err_unable_to_create_player">Unable to create player.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
+    <string name="err_unable_to_fetch_stats">Unable to fetch statistics for player</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
     <string name="err_invalid_player_name">Invalid player name</string>
     <string name="err_player_name_is_empty">Please type desired player name</string>

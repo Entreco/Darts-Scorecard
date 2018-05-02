@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="stats"
+            type="nl.entreco.dartsscorecard.profile.view.PlayerStats" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/def"
+            android:text="@{@string/number(stats.gamesPlayed)}"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            tools:text="@string/app_name" />
+
+        <include
+            layout="@layout/play_01_loading"
+            android:visibility="@{stats == null ? View.VISIBLE : View.GONE}" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

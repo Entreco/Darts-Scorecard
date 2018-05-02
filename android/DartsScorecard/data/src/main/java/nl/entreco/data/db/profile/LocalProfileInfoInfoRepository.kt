@@ -6,12 +6,12 @@ import nl.entreco.data.db.Mapper
 import nl.entreco.data.db.player.PlayerDao
 import nl.entreco.data.db.player.PlayerTable
 import nl.entreco.domain.profile.Profile
-import nl.entreco.domain.repository.ProfileRepository
+import nl.entreco.domain.repository.ProfileInfoRepository
 
 /**
  * Created by entreco on 23/02/2018.
  */
-class LocalProfileRepository(db: DscDatabase, private val mapper: Mapper<PlayerTable, Profile>) : ProfileRepository {
+class LocalProfileInfoInfoRepository(db: DscDatabase, private val mapper: Mapper<PlayerTable, Profile>) : ProfileInfoRepository {
     private val playerDao: PlayerDao = db.playerDao()
 
     @WorkerThread

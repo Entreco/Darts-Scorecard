@@ -1,4 +1,4 @@
-package nl.entreco.domain.archive
+package nl.entreco.domain.profile.archive
 
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
@@ -14,6 +14,7 @@ class ArchiveStatsUsecase @Inject constructor(
 
     fun exec(request: ArchiveStatsRequest, done: (ArchiveStatsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
+
             val scheduled = archiveRepository.archive(request.gameId)
             onUi { done(ArchiveStatsResponse(scheduled)) }
         }, fail)

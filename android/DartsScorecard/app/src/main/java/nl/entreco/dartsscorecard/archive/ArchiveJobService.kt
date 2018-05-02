@@ -14,8 +14,8 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher.Companion.EXTRA_GAME_ID
 import nl.entreco.dartsscorecard.di.archive.ArchiveModule
 import nl.entreco.dartsscorecard.di.service.ServiceModule
-import nl.entreco.domain.archive.ArchiveStatsRequest
-import nl.entreco.domain.archive.ArchiveStatsResponse
+import nl.entreco.domain.profile.archive.ArchiveStatsRequest
+import nl.entreco.domain.profile.archive.ArchiveStatsResponse
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ArchiveJobService : JobService() {

@@ -6,7 +6,7 @@ import nl.entreco.domain.profile.Profile
 /**
  * Created by entreco on 23/02/2018.
  */
-interface ProfileRepository {
+interface ProfileInfoRepository {
 
     @WorkerThread
     fun fetchAll(players: LongArray): List<Profile>

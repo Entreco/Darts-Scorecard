@@ -6,7 +6,7 @@ import nl.entreco.domain.model.LiveStat
 /**
  * Created by entreco on 16/01/2018.
  */
-interface StatRepository {
+interface LiveStatRepository {
 
     @WorkerThread
     fun fetchAllForGame(gameId: Long): Map<Long, LiveStat>

@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.repository.ProfileRepository
+import nl.entreco.domain.repository.ProfileInfoRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -19,7 +19,7 @@ class FetchProfileUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockProfileRepo: ProfileRepository
+    @Mock private lateinit var mockProfileInfoRepo: ProfileInfoRepository
     @Mock private lateinit var mockDone: (FetchProfileResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
 
@@ -40,17 +40,17 @@ class FetchProfileUsecaseTest {
     }
 
     private fun givenSubject() {
-        subject = FetchProfileUsecase(mockProfileRepo, bg, fg)
+        subject = FetchProfileUsecase(mockProfileInfoRepo, bg, fg)
     }
 
     private fun whenFetchingProfileSucceeds() {
         val players = LongArray(4)
-        whenever(mockProfileRepo.fetchAll(players)).thenReturn(emptyList())
+        whenever(mockProfileInfoRepo.fetchAll(players)).thenReturn(emptyList())
         subject.exec(FetchProfileRequest(players), mockDone, mockFail)
     }
 
     private fun whenFetchingProfileFails() {
-        whenever(mockProfileRepo.fetchAll(any())).thenThrow(RuntimeException("Unable to fetch profile"))
+        whenever(mockProfileInfoRepo.fetchAll(any())).thenThrow(RuntimeException("Unable to fetch profile"))
         subject.exec(FetchProfileRequest(LongArray(4)), mockDone, mockFail)
     }
 

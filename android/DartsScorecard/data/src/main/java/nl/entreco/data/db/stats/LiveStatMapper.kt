@@ -9,7 +9,7 @@ import nl.entreco.domain.model.Turn
 /**
  * Created by entreco on 16/01/2018.
  */
-class StatMapper {
+class LiveStatMapper {
 
     fun to(turns: List<TurnTable>, metas: List<MetaTable>): Map<Long, LiveStat> {
         val list = HashMap<Long, LiveStat>()

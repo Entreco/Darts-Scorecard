@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.LiveStat
-import nl.entreco.domain.repository.StatRepository
+import nl.entreco.domain.repository.LiveStatRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class FetchLiveStatUsecaseTest {
 
-    @Mock private lateinit var mockStatRepository: StatRepository
+    @Mock private lateinit var mockLiveStatRepository: LiveStatRepository
     @Mock private lateinit var done: (FetchGameStatResponse) -> Unit
     @Mock private lateinit var fail: (Throwable) -> Unit
     @Mock private lateinit var mockLiveStat: LiveStat
@@ -51,7 +51,7 @@ class FetchLiveStatUsecaseTest {
     }
 
     private fun givenSubject() {
-        subject = FetchGameStatUsecase(mockStatRepository, bg, fg)
+        subject = FetchGameStatUsecase(mockLiveStatRepository, bg, fg)
     }
 
     private fun whenFetchingStats() {
@@ -60,19 +60,19 @@ class FetchLiveStatUsecaseTest {
     }
 
     private fun whenFetchingStatsSucceeds() {
-        whenever(mockStatRepository.fetchStat(givenTurnId, givenMetaId)).thenReturn(mockLiveStat)
+        whenever(mockLiveStatRepository.fetchStat(givenTurnId, givenMetaId)).thenReturn(mockLiveStat)
         val req = FetchGameStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }
 
     private fun whenFetchingStatsFails(err: Throwable) {
-        whenever(mockStatRepository.fetchStat(givenTurnId, givenMetaId)).thenThrow(err)
+        whenever(mockLiveStatRepository.fetchStat(givenTurnId, givenMetaId)).thenThrow(err)
         val req = FetchGameStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }
 
     private fun thenStatsAreFetched() {
-        verify(mockStatRepository).fetchStat(givenTurnId, givenMetaId)
+        verify(mockLiveStatRepository).fetchStat(givenTurnId, givenMetaId)
     }
 
     private fun thenDoneIsInvoked() {

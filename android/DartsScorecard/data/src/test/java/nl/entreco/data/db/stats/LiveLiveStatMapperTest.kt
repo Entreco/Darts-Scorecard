@@ -12,9 +12,9 @@ import org.junit.Test
 /**
  * Created by entreco on 20/01/2018.
  */
-class LiveStatMapperTest {
+class LiveLiveStatMapperTest {
 
-    private lateinit var subject: StatMapper
+    private lateinit var subject: LiveStatMapper
     private lateinit var givenScores: Map<Long, Score>
     private lateinit var givenTurns: List<TurnTable>
     private lateinit var givenPlayerIds: List<Long>
@@ -120,7 +120,7 @@ class LiveStatMapperTest {
     }
 
     private fun givenSubject() {
-        subject = StatMapper()
+        subject = LiveStatMapper()
     }
 
     private fun givenPlayers(vararg ids: Long) {
