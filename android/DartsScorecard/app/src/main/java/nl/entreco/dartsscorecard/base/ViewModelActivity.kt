@@ -61,4 +61,10 @@ abstract class ViewModelActivity : AppCompatActivity() {
         setTitle(title)
         supportActionBar?.setDisplayHomeAsUpEnabled(showHomeEnabled)
     }
+
+    protected fun initToolbar(toolbar: Toolbar, title: String, showHomeEnabled: Boolean = true) {
+        setSupportActionBar(toolbar)
+        setTitle(title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(showHomeEnabled)
+    }
 }

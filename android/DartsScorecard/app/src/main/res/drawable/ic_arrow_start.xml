@@ -3,7 +3,6 @@
         android:height="@dimen/icon_size_default"
         android:viewportWidth="136.0"
         android:viewportHeight="136.0">
-
     <path
         android:pathData="M65,36.07L73.33,28L117.78,71.03L73.33,114.05L65,105.99L101.11,71.03L65,36.07Z"
         android:fillColor="?attr/scoreText"

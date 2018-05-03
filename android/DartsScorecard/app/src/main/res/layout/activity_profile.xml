@@ -4,6 +4,10 @@
 
     <data>
 
+        <import
+            alias="View"
+            type="android.view.View" />
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.profile.view.ProfileViewModel" />
@@ -32,14 +36,21 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
+            android:background="@drawable/stats_bg"
             android:clipToPadding="false"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include layout="@layout/include_profile_stats"
-                app:stats="@{viewModel.stats}"/>
+            <include
+                layout="@layout/include_profile_stats"
+                app:stats="@{viewModel.stats}" />
 
         </android.support.v4.widget.NestedScrollView>
+
+        <!-- Loader -->
+        <include
+            layout="@layout/play_01_loading"
+            android:visibility="@{viewModel.stats == null ? View.VISIBLE : View.GONE}" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

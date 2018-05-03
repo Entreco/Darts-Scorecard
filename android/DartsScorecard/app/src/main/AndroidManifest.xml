@@ -44,13 +44,9 @@
             android:name=".profile.edit.EditPlayerNameActivity"
             android:parentActivityName=".profile.view.ProfileActivity" />
 
-        <service
-            android:name="nl.entreco.data.archive.ArchiveService"
-            android:exported="false"
-            android:description="@string/archive_service"/>
-
         <service android:name=".archive.ArchiveJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"
+            android:description="@string/archive_service"
             android:exported="true" />
 
     </application>

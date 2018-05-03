@@ -27,9 +27,8 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize"
             android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_marginTop="?android:attr/actionBarSize">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -48,14 +47,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/beta_header_height"
-                    android:background="@drawable/beta_gradient" />
-
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/Beta.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.feature.title}" />
+                    android:background="@drawable/beta_gradient_bottom" />
 
                 <TextView
                     style="@style/Beta.Votes"

@@ -80,6 +80,10 @@
     <string name="live_20s">20+</string>
     <string name="live_average">average</string>
 
+    <!-- Profile -->
+    <string name="no_stats_available">No stats available yet</string>
+    <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
+
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
     <string name="channel_name">Archive stats</string>

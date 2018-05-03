@@ -7,10 +7,12 @@ import android.content.Intent
 import android.content.IntentSender
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.beta.donate.DonateCallback
@@ -25,7 +27,7 @@ import nl.entreco.domain.beta.donations.MakeDonationResponse
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaActivity : ViewModelActivity(), DonateCallback {
+class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
 
     private lateinit var binding: ActivityBetaBinding
     private val component: BetaComponent by componentProvider { it.plus(BetaModule(this)) }
@@ -46,6 +48,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
         binding.animator = animator
 
         animator.toggler = votesViewModel
+        animator.swapper = this
         adapter.betaAnimator = animator
 
         initToolbar(toolbar(binding), R.string.title_beta)
@@ -64,6 +67,16 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
 
     override fun lifeCycle(): Lifecycle {
         return lifecycle
+    }
+
+    override fun onSwapToolbar(showDetails: Boolean, title: String) {
+        if(showDetails){
+            supportActionBar?.title = title
+            binding.includeToolbar.collapsingToolbar.title = title
+        } else {
+            supportActionBar?.setTitle(R.string.title_beta)
+            binding.includeToolbar.collapsingToolbar.title = getString(R.string.title_beta)
+        }
     }
 
     override fun makeDonation(response: MakeDonationResponse) {
@@ -90,6 +103,16 @@ class BetaActivity : ViewModelActivity(), DonateCallback {
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun toolbar(binding: ActivityBetaBinding): Toolbar {

@@ -38,7 +38,8 @@ class AppModule(val app: App) {
     @Provides
     @ApplicationScope
     fun provideDb(app: App): DscDatabase {
-        return Room.databaseBuilder(app, DscDatabase::class.java, DscDatabase.name).build()
+        return Room.databaseBuilder(app, DscDatabase::class.java, DscDatabase.name)
+                .build()
     }
 
     @Provides
