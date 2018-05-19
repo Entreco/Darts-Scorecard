@@ -20,7 +20,7 @@ class ProfileStatTest {
     }
 
     private fun givenSubject(id: Long = -2, numberOfGames: Int = -2) {
-        subject = ProfileStat(id, numberOfGames)
+        subject = ProfileStat(id, numberOfGames, 4, 8)
     }
 
 }
