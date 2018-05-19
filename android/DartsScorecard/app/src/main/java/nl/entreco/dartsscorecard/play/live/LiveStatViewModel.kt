@@ -20,7 +20,7 @@ import javax.inject.Inject
 class LiveStatViewModel @Inject constructor(
         val adapter: LiveStatAdapter,
         private val fetchGameStatsUsecase: FetchGameStatsUsecase,
-        private val fetchGameStatUsecase: FetchGameStatUsecase,
+        private val fetchLiveStatUsecase: FetchLiveStatUsecase,
         private val archiveServiceLauncher: ArchiveServiceLauncher,
         private val logger: Logger)
     : BaseViewModel(), GameLoadedNotifier<Play01Response>, StatListener {
@@ -61,10 +61,10 @@ class LiveStatViewModel @Inject constructor(
     private fun onStatsFailed(): (Throwable) -> Unit = { err -> logger.e(err.localizedMessage) }
 
     override fun onStatsChange(turnId: Long, metaId: Long) {
-        fetchGameStatUsecase.exec(FetchGameStatRequest(turnId, metaId), onStatUpdated(), onStatsFailed())
+        fetchLiveStatUsecase.exec(FetchLiveStatRequest(turnId, metaId), onStatUpdated(), onStatsFailed())
     }
 
-    private fun onStatUpdated(): (FetchGameStatResponse) -> Unit {
+    private fun onStatUpdated(): (FetchLiveStatResponse) -> Unit {
         return { response ->
             val teamIndex = teams.indexOfFirst { it.contains(response.liveStat.playerId) }
             if (teamIndex >= 0) {

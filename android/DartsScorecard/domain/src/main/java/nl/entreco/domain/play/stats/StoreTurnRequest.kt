@@ -6,4 +6,4 @@ import nl.entreco.domain.model.Turn
 /**
  * Created by Entreco on 23/12/2017.
  */
- class StoreTurnRequest(val playerId: Long, val gameId: Long, val turn: Turn, val state: State)
+data class StoreTurnRequest(val playerId: Long, val gameId: Long, val turn: Turn, val state: State)

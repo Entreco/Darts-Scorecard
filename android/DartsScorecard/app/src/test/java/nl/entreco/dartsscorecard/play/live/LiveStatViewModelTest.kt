@@ -25,7 +25,7 @@ class LiveStatViewModelTest {
 
     @Mock private lateinit var mockAdapter: LiveStatAdapter
     @Mock private lateinit var mockFetchGameStatsUsecase: FetchGameStatsUsecase
-    @Mock private lateinit var mockFetchGameStatUsecase: FetchGameStatUsecase
+    @Mock private lateinit var mockFetchLiveStatUsecase: FetchLiveStatUsecase
     @Mock private lateinit var mockArchiveServiceLauncher: ArchiveServiceLauncher
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
@@ -39,7 +39,7 @@ class LiveStatViewModelTest {
 
     private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
-    private val statDoneCaptor = argumentCaptor<(FetchGameStatResponse) -> Unit>()
+    private val statDoneCaptor = argumentCaptor<(FetchLiveStatResponse) -> Unit>()
 
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
@@ -131,7 +131,7 @@ class LiveStatViewModelTest {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn(givenTeamIds)
-        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchGameStatUsecase, mockArchiveServiceLauncher, mockLogger)
+        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchLiveStatUsecase, mockArchiveServiceLauncher, mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 
@@ -175,16 +175,16 @@ class LiveStatViewModelTest {
     private fun whenStatsChangeSucceeds() {
         val turnId: Long = 1
         val metaId: Long = 20000
-        val req = FetchGameStatRequest(turnId, metaId)
-        val response = FetchGameStatResponse(givenUpdatedLiveStat)
+        val req = FetchLiveStatRequest(turnId, metaId)
+        val response = FetchLiveStatResponse(givenUpdatedLiveStat)
         subject.onStatsChange(turnId, metaId)
-        verify(mockFetchGameStatUsecase).exec(eq(req), statDoneCaptor.capture(), failCaptor.capture())
+        verify(mockFetchLiveStatUsecase).exec(eq(req), statDoneCaptor.capture(), failCaptor.capture())
         statDoneCaptor.lastValue.invoke(response)
     }
 
     private fun whenStatsChangeFails(err: Throwable) {
         subject.onStatsChange(8, 9)
-        verify(mockFetchGameStatUsecase).exec(any(), any(), failCaptor.capture())
+        verify(mockFetchLiveStatUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(err)
     }
 
@@ -193,7 +193,7 @@ class LiveStatViewModelTest {
     }
 
     private fun thenStatIsFetched() {
-        verify(mockFetchGameStatUsecase).exec(any(), any(), any())
+        verify(mockFetchLiveStatUsecase).exec(any(), any(), any())
     }
 
     private fun thenStatsAreFetched() {

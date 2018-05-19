@@ -19,12 +19,12 @@ import org.mockito.junit.MockitoJUnitRunner
 class FetchLiveStatUsecaseTest {
 
     @Mock private lateinit var mockLiveStatRepository: LiveStatRepository
-    @Mock private lateinit var done: (FetchGameStatResponse) -> Unit
+    @Mock private lateinit var done: (FetchLiveStatResponse) -> Unit
     @Mock private lateinit var fail: (Throwable) -> Unit
     @Mock private lateinit var mockLiveStat: LiveStat
     private val bg = TestBackground()
     private val fg = TestForeground()
-    private lateinit var subject: FetchGameStatUsecase
+    private lateinit var subject: FetchLiveStatUsecase
 
     private val givenTurnId: Long = 8888
     private val givenMetaId: Long = 9999
@@ -51,23 +51,23 @@ class FetchLiveStatUsecaseTest {
     }
 
     private fun givenSubject() {
-        subject = FetchGameStatUsecase(mockLiveStatRepository, bg, fg)
+        subject = FetchLiveStatUsecase(mockLiveStatRepository, bg, fg)
     }
 
     private fun whenFetchingStats() {
-        val req = FetchGameStatRequest(givenTurnId, givenMetaId)
+        val req = FetchLiveStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }
 
     private fun whenFetchingStatsSucceeds() {
         whenever(mockLiveStatRepository.fetchStat(givenTurnId, givenMetaId)).thenReturn(mockLiveStat)
-        val req = FetchGameStatRequest(givenTurnId, givenMetaId)
+        val req = FetchLiveStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }
 
     private fun whenFetchingStatsFails(err: Throwable) {
         whenever(mockLiveStatRepository.fetchStat(givenTurnId, givenMetaId)).thenThrow(err)
-        val req = FetchGameStatRequest(givenTurnId, givenMetaId)
+        val req = FetchLiveStatRequest(givenTurnId, givenMetaId)
         subject.exec(req, done, fail)
     }
 

@@ -1,6 +1,5 @@
 package nl.entreco.domain.profile.fetch
 
-import android.os.SystemClock
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
@@ -14,9 +13,6 @@ class FetchProfileStatsUsecase @Inject constructor(
 
     fun exec(req: FetchProfileStatRequest, done: (FetchProfileStatResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-
-            SystemClock.sleep(5000)
-
             val stat = profileStatRepository.fetchForPlayer(req.playerId)
             onUi { done(FetchProfileStatResponse(stat)) }
         }, fail)

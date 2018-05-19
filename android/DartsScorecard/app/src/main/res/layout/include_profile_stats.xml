@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".profile.view.ProfileActivity">
+    tools:context=".profile.view.ProfileActivity"
+    tools:showIn="@layout/activity_profile">
 
 
     <data>
+
         <import
             alias="View"
             type="android.view.View" />
@@ -19,26 +22,70 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/stat_1"
+            style="@style/ProfileStat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{stats.isEmpty ? View.GONE : View.VISIBLE}"
-            tools:visibility="gone">
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_width="match_parent"
+                style="@style/ProfileStatDescription"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/def"
-                android:text="@{@string/number(stats.gamesPlayed)}"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                tools:text="@string/app_name" />
-        </RelativeLayout>
+                android:layout_weight="5"
+                android:text="Games Played" />
+
+            <TextView
+                style="@style/ProfileStatValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@{stats.gamesPlayed}"
+                tools:text="89.77" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stat_2"
+            style="@style/ProfileStat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stat_1">
+
+            <TextView
+                style="@style/ProfileStatDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="Overal average" />
+
+            <TextView
+                style="@style/ProfileStatValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@{stats.average}"
+                tools:text="89.77" />
+        </LinearLayout>
 
         <!-- Empty Stats -->
         <include
             layout="@layout/include_profile_empty"
-            android:visibility="@{stats.isEmpty ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{stats.isEmpty ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{stats.isEmpty ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="stat_1, stat_2" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

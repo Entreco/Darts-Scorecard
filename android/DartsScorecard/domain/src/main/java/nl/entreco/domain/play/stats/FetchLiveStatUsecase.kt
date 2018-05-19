@@ -9,15 +9,15 @@ import javax.inject.Inject
 /**
  * Created by entreco on 22/01/2018.
  */
-class FetchGameStatUsecase @Inject constructor(
+class FetchLiveStatUsecase @Inject constructor(
         private val liveStatRepository: LiveStatRepository,
         bg: Background,
         fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(req: FetchGameStatRequest, done: (FetchGameStatResponse) -> Unit, fail: (Throwable) -> Unit) {
+    fun exec(req: FetchLiveStatRequest, done: (FetchLiveStatResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val stat = liveStatRepository.fetchStat(req.turnId, req.metaId)
-            onUi { done(FetchGameStatResponse(stat)) }
+            onUi { done(FetchLiveStatResponse(stat)) }
 
         }, fail)
     }
