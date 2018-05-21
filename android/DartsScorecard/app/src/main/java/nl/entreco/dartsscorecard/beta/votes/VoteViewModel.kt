@@ -17,6 +17,7 @@ import nl.entreco.domain.beta.vote.SubmitVoteRequest
 import nl.entreco.domain.beta.vote.SubmitVoteResponse
 import nl.entreco.domain.beta.vote.SubmitVoteUsecase
 import javax.inject.Inject
+import kotlin.math.min
 
 /**
  * Created by entreco on 07/02/2018.
@@ -58,7 +59,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
         val betaModel = feature.get()!!
         val currentFeature = betaModel.feature
         if (allowedToVote(betaModel, currentFeature)) {
-            feature.set(BetaModel(currentFeature.copy(votes = currentFeature.votes + amount)))
+            feature.set(BetaModel(currentFeature.copy(votes = min(currentFeature.required ,currentFeature.votes + amount))))
             votes.add(currentFeature.ref)
             analytics.trackViewFeature(currentFeature)
             submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))

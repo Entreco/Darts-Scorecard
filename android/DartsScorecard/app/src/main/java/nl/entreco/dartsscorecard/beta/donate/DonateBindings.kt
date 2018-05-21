@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.beta.donate
 
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -35,9 +36,7 @@ class DonateBindings {
         }
 
         internal fun clearPreviousViewsIfEmpty(viewGroup: ViewGroup) {
-            val count = (0 until viewGroup.childCount).count { viewGroup.getChildAt(it) is TextView }
-            if (count == 0) (0 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
-            else (1 until viewGroup.childCount).forEach { viewGroup.removeViewAt(it) }
+            viewGroup.removeAllViews()
         }
     }
 }
