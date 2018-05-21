@@ -5,12 +5,13 @@ import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -41,6 +42,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
+                                          private val adViewModel: AdViewModel,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -139,6 +141,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         handleGameFinished(next, game.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
+        showInterstitial(next)
         storeTurn(turn, by, next)
     }
 
@@ -159,6 +162,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         finished.set(gameFinished)
         if (gameFinished) {
             playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+            gameListeners.onGameFinished(gameId)
         }
     }
 
@@ -166,8 +170,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         gameListeners.onTurnSubmitted(next, turn, by, scores)
     }
 
-    private fun notifyMasterCaller(next: Next, turn: Turn){
-        when(next.state){
+    private fun notifyMasterCaller(next: Next, turn: Turn) {
+        when (next.state) {
             State.START -> masterCaller.play(MasterCallerRequest(start = true))
             State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
             State.SET -> masterCaller.play(MasterCallerRequest(set = true))
@@ -177,11 +181,21 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         }
     }
 
+    private fun showInterstitial(next: Next) {
+        when (next.state) {
+            State.START -> adViewModel.provideInterstitial()
+            State.LEG -> adViewModel.provideInterstitial()
+            State.SET -> adViewModel.provideInterstitial()
+            State.MATCH -> adViewModel.provideInterstitial()
+            else -> { }
+        }
+    }
+
     fun stop() {
         masterCaller.stop()
     }
 
-    fun initToggleMenuItem(menu: Menu?){
+    fun initToggleMenuItem(menu: Menu?) {
         menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
     }
 

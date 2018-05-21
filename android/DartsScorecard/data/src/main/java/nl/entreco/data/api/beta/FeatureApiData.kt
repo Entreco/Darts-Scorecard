@@ -28,4 +28,7 @@ internal class FeatureApiData {
 
     @PropertyName("count")
     val count: Int = 0
+
+    @PropertyName("video")
+    val video: String = ""
 }

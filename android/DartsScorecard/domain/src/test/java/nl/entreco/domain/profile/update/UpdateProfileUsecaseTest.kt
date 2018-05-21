@@ -7,7 +7,7 @@ import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.profile.Profile
 import nl.entreco.domain.repository.ImageRepository
-import nl.entreco.domain.repository.ProfileRepository
+import nl.entreco.domain.repository.ProfileInfoRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -25,7 +25,7 @@ class UpdateProfileUsecaseTest {
     @Mock private lateinit var mockDone: (UpdateProfileResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
     @Mock private lateinit var mockImageRepository: ImageRepository
-    @Mock private lateinit var mockProfileService: ProfileRepository
+    @Mock private lateinit var mockProfileInfoService: ProfileInfoRepository
     private lateinit var subject: UpdateProfileUsecase
 
     @Test
@@ -50,14 +50,14 @@ class UpdateProfileUsecaseTest {
     }
 
     private fun givenSubject() {
-        subject = UpdateProfileUsecase(mockImageRepository, mockProfileService, bg, fg)
+        subject = UpdateProfileUsecase(mockImageRepository, mockProfileInfoService, bg, fg)
     }
 
     private fun whenUpdatingProfileSucceeds(name: String = "name", image: String = "image") {
         whenever(mockImageRepository.copyImageToPrivateAppData(any(), any())).thenReturn(image)
-        whenever(mockProfileService.update(12, name, image, "12")).thenReturn(mockProfile)
+        whenever(mockProfileInfoService.update(12, name, image, "12")).thenReturn(mockProfile)
         subject.exec(UpdateProfileRequest(12, name, "12", image, 200F), mockDone, mockFail)
-        verify(mockProfileService).update(12, name, image, "12")
+        verify(mockProfileInfoService).update(12, name, image, "12")
     }
 
     private fun thenProfileIsReported() {

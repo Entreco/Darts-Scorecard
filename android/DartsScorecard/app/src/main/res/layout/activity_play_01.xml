@@ -14,7 +14,7 @@
 
         <variable
             name="statViewModel"
-            type="nl.entreco.dartsscorecard.play.stats.MatchStatViewModel" />
+            type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
             name="scoreViewModel"

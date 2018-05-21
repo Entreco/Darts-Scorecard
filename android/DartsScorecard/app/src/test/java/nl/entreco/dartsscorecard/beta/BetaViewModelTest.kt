@@ -8,7 +8,7 @@ import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.connect.SubscribeToFeaturesUsecase
+import nl.entreco.domain.purchases.connect.SubscribeToFeaturesUsecase
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -72,7 +72,7 @@ class BetaViewModelTest {
     }
 
     private fun whenFetchingFeaturesSucceeds() {
-        expectedFeatureList = listOf(Feature("ref", "title", "desc", "img", "", 3, 1))
+        expectedFeatureList = listOf(Feature("ref", "title", "desc", "img", "", 3, 1, ""))
         subject.refresh()
         verify(mockSubscribeToFeaturesUsecase).subscribe(doneCaptor.capture(), any())
         try {

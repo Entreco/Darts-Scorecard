@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.start
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -115,7 +115,7 @@ class Play01UsecaseTest {
         thenUndoUsecaseIsExecuted()
     }
 
-    private fun whenStoringTurn(turn: Turn, state : State = State.NORMAL) {
+    private fun whenStoringTurn(turn: Turn, state: State = State.NORMAL) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
         expectedTurnMeta = TurnMeta(1, 2, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
@@ -169,6 +169,7 @@ class Play01UsecaseTest {
         givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
         subject.markGameAsFinished(givenMarkFinishRequest)
     }
+
     private fun whenUndoLastTurn() {
         expectedUndoRequest = UndoTurnRequest(1)
         subject.undoLastTurn(expectedUndoRequest, {}, {})
@@ -197,5 +198,4 @@ class Play01UsecaseTest {
     private fun thenUndoUsecaseIsExecuted() {
         verify(mockUndo).exec(eq(expectedUndoRequest), any(), any())
     }
-
 }

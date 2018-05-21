@@ -18,6 +18,7 @@ data class Play01Response(val game: Game, val settings: ScoreSettings, val teams
         if (game != other.game) return false
         if (settings != other.settings) return false
         if (!Arrays.equals(teams, other.teams)) return false
+        if (teamIds != other.teamIds) return false
 
         return true
     }
@@ -26,7 +27,7 @@ data class Play01Response(val game: Game, val settings: ScoreSettings, val teams
         var result = game.hashCode()
         result = 31 * result + settings.hashCode()
         result = 31 * result + Arrays.hashCode(teams)
+        result = 31 * result + teamIds.hashCode()
         return result
     }
-
 }

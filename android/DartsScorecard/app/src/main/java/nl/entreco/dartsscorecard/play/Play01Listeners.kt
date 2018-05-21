@@ -54,6 +54,10 @@ class Play01Listeners @Inject constructor() {
         notifyNextPlayer(next)
     }
 
+    fun onGameFinished(gameId: Long) {
+        notifyGameFinished(gameId)
+    }
+
     private fun addScoreListener(scoreListener: ScoreListener) {
         synchronized(scoreListeners) {
             if (!scoreListeners.contains(scoreListener)) {
@@ -101,6 +105,12 @@ class Play01Listeners @Inject constructor() {
     private fun notifyNextPlayer(next: Next) {
         synchronized(playerListeners) {
             playerListeners.forEach { it.onNext(next) }
+        }
+    }
+
+    private fun notifyGameFinished(gameId: Long) {
+        synchronized(statListeners) {
+            statListeners.forEach { it.onGameFinished(gameId) }
         }
     }
 }

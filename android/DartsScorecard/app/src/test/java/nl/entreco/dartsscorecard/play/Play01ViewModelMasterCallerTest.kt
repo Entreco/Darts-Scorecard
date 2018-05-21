@@ -7,9 +7,10 @@ import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -32,19 +33,22 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 14/03/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class Play01ViewModelMasterCallerTest{
+class Play01ViewModelMasterCallerTest {
 
+    @Mock private lateinit var mockMenu: Menu
+    @Mock private lateinit var mockMenuItem: MenuItem
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
+    @Mock private lateinit var mockAdProvider: AdViewModel
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
     @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
 
-    @Mock private lateinit var mockGame : Game
-    @Mock private lateinit var mockRequest : Play01Request
+    @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockGameLoaded: GameLoadedNotifier<ScoreSettings>
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
 
@@ -87,16 +91,13 @@ class Play01ViewModelMasterCallerTest{
         thenToggleUsecaseIsCalled()
     }
 
-    @Mock private lateinit var mockMenu: Menu
-
-    @Mock private lateinit var mockMenuItem: MenuItem
     private fun givenSubject() {
         givenGameAndRequest()
         whenLoadingOk()
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 
@@ -110,7 +111,7 @@ class Play01ViewModelMasterCallerTest{
         whenever(mockGame.wasBreakMade(any())).thenReturn(false)
         whenever(mockGame.next).thenReturn(Next(State.NORMAL, Team(arrayOf(player)), 0, player, score))
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
-        doneCaptor.firstValue.invoke(Play01Response(mockGame, ScoreSettings(501, 1,1, 0), emptyArray(), "1"))
+        doneCaptor.firstValue.invoke(Play01Response(mockGame, ScoreSettings(501, 1, 1, 0), emptyArray(), "1"))
     }
 
     private fun whenSubmittingTurn(turn: Turn) {
@@ -124,7 +125,7 @@ class Play01ViewModelMasterCallerTest{
     }
 
     private fun whenTogglingMasterCaller(enabled: Boolean) {
-        whenever(mockMenuItem.isChecked).thenReturn( enabled )
+        whenever(mockMenuItem.isChecked).thenReturn(enabled)
         subject.toggleMasterCaller(mockMenuItem)
     }
 
@@ -133,11 +134,11 @@ class Play01ViewModelMasterCallerTest{
         assertEquals(expected, callerCaptor.lastValue.scored)
     }
 
-    private fun thenMenuIs(expected: Boolean){
+    private fun thenMenuIs(expected: Boolean) {
         verify(mockMenuItem).isChecked = expected
     }
 
-    private fun thenToggleUsecaseIsCalled(){
+    private fun thenToggleUsecaseIsCalled() {
         verify(mockToggleSoundUsecase).toggle()
     }
 }

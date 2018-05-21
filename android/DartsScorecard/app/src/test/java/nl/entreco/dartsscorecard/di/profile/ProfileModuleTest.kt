@@ -5,6 +5,7 @@ import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.ProfileMapper
+import nl.entreco.data.db.profile.ProfileStatMapper
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,7 +19,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class ProfileModuleTest {
 
     @Mock private lateinit var mockDatabase: DscDatabase
-    @Mock private lateinit var mockMapper: ProfileMapper
+    @Mock private lateinit var mockProfileMapper: ProfileMapper
+    @Mock private lateinit var mockProfileStatMapper: ProfileStatMapper
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockContentResolver: ContentResolver
 
@@ -28,8 +30,17 @@ class ProfileModuleTest {
     }
 
     @Test
+    fun `it should provide profile mapper`() {
+        assertNotNull(ProfileModule().provideProfileMapper())
+    }
+
+    @Test
+    fun `it should provide profile stat mapper`() {
+        assertNotNull(ProfileModule().provideProfileStatMapper())
+    }
+    @Test
     fun `it should provide mapper`() {
-        assertNotNull(ProfileModule().provideMapper())
+        assertNotNull(ProfileModule().provideProfileStatRepository(mockDatabase, mockProfileStatMapper))
     }
 
     @Test
@@ -45,6 +56,6 @@ class ProfileModuleTest {
 
     @Test
     fun `it should provide profileRepository`() {
-        assertNotNull(ProfileModule().provideProfileRepository(mockDatabase, mockMapper))
+        assertNotNull(ProfileModule().provideProfileRepository(mockDatabase, mockProfileMapper))
     }
 }

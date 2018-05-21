@@ -1,7 +1,9 @@
 package nl.entreco.dartsscorecard.beta.votes
 
+import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
+import android.view.View
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.beta.BetaModel
 import nl.entreco.domain.Analytics
@@ -25,7 +27,9 @@ class VoteViewModelTest {
     @Mock private lateinit var mockObservableField: ObservableField<String>
     @Mock private lateinit var mockVoteUsecase: SubmitVoteUsecase
     @Mock private lateinit var mockAnalytics: Analytics
+    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockModel: BetaModel
+    @Mock private lateinit var mockView: View
     private lateinit var subject: VoteViewModel
 
     private lateinit var givenDonation: Donation
@@ -100,10 +104,16 @@ class VoteViewModelTest {
         thenDidAlreadyVoteIs(false)
     }
 
+    @Test(expected = NullPointerException::class) // Meaning Uri.parse() called
+    fun `it should launch video for valid url`() {
+        givenSubject()
+        whenLaunchingVideo("http://www.url.com")
+        thenVideoIsLaunched()
+    }
+
     private fun givenDonation(amount: Int) {
         givenDonation = Donation("title", "desc", "sku", "price", amount, "e", "12222")
     }
-
 
     private fun givenSubject() {
         subject = VoteViewModel(mockVoteUsecase, mockAnalytics)
@@ -111,9 +121,16 @@ class VoteViewModelTest {
 
     private fun whenFeatureSelected(feature: BetaModel) {
         whenever(mockObservableField.get()).thenReturn("Feature Title")
-        whenever(mockModel.feature).thenReturn(Feature("reference", "feature title", "feature description", "some image", "updates", 10, 2))
+        whenever(mockModel.feature).thenReturn(Feature("reference", "feature title", "feature description", "some image", "updates", 10, 2, ""))
+        whenever(mockModel.video).thenReturn(mockObservableField)
         whenever(mockModel.title).thenReturn(mockObservableField)
         subject.onFeatureSelected(feature)
+    }
+
+    private fun whenLaunchingVideo(url: String) {
+        val feature = Feature("reference", "feature title", "feature description", "some image", "updates", 10, 2, url)
+        subject.onFeatureSelected(BetaModel(feature))
+        subject.launchVideo(mockView)
     }
 
     private fun whenSubmittingDonation() {
@@ -161,5 +178,9 @@ class VoteViewModelTest {
 
     private fun thenViewFeatureIsTracked() {
         verify(mockAnalytics).trackViewFeature(any())
+    }
+
+    private fun thenVideoIsLaunched() {
+        verify(mockView).context
     }
 }

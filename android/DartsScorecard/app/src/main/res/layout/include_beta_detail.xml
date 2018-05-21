@@ -22,14 +22,13 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:layout_marginTop="?android:attr/actionBarSize">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,21 +40,14 @@
                     android:id="@+id/preview"
                     style="@style/BetaHeader"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="@dimen/beta_header_height"
                     android:contentDescription="@null"
                     bind:imageUrl="@{viewModel.feature.image}" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/beta_header_height"
-                    android:background="@drawable/beta_gradient" />
-
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/Beta.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.feature.title}" />
+                    android:background="@drawable/beta_gradient_bottom" />
 
                 <TextView
                     style="@style/Beta.Votes"
@@ -101,11 +93,26 @@
                     android:text="@{viewModel.feature.description}"
                     tools:text="@string/votes_explained" />
 
+                <TextView
+                    android:id="@+id/video"
+                    style="@style/Beta.Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/description"
+                    android:layout_centerHorizontal="true"
+                    android:drawableEnd="@drawable/ic_play_video"
+                    android:drawablePadding="@dimen/small"
+                    android:drawableTint="@color/colorAccent"
+                    android:onClick="@{(v) -> viewModel.launchVideo(v)}"
+                    android:padding="@dimen/small"
+                    android:visibility="@{viewModel.showVideo}"
+                    app:textWithTags="@{@string/beta_video}" />
+
                 <include
                     layout="@layout/include_beta_donate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/description"
+                    android:layout_below="@id/video"
                     android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
                     app:total="@{viewModel.feature.total}"
                     app:viewModel="@{donateViewModel}" />
@@ -114,7 +121,7 @@
                     layout="@layout/include_beta_implementation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/description"
+                    android:layout_below="@id/video"
                     android:visibility="@{viewModel.feature.votable ? View.GONE : View.VISIBLE}"
                     app:feature="@{viewModel.feature}" />
 

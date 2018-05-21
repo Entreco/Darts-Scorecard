@@ -5,6 +5,7 @@
     <dimen name="def">8dp</dimen>
     <dimen name="large">16dp</dimen>
     <dimen name="xlarge">32dp</dimen>
+    <dimen name="xxlarge">64dp</dimen>
     <dimen name="elevation">6dp</dimen>
 
     <dimen name="icon_size_default">24dp</dimen>

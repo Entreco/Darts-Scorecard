@@ -50,6 +50,8 @@ class SelectProfileActivity : ViewModelActivity() {
         val recyclerView = binding.profileRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
         recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.setHasFixedSize(true)
+        recyclerView.setItemViewCacheSize(20)
         recyclerView.isDrawingCacheEnabled = true
         val swipeToDeleteHelper = ItemTouchHelper(object : SwipeToDeleteCallback(binding.root.context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

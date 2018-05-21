@@ -29,7 +29,7 @@ class RetrieveLatestGameUsecaseTest {
     private val createRequest = CreateGameRequest(501, 1, 2, 3)
 
     private lateinit var subject: RetrieveLatestGameUsecase
-    private lateinit var gavenLatestGame: FetchLatestGameResponse
+    private lateinit var givenLatestGame: FetchLatestGameResponse
 
     @Before
     fun setUp() {
@@ -53,12 +53,12 @@ class RetrieveLatestGameUsecaseTest {
     }
 
     private fun givenLatestGameExists() {
-        gavenLatestGame = FetchLatestGameResponse(gameId, teamids, createRequest.startScore, createRequest.startIndex, createRequest.numLegs, createRequest.numSets)
-        whenever(mockGameRepository.fetchLatest()).thenReturn(gavenLatestGame)
+        givenLatestGame = FetchLatestGameResponse(gameId, teamids, createRequest.startScore, createRequest.startIndex, createRequest.numLegs, createRequest.numSets)
+        whenever(mockGameRepository.fetchLatest()).thenReturn(givenLatestGame)
     }
 
     private fun givenLatestGameDoesNotExists() {
-        gavenLatestGame = FetchLatestGameResponse(gameId, teamids, createRequest.startScore, createRequest.startIndex, createRequest.numLegs, createRequest.numSets)
+        givenLatestGame = FetchLatestGameResponse(gameId, teamids, createRequest.startScore, createRequest.startIndex, createRequest.numLegs, createRequest.numSets)
         whenever(mockGameRepository.fetchLatest()).thenThrow(IllegalStateException("no game available"))
     }
 
@@ -67,7 +67,7 @@ class RetrieveLatestGameUsecaseTest {
     }
 
     private fun thenDoneIsCalled() {
-        verify(mockDone).invoke(gavenLatestGame)
+        verify(mockDone).invoke(givenLatestGame)
     }
 
     private fun thenErrorIsReported() {

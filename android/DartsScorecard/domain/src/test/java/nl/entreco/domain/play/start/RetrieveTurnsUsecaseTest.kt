@@ -31,7 +31,7 @@ class RetrieveTurnsUsecaseTest {
     @Test
     fun `it should retrieve turns from database`() {
         givenUsecase(66)
-        givenStoredTurns(listOf(Pair(1L,Turn()), Pair(2L,Turn())))
+        givenStoredTurns(listOf(Pair(1L, Turn()), Pair(2L, Turn())))
         whenRetrievingTurnsSucceeds()
         thenOkIsExecuted()
     }
@@ -39,7 +39,7 @@ class RetrieveTurnsUsecaseTest {
     @Test
     fun `it should report error when failing to retrieve turns from database`() {
         givenUsecase(66)
-        givenStoredTurns(listOf(Pair(1L,Turn()), Pair(2L,Turn())))
+        givenStoredTurns(listOf(Pair(1L, Turn()), Pair(2L, Turn())))
         whenRetrievingTurnsFails(RuntimeException("Something wrong with db"))
         thenFailIsExecuted()
     }

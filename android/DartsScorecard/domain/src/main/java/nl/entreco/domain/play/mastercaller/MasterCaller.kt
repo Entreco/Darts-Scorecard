@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.mastercaller
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
 import nl.entreco.domain.repository.SoundRepository

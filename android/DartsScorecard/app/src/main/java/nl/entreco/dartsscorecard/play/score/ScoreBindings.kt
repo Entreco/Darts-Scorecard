@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.play.score
 import android.databinding.BindingAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.finish.GetFinishUsecase
@@ -24,12 +23,12 @@ abstract class ScoreBindings {
                 throw IllegalStateException("state mismatch, scores.size != teams.size! -> was this game already started?")
             }
 
+            recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
             recyclerView.itemAnimator = null
+            recyclerView.isDrawingCacheEnabled = true
             recyclerView.adapter = adapter
             adapter.clear()
-
-            Log.w("TAG", "teams: $teams scores: $scores tsi:${scoreSettings.teamStartIndex}")
 
             val listeners = mutableListOf<TeamScoreListener>()
             teams.forEachIndexed { index, team ->

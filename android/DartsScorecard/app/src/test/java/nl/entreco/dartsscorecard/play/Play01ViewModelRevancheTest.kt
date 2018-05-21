@@ -3,9 +3,10 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.mastercaller.MasterCaller
@@ -31,6 +32,7 @@ class Play01ViewModelRevancheTest {
     @Mock private lateinit var mockPlay01Usecamse: Play01Usecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
+    @Mock private lateinit var mockAdProvider: AdViewModel
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mockGameListeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -41,7 +43,6 @@ class Play01ViewModelRevancheTest {
     @Mock private lateinit var mockScoreSettings: ScoreSettings
     @Mock private lateinit var team1: Team
     @Mock private lateinit var team2: Team
-
 
     private val revancheCaptor = argumentCaptor<(RevancheResponse) -> Unit>()
 
@@ -58,7 +59,7 @@ class Play01ViewModelRevancheTest {
     }
 
     private fun givenFullyLoadedSubject() {
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))

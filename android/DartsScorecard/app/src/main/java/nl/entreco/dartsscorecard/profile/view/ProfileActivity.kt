@@ -5,7 +5,9 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
@@ -34,6 +36,12 @@ class ProfileActivity : ViewModelActivity() {
         binding.navigator = ProfileNavigator(this)
 
         viewModel.fetchProfile(idsFromIntent(intent))
+
+        initToolbar(toolbar(binding), R.string.empty)
+    }
+
+    private fun toolbar(binding: ActivityProfileBinding): Toolbar {
+        return binding.includeAppbar.toolbar
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -45,6 +53,16 @@ class ProfileActivity : ViewModelActivity() {
             viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0))
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onBackPressed() {

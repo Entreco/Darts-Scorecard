@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".profile.view.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/xxlarge"
+        android:paddingTop="@dimen/xxlarge"
+        tools:showIn="@layout/include_profile_stats">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/def"
+            android:text="@string/no_stats_available"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableBottom="@mipmap/ic_launcher_foreground"
+            android:gravity="center"
+            android:padding="@dimen/def"
+            android:text="@string/no_stats_available_sub"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+</layout>

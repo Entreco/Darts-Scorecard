@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.beta.Feature
-import nl.entreco.domain.beta.connect.SubscribeToFeaturesUsecase
+import nl.entreco.domain.purchases.connect.SubscribeToFeaturesUsecase
 import javax.inject.Inject
 
 /**

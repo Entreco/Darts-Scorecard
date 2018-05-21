@@ -19,9 +19,7 @@ class BetaBindings {
         @BindingAdapter("imageUrl")
         fun loadImage(view: ImageView, url: String?) {
             url?.let {
-                Picasso.with(view.context)
-                        .load(Uri.parse(it))
-                        .into(view)
+                Picasso.get().load(Uri.parse(it)).fit().centerCrop().into(view)
             }
         }
 
@@ -37,7 +35,7 @@ class BetaBindings {
         @JvmStatic
         @BindingAdapter("textWithTags")
         fun setTextWithTags(view: TextView, message: String?) {
-            if(message != null) {
+            if (message != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     view.text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
                 } else {

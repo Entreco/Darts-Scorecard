@@ -18,6 +18,7 @@ class BetaModel(val feature: Feature) {
     val progress = ObservableFloat(((feature.votes.toFloat() / feature.required.toFloat())))
     val image = ObservableField<String>(feature.image)
     val remarks = ObservableField<String>(formatHtml(feature.remarks))
+    val video = ObservableField<String>(feature.video)
 
     private fun format(value: Int): String {
         return when {

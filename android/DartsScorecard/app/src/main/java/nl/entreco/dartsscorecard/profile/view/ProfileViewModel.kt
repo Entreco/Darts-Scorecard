@@ -5,9 +5,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.profile.fetch.FetchProfileRequest
-import nl.entreco.domain.profile.fetch.FetchProfileResponse
-import nl.entreco.domain.profile.fetch.FetchProfileUsecase
+import nl.entreco.domain.profile.fetch.*
 import nl.entreco.domain.profile.update.UpdateProfileRequest
 import nl.entreco.domain.profile.update.UpdateProfileResponse
 import nl.entreco.domain.profile.update.UpdateProfileUsecase
@@ -17,14 +15,17 @@ import javax.inject.Inject
  * Created by entreco on 21/02/2018.
  */
 class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: FetchProfileUsecase,
-                                           private val updateProfileUsecase: UpdateProfileUsecase) : BaseViewModel() {
+                                           private val updateProfileUsecase: UpdateProfileUsecase,
+                                           private val fetchProfileStatsUsecase: FetchProfileStatsUsecase) : BaseViewModel() {
 
     val profile = ObservableField<PlayerProfile>()
+    val stats = ObservableField<PlayerStats>()
     val errorMsg = ObservableInt()
 
     fun fetchProfile(playerIds: LongArray) {
         if (profile.get() == null && playerIds.isNotEmpty()) {
             fetchProfileUsecase.exec(FetchProfileRequest(playerIds), onProfileSuccess(), onProfileFailed())
+            fetchProfileStatsUsecase.exec(FetchProfileStatRequest(playerIds[0]), onStatsSuccess(), onStatsFailed())
         }
     }
 
@@ -56,6 +57,14 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     }
 
     private fun onProfileFailed(): (Throwable) -> Unit = {
-        errorMsg.set(R.string.err_unable_to_fetch_players)
+        this.errorMsg.set(R.string.err_unable_to_fetch_players)
+    }
+
+    private fun onStatsSuccess(): (FetchProfileStatResponse) -> Unit = { stats ->
+        this.stats.set(PlayerStats(stats.stat))
+    }
+
+    private fun onStatsFailed():(Throwable)->Unit = {
+        this.errorMsg.set(R.string.err_unable_to_fetch_stats)
     }
 }

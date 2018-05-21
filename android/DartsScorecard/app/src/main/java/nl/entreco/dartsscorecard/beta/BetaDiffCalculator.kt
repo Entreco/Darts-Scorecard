@@ -17,12 +17,6 @@ class BetaDiffCalculator(private val old: List<Feature>, private val new: List<F
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = old[oldItemPosition]
-        val newItem = new[newItemPosition]
-        return oldItem.description == newItem.description &&
-                oldItem.image == newItem.image &&
-                oldItem.required == newItem.required &&
-                oldItem.votes == newItem.votes &&
-                oldItem.title == newItem.title
+        return old[oldItemPosition] == new[newItemPosition]
     }
 }

@@ -5,4 +5,4 @@ import nl.entreco.domain.profile.Profile
 /**
  * Created by entreco on 23/02/2018.
  */
-data class FetchProfileResponse (val profiles: List<Profile>)
+class FetchProfileResponse (val profiles: List<Profile>)

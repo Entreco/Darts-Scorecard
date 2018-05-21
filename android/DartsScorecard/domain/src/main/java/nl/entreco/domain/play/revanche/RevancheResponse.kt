@@ -7,4 +7,4 @@ import nl.entreco.domain.settings.ScoreSettings
 /**
  * Created by entreco on 19/02/2018.
  */
-data class RevancheResponse(val game: Game, val settings: ScoreSettings, val teams: Array<Team>, val teamIds: String)
+class RevancheResponse(val game: Game, val settings: ScoreSettings, val teams: Array<Team>, val teamIds: String)

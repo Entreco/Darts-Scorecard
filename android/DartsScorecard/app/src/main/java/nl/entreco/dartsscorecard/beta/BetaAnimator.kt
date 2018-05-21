@@ -17,9 +17,14 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     private val appBar = binding.includeToolbar.betaAppbar
     private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar.toolbar, binding.sheet, binding.sheet.voteFab)
     internal var toggler: Toggler? = null
+    internal var swapper: Swapper? = null
 
     interface Toggler {
         fun onFeatureSelected(feature: BetaModel)
+    }
+
+    interface Swapper {
+        fun onSwapToolbar(showDetails: Boolean, title: String = "")
     }
 
     init {
@@ -31,6 +36,9 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 animator.onStateChanged(newState)
+                if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    swapper?.onSwapToolbar(false)
+                }
             }
         })
 
@@ -42,6 +50,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
             appBar.setExpanded(false, true)
             appBar.isEnabled = false
             behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+            swapper?.onSwapToolbar(true, model.title.get()!!)
             toggler?.onFeatureSelected(model)
         }
     }

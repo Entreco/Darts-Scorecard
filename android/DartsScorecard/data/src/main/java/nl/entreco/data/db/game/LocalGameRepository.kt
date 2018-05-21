@@ -45,8 +45,7 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     @Throws
     @WorkerThread
     override fun fetchBy(id: Long): Game {
-        val gameTable = gameDao.fetchBy(id)
-                ?: throw IllegalStateException("Game $id does not exist")
+        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
         return mapper.to(gameTable)
     }
 

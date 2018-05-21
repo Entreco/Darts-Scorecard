@@ -15,7 +15,17 @@ import nl.entreco.domain.repository.BillingRepository
  */
 class PlayStoreBillingRepository(private val context: Context, private val service: BillingServiceConnection) : BillingRepository {
 
-    private val BILLINGRESPONSERESULTOK = 0
+    companion object {
+        private const val BILLING_RESPONSE_RESULT_OK = 0
+        private const val BILLING_INTENT = "com.android.vending.billing.InAppBillingService.BIND"
+        private const val BILLING_PACKAGE = "com.android.vending"
+        private const val FETCH_RESPONSE_CODE = "RESPONSE_CODE"
+        private const val EXTRA_DETAILS_LIST = "DETAILS_LIST"
+        private const val BUY_RESPONSE_CODE = "RESPONSE_CODE"
+        private const val EXTRA_BUY_INTENT = "BUY_INTENT"
+        private const val QUERY_RESPONSE_CODE = "RESPONSE_CODE"
+        private const val EXTRA_INAPP_PURCHASE_ITEM_LIST = "INAPP_PURCHASE_ITEM_LIST"
+    }
 
     private val gson by lazy { GsonBuilder().create() }
     private val apiVersion = 5
@@ -24,8 +34,8 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
     @UiThread
     override fun bind(done: (Boolean) -> Unit) {
         service.setCallback(done)
-        val intent = Intent("com.android.vending.billing.InAppBillingService.BIND")
-        intent.`package` = "com.android.vending"
+        val intent = Intent(BILLING_INTENT)
+        intent.`package` = BILLING_PACKAGE
         context.bindService(intent, service, Context.BIND_AUTO_CREATE)
     }
 
@@ -36,14 +46,24 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
     }
 
     @WorkerThread
-    override fun fetchDonations(): List<Donation> {
-
+    override fun fetchDonationsExclAds(): List<Donation> {
         val donations = FetchDonationsData()
+        return fetchProducts(donations)
+    }
+
+    @WorkerThread
+    override fun fetchDonationsInclAds(): List<Donation> {
+        val donations = FetchDonationsInclAdsData()
+        return fetchProducts(donations)
+    }
+
+    @WorkerThread
+    private fun fetchProducts(donations: InAppProducts): List<Donation> {
         val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
+        return if (bundle?.getInt(FETCH_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
 
-            bundle.getStringArrayList("DETAILS_LIST").mapNotNull { response ->
+            bundle.getStringArrayList(EXTRA_DETAILS_LIST).mapNotNull { response ->
                 val donation = gson.fromJson(response, DonationApiData::class.java)
                 val votes = donations.getVotes(donation.productId)
 
@@ -54,25 +74,35 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
         }
     }
 
+    @WorkerThread
     override fun donate(donation: Donation): MakeDonationResponse {
         val buy = MakeDonationData(donation)
         val payload = buy.payload()
-        val bundle = service.getService()?.run {
-            getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
-        }
+        val bundle = service.getService()?.getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
 
-        return if (bundle?.getInt("RESPONSE_CODE") == BILLINGRESPONSERESULTOK) {
-            val intent: PendingIntent = bundle.getParcelable("BUY_INTENT")
+        return if (bundle?.getInt(BUY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
+            val intent: PendingIntent = bundle.getParcelable(EXTRA_BUY_INTENT)
 
             MakeDonationResponse(intent, payload)
         } else {
-            throw Throwable("oops, $bundle")
+            throw Throwable("Unable to getBuyIntent() $bundle")
         }
     }
 
+    @WorkerThread
     override fun consume(token: String): Int {
-        return service.getService()?.run {
-            consumePurchase(apiVersion, packageName, token)
-        }!!
+        return service.getService()?.consumePurchase(apiVersion, packageName, token)!!
+    }
+
+    @WorkerThread
+    override fun fetchPurchasedItems(): List<String> {
+        val purchases = FetchPurchasesData()
+        val bundle = service.getService()?.getPurchases(apiVersion, packageName, purchases.type(), purchases.token())
+
+        return if (bundle?.getInt(QUERY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
+            return bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)
+        } else {
+            throw Throwable("Unable to getPurchases(), $bundle")
+        }
     }
 }

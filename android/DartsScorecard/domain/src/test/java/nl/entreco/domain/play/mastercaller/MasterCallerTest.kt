@@ -3,7 +3,7 @@ package nl.entreco.domain.play.mastercaller
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.SoundRepository

@@ -9,10 +9,10 @@ import org.junit.Test
  */
 class BetaDiffCalculatorTest {
 
-    private val feature1 = Feature("ref1", "title1", "desc1", "img1", "update", 1, 1)
-    private val feature2 = Feature("ref2", "title2", "desc2", "img2", "update", 2, 2)
-    private val feature3 = Feature("ref3", "title3", "desc3", "img3", "update", 3, 3)
-    private val feature4 = Feature("ref4", "title4", "desc4", "img4", "update", 4, 4)
+    private val feature1 = Feature("ref1", "title1", "desc1", "img1", "update", 1, 1, "")
+    private val feature2 = Feature("ref2", "title2", "desc2", "img2", "update", 2, 2, "")
+    private val feature3 = Feature("ref3", "title3", "desc3", "img3", "update", 3, 3, "")
+    private val feature4 = Feature("ref4", "title4", "desc4", "img4", "update", 4, 4, "")
 
     @Test
     fun `areItemsTheSame true`() {

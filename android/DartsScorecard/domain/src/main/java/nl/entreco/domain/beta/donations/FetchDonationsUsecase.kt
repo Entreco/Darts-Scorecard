@@ -11,11 +11,17 @@ import javax.inject.Inject
  */
 class FetchDonationsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(done: (FetchDonationsResponse)->Unit, fail: (Throwable) -> Unit){
+    fun exec(done: (FetchDonationsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val donations = billingRepository.fetchDonations().sortedBy { it.priceMicros }
-            val sorted = donations.sortedBy { it.price }
-            onUi { done(FetchDonationsResponse(sorted)) }
+
+            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
+            if (hasPreviouslyBoughtItems) {
+                val donations = billingRepository.fetchDonationsExclAds().sortedBy { it.priceMicros.toLong() }
+                onUi { done(FetchDonationsResponse(donations, true)) }
+            } else {
+                val donations = billingRepository.fetchDonationsInclAds().sortedBy { it.priceMicros.toLong() }
+                onUi { done(FetchDonationsResponse(donations, false)) }
+            }
         }, fail)
     }
 }

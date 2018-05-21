@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
-import nl.entreco.dartsscorecard.play.stats.MatchStatSlideAnimator
+import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -56,7 +56,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                                          private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
         private var animatorPosition: Int = 0
-        internal var animator: MatchStatSlideAnimator? = null
+        internal var animator: LiveStatSlideAnimator? = null
         private val lock = Object()
 
         fun onSlide(slideOffset: Float) {
@@ -111,10 +111,10 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
         }
 
-        private fun getAnimatorForPosition(position: Int): MatchStatSlideAnimator? {
+        private fun getAnimatorForPosition(position: Int): LiveStatSlideAnimator? {
             synchronized(lock) {
                 if (animator == null) {
-                    animator = MatchStatSlideAnimator(pager.findViewWithTag(position), pager.findViewWithTag(position - 1), pager.findViewWithTag(position + 1))
+                    animator = LiveStatSlideAnimator(pager.findViewWithTag(position), pager.findViewWithTag(position - 1), pager.findViewWithTag(position + 1))
                 }
                 return animator
             }

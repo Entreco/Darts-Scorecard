@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.launch.ExtractTeamsRequest
 import nl.entreco.domain.launch.ExtractTeamsResponse
 import nl.entreco.domain.launch.ExtractTeamsUsecase

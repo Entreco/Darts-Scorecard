@@ -5,7 +5,7 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.NoPlayer
 import nl.entreco.domain.model.players.Player

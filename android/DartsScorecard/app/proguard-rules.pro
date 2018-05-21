@@ -36,5 +36,8 @@
 -dontwarn okio.**
 -dontnote okio.**
 
+# OkHttp
+-dontwarn okhttp3.**
+
 # Billing
 -keep class com.android.vending.billing.**
