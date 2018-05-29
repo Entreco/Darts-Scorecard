@@ -21,14 +21,14 @@ class InterstitialLoaderTest {
     @Test
     fun `it should show Interstitial when loaded ok`() {
         givenSubject(true)
-        whenShowingInterstitial()
+        whenShowingInterstitial(true)
         thenInterstialIsShown()
     }
 
     @Test
     fun `it should NOT show interstitial when not loaded ok`() {
         givenSubject(false)
-        whenShowingInterstitial()
+        whenShowingInterstitial(false)
         thenInterstialIsNotShown()
     }
 
@@ -44,10 +44,13 @@ class InterstitialLoaderTest {
         subject = InterstitialLoader("interstialAdUnitId", mockHandler, mockInterstitial)
     }
 
-    private fun whenShowingInterstitial() {
+    private fun whenShowingInterstitial(loaded: Boolean) {
         subject.showInterstitial()
-        verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(250))
-        runnableCaptor.lastValue.run()
+
+        if(loaded) {
+            verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(250))
+            runnableCaptor.lastValue.run()
+        }
     }
 
     private fun whenAdClosed() {
