@@ -63,6 +63,7 @@
     <string name="favourite_double">Favourite double %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
     <string name="edit_player_double">Favourite double</string>
+    <string name="confirm_delete_profile">Profile deleted</string>
 
     <!-- Input -->
     <string name="darts_used">How many darts did you use?</string>

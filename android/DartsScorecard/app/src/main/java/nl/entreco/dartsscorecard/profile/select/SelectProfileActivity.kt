@@ -9,9 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.support.v7.widget.helper.ItemTouchHelper
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.base.SwipeToDeleteCallback
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivitySelectProfileBinding
 import nl.entreco.dartsscorecard.di.profile.SelectProfileComponent
@@ -53,20 +51,22 @@ class SelectProfileActivity : ViewModelActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
         recyclerView.isDrawingCacheEnabled = true
-        val swipeToDeleteHelper = ItemTouchHelper(object : SwipeToDeleteCallback(binding.root.context!!) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                viewModel.deletePlayerProfile(position, adapter)
-            }
-        })
-        swipeToDeleteHelper.attachToRecyclerView(recyclerView)
+        addSwipeToDelete(binding, recyclerView)
         recyclerView.adapter = adapter
+    }
+
+    private fun addSwipeToDelete(binding: ActivitySelectProfileBinding, recyclerView: RecyclerView) {
+        val swipeToDeleteHelper = SelectProfileSwiper(binding.root,
+                onSwiped = { viewModel.hidePlayerProfile(adapter.playerIdAt(it), adapter) },
+                deleteAction = { viewModel.deletePlayerProfile(adapter.playerIdAt(it), adapter) },
+                undoAction = { viewModel.reload(adapter) })
+        swipeToDeleteHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_VIEW && resultCode == Activity.RESULT_OK) {
             viewModel.reload(adapter)
-        } else if(requestCode == REQUEST_CODE_CREATE && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == REQUEST_CODE_CREATE && resultCode == Activity.RESULT_OK) {
             val name = data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!
             val double = data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0)
             viewModel.create(adapter, name, double)

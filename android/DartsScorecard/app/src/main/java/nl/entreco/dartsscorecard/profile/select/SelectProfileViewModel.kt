@@ -23,10 +23,10 @@ class SelectProfileViewModel @Inject constructor(
         }
     }
 
-    fun reload(adapter: SelectProfileAdapter) {
+    fun reload(adapter: SelectProfileAdapter, playerToHide: Long? = null) {
         isLoading.set(true)
         isEmpty.set(false)
-        fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFailed())
+        fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter, playerToHide), onFailed())
     }
 
     fun create(adapter: SelectProfileAdapter, name: String, fav: Int) {
@@ -35,18 +35,29 @@ class SelectProfileViewModel @Inject constructor(
         createPlayerUsecase.exec(CreatePlayerRequest(name, fav), onCreateSuccess(adapter), onFailed())
     }
 
-    fun deletePlayerProfile(position: Int, adapter: SelectProfileAdapter) {
-        val player = adapter.playerIdAt(position)
-        deletePlayerUsecase.delete(DeletePlayerRequest(player), {}, onFailed())
-        reload(adapter)
+    fun deletePlayerProfile(player: Long, adapter: SelectProfileAdapter) {
+        isLoading.set(true)
+        deletePlayerUsecase.delete(DeletePlayerRequest(player), { reload(adapter) }, onFailed())
     }
 
-    private fun onFetchSuccess(adapter: SelectProfileAdapter): (FetchExistingPlayersResponse) -> Unit = { response ->
+    fun hidePlayerProfile(player: Long, adapter: SelectProfileAdapter) {
+        isLoading.set(true)
+        reload(adapter, player)
+    }
+
+    private fun onFetchSuccess(adapter: SelectProfileAdapter, playerToHide: Long?): (FetchExistingPlayersResponse) -> Unit = { response ->
         isLoading.set(false)
-        val profiles = response.players.map { Profile(it.name, it.id, it.image ?: "", it.prefs) }
+        val profiles = if (playerToHide != null) {
+            toProfiles(response).filter { it.id == playerToHide }
+        } else {
+            toProfiles(response)
+        }
         isEmpty.set(profiles.isEmpty())
         adapter.setItems(profiles)
     }
+
+    private fun toProfiles(response: FetchExistingPlayersResponse) =
+            response.players.map { Profile(it.name, it.id, it.image ?: "", it.prefs) }
 
     private fun onCreateSuccess(adapter: SelectProfileAdapter): (CreatePlayerResponse) -> Unit = { _ ->
         reload(adapter)
