@@ -80,7 +80,6 @@
                         android:imeOptions="actionDone"
                         android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
                         android:text="@{viewModel.name}"
-                        android:textAllCaps="true"
                         app:showKeyboard="@{viewModel.isTyping}"
                         app:window="@{window}" />
 

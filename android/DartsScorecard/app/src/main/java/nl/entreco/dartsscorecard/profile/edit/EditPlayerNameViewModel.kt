@@ -63,7 +63,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     }
 
     fun onNameChanged(editable: Editable) {
-        name.set(editable.toString().toLowerCase())
+        name.set(editable.toString())
     }
 
     private fun toIndex(fav: String, context: Context): Int {
