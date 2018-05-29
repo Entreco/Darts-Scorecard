@@ -83,7 +83,7 @@ class FetchPurchasedItemsUsecaseTest {
     }
 
     private fun whenFetchingSucceeds() {
-        whenever(mockGameRepo.numberOfGames()).thenReturn(givenNumberOfGames)
+        whenever(mockGameRepo.countFinishedGames()).thenReturn(givenNumberOfGames)
         whenever(mockBillingRepo.fetchPurchasedItems()).thenReturn(givenPurchases)
         subject.exec(mockDone, mockFail)
     }

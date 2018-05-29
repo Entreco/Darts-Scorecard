@@ -15,7 +15,7 @@ class FetchPurchasedItemsUsecase @Inject constructor(
 
     fun exec(done: (FetchPurchasedItemsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val numberOfGames = gameRepository.numberOfGames()
+            val numberOfGames = gameRepository.countFinishedGames()
             val items = billingRepository.fetchPurchasedItems()
             onUi {
                 done(FetchPurchasedItemsResponse(items.isEmpty() && numberOfGames >= 1))

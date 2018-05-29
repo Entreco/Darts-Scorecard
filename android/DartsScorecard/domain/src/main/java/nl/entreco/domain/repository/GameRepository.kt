@@ -34,5 +34,5 @@ interface GameRepository {
 
     @Throws
     @WorkerThread
-    fun numberOfGames(): Int
+    fun countFinishedGames(): Int
 }

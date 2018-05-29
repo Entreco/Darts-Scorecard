@@ -67,7 +67,7 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     }
 
     @WorkerThread
-    override fun numberOfGames(): Int {
+    override fun countFinishedGames(): Int {
         return gameDao.fetchAll().count { !it.finished }
     }
 }
