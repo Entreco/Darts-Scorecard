@@ -31,4 +31,8 @@ interface GameRepository {
     @Throws
     @WorkerThread
     fun fetchLatest(): FetchLatestGameResponse
+
+    @Throws
+    @WorkerThread
+    fun numberOfGames(): Int
 }
