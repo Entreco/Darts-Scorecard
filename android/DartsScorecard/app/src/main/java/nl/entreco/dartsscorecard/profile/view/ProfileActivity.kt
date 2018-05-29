@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -26,6 +27,7 @@ class ProfileActivity : ViewModelActivity() {
 
     private val component: ProfileComponent by componentProvider { it.plus(ProfileModule()) }
     private val viewModel: ProfileViewModel by viewModelProvider { component.viewModel() }
+    private val navigator: ProfileNavigator by lazy { ProfileNavigator(this) }
     private var madeChanges = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class ProfileActivity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this, R.layout.activity_profile)
         binding.viewModel = viewModel
         binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
-        binding.navigator = ProfileNavigator(this)
+        binding.navigator = navigator
 
         viewModel.fetchProfile(idsFromIntent(intent))
 
@@ -55,10 +57,19 @@ class ProfileActivity : ViewModelActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.profile, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {
                 onBackPressed()
+                true
+            }
+            R.id.menu_profile_edit -> {
+                navigator.onEditProfile(viewModel.profile.get()!!)
                 true
             }
             else -> super.onOptionsItemSelected(item)

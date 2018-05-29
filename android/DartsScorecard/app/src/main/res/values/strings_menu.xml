@@ -3,4 +3,5 @@
     <string name="menu_title_swap">Swap Theme</string>
     <string name="menu_sound_swap">Master Caller</string>
     <string name="menu_title_done">Done</string>
+    <string name="menu_profile_edit">Edit</string>
 </resources>
