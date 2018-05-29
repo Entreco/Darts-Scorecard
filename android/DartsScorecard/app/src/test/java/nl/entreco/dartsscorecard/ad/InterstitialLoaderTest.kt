@@ -46,7 +46,7 @@ class InterstitialLoaderTest {
 
     private fun whenShowingInterstitial() {
         subject.showInterstitial()
-        verify(mockHandler).postDelayed(runnableCaptor.capture(), 250)
+        verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(250))
         runnableCaptor.lastValue.run()
     }
 
