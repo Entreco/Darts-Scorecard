@@ -82,4 +82,9 @@ class SelectProfileViewModel @Inject constructor(
         isLoading.set(false)
         isEmpty.set(true)
     }
+
+    override fun onCleared() {
+        deletePlayerUsecase.delete(DeletePlayerRequest(hiddenPlayers.toLongArray()), {}, {})
+        super.onCleared()
+    }
 }
