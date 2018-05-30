@@ -8,7 +8,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.SwipeToDeleteCallback
 
 
-class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: (Int) -> Unit, undoAction: () -> Unit) : ItemTouchHelper(object : SwipeToDeleteCallback(view.context) {
+class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: () -> Unit, undoAction: () -> Unit) : ItemTouchHelper(object : SwipeToDeleteCallback(view.context) {
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         onSwiped(viewHolder.adapterPosition)
 
@@ -17,7 +17,7 @@ class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: (In
         snack.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                    deleteAction(viewHolder.adapterPosition)
+                    deleteAction()
                 } else {
                     undoAction()
                 }

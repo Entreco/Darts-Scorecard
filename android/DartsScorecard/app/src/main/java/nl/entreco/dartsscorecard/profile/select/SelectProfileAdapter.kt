@@ -25,7 +25,7 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : List
     }
 
     fun playerIdAt(position: Int): Long {
-        return getItem(position).id
+        return if(position < itemCount) getItem(position).id else -1
     }
 
     fun setItems(profiles: List<Profile>) {

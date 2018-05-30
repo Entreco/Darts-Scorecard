@@ -58,8 +58,8 @@ class SelectProfileActivity : ViewModelActivity() {
     private fun addSwipeToDelete(binding: ActivitySelectProfileBinding, recyclerView: RecyclerView) {
         val swipeToDeleteHelper = SelectProfileSwiper(binding.root,
                 onSwiped = { viewModel.hidePlayerProfile(adapter.playerIdAt(it), adapter) },
-                deleteAction = { viewModel.deletePlayerProfile(adapter.playerIdAt(it), adapter) },
-                undoAction = { viewModel.reload(adapter) })
+                deleteAction = { viewModel.deletePlayerProfiles(adapter) },
+                undoAction = { viewModel.undoDelete(adapter) })
         swipeToDeleteHelper.attachToRecyclerView(recyclerView)
     }
 

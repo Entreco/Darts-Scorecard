@@ -16,6 +16,7 @@ class SelectProfileViewModel @Inject constructor(
 
     val isLoading = ObservableBoolean(true)
     val isEmpty = ObservableBoolean(false)
+    private val hiddenPlayers = mutableListOf<Long>()
 
     fun fetchPlayers(adapter: SelectProfileAdapter) {
         if (adapter.itemCount <= 0) {
@@ -23,10 +24,10 @@ class SelectProfileViewModel @Inject constructor(
         }
     }
 
-    fun reload(adapter: SelectProfileAdapter, playerToHide: Long? = null) {
+    fun reload(adapter: SelectProfileAdapter) {
         isLoading.set(true)
         isEmpty.set(false)
-        fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter, playerToHide), onFailed())
+        fetchExistingPlayersUsecase.exec(onFetchSuccess(adapter), onFailed())
     }
 
     fun create(adapter: SelectProfileAdapter, name: String, fav: Int) {
@@ -35,23 +36,37 @@ class SelectProfileViewModel @Inject constructor(
         createPlayerUsecase.exec(CreatePlayerRequest(name, fav), onCreateSuccess(adapter), onFailed())
     }
 
-    fun deletePlayerProfile(player: Long, adapter: SelectProfileAdapter) {
+    @Synchronized
+    fun deletePlayerProfiles(adapter: SelectProfileAdapter) {
         isLoading.set(true)
-        deletePlayerUsecase.delete(DeletePlayerRequest(player), { reload(adapter) }, onFailed())
+        deletePlayerUsecase.delete(DeletePlayerRequest(hiddenPlayers.toLongArray()), onPlayersDeleted(adapter), onFailed())
     }
 
+    @Synchronized
+    private fun onPlayersDeleted(adapter: SelectProfileAdapter): (DeletePlayerResponse) -> Unit =
+            {
+                hiddenPlayers.clear()
+                reload(adapter)
+            }
+
+    @Synchronized
     fun hidePlayerProfile(player: Long, adapter: SelectProfileAdapter) {
         isLoading.set(true)
-        reload(adapter, player)
+        hiddenPlayers.add(player)
+        reload(adapter)
     }
 
-    private fun onFetchSuccess(adapter: SelectProfileAdapter, playerToHide: Long?): (FetchExistingPlayersResponse) -> Unit = { response ->
+    @Synchronized
+    fun undoDelete(adapter: SelectProfileAdapter) {
+        isLoading.set(true)
+        hiddenPlayers.clear()
+        reload(adapter)
+    }
+
+    @Synchronized
+    private fun onFetchSuccess(adapter: SelectProfileAdapter): (FetchExistingPlayersResponse) -> Unit = { response ->
         isLoading.set(false)
-        val profiles = if (playerToHide != null) {
-            toProfiles(response).filter { it.id == playerToHide }
-        } else {
-            toProfiles(response)
-        }
+        val profiles = toProfiles(response).filter { !hiddenPlayers.contains(it.id) }
         isEmpty.set(profiles.isEmpty())
         adapter.setItems(profiles)
     }
