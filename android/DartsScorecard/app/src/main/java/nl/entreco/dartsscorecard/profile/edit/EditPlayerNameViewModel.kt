@@ -69,7 +69,7 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
     private fun toIndex(fav: String, context: Context): Int {
         return try {
             context.resources.getStringArray(R.array.fav_doubles).indexOf(fav)
-        } catch (unknownFavDouble: ArrayIndexOutOfBoundsException) {
+        } catch (unknownFavDouble: Exception) {
             ERR_EMPTY
         }
     }
