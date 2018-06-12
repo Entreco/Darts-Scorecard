@@ -36,7 +36,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 animator.onStateChanged(newState)
-                if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     swapper?.onSwapToolbar(false)
                 }
             }
@@ -64,14 +64,18 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     }
 
     internal class BetaAnimatorHandler(private val appBar: AppBarLayout, private val toolbar: View, private val sheet: View, private val fab: View) {
+
+        private val fraction: Float = 0.85F
+        private val rotationFactor: Int = 5
+
         fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
             val perc = abs(verticalOffset / appBarLayout.totalScrollRange.toFloat())
             toolbar.animate().alpha(perc).setDuration(0).start()
         }
 
         fun onSlide(slideOffset: Float) {
-            val perc = max(0.85F, slideOffset)
-            val rot = 5 - 5 * slideOffset
+            val perc = max(fraction, slideOffset)
+            val rot = rotationFactor - rotationFactor * slideOffset
             sheet.animate().scaleX(perc).scaleY(perc).rotationX(-rot).setDuration(0).start()
 
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()

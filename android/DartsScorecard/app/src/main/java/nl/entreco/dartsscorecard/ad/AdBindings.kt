@@ -7,18 +7,16 @@ import com.google.android.gms.ads.AdView
 /**
  * Created by Entreco on 29/12/2017.
  */
-abstract class AdBindings {
-    companion object {
-        @JvmStatic
-        @BindingAdapter("viewModel")
-        fun loadAd(view: AdView, viewModel: AdViewModel?) {
-            viewModel?.provideAdd(view)
-        }
+object AdBindings {
+    @JvmStatic
+    @BindingAdapter("viewModel")
+    fun loadAd(view: AdView, viewModel: AdViewModel?) {
+        viewModel?.provideAdd(view)
+    }
 
-        @JvmStatic
-        @BindingAdapter("showAd")
-        fun showAd(view: View, show: Boolean) {
-            view.visibility = if (show) View.VISIBLE else View.GONE
-        }
+    @JvmStatic
+    @BindingAdapter("showAd")
+    fun showAd(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 }
