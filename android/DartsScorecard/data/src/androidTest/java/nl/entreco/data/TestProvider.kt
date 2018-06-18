@@ -2,6 +2,7 @@ package nl.entreco.data
 
 import nl.entreco.data.db.game.GameTable
 import nl.entreco.data.db.player.PlayerTable
+import nl.entreco.data.db.profile.ProfileTable
 import nl.entreco.data.db.turn.TurnTable
 
 /**
@@ -38,6 +39,20 @@ class TestProvider {
             table.game = game
             table.numDarts = darts
             table.player = player
+            return table
+        }
+
+        fun createProfile(id: Long, player: Long, gameId: Long, total: Int, total9: Int, num180s: Int, darts: Int, darts9: Int, didWin: Boolean): ProfileTable {
+            val table = ProfileTable()
+            table.id = id
+            table.playerId = player
+            table.gameId = gameId
+            table.numDarts = darts
+            table.numDarts9 = darts9
+            table.totalScore = total
+            table.totalScore9 = total9
+            table.num180s = num180s
+            table.didWin = didWin
             return table
         }
 

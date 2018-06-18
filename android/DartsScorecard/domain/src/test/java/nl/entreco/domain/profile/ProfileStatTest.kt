@@ -19,8 +19,20 @@ class ProfileStatTest {
         assertEquals(8, subject.numberOfGames)
     }
 
-    private fun givenSubject(id: Long = -2, numberOfGames: Int = -2) {
-        subject = ProfileStat(id, numberOfGames, 4, 8)
+    @Test
+    fun getNumberOfDarts() {
+        givenSubject(numberOfDarts = 18)
+        assertEquals(18, subject.numberOfDarts)
+    }
+
+    @Test
+    fun getNumberOf180s() {
+        givenSubject(numberOf180s = 3)
+        assertEquals(3, subject.numberOf180s)
+    }
+
+    private fun givenSubject(id: Long = -2, numberOfGames: Int = -2, numberOfDarts: Int = -2, numberOf180s: Int = -2) {
+        subject = ProfileStat(id, numberOfGames, 4, numberOfDarts, 4, numberOf180s)
     }
 
 }

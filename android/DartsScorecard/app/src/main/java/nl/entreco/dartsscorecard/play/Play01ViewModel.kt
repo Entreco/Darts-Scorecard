@@ -138,7 +138,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val next = game.next
         val scores = game.scores
 
-        handleGameFinished(next, game.id)
+        handleGameFinished(next, game.id, by.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
         showInterstitial(next)
@@ -157,11 +157,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         })
     }
 
-    private fun handleGameFinished(next: Next, gameId: Long) {
+    private fun handleGameFinished(next: Next, gameId: Long, winnerId: Long) {
         val gameFinished = next.state == State.MATCH
         finished.set(gameFinished)
         if (gameFinished) {
-            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId, teams.first { it.contains(winnerId) }.toTeamString()))
             gameListeners.onGameFinished(gameId)
         }
     }

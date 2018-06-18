@@ -25,7 +25,7 @@ class ArchiveServiceRepository(db: DscDatabase, private val mapper: ArchiveStatM
                 .flatMap { it }
 
         players.forEach { player ->
-            val profileTable = mapper.to(gameId, player.toLong(), turnTable, metaTable)
+            val profileTable = mapper.to(gameId, player.toLong(), game.winningTeam, turnTable, metaTable)
             profileDao.create(profileTable)
         }
 

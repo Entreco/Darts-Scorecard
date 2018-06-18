@@ -73,7 +73,14 @@ class LocalGameRepositoryTest {
     @Test
     fun `it should mark game as finished`() {
         givenExistingGames(1)
-        whenFinishingGame(1)
+        whenFinishingGame(1, "1")
+        thenUpdateGamesIsCalledOnDao()
+    }
+
+    @Test
+    fun `it should store winningTeam when finishing`() {
+        givenExistingGames(1)
+        whenFinishingGame(1, "1,2")
         thenUpdateGamesIsCalledOnDao()
     }
 
@@ -151,8 +158,8 @@ class LocalGameRepositoryTest {
         subject.fetchBy(id)
     }
 
-    private fun whenFinishingGame(gameId: Long) {
-        subject.finish(gameId)
+    private fun whenFinishingGame(gameId: Long, winningTeam: String) {
+        subject.finish(gameId, winningTeam)
     }
 
     private fun whenUnFinishingGame(gameId: Long) {

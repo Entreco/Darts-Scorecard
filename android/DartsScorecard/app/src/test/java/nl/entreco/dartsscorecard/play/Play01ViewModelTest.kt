@@ -321,7 +321,7 @@ class Play01ViewModelTest {
     }
 
     private fun thenGameIsMarkedAsFinished() {
-        verify(mockPlayGameUsecase).markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+        verify(mockPlayGameUsecase).markGameAsFinished(MarkGameAsFinishedRequest(gameId, "p1"))
     }
 
     private fun thenGameIsNotMarkedAsFinished() {

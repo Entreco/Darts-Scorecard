@@ -57,6 +57,12 @@ class Team(val players: Array<Player> = emptyArray()) {
         return players[0].image
     }
 
+    fun toTeamString() : String {
+        return StringBuilder(firstPlayer().name).apply {
+            players.drop(1).forEach { append(PlayerSeperator).append(it.name) }
+        }.toString()
+    }
+
     override fun toString(): String {
         return StringBuilder(firstPlayer().name).apply {
             players.drop(1).forEach { append(" & ").append(it.name) }

@@ -19,7 +19,7 @@ interface GameRepository {
             numSets: Int): Long
 
     @WorkerThread
-    fun finish(id: Long)
+    fun finish(id: Long, winningTeam: String)
 
     @WorkerThread
     fun undoFinish(id: Long)
