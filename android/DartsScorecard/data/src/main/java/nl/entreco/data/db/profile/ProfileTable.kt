@@ -26,4 +26,10 @@ class ProfileTable {
 
     @ColumnInfo(name = "totalScore9")
     var totalScore9: Int = 0
+
+    @ColumnInfo(name = "num180s")
+    var num180s: Int = 0
+
+    @ColumnInfo(name = "didWin")
+    var didWin: Boolean = false
 }

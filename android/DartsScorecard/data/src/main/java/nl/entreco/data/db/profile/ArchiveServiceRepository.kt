@@ -19,7 +19,11 @@ class ArchiveServiceRepository(db: DscDatabase, private val mapper: ArchiveStatM
 
         val turnTable = turnDao.fetchAll(gameId)
         val metaTable = metaDao.fetchAll(gameId)
-        val players = game.teams.split(TeamSeperator).map { it.split(PlayerSeperator) }.flatMap { it }
+        val players = game.teams
+                .split(TeamSeperator)
+                .map { it.split(PlayerSeperator) }
+                .flatMap { it }
+
         players.forEach { player ->
             val profileTable = mapper.to(gameId, player.toLong(), turnTable, metaTable)
             profileDao.create(profileTable)

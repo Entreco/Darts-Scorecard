@@ -9,8 +9,13 @@ class ArchiveStatMapper {
         val table = ProfileTable()
         table.gameId = gameId
         table.playerId = playerId
-        table.numDarts = turns.filter { it.player == playerId }.sumBy { it.numDarts }
-        table.totalScore = turns.filter { it.player == playerId }.sumBy { score(it) }
+
+        turns.filter { it.player == playerId }.also {
+            table.numDarts = it.sumBy { it.numDarts }
+            table.totalScore = it.sumBy { score(it) }
+            table.num180s = it.count { score(it) == 180 }
+        }
+
         return table
     }
 
