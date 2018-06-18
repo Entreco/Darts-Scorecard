@@ -8,7 +8,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+import nl.entreco.dartsscorecard.di.glide.GlideApp
 
 /**
  * Created by entreco on 03/02/2018.
@@ -22,7 +22,7 @@ object BetaBindings {
     @BindingAdapter("imageUrl")
     fun loadImage(view: ImageView, url: String?) {
         url?.let {
-            Picasso.get().load(Uri.parse(it)).fit().centerCrop().into(view)
+            GlideApp.with(view).load((Uri.parse(it))).fitCenter().centerCrop().into(view)
         }
     }
 

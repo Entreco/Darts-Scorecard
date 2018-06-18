@@ -58,7 +58,7 @@ ext {
             architecture = '1.1.1',
             room = '1.1.0',
             firebase = '15.0.0',
-            picasso = '2.71828',
+            glide = '4.7.1',
             circleImageView = '2.2.0',
             crash = '2.9.1@aar',
             gson = '2.8.2',
