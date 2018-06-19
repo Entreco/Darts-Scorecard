@@ -35,7 +35,7 @@ class PlayerStatsTest {
     @Test
     fun `it should show average`() {
         givenSubject(points = 100, darts = 3)
-        assertEquals("100.0", subject.average.get())
+        assertEquals("100.00", subject.average.get())
     }
 
     private fun givenSubject(played: Int = 0, points: Int = 0, darts: Int = 0) {

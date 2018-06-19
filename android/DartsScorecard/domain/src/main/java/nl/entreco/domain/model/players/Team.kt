@@ -58,8 +58,8 @@ class Team(val players: Array<Player> = emptyArray()) {
     }
 
     fun toTeamString() : String {
-        return StringBuilder(firstPlayer().name).apply {
-            players.drop(1).forEach { append(PlayerSeperator).append(it.name) }
+        return StringBuilder(firstPlayer().id.toString()).apply {
+            players.drop(1).forEach { append(PlayerSeperator).append(it.id) }
         }.toString()
     }
 

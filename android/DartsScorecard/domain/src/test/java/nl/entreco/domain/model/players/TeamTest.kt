@@ -56,4 +56,9 @@ class TeamTest{
     fun `it should NOT have image initially`() {
         assertNull(subject.imageUrl())
     }
+
+    @Test
+    fun `it should print player Ids`() {
+        assertEquals("0,0,0", subject.toTeamString())
+    }
 }
