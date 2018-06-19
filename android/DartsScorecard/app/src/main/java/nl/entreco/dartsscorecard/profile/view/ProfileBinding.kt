@@ -5,6 +5,7 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.di.glide.GlideApp
 
 /**
  * Created by entreco on 23/02/2018.
@@ -19,7 +20,7 @@ object ProfileBinding {
             if (uri == null || uri.toString().isBlank()) {
                 view.setImageResource(R.drawable.ic_no_profile)
             } else {
-                view.setImageURI(uri)
+                GlideApp.with(view).load(uri).into(view)
             }
         } catch (oops: NullPointerException) {
             view.setImageResource(R.drawable.ic_no_profile)

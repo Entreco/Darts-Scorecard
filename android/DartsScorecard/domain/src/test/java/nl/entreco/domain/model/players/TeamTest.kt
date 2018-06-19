@@ -59,6 +59,6 @@ class TeamTest{
 
     @Test
     fun `it should print player Ids`() {
-        assertEquals("0,0,0", subject.toTeamString())
+        assertEquals("0,0", subject.toTeamString())
     }
 }
