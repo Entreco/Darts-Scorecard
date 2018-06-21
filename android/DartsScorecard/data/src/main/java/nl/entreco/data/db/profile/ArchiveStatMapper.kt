@@ -15,6 +15,11 @@ class ArchiveStatMapper {
             table.numDarts = it.sumBy { it.numDarts }
             table.totalScore = it.sumBy { score(it) }
             table.num180s = it.count { score(it) == 180 }
+            table.num140s = it.count { score(it) == 140 }
+            table.num100s = it.count { score(it) == 100 }
+            table.num60s = it.count { score(it) == 60 }
+            table.num20s = it.count { score(it) == 20 }
+            table.num0s = it.count { score(it) == 0 }
         }
 
         table.didWin = winningTeam.split(PlayerSeperator).map { it.toLong() }.contains(playerId)

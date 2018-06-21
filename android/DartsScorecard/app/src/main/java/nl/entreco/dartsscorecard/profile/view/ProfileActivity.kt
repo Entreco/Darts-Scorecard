@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
@@ -27,6 +28,7 @@ class ProfileActivity : ViewModelActivity() {
 
     private val component: ProfileComponent by componentProvider { it.plus(ProfileModule()) }
     private val viewModel: ProfileViewModel by viewModelProvider { component.viewModel() }
+    private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
     private val navigator: ProfileNavigator by lazy { ProfileNavigator(this) }
     private var madeChanges = false
 
@@ -36,6 +38,7 @@ class ProfileActivity : ViewModelActivity() {
         binding.viewModel = viewModel
         binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
         binding.navigator = navigator
+        binding.adViewModel = adViewModel
 
         viewModel.fetchProfile(idsFromIntent(intent))
 

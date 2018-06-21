@@ -23,7 +23,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableBottom="@mipmap/ic_launcher_foreground"
+            android:drawableTop="@drawable/ic_empty"
+            android:drawablePadding="@dimen/def"
             android:gravity="center"
             android:padding="@dimen/def"
             android:text="@string/no_stats_available_sub"

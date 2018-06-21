@@ -13,6 +13,10 @@
             type="nl.entreco.dartsscorecard.profile.view.ProfileViewModel" />
 
         <variable
+                name="adViewModel"
+                type="nl.entreco.dartsscorecard.ad.AdViewModel"/>
+
+        <variable
             name="animator"
             type="nl.entreco.dartsscorecard.profile.view.ProfileAnimator" />
 

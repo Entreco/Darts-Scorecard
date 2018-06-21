@@ -16,7 +16,7 @@ import nl.entreco.data.db.turn.TurnTable
 /**
  * Created by Entreco on 12/12/2017.
  */
-@Database(entities = [(GameTable::class), (PlayerTable::class), (TurnTable::class), (MetaTable::class), (ProfileTable::class)], version = 1, exportSchema = false)
+@Database(entities = [(GameTable::class), (PlayerTable::class), (TurnTable::class), (MetaTable::class), (ProfileTable::class)], version = 2, exportSchema = false)
 abstract class DscDatabase : RoomDatabase() {
     abstract fun gameDao(): GameDao
     abstract fun playerDao(): PlayerDao

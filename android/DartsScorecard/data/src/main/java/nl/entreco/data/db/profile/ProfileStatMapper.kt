@@ -10,6 +10,11 @@ class ProfileStatMapper {
                 stats.count { it.didWin },
                 stats.sumBy { it.numDarts },
                 stats.sumBy { it.totalScore },
-                stats.sumBy { it.num180s })
+                stats.sumBy { it.num180s },
+                stats.sumBy { it.num140s },
+                stats.sumBy { it.num100s },
+                stats.sumBy { it.num60s },
+                stats.sumBy { it.num20s },
+                stats.sumBy { it.num0s })
     }
 }
