@@ -89,11 +89,11 @@
     <string name="profile_darts_thrown">Darts thrown</string>
     <string name="profile_win_ratio">Win Ratio</string>
     <string name="profile_num_180">#180\'s</string>
-    <string name="profile_num_140">#140\'s</string>
-    <string name="profile_num_100">#100\'s</string>
-    <string name="profile_num_60">#60\'s</string>
-    <string name="profile_num_20">#20\'s</string>
-    <string name="profile_num_0">#0\'s</string>
+    <string name="profile_num_140">#140+</string>
+    <string name="profile_num_100">#100+</string>
+    <string name="profile_num_60">#60+</string>
+    <string name="profile_num_20">#20+</string>
+    <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
