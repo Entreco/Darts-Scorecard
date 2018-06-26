@@ -45,6 +45,12 @@ class ProfileTable {
     @ColumnInfo(name = "num0s")
     var num0s: Int = 0
 
+    @ColumnInfo(name = "numDartsAtFinish")
+    var numDartsAtFinish: Int = 0
+
+    @ColumnInfo(name = "numFinishes")
+    var numFinishes: Int = 0
+
     @ColumnInfo(name = "didWin")
     var didWin: Boolean = false
 }

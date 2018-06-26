@@ -11,20 +11,37 @@ class ArchiveStatMapper {
         table.gameId = gameId
         table.playerId = playerId
 
-        turns.filter { it.player == playerId }.also {
-            table.numDarts = it.sumBy { it.numDarts }
-            table.totalScore = it.sumBy { score(it) }
-            table.num180s = it.count { score(it) == 180 }
-            table.num140s = it.count { score(it) in 140..179 }
-            table.num100s = it.count { score(it) in 100..139 }
-            table.num60s = it.count { score(it) in 60..99 }
-            table.num20s = it.count { score(it) in 20..59 }
-            table.num0s = it.count { score(it) == 0 }
-        }
+        val playerTurnMetaPairs = turns.zip(metas).filter { it.first.player == playerId && it.second.playerId == playerId }
+        val scores = playerTurnMetaPairs.map { score(it.first) }
+
+        countAverages(table, playerTurnMetaPairs, scores)
+        countScoreFrequencies(table, scores)
+        countCheckOuts(table, playerTurnMetaPairs)
 
         table.didWin = winningTeam.split(PlayerSeperator).map { it.toLong() }.contains(playerId)
 
         return table
+    }
+
+    private fun countAverages(table: ProfileTable, playerTurnMetaPairs: List<Pair<TurnTable, MetaTable>>, scores: List<Int>) {
+        table.numDarts = playerTurnMetaPairs.sumBy { it.first.numDarts }
+        table.totalScore = scores.sumBy { it }
+        table.numDarts9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumBy { it.first.numDarts }
+        table.totalScore9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumBy { score(it.first) }
+    }
+
+    private fun countScoreFrequencies(table: ProfileTable, scores: List<Int>) {
+        table.num180s = scores.count { it == 180 }
+        table.num140s = scores.count { it in 140..179 }
+        table.num100s = scores.count { it in 100..139 }
+        table.num60s = scores.count { it in 60..99 }
+        table.num20s = scores.count { it in 20..59 }
+        table.num0s = scores.count { it == 0 }
+    }
+
+    private fun countCheckOuts(table: ProfileTable, playerTurnMetaPairs: List<Pair<TurnTable, MetaTable>>) {
+        table.numDartsAtFinish = playerTurnMetaPairs.sumBy { it.second.atCheckout }
+        table.numFinishes = playerTurnMetaPairs.count { it.second.score == score(it.first) }
     }
 
     private fun score(it: TurnTable): Int {

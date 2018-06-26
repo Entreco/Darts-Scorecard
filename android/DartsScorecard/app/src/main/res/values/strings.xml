@@ -86,8 +86,10 @@
     <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
     <string name="profile_games_played">Games Played</string>
     <string name="profile_overall_average">Overall average</string>
+    <string name="profile_first9_average">1st 9 average</string>
     <string name="profile_darts_thrown">Darts thrown</string>
     <string name="profile_win_ratio">Win Ratio</string>
+    <string name="profile_checkout_ratio">Checkout Ratio</string>
     <string name="profile_num_180">#180\'s</string>
     <string name="profile_num_140">#140+</string>
     <string name="profile_num_100">#100+</string>

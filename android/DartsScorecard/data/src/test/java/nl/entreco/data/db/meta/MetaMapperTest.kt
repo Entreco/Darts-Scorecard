@@ -25,10 +25,9 @@ class MetaMapperTest {
     private val givenPlayerId: Long = 33
     private val givenTurnNumber: Int = 11
     private val givenScore: Score = Score(102, 4, 5)
-    private val givenStarted = true
     private val givenBreakMade = true
 
-    private val givenMeta: TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenScore, givenStarted, givenBreakMade)
+    private val givenMeta: TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenScore, givenBreakMade)
     private val subject = MetaMapper()
 
     @Test
@@ -43,7 +42,6 @@ class MetaMapperTest {
         assertEquals(givenScore.score, result.score)
         assertEquals(givenTurnNumber, result.turnInLeg)
         assertEquals(givenAtDouble, result.atCheckout)
-        assertEquals(true, result.started)
         assertEquals(true, result.breakMade)
     }
 

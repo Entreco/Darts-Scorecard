@@ -57,7 +57,7 @@ class ProfileStatTest {
     }
 
     private fun givenSubject(id: Long = -2, numberOfGames: Int = -2, numberOfDarts: Int = -2, numberOf180s: Int = -2, numberOf140s: Int = -2, numberOf100s: Int = -2, numberOf60s: Int = -2, numberOf20s: Int = -2, numberOf0s: Int = -2) {
-        subject = ProfileStat(id, numberOfGames, 4, numberOfDarts, 4, numberOf180s, numberOf140s, numberOf100s, numberOf60s, numberOf20s, numberOf0s)
+        subject = ProfileStat(id, numberOfGames, 4, numberOfDarts, 4, 4, 4,numberOf180s, numberOf140s, numberOf100s, numberOf60s, numberOf20s, numberOf0s, 1, 0)
     }
 
 }
