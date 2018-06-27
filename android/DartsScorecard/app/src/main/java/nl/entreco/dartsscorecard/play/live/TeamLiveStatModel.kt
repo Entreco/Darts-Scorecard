@@ -63,7 +63,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
 
         when (denominator) {
             0 -> co.set(empty)
-            else -> co.set("%.2f".format(aggregator / denominator.toDouble() * 100) + "%")
+            else -> co.set("%d/%d".format(aggregator, denominator))
         }
     }
 

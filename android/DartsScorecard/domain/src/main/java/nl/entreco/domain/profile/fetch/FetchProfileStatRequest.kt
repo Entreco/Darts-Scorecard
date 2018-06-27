@@ -1,4 +1,4 @@
 package nl.entreco.domain.profile.fetch
 
 
-data class FetchProfileStatRequest(val playerId: Long)
+data class FetchProfileStatRequest(val playerIds: LongArray)

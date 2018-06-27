@@ -13,8 +13,11 @@ class FetchProfileStatsUsecase @Inject constructor(
 
     fun exec(req: FetchProfileStatRequest, done: (FetchProfileStatResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val stat = profileStatRepository.fetchForPlayer(req.playerId)
-            onUi { done(FetchProfileStatResponse(stat)) }
+
+            val stats = req.playerIds.map { playerId ->
+                profileStatRepository.fetchForPlayer(playerId)
+            }
+            onUi { done(FetchProfileStatResponse(stats)) }
         }, fail)
     }
 }

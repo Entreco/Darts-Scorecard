@@ -27,7 +27,7 @@ class TeamLiveStatModelTest {
     @Test
     fun `it should update stats at the start`() {
         subject = TeamLiveStatModel(mockTeam, mutableListOf(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11))))
-        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
     @Test
@@ -46,14 +46,14 @@ class TeamLiveStatModelTest {
     fun `it should update stats (normal case)`() {
         givenSubject("Team name")
         whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
-        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "33.33%", "9")
+        thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
     @Test
     fun `it should update stats (no average)`() {
         givenSubject("Team name")
         whenUpdating(LiveStat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
-        thenStatsAre("--", "4", "5", "6", "2", "3", "11", "33.33%", "9")
+        thenStatsAre("--", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
     @Test

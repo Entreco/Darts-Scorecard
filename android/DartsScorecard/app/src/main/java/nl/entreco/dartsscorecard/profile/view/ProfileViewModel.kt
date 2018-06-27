@@ -25,7 +25,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     fun fetchProfile(playerIds: LongArray) {
         if (profile.get() == null && playerIds.isNotEmpty()) {
             fetchProfileUsecase.exec(FetchProfileRequest(playerIds), onProfileSuccess(), onProfileFailed())
-            fetchProfileStatsUsecase.exec(FetchProfileStatRequest(playerIds[0]), onStatsSuccess(), onStatsFailed())
+            fetchProfileStatsUsecase.exec(FetchProfileStatRequest(playerIds), onStatsSuccess(), onStatsFailed())
         }
     }
 
@@ -60,8 +60,8 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         this.errorMsg.set(R.string.err_unable_to_fetch_players)
     }
 
-    private fun onStatsSuccess(): (FetchProfileStatResponse) -> Unit = { stats ->
-        this.stats.set(PlayerStats(stats.stat))
+    private fun onStatsSuccess(): (FetchProfileStatResponse) -> Unit = { response ->
+        this.stats.set(PlayerStats(response.stats[0]))
     }
 
     private fun onStatsFailed():(Throwable)->Unit = {
