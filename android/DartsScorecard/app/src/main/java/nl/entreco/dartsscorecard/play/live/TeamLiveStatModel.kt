@@ -60,11 +60,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
     private fun updateDoublePercentage() {
         val aggregator = liveStats.sumBy { it.nCheckouts }
         val denominator = liveStats.sumBy { it.nAtCheckout }
-
-        when (denominator) {
-            0 -> co.set(empty)
-            else -> co.set("%d/%d".format(aggregator, denominator))
-        }
+        co.set("%d/%d".format(aggregator, denominator))
     }
 
     private fun updateHighestScore() {
@@ -77,6 +73,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
             else -> hScore.set("$value")
         }
     }
+
     private fun updateHighestCheckout() {
         val value = liveStats
                 .filter { it.highestCo.isNotEmpty() }
@@ -92,6 +89,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
         val value = liveStats.sumBy { it.n20 }
         n20.set("$value")
     }
+
     private fun update60s() {
         val value = liveStats.sumBy { it.n60 }
         n60.set("$value")
