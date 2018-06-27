@@ -39,6 +39,7 @@ class AppModule(val app: App) {
     @ApplicationScope
     fun provideDb(app: App): DscDatabase {
         return Room.databaseBuilder(app, DscDatabase::class.java, DscDatabase.name)
+                .fallbackToDestructiveMigration()
                 .build()
     }
 

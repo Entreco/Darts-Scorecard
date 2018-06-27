@@ -49,7 +49,7 @@ class ProfileAnimatorTest {
         whenever(mockAnimator.alpha(any())).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
         whenever(mockTextView.animate()).thenReturn(mockAnimator)
-        val handler = ProfileAnimator.ProfileAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockTextView, mockView)
+        val handler = ProfileAnimator.ProfileAnimatorHandler(mockView, mockView, mockView, mockView, mockTextView, mockView)
         handler.onOffsetChanged(12F, 66F, mockAppbarLayout, 12)
         verify(mockView, atLeastOnce()).animate()
     }

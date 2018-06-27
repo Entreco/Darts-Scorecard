@@ -29,9 +29,10 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     }
 
     @WorkerThread
-    override fun finish(id: Long) {
+    override fun finish(id: Long, winningTeam: String) {
         val gameTable = gameDao.fetchBy(id)!!
         gameTable.finished = true
+        gameTable.winningTeam = winningTeam
         gameDao.updateGames(gameTable)
     }
 
@@ -45,7 +46,8 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     @Throws
     @WorkerThread
     override fun fetchBy(id: Long): Game {
-        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
+        val gameTable = gameDao.fetchBy(id)
+                ?: throw IllegalStateException("Game $id does not exist")
         return mapper.to(gameTable)
     }
 
@@ -63,5 +65,10 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
                     latestGame.numLegs,
                     latestGame.numSets)
         }
+    }
+
+    @WorkerThread
+    override fun countFinishedGames(): Int {
+        return gameDao.fetchAll().count { !it.finished }
     }
 }

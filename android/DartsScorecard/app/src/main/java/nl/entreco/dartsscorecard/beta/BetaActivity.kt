@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentSender
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
@@ -70,7 +69,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     }
 
     override fun onSwapToolbar(showDetails: Boolean, title: String) {
-        if(showDetails){
+        if (showDetails) {
             supportActionBar?.title = title
             binding.includeToolbar.collapsingToolbar.title = title
         } else {
@@ -106,7 +105,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 return true

@@ -45,19 +45,19 @@ class MarkGameAsFinishedUsecaseTest {
 
     private fun whenMarkingGameAsFinished(gameId: Long) {
         givenId = gameId
-        givenMarkAsFinishedRequest = MarkGameAsFinishedRequest(gameId)
+        givenMarkAsFinishedRequest = MarkGameAsFinishedRequest(gameId, "1")
         subject.exec(givenMarkAsFinishedRequest)
     }
 
     private fun whenMarkingGameAsFinishedFails(err: Throwable) {
         givenId = 666
-        givenMarkAsFinishedRequest = MarkGameAsFinishedRequest(givenId)
-        whenever(mockGameRepository.finish(any())).thenThrow(err)
+        givenMarkAsFinishedRequest = MarkGameAsFinishedRequest(givenId, "1")
+        whenever(mockGameRepository.finish(any(), any())).thenThrow(err)
         subject.exec(givenMarkAsFinishedRequest)
     }
 
     private fun thenGameIsMarkedAsFinished() {
-        verify(mockGameRepository).finish(givenId)
+        verify(mockGameRepository).finish(givenId, "1")
     }
 
 }

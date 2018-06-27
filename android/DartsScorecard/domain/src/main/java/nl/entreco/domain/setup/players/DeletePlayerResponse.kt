@@ -3,4 +3,4 @@ package nl.entreco.domain.setup.players
 /**
  * Created by entreco on 17/03/2018.
  */
-class DeletePlayerResponse(val id: Long)
+class DeletePlayerResponse(val ids: LongArray)

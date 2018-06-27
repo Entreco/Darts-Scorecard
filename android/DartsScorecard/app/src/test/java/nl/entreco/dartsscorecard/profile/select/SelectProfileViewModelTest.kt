@@ -1,9 +1,6 @@
 package nl.entreco.dartsscorecard.profile.select
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.profile.Profile
@@ -27,6 +24,8 @@ class SelectProfileViewModelTest {
     @Mock private lateinit var mockDeleteUsecase: DeletePlayerUsecase
     private lateinit var subject: SelectProfileViewModel
 
+    private var givenPlayers : List<Player>? = emptyList()
+
     private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
     private val profileCaptor = argumentCaptor<List<Profile>>()
@@ -46,7 +45,7 @@ class SelectProfileViewModelTest {
 
     @Test
     fun `it should isEmpty when fetching players succeeds with empty list`() {
-        givenMockPlayer()
+        givenMockPlayers()
         givenSubject()
         whenFetchingPlayersSucceeds()
         thenEmptys(true)
@@ -54,9 +53,9 @@ class SelectProfileViewModelTest {
 
     @Test
     fun `it should set Profiles on the Adapter when fetching players succeeds`() {
-        givenMockPlayer()
+        givenMockPlayers(1,2)
         givenSubject()
-        whenFetchingPlayersSucceeds(mockPlayer, mockPlayer)
+        whenFetchingPlayersSucceeds()
         thenProfilesAreSet(2)
     }
 
@@ -84,15 +83,16 @@ class SelectProfileViewModelTest {
     @Test
     fun `it should reload when deleting player succeeds`() {
         givenSubject()
+        whenHidingPlayer(12L)
         whenDeletingPlayer()
-        // TODO: Verify loader or something
+        thenPlayersAreFetched()
     }
 
     @Test
     fun `it should report error when deleting player fails`() {
         givenSubject()
         whenDeletingPlayer()
-        // TODO: Verify loader or something
+        thenPlayersAreFetched()
     }
 
     @Test
@@ -102,21 +102,44 @@ class SelectProfileViewModelTest {
         thenLoadingIs(true)
     }
 
+    @Test
+    fun `it should hide players that are temporarily deleted`() {
+        givenMockPlayers(1, 2, 3)
+        givenSubject()
+        whenHidingPlayer(1)
+        thenProfilesAreSet(2)
+    }
+
+    @Test
+    fun `it should clear hidden players when undoing`() {
+        givenMockPlayers(1, 2, 3)
+        givenSubject()
+        whenHidingPlayer(1)
+        thenProfilesAreSet(2)
+
+        whenUndoing()
+        thenProfilesAreSet(3)
+    }
+
     private fun givenSubject() {
         subject = SelectProfileViewModel(mockCreateUsecase, mockFetchUsecase, mockDeleteUsecase)
     }
 
-    private fun givenMockPlayer() {
-        whenever(mockPlayer.name).thenReturn("Some name")
-        whenever(mockPlayer.id).thenReturn(1)
-        whenever(mockPlayer.image).thenReturn("Some image")
-        whenever(mockPlayer.prefs).thenReturn(PlayerPrefs(20))
+    private fun givenMockPlayers(vararg players: Long) {
+        givenPlayers = players.map {
+            mock<Player> { _ ->
+                on { name } doReturn "$it"
+                on { image } doReturn "$it"
+                on { id } doReturn it
+                on { prefs } doReturn PlayerPrefs(20)
+            }
+        }
     }
 
-    private fun whenFetchingPlayersSucceeds(vararg players: Player) {
+    private fun whenFetchingPlayersSucceeds() {
         subject.fetchPlayers(mockAdapter)
         verify(mockFetchUsecase).exec(doneCaptor.capture(), any())
-        doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(players.toList()))
+        doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(givenPlayers!!))
     }
 
     private fun whenFetchingPlayersFails() {
@@ -130,9 +153,23 @@ class SelectProfileViewModelTest {
     }
 
     private fun whenDeletingPlayer() {
-        subject.deletePlayerProfile(12, mockAdapter)
+        subject.deletePlayerProfiles(mockAdapter)
         verify(mockDeleteUsecase).delete(any(), deleteCaptor.capture(), any())
-        deleteCaptor.lastValue.invoke(DeletePlayerResponse(12))
+        deleteCaptor.lastValue.invoke(DeletePlayerResponse(arrayOf(12L).toLongArray()))
+    }
+
+    private fun whenHidingPlayer(playerId: Long) {
+        subject.hidePlayerProfile(playerId, mockAdapter)
+        verify(mockFetchUsecase).exec(doneCaptor.capture(), any())
+        doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(givenPlayers!!))
+        reset(mockFetchUsecase)
+    }
+
+    private fun whenUndoing(){
+        subject.undoDelete(mockAdapter)
+        verify(mockFetchUsecase).exec(doneCaptor.capture(), any())
+        doneCaptor.lastValue.invoke(FetchExistingPlayersResponse(givenPlayers!!))
+        reset(mockFetchUsecase)
     }
 
     private fun whenCreatingPlayerSucceeds(name: String) {
@@ -142,6 +179,7 @@ class SelectProfileViewModelTest {
     private fun thenProfilesAreSet(expected: Int) {
         verify(mockAdapter).setItems(profileCaptor.capture())
         assertEquals(expected, profileCaptor.lastValue.size)
+        reset(mockAdapter)
     }
 
     private fun thenLoadingIs(expected: Boolean) {
@@ -150,5 +188,9 @@ class SelectProfileViewModelTest {
 
     private fun thenEmptys(expected: Boolean) {
         assertEquals(expected, subject.isEmpty.get())
+    }
+
+    private fun thenPlayersAreFetched(){
+        verify(mockFetchUsecase).exec(any(), any())
     }
 }

@@ -3,13 +3,11 @@ package nl.entreco.dartsscorecard.profile.edit
 import android.content.Context
 import android.os.Handler
 import android.text.Editable
-import android.text.SpannableStringBuilder
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.setup.edit.EditPlayerNavigator
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersResponse
@@ -99,10 +97,10 @@ class EditPlayerNameViewModelTest {
     }
 
     @Test
-    fun `it should set to Lowercase onNameChanged`() {
+    fun `it should NOT set to Lowercase onNameChanged`() { // Causes CAPS Lock to break
         givenSubject()
         whenNameChanged("ReMcO")
-        thenNameIs("remco")
+        thenNameIs("ReMcO")
     }
 
     @Test

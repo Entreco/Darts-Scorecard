@@ -2,10 +2,8 @@ package nl.entreco.dartsscorecard.ad
 
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * Created by Entreco on 29/12/2017.

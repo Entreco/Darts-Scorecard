@@ -166,7 +166,7 @@ class Play01UsecaseTest {
     }
 
     private fun whenGameIsFinished() {
-        givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId)
+        givenMarkFinishRequest = MarkGameAsFinishedRequest(gameId, "p1")
         subject.markGameAsFinished(givenMarkFinishRequest)
     }
 

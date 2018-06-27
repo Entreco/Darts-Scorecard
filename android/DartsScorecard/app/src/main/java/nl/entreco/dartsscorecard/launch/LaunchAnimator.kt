@@ -20,15 +20,22 @@ class LaunchAnimator(binding: ActivityLaunchBinding) {
     internal class LaunchAnimatorHandler(private val lets: View, private val play: View, private val darts: View,
                                          private val btn1: View, private val btn2: View, private val btn3: View, private val btn4: View) {
 
+        private val horizontalTranslation: Float = 800F
+        private val verticalTranslation = 100F
+        private val duration: Long = 250
+        private val durationTwice: Long = 500
+        private val delayFactor: Long = 26L
+
         init {
-            lets.also { it.translationX = -800F }
-            play.also { it.translationX = 800F }
-            darts.also { it.translationX = -800F }
+            lets.also { it.translationX = -horizontalTranslation }
+            play.also { it.translationX = horizontalTranslation }
+            darts.also { it.translationX = -horizontalTranslation }
             btn1.also(buttonStart(0))
             btn2.also(buttonStart(1))
             btn3.also(buttonStart(2))
             btn4.also(buttonStart(3))
         }
+
 
         fun init() {
             buttonAnimation(btn1, 0)
@@ -36,17 +43,18 @@ class LaunchAnimator(binding: ActivityLaunchBinding) {
             buttonAnimation(btn3, 2)
             buttonAnimation(btn4, 2)
 
-            lets.animate().translationX(0F).setDuration(250).setInterpolator(AccelerateDecelerateInterpolator()).start()
-            play.animate().translationX(0F).setStartDelay(250).setDuration(250).setInterpolator(AccelerateDecelerateInterpolator()).start()
-            darts.animate().translationX(0F).setStartDelay(500).setDuration(250).setInterpolator(AccelerateDecelerateInterpolator()).start()
+            lets.animate().translationX(0F).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).start()
+            play.animate().translationX(0F).setStartDelay(duration).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).start()
+            darts.animate().translationX(0F).setStartDelay(durationTwice).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).start()
         }
 
+
         private fun buttonAnimation(btn: View, index: Int) {
-            btn.animate().alpha(1F).translationY(0F).setStartDelay(index * 26L).setInterpolator(OvershootInterpolator()).start()
+            btn.animate().alpha(1F).translationY(0F).setStartDelay(index * delayFactor).setInterpolator(OvershootInterpolator()).start()
         }
 
         private fun buttonStart(index: Int): (View) -> Unit = {
-            it.translationY = 100F * index
+            it.translationY = verticalTranslation * index
             it.alpha = 0F
         }
     }

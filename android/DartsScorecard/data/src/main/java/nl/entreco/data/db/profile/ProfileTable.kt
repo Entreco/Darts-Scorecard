@@ -26,4 +26,31 @@ class ProfileTable {
 
     @ColumnInfo(name = "totalScore9")
     var totalScore9: Int = 0
+
+    @ColumnInfo(name = "num180s")
+    var num180s: Int = 0
+
+    @ColumnInfo(name = "num140s")
+    var num140s: Int = 0
+
+    @ColumnInfo(name = "num100s")
+    var num100s: Int = 0
+
+    @ColumnInfo(name = "num60s")
+    var num60s: Int = 0
+
+    @ColumnInfo(name = "num20s")
+    var num20s: Int = 0
+
+    @ColumnInfo(name = "num0s")
+    var num0s: Int = 0
+
+    @ColumnInfo(name = "numDartsAtFinish")
+    var numDartsAtFinish: Int = 0
+
+    @ColumnInfo(name = "numFinishes")
+    var numFinishes: Int = 0
+
+    @ColumnInfo(name = "didWin")
+    var didWin: Boolean = false
 }

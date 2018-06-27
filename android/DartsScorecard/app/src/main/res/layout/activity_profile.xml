@@ -13,6 +13,10 @@
             type="nl.entreco.dartsscorecard.profile.view.ProfileViewModel" />
 
         <variable
+                name="adViewModel"
+                type="nl.entreco.dartsscorecard.ad.AdViewModel"/>
+
+        <variable
             name="animator"
             type="nl.entreco.dartsscorecard.profile.view.ProfileAnimator" />
 
@@ -51,20 +55,6 @@
         <include
             layout="@layout/play_01_loading"
             android:visibility="@{viewModel.stats == null ? View.VISIBLE : View.GONE}" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/def"
-            android:onClick="@{() -> navigator.onEditProfile(viewModel.profile.get())}"
-            android:src="@drawable/ic_edit_profile"
-            android:tint="@color/white"
-            app:backgroundTint="?attr/colorEditProfile"
-            app:elevation="@dimen/def"
-            app:fabSize="normal"
-            app:layout_anchor="@id/scrollView"
-            app:layout_anchorGravity="end" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

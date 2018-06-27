@@ -95,6 +95,11 @@ class LocalPlayerRepositoryTest {
         thenPlayerIsDeleted(2)
     }
 
+    @Test(expected = NullPointerException::class)
+    fun `it should throw when deleting id that does not exist`() {
+        whenDeletingPlayer(-1)
+    }
+
     private fun givenPlayerWith(name: String, double: Int) {
         val table = PlayerTable()
         table.name = name

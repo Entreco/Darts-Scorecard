@@ -1,13 +1,9 @@
 package nl.entreco.dartsscorecard.ad
 
+import android.os.Handler
 import com.google.android.gms.ads.InterstitialAd
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.times
@@ -17,19 +13,22 @@ import org.mockito.junit.MockitoJUnitRunner
 class InterstitialLoaderTest {
 
     @Mock private lateinit var mockInterstitial: InterstitialAd
-    private lateinit var subject : InterstitialLoader
+    @Mock private lateinit var mockHandler: Handler
+    private lateinit var subject: InterstitialLoader
+
+    private var runnableCaptor = argumentCaptor<Runnable>()
 
     @Test
     fun `it should show Interstitial when loaded ok`() {
         givenSubject(true)
-        whenShowingInterstitial()
+        whenShowingInterstitial(true)
         thenInterstialIsShown()
     }
 
     @Test
     fun `it should NOT show interstitial when not loaded ok`() {
         givenSubject(false)
-        whenShowingInterstitial()
+        whenShowingInterstitial(false)
         thenInterstialIsNotShown()
     }
 
@@ -42,11 +41,16 @@ class InterstitialLoaderTest {
 
     private fun givenSubject(loaded: Boolean) {
         whenever(mockInterstitial.isLoaded).thenReturn(loaded)
-        subject = InterstitialLoader("interstialAdUnitId", mockInterstitial)
+        subject = InterstitialLoader("interstialAdUnitId", mockHandler, mockInterstitial)
     }
 
-    private fun whenShowingInterstitial() {
+    private fun whenShowingInterstitial(loaded: Boolean) {
         subject.showInterstitial()
+
+        if(loaded) {
+            verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(250))
+            runnableCaptor.lastValue.run()
+        }
     }
 
     private fun whenAdClosed() {

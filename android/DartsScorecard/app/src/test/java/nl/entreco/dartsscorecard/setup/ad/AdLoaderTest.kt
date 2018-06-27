@@ -2,12 +2,10 @@ package nl.entreco.dartsscorecard.setup.ad
 
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.dartsscorecard.ad.AdBindings.Companion.loadAd
 import nl.entreco.dartsscorecard.ad.AdLoader
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -17,8 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AdLoaderTest {
 
-    @Mock private lateinit var mockView: AdView
-    @Mock private lateinit var mockListener: AdLoader.AdListener
+    @Mock
+    private lateinit var mockView: AdView
+    @Mock
+    private lateinit var mockListener: AdLoader.AdListener
     private lateinit var subject: AdLoader
 
     @Before
@@ -40,7 +40,7 @@ class AdLoaderTest {
         verify(mockListener).onAdFailed()
     }
 
-    private fun loadAd(){
+    private fun loadAd() {
         subject.loadAd(mockView, mockListener)
     }
 

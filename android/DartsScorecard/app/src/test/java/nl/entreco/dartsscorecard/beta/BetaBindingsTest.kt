@@ -27,7 +27,7 @@ class BetaBindingsTest {
     @Mock private lateinit var mockImageView: ImageView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = NullPointerException::class)
     fun loadImage() {
         setupContextMocking()
         BetaBindings.loadImage(mockImageView, "some url")
@@ -69,7 +69,9 @@ class BetaBindingsTest {
         verify(mockTextView, never()).text = any()
     }
 
-    private fun setupContextMocking() {}
+    private fun setupContextMocking() {
+        whenever(mockImageView.context).thenReturn(mockContext)
+    }
 
     private fun setupMocking() {
         whenever(mockView.animate()).thenReturn(mockAnimator)

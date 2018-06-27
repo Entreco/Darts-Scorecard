@@ -135,7 +135,6 @@ class LiveLiveStatMapperTest {
     private fun givenTurns(vararg turns: Turn) {
         val metaTables = mutableListOf<MetaTable>()
         val turnTables = mutableListOf<TurnTable>()
-        var starter = true
         val starterId = id(0)
 
         turns.forEachIndexed { index, turn ->
@@ -147,9 +146,8 @@ class LiveLiveStatMapperTest {
             val atDouble = scoreEstimator.atDouble(turn, score.score)
             score -= turn
 
-            val meta = TurnMeta(id(index), index, previousScore, starter, score.score == 0 && playerId != starterId)
+            val meta = TurnMeta(id(index), index, previousScore, score.score == 0 && playerId != starterId)
             metaTables.add(toTable(playerId, atDouble, meta))
-            starter = false
         }
         givenTurns = turnTables
         givenMetas = metaTables

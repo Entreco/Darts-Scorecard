@@ -4,8 +4,10 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.Rect
 import android.net.Uri
+import android.support.media.ExifInterface
 import nl.entreco.domain.repository.ImageRepository
 import java.io.File
 import java.io.FileOutputStream
@@ -22,9 +24,10 @@ class LocalImageRepository(private val context: Context, private val contentReso
         return try {
             val originalUri = Uri.parse(imageUri)
             val output = File(context.filesDir, originalUri.lastPathSegment)
+            val rotation = getPhotoOrientation(originalUri)
 
             copyInput(originalUri, output)
-            copyOutput(output, resize(output, size))
+            copyOutput(output, resize(output, size, rotation))
 
             val outputUri = Uri.fromFile(output)
             outputUri.toString()
@@ -48,7 +51,19 @@ class LocalImageRepository(private val context: Context, private val contentReso
         }
     }
 
-    private fun resize(output: File, size: Float) : Bitmap {
+    private fun getPhotoOrientation(uri: Uri): Float {
+        contentResolver.openInputStream(uri).use { input ->
+            val exif = ExifInterface(input)
+            return when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270F
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180F
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90F
+                else -> 0F
+            }
+        }
+    }
+
+    private fun resize(output: File, size: Float, degrees: Float): Bitmap {
         val boundsOnly = BitmapFactory.Options()
         boundsOnly.inJustDecodeBounds = true
         BitmapFactory.decodeFile(output.absolutePath, boundsOnly)
@@ -62,7 +77,10 @@ class LocalImageRepository(private val context: Context, private val contentReso
         val shortSide = min(width, height) / 2
         val src = Rect(0, 0, width, height)
         val dst = Rect(src.centerX() - shortSide, src.centerY() - shortSide, src.centerX() + shortSide, src.centerY() + shortSide)
-        val tmp = Bitmap.createBitmap(bitmap, dst.left, dst.top, dst.width(), dst.height(), null, true)
+
+        val matrix = Matrix()
+        matrix.postRotate(degrees)
+        val tmp = Bitmap.createBitmap(bitmap, dst.left, dst.top, dst.width(), dst.height(), matrix, true)
 
 
         val resized = Bitmap.createScaledBitmap(tmp, size.toInt(), size.toInt(), true)

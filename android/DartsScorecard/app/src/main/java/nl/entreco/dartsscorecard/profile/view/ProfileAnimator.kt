@@ -24,7 +24,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val animator = ProfileAnimatorHandler(binding.includeAppbar.includeHeaderViewTop.imageTop,
             binding.includeAppbar.includeHeaderView.image,
             binding.includeAppbar.includeHeaderViewTop.toolbarHeaderViewTop,
-            binding.includeAppbar.includeHeaderView.toolbarHeaderView, binding.fab, expandedName,
+            binding.includeAppbar.includeHeaderView.toolbarHeaderView, expandedName,
             binding.includeAppbar.includeHeaderView.favDouble)
 
     private val revealAnimator = RevealAnimator(expandedImage)
@@ -41,8 +41,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     }
 
     internal class ProfileAnimatorHandler(private val collapsedImage: View, private val expandedImage: View, private val collapsedHeader: View,
-                                          private val expandedHeader: View, private val fab: View,
-                                          private val expandedName: TextView, private val expandedDouble: View) {
+                                          private val expandedHeader: View, private val expandedName: TextView, private val expandedDouble: View) {
 
         private var isHideToolbarView = false
 
@@ -55,7 +54,6 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
             animateImage(percentage, orig, width)
             animateTitle(start, end, width, percentage)
             animateFavDouble(percentage)
-            animateFab(percentage)
 
             if (percentage == 1f && isHideToolbarView) {
                 collapsedHeader.visibility = View.VISIBLE
@@ -67,10 +65,6 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
                 expandedHeader.visibility = View.VISIBLE
                 isHideToolbarView = !isHideToolbarView
             }
-        }
-
-        private fun animateFab(percentage: Float) {
-            fab.animate().scaleX(1 - percentage).scaleY(1 - percentage).alpha(1 - percentage).setDuration(0).start()
         }
 
         private fun animateImage(percentage: Float, orig: Double, width: Int) {

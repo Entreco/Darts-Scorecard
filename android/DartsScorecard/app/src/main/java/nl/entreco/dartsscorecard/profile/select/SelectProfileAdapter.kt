@@ -1,14 +1,11 @@
 package nl.entreco.dartsscorecard.profile.select
 
 import android.databinding.DataBindingUtil
-import android.support.annotation.NonNull
-import android.support.v7.recyclerview.extensions.AsyncDifferConfig
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.ProfileViewBinding
 import nl.entreco.domain.profile.Profile
 
@@ -28,7 +25,7 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : List
     }
 
     fun playerIdAt(position: Int): Long {
-        return getItem(position).id
+        return if(position < itemCount) getItem(position).id else -1
     }
 
     fun setItems(profiles: List<Profile>) {
@@ -36,7 +33,7 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : List
     }
 }
 
-val diff : DiffUtil.ItemCallback<Profile> = object : DiffUtil.ItemCallback<Profile>() {
+val diff: DiffUtil.ItemCallback<Profile> = object : DiffUtil.ItemCallback<Profile>() {
     override fun areItemsTheSame(oldItem: Profile?, newItem: Profile?): Boolean {
         return oldItem?.id == newItem?.id
     }

@@ -138,7 +138,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val next = game.next
         val scores = game.scores
 
-        handleGameFinished(next, game.id)
+        handleGameFinished(next, game.id, by.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
         showInterstitial(next)
@@ -151,17 +151,17 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val started = game.isNewMatchLegOrSet()
         val turnCounter = game.getTurnCount()
         val breakMade = game.wasBreakMade(by)
-        val turnMeta = TurnMeta(by.id, turnCounter, score, started, breakMade)
-        playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta, { turnId, metaId ->
+        val turnMeta = TurnMeta(by.id, turnCounter, score, breakMade)
+        playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta) { turnId, metaId ->
             gameListeners.onStatsUpdated(turnId, metaId)
-        })
+        }
     }
 
-    private fun handleGameFinished(next: Next, gameId: Long) {
+    private fun handleGameFinished(next: Next, gameId: Long, winnerId: Long) {
         val gameFinished = next.state == State.MATCH
         finished.set(gameFinished)
         if (gameFinished) {
-            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId, teams.first { it.contains(winnerId) }.toTeamString()))
             gameListeners.onGameFinished(gameId)
         }
     }
@@ -187,7 +187,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
             State.LEG -> adViewModel.provideInterstitial()
             State.SET -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else -> { }
+            else -> {
+            }
         }
     }
 
