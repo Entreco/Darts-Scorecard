@@ -5,6 +5,7 @@
     <dimen name="def">8dp</dimen>
     <dimen name="large">16dp</dimen>
     <dimen name="xlarge">32dp</dimen>
+    <dimen name="xxlarge">64dp</dimen>
     <dimen name="elevation">6dp</dimen>
 
     <dimen name="icon_size_default">24dp</dimen>
@@ -15,7 +16,6 @@
     <dimen name="score_leg_w">42</dimen>
     <dimen name="score_set_w">42</dimen>
     <dimen name="score_pts_w">54</dimen>
-
 
     <dimen name="input_side_bar">60dp</dimen>
     <dimen name="input_peek_height">48dp</dimen>
@@ -35,4 +35,6 @@
 
     <!-- Stats -->
     <dimen name="match_stat_width">68dp</dimen>
+    <integer name="col_key_weight">4</integer>
+    <integer name="col_value_weight">2</integer>
 </resources>

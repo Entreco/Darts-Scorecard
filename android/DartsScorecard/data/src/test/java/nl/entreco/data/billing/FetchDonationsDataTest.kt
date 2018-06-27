@@ -17,6 +17,9 @@ class FetchDonationsDataTest {
         assertTrue(FetchDonationsData().contains("10_feature_votes"))
         assertTrue(FetchDonationsData().contains("50_feature_votes"))
         assertTrue(FetchDonationsData().contains("100_feature_votes"))
+        assertTrue(FetchDonationsData().contains("200_feature_votes"))
+        assertTrue(FetchDonationsData().contains("500_feature_votes"))
+        assertTrue(FetchDonationsData().contains("1000_feature_votes"))
     }
 
     @Test
@@ -27,8 +30,18 @@ class FetchDonationsDataTest {
     }
 
     @Test
-    fun type() {
+    fun `should have correct fetch type`() {
         assertEquals("inapp", FetchDonationsData().type())
+    }
+
+    @Test
+    fun `should have correct purchase type`() {
+        assertEquals("inapp", FetchPurchasesData().type())
+    }
+
+    @Test
+    fun `should have correct purchase token`() {
+        assertEquals("unused token", FetchPurchasesData().token())
     }
 
     @Test
@@ -36,6 +49,9 @@ class FetchDonationsDataTest {
         assertEquals(10, FetchDonationsData().getVotes("10_feature_votes"))
         assertEquals(50, FetchDonationsData().getVotes("50_feature_votes"))
         assertEquals(100, FetchDonationsData().getVotes("100_feature_votes"))
+        assertEquals(200, FetchDonationsData().getVotes("200_feature_votes"))
+        assertEquals(500, FetchDonationsData().getVotes("500_feature_votes"))
+        assertEquals(1000, FetchDonationsData().getVotes("1000_feature_votes"))
     }
 
     @Test(expected = NoSuchElementException::class)

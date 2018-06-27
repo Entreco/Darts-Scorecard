@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard
 
 import android.util.Log
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 
 /**
  * Created by Entreco on 27/11/2017.

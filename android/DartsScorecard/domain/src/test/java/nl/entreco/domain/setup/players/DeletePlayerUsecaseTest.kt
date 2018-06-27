@@ -46,12 +46,12 @@ class DeletePlayerUsecaseTest {
 
 
     private fun whenDeletingPlayerSucceeds() {
-        subject.delete(DeletePlayerRequest(12), mockDone, mockFail)
+        subject.delete(DeletePlayerRequest(arrayOf(12L).toLongArray()), mockDone, mockFail)
     }
 
     private fun whenDeletingPlayerThrows() {
-        whenever(mockPlayerRepo.deleteById(12)).thenThrow(RuntimeException("Player does not exist"))
-        subject.delete(DeletePlayerRequest(12), mockDone, mockFail)
+        whenever(mockPlayerRepo.deleteById(12L)).thenThrow(RuntimeException("Player does not exist"))
+        subject.delete(DeletePlayerRequest(arrayOf(12L).toLongArray()), mockDone, mockFail)
     }
 
     private fun thenNoErrorIsReported() {

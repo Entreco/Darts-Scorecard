@@ -3,7 +3,7 @@ package nl.entreco.domain.play.mastercaller
 /**
  * Created by entreco on 14/03/2018.
  */
-data class MasterCallerRequest(val scored: Int = -1, val start: Boolean = false, val leg: Boolean = false, val set: Boolean = false, val match:Boolean = false) {
+class MasterCallerRequest(val scored: Int = -1, val start: Boolean = false, val leg: Boolean = false, val set: Boolean = false, val match:Boolean = false) {
     fun toSound(): Sound {
 
         return when {

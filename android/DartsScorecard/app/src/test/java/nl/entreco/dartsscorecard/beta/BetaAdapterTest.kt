@@ -3,6 +3,8 @@ package nl.entreco.dartsscorecard.beta
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.isNull
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.dartsscorecard.TestBackground
+import nl.entreco.dartsscorecard.TestForeground
 import nl.entreco.domain.beta.Feature
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -23,7 +25,7 @@ class BetaAdapterTest {
 
     @Before
     fun setUp() {
-        subject = BetaAdapter()
+        subject = BetaAdapter(TestBackground(), TestForeground())
     }
 
     @Test

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- AdMob -->
+    <string name="app_id">ca-app-pub-3793327349392749~1846337901</string>
     <string name="setup_ad_unit_id">ca-app-pub-3793327349392749/2238054293</string>
+    <string name="stats_ad_unit_id">ca-app-pub-3793327349392749/3337437992</string>
+    <string name="setup_interstitial_unit_id">ca-app-pub-3793327349392749/9019610403</string>
 </resources>

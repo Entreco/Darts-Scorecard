@@ -9,6 +9,7 @@ import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameMapper
 import nl.entreco.data.db.game.GameTable
 import nl.entreco.data.db.game.LocalGameRepository
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -26,6 +27,8 @@ class LocalGameRepositoryTest {
     @Mock private lateinit var mockGameDao: GameDao
     private lateinit var subject: LocalGameRepository
     private lateinit var mapper: GameMapper
+
+    private var actualFinishedGamesCount : Int = 0
 
     @Before
     fun setUp() {
@@ -70,7 +73,14 @@ class LocalGameRepositoryTest {
     @Test
     fun `it should mark game as finished`() {
         givenExistingGames(1)
-        whenFinishingGame(1)
+        whenFinishingGame(1, "1")
+        thenUpdateGamesIsCalledOnDao()
+    }
+
+    @Test
+    fun `it should store winningTeam when finishing`() {
+        givenExistingGames(1)
+        whenFinishingGame(1, "1,2")
         thenUpdateGamesIsCalledOnDao()
     }
 
@@ -81,6 +91,20 @@ class LocalGameRepositoryTest {
         thenUndoFinishIsCalledOnDao()
     }
 
+    @Test
+    fun `it should return finished game count (0)`() {
+        givenExistingGames(1)
+        whenCountingFinishedGames()
+        thenNumberOfFinishedGamesIs(0)
+    }
+
+    @Test
+    fun `it should return finished game count (10)`() {
+        givenFinishedGames(4)
+        whenCountingFinishedGames()
+        thenNumberOfFinishedGamesIs(0)
+    }
+
     private fun givenExistingGames() {
         val table = GameTable()
         table.startIndex = 0
@@ -88,8 +112,25 @@ class LocalGameRepositoryTest {
         table.numSets = 5
         table.numLegs = 5
         table.teams = "1,2|3"
+        table.finished = false
         table.id = 1
         val games = listOf(table)
+        whenever(mockGameDao.fetchAll()).thenReturn(games)
+    }
+
+    private fun givenFinishedGames(count: Int){
+        val games = mutableListOf<GameTable>()
+        (0 until count).forEach {
+            val table = GameTable()
+            table.startIndex = 0
+            table.startScore = 5
+            table.numSets = 5
+            table.numLegs = 5
+            table.teams = "1,2|3"
+            table.finished = true
+            table.id = it.toLong()
+            games.add(table)
+        }
         whenever(mockGameDao.fetchAll()).thenReturn(games)
     }
 
@@ -100,6 +141,7 @@ class LocalGameRepositoryTest {
         table.numSets = 5
         table.numLegs = 5
         table.teams = "1,2|3"
+        table.finished = false
         table.id = id
         whenever(mockGameDao.fetchBy(id)).thenReturn(table)
     }
@@ -116,12 +158,16 @@ class LocalGameRepositoryTest {
         subject.fetchBy(id)
     }
 
-    private fun whenFinishingGame(gameId: Long) {
-        subject.finish(gameId)
+    private fun whenFinishingGame(gameId: Long, winningTeam: String) {
+        subject.finish(gameId, winningTeam)
     }
 
     private fun whenUnFinishingGame(gameId: Long) {
         subject.undoFinish(gameId)
+    }
+
+    private fun whenCountingFinishedGames(){
+        actualFinishedGamesCount = subject.countFinishedGames()
     }
 
     private fun thenFetchAllIsCalledOnDao() {
@@ -138,5 +184,9 @@ class LocalGameRepositoryTest {
 
     private fun thenUndoFinishIsCalledOnDao() {
         verify(mockGameDao).undoFinish(isA())
+    }
+
+    private fun thenNumberOfFinishedGamesIs(expected: Int) {
+        assertEquals(expected, actualFinishedGamesCount)
     }
 }

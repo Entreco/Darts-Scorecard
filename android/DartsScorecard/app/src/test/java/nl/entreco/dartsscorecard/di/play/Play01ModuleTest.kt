@@ -57,6 +57,11 @@ class Play01ModuleTest {
         assertNotNull(subject().provideAudioPreferences())
     }
 
+    @Test
+    fun `it should provide ArchiveServiceLauncher`() {
+        assertNotNull(subject().provideArchiveServiceLauncher(mockContext))
+    }
+
     @Test(expected = NullPointerException::class) // SoundPool.Builder() cannot be mocked
     fun `it should provide soundPool`() {
         assertNotNull(subject().provideSoundPool())

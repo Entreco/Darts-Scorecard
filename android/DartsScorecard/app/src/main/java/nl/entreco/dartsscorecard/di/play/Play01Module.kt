@@ -1,10 +1,13 @@
 package nl.entreco.dartsscorecard.di.play
 
+import android.content.ComponentName
 import android.content.Context
 import android.media.SoundPool
 import android.support.v7.app.AlertDialog
 import dagger.Module
 import dagger.Provides
+import nl.entreco.dartsscorecard.archive.ArchiveJobService
+import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.prefs.SharedAudioPrefRepo
@@ -23,7 +26,7 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provide01Activity() : Play01Activity {
+    fun provide01Activity(): Play01Activity {
         return activity
     }
 
@@ -35,13 +38,13 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provideSoundMapper() : SoundMapper {
+    fun provideSoundMapper(): SoundMapper {
         return SoundMapper()
     }
 
     @Provides
     @Play01Scope
-    fun provideAudioPreferences() : AudioPrefRepository {
+    fun provideAudioPreferences(): AudioPrefRepository {
         return SharedAudioPrefRepo(prefs)
     }
 
@@ -55,5 +58,11 @@ class Play01Module(private val activity: Play01Activity) {
     @Play01Scope
     fun provideSoundRepository(@ActivityScope context: Context, @Play01Scope soundPool: SoundPool, @Play01Scope mapper: SoundMapper, @Play01Scope prefs: AudioPrefRepository): SoundRepository {
         return LocalSoundRepository(context, soundPool, prefs, mapper)
+    }
+
+    @Provides
+    @Play01Scope
+    fun provideArchiveServiceLauncher(@ActivityScope context: Context): ArchiveServiceLauncher {
+        return ArchiveServiceLauncher(context, ComponentName(context, ArchiveJobService::class.java))
     }
 }

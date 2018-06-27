@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".profile.view.ProfileActivity"
+        tools:showIn="@layout/activity_profile">
+
+    <data>
+
+        <import
+                alias="View"
+                type="android.view.View"/>
+
+        <variable
+                name="stats"
+                type="nl.entreco.dartsscorecard.profile.view.PlayerStats"/>
+
+        <variable
+                name="adViewModel"
+                type="nl.entreco.dartsscorecard.ad.AdViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+        <LinearLayout
+                android:id="@+id/stat_1"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_games_played"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.gamesPlayed}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_2"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_1">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_overall_average"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.average}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_3"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_2">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_first9_average"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.average9}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_4"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_3">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_win_percentage"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.winPercentage}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/stat_5"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_4">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_checkout_percentage"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.checkoutPercentage}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <FrameLayout
+                android:id="@+id/stat_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_5">
+            <include layout="@layout/include_profile_stats_ad"
+                     app:viewModel="@{adViewModel}"/>
+        </FrameLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_7"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_6">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_180"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num180s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_8"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_7">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_140"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num140s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_9"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_8">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_100"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num100s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_10"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_9">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_60"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num60s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_11"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_10">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_20"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num20s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/stat_12"
+                style="@style/ProfileStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stat_11">
+
+            <TextView
+                    style="@style/ProfileStatDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_key_weight"
+                    android:text="@string/profile_num_0"/>
+
+            <TextView
+                    style="@style/ProfileStatValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@integer/col_value_weight"
+                    android:text="@{stats.num0s}"
+                    tools:text="89.77"/>
+        </LinearLayout>
+
+
+        <!-- Empty Stats -->
+        <include
+                layout="@layout/include_profile_empty"
+                android:visibility="@{stats.isEmpty ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone"/>
+
+        <android.support.constraint.Group
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{stats.isEmpty ? View.GONE : View.VISIBLE}"
+                app:constraint_referenced_ids="stat_1, stat_2, stat_3, stat_4, stat_5, stat_6, stat_7, stat_8, stat_9, stat_10, stat_11, stat_12"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -6,7 +6,7 @@ import nl.entreco.domain.model.players.TeamSeperator
 /**
  * Created by entreco on 06/01/2018.
  */
-data class ExtractTeamsRequest(private val teamString: String){
+data class ExtractTeamsRequest(private val teamString: String) {
     private val illegalState = IllegalStateException("invalid team string, should be 'player1,player2|player3|player4,player5'")
     private val playerSplit: MutableList<List<String>> = emptyList<List<String>>().toMutableList()
     private lateinit var teamSplit: List<String>

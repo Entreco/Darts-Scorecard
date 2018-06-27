@@ -36,9 +36,6 @@ class MetaTable {
     @ColumnInfo(name = "atco")
     var atCheckout: Int = 0
 
-    @ColumnInfo(name = "started")
-    var started: Boolean = false
-
     @ColumnInfo(name = "break")
     var breakMade: Boolean = false
 }

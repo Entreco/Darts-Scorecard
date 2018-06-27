@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.di.profile
 
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.profile.view.ProfileViewModel
 
 /**
@@ -10,4 +11,5 @@ import nl.entreco.dartsscorecard.profile.view.ProfileViewModel
 @Subcomponent(modules = [(ProfileModule::class)])
 interface ProfileComponent {
     fun viewModel(): ProfileViewModel
+    fun ads(): AdViewModel
 }

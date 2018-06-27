@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/def"
         android:background="@drawable/beta_bg"
+        android:clickable="true"
         android:elevation="4dp"
+        android:focusable="true"
         android:onClick="@{() -> animator.vote(feature)}">
 
         <ImageView
@@ -31,9 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="@drawable/beta_bg"
+            android:contentDescription="@null"
             android:outlineProvider="background"
             android:scaleType="centerCrop"
-            android:contentDescription="@null"
             android:src="@drawable/beta_header_image"
             bind:imageUrl="@{feature.image}" />
 
@@ -109,10 +111,10 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@null"
+            android:contentDescription="@null"
             android:elevation="6dp"
             android:scaleType="fitEnd"
             android:src="@drawable/ic_started"
-            android:contentDescription="@null"
             android:visibility="@{feature.votable ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>

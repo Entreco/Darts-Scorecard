@@ -8,7 +8,7 @@ const val PlayerSeperator = ","
  */
 class Team(val players: Array<Player> = emptyArray()) {
 
-    private var STARTTURN = -1
+    private val STARTTURN = -1
     private var turns = STARTTURN
     private var offset = 0
     private var lastLeg = 0
@@ -55,6 +55,12 @@ class Team(val players: Array<Player> = emptyArray()) {
 
     fun imageUrl(): String? {
         return players[0].image
+    }
+
+    fun toTeamString() : String {
+        return StringBuilder(firstPlayer().id.toString()).apply {
+            players.drop(1).forEach { append(PlayerSeperator).append(it.id) }
+        }.toString()
     }
 
     override fun toString(): String {

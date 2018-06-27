@@ -1,8 +1,8 @@
 package nl.entreco.domain.play.stats
 
-import nl.entreco.domain.model.Stat
+import nl.entreco.domain.model.LiveStat
 
 /**
  * Created by entreco on 16/01/2018.
  */
-data class FetchGameStatsResponse(val gameId: Long, val stats: Map<Long, Stat>)
+data class FetchGameStatsResponse(val gameId: Long, val stats: Map<Long, LiveStat>)

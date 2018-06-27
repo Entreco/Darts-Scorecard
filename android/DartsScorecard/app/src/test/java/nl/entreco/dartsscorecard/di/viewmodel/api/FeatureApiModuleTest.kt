@@ -4,7 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith

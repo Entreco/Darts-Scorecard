@@ -57,6 +57,6 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     private fun updateTeamCount() {
         teams.clear()
         teams += 1..itemCount
-        tryNotifyItemRangeChanged(0, itemCount)
+        tryNotifyItemRangeInserted(0, itemCount)
     }
 }

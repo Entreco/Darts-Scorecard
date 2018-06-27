@@ -5,10 +5,14 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
@@ -24,6 +28,8 @@ class ProfileActivity : ViewModelActivity() {
 
     private val component: ProfileComponent by componentProvider { it.plus(ProfileModule()) }
     private val viewModel: ProfileViewModel by viewModelProvider { component.viewModel() }
+    private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
+    private val navigator: ProfileNavigator by lazy { ProfileNavigator(this) }
     private var madeChanges = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +37,16 @@ class ProfileActivity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityProfileBinding>(this, R.layout.activity_profile)
         binding.viewModel = viewModel
         binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
-        binding.navigator = ProfileNavigator(this)
+        binding.navigator = navigator
+        binding.adViewModel = adViewModel
 
         viewModel.fetchProfile(idsFromIntent(intent))
+
+        initToolbar(toolbar(binding), R.string.empty)
+    }
+
+    private fun toolbar(binding: ActivityProfileBinding): Toolbar {
+        return binding.includeAppbar.toolbar
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -45,6 +58,25 @@ class ProfileActivity : ViewModelActivity() {
             viewModel.showNameForProfile(data?.getStringExtra(EditPlayerNameActivity.EXTRA_NAME)!!, data.getIntExtra(EditPlayerNameActivity.EXTRA_FAV, 0))
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.profile, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.menu_profile_edit -> {
+                navigator.onEditProfile(viewModel.profile.get()!!)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onBackPressed() {

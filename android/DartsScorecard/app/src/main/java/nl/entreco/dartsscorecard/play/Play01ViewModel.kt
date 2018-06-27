@@ -5,12 +5,13 @@ import android.databinding.ObservableInt
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -41,6 +42,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
+                                          private val adViewModel: AdViewModel,
                                           private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -136,9 +138,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val next = game.next
         val scores = game.scores
 
-        handleGameFinished(next, game.id)
+        handleGameFinished(next, game.id, by.id)
         notifyListeners(next, turn, by, scores)
         notifyMasterCaller(next, turn)
+        showInterstitial(next)
         storeTurn(turn, by, next)
     }
 
@@ -148,17 +151,18 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val started = game.isNewMatchLegOrSet()
         val turnCounter = game.getTurnCount()
         val breakMade = game.wasBreakMade(by)
-        val turnMeta = TurnMeta(by.id, turnCounter, score, started, breakMade)
-        playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta, { turnId, metaId ->
+        val turnMeta = TurnMeta(by.id, turnCounter, score, breakMade)
+        playGameUsecase.storeTurnAndMeta(turnRequest, turnMeta) { turnId, metaId ->
             gameListeners.onStatsUpdated(turnId, metaId)
-        })
+        }
     }
 
-    private fun handleGameFinished(next: Next, gameId: Long) {
+    private fun handleGameFinished(next: Next, gameId: Long, winnerId: Long) {
         val gameFinished = next.state == State.MATCH
         finished.set(gameFinished)
         if (gameFinished) {
-            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId))
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId, teams.first { it.contains(winnerId) }.toTeamString()))
+            gameListeners.onGameFinished(gameId)
         }
     }
 
@@ -166,8 +170,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         gameListeners.onTurnSubmitted(next, turn, by, scores)
     }
 
-    private fun notifyMasterCaller(next: Next, turn: Turn){
-        when(next.state){
+    private fun notifyMasterCaller(next: Next, turn: Turn) {
+        when (next.state) {
             State.START -> masterCaller.play(MasterCallerRequest(start = true))
             State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
             State.SET -> masterCaller.play(MasterCallerRequest(set = true))
@@ -177,11 +181,22 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         }
     }
 
+    private fun showInterstitial(next: Next) {
+        when (next.state) {
+            State.START -> adViewModel.provideInterstitial()
+            State.LEG -> adViewModel.provideInterstitial()
+            State.SET -> adViewModel.provideInterstitial()
+            State.MATCH -> adViewModel.provideInterstitial()
+            else -> {
+            }
+        }
+    }
+
     fun stop() {
         masterCaller.stop()
     }
 
-    fun initToggleMenuItem(menu: Menu?){
+    fun initToggleMenuItem(menu: Menu?) {
         menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
     }
 

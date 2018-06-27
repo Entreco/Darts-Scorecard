@@ -31,8 +31,10 @@
     <string name="vote">VOTE</string>
     <string name="number_votes">%1$s VOTES</string>
     <string name="donation_button">%1$s %2$s</string>
-    <string name="donation_thanks">Thanks! You are AWESOME!</string>
-    <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p></string>
+    <string name="donation_thanks">You are AWESOME &amp; will no longer see those annoying ads ;)</string>
+    <string name="donation_ok">THANKS</string>
+    <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p>&lt;p>All Donations &lt;b>include removing all ads&lt;/b> from the app&lt;/p></string>
+    <string name="beta_video">&lt;b>Watch the video&lt;/b></string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>
@@ -61,6 +63,7 @@
     <string name="favourite_double">Favourite double %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
     <string name="edit_player_double">Favourite double</string>
+    <string name="confirm_delete_profile">Profile deleted</string>
 
     <!-- Input -->
     <string name="darts_used">How many darts did you use?</string>
@@ -69,11 +72,36 @@
     <string name="match_stats">Match Statistics</string>
     <string name="live_breaks_made">Breaks Made</string>
     <string name="live_double_success">Double Success</string>
+    <string name="live_highest_score">Highest Score</string>
     <string name="live_highest_out">Highest Out</string>
     <string name="live_180s">180\'s</string>
     <string name="live_140s">140+</string>
     <string name="live_100s">100+</string>
+    <string name="live_60s">60+</string>
+    <string name="live_20s">20+</string>
     <string name="live_average">average</string>
+
+    <!-- Profile -->
+    <string name="no_stats_available">No stats available yet</string>
+    <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
+    <string name="profile_games_played">Games Played</string>
+    <string name="profile_overall_average">Overall average</string>
+    <string name="profile_first9_average">1st 9 average</string>
+    <string name="profile_darts_thrown">Darts thrown</string>
+    <string name="profile_win_percentage">Win %</string>
+    <string name="profile_checkout_percentage">Checkout %</string>
+    <string name="profile_num_180">#180\'s</string>
+    <string name="profile_num_140">#140+</string>
+    <string name="profile_num_100">#100+</string>
+    <string name="profile_num_60">#60+</string>
+    <string name="profile_num_20">#20+</string>
+    <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
+
+    <!-- Archive Service -->
+    <string name="archive_service">Archive Stats Service</string>
+    <string name="channel_name">Archive stats</string>
+    <string name="channel_description">Calculating stats &amp; averages</string>
+    <string name="notif_title">Calculating new stats, averages &amp; hiscores</string>
 
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>
@@ -86,6 +114,7 @@
     <string name="err_unable_to_create_player">Unable to create player.</string>
     <string name="err_unable_to_donate">Unable to donate for features at the moment.</string>
     <string name="err_unable_to_fetch_players">Unable to fetch players.</string>
+    <string name="err_unable_to_fetch_stats">Unable to fetch statistics for player</string>
     <string name="err_player_already_exists">Player name already exists. Please choose a different name</string>
     <string name="err_invalid_player_name">Invalid player name</string>
     <string name="err_player_name_is_empty">Please type desired player name</string>

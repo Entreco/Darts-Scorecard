@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MarkGameAsFinishedUsecase @Inject constructor(private val gameRepository: GameRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
     fun exec(request: MarkGameAsFinishedRequest) {
         onBackground({
-            gameRepository.finish(request.gameId)
+            gameRepository.finish(request.gameId, request.winningTeam)
         }, {})
     }
 }

@@ -9,7 +9,8 @@ import org.junit.Test
 class DeletePlayerRequestTest {
     @Test
     fun getId() {
-        assertEquals(42, DeletePlayerRequest(42).id)
+        val ids = arrayOf(1L,2L).toLongArray()
+        assertEquals(ids, DeletePlayerRequest(ids).ids)
     }
 
 }

@@ -1,28 +1,32 @@
 package nl.entreco.dartsscorecard.di.viewmodel
 
-import android.app.Activity
+import android.arch.lifecycle.Lifecycle
+import android.content.Context
+import android.support.v4.app.FragmentActivity
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.dartsscorecard.App
+import nl.entreco.data.billing.BillingServiceConnection
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by Entreco on 17/12/2017.
  */
+@RunWith(MockitoJUnitRunner::class)
 class ViewModelModuleTest {
 
-    @Mock private lateinit var mockApp: App
-    @Mock private lateinit var mockActivity: Activity
+    @Mock private lateinit var mockLifeCycle: Lifecycle
+    @Mock private lateinit var mockContext: Context
+    @Mock private lateinit var mockBillingConnection: BillingServiceConnection
+    @Mock private lateinit var mockActivity: FragmentActivity
     private lateinit var subject: ViewModelModule
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        whenever(mockApp.applicationContext).thenReturn(mockApp)
         subject = ViewModelModule(mockActivity)
     }
 
@@ -30,6 +34,22 @@ class ViewModelModuleTest {
     fun context() {
         assertNotNull(subject.context())
         assertEquals(mockActivity, subject.context())
+    }
+
+    @Test
+    fun `it should provide lifecycle`() {
+        whenever(mockActivity.lifecycle).thenReturn(mockLifeCycle)
+        assertNotNull(subject.lifeCycle())
+    }
+
+    @Test
+    fun `it should provide service Connection`() {
+        assertNotNull(subject.provideServiceConnection())
+    }
+
+    @Test
+    fun `it should provide BillingRepository`() {
+        assertNotNull(subject.provideBillingRepository(mockContext, mockBillingConnection))
     }
 
 }

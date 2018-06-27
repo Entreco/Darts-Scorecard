@@ -13,7 +13,7 @@ class FetchExistingPlayersUsecase @Inject constructor(private var playerReposito
     fun exec(done: (FetchExistingPlayersResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val players = playerRepository.fetchAll()
-            onUi({ done(FetchExistingPlayersResponse(players)) })
+            onUi { done(FetchExistingPlayersResponse(players)) }
         }, fail)
     }
 }

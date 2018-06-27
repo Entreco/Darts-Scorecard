@@ -34,12 +34,13 @@ abstract class TestableAdapter<T : RecyclerView.ViewHolder?> : RecyclerView.Adap
         }
     }
 
-    protected fun tryNotifyItemRangeChanged(position: Int, count: Int) {
+    protected fun tryNotifyItemRangeInserted(position: Int, count: Int) {
         try {
             notifyItemRangeChanged(position, count)
         } catch (ignore: NullPointerException) {
         }
     }
+
     protected fun tryNotifyItemRemoved(position: Int) {
         try {
             notifyItemRemoved(position)

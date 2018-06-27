@@ -4,9 +4,17 @@
 
     <data>
 
+        <import
+            alias="View"
+            type="android.view.View" />
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.profile.view.ProfileViewModel" />
+
+        <variable
+                name="adViewModel"
+                type="nl.entreco.dartsscorecard.ad.AdViewModel"/>
 
         <variable
             name="animator"
@@ -20,7 +28,8 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/stats_bg">
 
         <include
             android:id="@+id/include_appbar"
@@ -31,106 +40,21 @@
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:clipToPadding="false"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="asdfasdfkahsdf\nlkasdhf\n lkajsdf lkjashdf \nklajshdfk ajs\nhdf kajsdhf aksjdhf asdf askldj\nhf laksjdhf klasjdh f" />
-            </LinearLayout>
+            <include
+                layout="@layout/include_profile_stats"
+                app:stats="@{viewModel.stats}" />
 
         </android.support.v4.widget.NestedScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/def"
-            android:onClick="@{() -> navigator.onEditProfile(viewModel.profile.get())}"
-            android:src="@drawable/ic_edit_profile"
-            android:tint="@color/white"
-            app:backgroundTint="?attr/colorEditProfile"
-            app:elevation="@dimen/def"
-            app:fabSize="normal"
-            app:layout_anchor="@id/scrollView"
-            app:layout_anchorGravity="end" />
+        <!-- Loader -->
+        <include
+            layout="@layout/play_01_loading"
+            android:visibility="@{viewModel.stats == null ? View.VISIBLE : View.GONE}" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -32,7 +32,7 @@ class FirebaseAnalyticsInstrumentationTest {
 
     @Test
     fun itShouldTrackViewFeature() {
-        subject.trackViewFeature(Feature("ref", "ti", "d", "i", "u", 12, 2))
+        subject.trackViewFeature(Feature("ref", "ti", "d", "i", "u", 12, 2, "video"))
     }
 
     private fun givenSubject() {

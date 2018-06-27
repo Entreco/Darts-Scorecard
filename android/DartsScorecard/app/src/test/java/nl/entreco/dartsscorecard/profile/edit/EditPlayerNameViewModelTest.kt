@@ -2,8 +2,11 @@ package nl.entreco.dartsscorecard.profile.edit
 
 import android.content.Context
 import android.os.Handler
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
+import android.text.Editable
+import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
+import android.widget.TextView
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
@@ -21,6 +24,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class EditPlayerNameViewModelTest {
 
+    @Mock private lateinit var mockView: TextView
+    @Mock private lateinit var mockNavigator: EditPlayerNameNavigator
+    @Mock private lateinit var mockAdapter: AdapterView<*>
+    @Mock private lateinit var mockEditable: Editable
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockHandler: Handler
     @Mock private lateinit var mockAnalytics: Analytics
@@ -36,6 +43,18 @@ class EditPlayerNameViewModelTest {
     fun `it should fetch existing players on init`() {
         givenSubject()
         thenExistingPlayersAreFetched()
+    }
+
+    @Test
+    fun `it should have empty name initially`() {
+        givenSubject()
+        thenNameIs("")
+    }
+
+    @Test
+    fun `it should have empty favdouble initially`() {
+        givenSubject()
+        thenFavouriteDoubleIs("")
     }
 
     @Test
@@ -77,6 +96,94 @@ class EditPlayerNameViewModelTest {
         thenInitialNameIs("remco")
     }
 
+    @Test
+    fun `it should NOT set to Lowercase onNameChanged`() { // Causes CAPS Lock to break
+        givenSubject()
+        whenNameChanged("ReMcO")
+        thenNameIs("ReMcO")
+    }
+
+    @Test
+    fun `it should set favouriteDouble onFavouriteDoubleSelected`() {
+        givenSubject()
+        whenFavouriteDoubleSelected(12)
+        thenFavouriteDoubleIndexIs(12)
+    }
+
+    @Test
+    fun `it should trackAnalytics onFavouriteDoubleSelected`() {
+        givenSubject()
+        whenFavouriteDoubleSelected(12)
+        thenAnalyticsIsNotified(12)
+    }
+
+    @Test
+    fun `it should set name onActionDone (IME_ACTION_DONE)`() {
+        givenSubject()
+        whenOnActionDone("REMCO", EditorInfo.IME_ACTION_DONE)
+        thenNameIs("remco")
+    }
+
+    @Test
+    fun `it should NOT set name onActionDone (IME_ACTION_DONE)`() {
+        givenSubject()
+        whenOnActionDone("Pietje", 0)
+        thenNameIs("")
+    }
+
+    @Test
+    fun `it should set typing(false) onDone when valid name entered`() {
+        givenSubject()
+        givenExistingPlayers("p1", "p2")
+        whenNameChanged("NEW PLAYER")
+        whenDone()
+        thenIsTypingIs(false)
+    }
+
+    @Test
+    fun `it should notifyNavigator onDone when valid name entered`() {
+        givenSubject()
+        givenExistingPlayers("p1", "p2")
+        whenNameChanged("NEW PLAYER")
+        whenDone()
+        thenNavigatorIsNotified("new player")
+    }
+
+    @Test
+    fun `it should set typing(true) onDone when name is empty`() {
+        givenSubject()
+        whenDone()
+        thenIsTypingIs(true)
+    }
+
+    @Test
+    fun `it should set errorMessage onDone when name is empty`() {
+        givenSubject()
+        whenDone()
+        thenErrorMessageIs(R.string.err_player_name_is_empty)
+    }
+    @Test
+    fun `it should set typing(true) onDone when name is already taken`() {
+        givenExistingPlayers("p1")
+        givenSubject()
+        whenSettingPlayerName("player 1")
+        whenFetchingExistingPlayersSucceeds()
+        whenNameChanged("p1")
+        whenDone()
+        thenIsTypingIs(true)
+    }
+
+    @Test
+    fun `it should set errorMessage onDone when name is already taken`() {
+        givenExistingPlayers("p1")
+        givenSubject()
+        whenSettingPlayerName("player 1")
+        whenFetchingExistingPlayersSucceeds()
+        whenNameChanged("p1")
+        whenDone()
+        thenErrorMessageIs(R.string.err_player_already_exists)
+    }
+
     private fun givenExistingPlayers(vararg players: String) {
         givenExistingPlayers = players.map { Player(it) }
     }
@@ -95,9 +202,30 @@ class EditPlayerNameViewModelTest {
     }
 
     private fun whenSettingPlayerName(initialName: String) {
+        val runnableCaptor = argumentCaptor<Runnable>()
         subject.playerName(initialName, "", mockContext)
+        verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(500))
+        runnableCaptor.lastValue.run()
     }
 
+    private fun whenNameChanged(name: String) {
+        whenever(mockEditable.toString()).thenReturn(name)
+        subject.onNameChanged(mockEditable)
+    }
+
+    private fun whenFavouriteDoubleSelected(index: Int) {
+        whenever(mockAdapter.getItemAtPosition(any())).thenReturn("$index")
+        subject.onFavouriteDoubleSelected(mockAdapter, index)
+    }
+
+    private fun whenOnActionDone(name: String, action: Int) {
+        whenever(mockView.text).thenReturn(name)
+        subject.onActionDone(mockView, action, mockNavigator)
+    }
+
+    private fun whenDone(){
+        subject.onDone(mockNavigator)
+    }
 
     private fun thenExistingPlayersAreFetched() {}
 
@@ -111,5 +239,30 @@ class EditPlayerNameViewModelTest {
 
     private fun thenInitialNameIs(expected: String) {
         assertEquals(expected, subject.initialProfileName)
+    }
+
+    private fun thenNameIs(expected: String) {
+        assertEquals(expected, subject.name.get())
+    }
+
+    private fun thenFavouriteDoubleIs(expected: String) {
+        assertEquals(expected, subject.favDouble.get())
+    }
+
+    private fun thenFavouriteDoubleIndexIs(expected: Int) {
+        assertEquals(expected, subject.favDoubleIndex.get())
+        assertEquals("$expected", subject.favDouble.get())
+    }
+
+    private fun thenAnalyticsIsNotified(expected: Int){
+        verify(mockAnalytics).setFavDoubleProperty("$expected")
+    }
+
+    private fun thenIsTypingIs(expected: Boolean) {
+        assertEquals(expected, subject.isTyping.get())
+    }
+
+    private fun thenNavigatorIsNotified(expected: String){
+        verify(mockNavigator).onDoneEditing(eq(expected), any())
     }
 }

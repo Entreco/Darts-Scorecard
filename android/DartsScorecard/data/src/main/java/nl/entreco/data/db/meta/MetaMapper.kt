@@ -22,7 +22,6 @@ class MetaMapper : Mapper<TurnMeta, MetaTable> {
         table.turnInLeg = turnMeta.turnNumber
         table.score = turnMeta.score.score
         table.atCheckout = atDouble
-        table.started = turnMeta.started
         table.breakMade = turnMeta.breakMade
         return table
     }

@@ -1,9 +1,10 @@
 package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.Logger
+import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
@@ -30,6 +31,7 @@ class Play01ViewModelUndoTest {
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockResponse: Play01Response
+    @Mock private lateinit var mockAdProvider: AdViewModel
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>
@@ -74,7 +76,7 @@ class Play01ViewModelUndoTest {
         whenever(mockGame.id).thenReturn(5)
         whenever(mockResponse.game).thenReturn(mockGame)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

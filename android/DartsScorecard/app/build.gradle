@@ -34,9 +34,10 @@ dependencies {
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "android.arch.persistence.room:compiler:$room"
+    kapt "com.github.bumptech.glide:compiler:$glide"
 
     // Implementation
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
@@ -45,17 +46,20 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:$firebase"
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
-    implementation "com.squareup.picasso:picasso:$picasso"
+    implementation "com.github.bumptech.glide:glide:$glide"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
     implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
         transitive = true
     }
 
+    // Leaks
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
+
     // Test
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
-    testImplementation "com.github.dpreussler:android-tdd-utils:$tddUtils"
 
     // AndroidTest
     androidTestImplementation "com.android.support.test:runner:$espressoRunner"

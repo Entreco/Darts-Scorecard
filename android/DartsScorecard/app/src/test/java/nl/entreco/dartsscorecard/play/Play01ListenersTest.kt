@@ -130,6 +130,14 @@ class Play01ListenersTest {
         thenPlayerListenersAreNotified()
     }
 
+    @Test
+    fun `it should notify stat listeners when game finished`() {
+        givenSubject()
+        whenRegisteringListeners()
+        whenGameFinished(42)
+        thenStatListenersAreNotifiedOfGameFinished(42)
+    }
+
     private fun givenSubject() {
         subject = Play01Listeners()
     }
@@ -157,6 +165,10 @@ class Play01ListenersTest {
     private fun whenTurnSubmitted() {
         givenScores = arrayOf(Score(), Score())
         subject.onTurnSubmitted(mockNext, mockTurn, mockPlayer, givenScores)
+    }
+
+    private fun whenGameFinished(gameId: Long) {
+        subject.onGameFinished(gameId)
     }
 
     private fun thenScoreListenerIsAdded() {
@@ -199,6 +211,10 @@ class Play01ListenersTest {
 
     private fun thenStatListenersAreNotifiedOfDartThrown() {
         verify(mockStatListener).onStatsChange(any(), any())
+    }
+    
+    private fun thenStatListenersAreNotifiedOfGameFinished(gameId: Long) {
+        verify(mockStatListener).onGameFinished(gameId)
     }
 
     private fun thenSpecialEventListenersAreNotified() {

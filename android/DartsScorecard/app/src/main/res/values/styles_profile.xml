@@ -29,4 +29,29 @@
         <item name="android:gravity">start</item>
         <item name="android:padding">@dimen/xsmall</item>
     </style>
+
+    <style name="ProfileStat">
+        <item name="android:background">@drawable/profile_stat_bg</item>
+    </style>
+
+    <style name="ProfileStatText">
+        <item name="android:padding">@dimen/large</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ProfileStatDescription" parent="ProfileStatText">
+        <item name="android:textColor">?attr/ptsText</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ProfileStatValue" parent="ProfileStatText">
+        <item name="android:gravity">end</item>
+        <item name="android:background">@drawable/ic_stat_side</item>
+        <item name="android:textColor">?attr/nameText</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

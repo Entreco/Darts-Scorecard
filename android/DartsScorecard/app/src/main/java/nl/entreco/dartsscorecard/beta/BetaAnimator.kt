@@ -17,9 +17,14 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     private val appBar = binding.includeToolbar.betaAppbar
     private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar.toolbar, binding.sheet, binding.sheet.voteFab)
     internal var toggler: Toggler? = null
+    internal var swapper: Swapper? = null
 
     interface Toggler {
         fun onFeatureSelected(feature: BetaModel)
+    }
+
+    interface Swapper {
+        fun onSwapToolbar(showDetails: Boolean, title: String = "")
     }
 
     init {
@@ -31,6 +36,9 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 animator.onStateChanged(newState)
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    swapper?.onSwapToolbar(false)
+                }
             }
         })
 
@@ -42,6 +50,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
             appBar.setExpanded(false, true)
             appBar.isEnabled = false
             behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+            swapper?.onSwapToolbar(true, model.title.get()!!)
             toggler?.onFeatureSelected(model)
         }
     }
@@ -55,14 +64,18 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     }
 
     internal class BetaAnimatorHandler(private val appBar: AppBarLayout, private val toolbar: View, private val sheet: View, private val fab: View) {
+
+        private val fraction: Float = 0.85F
+        private val rotationFactor: Int = 5
+
         fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
             val perc = abs(verticalOffset / appBarLayout.totalScrollRange.toFloat())
             toolbar.animate().alpha(perc).setDuration(0).start()
         }
 
         fun onSlide(slideOffset: Float) {
-            val perc = max(0.85F, slideOffset)
-            val rot = 5 - 5 * slideOffset
+            val perc = max(fraction, slideOffset)
+            val rot = rotationFactor - rotationFactor * slideOffset
             sheet.animate().scaleX(perc).scaleY(perc).rotationX(-rot).setDuration(0).start()
 
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()

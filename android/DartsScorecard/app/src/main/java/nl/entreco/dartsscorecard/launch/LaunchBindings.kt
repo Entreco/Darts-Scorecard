@@ -7,13 +7,15 @@ import nl.entreco.domain.setup.game.CreateGameResponse
 /**
  * Created by Entreco on 19/12/2017.
  */
-abstract class LaunchBindings {
 
-    companion object {
-        @JvmStatic
-        @BindingAdapter("resumeGame")
-        fun resumeGame(view: View, response: CreateGameResponse?) {
-            view.animate().alpha(if (response == null) 0.5F else 1.0F).start()
-        }
+object LaunchBindings {
+    
+    private const val half: Float = 0.5F
+    private const val full: Float = 1.0F
+
+    @JvmStatic
+    @BindingAdapter("resumeGame")
+    fun resumeGame(view: View, response: CreateGameResponse?) {
+        view.animate().alpha(if (response == null) half else full).start()
     }
 }

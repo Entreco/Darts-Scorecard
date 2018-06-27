@@ -36,7 +36,20 @@ allprojects {
 
 configurations.all {
     resolutionStrategy {
-        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+        force "com.android.support:appcompat-v7:$support"
+        force "com.android.support:design:$support"
+        force "com.android.support:appcompat-v7:$support"
+        force "com.android.support:support-annotations:$support"
+        force "com.android.support:animated-vector-drawable:$support"
+        force "com.android.support:exifinterface:$support"
+        force "com.android.support:customtabs:$support"
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "1500"
     }
 }
 
