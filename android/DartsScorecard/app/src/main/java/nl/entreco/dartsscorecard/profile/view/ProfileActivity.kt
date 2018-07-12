@@ -42,11 +42,8 @@ class ProfileActivity : ViewModelActivity() {
 
         viewModel.fetchProfile(idsFromIntent(intent))
 
-        initToolbar(toolbar(binding), R.string.empty)
-    }
-
-    private fun toolbar(binding: ActivityProfileBinding): Toolbar {
-        return binding.includeAppbar.toolbar
+        initToolbar(binding.mainToolbar, R.string.empty, true)
+//        binding.mainToolbar.inflateMenu(R.menu.profile)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,7 +108,7 @@ class ProfileActivity : ViewModelActivity() {
 
         @JvmStatic
         fun selectName(activity: Activity, name: String, fav: Int) {
-            val view = activity.findViewById<TextView>(R.id.profileHeaderName)
+            val view = activity.findViewById<TextView>(R.id.mainTextviewTitle)
             val pickName = EditPlayerNameActivity.launch(activity, name, activity.resources.getStringArray(R.array.fav_doubles)[fav])
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
             activity.startActivityForResult(pickName, REQUEST_CODE_CHANGE_NAME, options.toBundle())//one can be replaced with any action code

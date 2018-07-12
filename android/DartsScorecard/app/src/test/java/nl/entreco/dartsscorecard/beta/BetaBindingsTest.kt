@@ -27,16 +27,14 @@ class BetaBindingsTest {
     @Mock private lateinit var mockImageView: ImageView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
-    @Test(expected = NullPointerException::class)
+    @Test(expected = NoClassDefFoundError::class)
     fun loadImage() {
-        setupContextMocking()
         BetaBindings.loadImage(mockImageView, "some url")
         verify(mockView).context
     }
 
     @Test
     fun `loadImage with null`() {
-        setupContextMocking()
         BetaBindings.loadImage(mockImageView, null)
         verify(mockView, never()).context
     }
@@ -67,10 +65,6 @@ class BetaBindingsTest {
         val message = null
         BetaBindings.setTextWithTags(mockTextView, message)
         verify(mockTextView, never()).text = any()
-    }
-
-    private fun setupContextMocking() {
-        whenever(mockImageView.context).thenReturn(mockContext)
     }
 
     private fun setupMocking() {

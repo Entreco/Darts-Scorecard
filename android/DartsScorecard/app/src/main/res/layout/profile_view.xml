@@ -32,8 +32,8 @@
             android:background="@drawable/profile_bg_xsmall"
             android:scaleType="centerCrop"
             android:transitionName="profile"
-            app:civ_border_color="?android:attr/colorPrimary"
-            app:civ_border_width="2dp"
+            app:civ_border_color="?attr/colorPrimary"
+            app:civ_border_width="@dimen/xsmall"
             bind:profileImage="@{profile.image}" />
 
         <LinearLayout

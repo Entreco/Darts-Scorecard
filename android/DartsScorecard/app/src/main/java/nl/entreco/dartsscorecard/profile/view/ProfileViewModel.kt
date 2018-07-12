@@ -18,7 +18,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
                                            private val updateProfileUsecase: UpdateProfileUsecase,
                                            private val fetchProfileStatsUsecase: FetchProfileStatsUsecase) : BaseViewModel() {
 
-    val profile = ObservableField<PlayerProfile>()
+    val profile = ObservableField<PlayerProfile?>()
     val stats = ObservableField<PlayerStats>()
     val errorMsg = ObservableInt()
 
