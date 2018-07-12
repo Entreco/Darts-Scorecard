@@ -119,7 +119,7 @@
     <string name="err_invalid_player_name">Invalid player name</string>
     <string name="err_player_name_is_empty">Please type desired player name</string>
     <string name="err_no_players_yet">No Profiles yet. Play a Game, or create players using the + button</string>
-    <string name="err_player_already_in_match">Players is already participating in this match</string>
+    <string name="err_player_already_in_match">Player is already participating in this match</string>
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
