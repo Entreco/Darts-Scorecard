@@ -18,7 +18,21 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="entreco.nl"
+                    android:pathPattern="/dsc/*"
+                    android:scheme="http" />
+
+                <data
+                    android:host="entreco.nl"
+                    android:pathPattern="/dsc"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity android:name=".launch.LaunchActivity" />
@@ -44,10 +58,11 @@
             android:name=".profile.edit.EditPlayerNameActivity"
             android:parentActivityName=".profile.view.ProfileActivity" />
 
-        <service android:name=".archive.ArchiveJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
+        <service
+            android:name=".archive.ArchiveJobService"
             android:description="@string/archive_service"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 
