@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "nl.entreco.dartsscorecard.dev",
+    "sha256_cert_fingerprints":
+    ["20:60:F4:DB:5D:19:B9:BD:96:45:A5:FA:D7:67:9F:C6:BF:9C:9D:BA:D2:12:5A:1D:68:11:B6:FD:4E:49:48:BF"]
+  }
+}]
