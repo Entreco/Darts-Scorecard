@@ -81,7 +81,7 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
 
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
         finishFuture?.cancel(true)
-        finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble), { finish.set(it.finish) })
+        finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble)) { finish.set(it.finish) }
     }
 
     private fun removeScoredBadgeAfter(duration: Long) {

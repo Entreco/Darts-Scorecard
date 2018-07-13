@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,8 +14,8 @@
             type="nl.entreco.dartsscorecard.profile.view.ProfileViewModel" />
 
         <variable
-                name="adViewModel"
-                type="nl.entreco.dartsscorecard.ad.AdViewModel"/>
+            name="adViewModel"
+            type="nl.entreco.dartsscorecard.ad.AdViewModel" />
 
         <variable
             name="animator"
@@ -31,30 +32,134 @@
         android:layout_height="match_parent"
         android:background="@drawable/stats_bg">
 
-        <include
-            android:id="@+id/include_appbar"
-            layout="@layout/toolbar_profile"
-            app:navigator="@{navigator}"
-            app:profile="@{viewModel.profile}" />
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scrollView"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/mainAppbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:fillViewport="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/mainCollapsing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                <ImageView
+                    android:id="@+id/mainImageviewPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:contentDescription="@null"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.9" />
+
+                <FrameLayout
+                    android:id="@+id/mainFramelayoutTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="?attr/colorPrimary"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.3">
+
+                    <LinearLayout
+                        android:id="@+id/mainLinearlayoutTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/ProfileName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@{viewModel.profile.name}"
+                            android:textAllCaps="true"
+                            android:textSize="30sp"
+                            android:transitionName="profileName"
+                            tools:text="@string/app_name" />
+
+                        <TextView
+                            style="@style/ProfileTagline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@android:color/white"
+                            app:profileDouble="@{viewModel.profile.fav}"
+                            tools:text="@string/app_name" />
+
+                    </LinearLayout>
+                </FrameLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <include
                 layout="@layout/include_profile_stats"
+                app:adViewModel="@{adViewModel}"
                 app:stats="@{viewModel.stats}" />
+
 
         </android.support.v4.widget.NestedScrollView>
 
-        <!-- Loader -->
-        <include
-            layout="@layout/play_01_loading"
-            android:visibility="@{viewModel.stats == null ? View.VISIBLE : View.GONE}" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_anchor="@id/mainFramelayoutTitle"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:title="">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/image_final_width"
+                    android:layout_height="@dimen/image_final_width" />
+
+                <TextView
+                    android:id="@+id/mainTextviewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.profile.name}"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:transitionName="profileName"
+                    tools:text="@string/app_name" />
+
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/header_profile_pic_size"
+            android:layout_height="@dimen/header_profile_pic_size"
+            android:layout_gravity="center"
+            android:background="@drawable/profile_bg_xsmall"
+            android:onClick="@{() -> navigator.onChooseImage()}"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_bg_top"
+            android:transitionName="profile"
+            app:civ_border_color="?attr/colorPrimary"
+            app:civ_border_width="@dimen/xsmall"
+            app:finalHeight="@dimen/image_final_width"
+            app:finalYPosition="@dimen/xsmall"
+            app:layout_behavior="nl.entreco.dartsscorecard.profile.view.ProfileHeaderBehavior"
+            app:profileImage="@{viewModel.profile.image}"
+            app:startHeight="@dimen/xsmall"
+            app:startToolbarPosition="@dimen/xsmall"
+            app:startXPosition="@dimen/xxlarge"
+            tools:src="@drawable/ic_no_profile" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

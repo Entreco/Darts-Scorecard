@@ -48,6 +48,6 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
 
     override fun onNext(next: Next) {
         currentTeam.set(teams.indexOf(next.team))
-        teams.forEachIndexed({ index, _ -> adapter.teamAtIndexTurnUpdate(index, next) })
+        teams.forEachIndexed { index, _ -> adapter.teamAtIndexTurnUpdate(index, next) }
     }
 }

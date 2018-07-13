@@ -16,7 +16,7 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
         val teams = team.players.map { it.id }.filter { it > 0 }.toLongArray()
         if (teams.isEmpty()) {
             Snackbar.make(view, R.string.err_player_was_deleted, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, { })
+                    .setAction(android.R.string.ok) { }
                     .show()
         } else {
             ProfileActivity.launch(activity, view, teams)

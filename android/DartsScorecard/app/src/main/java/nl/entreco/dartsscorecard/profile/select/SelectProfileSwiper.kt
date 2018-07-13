@@ -13,7 +13,7 @@ class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: () 
         onSwiped(viewHolder.adapterPosition)
 
         val snack = Snackbar.make(view, R.string.confirm_delete_profile, Snackbar.LENGTH_LONG)
-        snack.setAction(R.string.undo, {})
+        snack.setAction(R.string.undo) {}
         snack.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {

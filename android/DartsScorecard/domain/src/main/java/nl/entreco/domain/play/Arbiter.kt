@@ -24,7 +24,7 @@ class Arbiter(initial: Score) {
     fun start(startIndex: Int, teams: Array<Team>): Next {
         this.teams = teams
         this.turnHandler = TurnHandler(startIndex, teams)
-        this.scores = Array(teams.size, { scoreSettings.score().copy() })
+        this.scores = Array(teams.size) { scoreSettings.score().copy() }
         this.turnCounter = 0
         return turnHandler.start(scores[startIndex])
     }

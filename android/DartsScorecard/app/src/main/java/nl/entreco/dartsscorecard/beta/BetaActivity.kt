@@ -89,7 +89,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
 
     private fun showTankYouToast() {
         val snack = Snackbar.make(binding.root, R.string.donation_thanks, Snackbar.LENGTH_INDEFINITE)
-        snack.setAction(R.string.donation_ok, { snack.dismiss() })
+        snack.setAction(R.string.donation_ok) { snack.dismiss() }
         snack.setActionTextColor(getColor(R.color.colorAccent))
         snack.show()
     }

@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.content.Context
 import android.text.Html
 import android.view.View
 import android.view.ViewPropertyAnimator
@@ -21,7 +20,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BetaBindingsTest {
 
-    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockImageView: ImageView
@@ -29,14 +27,12 @@ class BetaBindingsTest {
 
     @Test(expected = NullPointerException::class)
     fun loadImage() {
-        setupContextMocking()
         BetaBindings.loadImage(mockImageView, "some url")
         verify(mockView).context
     }
 
     @Test
     fun `loadImage with null`() {
-        setupContextMocking()
         BetaBindings.loadImage(mockImageView, null)
         verify(mockView, never()).context
     }
@@ -67,10 +63,6 @@ class BetaBindingsTest {
         val message = null
         BetaBindings.setTextWithTags(mockTextView, message)
         verify(mockTextView, never()).text = any()
-    }
-
-    private fun setupContextMocking() {
-        whenever(mockImageView.context).thenReturn(mockContext)
     }
 
     private fun setupMocking() {

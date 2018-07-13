@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
@@ -31,6 +32,7 @@ class Play01Activity : ViewModelActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
@@ -52,6 +54,7 @@ class Play01Activity : ViewModelActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stop()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     private fun initGame() {

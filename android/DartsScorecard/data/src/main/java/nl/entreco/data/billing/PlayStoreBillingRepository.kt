@@ -41,7 +41,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
 
     @UiThread
     override fun unbind() {
-        service.setCallback({})
+        service.setCallback {}
         context.unbindService(service)
     }
 
