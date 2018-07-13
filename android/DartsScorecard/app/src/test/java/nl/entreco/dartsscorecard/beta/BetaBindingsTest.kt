@@ -21,13 +21,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BetaBindingsTest {
 
-    @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockImageView: ImageView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
-    @Test(expected = NoClassDefFoundError::class)
+    @Test(expected = NullPointerException::class)
     fun loadImage() {
         BetaBindings.loadImage(mockImageView, "some url")
         verify(mockView).context
