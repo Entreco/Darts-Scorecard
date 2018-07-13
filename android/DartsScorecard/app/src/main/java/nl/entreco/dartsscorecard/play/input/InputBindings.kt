@@ -88,29 +88,29 @@ object InputBindings {
     }
 
     private fun clear(view: TextView, delay: Long) {
-        view.animate().translationX(-clearTranslation).setStartDelay(delay).withEndAction({
+        view.animate().translationX(-clearTranslation).setStartDelay(delay).withEndAction {
             view.text = ""
-        }).setDuration(defaultAnimationDuration).start()
+        }.setDuration(defaultAnimationDuration).start()
     }
 
     private fun handleThrown(view: TextView, describe: String) {
         view.text = describe
-        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction({
+        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction {
             clear(view, delay)
-        }).start()
+        }.start()
     }
 
     private fun handleNoScore(view: TextView) {
         view.setText(R.string.no_score)
-        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction({
+        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction {
             clear(view, delay)
-        }).start()
+        }.start()
     }
 
     private fun handleBust(view: TextView) {
         view.setText(R.string.bust)
-        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction({
+        view.animate().translationX(horizontalTranslation).setDuration(defaultAnimationDuration).withEndAction {
             clear(view, delay)
-        }).start()
+        }.start()
     }
 }

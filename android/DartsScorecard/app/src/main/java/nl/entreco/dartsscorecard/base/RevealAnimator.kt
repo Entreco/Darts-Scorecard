@@ -14,7 +14,7 @@ import kotlin.math.max
  */
 class RevealAnimator(private val target: View) {
 
-    fun setupEnterAnimation(inflater: TransitionInflater?, window: Window, root: View, reverse: Boolean = true) {
+    fun setupEnterAnimation(inflater: TransitionInflater?, window: Window, reverse: Boolean = true) {
         if (inflater == null) return
         val boundsTransition = inflater.inflateTransition(R.transition.change_bound_with_arc)
         boundsTransition.duration = 100
@@ -22,7 +22,7 @@ class RevealAnimator(private val target: View) {
         boundsTransition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition?) {
                 if (!reverse) {
-                    animateRevealShow(root)
+                    animateRevealShow(target.rootView)
                 }
                 boundsTransition.removeListener(this)
             }
@@ -35,7 +35,7 @@ class RevealAnimator(private val target: View) {
 
             override fun onTransitionStart(transition: Transition?) {
                 if (!reverse) {
-                    root.visibility = View.INVISIBLE
+                    target.visibility = View.INVISIBLE
                 }
             }
         })

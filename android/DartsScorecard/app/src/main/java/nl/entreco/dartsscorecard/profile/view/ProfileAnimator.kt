@@ -2,91 +2,95 @@ package nl.entreco.dartsscorecard.profile.view
 
 import android.support.design.widget.AppBarLayout
 import android.transition.TransitionInflater
-import android.util.TypedValue
 import android.view.View
 import android.view.Window
-import android.widget.TextView
+import android.view.animation.AlphaAnimation
 import nl.entreco.dartsscorecard.base.RevealAnimator
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import kotlin.math.abs
-import kotlin.math.max
+
 
 /**
  * Created by entreco on 23/02/2018.
  */
 class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInflater, window: Window) {
 
-    private val appBar = binding.includeAppbar.profileAppbar
-    private val expandedImage: View = binding.includeAppbar.includeHeaderView.image
-    private val expandedName: TextView = binding.includeAppbar.includeHeaderView.profileHeaderName
-    private val collapsedName: TextView = binding.includeAppbar.includeHeaderViewTop.nameTop
-
-    private val animator = ProfileAnimatorHandler(binding.includeAppbar.includeHeaderViewTop.imageTop,
-            binding.includeAppbar.includeHeaderView.image,
-            binding.includeAppbar.includeHeaderViewTop.toolbarHeaderViewTop,
-            binding.includeAppbar.includeHeaderView.toolbarHeaderView, expandedName,
-            binding.includeAppbar.includeHeaderView.favDouble)
-
-    private val revealAnimator = RevealAnimator(expandedImage)
+    private val appBarLayout = binding.mainAppbar
+    private val title = binding.mainTextviewTitle
+    private val titleContainer = binding.mainLinearlayoutTitle
+    private val animator = ProfileAnimatorHandler(title, titleContainer)
+    private val revealAnimator = RevealAnimator(appBarLayout)
 
     init {
-        val start = expandedName.textSize
-        val end = collapsedName.textSize
-
-        appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            animator.onOffsetChanged(start, end, appBarLayout, verticalOffset)
+        appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            animator.onOffsetChanged(appBarLayout, verticalOffset)
         }
 
-        revealAnimator.setupEnterAnimation(inflater, window, binding.root)
+        revealAnimator.setupEnterAnimation(inflater, window, true)
+        animator.startAlphaAnimation(title, 0, View.INVISIBLE)
     }
 
-    internal class ProfileAnimatorHandler(private val collapsedImage: View, private val expandedImage: View, private val collapsedHeader: View,
-                                          private val expandedHeader: View, private val expandedName: TextView, private val expandedDouble: View) {
+    internal class ProfileAnimatorHandler(private val title: View, private val titleContainer: View) {
 
-        private var isHideToolbarView = false
+        companion object {
+            private const val PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f
+            private const val PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f
+            private const val ALPHA_ANIMATIONS_DURATION: Long = 200
+        }
 
-        fun onOffsetChanged(start: Float, end: Float, appBarLayout: AppBarLayout, verticalOffset: Int) {
+        private var mIsTheTitleVisible = false
+        private var mIsTheTitleContainerVisible = true
+
+        fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {
             val maxScroll = appBarLayout.totalScrollRange
-            val percentage = abs(verticalOffset).toFloat() / maxScroll.toFloat()
-            val width = appBarLayout.width / 2
-            val orig: Double by lazy { collapsedImage.height.toFloat() / expandedImage.height.toDouble() }
+            val percentage: Float = abs(offset) / maxScroll.toFloat()
 
-            animateImage(percentage, orig, width)
-            animateTitle(start, end, width, percentage)
-            animateFavDouble(percentage)
+            handleAlphaOnTitle(percentage)
+            handleToolbarTitleVisibility(percentage)
+        }
 
-            if (percentage == 1f && isHideToolbarView) {
-                collapsedHeader.visibility = View.VISIBLE
-                expandedHeader.visibility = View.GONE
-                isHideToolbarView = !isHideToolbarView
+        private fun handleToolbarTitleVisibility(percentage: Float) {
+            if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
-            } else if (percentage < 1f && !isHideToolbarView) {
-                collapsedHeader.visibility = View.GONE
-                expandedHeader.visibility = View.VISIBLE
-                isHideToolbarView = !isHideToolbarView
+                if (!mIsTheTitleVisible) {
+                    startAlphaAnimation(title, ALPHA_ANIMATIONS_DURATION, View.VISIBLE)
+                    mIsTheTitleVisible = true
+                }
+
+            } else {
+
+                if (mIsTheTitleVisible) {
+                    startAlphaAnimation(title, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE)
+                    mIsTheTitleVisible = false
+                }
             }
         }
 
-        private fun animateImage(percentage: Float, orig: Double, width: Int) {
-            val scale = max(1.0 - percentage, orig).toFloat()
-            expandedImage.animate()
-                    .translationX((width - 20) * percentage)
-                    .scaleX(scale)
-                    .scaleY(scale)
-                    .setDuration(0).start()
+        private fun handleAlphaOnTitle(percentage: Float) {
+            if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+                if (mIsTheTitleContainerVisible) {
+                    startAlphaAnimation(titleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE)
+                    mIsTheTitleContainerVisible = false
+                }
+
+            } else {
+
+                if (!mIsTheTitleContainerVisible) {
+                    startAlphaAnimation(titleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE)
+                    mIsTheTitleContainerVisible = true
+                }
+            }
         }
 
-        private fun animateTitle(start: Float, end: Float, width: Int, percentage: Float) {
-            val textSize = (start - end) * (1 - percentage) + end
-            expandedName.animate()
-                    .translationX(-(width - expandedName.width / 2) * percentage)
-                    .translationY(-expandedName.y * percentage / 2)
-                    .withEndAction { expandedName.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize) }
-                    .setDuration(0).start()
-        }
+        fun startAlphaAnimation(v: View, duration: Long, visibility: Int) {
+            val alphaAnimation = if (visibility == View.VISIBLE)
+                AlphaAnimation(0f, 1f)
+            else
+                AlphaAnimation(1f, 0f)
 
-        private fun animateFavDouble(percentage: Float) {
-            expandedDouble.animate().alpha(1 - percentage).setDuration(0).start()
+            alphaAnimation.duration = duration
+            alphaAnimation.fillAfter = true
+            v.startAnimation(alphaAnimation)
         }
     }
 }

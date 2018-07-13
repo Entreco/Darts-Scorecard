@@ -33,7 +33,6 @@ class EditPlayerNameBindingTest {
 
     @Test
     fun `it should show Keyboard`() {
-        whenever(mockView.rootView).thenReturn(mockView)
         EditPlayerNameBinding.showKeyboard(mockView, true, mockWindow)
         verify(mockInputMethodManager).showSoftInput(mockView, InputMethodManager.SHOW_IMPLICIT)
 

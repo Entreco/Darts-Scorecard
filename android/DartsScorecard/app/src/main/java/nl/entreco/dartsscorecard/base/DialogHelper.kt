@@ -18,16 +18,16 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder)
             var selectedIndex = previousIndex
             builder
                     .setTitle(R.string.select_starting_team)
-                    .setSingleChoiceItems(teams.map { it.toString() }.toTypedArray(), previousIndex, { _, which ->
+                    .setSingleChoiceItems(teams.map { it.toString() }.toTypedArray(), previousIndex) { _, which ->
                         selectedIndex = which
-                    })
-                    .setPositiveButton(android.R.string.ok, { dialog, _ ->
+                    }
+                    .setPositiveButton(android.R.string.ok) { dialog, _ ->
                         select(selectedIndex)
                         dialog.dismiss()
-                    })
-                    .setNegativeButton(R.string.cancel, { dialog, _ ->
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
-                    })
+                    }
                     .create()
                     .show()
         }

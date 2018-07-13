@@ -18,13 +18,6 @@ task showApiVersion {
     }
 }
 
-task showBuildToolsVersion {
-    doLast {
-        def config = rootProject.extensions.getByName("ext")
-        println config.androidBuildToolsVersion
-    }
-}
-
 task showAppName {
     doLast {
         println android.applicationVariants[0].outputs[0].outputFileName
