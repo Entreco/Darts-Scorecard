@@ -5,6 +5,7 @@ import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window
 import android.view.animation.AlphaAnimation
+import nl.entreco.dartsscorecard.base.RevealAnimator
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import kotlin.math.abs
 
@@ -18,12 +19,14 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val title = binding.mainTextviewTitle
     private val titleContainer = binding.mainLinearlayoutTitle
     private val animator = ProfileAnimatorHandler(title, titleContainer)
+    private val revealAnimator = RevealAnimator(appBarLayout)
 
     init {
         appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             animator.onOffsetChanged(appBarLayout, verticalOffset)
         }
 
+        revealAnimator.setupEnterAnimation(inflater, window, true)
         animator.startAlphaAnimation(title, 0, View.INVISIBLE)
     }
 

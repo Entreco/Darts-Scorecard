@@ -17,12 +17,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
+        tools:visibility="visible"
         app:showAd="@{viewModel.showAd}">
 
         <TextView
             style="@style/Setup.Hdr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large"
             android:background="@drawable/score_header"
             android:orientation="horizontal"
             android:padding="@dimen/xsmall"

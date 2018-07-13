@@ -75,6 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:text="@{viewModel.profile.name}"
+                            android:textAllCaps="true"
                             android:textSize="30sp"
                             android:transitionName="profileName"
                             tools:text="@string/app_name" />
@@ -132,6 +133,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{viewModel.profile.name}"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:transitionName="profileName"

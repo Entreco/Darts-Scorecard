@@ -21,7 +21,7 @@ object EditPlayerNameBinding {
         val revealAnimator = RevealAnimator(view)
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (show) {
-            revealAnimator.setupEnterAnimation(TransitionInflater.from(view.context), window, view.rootView)
+            revealAnimator.setupEnterAnimation(TransitionInflater.from(view.context), window)
             view.selectAll()
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         } else {

@@ -24,7 +24,6 @@ class RevealAnimatorTest {
     @Mock private lateinit var mockWindow: Window
     @Mock private lateinit var mockTransition: Transition
     @Mock private lateinit var mockInflater: TransitionInflater
-    @Mock private lateinit var mockBinding: ActivityEditPlayerNameBinding
     @Mock private lateinit var mockView: View
     private lateinit var subject: RevealAnimator
 
@@ -36,8 +35,7 @@ class RevealAnimatorTest {
     @Test
     fun setupEnterAnimation() {
         whenever(mockInflater.inflateTransition(any())).thenReturn(mockTransition)
-        whenever(mockBinding.root).thenReturn(mockView)
-        subject.setupEnterAnimation(mockInflater, mockWindow, mockBinding.root)
+        subject.setupEnterAnimation(mockInflater, mockWindow)
         verify(mockInflater).inflateTransition(R.transition.change_bound_with_arc)
     }
 

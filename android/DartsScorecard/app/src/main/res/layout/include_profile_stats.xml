@@ -159,9 +159,11 @@
             android:id="@+id/stat_6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stat_5">
+
             <include
                 layout="@layout/include_profile_stats_ad"
                 app:viewModel="@{adViewModel}" />
