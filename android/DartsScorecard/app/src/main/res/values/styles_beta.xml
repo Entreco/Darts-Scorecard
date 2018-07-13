@@ -9,10 +9,6 @@
         <item name="android:padding">@dimen/def</item>
     </style>
 
-    <style name="Beta.Title">
-        <item name="android:textSize">30sp</item>
-    </style>
-
     <style name="Beta.Votes">
         <item name="android:textSize">24sp</item>
         <item name="android:maxLines">1</item>

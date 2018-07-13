@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.content.Context
 import android.text.Html
 import android.view.View
 import android.view.ViewPropertyAnimator

@@ -4,12 +4,9 @@ import android.support.design.widget.AppBarLayout
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window
-import android.widget.TextView
+import android.view.animation.AlphaAnimation
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import kotlin.math.abs
-import android.view.animation.AlphaAnimation
-import android.widget.LinearLayout
-import nl.entreco.dartsscorecard.R
 
 
 /**
@@ -32,9 +29,11 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
 
     internal class ProfileAnimatorHandler(private val title: View, private val titleContainer: View) {
 
-        private val PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f
-        private val PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f
-        private val ALPHA_ANIMATIONS_DURATION: Long = 200
+        companion object {
+            private const val PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f
+            private const val PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f
+            private const val ALPHA_ANIMATIONS_DURATION: Long = 200
+        }
 
         private var mIsTheTitleVisible = false
         private var mIsTheTitleContainerVisible = true

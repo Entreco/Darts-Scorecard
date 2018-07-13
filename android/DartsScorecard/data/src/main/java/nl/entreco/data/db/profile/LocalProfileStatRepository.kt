@@ -2,7 +2,6 @@ package nl.entreco.data.db.profile
 
 import android.support.annotation.WorkerThread
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.Mapper
 import nl.entreco.domain.profile.ProfileStat
 import nl.entreco.domain.repository.ProfileStatRepository
 

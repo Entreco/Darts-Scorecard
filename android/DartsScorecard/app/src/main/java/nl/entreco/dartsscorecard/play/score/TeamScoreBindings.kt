@@ -64,11 +64,11 @@ object TeamScoreBindings {
                 .withStartAction {
                     view.pivotY = view.height.toFloat()
                 }
-                .withEndAction({
+                .withEndAction {
                     view.scaleY = 0F
                     view.translationY = 0F
                     view.setText(R.string.empty)
-                }).setDuration(if (delay == 0L) 0 else DEFAULT_ANIMATION_TIME).start()
+                }.setDuration(if (delay == 0L) 0 else DEFAULT_ANIMATION_TIME).start()
     }
 
     private fun handle180(view: TextView) {
@@ -79,10 +79,10 @@ object TeamScoreBindings {
                     view.scaleY = 0F
                     view.pivotY = 0F
                 }
-                .withEndAction({
+                .withEndAction {
                     animateColor(view, R.attr.colorOneEighty, R.attr.scoreText, 1200L)
                     clear(view, 1200L)
-                }).start()
+                }.start()
     }
 
     private fun animateColor(view: TextView, attr: Int, attr2: Int, duration: Long) {

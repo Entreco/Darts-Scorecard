@@ -1,9 +1,7 @@
 package nl.entreco.dartsscorecard.beta.donate
 
 import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

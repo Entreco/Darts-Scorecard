@@ -16,7 +16,7 @@ class RetrieveGameUsecase @Inject constructor(private val gameRepository: GameRe
     fun start(request: RetrieveGameRequest, ok: (RetrieveGameResponse) -> Unit, err: (Throwable) -> Unit) {
         onBackground({
             val game = gameRepository.fetchBy(request.gameId)
-            onUi({ ok(RetrieveGameResponse(game)) })
+            onUi { ok(RetrieveGameResponse(game)) }
         }, err)
     }
 }

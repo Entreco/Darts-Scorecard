@@ -29,14 +29,14 @@ class RemoteFeatureRepositoryTest {
     @Test
     fun `subscribe should return empty list initially`() {
         givenSubject()
-        whenSubscribing({})
+        whenSubscribing {}
         thenResultIsEmptyList()
     }
 
     @Test
     fun `subscribe should store onChange method reference`() {
         givenSubject()
-        whenSubscribing({})
+        whenSubscribing {}
         thenOnChangeIsNotNull()
     }
 
