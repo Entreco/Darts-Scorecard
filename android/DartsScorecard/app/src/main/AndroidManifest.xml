@@ -16,20 +16,32 @@
             android:name=".splash.SplashActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.VIEW" />
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="entreco.nl" />
-                <data android:pathPattern="/*" />
-                <data android:pathPrefix="/dsc" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="dsc.entreco.nl"
+                    android:pathPattern="/*"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="dsc.entreco.nl"
+                    android:pathPattern="/*"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>
