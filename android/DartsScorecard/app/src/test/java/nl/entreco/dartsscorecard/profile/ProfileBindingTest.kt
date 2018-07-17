@@ -26,6 +26,36 @@ class ProfileBindingTest {
     }
 
     @Test
+    fun loadProfileImage_team() {
+        ProfileBinding.loadProfileImage(mockImageView, "team")
+        verify(mockImageView).setImageResource(R.drawable.ic_team_profile2)
+    }
+
+    @Test
+    fun loadProfileImage_team0() {
+        ProfileBinding.loadProfileImage(mockImageView, "team0")
+        verify(mockImageView).setImageResource(R.drawable.ic_no_profile)
+    }
+
+    @Test
+    fun loadProfileImage_team1() {
+        ProfileBinding.loadProfileImage(mockImageView, "team1")
+        verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
+    }
+
+    @Test
+    fun loadProfileImage_team2() {
+        ProfileBinding.loadProfileImage(mockImageView, "team2")
+        verify(mockImageView).setImageResource(R.drawable.ic_team_profile2)
+    }
+
+    @Test
+    fun loadProfileImage_team3() {
+        ProfileBinding.loadProfileImage(mockImageView, "team3")
+        verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
+    }
+
+    @Test
     fun loadProfileImage_blank() {
         ProfileBinding.loadProfileImage(mockImageView, " ")
         verify(mockImageView, never()).setImageURI(any())

@@ -62,7 +62,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         } else {
             Profile(response.profiles.joinToString("&") { it.name },
                     0,
-                    "team",
+                    "team${response.profiles.size}",
                     PlayerPrefs(-1))
         }
 

@@ -54,7 +54,7 @@ class Team(val players: Array<Player> = emptyArray()) {
     }
 
     fun imageUrl(): String? {
-        return players[0].image
+        return if(players.size <= 1) players[0].image else "team${players.size}"
     }
 
     fun toTeamString() : String {
