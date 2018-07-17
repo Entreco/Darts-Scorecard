@@ -14,7 +14,6 @@ class ArchiveModuleTest {
 
     @Mock private lateinit var mockMapper: ArchiveStatMapper
     @Mock private lateinit var mockDb: DscDatabase
-    @Mock private lateinit var mockLogger: Logger
 
     @Test
     fun `it should provide ProfileStatMapper`() {
@@ -24,6 +23,6 @@ class ArchiveModuleTest {
 
     @Test
     fun provideArchiveRepository() {
-        assertNotNull(ArchiveModule().provideArchiveRepository(mockDb, mockMapper, mockLogger))
+        assertNotNull(ArchiveModule().provideArchiveRepository(mockDb, mockMapper))
     }
 }

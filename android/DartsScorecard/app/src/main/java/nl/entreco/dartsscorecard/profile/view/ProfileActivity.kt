@@ -42,7 +42,6 @@ class ProfileActivity : ViewModelActivity() {
         viewModel.fetchProfile(idsFromIntent(intent))
 
         initToolbar(binding.mainToolbar, R.string.empty, true)
-//        binding.mainToolbar.inflateMenu(R.menu.profile)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -58,6 +57,7 @@ class ProfileActivity : ViewModelActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.profile, menu)
+        menu?.findItem(R.id.menu_profile_edit)?.isVisible = idsFromIntent(intent).size <= 1
         return super.onCreateOptionsMenu(menu)
     }
 

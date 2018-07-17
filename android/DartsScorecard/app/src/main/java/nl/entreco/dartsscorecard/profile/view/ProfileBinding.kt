@@ -19,6 +19,8 @@ object ProfileBinding {
             val uri = Uri.parse(path)
             if (uri == null || uri.toString().isBlank()) {
                 view.setImageResource(R.drawable.ic_no_profile)
+            } else if(path == "team"){
+                view.setImageResource(R.drawable.ic_team_profile)
             } else {
                 GlideApp.with(view).load(uri).into(view)
             }
