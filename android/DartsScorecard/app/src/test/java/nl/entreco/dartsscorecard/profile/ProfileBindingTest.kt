@@ -19,7 +19,7 @@ class ProfileBindingTest {
 
     @Mock private lateinit var mockImageView: ImageView
 
-    @Test
+    @Test(expected = Exception::class)
     fun loadProfileImage_normal() {
         ProfileBinding.loadProfileImage(mockImageView, "content://some.location")
         verify(mockImageView).setImageResource(R.drawable.ic_no_profile)
@@ -28,7 +28,7 @@ class ProfileBindingTest {
     @Test
     fun loadProfileImage_team() {
         ProfileBinding.loadProfileImage(mockImageView, "team")
-        verify(mockImageView).setImageResource(R.drawable.ic_team_profile2)
+        verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
     }
 
     @Test
@@ -55,19 +55,19 @@ class ProfileBindingTest {
         verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun loadProfileImage_blank() {
         ProfileBinding.loadProfileImage(mockImageView, " ")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun loadProfileImage_empty() {
         ProfileBinding.loadProfileImage(mockImageView, "")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test
+    @Test(expected = Exception::class)
     fun loadProfileImage_null() {
         ProfileBinding.loadProfileImage(mockImageView, null)
         verify(mockImageView, never()).setImageURI(any())
