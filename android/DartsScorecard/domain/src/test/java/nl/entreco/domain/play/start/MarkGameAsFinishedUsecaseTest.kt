@@ -3,6 +3,7 @@ package nl.entreco.domain.play.start
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.GameRepository
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MarkGameAsFinishedUsecaseTest {
 
+    @Mock private lateinit var mockAnalytics: Analytics
     @Mock private lateinit var mockGameRepository: GameRepository
     private val bg = TestBackground()
     private val fg = TestForeground()
@@ -39,8 +41,15 @@ class MarkGameAsFinishedUsecaseTest {
         thenGameIsMarkedAsFinished()
     }
 
+    @Test
+    fun `it should log "game created" when executing usecase`() {
+        givenSubject()
+        whenMarkingGameAsFinished(244)
+        thenSendToAnalytics("Game Finished")
+    }
+
     private fun givenSubject() {
-        subject = MarkGameAsFinishedUsecase(mockGameRepository, bg, fg)
+        subject = MarkGameAsFinishedUsecase(mockGameRepository, mockAnalytics, bg, fg)
     }
 
     private fun whenMarkingGameAsFinished(gameId: Long) {
@@ -58,6 +67,10 @@ class MarkGameAsFinishedUsecaseTest {
 
     private fun thenGameIsMarkedAsFinished() {
         verify(mockGameRepository).finish(givenId, "1")
+    }
+
+    private fun thenSendToAnalytics(expected: String) {
+        verify(mockAnalytics).trackAchievement(expected)
     }
 
 }

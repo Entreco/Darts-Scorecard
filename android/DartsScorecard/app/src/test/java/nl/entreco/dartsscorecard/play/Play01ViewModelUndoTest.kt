@@ -6,6 +6,7 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheUsecase
@@ -29,6 +30,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ViewModelUndoTest {
 
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockTeam: Team
+    @Mock private lateinit var mockSettings: ScoreSettings
     @Mock private lateinit var mockRequest: Play01Request
     @Mock private lateinit var mockResponse: Play01Response
     @Mock private lateinit var mockAdProvider: AdViewModel
@@ -75,6 +78,9 @@ class Play01ViewModelUndoTest {
     private fun givenSubject() {
         whenever(mockGame.id).thenReturn(5)
         whenever(mockResponse.game).thenReturn(mockGame)
+        whenever(mockResponse.teams).thenReturn(arrayOf(mockTeam, mockTeam))
+        whenever(mockResponse.teamIds).thenReturn("")
+        whenever(mockResponse.settings).thenReturn(mockSettings)
 
         subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
