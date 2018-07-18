@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.start
 
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.common.executors.Background
 import nl.entreco.domain.common.executors.Foreground
@@ -9,9 +10,10 @@ import javax.inject.Inject
 /**
  * Created by entreco on 09/01/2018.
  */
-class MarkGameAsFinishedUsecase @Inject constructor(private val gameRepository: GameRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+class MarkGameAsFinishedUsecase @Inject constructor(private val gameRepository: GameRepository, private val analytics: Analytics, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
     fun exec(request: MarkGameAsFinishedRequest) {
         onBackground({
+            analytics.trackAchievement("Game Finished")
             gameRepository.finish(request.gameId, request.winningTeam)
         }, {})
     }
