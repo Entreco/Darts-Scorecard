@@ -20,7 +20,7 @@ class ProfileBindingTest {
     @Mock
     private lateinit var mockImageView: ImageView
 
-    @Test(expected = NoClassDefFoundError::class)
+    @Test(expected = NullPointerException::class)
     fun loadProfileImage_normal() {
         ProfileBinding.loadProfileImage(mockImageView, "content://some.location")
         verify(mockImageView).setImageResource(R.drawable.ic_no_profile)
@@ -56,19 +56,19 @@ class ProfileBindingTest {
         verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
     }
 
-    @Test(expected = NoClassDefFoundError::class)
+    @Test(expected = NullPointerException::class)
     fun loadProfileImage_blank() {
         ProfileBinding.loadProfileImage(mockImageView, " ")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test(expected = NoClassDefFoundError::class)
+    @Test(expected = NullPointerException::class)
     fun loadProfileImage_empty() {
         ProfileBinding.loadProfileImage(mockImageView, "")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test(expected = NoClassDefFoundError::class)
+    @Test(expected = NullPointerException::class)
     fun loadProfileImage_null() {
         ProfileBinding.loadProfileImage(mockImageView, null)
         verify(mockImageView, never()).setImageURI(any())
