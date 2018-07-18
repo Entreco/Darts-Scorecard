@@ -10,6 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import java.lang.RuntimeException
 
 /**
  * Created by entreco on 26/02/2018.
@@ -19,7 +20,7 @@ class ProfileBindingTest {
 
     @Mock private lateinit var mockImageView: ImageView
 
-    @Test(expected = Exception::class)
+    @Test(expected = RuntimeException::class)
     fun loadProfileImage_normal() {
         ProfileBinding.loadProfileImage(mockImageView, "content://some.location")
         verify(mockImageView).setImageResource(R.drawable.ic_no_profile)
@@ -55,19 +56,19 @@ class ProfileBindingTest {
         verify(mockImageView).setImageResource(R.drawable.ic_team_profile)
     }
 
-    @Test(expected = Exception::class)
+    @Test(expected = RuntimeException::class)
     fun loadProfileImage_blank() {
         ProfileBinding.loadProfileImage(mockImageView, " ")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test(expected = Exception::class)
+    @Test(expected = RuntimeException::class)
     fun loadProfileImage_empty() {
         ProfileBinding.loadProfileImage(mockImageView, "")
         verify(mockImageView, never()).setImageURI(any())
     }
 
-    @Test(expected = Exception::class)
+    @Test(expected = RuntimeException::class)
     fun loadProfileImage_null() {
         ProfileBinding.loadProfileImage(mockImageView, null)
         verify(mockImageView, never()).setImageURI(any())
