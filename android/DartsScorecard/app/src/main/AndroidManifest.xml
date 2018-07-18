@@ -29,7 +29,6 @@
 
                 <data
                     android:host="dsc.entreco.nl"
-                    android:pathPattern="/*"
                     android:scheme="http" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
@@ -40,7 +39,6 @@
 
                 <data
                     android:host="dsc.entreco.nl"
-                    android:pathPattern="/*"
                     android:scheme="https" />
             </intent-filter>
 
