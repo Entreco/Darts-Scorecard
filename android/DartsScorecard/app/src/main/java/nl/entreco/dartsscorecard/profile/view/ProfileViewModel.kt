@@ -5,6 +5,9 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.model.players.PlayerPrefs
+import nl.entreco.domain.profile.Profile
+import nl.entreco.domain.profile.ProfileStat
 import nl.entreco.domain.profile.fetch.*
 import nl.entreco.domain.profile.update.UpdateProfileRequest
 import nl.entreco.domain.profile.update.UpdateProfileResponse
@@ -18,7 +21,8 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
                                            private val updateProfileUsecase: UpdateProfileUsecase,
                                            private val fetchProfileStatsUsecase: FetchProfileStatsUsecase) : BaseViewModel() {
 
-    val profile = ObservableField<PlayerProfile?>()
+    val numberOfProfiles = ObservableInt()
+    val profile = ObservableField<PlayerProfile>()
     val stats = ObservableField<PlayerStats>()
     val errorMsg = ObservableInt()
 
@@ -52,8 +56,18 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         this.profile.set(PlayerProfile(profile.profile))
     }
 
-    private fun onProfileSuccess(): (FetchProfileResponse) -> Unit = { profile ->
-        this.profile.set(PlayerProfile(profile.profiles[0]))
+    private fun onProfileSuccess(): (FetchProfileResponse) -> Unit = { response ->
+        val teamProfile = if (response.profiles.size <= 1) {
+            response.profiles[0]
+        } else {
+            Profile(response.profiles.joinToString("&") { it.name },
+                    0,
+                    "team${response.profiles.size}",
+                    PlayerPrefs(-1))
+        }
+
+        this.numberOfProfiles.set(response.profiles.size)
+        this.profile.set(PlayerProfile(teamProfile))
     }
 
     private fun onProfileFailed(): (Throwable) -> Unit = {
@@ -61,10 +75,31 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
     }
 
     private fun onStatsSuccess(): (FetchProfileStatResponse) -> Unit = { response ->
-        this.stats.set(PlayerStats(response.stats[0]))
+        val teamStats = if (response.stats.size <= 1) {
+            response.stats[0]
+        } else {
+            ProfileStat(
+                    response.stats.sumBy { it.numberOfGames },
+                    response.stats.sumBy { it.numberOfWins },
+                    response.stats.sumBy { it.numberOfDarts },
+                    response.stats.sumBy { it.numberOfPoints },
+                    response.stats.sumBy { it.numberOfDarts9 },
+                    response.stats.sumBy { it.numberOfPoints9 },
+                    response.stats.sumBy { it.numberOf180s },
+                    response.stats.sumBy { it.numberOf140s },
+                    response.stats.sumBy { it.numberOf100s },
+                    response.stats.sumBy { it.numberOf60s },
+                    response.stats.sumBy { it.numberOf20s },
+                    response.stats.sumBy { it.numberOf0s },
+                    response.stats.sumBy { it.numberOfDartsAtFinish },
+                    response.stats.sumBy { it.numberOfFinishes }
+            )
+        }
+
+        this.stats.set(PlayerStats(teamStats))
     }
 
-    private fun onStatsFailed():(Throwable)->Unit = {
+    private fun onStatsFailed(): (Throwable) -> Unit = {
         this.errorMsg.set(R.string.err_unable_to_fetch_stats)
     }
 }

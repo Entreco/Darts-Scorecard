@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableInt
+import android.support.annotation.StringRes
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
@@ -11,6 +12,7 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
@@ -20,6 +22,7 @@ import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.MasterCallerRequest
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
+import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
@@ -51,48 +54,47 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private lateinit var game: Game
     private lateinit var request: Play01Request
     private lateinit var teams: Array<Team>
-    private lateinit var load: GameLoadedNotifier<ScoreSettings>
-    private lateinit var loaders: Array<GameLoadedNotifier<Play01Response>>
+    private var load: GameLoadedNotifier<ScoreSettings>? = null
+    private var loaders: Array<GameLoadedNotifier<Play01Response>>? = null
 
     fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
-        this.request = request
         this.load = load
         this.loaders = arrayOf(*loaders)
         this.playGameUsecase.loadGameAndStart(request,
                 { response ->
-                    this.game = response.game
-                    this.teams = response.teams
-                    this.load.onLoaded(response.teams, game.scores, response.settings, this)
-                    this.loaders.forEach {
-                        it.onLoaded(response.teams, game.scores, response, null)
-                    }
+                    onGameOk(request, response, null)
                 },
-                { err ->
-                    logger.e("err: $err")
-                    loading.set(false)
-                    errorMsg.set(R.string.err_unable_to_retrieve_game)
-                })
+                onGameFailed(R.string.err_unable_to_retrieve_game))
     }
 
     override fun onRevanche() {
         dialogHelper.revanche(request.startIndex, teams) { startIndex ->
             val nextTeam = (startIndex) % teams.size
             revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams, nextTeam),
-                    { response ->
-                        this.request = this.request.copy(gameId = response.game.id, startIndex = nextTeam)
-                        this.game = response.game
-                        this.teams = response.teams
-                        this.load.onLoaded(response.teams, game.scores, response.settings, this)
-                        this.loaders.forEach {
-                            val playResponse = Play01Response(response.game, response.settings, response.teams, response.teamIds)
-                            it.onLoaded(response.teams, game.scores, playResponse, null)
-                        }
+                    { revenge ->
+                        onGameOk(this.request.copy(gameId = revenge.game.id, startIndex = nextTeam), null, revenge)
                     },
-                    { err ->
-                        logger.e("err: $err")
-                        loading.set(false)
-                        errorMsg.set(R.string.err_unable_to_revanche)
-                    })
+                    onGameFailed(R.string.err_unable_to_revanche))
+        }
+    }
+
+    private fun onGameOk(request: Play01Request, response: Play01Response?, revancheResponse: RevancheResponse?) {
+        this.request = request
+        this.game = response?.game ?: revancheResponse!!.game
+        this.teams = response?.teams ?: revancheResponse!!.teams
+        val teamIds = response?.teamIds ?: revancheResponse!!.teamIds
+        val settings = response?.settings ?: revancheResponse!!.settings
+        this.load?.onLoaded(teams, game.scores, settings, this)
+        this.loaders?.forEach {
+            it.onLoaded(teams, game.scores, response ?: Play01Response(game, settings, teams, teamIds), null)
+        }
+    }
+
+    private fun onGameFailed(@StringRes error: Int): (Throwable) -> Unit {
+        return { err ->
+            logger.e("err: $err")
+            loading.set(false)
+            errorMsg.set(error)
         }
     }
 
@@ -120,7 +122,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private fun undoSuccess(): (UndoTurnResponse) -> Unit {
         return {
             logger.i("Undo done! -> go to Let's Play Darts Function")
-            load(request, load, *loaders)
+            load(request, load!!, *loaders!!)
         }
     }
 
@@ -187,8 +189,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
             State.LEG -> adViewModel.provideInterstitial()
             State.SET -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else -> {
-            }
+            else -> { /* ignore */ }
         }
     }
 
@@ -203,5 +204,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     fun toggleMasterCaller(item: MenuItem) {
         item.isChecked = !item.isChecked
         toggleSoundUsecase.toggle()
+    }
+
+    override fun onCleared() {
+        load = null
+        loaders = null
+        super.onCleared()
     }
 }

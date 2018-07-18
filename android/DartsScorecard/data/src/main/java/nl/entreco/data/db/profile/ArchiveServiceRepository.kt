@@ -6,7 +6,7 @@ import nl.entreco.domain.model.players.PlayerSeperator
 import nl.entreco.domain.model.players.TeamSeperator
 import nl.entreco.domain.repository.ArchiveRepository
 
-class ArchiveServiceRepository(db: DscDatabase, private val mapper: ArchiveStatMapper, private val logger: Logger) : ArchiveRepository {
+class ArchiveServiceRepository(db: DscDatabase, private val mapper: ArchiveStatMapper) : ArchiveRepository {
 
     private val gameDao = db.gameDao()
     private val turnDao = db.turnDao()

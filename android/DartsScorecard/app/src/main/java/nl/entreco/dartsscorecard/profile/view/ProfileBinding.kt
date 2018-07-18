@@ -16,26 +16,17 @@ object ProfileBinding {
     @BindingAdapter("profileImage")
     fun loadProfileImage(view: ImageView, path: String?) {
         try {
-            val uri = Uri.parse(path)
-            if (uri == null || uri.toString().isBlank()) {
-                view.setImageResource(R.drawable.ic_no_profile)
+            if (path?.startsWith("team") == true) {
+                when (path) {
+                    "team0" -> view.setImageResource(R.drawable.ic_no_profile)
+                    "team2" -> view.setImageResource(R.drawable.ic_team_profile2)
+                    else -> view.setImageResource(R.drawable.ic_team_profile)
+                }
             } else {
-                GlideApp.with(view).load(uri).into(view)
+                GlideApp.with(view).load(Uri.parse(path)).into(view)
             }
         } catch (oops: NullPointerException) {
             view.setImageResource(R.drawable.ic_no_profile)
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("profileDouble")
-    fun showProfileDouble(view: TextView, favDouble: String?) {
-        try {
-            val double = view.context.resources.getStringArray(R.array.fav_doubles)[favDouble?.toInt()!!]
-            view.text = view.context.getString(R.string.favourite_double, double)
-        } catch (oops: Exception) {
-            val double = view.context.resources.getStringArray(R.array.fav_doubles)[0]
-            view.text = view.context.getString(R.string.favourite_double, double)
         }
     }
 
