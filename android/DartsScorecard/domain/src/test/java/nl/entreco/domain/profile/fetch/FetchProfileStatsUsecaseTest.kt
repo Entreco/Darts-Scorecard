@@ -37,7 +37,7 @@ class FetchProfileStatsUsecaseTest {
         verify(mockProfileStatRepo, times(3)).fetchForPlayer(any())
         verify(mockDone).invoke(any())
     }
-    
+
     @Test
     fun `it should report error when something goes wrong`() {
         whenever(mockProfileStatRepo.fetchForPlayer(3)).thenThrow(RuntimeException("doh"))

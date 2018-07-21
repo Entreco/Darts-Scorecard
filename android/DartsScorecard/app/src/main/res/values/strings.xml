@@ -122,4 +122,7 @@
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
+    <string name="cd_throw">Submit darts</string>
+    <string name="cd_add_player">Add player</string>
+    <string name="cd_add_profile_picture">Add profile picture</string>
 </resources>

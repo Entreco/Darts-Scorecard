@@ -151,6 +151,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/profile_bg_top"
             android:transitionName="profile"
+            android:contentDescription="@string/cd_add_profile_picture"
             app:civ_border_color="?attr/colorPrimary"
             app:civ_border_width="@dimen/xsmall"
             app:finalHeight="@dimen/image_final_width"
