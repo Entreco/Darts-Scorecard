@@ -43,7 +43,7 @@ class ArchiveStatMapperTest {
         val profile = subject.to(gameId, playerId, "1", listOf(turnTable), listOf(metaTable))
         assertFalse(profile.didWin)
     }
-    
+
     @Test
     fun `it should map 'didWin' (true)`() {
         val profile = subject.to(gameId, playerId, "$playerId", listOf(turnTable), listOf(metaTable))
