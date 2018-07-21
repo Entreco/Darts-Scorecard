@@ -102,7 +102,6 @@
                     android:layout_centerHorizontal="true"
                     android:drawableEnd="@drawable/ic_play_video"
                     android:drawablePadding="@dimen/small"
-                    android:drawableTint="@color/colorAccent"
                     android:onClick="@{(v) -> viewModel.launchVideo(v)}"
                     android:padding="@dimen/small"
                     android:visibility="@{viewModel.showVideo}"
