@@ -16,6 +16,6 @@
         android:hint="@string/search_wtf"
         android:lines="1"
         android:onTextChanged="@{(text, s,b,c) -> listener.search(text)}"
-        android:textColor="#7fffffff"
-        android:textColorHint="@color/gray_opa_20" />
+        android:textColor="@color/white"
+        android:textColorHint="#7fffffff" />
 </layout>

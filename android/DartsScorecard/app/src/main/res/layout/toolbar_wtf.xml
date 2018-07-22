@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/colorPrimary"
-            android:layout_gravity="bottom"
             android:paddingLeft="@dimen/def"
             android:paddingStart="@dimen/def"
             app:cancelIcon="@drawable/ic_clear"

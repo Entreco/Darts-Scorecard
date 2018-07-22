@@ -53,11 +53,6 @@ class WtfActivity : ViewModelActivity() {
         initJellyBar()
         initToolbar(toolbar(binding), R.string.title_wtf)
         initRecyclerView(binding)
-
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
     }
 
     private fun initJellyBar() {
