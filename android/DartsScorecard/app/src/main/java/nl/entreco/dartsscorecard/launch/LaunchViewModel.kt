@@ -7,6 +7,7 @@ import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
+import nl.entreco.dartsscorecard.wtf.WtfActivity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.RetrieveLatestGameUsecase
 import nl.entreco.domain.setup.game.CreateGameResponse

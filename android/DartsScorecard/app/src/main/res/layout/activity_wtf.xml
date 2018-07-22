@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.wtf.WtfViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_wtf" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/wtf_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/small"
+            android:layout_marginTop="@dimen/small"
+            android:layoutAnimation="@anim/layout_animation_from_bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/wtf_view" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

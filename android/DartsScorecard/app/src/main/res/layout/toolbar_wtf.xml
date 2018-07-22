@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.yalantis.jellytoolbar.widget.JellyToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/colorPrimary"
+            android:paddingLeft="@dimen/def"
+            android:paddingStart="@dimen/def"
+            app:cancelIcon="@drawable/ic_clear"
+            app:endColor="?attr/colorPrimaryDark"
+            app:icon="@drawable/ic_search"
+            app:startColor="?android:attr/colorPrimary"
+            app:title="@string/title_wtf"
+            app:titleTextColor="@android:color/white" />
+
+    </android.support.design.widget.AppBarLayout>
+</layout>

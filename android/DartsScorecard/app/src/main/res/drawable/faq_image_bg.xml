@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <padding
+                android:bottom="@dimen/small"
+                android:top="@dimen/small"
+                android:left="@dimen/small"
+                android:right="@dimen/small" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <stroke
+                android:width="1dip"
+                android:color="@color/gray_opa_20" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_darts_3"/>
+    <item android:drawable="@drawable/highlight" />
+</layer-list>

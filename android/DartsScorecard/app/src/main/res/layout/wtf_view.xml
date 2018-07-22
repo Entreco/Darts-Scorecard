@@ -1,0 +1,100 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <variable
+            name="wtf"
+            type="nl.entreco.dartsscorecard.wtf.WtfModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        style="@style/WtfContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Wtf.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_drop_down"
+            android:drawableTint="?attr/colorAccent"
+            android:onClick="@{() -> wtf.toggle()}"
+            android:text="@{wtf.title}"
+            tools:text="@string/wtf" />
+
+        <View
+            android:id="@+id/div1"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginBottom="@dimen/large"
+            android:alpha="0.2"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/faq_image_bg"
+            android:scaleType="centerCrop"
+            android:visibility="@{wtf.showImage}"
+            app:imageUrl="@{wtf.image}"
+            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div1" />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/Wtf.Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:textWithTags="@{wtf.description}"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="@string/wtf" />
+
+        <View
+            android:id="@+id/div2"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginTop="@dimen/large"
+            android:alpha="0.2"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <TextView
+            android:id="@+id/video"
+            style="@style/Beta.Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_play_video"
+            android:drawablePadding="@dimen/def"
+            android:onClick="@{(v) -> wtf.launchVideo(v)}"
+            android:padding="@dimen/def"
+            android:visibility="@{wtf.showVideo}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div2"
+            app:textWithTags="@{@string/beta_video}"
+            tools:text="@string/beta_video" />
+
+
+        <android.support.constraint.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{wtf.collapsed ? View.GONE : View.VISIBLE}"
+            app:constraint_referenced_ids="div1, description, div2" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
