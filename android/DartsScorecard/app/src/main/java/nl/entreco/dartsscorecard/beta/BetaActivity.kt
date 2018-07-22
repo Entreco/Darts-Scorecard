@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
@@ -62,6 +63,11 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     override fun onPause() {
         super.onPause()
         viewModel.unsubscribe(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.beta, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun lifeCycle(): Lifecycle {

@@ -48,6 +48,10 @@
             android:name=".beta.BetaActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
+            android:name=".wtf.WtfActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
             android:name=".setup.Setup01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity

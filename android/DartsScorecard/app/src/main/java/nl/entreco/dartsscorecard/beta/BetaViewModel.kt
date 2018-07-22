@@ -15,7 +15,6 @@ class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: 
 
     private val features: MutableLiveData<List<Feature>> = MutableLiveData()
 
-
     fun refresh() {
         subscribeToFeaturesUsecase.subscribe({
             features.value = it

@@ -9,10 +9,12 @@ import android.preference.PreferenceManager
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
+import nl.entreco.dartsscorecard.wtf.WtfActivity
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -54,6 +56,16 @@ abstract class ViewModelActivity : AppCompatActivity() {
 
     protected fun swapStyle() {
         styler.switch()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_faq -> {
+                WtfActivity.launch(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     protected fun initToolbar(toolbar: Toolbar, @StringRes title: Int = R.string.app_name, showHomeEnabled: Boolean = true) {
