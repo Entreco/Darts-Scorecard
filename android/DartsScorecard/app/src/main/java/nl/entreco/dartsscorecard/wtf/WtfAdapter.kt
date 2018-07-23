@@ -85,7 +85,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
 
             synchronized(lock) {
 
-                allItems.addAll(features)
+                allItems.addAll(features.distinctBy { it.title })
                 val filtSort = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
                 val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filtSort), true)
                 fg.post(Runnable {
