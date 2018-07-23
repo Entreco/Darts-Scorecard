@@ -14,7 +14,7 @@ class WtfViewModel @Inject constructor(private val subscribeToWtfUsecase: Subscr
 
     private val items: MutableLiveData<List<WtfItem>> = MutableLiveData()
 
-    fun refresh() {
+    private fun refresh() {
         subscribeToWtfUsecase.subscribe({
             items.value = it
         }, {})

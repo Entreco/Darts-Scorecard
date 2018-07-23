@@ -6,6 +6,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.Feature
+import nl.entreco.domain.wtf.WtfItem
 
 
 /**
@@ -32,12 +33,20 @@ class FirebaseAnalytics(context: Context) : Analytics {
         fb.setUserProperty("fav_double", favouriteDouble)
     }
 
-    override fun trackViewFeature(feature: Feature) {
+    override fun trackViewFeature(feature: Feature, amount: Int) {
         fb.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "feature")
-            putInt(FirebaseAnalytics.Param.QUANTITY, feature.votes)
+            putInt(FirebaseAnalytics.Param.QUANTITY, amount)
             putString(FirebaseAnalytics.Param.ITEM_NAME, feature.title)
             putString(FirebaseAnalytics.Param.ITEM_ID, feature.ref)
+        })
+    }
+
+    override fun trackViewFaq(item: WtfItem) {
+        fb.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, Bundle().apply {
+            putString(FirebaseAnalytics.Param.ITEM_ID, item.docId)
+            putString(FirebaseAnalytics.Param.ITEM_NAME, item.title)
+            putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "faq")
         })
     }
 

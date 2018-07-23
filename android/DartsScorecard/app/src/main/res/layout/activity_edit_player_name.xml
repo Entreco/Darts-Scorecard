@@ -59,6 +59,7 @@
                     android:layout_height="match_parent"
                     android:padding="@dimen/def"
                     android:text="@{viewModel.name}"
+                    android:contentDescription="@null"
                     android:transitionName="profileName" />
 
                 <android.support.design.widget.TextInputLayout

@@ -136,6 +136,7 @@
             android:onClick="@{() -> viewModel.submitVote(1)}"
             android:src="@drawable/ic_like"
             android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
+            android:contentDescription="@string/cd_vote"
             app:elevation="@dimen/elevation"
             app:fabSize="normal"
             app:layout_anchor="@id/preview"

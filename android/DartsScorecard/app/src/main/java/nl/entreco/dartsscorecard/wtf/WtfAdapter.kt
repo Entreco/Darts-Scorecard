@@ -34,7 +34,6 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     }
 
     override fun onBindViewHolder(holder: WtfView, position: Int) {
-
         synchronized(lock) {
             val currentItem = visibleItems[position]
             holder.bind(currentItem, currentItem.docId != expandedItem, this)
@@ -42,11 +41,12 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     }
 
     override fun getItemCount(): Int {
-        return visibleItems.size
+        synchronized(lock) {
+            return visibleItems.size
+        }
     }
 
     override fun search(text: CharSequence) {
-
         if (text.isNotEmpty() && text.length >= 3) {
             searchText = text.toString().toLowerCase()
             onChanged(allItems.toList())
@@ -56,8 +56,10 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     }
 
     private fun clearSearch() {
-        searchText = ""
-        onChanged(allItems.toList())
+        synchronized(lock) {
+            searchText = ""
+            onChanged(allItems.toList())
+        }
     }
 
     override fun toggle(item: WtfItem) {
@@ -65,7 +67,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
             expandedItem = if (item.docId == expandedItem) null
             else item.docId
             notifyItemRangeChanged(0, visibleItems.size)
-            submitViewedItemUsecase.exec(SubmitViewedItemRequest(item.docId))
+            submitViewedItemUsecase.exec(SubmitViewedItemRequest(item))
         }
     }
 
@@ -80,16 +82,20 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
 
     private fun calculateDiff(features: List<WtfItem>) {
         bg.post(Runnable {
-            allItems.addAll(features)
-            val filtSort = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
-            val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filtSort), true)
-            fg.post(Runnable {
-                queue.remove()
-                updateItems(filtSort, diff)
-                if (queue.size > 0) {
-                    calculateDiff(queue.peek())
-                }
-            })
+
+            synchronized(lock) {
+
+                allItems.addAll(features)
+                val filtSort = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
+                val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filtSort), true)
+                fg.post(Runnable {
+                    queue.remove()
+                    updateItems(filtSort, diff)
+                    if (queue.size > 0) {
+                        calculateDiff(queue.peek())
+                    }
+                })
+            }
         })
     }
 
@@ -104,8 +110,10 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     }
 
     private fun updateItems(features: List<WtfItem>, diff: DiffUtil.DiffResult) {
-        visibleItems.clear()
-        visibleItems.addAll(features)
-        diff.dispatchUpdatesTo(this)
+        synchronized(lock) {
+            visibleItems.clear()
+            visibleItems.addAll(features)
+            diff.dispatchUpdatesTo(this)
+        }
     }
 }

@@ -61,7 +61,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
         if (allowedToVote(betaModel, currentFeature)) {
             feature.set(BetaModel(currentFeature.copy(votes = min(currentFeature.required ,currentFeature.votes + amount))))
             votes.add(currentFeature.ref)
-            analytics.trackViewFeature(currentFeature)
+            analytics.trackViewFeature(currentFeature, amount)
             submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))
         }
     }

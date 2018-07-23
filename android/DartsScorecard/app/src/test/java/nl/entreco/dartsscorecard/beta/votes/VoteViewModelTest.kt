@@ -177,7 +177,7 @@ class VoteViewModelTest {
     }
 
     private fun thenViewFeatureIsTracked() {
-        verify(mockAnalytics).trackViewFeature(any())
+        verify(mockAnalytics).trackViewFeature(any(), amount)
     }
 
     private fun thenVideoIsLaunched() {
