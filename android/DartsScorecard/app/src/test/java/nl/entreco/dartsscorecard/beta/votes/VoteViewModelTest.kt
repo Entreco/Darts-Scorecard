@@ -83,7 +83,7 @@ class VoteViewModelTest {
         givenSubject()
         whenFeatureSelected(mockModel)
         whenSubmittingDonationSucceeds()
-        thenViewFeatureIsTracked()
+        thenViewFeatureIsTracked(1)
     }
 
     @Test
@@ -176,8 +176,8 @@ class VoteViewModelTest {
         assertFalse(subject.votes.contains(expected))
     }
 
-    private fun thenViewFeatureIsTracked() {
-        verify(mockAnalytics).trackViewFeature(any(), amount)
+    private fun thenViewFeatureIsTracked(amount: Int) {
+        verify(mockAnalytics).trackViewFeature(any(), eq(amount))
     }
 
     private fun thenVideoIsLaunched() {
