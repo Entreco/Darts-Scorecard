@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.animation.ValueAnimator
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.databinding.BindingAdapter
 import android.graphics.Color
@@ -50,11 +51,8 @@ object TeamScoreBindings {
         val diff = oldScore - score
         when (diff) {
             180 -> handle180(view)
-            0 -> {
-            }
-            else -> {
-                clear(view)
-            }
+            0 -> { /* nothing */ }
+            else -> clear(view)
         }
     }
 
