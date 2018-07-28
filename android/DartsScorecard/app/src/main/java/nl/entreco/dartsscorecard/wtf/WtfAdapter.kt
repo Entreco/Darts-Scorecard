@@ -14,14 +14,13 @@ import nl.entreco.domain.wtf.SubmitViewedItemRequest
 import nl.entreco.domain.wtf.SubmitViewedItemUsecase
 import nl.entreco.domain.wtf.WtfItem
 import java.util.*
-import java.util.Locale.filter
 import javax.inject.Inject
 
 class WtfAdapter @Inject constructor(private val bg: Background, private val fg: Foreground,
                                      private val submitViewedItemUsecase: SubmitViewedItemUsecase) : TestableAdapter<WtfView>(), Observer<List<WtfItem>>, WtfToggler, WtfSearchable {
 
     private var searchText : String = ""
-    private var allItems: MutableSet<WtfItem> = mutableSetOf()
+    private var allItems: MutableMap<String, WtfItem> = mutableMapOf()
     private val visibleItems: MutableList<WtfItem> = mutableListOf()
     private val queue: Queue<List<WtfItem>> = ArrayDeque()
     private var expandedItem: String? = null
@@ -49,7 +48,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     override fun search(text: CharSequence) {
         if (text.isNotEmpty() && text.length >= 3) {
             searchText = text.toString().toLowerCase()
-            onChanged(allItems.toList())
+            onChanged(allItems.values.toList())
         } else {
             clearSearch()
         }
@@ -58,7 +57,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     private fun clearSearch() {
         synchronized(lock) {
             searchText = ""
-            onChanged(allItems.toList())
+            onChanged(allItems.values.toList())
         }
     }
 
@@ -84,13 +83,14 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
         bg.post(Runnable {
 
             synchronized(lock) {
-
-                allItems.addAll(features.filter{ !allItems.contains(it)})
-                val filtSort = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
-                val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filtSort), true)
+                features.forEach { item ->
+                    allItems[item.docId] = item
+                }
+                val filteredSorted = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
+                val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filteredSorted), true)
                 fg.post(Runnable {
                     queue.remove()
-                    updateItems(filtSort, diff)
+                    updateItems(filteredSorted, diff)
                     if (queue.size > 0) {
                         calculateDiff(queue.peek())
                     }
@@ -103,6 +103,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
         if(searchText.isBlank()) return true
         return item.title.toLowerCase().contains(searchText) || item.description.toLowerCase().contains(searchText)
     }
+
     private fun score(item: WtfItem, searchText: String): Int {
         if(searchText.isBlank()) return 0
         return if(item.title.toLowerCase().contains(searchText)) 10 else 0 +
