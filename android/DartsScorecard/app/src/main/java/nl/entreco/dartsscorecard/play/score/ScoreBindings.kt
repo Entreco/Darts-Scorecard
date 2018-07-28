@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.score
 import android.databinding.BindingAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.finish.GetFinishUsecase
@@ -43,5 +44,13 @@ object ScoreBindings {
     @BindingAdapter("currentTeam")
     fun scrollToCurrentTeam(recyclerView: RecyclerView, currentTeamIndex: Int) {
         recyclerView.smoothScrollToPosition(currentTeamIndex)
+    }
+
+    @JvmStatic
+    @BindingAdapter("description")
+    fun setMatchDescription(view: TextView, desc: String?) {
+        desc?.let {
+            view.text = desc
+        }
     }
 }

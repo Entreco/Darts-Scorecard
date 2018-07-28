@@ -14,6 +14,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.google.firebase:firebase-core:$firebase"
     implementation "com.google.firebase:firebase-firestore:$firebase"
+    implementation "com.google.firebase:firebase-config:$firebase"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:exifinterface:$support"
     implementation "android.arch.lifecycle:livedata:$architecture"
