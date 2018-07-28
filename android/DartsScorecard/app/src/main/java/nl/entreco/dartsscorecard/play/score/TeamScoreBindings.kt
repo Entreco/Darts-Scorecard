@@ -59,7 +59,9 @@ object TeamScoreBindings {
     }
 
     private fun clear(view: TextView, delay: Long = 0) {
-        view.animate().scaleY(0F).setStartDelay(delay)
+        view.animate()
+                .scaleY(0F)
+                .setStartDelay(delay)
                 .setInterpolator(DecelerateInterpolator())
                 .withStartAction {
                     view.pivotY = view.height.toFloat()
@@ -72,8 +74,12 @@ object TeamScoreBindings {
     }
 
     private fun handle180(view: TextView) {
+        view.animate().cancel()
         view.setText(R.string.score_180)
-        view.animate().scaleY(1F).setDuration(DEFAULT_ANIMATION_TIME)
+        view.animate()
+                .scaleY(1F)
+                .setStartDelay(0L)
+                .setDuration(DEFAULT_ANIMATION_TIME)
                 .setInterpolator(AccelerateInterpolator())
                 .withStartAction {
                     view.scaleY = 0F
@@ -86,7 +92,8 @@ object TeamScoreBindings {
     }
 
     private fun animateColor(view: TextView, attr: Int, attr2: Int, duration: Long) {
-        view.animate().setDuration(duration / 3)
+        view.animate()
+                .setDuration(duration / 3)
                 .setStartDelay(duration / 3)
                 .withStartAction { view.setTextColor(fromAttr(view.context, attr)) }
                 .withEndAction { view.setTextColor(fromAttr(view.context, attr2)) }
