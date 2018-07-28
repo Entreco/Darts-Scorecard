@@ -3,6 +3,8 @@ package nl.entreco.domain.play.finish
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
 import nl.entreco.domain.common.executors.Background
+import nl.entreco.domain.model.Dart
+import java.nio.file.Files.find
 import java.util.concurrent.Future
 import javax.inject.Inject
 
@@ -33,8 +35,7 @@ class GetFinishUsecase @Inject constructor(private val bg: Background) {
         if (target <= 1) return notPossible
         if (impossible.contains(target)) return notPossible
 
-        // Now, hardcode some values that do not need favourite Double, since
-        // it can only be done in 1 way
+        // These can only be done in 1 way -> just return that one
         if (require(target, dartsLeft, 170, 3)) return "T20 T20 BULL"
         if (require(target, dartsLeft, 167, 3)) return "T20 T19 BULL"
         if (require(target, dartsLeft, 164, 3)) return "T20 T18 BULL"
@@ -48,6 +49,47 @@ class GetFinishUsecase @Inject constructor(private val bg: Background) {
         if (require(target, dartsLeft, 153, 3)) return "T20 T19 D18"
         if (require(target, dartsLeft, 152, 3)) return "T20 T20 D16"
         if (require(target, dartsLeft, 151, 3)) return "T20 T17 D20"
+
+        return when (favDouble) {
+            0 -> calculateNormalOuts(target, dartsLeft)
+            else -> calculatePersonalOuts(target, dartsLeft, favDouble)
+        }
+    }
+
+    private fun calculatePersonalOuts(target: Int, dartsLeft: Int, fav: Int): String {
+        val favScore = 2 * fav
+        val favDouble = when(fav){
+            25 -> "BULL"
+            else -> "D$fav"
+        }
+
+        if (dartsLeft >= 1 && target == favScore) return favDouble
+
+        if (dartsLeft >= 2)
+            findDart(target - favScore)?.let { dart ->
+                return "${dart.desc()} $favDouble"
+            }
+
+        if (dartsLeft >= 3) {
+            Dart.values().forEach { dart1 ->
+                findDart(target - dart1.points() - favScore)?.let { dart2 ->
+                    return "${dart2.desc()} ${dart1.desc()} $favDouble"
+                }
+            }
+        }
+
+        return calculateNormalOuts(target, dartsLeft)
+    }
+
+    private fun findDart(rest: Int): Dart? {
+        return Dart.values().firstOrNull {
+            it.points() == rest
+        }
+    }
+
+    private fun calculateNormalOuts(target: Int, dartsLeft: Int): String {
+        // Now, hardcode some values that do not need favourite Double, since
+        // it can only be done in 1 way
         if (require(target, dartsLeft, 150, 3)) return "T20 T18 D18"
         if (require(target, dartsLeft, 149, 3)) return "T20 T19 D16"
         if (require(target, dartsLeft, 148, 3)) return "T20 T16 D20"
@@ -213,16 +255,6 @@ class GetFinishUsecase @Inject constructor(private val bg: Background) {
         if (require(target, dartsLeft, 4, 1)) return "D2"
         if (require(target, dartsLeft, 3, 2)) return "1 D1"
         if (require(target, dartsLeft, 2, 1)) return "D1"
-
-        // Okay, now we have some options -> so let's go
-//        if (target == dartsLeft.total() && dartsLeft.last().isDouble()) return dartsLeft.asFinish()
-//        if (dartsLeft == 0) return notPossible
-
-        // TODO: Try Doubles + BULL
-        // TODO: If fails, add 1 dart for all singles, triples
-        // TODO: Recurse;)
-
-        // All Doubles, + 1 BULL, All Singles, S.BULL, All Tripples
         return notPossible
     }
 
