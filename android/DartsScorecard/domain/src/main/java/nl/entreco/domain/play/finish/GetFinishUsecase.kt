@@ -3,6 +3,8 @@ package nl.entreco.domain.play.finish
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
 import nl.entreco.domain.common.executors.Background
+import nl.entreco.domain.model.Dart
+import java.nio.file.Files.find
 import java.util.concurrent.Future
 import javax.inject.Inject
 
@@ -48,22 +50,44 @@ class GetFinishUsecase @Inject constructor(private val bg: Background) {
         if (require(target, dartsLeft, 152, 3)) return "T20 T20 D16"
         if (require(target, dartsLeft, 151, 3)) return "T20 T17 D20"
 
-        return when(favDouble){
+        return when (favDouble) {
             0 -> calculateNormalOuts(target, dartsLeft)
             else -> calculatePersonalOuts(target, dartsLeft, favDouble)
         }
     }
 
-    private fun calculatePersonalOuts(target: Int, dartsLeft: Int, fav: Int) : String {
+    private fun calculatePersonalOuts(target: Int, dartsLeft: Int, fav: Int): String {
+        val favScore = 2 * fav
+        val favDouble = when(fav){
+            25 -> "BULL"
+            else -> "D$fav"
+        }
 
-        when(dartsLeft){
-            1 -> if(target == 2*fav) return "D$fav"
+        if (dartsLeft >= 1 && target == favScore) return favDouble
+
+        if (dartsLeft >= 2)
+            findDart(target - favScore)?.let { dart ->
+                return "${dart.desc()} $favDouble"
+            }
+
+        if (dartsLeft >= 3) {
+            Dart.values().forEach { dart1 ->
+                findDart(target - dart1.points() - favScore)?.let { dart2 ->
+                    return "${dart2.desc()} ${dart1.desc()} $favDouble"
+                }
+            }
         }
 
         return calculateNormalOuts(target, dartsLeft)
     }
 
-    private fun calculateNormalOuts(target: Int, dartsLeft: Int) : String {
+    private fun findDart(rest: Int): Dart? {
+        return Dart.values().firstOrNull {
+            it.points() == rest
+        }
+    }
+
+    private fun calculateNormalOuts(target: Int, dartsLeft: Int): String {
         // Now, hardcode some values that do not need favourite Double, since
         // it can only be done in 1 way
         if (require(target, dartsLeft, 150, 3)) return "T20 T18 D18"
