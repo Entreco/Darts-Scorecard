@@ -23,7 +23,7 @@ class ScoreViewModel @Inject constructor(
         val adapter: ScoreAdapter,
         private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
-    val description = ObservableField<String>()
+    val description = ObservableField<String>("")
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
     val currentTeam = ObservableInt()

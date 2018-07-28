@@ -48,8 +48,8 @@ object ScoreBindings {
 
     @JvmStatic
     @BindingAdapter("description")
-    fun setMatchDescription(view: TextView, desc: String?) {
-        desc?.let {
+    fun setMatchDescription(view: TextView, desc: String) {
+        desc.isNotBlank().let {
             view.text = desc
         }
     }

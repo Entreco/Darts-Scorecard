@@ -1,7 +1,9 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Player
@@ -20,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ScoreBindingsTest {
 
+    @Mock private lateinit var mockTextView: TextView
     @Mock private lateinit var mockRecyclerView: RecyclerView
     @Mock private lateinit var mockScoreAdapter: ScoreAdapter
     @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
@@ -47,4 +50,17 @@ class ScoreBindingsTest {
         ScoreBindings.scrollToCurrentTeam(mockRecyclerView, 0)
         verify(mockRecyclerView).smoothScrollToPosition(0)
     }
+
+    @Test
+    fun `it should set description when not blank`() {
+        ScoreBindings.setMatchDescription(mockTextView, "some description")
+        verify(mockTextView).text = "some description"
+    }
+    
+    @Test
+    fun `it should NOT set description when blank`() {
+        ScoreBindings.setMatchDescription(mockTextView, " ")
+        verify(mockTextView, never()).text = any()
+    }
+
 }

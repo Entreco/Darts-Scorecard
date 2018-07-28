@@ -3,7 +3,7 @@
 <defaultsMap>
     <entry>
         <key>match_description</key>
-        <value>?attr/match_description</value>
+        <value></value>
     </entry>
 </defaultsMap>
 <!-- END xml_defaults -->
