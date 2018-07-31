@@ -44,6 +44,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "com.google.firebase:firebase-ads:$firebase"
     implementation "com.google.firebase:firebase-firestore:$firebase"
+    implementation "com.google.firebase:firebase-config:$firebase"
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.github.yalantis:jellytoolbar:$jelly"

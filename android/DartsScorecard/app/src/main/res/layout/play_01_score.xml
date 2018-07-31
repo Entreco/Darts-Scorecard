@@ -87,7 +87,8 @@
                 style="@style/Score.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="?attr/match_description" />
+                android:text="?attr/match_description"
+                app:description="@{viewModel.description}" />
 
         </LinearLayout>
     </LinearLayout>

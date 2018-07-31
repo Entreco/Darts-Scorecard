@@ -92,7 +92,9 @@ class PlayersViewModelTest {
     }
 
     private fun thenTeamsAsStringIs(expected: String) {
-        assertEquals(expected, subject.setupTeams().toString())
+        val teamsRequest = subject.setupTeams()
+        teamsRequest.validate()
+        assertEquals(expected, teamsRequest.toString())
     }
 
     private data class TeamPlayer(val name: String, val index: Int)

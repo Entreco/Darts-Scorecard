@@ -16,14 +16,14 @@ object ProfileBinding {
     @BindingAdapter("profileImage")
     fun loadProfileImage(view: ImageView, path: String?) {
         try {
-            if (path?.startsWith("team") == true) {
-                when (path) {
+            when {
+                path?.startsWith("team") == true -> when (path) {
                     "team0" -> view.setImageResource(R.drawable.ic_no_profile)
                     "team2" -> view.setImageResource(R.drawable.ic_team_profile2)
                     else -> view.setImageResource(R.drawable.ic_team_profile)
                 }
-            } else {
-                GlideApp.with(view).load(Uri.parse(path)).into(view)
+                path?.isBlank() == true -> view.setImageResource(R.drawable.ic_no_profile)
+                else -> GlideApp.with(view).load(Uri.parse(path)).into(view)
             }
         } catch (oops: NullPointerException) {
             view.setImageResource(R.drawable.ic_no_profile)
