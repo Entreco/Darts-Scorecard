@@ -42,6 +42,7 @@ data class ExtractTeamsRequest(private val teamString: String) {
     }
 
     fun toPlayerNames(): List<String> {
+        validate()
         val players = ArrayList<String>()
         teams.forEach { players.addAll(it) }
         return players
