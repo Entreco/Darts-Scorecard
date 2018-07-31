@@ -63,4 +63,16 @@ class ScoreBindingsTest {
         verify(mockTextView, never()).text = any()
     }
 
+    @Test
+    fun `it should NOT set description when empty`() {
+        ScoreBindings.setMatchDescription(mockTextView, "")
+        verify(mockTextView, never()).text = any()
+    }
+
+    @Test
+    fun `it should NOT set description when null`() {
+        ScoreBindings.setMatchDescription(mockTextView, null)
+        verify(mockTextView, never()).text = any()
+    }
+
 }
