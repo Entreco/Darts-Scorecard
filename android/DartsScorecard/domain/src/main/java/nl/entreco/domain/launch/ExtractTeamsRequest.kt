@@ -11,10 +11,6 @@ data class ExtractTeamsRequest(private val teamString: String) {
     private val playerSplit: MutableList<List<String>> = emptyList<List<String>>().toMutableList()
     private lateinit var teamSplit: List<String>
 
-    init {
-        validate(teamString)
-    }
-
     private val teams: Array<Array<String>> by lazy {
 
         val teamsArray = ArrayList<Array<String>>()
@@ -30,7 +26,9 @@ data class ExtractTeamsRequest(private val teamString: String) {
 
     }
 
-    private fun validate(teams: String) {
+    @Throws(IllegalStateException::class)
+    fun validate() {
+        val teams = teamString
         if (teams.isEmpty()) throw illegalState
         teamSplit = teams.split(TeamSeperator)
         teamSplit.forEach {
