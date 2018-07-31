@@ -68,7 +68,7 @@ class ProfileViewModelTest{
     fun `it should store Profile(0) when profiles are fetched`() {
         givenSubject()
         whenFetchingProfilesSucceeds(1,2)
-        thenProfileIdIs(1)
+        thenProfileIdIs(0) // 0 -> means TeamProfile
     }
 
     @Test

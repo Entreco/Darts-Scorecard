@@ -59,7 +59,7 @@
                     layout="@layout/include_setup_settings"
                     app:viewModel="@{settingsViewModel}" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     style="@style/Setup.Btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -3,15 +3,15 @@
 
     <style name="Launch" />
 
-    <style name="Launch.Btn" parent="@style/Widget.AppCompat.Button">
+    <style name="Launch.Btn" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/launch_btn</item>
         <item name="android:textColor">?attr/launchText</item>
         <item name="android:layout_marginTop">@dimen/small</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:padding">@dimen/def</item>
+        <item name="android:drawableTint">?attr/launchText</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:drawableTint">?attr/launchText</item>
         <item name="android:layout_marginStart">@dimen/xlarge</item>
         <item name="android:layout_marginEnd">@dimen/xlarge</item>
         <item name="android:paddingEnd">@dimen/xlarge</item>

@@ -3,6 +3,7 @@ package nl.entreco.domain.setup.game
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.domain.Analytics
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.GameRepository
@@ -19,6 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
+    @Mock private lateinit var mockAnalytics: Analytics
     @Mock private lateinit var mockGameRepository: GameRepository
     @Mock private lateinit var mockOk: (CreateGameResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
@@ -43,8 +45,15 @@ class CreateGameUsecaseTest {
         thenGameIsStarted()
     }
 
+    @Test
+    fun `it should log "game created" when executing usecase`() {
+        givenCreateGameUsecase()
+        whenStartIsCalled()
+        thenSendToAnalytics("Game Created")
+    }
+
     private fun givenCreateGameUsecase() {
-        subject = CreateGameUsecase(mockGameRepository, mockBg, mockFg)
+        subject = CreateGameUsecase(mockGameRepository, mockAnalytics, mockBg, mockFg)
     }
 
     private fun whenStartIsCalled() {
@@ -54,5 +63,9 @@ class CreateGameUsecaseTest {
 
     private fun thenGameIsStarted() {
         verify(mockOk).invoke(any())
+    }
+
+    private fun thenSendToAnalytics(expected: String) {
+        verify(mockAnalytics).trackAchievement(expected)
     }
 }

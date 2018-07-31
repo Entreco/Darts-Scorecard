@@ -12,6 +12,6 @@ class LocalProfileStatRepository(db: DscDatabase, private val mapper: ProfileSta
     @WorkerThread
     override fun fetchForPlayer(playerId: Long): ProfileStat {
         val table = profileDao.fetchByPlayerId(playerId)
-        return mapper.to(playerId, table)
+        return mapper.to(table)
     }
 }

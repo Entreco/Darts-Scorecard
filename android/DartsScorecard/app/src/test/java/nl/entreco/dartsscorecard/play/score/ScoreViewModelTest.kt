@@ -6,10 +6,12 @@ import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.description.FetchMatchDescriptionUsecase
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.Description
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -32,12 +34,12 @@ class ScoreViewModelTest {
     private lateinit var givenNext: Next
     @Mock private lateinit var mockAdapter: ScoreAdapter
     @Mock private lateinit var mockPlayer: Player
-    @Mock private lateinit var mockLogger: Logger
+    @Mock private lateinit var mockFetchMatchDescription: FetchMatchDescriptionUsecase
     @Mock private lateinit var mockCallback: UiCallback
 
     @Before
     fun setUp() {
-        subject = ScoreViewModel(mockAdapter, mockLogger)
+        subject = ScoreViewModel(mockAdapter, mockFetchMatchDescription)
     }
 
     @Test

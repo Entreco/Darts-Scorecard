@@ -72,6 +72,7 @@
             android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount, viewModel.adapter.entries())}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/white"
+            android:contentDescription="@string/cd_add_player"
             app:fabSize="mini" />
     </RelativeLayout>
 

@@ -92,7 +92,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
             }
 
             when {
-                isNewPlayer(existing) -> createPlayerUsecase.exec(CreatePlayerRequest(desiredName, 16),
+                isNewPlayer(existing) -> createPlayerUsecase.exec(CreatePlayerRequest(desiredName),
                         onCreateSuccess(navigator),
                         onCreateFailed())
                 isAlreadyPlaying(existing!!, desiredName) -> errorMsg.set(R.string.err_player_already_in_match)

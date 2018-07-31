@@ -10,7 +10,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Setup.Progress" parent="Widget.AppCompat.SeekBar.Discrete">
+    <style name="Setup.Progress" parent="@style/Widget.AppCompat.SeekBar.Discrete">
         <item name="android:layout_gravity">center</item>
         <item name="tickMark">@null</item>
     </style>
@@ -74,7 +74,10 @@
     <style name="Setup.Entry.Txt">
         <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/def</item>
+        <item name="android:paddingTop">@dimen/def</item>
+        <item name="android:paddingBottom">@dimen/def</item>
+        <item name="android:paddingStart">@dimen/large</item>
+        <item name="android:paddingEnd">@dimen/large</item>
         <item name="android:background">@null</item>
         <item name="android:textColor">?attr/nameText</item>
     </style>
@@ -85,7 +88,7 @@
         <item name="android:textColor">?attr/nameText</item>
     </style>
 
-    <style name="Setup.Btn" parent="Base.Widget.AppCompat.Button">
+    <style name="Setup.Btn" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/score_hint</item>
         <item name="android:textColor">?attr/scoreText</item>
         <item name="android:fontFamily">sans-serif-condensed</item>

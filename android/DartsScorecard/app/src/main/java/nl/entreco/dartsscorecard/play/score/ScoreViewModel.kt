@@ -10,6 +10,7 @@ import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
+import nl.entreco.domain.play.description.FetchMatchDescriptionUsecase
 import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.settings.ScoreSettings
@@ -18,8 +19,11 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 18/11/2017.
  */
-class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val logger: Logger) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
+class ScoreViewModel @Inject constructor(
+        val adapter: ScoreAdapter,
+        private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
+    val description = ObservableField<String>("")
     val numSets = ObservableInt(0)
     val teams = ObservableArrayList<Team>()
     val currentTeam = ObservableInt()
@@ -35,6 +39,7 @@ class ScoreViewModel @Inject constructor(val adapter: ScoreAdapter, private val 
         this.teams.clear()
         this.teams.addAll(teams)
         this.numSets.set(info.numSets)
+        this.fetchMatchDescriptionUsecase.go({ response -> description.set(response.description.description) }, { /* TODO: Set default value */})
     }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {

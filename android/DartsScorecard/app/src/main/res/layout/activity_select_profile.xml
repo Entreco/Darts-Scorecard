@@ -42,6 +42,7 @@
             android:layoutAnimation="@anim/layout_animation_from_bottom"
             android:paddingBottom="@dimen/def"
             android:paddingTop="@dimen/def"
+            android:contentDescription="@string/cd_list_of_profiles"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/profile_view" />
 
@@ -55,6 +56,7 @@
             android:transitionName=""
             android:src="@drawable/ic_add_profile"
             android:layout_gravity="bottom|end"
+            android:contentDescription="@string/cd_add_player"
             app:backgroundTint="?attr/colorEditProfile"
             app:elevation="@dimen/def"
             app:fabSize="normal" />

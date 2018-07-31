@@ -87,6 +87,7 @@
                 style="@style/Setup.Entry.Txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/cd_decrease_sets"
                 android:onClick="@{() -> viewModel.onSetsChanged(setupSets, -1)}"
                 android:text="@string/minus" />
 
@@ -97,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:max="@{viewModel.max}"
+                android:contentDescription="@string/cd_choose_sets"
                 android:onProgressChanged="@{(view, sets, user) -> viewModel.onSetsProgressChanged(sets)}"
                 android:progress="@{viewModel.numSets}" />
 
@@ -104,6 +106,7 @@
                 style="@style/Setup.Entry.Txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/cd_increase_sets"
                 android:onClick="@{() -> viewModel.onSetsChanged(setupSets, +1)}"
                 android:text="@string/plus" />
 
@@ -150,6 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.onLegsChanged(setupLegs, -1)}"
+                android:contentDescription="@string/cd_decrease_legs"
                 android:text="@string/minus" />
 
             <SeekBar
@@ -158,6 +162,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/cd_choose_legs"
                 android:max="@{viewModel.max}"
                 android:onProgressChanged="@{(view, legs, user) -> viewModel.onLegsProgressChanged(legs)}"
                 android:progress="@{viewModel.numLegs}" />
@@ -167,6 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.onLegsChanged(setupLegs, +1)}"
+                android:contentDescription="@string/cd_increase_legs"
                 android:text="@string/plus" />
 
             <TextView

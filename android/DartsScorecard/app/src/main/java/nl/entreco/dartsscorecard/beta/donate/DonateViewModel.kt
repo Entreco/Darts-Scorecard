@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Created by entreco on 08/02/2018.
  */
 class DonateViewModel @Inject constructor(
-        private val donateCallback: DonateCallback,
+        private var donateCallback: DonateCallback?,
         private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchDonationsUsecase: FetchDonationsUsecase,
         private val makeDonation: MakeDonationUsecase,
@@ -26,7 +26,7 @@ class DonateViewModel @Inject constructor(
         private val analytics: Analytics) : BaseViewModel(), LifecycleObserver {
 
     init {
-        donateCallback.lifeCycle().addObserver(this)
+        donateCallback?.lifeCycle()?.addObserver(this)
     }
 
     internal var productId: String = ""
@@ -42,7 +42,7 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onStartMakeDonation(): (MakeDonationResponse) -> Unit = { response ->
-        donateCallback.makeDonation(response)
+        donateCallback?.makeDonation(response)
     }
 
     fun onMakeDonationSuccess(data: Intent?) {
@@ -79,7 +79,7 @@ class DonateViewModel @Inject constructor(
     private fun donationDone(response: ConsumeDonationResponse) {
         donationWithId(response)?.let { donation ->
             analytics.trackPurchase(donation, response.orderId)
-            donateCallback.onDonationMade(donation)
+            donateCallback?.onDonationMade(donation)
         }
     }
 
@@ -126,6 +126,11 @@ class DonateViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {
-        donateCallback.lifeCycle().removeObserver(this)
+        donateCallback?.lifeCycle()?.removeObserver(this)
+    }
+
+    override fun onCleared() {
+        donateCallback = null
+        super.onCleared()
     }
 }

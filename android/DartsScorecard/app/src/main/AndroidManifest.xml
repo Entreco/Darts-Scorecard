@@ -16,30 +16,40 @@
             android:name=".splash.SplashActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
-            <intent-filter android:autoVerify="true">
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="entreco.nl"
-                    android:pathPrefix="/dsc"
-                    android:pathPattern="/*"
+                    android:host="dsc.entreco.nl"
                     android:scheme="http" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="entreco.nl"
-                    android:pathPattern="/dsc"
-                    android:scheme="http" />
+                    android:host="dsc.entreco.nl"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>
         <activity android:name=".launch.LaunchActivity" />
         <activity
             android:name=".beta.BetaActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
+            android:name=".wtf.WtfActivity"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
             android:name=".setup.Setup01Activity"

@@ -101,12 +101,12 @@
                     android:layout_below="@id/description"
                     android:layout_centerHorizontal="true"
                     android:drawableEnd="@drawable/ic_play_video"
-                    android:drawablePadding="@dimen/small"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawablePadding="@dimen/def"
                     android:onClick="@{(v) -> viewModel.launchVideo(v)}"
-                    android:padding="@dimen/small"
+                    android:padding="@dimen/def"
                     android:visibility="@{viewModel.showVideo}"
-                    app:textWithTags="@{@string/beta_video}" />
+                    app:textWithTags="@{@string/beta_video}"
+                    tools:text="@string/beta_video"/>
 
                 <include
                     layout="@layout/include_beta_donate"
@@ -136,6 +136,7 @@
             android:onClick="@{() -> viewModel.submitVote(1)}"
             android:src="@drawable/ic_like"
             android:visibility="@{viewModel.feature.votable ? View.VISIBLE : View.GONE}"
+            android:contentDescription="@string/cd_vote"
             app:elevation="@dimen/elevation"
             app:fabSize="normal"
             app:layout_anchor="@id/preview"

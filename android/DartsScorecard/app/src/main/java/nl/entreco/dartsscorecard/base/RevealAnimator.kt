@@ -22,7 +22,7 @@ class RevealAnimator(private val target: View) {
         boundsTransition.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition?) {
                 if (!reverse) {
-                    animateRevealShow(target.rootView)
+                    animateRevealShow()
                 }
                 boundsTransition.removeListener(this)
             }
@@ -41,10 +41,10 @@ class RevealAnimator(private val target: View) {
         })
     }
 
-    private fun animateRevealShow(root: View) {
+    private fun animateRevealShow() {
         val cx = (target.left + target.right) / 2
         val cy = (target.top + target.bottom) / 2
-        revealActivity(root, cx, cy)
+        revealActivity(target, cx, cy)
     }
 
     private fun revealActivity(root: View, x: Int, y: Int) {

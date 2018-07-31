@@ -165,7 +165,7 @@ class TeamScoreBindingsTest {
 
     private fun then180AnimationIsShown() {
         verify(mockTextView).setText(R.string.score_180)
-        verify(mockTextView, times(1)).animate()
+        verify(mockTextView, atLeastOnce()).animate()
         verify(mockAnimator).withStartAction(runnable.capture())
         verify(mockAnimator).withEndAction(runnable.capture())
         runnable.allValues.forEach { it.run() }

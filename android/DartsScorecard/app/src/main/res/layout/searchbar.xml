@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="nl.entreco.dartsscorecard.wtf.WtfSearchable" />
+    </data>
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/searchField"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:hint="@string/search_wtf"
+        android:lines="1"
+        android:onTextChanged="@{(text, s,b,c) -> listener.search(text)}"
+        android:textColor="@color/white"
+        android:textColorHint="#7fffffff" />
+</layout>

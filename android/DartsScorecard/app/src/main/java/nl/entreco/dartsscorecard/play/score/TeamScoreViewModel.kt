@@ -30,6 +30,7 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
     val scored = ObservableInt(0)
     val score = ObservableField<Score>(startScore)
     val currentTeam = ObservableBoolean()
+    private var currentPlayer : Player = team.players[0]
 
     private var isNineDarterStillPossible = true
     private var finishFuture: Future<*>? = null
@@ -38,6 +39,8 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
         updateNineDarter(next)
         updateLegStarter(next)
         updateCurrentTeam(next)
+        updateCurrentPlayer(next.player)
+        calculateFinish(score.get()!!, currentPlayer)
     }
 
     fun scored(input: Score, by: Player) {
@@ -55,6 +58,12 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
 
     private fun updateCurrentTeam(next: Next) {
         currentTeam.set(team.contains(next.player))
+    }
+
+    private fun updateCurrentPlayer(player: Player){
+        if(team.contains(player)){
+            currentPlayer = player
+        }
     }
 
     private fun updateLegStarter(next: Next) {
@@ -80,11 +89,17 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
     }
 
     private fun calculateFinish(input: Score, player: Player, turn: Turn = Turn()) {
-        finishFuture?.cancel(true)
-        finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble)) { finish.set(it.finish) }
+        if(team.contains(player)) {
+            finishFuture?.cancel(true)
+            finishFuture = getFinishUsecase.calculate(GetFinishRequest(input, turn, player.prefs.favoriteDouble)) {
+                finish.set(it.finish)
+            }
+        }
     }
 
     private fun removeScoredBadgeAfter(duration: Long) {
-        this.handler.postDelayed({ scored.set(0) }, duration)
+        this.handler.postDelayed({
+            scored.set(0)
+        }, duration)
     }
 }

@@ -258,6 +258,7 @@
             android:onClick="@{() -> viewModel.onSubmitScore(inputScore, listener)}"
             android:scaleType="fitXY"
             android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
+            android:contentDescription="@string/cd_throw"
             app:numDarts="@{viewModel.dartsLeft}"
             fab:fabSize="normal"
             fab:useCompatPadding="true" />

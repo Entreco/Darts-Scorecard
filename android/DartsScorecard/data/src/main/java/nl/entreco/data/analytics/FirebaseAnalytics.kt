@@ -6,6 +6,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.Feature
+import nl.entreco.domain.wtf.WtfItem
 
 
 /**
@@ -16,29 +17,53 @@ class FirebaseAnalytics(context: Context) : Analytics {
     private val fb by lazy { FirebaseAnalytics.getInstance(context) }
 
     override fun trackScore(scored: String, total: Int) {
-        fb.logEvent("scored", Bundle().apply {
+        fb.logEvent("scored", trackScoreBundle(scored, total))
+    }
+
+    internal fun trackScoreBundle(scored: String, total: Int): Bundle {
+        return Bundle().apply {
             putString(FirebaseAnalytics.Param.SCORE, scored)
             putInt(FirebaseAnalytics.Param.VALUE, total)
-        })
+        }
     }
 
     override fun trackAchievement(achievementId: String) {
-        fb.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, Bundle().apply {
+        fb.logEvent(FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT, trackAchievementBundle(achievementId))
+    }
+
+    internal fun trackAchievementBundle(achievementId: String): Bundle {
+        return Bundle().apply {
             putString(FirebaseAnalytics.Param.ACHIEVEMENT_ID, achievementId)
-        })
+        }
     }
 
     override fun setFavDoubleProperty(favouriteDouble: String) {
         fb.setUserProperty("fav_double", favouriteDouble)
     }
 
-    override fun trackViewFeature(feature: Feature) {
-        fb.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, Bundle().apply {
+    override fun trackViewFeature(feature: Feature, amount: Int) {
+        fb.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, trackViewFeatureBundle(amount, feature))
+    }
+
+    internal fun trackViewFeatureBundle(amount: Int, feature: Feature): Bundle {
+        return Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "feature")
-            putInt(FirebaseAnalytics.Param.QUANTITY, feature.votes)
+            putInt(FirebaseAnalytics.Param.QUANTITY, amount)
             putString(FirebaseAnalytics.Param.ITEM_NAME, feature.title)
             putString(FirebaseAnalytics.Param.ITEM_ID, feature.ref)
-        })
+        }
+    }
+
+    override fun trackViewFaq(item: WtfItem) {
+        fb.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, trackViewFaqBundle(item))
+    }
+
+    internal fun trackViewFaqBundle(item: WtfItem): Bundle {
+        return Bundle().apply {
+            putString(FirebaseAnalytics.Param.ITEM_ID, item.docId)
+            putString(FirebaseAnalytics.Param.ITEM_NAME, item.title)
+            putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "faq")
+        }
     }
 
     override fun trackPurchaseStart(donation: Donation) {
@@ -62,15 +87,19 @@ class FirebaseAnalytics(context: Context) : Analytics {
     }
 
     override fun trackPurchaseFailed(productId: String, step: String) {
-        fb.logEvent(FirebaseAnalytics.Event.CHECKOUT_PROGRESS, Bundle()
+        fb.logEvent(FirebaseAnalytics.Event.CHECKOUT_PROGRESS, trackPurchaseFailedBundle(step, productId))
+    }
+
+    internal fun trackPurchaseFailedBundle(step: String, productId: String): Bundle {
+        return Bundle()
                 .apply {
                     putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "donations")
                     putString(FirebaseAnalytics.Param.CHECKOUT_STEP, step)
                     putString(FirebaseAnalytics.Param.ITEM_ID, productId)
-                })
+                }
     }
 
-    private fun toBundle(donation: Donation): Bundle {
+    internal fun toBundle(donation: Donation): Bundle {
         val product = Bundle().apply {
             putString(FirebaseAnalytics.Param.ITEM_ID, donation.sku) // ITEM_ID or ITEM_NAME is required
             putString(FirebaseAnalytics.Param.ITEM_NAME, donation.title)

@@ -119,13 +119,99 @@ class GetFinishUsecaseTest {
         }
     }
 
+    @Test
+    fun `it should use personal finish (15) with 1 dart used`() {
+        assertEquals("D15", subject.calculateInBack(30, 1, 0, 15))
+        assertEquals("D15", subject.calculateInBack(30, 2, 0, 15))
+        assertEquals("D15", subject.calculateInBack(30, 3, 0, 15))
+    }
+
+    @Test
+    fun `it should use personal finish (15) with 2 darts used`() {
+        assertEquals("", subject.calculateInBack(31, 1, 0, 15))
+        assertEquals("1 D15", subject.calculateInBack(31, 2, 0, 15))
+        assertEquals("1 D15", subject.calculateInBack(31, 3, 0, 15))
+    }
+
+    @Test
+    fun `it should use personal finish (15) with 3 darts used`() {
+        assertEquals("", subject.calculateInBack(91, 1, 0, 15))
+        assertEquals("T17 D20", subject.calculateInBack(91, 2, 0, 15))
+        assertEquals("T20 1 D15", subject.calculateInBack(91, 3, 0, 15))
+    }
+
+
+    @Test
+    fun `it should use personal finish (1) with 1 dart used`() {
+        assertEquals("D15", subject.calculateInBack(30, 1, 0, 1))
+        assertEquals("D14 D1", subject.calculateInBack(30, 2, 0, 1))
+        assertEquals("D14 D1", subject.calculateInBack(30, 3, 0, 1))
+    }
+
+    @Test
+    fun `it should use personal finish (1) with 2 darts used`() {
+        assertEquals("", subject.calculateInBack(31, 1, 0, 1))
+        assertEquals("15 D8", subject.calculateInBack(31, 2, 0, 1))
+        assertEquals("D14 1 D1", subject.calculateInBack(31, 3, 0, 1))
+    }
+
+    @Test
+    fun `it should use personal finish (1) with 3 darts used`() {
+        assertEquals("", subject.calculateInBack(91, 1, 0, 1))
+        assertEquals("T17 D20", subject.calculateInBack(91, 2, 0, 1))
+        assertEquals("T19 D16 D1", subject.calculateInBack(91, 3, 0, 1))
+    }
+
+    @Test
+    fun `it should use personal finish (20) with 1 dart used`() {
+        assertEquals("D15", subject.calculateInBack(30, 1, 0, 20))
+        assertEquals("D15", subject.calculateInBack(30, 2, 0, 20))
+        assertEquals("14 D8", subject.calculateInBack(30, 3, 0, 20))
+    }
+
+    @Test
+    fun `it should use personal finish (20) with 2 darts used`() {
+        assertEquals("", subject.calculateInBack(31, 1, 0, 20))
+        assertEquals("15 D8", subject.calculateInBack(31, 2, 0, 20))
+        assertEquals("15 D8", subject.calculateInBack(31, 3, 0, 20))
+    }
+
+    @Test
+    fun `it should use personal finish (20) with 3 darts used`() {
+        assertEquals("", subject.calculateInBack(91, 1, 0, 20))
+        assertEquals("T17 D20", subject.calculateInBack(91, 2, 0, 20))
+        assertEquals("T17 D20", subject.calculateInBack(91, 3, 0, 20))
+    }
+
+
+    @Test
+    fun `it should use personal finish (BULL) with 1 dart used`() {
+        assertEquals("BULL", subject.calculateInBack(50, 1, 0, 25))
+        assertEquals("BULL", subject.calculateInBack(50, 2, 0, 25))
+        assertEquals("BULL", subject.calculateInBack(50, 3, 0, 25))
+    }
+
+    @Test
+    fun `it should use personal finish (BULL) with 2 darts used`() {
+        assertEquals("", subject.calculateInBack(51, 1, 0, 25))
+        assertEquals("1 BULL", subject.calculateInBack(51, 2, 0, 25))
+        assertEquals("1 BULL", subject.calculateInBack(51, 3, 0, 25))
+    }
+
+    @Test
+    fun `it should use personal finish (BULL) with 3 darts used`() {
+        assertEquals("", subject.calculateInBack(91, 1, 0, 25))
+        assertEquals("T17 D20", subject.calculateInBack(91, 2, 0, 25))
+        assertEquals("D20 1 BULL", subject.calculateInBack(91, 3, 0, 25))
+    }
+
     private fun verifyNotPossible(scored: Int, turn: Turn) {
         val finish = subject.calculateInBack(scored, turn.dartsLeft(), turn.total(), 20)
         assertEquals("scored: $scored finish: $finish", subject.notPossible, finish)
     }
 
     private fun verifyDartsNeeded(scored: Int, turn: Turn, numDarts: Int) {
-        val finish = subject.calculateInBack(scored, turn.dartsLeft(), turn.total(), 20)
+        val finish = subject.calculateInBack(scored, turn.dartsLeft(), turn.total(), 0)
         val thrown = ScoreEstimator().guess(scored, false)
         assertNotEquals("scored: $scored finish: $finish", subject.notPossible, finish)
         assertEquals("scored: $scored finish: $finish", numDarts, finish.split(" ").size)

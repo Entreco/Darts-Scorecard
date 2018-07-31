@@ -20,7 +20,7 @@ class ArchiveModule {
 
     @Provides
     @ArchiveScope
-    fun provideArchiveRepository(db: DscDatabase, mapper: ArchiveStatMapper, logger: Logger): ArchiveRepository {
-        return ArchiveServiceRepository(db, mapper, logger)
+    fun provideArchiveRepository(db: DscDatabase, mapper: ArchiveStatMapper): ArchiveRepository {
+        return ArchiveServiceRepository(db, mapper)
     }
 }

@@ -9,42 +9,42 @@ import org.junit.Test
 class ExtractTeamsRequestTest {
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, empty`() {
-        ExtractTeamsRequest("")
+        ExtractTeamsRequest("").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, '|'`() {
-        ExtractTeamsRequest("|")
+        ExtractTeamsRequest("|").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, '1,2|'`() {
-        ExtractTeamsRequest("1,2|")
+        ExtractTeamsRequest("1,2|").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, '|1'`() {
-        ExtractTeamsRequest("|1")
+        ExtractTeamsRequest("|1").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, ',|'`() {
-        ExtractTeamsRequest(",|")
+        ExtractTeamsRequest(",|").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, '|,'`() {
-        ExtractTeamsRequest("|,")
+        ExtractTeamsRequest("|,").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, '||'`() {
-        ExtractTeamsRequest("||")
+        ExtractTeamsRequest("||").validate()
     }
 
     @Test(expected = IllegalStateException::class)
     fun `invalid team strings, ',,'`() {
-        ExtractTeamsRequest(",,")
+        ExtractTeamsRequest(",,").validate()
     }
 
     @Test

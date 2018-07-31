@@ -20,12 +20,14 @@
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
+    <string name="title_wtf">@string/wtf</string>
 
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Manage Profiles</string>
     <string name="beta">Beta</string>
+    <string name="wtf">What the FAQ</string>
 
     <!-- Beta -->
     <string name="vote">VOTE</string>
@@ -96,6 +98,9 @@
     <string name="profile_num_20">#20+</string>
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
 
+    <!-- What The FAQ -->
+    <string name="search_wtf">Search in F.A.Q.</string>
+
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
     <string name="channel_name">Archive stats</string>
@@ -122,4 +127,19 @@
 
     <!-- Content Descriptions -->
     <string name="cd_score_back">delete</string>
+    <string name="cd_throw">Submit darts</string>
+    <string name="cd_add_player">Add player</string>
+    <string name="cd_player_name">Enter Player name</string>
+    <string name="cd_existing_players">Existing Players</string>
+    <string name="cd_add_profile_picture">Add profile picture</string>
+    <string name="cd_vote">Vote for this feature</string>
+    <string name="cd_choose_sets">@string/number_of_sets</string>
+    <string name="cd_choose_legs">@string/number_of_legs</string>
+    <string name="cd_increase_sets">Plus 1 set</string>
+    <string name="cd_decrease_sets">Minus 1 set</string>
+    <string name="cd_increase_legs">Plus 1 leg</string>
+    <string name="cd_decrease_legs">Minus 1 leg</string>
+    <string name="cd_list_of_profiles">Player Profiles</string>
+    <string name="cd_list_of_wtfs">FAQ items</string>
+    <string name="cd_list_of_beta_features">Which features would you like to see added to the app</string>
 </resources>
