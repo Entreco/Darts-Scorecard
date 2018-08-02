@@ -31,4 +31,5 @@ dependencies {
     implementation "com.android.support:leanback-v17:$support"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.github.bumptech.glide:glide:$glide"
+    implementation "org.webrtc:google-webrtc:$webRtc"
 }

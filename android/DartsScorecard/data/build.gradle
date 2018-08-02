@@ -17,13 +17,14 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room"
 
     // Implementation
-    implementation "com.google.firebase:firebase-core:$firebase"
-    implementation "com.google.firebase:firebase-firestore:$firebase"
-    implementation "com.google.firebase:firebase-config:$firebase"
+    implementation "com.google.firebase:firebase-core:$fbCore"
+    implementation "com.google.firebase:firebase-firestore:$fbStore"
+    implementation "com.google.firebase:firebase-config:$fbConfig"
+    implementation "android.arch.persistence.room:runtime:$room"
+
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:exifinterface:$support"
     implementation "android.arch.lifecycle:livedata:$architecture"
-    implementation "android.arch.persistence.room:runtime:$room"
     implementation "com.google.code.gson:gson:$gson"
 
     testImplementation "junit:junit:$junit"
