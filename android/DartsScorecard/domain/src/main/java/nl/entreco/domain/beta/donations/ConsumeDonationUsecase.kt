@@ -3,8 +3,8 @@ package nl.entreco.domain.beta.donations
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.BillingRepository
 import javax.inject.Inject
 

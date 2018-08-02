@@ -1,8 +1,8 @@
 package nl.entreco.domain.setup.players
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.repository.PlayerRepository

@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.start
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team

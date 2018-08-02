@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.di.archive
 
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.ArchiveStatMapper
-import nl.entreco.domain.common.log.Logger
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith

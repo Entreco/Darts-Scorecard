@@ -1,7 +1,7 @@
 package nl.entreco.data.wtf
 
 import com.google.firebase.firestore.*
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.repository.WtfRepository
 import nl.entreco.domain.wtf.WtfItem
 

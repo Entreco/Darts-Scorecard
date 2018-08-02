@@ -8,10 +8,10 @@ import org.junit.Test
 class DscNotLoggerTest {
 
     init {
-        DscLogger.setEnabled(false)
+        AppLogger.setEnabled(false)
     }
 
-    private val subject = DscLogger("tag")
+    private val subject = AppLogger("tag")
 
     @Test
     fun `it should NOT log 'd(msg)' (and hence NOT crash)`() {

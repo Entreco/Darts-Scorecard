@@ -36,7 +36,6 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room"
 
     // Implementation
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
@@ -46,6 +45,8 @@ dependencies {
     implementation "com.google.firebase:firebase-config:$firebase"
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
     implementation("com.crashlytics.sdk.android:crashlytics:$crash") {

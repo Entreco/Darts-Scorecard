@@ -13,7 +13,10 @@ dependencies {
     implementation project(":domain")
     implementation project(":shared")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    // Annotation Processing
+    kapt "android.arch.persistence.room:compiler:$room"
+
+    // Implementation
     implementation "com.google.firebase:firebase-core:$firebase"
     implementation "com.google.firebase:firebase-firestore:$firebase"
     implementation "com.google.firebase:firebase-config:$firebase"
@@ -21,7 +24,7 @@ dependencies {
     implementation "com.android.support:exifinterface:$support"
     implementation "android.arch.lifecycle:livedata:$architecture"
     implementation "android.arch.persistence.room:runtime:$room"
-    kapt "android.arch.persistence.room:compiler:$room"
+    implementation "com.google.code.gson:gson:$gson"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"

@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.di.viewmodel.threading
 
 import android.os.Handler
-import nl.entreco.domain.common.executors.BgExecutor
-import nl.entreco.domain.common.executors.FgExecutor
+import nl.entreco.shared.threading.BgExecutor
+import nl.entreco.shared.threading.FgExecutor
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before

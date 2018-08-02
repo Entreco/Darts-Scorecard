@@ -8,7 +8,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import nl.entreco.dartsscorecard.shared.GlideApp
+import nl.entreco.shared.libs.GlideApp
 
 /**
  * Created by entreco on 03/02/2018.
@@ -25,7 +25,6 @@ object BetaBindings {
             GlideApp.with(view).load((Uri.parse(it))).fitCenter().centerCrop().into(view)
         }
     }
-
 
     @JvmStatic
     @BindingAdapter("progress")

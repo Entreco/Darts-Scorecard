@@ -1,8 +1,8 @@
 package nl.entreco.domain.profile.archive
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.ArchiveRepository
 import javax.inject.Inject
 

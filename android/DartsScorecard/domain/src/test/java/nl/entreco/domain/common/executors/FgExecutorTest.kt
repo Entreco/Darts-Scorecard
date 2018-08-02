@@ -2,6 +2,7 @@ package nl.entreco.domain.common.executors
 
 import android.os.Handler
 import com.nhaarman.mockito_kotlin.verify
+import nl.entreco.shared.threading.FgExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

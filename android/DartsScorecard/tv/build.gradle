@@ -19,9 +19,15 @@ android {
 
 dependencies {
     implementation project(":shared")
+    implementation project(":domain")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "com.android.support:leanback-v17:$support"
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.github.bumptech.glide:glide:$glide"

@@ -14,24 +14,22 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="TvApp">
         <activity
-            android:name=".splash.SplashActivity"
+            android:name=".splash.SplashTvActivity"
             android:noHistory="true"
-            android:banner="@drawable/app_icon_your_company"
-            android:icon="@drawable/app_icon_your_company"
+            android:banner="@drawable/tv_promo"
+            android:icon="@drawable/tv_promo"
             android:label="@string/app_name"
-            android:logo="@drawable/app_icon_your_company"
+            android:logo="@drawable/tv_promo"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".splash.LaunchActivity" />
-        <activity android:name=".DummyDetailsActivity" />
-        <activity android:name=".PlaybackActivity" />
-        <activity android:name=".BrowseErrorActivity" />
+        <activity android:name=".launch.LaunchTvActivity" />
     </application>
 
 </manifest>

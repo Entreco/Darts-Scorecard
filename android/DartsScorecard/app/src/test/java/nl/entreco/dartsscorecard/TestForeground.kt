@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard
 
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Foreground
 
 
 class TestForeground : Foreground {

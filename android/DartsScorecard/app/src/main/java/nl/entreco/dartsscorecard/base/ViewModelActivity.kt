@@ -14,7 +14,7 @@ import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
-import nl.entreco.dartsscorecard.wtf.WtfActivity
+import nl.entreco.dartsscorecard.faq.WtfActivity
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -28,7 +28,7 @@ abstract class ViewModelActivity : AppCompatActivity() {
 
 
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified VM : ViewModel> ViewModelActivity.viewModelProvider(
+    inline fun <reified VM : ViewModel> viewModelProvider(
             mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
             crossinline provider: () -> VM) = lazy(mode) {
         ViewModelProviders.of(this, object : ViewModelProvider.Factory {
@@ -37,7 +37,7 @@ abstract class ViewModelActivity : AppCompatActivity() {
         }).get(VM::class.java)
     }
 
-    inline fun <reified VM> ViewModelActivity.componentProvider(
+    inline fun <reified VM> componentProvider(
             mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
             crossinline provider: (ViewModelComponent) -> VM) = lazy(mode) {
         val component = app.appComponent.plus(ViewModelModule(this))

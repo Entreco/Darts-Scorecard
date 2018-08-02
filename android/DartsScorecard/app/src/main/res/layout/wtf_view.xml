@@ -10,7 +10,7 @@
 
         <variable
             name="wtf"
-            type="nl.entreco.dartsscorecard.wtf.WtfModel" />
+            type="nl.entreco.dartsscorecard.faq.WtfModel" />
 
     </data>
 

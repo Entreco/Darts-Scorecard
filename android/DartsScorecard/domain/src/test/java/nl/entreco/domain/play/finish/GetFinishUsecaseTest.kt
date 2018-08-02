@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.finish
 
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.domain.common.executors.Background
+import nl.entreco.shared.threading.Background
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Score

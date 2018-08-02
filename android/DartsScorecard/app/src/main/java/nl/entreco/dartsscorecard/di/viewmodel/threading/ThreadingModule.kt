@@ -4,10 +4,10 @@ import android.os.Handler
 import android.os.Looper
 import dagger.Module
 import dagger.Provides
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.BgExecutor
-import nl.entreco.domain.common.executors.FgExecutor
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.BgExecutor
+import nl.entreco.shared.threading.FgExecutor
+import nl.entreco.shared.threading.Foreground
 
 /**
  * Created by Entreco on 17/12/2017.

@@ -1,7 +1,6 @@
 package nl.entreco.data.db.profile
 
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.model.players.PlayerSeperator
 import nl.entreco.domain.model.players.TeamSeperator
 import nl.entreco.domain.repository.ArchiveRepository

@@ -7,11 +7,11 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.BuildConfig
-import nl.entreco.dartsscorecard.DscLogger
+import nl.entreco.dartsscorecard.AppLogger
 import nl.entreco.data.analytics.FirebaseAnalytics
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import javax.inject.Named
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import nl.entreco.dartsscorecard.R
@@ -36,7 +36,7 @@ class AppModule(val app: App) {
     @Provides
     @ApplicationScope
     fun provideLogger(): Logger {
-        return DscLogger("Dsc")
+        return AppLogger("Dsc")
     }
 
     @Provides

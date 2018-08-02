@@ -10,7 +10,7 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject

@@ -17,8 +17,8 @@ import nl.entreco.dartsscorecard.di.viewmodel.api.FaqApiModule
 import nl.entreco.dartsscorecard.di.viewmodel.api.FeatureApiModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.*
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
-import nl.entreco.dartsscorecard.di.wtf.WtfComponent
-import nl.entreco.dartsscorecard.di.wtf.WtfModule
+import nl.entreco.dartsscorecard.di.faq.WtfComponent
+import nl.entreco.dartsscorecard.di.faq.WtfModule
 
 /**
  * Created by Entreco on 14/11/2017.

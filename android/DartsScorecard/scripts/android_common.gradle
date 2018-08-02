@@ -40,3 +40,7 @@ android {
         resolutionStrategy.force "com.android.support:customtabs:$support"
     }
 }
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+}

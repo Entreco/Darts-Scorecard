@@ -2,9 +2,8 @@ package nl.entreco.domain.play.finish
 
 import android.support.annotation.VisibleForTesting
 import android.support.annotation.WorkerThread
-import nl.entreco.domain.common.executors.Background
+import nl.entreco.shared.threading.Background
 import nl.entreco.domain.model.Dart
-import java.nio.file.Files.find
 import java.util.concurrent.Future
 import javax.inject.Inject
 
