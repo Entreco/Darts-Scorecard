@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.launch
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
+import kotlinx.android.synthetic.main.include_launch_header.view.*
 import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
 
 /**

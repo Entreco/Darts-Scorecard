@@ -8,7 +8,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import nl.entreco.dartsscorecard.di.glide.GlideApp
+import nl.entreco.dartsscorecard.shared.GlideApp
 
 /**
  * Created by entreco on 03/02/2018.
