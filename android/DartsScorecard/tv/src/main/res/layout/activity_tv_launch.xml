@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,7 +20,7 @@
         android:background="@drawable/splash">
 
         <!-- Nested RelativeLayout with overscan-safe margin -->
-        <RelativeLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="27dp"
@@ -26,19 +28,62 @@
             android:layout_marginRight="48dp"
             android:layout_marginTop="27dp"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
             android:paddingTop="@dimen/xlarge">
 
             <include
                 android:id="@+id/include_launch_header"
                 layout="@layout/include_launch_header" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/logo"
+                android:layout_below="@id/include_launch_header"
+                app:showIf="@{viewModel.isLoading}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/logo"
+                android:layout_below="@id/include_launch_header"
+                android:text="@string/enter_code_on_phone"
+                app:showIf="@{!viewModel.isLoading}"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/logo"
+                android:layout_below="@id/include_launch_header"
+                android:text="@{viewModel.registrationCode}"
+                app:showIf="@{!viewModel.isLoading}"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:padding="@dimen/def"
+                tools:text="2243"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <ImageView
+                android:id="@+id/logo"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/ic_entreco_black_bg" />
 
-        </RelativeLayout>
+        </android.support.v7.widget.LinearLayoutCompat>
 
     </android.support.v7.widget.FitWindowsFrameLayout>
 </layout>
