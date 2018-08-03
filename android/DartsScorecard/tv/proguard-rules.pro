@@ -44,7 +44,6 @@
 }
 
 # WebRtc
+-dontwarn com.google.gson.**
 -keep class org.webrtc.**  { *; }
--keep class org.appspot.apprtc.**  { *; }
--keep class de.tavendo.autobahn.**  { *; }
 -keepclasseswithmembernames class * { native <methods>; }
