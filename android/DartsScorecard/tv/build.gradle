@@ -1,23 +1,12 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply from: '../scripts/coverage.gradle'
+apply from: '../scripts/coverage_library.gradle'
 apply from: '../scripts/android_common.gradle'
 
 android {
-    defaultConfig {
-        applicationId "nl.entreco.dartsscorecard.tv"
-    }
-
-    buildTypes {
-        debug {
-            applicationIdSuffix ".tv"
-        }
-        release {
-            shrinkResources true
-        }
-    }
+    defaultPublishConfig "debug"
 
     dataBinding {
         enabled = true
