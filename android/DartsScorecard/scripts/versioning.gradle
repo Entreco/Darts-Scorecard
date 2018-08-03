@@ -23,3 +23,9 @@ task showAppName {
         println android.applicationVariants[0].outputs[0].outputFileName
     }
 }
+
+task showTvName {
+    doLast {
+        println android.applicationVariants[1].outputs[0].outputFileName
+    }
+}
