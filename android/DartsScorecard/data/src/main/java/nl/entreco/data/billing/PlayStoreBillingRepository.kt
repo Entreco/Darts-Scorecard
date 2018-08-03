@@ -100,7 +100,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
         val bundle = service.getService()?.getPurchases(apiVersion, packageName, purchases.type(), purchases.token())
 
         return if (bundle?.getInt(QUERY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-            return bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)
+            bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)
         } else {
             throw Throwable("Unable to getPurchases(), $bundle")
         }
