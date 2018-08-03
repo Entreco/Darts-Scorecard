@@ -7,15 +7,6 @@ apply from: '../scripts/android_common.gradle'
 
 android {
     defaultPublishConfig "debug"
-
-    dataBinding {
-        enabled = true
-    }
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
 }
 
 dependencies {

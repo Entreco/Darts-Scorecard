@@ -21,8 +21,10 @@ android {
             shrinkResources true
         }
     }
-    dataBinding {
-        enabled = true
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -30,6 +32,8 @@ dependencies {
     implementation project(":shared")
     implementation project(':domain')
     implementation project(':data')
+    implementation project(':tv')
+
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
