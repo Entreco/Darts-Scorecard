@@ -32,7 +32,6 @@ dependencies {
     implementation project(":shared")
     implementation project(':domain')
     implementation project(':data')
-    implementation project(':tv')
 
 
     // Annotation Processing
@@ -41,8 +40,9 @@ dependencies {
 
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:design:$support"
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.android.support:leanback-v17:$support"
     implementation "com.android.support.constraint:constraint-layout:$constraint"
     implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "com.google.firebase:firebase-core:$fbCore"
@@ -54,6 +54,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
+    implementation "org.webrtc:google-webrtc:$webRtc"
+
     implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
         transitive = true
     }

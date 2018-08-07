@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.tv.launch
 
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import nl.entreco.dartsscorecard.tv.databinding.ActivityTvLaunchBinding
+import nl.entreco.dartsscorecard.databinding.ActivityTvLaunchBinding
 
 class LaunchTvAnimator(binding: ActivityTvLaunchBinding) {
 

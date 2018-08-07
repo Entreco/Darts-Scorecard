@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.tv.di.tv
+package nl.entreco.dartsscorecard.di.tv
 
 import javax.inject.Scope
 

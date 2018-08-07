@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard.tv.base
+package nl.entreco.dartsscorecard.tv
 
 import android.databinding.BindingAdapter
 import android.view.View

@@ -2,16 +2,12 @@ package nl.entreco.dartsscorecard.tv.launch
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.databinding.ObservableInt
-import android.view.View
-import nl.entreco.dartsscorecard.tv.base.TvViewModel
+import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.stream.RegisterStreamReceiverUsecase
-import nl.entreco.shared.log.Logger
 import javax.inject.Inject
 
 class LaunchTvViewModel @Inject constructor(
-        private val logger: Logger,
-        registerStreamReceiverUsecase: RegisterStreamReceiverUsecase) : TvViewModel() {
+        registerStreamReceiverUsecase: RegisterStreamReceiverUsecase) : BaseViewModel() {
 
     val isLoading = ObservableBoolean(false)
     val registrationCode = ObservableField<String>("")

@@ -19,6 +19,8 @@ import nl.entreco.dartsscorecard.di.viewmodel.db.*
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
 import nl.entreco.dartsscorecard.di.faq.WtfComponent
 import nl.entreco.dartsscorecard.di.faq.WtfModule
+import nl.entreco.dartsscorecard.di.tv.TvLaunchComponent
+import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -40,4 +42,5 @@ interface ViewModelComponent {
     fun plus(module: SelectProfileModule): SelectProfileComponent
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: EditPlayerNameModule): EditPlayerNameComponent
+    fun plus(module: TvLaunchModule): TvLaunchComponent
 }
