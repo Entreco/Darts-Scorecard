@@ -27,7 +27,7 @@ class ArchiveJobService : JobService() {
     }
 
     private val app by lazy { application as App }
-    private val component by lazy { app.appComponent.plus(ServiceModule()) }
+    private val component by lazy { app.appComponent.plus(ServiceModule(this)) }
     private val archiveStatsUsecase by lazy { component.plus(ArchiveModule()).archive() }
 
     private val isWorking = AtomicBoolean(false)

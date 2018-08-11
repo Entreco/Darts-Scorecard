@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_faq"
-        android:title="@string/wtf"
-        android:icon="@drawable/ic_wtf"
-        app:showAsAction="always"/>
-
+        android:id="@+id/menu_stream"
+        android:icon="@drawable/ic_live_start"
+        android:title="@string/stream_start"
+        app:showAsAction="always" />
     <item
         android:id="@+id/menu_sound_settings"
         android:checkable="true"
         android:title="@string/menu_sound_swap" />
-
     <item
         android:id="@+id/menu_play_settings"
         android:title="@string/menu_title_swap" />
+    <item
+        android:id="@+id/menu_faq"
+        android:icon="@drawable/ic_wtf"
+        android:title="@string/wtf" />
 </menu>

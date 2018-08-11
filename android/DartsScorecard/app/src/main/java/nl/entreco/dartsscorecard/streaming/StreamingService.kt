@@ -17,6 +17,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.di.archive.ArchiveModule
 import nl.entreco.dartsscorecard.di.service.ServiceModule
 import nl.entreco.dartsscorecard.di.streaming.StreamingModule
+import org.webrtc.CameraVideoCapturer
 import org.webrtc.SurfaceViewRenderer
 
 class StreamingService : Service() {
@@ -39,7 +40,7 @@ class StreamingService : Service() {
     }
 
     private val app by lazy { application as App }
-    private val component by lazy { app.appComponent.plus(ServiceModule()) }
+    private val component by lazy { app.appComponent.plus(ServiceModule(this)) }
     private val streamingController : StreamingController by lazy { component.plus(StreamingModule()).streamingController()}
     private val binder = LocalBinder()
 
@@ -59,7 +60,6 @@ class StreamingService : Service() {
                 .setUsesChronometer(true)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setProgress(0, 0, true)
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
@@ -100,9 +100,9 @@ class StreamingService : Service() {
     }
 
 //    fun getRemoteUuid() = streamingController.remoteUuid
-//
-//    fun switchCamera() = streamingController.switchCamera()
-//
+
+    fun switchCamera(handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(handler)
+
 //    fun enableCamera(isEnabled: Boolean) {
 //        streamingController.enableCamera(isEnabled)
 //    }

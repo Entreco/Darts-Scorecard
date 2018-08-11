@@ -17,10 +17,6 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
-            name="streamViewModel"
-            type="nl.entreco.dartsscorecard.play.stream.StreamViewModel" />
-
-        <variable
             name="scoreViewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
@@ -53,6 +49,11 @@
             android:scaleType="centerCrop"
             android:src="@drawable/play01_bg_image" />
 
+        <FrameLayout
+            android:id="@+id/streamContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <include
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_setup_01" />
@@ -69,29 +70,12 @@
             app:navigator="@{navigator}"
             app:viewModel="@{statViewModel}" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <include
+            android:id="@+id/includeScore"
+            layout="@layout/play_01_score"
+            app:finishUsecase="@{finishUsecase}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/includeScore"
-                layout="@layout/play_01_score"
-                app:finishUsecase="@{finishUsecase}"
-                app:viewModel="@{scoreViewModel}" />
-
-            <include
-                android:id="@+id/includeStream"
-                layout="@layout/play_01_stream"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/input_peek_height"
-                android:layout_marginEnd="@dimen/def"
-                android:layout_marginStart="@dimen/def"
-                app:viewModel="@{streamViewModel}"
-                app:navigator="@{navigator}"/>
-        </LinearLayout>
+            app:viewModel="@{scoreViewModel}" />
 
         <include
             android:id="@+id/includeInput"

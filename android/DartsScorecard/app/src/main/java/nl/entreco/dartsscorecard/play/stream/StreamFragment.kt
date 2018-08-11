@@ -1,41 +1,111 @@
 package nl.entreco.dartsscorecard.play.stream
 
+import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.IBinder
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.design.widget.Snackbar
+import android.view.*
 import android.widget.Toast
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.areAllPermissionsGranted
+import nl.entreco.dartsscorecard.base.BaseFragment
 import nl.entreco.dartsscorecard.databinding.FragmentStreamBinding
+import nl.entreco.dartsscorecard.di.streaming.StreamModule
+import nl.entreco.dartsscorecard.startAppSettings
 import nl.entreco.dartsscorecard.streaming.StreamingService
 import nl.entreco.dartsscorecard.streaming.StreamingServiceListener
+import org.webrtc.CameraVideoCapturer
 import org.webrtc.PeerConnection
+import java.util.concurrent.atomic.AtomicBoolean
 
-class StreamFragment : Fragment(), StreamingServiceListener {
+class StreamFragment : BaseFragment(), StreamingServiceListener,
+        CameraVideoCapturer.CameraSwitchHandler {
 
     companion object {
         val TAG: String = StreamFragment::class.java.name
+        private const val CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE = 1
+        private val NECESSARY_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
 
-    var service: StreamingService? = null
     private lateinit var binding: FragmentStreamBinding
+    private val component by componentProvider { it.plus(StreamModule()) }
+    private val viewModel by viewModelProvider { component.viewModel() }
+
+
+    private val isShowingFrontCamera = AtomicBoolean(true)
+    var service: StreamingService? = null
     private lateinit var serviceConnection: ServiceConnection
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stream, container, false)
+        binding.viewModel = viewModel
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.stream, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        menu?.findItem(R.id.menu_toggle_front)?.isVisible = !isShowingFrontCamera.get()
+        menu?.findItem(R.id.menu_toggle_rear)?.isVisible = isShowingFrontCamera.get()
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_toggle_front, R.id.menu_toggle_rear -> service?.switchCamera(this)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO: If All Permissions Set
-        attachService()
+        checkPermissionsAndConnect()
+    }
+
+    private fun checkPermissionsAndConnect() {
+        if (context!!.areAllPermissionsGranted(*NECESSARY_PERMISSIONS)) {
+            attachService()
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) = when (requestCode) {
+        CHECK_PERMISSIONS_AND_CONNECT_REQUEST_CODE -> {
+            val grantResult = grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+            if (grantResult) {
+                checkPermissionsAndConnect()
+            } else {
+                showNoPermissionsSnackbar()
+            }
+        }
+        else -> {
+            error("Unknown permission request code $requestCode")
+        }
+    }
+
+    private fun showNoPermissionsSnackbar() {
+        view?.let { view ->
+            Snackbar.make(view, R.string.msg_permissions, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.action_settings) {
+                        try {
+                            context?.startAppSettings()
+                        } catch (e: ActivityNotFoundException) {
+                            showSnackbarMessage(R.string.error_permissions_couldnt_start_settings, Snackbar.LENGTH_LONG)
+                        }
+                    }
+                    .show()
+        }
     }
 
     override fun onStart() {
@@ -140,5 +210,16 @@ class StreamFragment : Fragment(), StreamingServiceListener {
 
     override fun connectionStateChange(iceConnectionState: PeerConnection.IceConnectionState) {
         Toast.makeText(context, "Connection State Change", Toast.LENGTH_LONG).show()
+    }
+
+
+    override fun onCameraSwitchDone(p0: Boolean) {
+        isShowingFrontCamera.set(!isShowingFrontCamera.get())
+        activity?.invalidateOptionsMenu()
+
+    }
+
+    override fun onCameraSwitchError(p0: String?) {
+        activity?.invalidateOptionsMenu()
     }
 }

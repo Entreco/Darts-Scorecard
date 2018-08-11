@@ -7,7 +7,6 @@ import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
-import nl.entreco.dartsscorecard.R.id.scoreSheet
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
@@ -22,7 +21,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet, binding.includeStream.streamSheet, binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
@@ -52,7 +51,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val streamSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
+    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
                                          private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View,
                                          private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
 
@@ -63,8 +62,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
             scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
-            streamSheet.animate().alpha(slideOffset * 2).translationY(-streamSheet.height * (1 - slideOffset)).setDuration(0).start()
-
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()

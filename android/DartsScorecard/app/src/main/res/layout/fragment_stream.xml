@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <data></data>
+    <data>
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.stream.StreamViewModel" />
+    </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,6 +17,26 @@
             android:id="@+id/localVideoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TOP OF SURFACE"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/top"
+            app:layout_constraintBottom_toTopOf="@+id/bottom"
+            android:text="CENTER OF SURFACE"/>
+
+        <TextView
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="BOTTOM OF SURFACE"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

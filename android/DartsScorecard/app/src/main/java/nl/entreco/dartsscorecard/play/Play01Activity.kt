@@ -14,9 +14,9 @@ import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
-import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
-import nl.entreco.dartsscorecard.play.stream.StreamViewModel
+import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.dartsscorecard.play.stream.StreamingViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
@@ -26,7 +26,7 @@ class Play01Activity : ViewModelActivity() {
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
-    private val streamViewModel: StreamViewModel by viewModelProvider { component.streamViewModel() }
+    private val streamViewModel: StreamingViewModel by viewModelProvider { component.streamViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
@@ -36,11 +36,11 @@ class Play01Activity : ViewModelActivity() {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
+        val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this,
+                R.layout.activity_play_01)
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
         binding.statViewModel = statViewModel
-        binding.streamViewModel = streamViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)
@@ -69,7 +69,8 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun resumeGame() {
-        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel, inputViewModel)
+        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel,
+                inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -79,11 +80,17 @@ class Play01Activity : ViewModelActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         viewModel.initToggleMenuItem(menu)
+        menu?.findItem(R.id.menu_stream)?.setIcon(streamViewModel.menuIcon())
+        menu?.findItem(R.id.menu_stream)?.setTitle(streamViewModel.menuTitle())
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
+            R.id.menu_stream -> {
+                streamViewModel.toggleStream(navigator)
+                invalidateOptionsMenu()
+            }
             R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)

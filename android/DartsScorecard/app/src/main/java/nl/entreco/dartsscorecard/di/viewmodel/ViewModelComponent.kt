@@ -19,6 +19,9 @@ import nl.entreco.dartsscorecard.di.viewmodel.db.*
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
 import nl.entreco.dartsscorecard.di.faq.WtfComponent
 import nl.entreco.dartsscorecard.di.faq.WtfModule
+import nl.entreco.dartsscorecard.di.streaming.StreamComponent
+import nl.entreco.dartsscorecard.di.streaming.StreamModule
+import nl.entreco.dartsscorecard.di.streaming.StreamingModule
 import nl.entreco.dartsscorecard.di.tv.TvLaunchComponent
 import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
 import nl.entreco.dartsscorecard.di.viewmodel.tv.TvModule
@@ -35,7 +38,6 @@ interface ViewModelComponent {
 
     // Where can this be used
     fun plus(module: LaunchModule): LaunchComponent
-
     fun plus(module: BetaModule): BetaComponent
     fun plus(module: WtfModule): WtfComponent
     fun plus(module: Setup01Module): Setup01Component
@@ -45,4 +47,5 @@ interface ViewModelComponent {
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: EditPlayerNameModule): EditPlayerNameComponent
     fun plus(module: TvLaunchModule): TvLaunchComponent
+    fun plus(module: StreamModule) : StreamComponent
 }

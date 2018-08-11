@@ -28,6 +28,13 @@
     <string name="profiles">Manage Profiles</string>
     <string name="beta">Beta</string>
     <string name="wtf">What the FAQ</string>
+    <string name="stream_start">Start Stream</string>
+    <string name="stream_stop">Stop Stream</string>
+    <string name="cam_front">Switch to rear</string>
+    <string name="cam_rear">Switch to front</string>
+    <string name="msg_permissions">Camera and audio access is needed to Stream</string>
+    <string name="error_permissions_couldnt_start_settings">Couldn\'t open app settings. To grant permissions please visit settings of this app.</string>
+    <string name="action_settings">Settings</string>
 
     <!-- Beta -->
     <string name="vote">VOTE</string>
