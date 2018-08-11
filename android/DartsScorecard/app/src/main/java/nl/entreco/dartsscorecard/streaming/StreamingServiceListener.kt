@@ -9,5 +9,5 @@ interface StreamingServiceListener {
      */
     fun criticalWebRTCServiceException(throwable: Throwable)
 
-    fun connectionStateChange(iceConnectionState: PeerConnection.IceConnectionState)
+    fun connectionStateChange(iceConnectionState: PeerConnection.IceConnectionState?)
 }

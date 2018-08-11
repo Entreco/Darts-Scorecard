@@ -91,10 +91,13 @@
     <string name="live_average">average</string>
 
     <!-- Streaming -->
+    <string name="streaming_dialog_title">Enter Code</string>
     <string name="streaming_service">Streaming Service</string>
     <string name="live_stream_start">Start Streaming</string>
     <string name="live_stream_connecting">Connecting…</string>
+    <string name="live_stream_connect">Connect</string>
     <string name="live_stream">Live Stream</string>
+    <string name="enter_tv_code">Enter code</string>
 
     <!-- Streaming Service -->
     <string name="streaming_channel_name">Archive stats</string>

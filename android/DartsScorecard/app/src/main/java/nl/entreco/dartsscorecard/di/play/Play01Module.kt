@@ -36,12 +36,6 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provideAlertDialogBuilder(@ActivityScope context: Context): AlertDialog.Builder {
-        return AlertDialog.Builder(context)
-    }
-
-    @Provides
-    @Play01Scope
     fun provideSoundMapper(): SoundMapper {
         return SoundMapper()
     }

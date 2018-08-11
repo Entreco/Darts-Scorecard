@@ -14,7 +14,6 @@ import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.di.archive.ArchiveModule
 import nl.entreco.dartsscorecard.di.service.ServiceModule
 import nl.entreco.dartsscorecard.di.streaming.StreamingModule
 import org.webrtc.CameraVideoCapturer
@@ -34,9 +33,6 @@ class StreamingService : Service() {
         fun bindService(context: Context, connection: ServiceConnection) {
             context.bindService(Intent(context, StreamingService::class.java), connection, 0)
         }
-
-        private val BACKGROUND_WORK_NOTIFICATION_ID = 1
-        private val PENDING_INTENT_REQUEST_CODE = 1
     }
 
     private val app by lazy { application as App }
@@ -75,25 +71,23 @@ class StreamingService : Service() {
         super.onDestroy()
     }
 
-    fun attachServiceActionsListener(webRtcServiceListener: StreamingServiceListener) {
-        streamingController.serviceListener = webRtcServiceListener
+    fun attachServiceActionsListener(service: StreamingServiceListener) {
+        streamingController.serviceListener = service
     }
 
     fun detachServiceActionsListener() {
         streamingController.serviceListener = null
     }
 
-//    fun offerDevice(deviceUuid: String) {
-//        streamingController.offerDevice(deviceUuid)
-//    }
-//
-//    fun attachRemoteView(remoteView: SurfaceViewRenderer) {
-//        streamingController.attachRemoteView(remoteView)
-//    }
+    fun offerDevice(deviceUuid: String) {
+        streamingController.offerDevice(deviceUuid)
+    }
 
     fun attachLocalView(localView: SurfaceViewRenderer) {
         streamingController.attachLocalView(localView)
     }
+
+    fun onStop()= stopSelf()
 
     fun detachViews() {
         streamingController.detachViews()
@@ -102,12 +96,6 @@ class StreamingService : Service() {
 //    fun getRemoteUuid() = streamingController.remoteUuid
 
     fun switchCamera(handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(handler)
-
-//    fun enableCamera(isEnabled: Boolean) {
-//        streamingController.enableCamera(isEnabled)
-//    }
-//
-//    fun isCameraEnabled() = streamingController.isCameraEnabled()
 
     fun showBackground(){
         registerChannel()

@@ -16,6 +16,7 @@ import nl.entreco.shared.log.Logger
 import javax.inject.Named
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import nl.entreco.dartsscorecard.R
+import java.util.*
 
 
 /**
@@ -58,6 +59,13 @@ class AppModule(val app: App) {
     @ApplicationScope
     fun provideFirebaseDatabase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
+    }
+
+    @Provides
+    @ApplicationScope
+    @Named("uuid")
+    fun provideUuid() : String {
+        return UUID.randomUUID().toString()
     }
 
     @Provides

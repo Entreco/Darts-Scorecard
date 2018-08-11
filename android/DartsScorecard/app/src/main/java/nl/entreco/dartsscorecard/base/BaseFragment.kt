@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
-import nl.entreco.dartsscorecard.getColorCompat
 
 abstract class BaseFragment : Fragment() {
 
@@ -36,7 +35,7 @@ abstract class BaseFragment : Fragment() {
     fun showSnackbarMessage(@StringRes resId: Int, @BaseTransientBottomBar.Duration duration: Int) {
         view?.let {
             val snackbar = Snackbar.make(it, resId, duration)
-            val layout = snackbar.view as Snackbar.SnackbarLayout
+//            val layout = snackbar.view as Snackbar.SnackbarLayout
 //            layout.setBackgroundColor(context.getColorCompat(R.color.transparent_black))
             snackbar.show()
         }

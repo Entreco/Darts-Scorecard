@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 
-class StreamingViewModel @Inject constructor() : BaseViewModel() {
+class ToggleStreamViewModel @Inject constructor() : BaseViewModel() {
 
     private val isStreaming = AtomicBoolean(false)
 
