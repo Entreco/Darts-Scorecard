@@ -38,7 +38,7 @@ class ArchiveJobService : JobService() {
     private val notif by lazy {
         NotificationCompat.Builder(baseContext, CHANNEL_ID)
                 .setOngoing(true)
-                .setContentTitle(getString(R.string.notif_title))
+                .setContentTitle(getString(R.string.archive_notif_title))
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setColor(Color.parseColor(NOTIF_COLOR))
                 .setBadgeIconType(R.mipmap.ic_launcher_foreground)
@@ -57,8 +57,8 @@ class ArchiveJobService : JobService() {
 
     private fun registerChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.channel_name)
-            val desc = getString(R.string.channel_description)
+            val name = getString(R.string.archive_channel_name)
+            val desc = getString(R.string.archive_channel_description)
             val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(CHANNEL_ID, name, importance)
             channel.description = desc

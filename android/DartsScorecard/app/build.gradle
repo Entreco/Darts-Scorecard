@@ -12,6 +12,8 @@ android {
     defaultConfig {
         applicationId "nl.entreco.dartsscorecard"
         resValue "string", "version", "${config.versionName}"
+
+        ndk {abiFilters "armeabi", "armeabi-v7a", "x86", "mips"}
     }
     buildTypes {
         debug {
@@ -22,13 +24,20 @@ android {
         }
     }
 
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation project(":shared")
     implementation project(':domain')
     implementation project(':data')
@@ -48,6 +57,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
+    implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "android.arch.persistence.room:runtime:$room"
     implementation "android.arch.lifecycle:extensions:$architecture"
     implementation "com.google.code.gson:gson:$gson"

@@ -20,12 +20,14 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
+    implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "android.arch.persistence.room:runtime:$room"
 
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:exifinterface:$support"
     implementation "android.arch.lifecycle:livedata:$architecture"
     implementation "com.google.code.gson:gson:$gson"
+    implementation "org.webrtc:google-webrtc:$webRtc"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"

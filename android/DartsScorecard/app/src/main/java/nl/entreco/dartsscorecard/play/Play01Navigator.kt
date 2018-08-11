@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play
 import android.support.design.widget.Snackbar
 import android.view.View
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.play.stream.StreamFragment
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import nl.entreco.domain.model.players.Team
 import javax.inject.Inject
@@ -21,5 +22,19 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
         } else {
             ProfileActivity.launch(activity, view, teams)
         }
+    }
+
+    fun attachVideoStream() {
+        activity.supportFragmentManager.beginTransaction()
+                .add(R.id.streamContainer, StreamFragment(), StreamFragment.TAG)
+                .commit()
+    }
+
+    fun detachVideoStream() {
+        val fragmentManager = activity.supportFragmentManager
+        val streamFragment = fragmentManager.findFragmentById(R.id.streamContainer)
+        fragmentManager.beginTransaction()
+                .remove(streamFragment)
+                .commit()
     }
 }

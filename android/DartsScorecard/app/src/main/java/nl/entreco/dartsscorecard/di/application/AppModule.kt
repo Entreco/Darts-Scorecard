@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.di.application
 
 import android.arch.persistence.room.Room
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
@@ -51,6 +52,12 @@ class AppModule(val app: App) {
     @ApplicationScope
     fun provideFireStore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideFirebaseDatabase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
     }
 
     @Provides

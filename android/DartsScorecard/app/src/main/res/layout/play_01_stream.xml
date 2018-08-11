@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.stream.StreamViewModel" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.play.Play01Navigator" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/streamSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            tools:alpha="1">
+
+            <FrameLayout
+                android:id="@+id/streamContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                style="@style/Main.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.title}"
+                android:onClick="@{() -> viewModel.toggleStream(navigator)}"
+                tools:text="@string/live_stream_start"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

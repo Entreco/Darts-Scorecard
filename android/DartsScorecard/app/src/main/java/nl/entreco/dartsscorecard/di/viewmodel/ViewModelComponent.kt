@@ -21,6 +21,7 @@ import nl.entreco.dartsscorecard.di.faq.WtfComponent
 import nl.entreco.dartsscorecard.di.faq.WtfModule
 import nl.entreco.dartsscorecard.di.tv.TvLaunchComponent
 import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
+import nl.entreco.dartsscorecard.di.viewmodel.tv.TvModule
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -28,7 +29,8 @@ import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
 @ActivityScope
 @Subcomponent(modules = [(ViewModelModule::class), (ThreadingModule::class), (AdModule::class),
     (GameDbModule::class), (PlayerDbModule::class), (TurnDbModule::class),
-    (MetaDbModule::class), (StatDbModule::class), (FeatureApiModule::class), (FaqApiModule::class)])
+    (MetaDbModule::class), (StatDbModule::class), (FeatureApiModule::class),
+    (FaqApiModule::class), (TvModule::class)])
 interface ViewModelComponent {
 
     // Where can this be used

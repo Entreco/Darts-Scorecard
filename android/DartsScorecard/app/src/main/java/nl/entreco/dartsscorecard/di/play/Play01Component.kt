@@ -6,6 +6,7 @@ import nl.entreco.dartsscorecard.play.Play01ViewModel
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
+import nl.entreco.dartsscorecard.play.stream.StreamViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 
 /**
@@ -17,6 +18,7 @@ interface Play01Component {
     fun viewModel(): Play01ViewModel
     fun navigator(): Play01Navigator
     fun scoreViewModel(): ScoreViewModel
+    fun streamViewModel(): StreamViewModel
     fun inputViewModel(): InputViewModel
     fun statViewModel(): LiveStatViewModel
     fun finishUsecase(): GetFinishUsecase

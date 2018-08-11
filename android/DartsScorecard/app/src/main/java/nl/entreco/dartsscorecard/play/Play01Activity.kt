@@ -16,6 +16,7 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
+import nl.entreco.dartsscorecard.play.stream.StreamViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
@@ -25,6 +26,7 @@ class Play01Activity : ViewModelActivity() {
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
+    private val streamViewModel: StreamViewModel by viewModelProvider { component.streamViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
@@ -38,6 +40,7 @@ class Play01Activity : ViewModelActivity() {
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
         binding.statViewModel = statViewModel
+        binding.streamViewModel = streamViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = Play01Animator(binding)

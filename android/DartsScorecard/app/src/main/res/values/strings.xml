@@ -83,6 +83,17 @@
     <string name="live_20s">20+</string>
     <string name="live_average">average</string>
 
+    <!-- Streaming -->
+    <string name="streaming_service">Streaming Service</string>
+    <string name="live_stream_start">Start Streaming</string>
+    <string name="live_stream_connecting">Connecting…</string>
+    <string name="live_stream">Live Stream</string>
+
+    <!-- Streaming Service -->
+    <string name="streaming_channel_name">Archive stats</string>
+    <string name="streaming_channel_description">Calculating stats &amp; averages</string>
+    <string name="streaming_notif_title">Streaming to Television</string>
+
     <!-- Profile -->
     <string name="no_stats_available">No stats available yet</string>
     <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
@@ -103,9 +114,9 @@
 
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
-    <string name="channel_name">Archive stats</string>
-    <string name="channel_description">Calculating stats &amp; averages</string>
-    <string name="notif_title">Calculating new stats, averages &amp; hiscores</string>
+    <string name="archive_channel_name">Archive stats</string>
+    <string name="archive_channel_description">Calculating stats &amp; averages</string>
+    <string name="archive_notif_title">Calculating new stats, averages &amp; hiscores</string>
 
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>

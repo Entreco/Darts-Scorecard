@@ -49,8 +49,3 @@
   **[] $VALUES;
   public *;
 }
-
-# WebRtc
--dontwarn com.google.gson.**
--keep class org.webrtc.**  { *; }
--keepclasseswithmembernames class * { native <methods>; }
