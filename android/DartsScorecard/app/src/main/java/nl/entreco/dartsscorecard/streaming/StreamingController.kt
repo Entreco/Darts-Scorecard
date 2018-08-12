@@ -5,9 +5,7 @@ import android.os.Looper
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
-import nl.entreco.dartsscorecard.streaming.constraints.OfferAnswerConstraints
-import nl.entreco.dartsscorecard.streaming.constraints.WebRtcConstraints
-import nl.entreco.dartsscorecard.streaming.constraints.addConstraints
+import nl.entreco.dartsscorecard.streaming.constraints.*
 import nl.entreco.domain.streaming.ice.*
 import nl.entreco.domain.streaming.p2p.RemoveIceCandidateRequest
 import nl.entreco.domain.streaming.p2p.RemoveIceCandidateUsecase
@@ -40,7 +38,6 @@ class StreamingController @Inject constructor(
     private val counter = AtomicInteger(0)
     private var finishedInitializing = AtomicBoolean(false)
     private var shouldCreateOffer = AtomicBoolean(false)
-    private fun getCounterStringValueAndIncrement() = counter.getAndIncrement().toString()
 
     private var videoSource: VideoSource? = null
     private var localView: SurfaceViewRenderer? = null
@@ -51,17 +48,37 @@ class StreamingController @Inject constructor(
     private var peerConnection: PeerConnection? = null
     private val isPeerConnectionInitialized = AtomicBoolean(false)
 
+    private lateinit var audioSource: AudioSource
+    private lateinit var localAudioTrack: AudioTrack
+
     private lateinit var offeringPartyHandler: WebRtcOfferingPartyHandler
 
+    private val audioBooleanConstraints by lazy {
+        WebRtcConstraints<BooleanAudioConstraints, Boolean>().apply {
+            addMandatoryConstraint(BooleanAudioConstraints.DISABLE_AUDIO_PROCESSING, true)
+        }
+    }
+
+    private val audioIntegerConstraints by lazy {
+        WebRtcConstraints<IntegerAudioConstraints, Int>()
+    }
+
     private val offerAnswerConstraints by lazy {
-        WebRtcConstraints<OfferAnswerConstraints, Boolean>()
-                .apply {
-//                    addOptionalConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
-                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
-                }
+        WebRtcConstraints<OfferAnswerConstraints, Boolean>().apply {
+            addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
+            addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
+        }
+    }
+
+    private val peerConnectionConstraints by lazy {
+        WebRtcConstraints<PeerConnectionConstraints, Boolean>().apply {
+            addMandatoryConstraint(PeerConnectionConstraints.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, true)
+            addMandatoryConstraint(PeerConnectionConstraints.GOOG_CPU_OVERUSE_DETECTION, true)
+        }
     }
 
     init {
+
         singleThreadExecutor.execute {
             initialize()
         }
@@ -78,8 +95,8 @@ class StreamingController @Inject constructor(
             enableVideo(cameraEnabled, videoCameraCapturer)
         }
 
-//        audioSource = peerConnectionFactory.createAudioSource(getAudioMediaConstraints())
-//        localAudioTrack = peerConnectionFactory.createAudioTrack(getCounterStringValueAndIncrement(), audioSource)
+        audioSource = peerConnectionFactory.createAudioSource(getAudioMediaConstraints())
+        localAudioTrack = peerConnectionFactory.createAudioTrack(getCounterStringValueAndIncrement(), audioSource)
     }
 
     fun attachService(service: StreamingService) {
@@ -107,7 +124,6 @@ class StreamingController @Inject constructor(
     private fun initializeWebRtcStreamer(servers: List<DscIceServer>,
                                          listener: WebRtcOfferingPartyHandler.Listener) {
         val iceServers = servers.map { PeerConnection.IceServer.builder(it.uri).createIceServer() }
-
         peerConnection = peerConnectionFactory.createPeerConnection(iceServers,
                 object : PeerConnection.Observer {
                     override fun onIceCandidate(iceCandidate: IceCandidate?) {
@@ -168,6 +184,7 @@ class StreamingController @Inject constructor(
         isPeerConnectionInitialized.set(true)
 
         val localMediaStream = peerConnectionFactory.createLocalMediaStream(getCounterStringValueAndIncrement())
+        localMediaStream.addTrack(localAudioTrack)
         localVideoTrack?.let { localMediaStream.addTrack(it) }
 
         peerConnection?.addStream(localMediaStream)
@@ -210,7 +227,6 @@ class StreamingController @Inject constructor(
     }
 
     private fun createOffer() {
-
         singleThreadExecutor.execute {
             offeringPartyHandler.createOffer(getOfferAnswerConstraints())
         }
@@ -298,6 +314,7 @@ class StreamingController @Inject constructor(
                 peerConnection?.dispose()
             }
             eglBase.release()
+            audioSource.dispose()
             videoCameraCapturer?.dispose()
             videoSource?.dispose()
             peerConnectionFactory.dispose()
@@ -369,6 +386,16 @@ class StreamingController @Inject constructor(
             videoCameraCapturer?.switchCamera(cameraSwitchHandler)
         }
     }
+
+    private fun getCounterStringValueAndIncrement() = counter.getAndIncrement().toString()
+
+    private fun getAudioMediaConstraints() = MediaConstraints().apply {
+        addConstraints(audioBooleanConstraints, audioIntegerConstraints)
+    }
+
+//    private fun getPeerConnectionMediaConstraints() = MediaConstraints().apply {
+//        addConstraints(peerConnectionConstraints)
+//    }
 
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)

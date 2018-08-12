@@ -5,9 +5,7 @@ import android.os.Looper
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
-import nl.entreco.dartsscorecard.streaming.constraints.OfferAnswerConstraints
-import nl.entreco.dartsscorecard.streaming.constraints.WebRtcConstraints
-import nl.entreco.dartsscorecard.streaming.constraints.addConstraints
+import nl.entreco.dartsscorecard.streaming.constraints.*
 import nl.entreco.domain.streaming.ice.*
 import nl.entreco.domain.streaming.p2p.RemoveIceCandidateRequest
 import nl.entreco.domain.streaming.p2p.RemoveIceCandidateUsecase
@@ -17,6 +15,7 @@ import nl.entreco.shared.log.Logger
 import org.webrtc.*
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class ReceivingController @Inject constructor(
@@ -34,23 +33,54 @@ class ReceivingController @Inject constructor(
     private val mainThreadHandler = Handler(Looper.getMainLooper())
     var serviceListener: ReceivingServiceListener? = null
     private var remoteUuid: String? = null
+    private val counter = AtomicInteger(0)
 
     private val eglBase = EglProvider.get()
     private var service: ReceiverService? = null
     private var peerConnection: PeerConnection? = null
     private val isPeerConnectionInitialized = AtomicBoolean(false)
 
+    private lateinit var audioSource: AudioSource
+    private lateinit var localAudioTrack: AudioTrack
+
     private var remoteView: SurfaceViewRenderer? = null
     private var remoteVideoTrack: VideoTrack? = null
 
     private lateinit var answeringPartyHandler: WebRtcAnsweringPartyHandler
 
+    private val audioBooleanConstraints by lazy {
+        WebRtcConstraints<BooleanAudioConstraints, Boolean>().apply {
+            addMandatoryConstraint(BooleanAudioConstraints.DISABLE_AUDIO_PROCESSING, true)
+        }
+    }
+
+    private val audioIntegerConstraints by lazy {
+        WebRtcConstraints<IntegerAudioConstraints, Int>()
+    }
+
     private val offerAnswerConstraints by lazy {
-        WebRtcConstraints<OfferAnswerConstraints, Boolean>()
-                .apply {
-//                    addOptionalConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
-                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
-                }
+        WebRtcConstraints<OfferAnswerConstraints, Boolean>().apply {
+            addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
+            addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
+        }
+    }
+
+    private val peerConnectionConstraints by lazy {
+        WebRtcConstraints<PeerConnectionConstraints, Boolean>().apply {
+            addMandatoryConstraint(PeerConnectionConstraints.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, true)
+            addMandatoryConstraint(PeerConnectionConstraints.GOOG_CPU_OVERUSE_DETECTION, true)
+        }
+    }
+
+    init {
+        singleThreadExecutor.execute {
+            initialize()
+        }
+    }
+
+    private fun initialize() {
+        audioSource = peerConnectionFactory.createAudioSource(getAudioMediaConstraints())
+        localAudioTrack = peerConnectionFactory.createAudioTrack(getCounterStringValueAndIncrement(), audioSource)
     }
 
     fun attachService(service: ReceiverService) {
@@ -273,7 +303,47 @@ class ReceivingController @Inject constructor(
         detachRemoteView()
     }
 
+    fun dispose() {
+        singleThreadExecutor.execute {
+            if (isPeerConnectionInitialized.get()) {
+                peerConnection?.close()
+                peerConnection?.dispose()
+            }
+            eglBase.release()
+            audioSource.dispose()
+            peerConnectionFactory.dispose()
+        }
+        singleThreadExecutor.shutdown()
+    }
+
+
+    /**
+     * Safety net in case the owner of an object forgets to call its explicit termination method.
+     * @see <a href="https://kotlinlang.org/docs/reference/java-interop.html#finalize">
+     *     https://kotlinlang.org/docs/reference/java-interop.html#finalize</a>
+     */
+    @Suppress("unused", "ProtectedInFinal")
+    protected fun finalize() {
+        if (!singleThreadExecutor.isShutdown) {
+            dispose()
+        }
+    }
+
+    private fun getCounterStringValueAndIncrement() = counter.getAndIncrement().toString()
+
+    private fun getAudioMediaConstraints() = MediaConstraints().apply {
+        addConstraints(audioBooleanConstraints, audioIntegerConstraints)
+    }
+
+//    private fun getPeerConnectionMediaConstraints() = MediaConstraints().apply {
+//        addConstraints(peerConnectionConstraints)
+//    }
+
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)
     }
+
+//    private fun getOfferAnswerRestartConstraints() = getOfferAnswerConstraints().apply {
+//        mandatory.add(OfferAnswerConstraints.ICE_RESTART.toKeyValuePair(true))
+//    }
 }
