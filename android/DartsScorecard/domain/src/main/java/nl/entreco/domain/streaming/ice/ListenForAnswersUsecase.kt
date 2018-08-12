@@ -15,8 +15,7 @@ class ListenForAnswersUsecase @Inject constructor(
         onBackground({
 
             repository.listenForNewAnswers { change ->
-                val response = ListenForAnswersResponse(change.uuid, change.type,
-                        change.description)
+                val response = ListenForAnswersResponse(change.type, change.description)
                 onUi { done(response) }
             }
 

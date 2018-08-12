@@ -18,8 +18,8 @@ class FirebaseOffersRepository(private val db: FirebaseDatabase,
 
     private fun deviceOffersPath(uuid: String) = OFFERS_PATH.plus(uuid)
 
-    override fun create(localSessionDescription: DscSessionDescription) {
-        val reference = db.getReference(deviceOffersPath(localSessionDescription.uuid))
+    override fun create(recipientUuid: String, localSessionDescription: DscSessionDescription) {
+        val reference = db.getReference(deviceOffersPath(recipientUuid))
         reference.onDisconnect().removeValue()
 
         val aha = SessionDescriptionFirebaseApiData()
@@ -27,19 +27,27 @@ class FirebaseOffersRepository(private val db: FirebaseDatabase,
         aha.type = localSessionDescription.type
         aha.description = localSessionDescription.description
 
+        logger.w("WEBRTC: create Offer $aha")
+
         reference.setValue(aha)
     }
 
-    override fun listenForNewOffersWithUuid(onChange: (DscSessionDescription) -> Unit) {
-        db.getReference(deviceOffersPath(currentDeviceUuid)).addValueEventListener(object : ValueEventListener {
+    override fun listenForNewOffersWithUuid(onChange: (String, DscSessionDescription) -> Unit) {
+        val reference = db.getReference(deviceOffersPath(currentDeviceUuid))
+        val valueListener = object : ValueEventListener {
 
             override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(p0: DataSnapshot) {
-                val description = p0.getValue(SessionDescriptionFirebaseApiData::class.java)
-                onChange(DscSessionDescription(currentDeviceUuid, description?.type ?: -1,
-                        description?.description ?: ""))
+                p0.getValue(SessionDescriptionFirebaseApiData::class.java)?.let { description ->
+
+                    logger.w("WEBRTC: listenForNewOffersWithUuid $description")
+                    val session = DscSessionDescription(description.type, description.description ?: "")
+                    onChange(currentDeviceUuid, session)
+
+                }
             }
-        })
+        }
+        reference.addValueEventListener(valueListener)
     }
 }

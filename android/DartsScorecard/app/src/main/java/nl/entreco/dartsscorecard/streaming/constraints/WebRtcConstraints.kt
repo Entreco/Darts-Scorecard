@@ -22,14 +22,14 @@ open class WebRtcConstraints<T : WebRtcConstraint<E>, E> {
      * Adds mandatory constraint. If constraint is already present new value will be used.
      */
     fun addMandatoryConstraint(constraint: T, value: E) {
-        mandatory.put(constraint, value)
+        mandatory[constraint] = value
     }
 
     /**
      * Adds optional constraint. If constraint is already present new value will be used.
      */
     fun addOptionalConstraint(constraint: T, value: E) {
-        optional.put(constraint, value)
+        optional[constraint] = value
     }
 
     /**

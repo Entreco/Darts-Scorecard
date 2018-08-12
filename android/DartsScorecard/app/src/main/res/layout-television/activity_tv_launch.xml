@@ -23,7 +23,8 @@
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remoteView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#a0ff6600"/>
 
         <!-- Nested RelativeLayout with overscan-safe margin -->
         <android.support.v7.widget.LinearLayoutCompat

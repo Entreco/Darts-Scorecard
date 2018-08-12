@@ -36,6 +36,12 @@ class ViewModelModuleTest {
         assertEquals(mockActivity, subject.context())
     }
 
+
+    @Test(expected = NullPointerException::class)
+    fun `it should provide AlertDialogBuilder`() {
+        subject.provideAlertDialogBuilder(mockContext)
+    }
+
     @Test
     fun `it should provide lifecycle`() {
         whenever(mockActivity.lifecycle).thenReturn(mockLifeCycle)

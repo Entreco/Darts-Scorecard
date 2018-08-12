@@ -11,7 +11,6 @@ internal class SessionDescriptionFirebaseApiData {
     @PropertyName("uuid")
     var uuid: String = ""
 
-
     @PropertyName("type")
     var type: Int = 0
 

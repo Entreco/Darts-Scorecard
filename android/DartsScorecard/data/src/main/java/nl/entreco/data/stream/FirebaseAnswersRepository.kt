@@ -18,10 +18,10 @@ class FirebaseAnswersRepository(
         private const val ANSWERS_PATH = "answers/"
     }
 
-    private fun deviceAnswersPath(deviceUuid: String) = ANSWERS_PATH.plus(deviceUuid)
+    private fun deviceAnswersPath(uuid: String) = ANSWERS_PATH.plus(uuid)
 
-    override fun create(localSessionDescription: DscSessionDescription) {
-        val reference = db.getReference(deviceAnswersPath(localSessionDescription.uuid))
+    override fun create(recipientUuid: String, localSessionDescription: DscSessionDescription) {
+        val reference = db.getReference(deviceAnswersPath(recipientUuid))
         reference.onDisconnect().removeValue()
 
         val aha = SessionDescriptionFirebaseApiData()
@@ -29,22 +29,27 @@ class FirebaseAnswersRepository(
         aha.type = localSessionDescription.type
         aha.description = localSessionDescription.description
 
+        logger.w("WEBRTC: create Answer $aha")
+
         reference.setValue(aha)
     }
 
     override fun listenForNewAnswers(onChange: (DscSessionDescription) -> Unit) {
-        db.getReference(deviceAnswersPath(currentDeviceUuid)).addValueEventListener(object :
+        val reference = db.getReference(deviceAnswersPath(currentDeviceUuid))
+        val valueListener = object :
                 ValueEventListener {
 
             override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(p0: DataSnapshot) {
-                val description = p0.getValue(SessionDescriptionFirebaseApiData::class.java)
-                onChange(DscSessionDescription(currentDeviceUuid, description?.type ?: -1,
-                        description?.description ?: ""))
+                p0.getValue(SessionDescriptionFirebaseApiData::class.java)?.let { description ->
+
+                    logger.w("WEBRTC: listenForNewAnswers $description")
+                    val session = DscSessionDescription(description.type, description.description ?: "")
+                    onChange(session)
+                }
             }
-        })
-
-
+        }
+        reference.addValueEventListener(valueListener)
     }
 }

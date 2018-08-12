@@ -48,7 +48,7 @@ class ReceivingController @Inject constructor(
     private val offerAnswerConstraints by lazy {
         WebRtcConstraints<OfferAnswerConstraints, Boolean>()
                 .apply {
-                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, false)
+//                    addOptionalConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
                     addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
                 }
     }
@@ -61,12 +61,13 @@ class ReceivingController @Inject constructor(
     private fun onServersRetrieved(): (FetchIceServerResponse) -> Unit {
         return { response ->
             listenForOffers()
-            initializeWebRtc(response.iceServers, object : WebRtcAnsweringPartyHandler.Listener {
+            initializeWebRtcReceiver(response.iceServers, object : WebRtcAnsweringPartyHandler.Listener {
                 override fun onError(error: String) {
-                    logger.e("4Error in answering party: $error")
+                    logger.e("WEBRTC: Error in answering party: $error")
                 }
 
                 override fun onSuccess(localSessionDescription: SessionDescription) {
+                    logger.w("WEBRTC: onSuccess $localSessionDescription")
                     sendAnswer(localSessionDescription)
                 }
             })
@@ -74,10 +75,9 @@ class ReceivingController @Inject constructor(
     }
 
     private fun sendAnswer(localDescription: SessionDescription) {
-        val description = DscSessionDescription(
-                remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first"),
-                localDescription.type.ordinal, localDescription.description)
-        sendAnswerUsecase.go(SendAnswerRequest(description), onCriticalError())
+        val recipientUuid = remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first")
+        val session = DscSessionDescription(localDescription.type.ordinal, localDescription.description)
+        sendAnswerUsecase.go(SendAnswerRequest(recipientUuid, session), onCriticalError())
     }
 
     private fun onCriticalError(): (Throwable) -> Unit = { err ->
@@ -85,8 +85,8 @@ class ReceivingController @Inject constructor(
         service?.onStop()
     }
 
-    private fun initializeWebRtc(servers: List<DscIceServer>,
-                                 listener: WebRtcAnsweringPartyHandler.Listener) {
+    private fun initializeWebRtcReceiver(servers: List<DscIceServer>,
+                                         listener: WebRtcAnsweringPartyHandler.Listener) {
         val iceServers = servers.map { PeerConnection.IceServer.builder(it.uri).createIceServer() }
         peerConnection = peerConnectionFactory.createPeerConnection(iceServers,
                 object : PeerConnection.Observer {
@@ -106,6 +106,7 @@ class ReceivingController @Inject constructor(
                     override fun onIceConnectionChange(
                             iceConnectionState: PeerConnection.IceConnectionState?) {
                         logger.w("PEER: onIceConnectionChange")
+                        logger.w("WEBRTC: onIceConnectionChange $iceConnectionState")
                         // NOTE: Restart is for StreamingController only
                         mainThreadHandler.post {
                             serviceListener?.connectionStateChange(iceConnectionState)
@@ -117,7 +118,7 @@ class ReceivingController @Inject constructor(
                     }
 
                     override fun onAddStream(p0: MediaStream?) {
-                        logger.w("PEER: onAddStream")
+                        logger.w("PEER: onAddStream $p0")
                         if (p0?.videoTracks?.isNotEmpty() == true) {
                             onAddRemoteVideoStream(p0.videoTracks[0])
                         }
@@ -172,8 +173,10 @@ class ReceivingController @Inject constructor(
     private fun listenForOffers() {
         listenForOfferUsecase.go({ response ->
 
-            this.remoteUuid = response.remoteUuid
-            listenForIceCandidate(response.remoteUuid)
+            logger.w("WEBRTC: listenForNewOffersWithUuid $response")
+
+            this.remoteUuid = response.senderUuid
+            listenForIceCandidate(response.senderUuid)
 
             val type = SessionDescription.Type.values()[response.sessionType]
             val session = SessionDescription(type, response.sessionDescription)
@@ -229,9 +232,7 @@ class ReceivingController @Inject constructor(
     private fun onAddRemoteVideoStream(remoteVideoTrack: VideoTrack) {
         singleThreadExecutor.execute {
             this.remoteVideoTrack = remoteVideoTrack
-            remoteView?.let {
-                remoteVideoTrack.addSink(it)
-            }
+            remoteVideoTrack.addSink(remoteView)
         }
     }
 

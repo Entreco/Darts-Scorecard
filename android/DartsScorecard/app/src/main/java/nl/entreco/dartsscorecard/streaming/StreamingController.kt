@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.streaming
 
 import android.os.Handler
 import android.os.Looper
-import com.google.android.gms.common.util.InputMethodUtils.restart
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
@@ -57,7 +56,7 @@ class StreamingController @Inject constructor(
     private val offerAnswerConstraints by lazy {
         WebRtcConstraints<OfferAnswerConstraints, Boolean>()
                 .apply {
-                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, false)
+//                    addOptionalConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
                     addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
                 }
     }
@@ -90,12 +89,13 @@ class StreamingController @Inject constructor(
 
     private fun onServersRetrieved(): (FetchIceServerResponse) -> Unit {
         return { response ->
-            initializeWebRtc(response.iceServers, object : WebRtcOfferingPartyHandler.Listener {
+            initializeWebRtcStreamer(response.iceServers, object : WebRtcOfferingPartyHandler.Listener {
                 override fun onError(error: String) {
-                    logger.e("Error in offering party: $error")
+                    logger.e("WEBRTC: Error in offering party: $error")
                 }
 
                 override fun onOfferRemoteDescription(localSessionDescription: SessionDescription) {
+                    logger.w("WEBRTC: onOfferRemoteDescription $localSessionDescription")
                     listenForAnswers()
                     sendOffer(localSessionDescription)
                 }
@@ -104,8 +104,8 @@ class StreamingController @Inject constructor(
     }
 
 
-    private fun initializeWebRtc(servers: List<DscIceServer>,
-                                 listener: WebRtcOfferingPartyHandler.Listener) {
+    private fun initializeWebRtcStreamer(servers: List<DscIceServer>,
+                                         listener: WebRtcOfferingPartyHandler.Listener) {
         val iceServers = servers.map { PeerConnection.IceServer.builder(it.uri).createIceServer() }
 
         peerConnection = peerConnectionFactory.createPeerConnection(iceServers,
@@ -126,6 +126,7 @@ class StreamingController @Inject constructor(
                     override fun onIceConnectionChange(
                             iceConnectionState: PeerConnection.IceConnectionState?) {
                         logger.w("PEER: onIceConnectionChange")
+                        logger.w("WEBRTC: onIceConnectionChange $iceConnectionState")
                         if (iceConnectionState == PeerConnection.IceConnectionState.DISCONNECTED) {
                             restart()
                         }
@@ -162,7 +163,6 @@ class StreamingController @Inject constructor(
                     override fun onAddTrack(p0: RtpReceiver?, p1: Array<out MediaStream>?) {
                         logger.w("PEER: onAddTrack")
                     }
-
                 })
 
         isPeerConnectionInitialized.set(true)
@@ -204,12 +204,9 @@ class StreamingController @Inject constructor(
     }
 
     private fun sendOffer(localDescription: SessionDescription) {
-        val description = DscSessionDescription(
-                remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first"),
-                localDescription.type.ordinal, localDescription.description)
-        createOfferUsecase.go(CreateOfferRequest(description), {
-            logger.d("description set")
-        }, onCriticalError())
+        val recipientUuid = remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first")
+        val session = DscSessionDescription(localDescription.type.ordinal, localDescription.description)
+        createOfferUsecase.go(CreateOfferRequest(recipientUuid, session), onCriticalError())
     }
 
     private fun createOffer() {
@@ -342,6 +339,8 @@ class StreamingController @Inject constructor(
 
     private fun listenForAnswers() {
         listenForAnswersUsecase.go({ response ->
+
+            logger.w("WEBRTC: Listen for Answers $response")
 
             val type = SessionDescription.Type.values()[response.sessionType]
             val sessionDescription = SessionDescription(type, response.sessionDescription)

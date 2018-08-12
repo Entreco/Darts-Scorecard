@@ -14,8 +14,8 @@ class ListenForOfferUsecase @Inject constructor(
            fail: (Throwable) -> Unit) {
         onBackground({
 
-            respository.listenForNewOffersWithUuid { change ->
-                val response = ListenForOfferResponse(change.uuid, change.type, change.description)
+            respository.listenForNewOffersWithUuid { senderUuid, session ->
+                val response = ListenForOfferResponse(senderUuid, session.type, session.description)
                 onUi { done(response) }
             }
 
