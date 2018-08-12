@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.streaming
 
 import android.os.Handler
 import android.os.Looper
+import com.google.android.gms.common.util.InputMethodUtils.restart
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
@@ -38,6 +39,8 @@ class StreamingController @Inject constructor(
     private val mainThreadHandler = Handler(Looper.getMainLooper())
 
     private val counter = AtomicInteger(0)
+    private var finishedInitializing = AtomicBoolean(false)
+    private var shouldCreateOffer = AtomicBoolean(false)
     private fun getCounterStringValueAndIncrement() = counter.getAndIncrement().toString()
 
     private var videoSource: VideoSource? = null
@@ -54,10 +57,8 @@ class StreamingController @Inject constructor(
     private val offerAnswerConstraints by lazy {
         WebRtcConstraints<OfferAnswerConstraints, Boolean>()
                 .apply {
-                    addMandatoryConstraint(
-                            OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
-                    addMandatoryConstraint(
-                            OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
+                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, false)
+                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
                 }
     }
 
@@ -99,7 +100,6 @@ class StreamingController @Inject constructor(
                     sendOffer(localSessionDescription)
                 }
             })
-            createOffer()
         }
     }
 
@@ -127,7 +127,7 @@ class StreamingController @Inject constructor(
                             iceConnectionState: PeerConnection.IceConnectionState?) {
                         logger.w("PEER: onIceConnectionChange")
                         if (iceConnectionState == PeerConnection.IceConnectionState.DISCONNECTED) {
-//                    TODO: webRtcClient.restart()
+                            restart()
                         }
                         mainThreadHandler.post {
                             serviceListener?.connectionStateChange(iceConnectionState)
@@ -167,13 +167,21 @@ class StreamingController @Inject constructor(
 
         isPeerConnectionInitialized.set(true)
 
-        val localMediaStream = peerConnectionFactory.createLocalMediaStream(
-                getCounterStringValueAndIncrement())
-//        localMediaStream.addTrack(localAudioTrack)
+        val localMediaStream = peerConnectionFactory.createLocalMediaStream(getCounterStringValueAndIncrement())
         localVideoTrack?.let { localMediaStream.addTrack(it) }
 
         peerConnection?.addStream(localMediaStream)
         offeringPartyHandler = WebRtcOfferingPartyHandler(logger, peerConnection!!, listener)
+
+
+        if (shouldCreateOffer.get()) createOffer()
+        finishedInitializing.set(true)
+    }
+
+    private fun restart(){
+        singleThreadExecutor.execute {
+            offeringPartyHandler.createOffer(getOfferAnswerRestartConstraints())
+        }
     }
 
     private fun sendIceCandidate(iceCandidate: IceCandidate?) {
@@ -205,6 +213,7 @@ class StreamingController @Inject constructor(
     }
 
     private fun createOffer() {
+
         singleThreadExecutor.execute {
             offeringPartyHandler.createOffer(getOfferAnswerConstraints())
         }
@@ -227,9 +236,8 @@ class StreamingController @Inject constructor(
         remoteUuid = deviceUuid
         listenForIceCandidate(deviceUuid)
 
-        // So, here we have a RACE condition -> we must have IceCandidates before we can make an offer
-//        if (finishedInitializing) webRtcClient.createOffer() else shouldCreateOffer = true
-//        createOfferUsecase.go(CreateOfferRequest(deviceUuid), {}, onCriticalError())
+        if (finishedInitializing.get()) createOffer() else shouldCreateOffer.set(true)
+
     }
 
     /**
@@ -253,8 +261,7 @@ class StreamingController @Inject constructor(
     private fun listenForIceCandidate(deviceUuid: String) {
         listenForIceServersUsecase.go(ListenForIceCandidatesRequest(deviceUuid), { response ->
 
-            val candidate = IceCandidate(response.candidate.sdpMid,
-                    response.candidate.sdpMLineIndex, response.candidate.sdp)
+            val candidate = IceCandidate(response.candidate.sdpMid, response.candidate.sdpMLineIndex, response.candidate.sdp)
             if (response.shouldAdd) {
                 // Add DscIceCandidate to webRtc
                 addRemoteIceCandidate(candidate)
@@ -276,7 +283,7 @@ class StreamingController @Inject constructor(
         }
     }
 
-    fun detachLocalView() {
+    private fun detachLocalView() {
         singleThreadExecutor.execute {
             localVideoTrack?.removeSink(localView)
         }
@@ -294,7 +301,6 @@ class StreamingController @Inject constructor(
                 peerConnection?.dispose()
             }
             eglBase.release()
-//            audioSource.dispose()
             videoCameraCapturer?.dispose()
             videoSource?.dispose()
             peerConnectionFactory.dispose()
@@ -337,9 +343,8 @@ class StreamingController @Inject constructor(
     private fun listenForAnswers() {
         listenForAnswersUsecase.go({ response ->
 
-            // TODO: We get Firebase Int -> is it DescriptionType.ANSWER
-            val sessionDescription = SessionDescription(SessionDescription.Type.ANSWER,
-                    response.sessionDescription)
+            val type = SessionDescription.Type.values()[response.sessionType]
+            val sessionDescription = SessionDescription(type, response.sessionDescription)
             handleRemoteAnswer(sessionDescription)
 
         }, onCriticalError())
@@ -368,5 +373,9 @@ class StreamingController @Inject constructor(
 
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)
+    }
+
+    private fun getOfferAnswerRestartConstraints() = getOfferAnswerConstraints().apply {
+        mandatory.add(OfferAnswerConstraints.ICE_RESTART.toKeyValuePair(true))
     }
 }

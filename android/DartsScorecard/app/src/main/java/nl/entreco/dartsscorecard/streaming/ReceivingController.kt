@@ -48,10 +48,8 @@ class ReceivingController @Inject constructor(
     private val offerAnswerConstraints by lazy {
         WebRtcConstraints<OfferAnswerConstraints, Boolean>()
                 .apply {
-                    addMandatoryConstraint(
-                            OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, true)
-                    addMandatoryConstraint(
-                            OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
+                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_AUDIO, false)
+                    addMandatoryConstraint(OfferAnswerConstraints.OFFER_TO_RECEIVE_VIDEO, true)
                 }
     }
 
@@ -65,7 +63,7 @@ class ReceivingController @Inject constructor(
             listenForOffers()
             initializeWebRtc(response.iceServers, object : WebRtcAnsweringPartyHandler.Listener {
                 override fun onError(error: String) {
-                    logger.e("Error in answering party: $error")
+                    logger.e("4Error in answering party: $error")
                 }
 
                 override fun onSuccess(localSessionDescription: SessionDescription) {
@@ -108,9 +106,7 @@ class ReceivingController @Inject constructor(
                     override fun onIceConnectionChange(
                             iceConnectionState: PeerConnection.IceConnectionState?) {
                         logger.w("PEER: onIceConnectionChange")
-                        if (iceConnectionState == PeerConnection.IceConnectionState.DISCONNECTED) {
-//                    TODO: webRtcClient.restart()
-                        }
+                        // NOTE: Restart is for StreamingController only
                         mainThreadHandler.post {
                             serviceListener?.connectionStateChange(iceConnectionState)
                         }
@@ -148,12 +144,10 @@ class ReceivingController @Inject constructor(
                     override fun onAddTrack(p0: RtpReceiver?, p1: Array<out MediaStream>?) {
                         logger.w("PEER: onAddTrack")
                     }
-
                 })
         isPeerConnectionInitialized.set(true)
 
-        answeringPartyHandler = WebRtcAnsweringPartyHandler(logger, peerConnection!!,
-                getOfferAnswerConstraints(), listener)
+        answeringPartyHandler = WebRtcAnsweringPartyHandler(logger, peerConnection!!, getOfferAnswerConstraints(), listener)
     }
 
     private fun sendIceCandidate(iceCandidate: IceCandidate?) {
@@ -180,10 +174,10 @@ class ReceivingController @Inject constructor(
 
             this.remoteUuid = response.remoteUuid
             listenForIceCandidate(response.remoteUuid)
-            handleRemoteOffer(
 
-                    // TODO: We get Firebase Int -> is it DescriptionType.OFFER?
-                    SessionDescription(SessionDescription.Type.OFFER, response.sessionDescription))
+            val type = SessionDescription.Type.values()[response.sessionType]
+            val session = SessionDescription(type, response.sessionDescription)
+            handleRemoteOffer(session)
 
         }, onCriticalError())
     }
