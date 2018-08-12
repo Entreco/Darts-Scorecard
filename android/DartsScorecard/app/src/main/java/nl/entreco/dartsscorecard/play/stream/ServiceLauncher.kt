@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ServiceConnection
 import android.widget.Toast
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
+import nl.entreco.dartsscorecard.streaming.ReceiverService
 import nl.entreco.dartsscorecard.streaming.StreamingService
 import org.webrtc.PeerConnection
 import javax.inject.Inject
@@ -14,6 +15,11 @@ class ServiceLauncher @Inject constructor(@ActivityScope private val context: Co
     fun launchStreamingService(serviceConnection: ServiceConnection) {
         StreamingService.startService(context)
         StreamingService.bindService(context, serviceConnection)
+    }
+
+    fun launchReceiverService(serviceConnection: ServiceConnection) {
+        ReceiverService.startService(context)
+        ReceiverService.bindService(context, serviceConnection)
     }
 
     fun unbindServiceConnection(serviceConnection: ServiceConnection) {

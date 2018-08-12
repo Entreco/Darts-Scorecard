@@ -5,9 +5,7 @@ import android.content.ServiceConnection
 import android.databinding.ObservableField
 import android.os.IBinder
 import nl.entreco.dartsscorecard.base.DialogHelper
-import nl.entreco.dartsscorecard.base.DialogHelper_Factory
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
-import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.dartsscorecard.di.streaming.StreamScope
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.streaming.StreamingService
@@ -21,12 +19,13 @@ import org.webrtc.CameraVideoCapturer
 import org.webrtc.PeerConnection
 import org.webrtc.SurfaceViewRenderer
 import javax.inject.Inject
+import javax.inject.Named
 
 class StreamViewModel @Inject constructor(
         @ApplicationScope private val logger: Logger,
         @ActivityScope private val dialogHelper: DialogHelper,
-        @StreamScope private val localVideoView: SurfaceViewRenderer,
-        private val serviceLauncher: ServiceLauncher,
+        @StreamScope @Named("local") private val localVideoView: SurfaceViewRenderer,
+        @ApplicationScope private val serviceLauncher: ServiceLauncher,
         private val registerStreamerUsecase: RegisterStreamerUsecase,
         private val disconnectFromSignallingUsecase: DisconnectFromSignallingUsecase
 ) : StreamingServiceListener {
@@ -67,9 +66,7 @@ class StreamViewModel @Inject constructor(
         connectionState.set(ReadyToConnect)
         this.service = service
         service.attachLocalView(localVideoView)
-//        service.attachRemoteView(remoteVideoView)
-//        syncButtonsState(service)
-        service.attachServiceActionsListener(service = this)
+        service.attachServiceActionsListener(listener = this)
     }
 
     private fun onWebRtcServiceDisconnected() {

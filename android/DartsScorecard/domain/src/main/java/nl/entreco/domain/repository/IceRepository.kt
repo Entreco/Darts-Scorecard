@@ -10,4 +10,10 @@ interface IceRepository {
 
     @WorkerThread
     fun listenForIceCandidates(remoteUuid: String, add:(DscIceCandidate)->Unit, remove: (DscIceCandidate)->Unit)
+
+    @WorkerThread
+    fun send(candidate: DscIceCandidate, done:(Boolean)->Unit)
+
+    @WorkerThread
+    fun remove(iceCandidatesToRemove: Array<DscIceCandidate>, done: (Boolean)->Unit)
 }

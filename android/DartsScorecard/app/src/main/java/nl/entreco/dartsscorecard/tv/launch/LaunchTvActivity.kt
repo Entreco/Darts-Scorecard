@@ -11,14 +11,31 @@ import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
 
 class LaunchTvActivity : ViewModelActivity() {
 
-    private val component by componentProvider { it.plus(TvLaunchModule()) }
+    private lateinit var binding: ActivityTvLaunchBinding
+    private val component by componentProvider { it.plus(TvLaunchModule(binding.remoteView)) }
     private val viewModel by lazy { component.viewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityTvLaunchBinding>(this, R.layout.activity_tv_launch)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_tv_launch)
         binding.animator = LaunchTvAnimator(binding)
         binding.viewModel = viewModel
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
+    }
+
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
+        viewModel.disconnect()
     }
 
     companion object {

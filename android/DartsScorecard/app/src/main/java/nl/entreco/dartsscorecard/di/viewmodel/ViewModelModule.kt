@@ -9,13 +9,10 @@ import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
-import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.data.billing.BillingServiceConnection
 import nl.entreco.data.billing.PlayStoreBillingRepository
-import nl.entreco.data.stream.FirebaseIceRepository
 import nl.entreco.data.stream.FirebaseSignallingRepository
 import nl.entreco.domain.repository.BillingRepository
-import nl.entreco.domain.repository.IceRepository
 import nl.entreco.domain.repository.SignallingRepository
 import nl.entreco.shared.log.Logger
 import javax.inject.Named
@@ -61,7 +58,8 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @ActivityScope
     fun provideSignallingRepository(@ApplicationScope db: FirebaseDatabase,
                                     @ApplicationScope logger: Logger,
-                                    @ApplicationScope @Named("uuid") uuid: String): SignallingRepository {
+                                    @ApplicationScope @Named(
+                                            "uuid") uuid: String): SignallingRepository {
         return FirebaseSignallingRepository(db, logger, uuid)
     }
 }

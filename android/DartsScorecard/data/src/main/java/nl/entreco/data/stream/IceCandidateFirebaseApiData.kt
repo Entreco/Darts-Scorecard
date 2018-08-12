@@ -9,11 +9,11 @@ import com.google.gson.annotations.SerializedName
 internal class IceCandidateFirebaseApiData {
 
     @SerializedName("sdpMid")
-    val sdpMid: String = ""
+    var sdpMid: String = ""
 
     @SerializedName("sdpMLineIndex")
-    val sdpMLineIndex: Int = -1
+    var sdpMLineIndex: Int = -1
 
     @SerializedName("sdp")
-    val sdp: String = ""
+    var sdp: String = ""
 }

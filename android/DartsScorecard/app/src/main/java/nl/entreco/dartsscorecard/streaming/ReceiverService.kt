@@ -16,28 +16,27 @@ import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.di.service.ServiceModule
 import nl.entreco.dartsscorecard.di.streaming.StreamingModule
-import org.webrtc.CameraVideoCapturer
 import org.webrtc.SurfaceViewRenderer
 
-class StreamingService : Service() {
+class ReceiverService: Service() {
 
     companion object {
-        private const val CHANNEL_ID = "dsc_streaming_channel"
-        private const val NOTIF_ID = 501
+        private const val CHANNEL_ID = "dsc_receiving_channel"
+        private const val NOTIF_ID = 301
         private const val NOTIF_COLOR = "#A4B5CE"
 
         fun startService(packageContext: Context) {
-            packageContext.startService(Intent(packageContext, StreamingService::class.java))
+            packageContext.startService(Intent(packageContext, ReceiverService::class.java))
         }
 
         fun bindService(context: Context, connection: ServiceConnection) {
-            context.bindService(Intent(context, StreamingService::class.java), connection, 0)
+            context.bindService(Intent(context, ReceiverService::class.java), connection, 0)
         }
     }
 
     private val app by lazy { application as App }
     private val component by lazy { app.appComponent.plus(ServiceModule(this)) }
-    private val streamingController : StreamingController by lazy { component.plus(StreamingModule()).streamingController()}
+    private val receivingController : ReceivingController by lazy { component.plus(StreamingModule()).receivingController()}
     private val binder = LocalBinder()
 
     private val notificationManager: NotificationManager by lazy {
@@ -62,40 +61,35 @@ class StreamingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        streamingController.attachService(this)
+        receivingController.attachService(this)
     }
 
     override fun onDestroy() {
-        streamingController.detachService()
+        receivingController.detachService()
         hideBackground()
         super.onDestroy()
     }
 
-    fun attachServiceActionsListener(listener: StreamingServiceListener) {
-        streamingController.serviceListener = listener
+    fun attachServiceActionsListener(listener: ReceivingServiceListener) {
+        receivingController.serviceListener = listener
     }
 
     fun detachServiceActionsListener() {
-        streamingController.serviceListener = null
+        receivingController.serviceListener = null
     }
 
-    fun offerDevice(deviceUuid: String) {
-        streamingController.offerDevice(deviceUuid)
-    }
-
-    fun attachLocalView(localView: SurfaceViewRenderer) {
-        streamingController.attachLocalView(localView)
+    fun attachRemoteView(remoteView: SurfaceViewRenderer) {
+        receivingController.attachRemoteView(remoteView)
     }
 
     fun onStop()= stopSelf()
 
     fun detachViews() {
-        streamingController.detachViews()
+        receivingController.detachViews()
     }
 
-//    fun getRemoteUuid() = streamingController.remoteUuid
+//    fun getRemoteUuid() = receivingController.remoteUuid
 
-    fun switchCamera(handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(handler)
 
     fun showBackground(){
         registerChannel()
@@ -119,7 +113,7 @@ class StreamingService : Service() {
     }
 
     inner class LocalBinder : Binder() {
-        val service: StreamingService
-            get() = this@StreamingService
+        val service: ReceiverService
+            get() = this@ReceiverService
     }
 }

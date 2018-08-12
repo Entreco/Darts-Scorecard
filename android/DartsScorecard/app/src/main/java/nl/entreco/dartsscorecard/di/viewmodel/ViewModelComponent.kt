@@ -21,7 +21,6 @@ import nl.entreco.dartsscorecard.di.faq.WtfComponent
 import nl.entreco.dartsscorecard.di.faq.WtfModule
 import nl.entreco.dartsscorecard.di.streaming.StreamComponent
 import nl.entreco.dartsscorecard.di.streaming.StreamModule
-import nl.entreco.dartsscorecard.di.streaming.StreamingModule
 import nl.entreco.dartsscorecard.di.tv.TvLaunchComponent
 import nl.entreco.dartsscorecard.di.tv.TvLaunchModule
 import nl.entreco.dartsscorecard.di.viewmodel.tv.TvModule

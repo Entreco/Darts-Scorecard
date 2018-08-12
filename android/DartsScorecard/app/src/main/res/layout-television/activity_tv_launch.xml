@@ -19,6 +19,12 @@
         android:layout_height="match_parent"
         android:background="@drawable/splash">
 
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/remoteView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <!-- Nested RelativeLayout with overscan-safe margin -->
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
