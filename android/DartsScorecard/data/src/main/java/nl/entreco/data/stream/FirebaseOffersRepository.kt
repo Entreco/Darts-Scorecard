@@ -43,7 +43,7 @@ class FirebaseOffersRepository(private val db: FirebaseDatabase,
 
                     logger.w("WEBRTC: listenForNewOffersWithUuid $description")
                     val session = DscSessionDescription(description.type, description.description ?: "")
-                    onChange(currentDeviceUuid, session)
+                    onChange(description.uuid, session)
 
                 }
             }
