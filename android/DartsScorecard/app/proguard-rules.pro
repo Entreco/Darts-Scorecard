@@ -29,8 +29,18 @@
 
 # Google Play Services
 -keep public class com.google.android.gms.* { public *; }
+-keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
 -dontnote com.google.android.gms.**
+-keepnames @com.google.android.gms.common.annotation.KeepName class
+    com.google.android.gms.**,
+    com.google.ads.**
+
+-keepclassmembernames class
+    com.google.android.gms.**,
+    com.google.ads.** {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
 
 # Okio
 -dontwarn okio.**

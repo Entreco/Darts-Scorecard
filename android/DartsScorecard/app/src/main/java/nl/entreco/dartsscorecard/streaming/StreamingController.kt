@@ -70,15 +70,7 @@ class StreamingController @Inject constructor(
         }
     }
 
-    private val peerConnectionConstraints by lazy {
-        WebRtcConstraints<PeerConnectionConstraints, Boolean>().apply {
-            addMandatoryConstraint(PeerConnectionConstraints.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, true)
-            addMandatoryConstraint(PeerConnectionConstraints.GOOG_CPU_OVERUSE_DETECTION, true)
-        }
-    }
-
     init {
-
         singleThreadExecutor.execute {
             initialize()
         }
@@ -334,7 +326,6 @@ class StreamingController @Inject constructor(
         }
     }
 
-
     private val localVideoWidth: Int = 1280
     private val localVideoHeight: Int = 720
     private val localVideoFps: Int = 24
@@ -392,10 +383,6 @@ class StreamingController @Inject constructor(
     private fun getAudioMediaConstraints() = MediaConstraints().apply {
         addConstraints(audioBooleanConstraints, audioIntegerConstraints)
     }
-
-//    private fun getPeerConnectionMediaConstraints() = MediaConstraints().apply {
-//        addConstraints(peerConnectionConstraints)
-//    }
 
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)

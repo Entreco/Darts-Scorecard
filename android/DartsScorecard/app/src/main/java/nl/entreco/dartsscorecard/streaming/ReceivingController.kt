@@ -65,13 +65,6 @@ class ReceivingController @Inject constructor(
         }
     }
 
-    private val peerConnectionConstraints by lazy {
-        WebRtcConstraints<PeerConnectionConstraints, Boolean>().apply {
-            addMandatoryConstraint(PeerConnectionConstraints.DTLS_SRTP_KEY_AGREEMENT_CONSTRAINT, true)
-            addMandatoryConstraint(PeerConnectionConstraints.GOOG_CPU_OVERUSE_DETECTION, true)
-        }
-    }
-
     init {
         singleThreadExecutor.execute {
             initialize()
@@ -215,10 +208,6 @@ class ReceivingController @Inject constructor(
         }, onCriticalError())
     }
 
-    /**
-     * Handles received remote offer. This will result in producing answer which will be returned in
-     * [WebRtcAnsweringPartyListener] callback.
-     */
     private fun handleRemoteOffer(remoteSessionDescription: SessionDescription) {
         singleThreadExecutor.execute {
             answeringPartyHandler.handleRemoteOffer(remoteSessionDescription)
@@ -335,15 +324,7 @@ class ReceivingController @Inject constructor(
         addConstraints(audioBooleanConstraints, audioIntegerConstraints)
     }
 
-//    private fun getPeerConnectionMediaConstraints() = MediaConstraints().apply {
-//        addConstraints(peerConnectionConstraints)
-//    }
-
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)
     }
-
-//    private fun getOfferAnswerRestartConstraints() = getOfferAnswerConstraints().apply {
-//        mandatory.add(OfferAnswerConstraints.ICE_RESTART.toKeyValuePair(true))
-//    }
 }
