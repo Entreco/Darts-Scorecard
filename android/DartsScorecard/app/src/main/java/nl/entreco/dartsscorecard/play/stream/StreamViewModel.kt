@@ -27,7 +27,8 @@ class StreamViewModel @Inject constructor(
         @StreamScope @Named("local") private val localVideoView: SurfaceViewRenderer,
         @ApplicationScope private val serviceLauncher: ServiceLauncher,
         private val registerStreamerUsecase: RegisterStreamerUsecase,
-        private val disconnectFromSignallingUsecase: DisconnectFromSignallingUsecase
+        private val cameraSwitchHandler: CameraVideoCapturer.CameraSwitchHandler,
+        private val listener: StreamFragment.Listener?
 ) : StreamingServiceListener {
 
     val connectionState = ObservableField<ConnectionState>(Unknown)
@@ -36,11 +37,7 @@ class StreamViewModel @Inject constructor(
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
             onWebRtcServiceConnected((iBinder as (StreamingService.LocalBinder)).service)
-            dialogHelper.showStreamDialog{ code ->
-                registerStreamerUsecase.go(RegisterStreamerRequest(code),
-                        onRegisterSuccess(),
-                        onRegisterFailed())
-            }
+            dialogHelper.showStreamDialog(onCodeEntered(), onStreamCancelled())
         }
 
         override fun onServiceDisconnected(componentName: ComponentName) {
@@ -48,11 +45,24 @@ class StreamViewModel @Inject constructor(
         }
     }
 
-    fun onRegisterSuccess(): (RegisterStreamerResponse) -> Unit = { response ->
+    private fun onStreamCancelled(): () -> Unit = {
+        connectionState.set(Killing)
+        listener?.onPleaseKillMe()
+    }
+
+    private fun onCodeEntered(): (String) -> Unit {
+        return { code ->
+            registerStreamerUsecase.go(RegisterStreamerRequest(code),
+                    onRegisterSuccess(),
+                    onRegisterFailed())
+        }
+    }
+
+    private fun onRegisterSuccess(): (RegisterStreamerResponse) -> Unit = { response ->
         service?.offerDevice(response.uuid)
     }
 
-    fun onRegisterFailed(): (Throwable) -> Unit = { error ->
+    private fun onRegisterFailed(): (Throwable) -> Unit = { error ->
         serviceLauncher.showError(error.localizedMessage)
     }
 
@@ -110,8 +120,8 @@ class StreamViewModel @Inject constructor(
         }
     }
 
-    fun switchCamera(switchHandler: CameraVideoCapturer.CameraSwitchHandler) {
-        service?.switchCamera(switchHandler)
+    fun switchCamera() {
+        service?.switchCamera(cameraSwitchHandler)
     }
 
     fun onStart() {

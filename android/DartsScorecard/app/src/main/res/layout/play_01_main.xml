@@ -10,6 +10,10 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
+            name="controlStreamViewModel"
+            type="nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel" />
+
+        <variable
             name="navigator"
             type="nl.entreco.dartsscorecard.play.Play01Navigator" />
     </data>
@@ -32,6 +36,37 @@
             tools:alpha="1">
 
             <TextView
+                android:id="@+id/streamTitle"
+                style="@style/Main.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/match_stats" />
+
+            <LinearLayout
+                android:id="@+id/streamControls"
+                android:layout_below="@id/streamTitle"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/def"
+                    android:background="@null"
+                    android:src="@drawable/ic_camera_rear" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/def"
+                    android:background="@null"
+                    android:src="@android:drawable/stat_notify_call_mute" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_below="@id/streamControls"
                 android:id="@+id/title"
                 style="@style/Main.Title"
                 android:layout_width="match_parent"

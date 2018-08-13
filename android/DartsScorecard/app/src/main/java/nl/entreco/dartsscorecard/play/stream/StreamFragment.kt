@@ -1,5 +1,7 @@
 package nl.entreco.dartsscorecard.play.stream
 
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.*
@@ -17,37 +19,33 @@ class StreamFragment : BaseFragment(), CameraVideoCapturer.CameraSwitchHandler {
         val TAG: String = StreamFragment::class.java.name
     }
 
+    interface Listener {
+        fun onPleaseKillMe()
+    }
+
     private lateinit var binding: FragmentStreamBinding
-    private val component by componentProvider { it.plus(StreamModule(this, binding.localVideoView)) }
+    private val component by componentProvider { it.plus(StreamModule(this, activityListener, binding.localVideoView)) }
     private val viewModel by lazy { component.viewModel() }
     private val permissionHelper by lazy { component.permissionHelper() }
+    private val streamController by lazy { ViewModelProviders.of(this).get(ControlStreamViewModel::class.java)}
 
     private val isShowingFrontCamera = AtomicBoolean(true)
+    private var activityListener : StreamFragment.Listener? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        activityListener = context as Listener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activityListener = null
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_stream, container, false)
-        binding.viewModel = viewModel
-        setHasOptionsMenu(true)
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.stream, menu)
-        return super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?) {
-        menu?.findItem(R.id.menu_toggle_front)?.isVisible = !isShowingFrontCamera.get()
-        menu?.findItem(R.id.menu_toggle_rear)?.isVisible = isShowingFrontCamera.get()
-        super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.menu_toggle_front, R.id.menu_toggle_rear -> viewModel.switchCamera(this)
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,12 +78,12 @@ class StreamFragment : BaseFragment(), CameraVideoCapturer.CameraSwitchHandler {
         viewModel.onDestroy()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
 //        if (remoteVideoView.visibility == View.VISIBLE) {
 //            outState.putBoolean(KEY_IN_CHAT, true)
 //        }
-    }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

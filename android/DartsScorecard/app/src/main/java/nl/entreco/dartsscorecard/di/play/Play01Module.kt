@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.di.play
 import android.content.ComponentName
 import android.content.Context
 import android.media.SoundPool
-import android.support.v7.app.AlertDialog
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides

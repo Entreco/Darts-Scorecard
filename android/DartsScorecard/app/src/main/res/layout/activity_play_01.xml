@@ -17,6 +17,10 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
+            name="controlStreamViewModel"
+            type="nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel" />
+
+        <variable
             name="scoreViewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
@@ -52,7 +56,8 @@
         <FrameLayout
             android:id="@+id/streamContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <include
             android:id="@+id/includeToolbar"
@@ -68,7 +73,8 @@
             android:layout_marginStart="@dimen/def"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navigator="@{navigator}"
-            app:viewModel="@{statViewModel}" />
+            app:viewModel="@{statViewModel}"
+            app:controlStreamViewModel="@{controlStreamViewModel}"/>
 
         <include
             android:id="@+id/includeScore"

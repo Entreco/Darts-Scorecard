@@ -16,34 +16,37 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.dartsscorecard.play.stream.ToggleStreamViewModel
+import nl.entreco.dartsscorecard.play.stream.StreamFragment
+import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
 
-class Play01Activity : ViewModelActivity() {
+class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
+    private lateinit var binding: ActivityPlay01Binding
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
-    private val streamViewModel: ToggleStreamViewModel by viewModelProvider { component.streamViewModel() }
+    private val controlStreamViewModel: ControlStreamViewModel by viewModelProvider { component.streamViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
     private val navigator: Play01Navigator by lazy { component.navigator() }
+    private val animator: Play01Animator by lazy { Play01Animator(binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this,
-                R.layout.activity_play_01)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
         binding.statViewModel = statViewModel
+        binding.controlStreamViewModel = controlStreamViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
-        binding.animator = Play01Animator(binding)
+        binding.animator = animator
         binding.navigator = navigator
 
         if (savedInstanceState == null) {
@@ -52,6 +55,11 @@ class Play01Activity : ViewModelActivity() {
 
         initToolbar(toolbar(binding))
         resumeGame()
+    }
+
+    override fun onPleaseKillMe() {
+        controlStreamViewModel.toggleStream(navigator, animator)
+        invalidateOptionsMenu()
     }
 
     override fun onDestroy() {
@@ -80,15 +88,15 @@ class Play01Activity : ViewModelActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         viewModel.initToggleMenuItem(menu)
-        menu?.findItem(R.id.menu_stream)?.setIcon(streamViewModel.menuIcon())
-        menu?.findItem(R.id.menu_stream)?.setTitle(streamViewModel.menuTitle())
+        menu?.findItem(R.id.menu_stream)?.setIcon(controlStreamViewModel.menuIcon())
+        menu?.findItem(R.id.menu_stream)?.setTitle(controlStreamViewModel.menuTitle())
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_stream -> {
-                streamViewModel.toggleStream(navigator)
+                controlStreamViewModel.toggleStream(navigator, animator)
                 invalidateOptionsMenu()
             }
             R.id.menu_play_settings -> {
@@ -100,6 +108,11 @@ class Play01Activity : ViewModelActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     companion object {

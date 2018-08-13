@@ -4,21 +4,25 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.dartsscorecard.di.play.Play01Scope
+import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.dartsscorecard.play.Play01Navigator
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 
-class ToggleStreamViewModel @Inject constructor() : BaseViewModel() {
+class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
 
     private val isStreaming = AtomicBoolean(false)
 
-    fun toggleStream(navigator: Play01Navigator) {
+    fun toggleStream(navigator: Play01Navigator, animator: Play01Animator) {
         if (isStreaming.get()) {
             isStreaming.set(false)
+            animator.expand()
             navigator.detachVideoStream()
         } else {
             isStreaming.set(true)
+            animator.collapse()
             navigator.attachVideoStream()
         }
     }

@@ -40,7 +40,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder)
     private fun onlyOneTeam(teams: Array<Team>) = teams.size == 1
     private fun moreThanOneTeam(teams: Array<Team>) = teams.size > 1
 
-    fun showStreamDialog(done: (String) -> Unit) {
+    fun showStreamDialog(done: (String) -> Unit, cancel: ()->Unit) {
         val editText : EditText = createCodeEditText()
         builder
                 .setTitle(R.string.streaming_dialog_title)
@@ -50,6 +50,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder)
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    cancel()
                     dialog.dismiss()
                 }
                 .create()
