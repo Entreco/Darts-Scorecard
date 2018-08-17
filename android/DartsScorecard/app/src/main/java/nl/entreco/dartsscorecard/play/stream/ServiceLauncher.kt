@@ -27,11 +27,11 @@ class ServiceLauncher @Inject constructor(@ActivityScope private val context: Co
     }
 
     fun criticalWebRTCServiceException(throwable: Throwable) {
-        Toast.makeText(context, "Critical error", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Critical error ${throwable.localizedMessage}", Toast.LENGTH_LONG).show()
     }
 
     fun connectionStateChange(iceConnectionState: PeerConnection.IceConnectionState?) {
-        Toast.makeText(context, "Connection State Change", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Connection State Change $iceConnectionState", Toast.LENGTH_LONG).show()
     }
 
     fun showError(msg: String){

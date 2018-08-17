@@ -36,7 +36,7 @@ class Play01AnimatorHandlerTest {
         whenever(mockAnimator.scaleY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.scaleX(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
-        subject = Play01Animator.Play01AnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockViewPager, mockMaxHeightView, mockView, mockView, mockView, mockView)
+        subject = Play01Animator.Play01AnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockViewPager, mockMaxHeightView, mockView, mockView, mockView, mockView, mockView, mockView)
     }
 
     @Test(expected = KotlinNullPointerException::class)
