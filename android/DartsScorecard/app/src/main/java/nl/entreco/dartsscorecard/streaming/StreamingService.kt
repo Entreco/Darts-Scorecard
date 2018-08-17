@@ -37,9 +37,7 @@ class StreamingService : Service() {
 
     private val app by lazy { application as App }
     private val component by lazy { app.appComponent.plus(ServiceModule(this)) }
-    private val streamingController: StreamingController by lazy {
-        component.plus(StreamingModule()).streamingController()
-    }
+    private val streamingController: StreamingController by lazy { component.plus(StreamingModule()).streamingController() }
     private val binder = LocalBinder()
 
     private val notificationManager: NotificationManager by lazy {
