@@ -31,12 +31,12 @@ class WtfActivity : ViewModelActivity() {
         object : JellyListener() {
             override fun onCancelIconClicked() {
                 val searchField = searchBinding.searchField
-                if (searchField.text.isEmpty()) {
+                if (searchField.text?.isEmpty() == true) {
                     binding.includeToolbar.toolbar.collapse()
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(searchField.windowToken, 0)
                 } else {
-                    searchField.text.clear()
+                    searchField.text?.clear()
                 }
             }
         }

@@ -43,15 +43,15 @@ ext {
     coverallsVersion = '2.8.2'
     fabricVersion = '1.25.1'
 
-    androidCompileSdkVersion = 27
+    androidCompileSdkVersion = 28
     androidMinSdkVersion = 23
-    androidTargetSdkVersion = 27
+    androidTargetSdkVersion = 28
 
     versionCode = versionCode()
     versionName = versionName()
 
     dependencies = [
-            support = '27.1.1',
+            support = '28.0.0-beta01',
             daggerVersion = '2.13',
             constraint = '1.1.2',
             architecture = '1.1.1',

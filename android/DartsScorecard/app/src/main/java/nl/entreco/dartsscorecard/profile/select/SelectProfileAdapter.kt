@@ -34,11 +34,12 @@ class SelectProfileAdapter(private val navigator: SelectProfileNavigator) : List
 }
 
 val diff: DiffUtil.ItemCallback<Profile> = object : DiffUtil.ItemCallback<Profile>() {
-    override fun areItemsTheSame(oldItem: Profile?, newItem: Profile?): Boolean {
-        return oldItem?.id == newItem?.id
+
+    override fun areItemsTheSame(oldItem: Profile, newItem: Profile): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Profile?, newItem: Profile?): Boolean {
+    override fun areContentsTheSame(oldItem: Profile, newItem: Profile): Boolean {
         return oldItem == newItem
     }
 }

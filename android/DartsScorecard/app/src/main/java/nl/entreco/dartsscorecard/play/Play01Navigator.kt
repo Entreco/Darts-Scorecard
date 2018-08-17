@@ -35,10 +35,11 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
     }
 
     fun detachVideoStream() {
-        val streamFragment = fm.findFragmentById(R.id.streamContainer)
+        fm.findFragmentById(R.id.streamContainer)?.apply {
         fm.beginTransaction()
-                .remove(streamFragment)
+                .remove(this)
                 .commit()
+        }
     }
 
     fun streamController(): StreamController? {
