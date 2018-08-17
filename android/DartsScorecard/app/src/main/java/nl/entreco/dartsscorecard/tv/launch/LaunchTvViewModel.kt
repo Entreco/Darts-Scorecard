@@ -108,6 +108,10 @@ class LaunchTvViewModel @Inject constructor(
                 isStreaming.set(false)
                 connectionState.set(Disconnected)
                 service?.detachViews()
+
+                isLoading.set(true)
+                registerReceiverUsecase.go(RegisterReceiverRequest("todo -> maybe tv or some identifier"),
+                        registrationOk(), registrationFailed())
             }
             else -> {
                 //no-op for now - could show or hide progress bars or messages on given event

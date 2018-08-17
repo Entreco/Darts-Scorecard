@@ -44,7 +44,7 @@
 
             <include
                 android:id="@+id/include_launch_header"
-                app:showIf="@{!viewModel.isStreaming}"
+                android:visibility="@{!viewModel.isStreaming ? View.VISIBLE : View.GONE }"
                 layout="@layout/include_launch_header" />
 
             <View
@@ -106,12 +106,13 @@
             android:layout_marginRight="48dp"
             android:layout_marginTop="27dp"
             android:gravity="center_horizontal"
-            app:attachMatch="@{viewModel.isStreaming}"
-            app:launchNavigator="@{navigator}"
-            android:visibility="@{viewModel.isStreaming ? View.VISIBLE : View.GONE }"
+            android:visibility="@{viewModel.isStreaming ? View.VISIBLE : View.INVISIBLE }"
             android:orientation="vertical"
             android:animateLayoutChanges="true"
-            android:paddingTop="@dimen/xlarge" />
+            android:paddingTop="@dimen/xlarge" >
+            <include
+                layout="@layout/fragment_match" />
+        </FrameLayout>
 
     </android.support.v7.widget.FitWindowsFrameLayout>
 </layout>

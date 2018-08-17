@@ -120,6 +120,7 @@ class StreamViewModel @Inject constructor(
             PeerConnection.IceConnectionState.DISCONNECTED -> {
 //                getView()?.showWillTryToRestartMsg()
                 connectionState.set(Disconnected)
+                listener?.onPleaseKillMe()
             }
             else -> {
                 //no-op for now - could show or hide progress bars or messages on given event

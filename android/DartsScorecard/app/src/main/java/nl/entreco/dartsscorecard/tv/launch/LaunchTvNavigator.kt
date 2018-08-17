@@ -8,15 +8,15 @@ import javax.inject.Inject
 
 class LaunchTvNavigator @Inject constructor(@ActivityScope private val fm: FragmentManager) {
     fun attach() {
-        fm.beginTransaction()
-                .add(R.id.matchContainer, MatchFragment(), MatchFragment.TAG)
-                .commit()
+//        fm.beginTransaction()
+//                .add(R.id.matchContainer, MatchFragment(), MatchFragment.TAG)
+//                .commit()
     }
 
     fun detach() {
-        val frag = fm.findFragmentByTag(MatchFragment.TAG)
-        fm.beginTransaction()
-                .remove(frag)
-                .commit()
+//        val frag = fm.findFragmentByTag(MatchFragment.TAG)
+//        fm.beginTransaction()
+//                .remove(frag)
+//                .commit()
     }
 }
