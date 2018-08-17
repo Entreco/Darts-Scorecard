@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.content.Context
 import android.content.res.Resources
 import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
@@ -25,6 +26,10 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @Provides
     @ActivityScope
     fun context(): Context = activity
+
+    @Provides
+    @ActivityScope
+    fun fragmentManager(): FragmentManager = activity.supportFragmentManager
 
     @Provides
     @ActivityScope

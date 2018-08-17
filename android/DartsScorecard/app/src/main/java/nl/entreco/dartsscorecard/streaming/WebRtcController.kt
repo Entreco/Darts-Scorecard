@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.streaming
 
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
@@ -257,6 +258,7 @@ class WebRtcController @Inject constructor(
 
     fun attachRemoteView(remoteView: SurfaceViewRenderer) {
         mainThreadHandler.post {
+            remoteView.visibility = View.VISIBLE
             remoteView.init(eglBase.eglBaseContext, null)
             this@WebRtcController.remoteView = remoteView
             singleThreadExecutor.execute {
@@ -267,6 +269,7 @@ class WebRtcController @Inject constructor(
 
     private fun detachRemoteView() {
         mainThreadHandler.post {
+            remoteView?.visibility = View.GONE
             remoteView?.release()
             remoteView = null
         }

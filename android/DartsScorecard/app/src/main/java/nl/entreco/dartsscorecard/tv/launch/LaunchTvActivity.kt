@@ -14,12 +14,14 @@ class LaunchTvActivity : ViewModelActivity() {
     private lateinit var binding: ActivityTvLaunchBinding
     private val component by componentProvider { it.plus(TvLaunchModule(binding.remoteView)) }
     private val viewModel by lazy { component.viewModel() }
+    private val navigator by lazy { component.navigator() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tv_launch)
         binding.animator = LaunchTvAnimator(binding)
         binding.viewModel = viewModel
+        binding.navigator = navigator
     }
 
     override fun onStart() {

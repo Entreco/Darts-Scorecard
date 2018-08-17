@@ -31,6 +31,7 @@ class LaunchTvViewModel @Inject constructor(
 ) : ReceivingServiceListener {
 
     val isLoading = ObservableBoolean(false)
+    val isStreaming = ObservableBoolean(false)
     val registrationCode = ObservableField<String>("")
     val connectionState = ObservableField<ConnectionState>(Unknown)
 
@@ -87,6 +88,7 @@ class LaunchTvViewModel @Inject constructor(
     private fun onWebRtcServiceDisconnected() {
         logger.d("Service disconnected")
         connectionState.set(Disconnected)
+        isStreaming.set(false)
     }
 
     override fun criticalWebRTCServiceException(throwable: Throwable) {
@@ -99,9 +101,11 @@ class LaunchTvViewModel @Inject constructor(
         when (iceConnectionState) {
             PeerConnection.IceConnectionState.CONNECTED -> {
                 connectionState.set(Connected)
+                isStreaming.set(true)
             }
             PeerConnection.IceConnectionState.DISCONNECTED -> {
 //                getView()?.showWillTryToRestartMsg()
+                isStreaming.set(false)
                 connectionState.set(Disconnected)
                 service?.detachViews()
             }

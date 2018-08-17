@@ -19,18 +19,15 @@ class RegisterReceiverUsecase @Inject constructor(
         onBackground({
 
             signallingRepository.connect()
-            signallingRepository.cleanDisconnectOrders(onDisconnectSuccess(request, done, fail),
+            signallingRepository.cleanDisconnectOrders(onDisconnectSuccess(done, fail),
                     onError("error disconnecting orders", fail))
         }, fail)
 
     }
 
-    private fun onDisconnectSuccess(request: RegisterReceiverRequest,
+    private fun onDisconnectSuccess(
                                     done: (RegisterReceiverResponse) -> Unit,
                                     fail: (Throwable) -> Unit): () -> Unit = {
-        // done
-        // Start UseCase that listens for Disconnects
-        // signallingRepository.listenForDisconnectOrders(request.onDisconnect)
         connectCode = (0..4).map { Random().nextInt(9) }.joinToString("") { it.toString() }
         signallingRepository.setReceiverOnline(
                 connectCode,

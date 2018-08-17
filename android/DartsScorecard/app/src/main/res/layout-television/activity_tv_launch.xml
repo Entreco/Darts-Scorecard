@@ -5,9 +5,14 @@
 
     <data>
 
+        <import type="android.view.View" alias="View" />
         <variable
             name="animator"
             type="nl.entreco.dartsscorecard.tv.launch.LaunchTvAnimator" />
+
+        <variable
+            name="navigator"
+            type="nl.entreco.dartsscorecard.tv.launch.LaunchTvNavigator" />
 
         <variable
             name="viewModel"
@@ -19,13 +24,12 @@
         android:layout_height="match_parent"
         android:background="@drawable/splash">
 
-
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remoteView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!-- Nested RelativeLayout with overscan-safe margin -->
+        <!-- Nested LinearLayout with overscan-safe margin -->
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,6 +44,7 @@
 
             <include
                 android:id="@+id/include_launch_header"
+                app:showIf="@{!viewModel.isStreaming}"
                 layout="@layout/include_launch_header" />
 
             <View
@@ -61,7 +66,7 @@
                 android:layout_above="@id/logo"
                 android:layout_below="@id/include_launch_header"
                 android:text="@string/enter_code_on_phone"
-                app:showIf="@{!viewModel.isLoading}"
+                app:showIf="@{!viewModel.isLoading &amp;&amp; !viewModel.isStreaming}"
                 android:textColor="@color/gray"
                 android:textSize="20sp" />
 
@@ -71,7 +76,7 @@
                 android:layout_above="@id/logo"
                 android:layout_below="@id/include_launch_header"
                 android:text="@{viewModel.registrationCode}"
-                app:showIf="@{!viewModel.isLoading}"
+                app:showIf="@{!viewModel.isLoading &amp;&amp; !viewModel.isStreaming}"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:padding="@dimen/def"
@@ -90,6 +95,23 @@
                 android:src="@drawable/ic_entreco_black_bg" />
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+        <!-- Nested FrameLayout with overscan-safe margin -->
+        <FrameLayout
+            android:id="@+id/matchContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="27dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginTop="27dp"
+            android:gravity="center_horizontal"
+            app:attachMatch="@{viewModel.isStreaming}"
+            app:launchNavigator="@{navigator}"
+            android:visibility="@{viewModel.isStreaming ? View.VISIBLE : View.GONE }"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:paddingTop="@dimen/xlarge" />
 
     </android.support.v7.widget.FitWindowsFrameLayout>
 </layout>
