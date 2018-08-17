@@ -43,9 +43,9 @@ ext {
     coverallsVersion = '2.8.2'
     fabricVersion = '1.25.1'
 
-    androidCompileSdkVersion = 28
+    androidCompileSdkVersion = 27
     androidMinSdkVersion = 23
-    androidTargetSdkVersion = 28
+    androidTargetSdkVersion = 27
 
     versionCode = versionCode()
     versionName = versionName()
