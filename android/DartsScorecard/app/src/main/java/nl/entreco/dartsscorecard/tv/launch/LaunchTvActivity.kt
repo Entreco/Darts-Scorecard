@@ -29,13 +29,8 @@ class LaunchTvActivity : ViewModelActivity() {
 
     override fun onStop() {
         viewModel.onStop()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.onDestroy()
         viewModel.disconnect()
+        super.onStop()
     }
 
     companion object {

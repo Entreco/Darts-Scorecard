@@ -21,6 +21,7 @@ import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
+import nl.entreco.domain.streaming.ConnectionState
 
 class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
@@ -58,8 +59,13 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
     }
 
     override fun onPleaseKillMe() {
+        controlStreamViewModel.sendDisconnect(navigator)
         controlStreamViewModel.toggleStream(navigator, animator)
         invalidateOptionsMenu()
+    }
+
+    override fun onConnectionStateChanged(connectionState: ConnectionState) {
+        controlStreamViewModel.connectionState(connectionState)
     }
 
     override fun onDestroy() {
@@ -96,6 +102,7 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_stream -> {
+                controlStreamViewModel.sendDisconnect(navigator)
                 controlStreamViewModel.toggleStream(navigator, animator)
                 invalidateOptionsMenu()
             }

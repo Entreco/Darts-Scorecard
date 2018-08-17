@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.stream
 
+import android.databinding.ObservableField
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import nl.entreco.dartsscorecard.R
@@ -7,6 +8,8 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.dartsscorecard.play.Play01Navigator
+import nl.entreco.domain.streaming.ConnectionState
+import nl.entreco.domain.streaming.Unknown
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -14,6 +17,7 @@ import javax.inject.Inject
 class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
 
     private val isStreaming = AtomicBoolean(false)
+    val state = ObservableField<ConnectionState>(Unknown)
 
     fun toggleStream(navigator: Play01Navigator, animator: Play01Animator) {
         if (isStreaming.get()) {
@@ -25,6 +29,18 @@ class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
             animator.collapse()
             navigator.attachVideoStream()
         }
+    }
+
+    fun sendDisconnect(navigator: Play01Navigator){
+        navigator.streamController()?.sendDisconnect()
+    }
+
+    fun toggleCamera(navigator: Play01Navigator){
+        navigator.streamController()?.toggleCamera()
+    }
+
+    fun connectionState(connectionState: ConnectionState) {
+        state.set(connectionState)
     }
 
     @DrawableRes

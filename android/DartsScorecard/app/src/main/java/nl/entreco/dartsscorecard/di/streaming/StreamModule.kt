@@ -2,7 +2,10 @@ package nl.entreco.dartsscorecard.di.streaming
 
 import dagger.Module
 import dagger.Provides
+import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.play.stream.StreamFragment
+import nl.entreco.dartsscorecard.streaming.WebRtcController
+import nl.entreco.shared.log.Logger
 import org.webrtc.CameraVideoCapturer
 import org.webrtc.SurfaceViewRenderer
 import javax.inject.Named

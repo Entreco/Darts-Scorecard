@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play.stream
 
 import android.content.ComponentName
 import android.content.ServiceConnection
+import android.databinding.Observable
 import android.databinding.ObservableField
 import android.os.IBinder
 import nl.entreco.dartsscorecard.base.DialogHelper
@@ -11,6 +12,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.streaming.StreamingService
 import nl.entreco.dartsscorecard.streaming.StreamingServiceListener
 import nl.entreco.domain.streaming.*
+import nl.entreco.domain.streaming.receive.ListenForDisconnectsUsecase
 import nl.entreco.domain.streaming.send.RegisterStreamerRequest
 import nl.entreco.domain.streaming.send.RegisterStreamerResponse
 import nl.entreco.domain.streaming.send.RegisterStreamerUsecase
@@ -27,11 +29,24 @@ class StreamViewModel @Inject constructor(
         @StreamScope @Named("local") private val localVideoView: SurfaceViewRenderer,
         @ApplicationScope private val serviceLauncher: ServiceLauncher,
         private val registerStreamerUsecase: RegisterStreamerUsecase,
+        private val listenForDisconnectsUsecase: ListenForDisconnectsUsecase,
+        private val disconnectUsecase: DisconnectUsecase,
+        private val disconnectFromSignallingUsecase: DisconnectFromSignallingUsecase,
         private val cameraSwitchHandler: CameraVideoCapturer.CameraSwitchHandler,
         private val listener: StreamFragment.Listener?
 ) : StreamingServiceListener {
 
-    val connectionState = ObservableField<ConnectionState>(Unknown)
+    private var remoteUuid: String? = null
+    private val connectionState = ObservableField<ConnectionState>(Unknown)
+    private val connectionChange = object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            listener?.onConnectionStateChanged(connectionState.get()!!)
+        }
+    }
+
+    init {
+        connectionState.addOnPropertyChangedCallback(connectionChange)
+    }
 
     private var service: StreamingService? = null
     private val serviceConnection = object : ServiceConnection {
@@ -52,6 +67,7 @@ class StreamViewModel @Inject constructor(
 
     private fun onCodeEntered(): (String) -> Unit {
         return { code ->
+            connectionState.set(Connecting)
             registerStreamerUsecase.go(RegisterStreamerRequest(code),
                     onRegisterSuccess(),
                     onRegisterFailed())
@@ -59,11 +75,17 @@ class StreamViewModel @Inject constructor(
     }
 
     private fun onRegisterSuccess(): (RegisterStreamerResponse) -> Unit = { response ->
+        remoteUuid = response.uuid
         service?.offerDevice(response.uuid)
+        listenForDisconnectsUsecase.go  {
+            disconnect()
+        }
     }
 
     private fun onRegisterFailed(): (Throwable) -> Unit = { error ->
         serviceLauncher.showError(error.localizedMessage)
+        connectionState.set(Killing)
+        listener?.onPleaseKillMe()
     }
 
     fun attachService() {
@@ -117,6 +139,14 @@ class StreamViewModel @Inject constructor(
             it.detachServiceActionsListener()
             serviceLauncher.unbindServiceConnection(serviceConnection)
             service = null
+            connectionState.set(Unknown)
+        }
+    }
+
+    fun sendDisconnect() {
+        connectionState.set(Disconnecting)
+        disconnectFromSignallingUsecase.go(DisconnectFromSignallingRequest(remoteUuid)) {
+            disconnect()
         }
     }
 
@@ -134,6 +164,9 @@ class StreamViewModel @Inject constructor(
 
     fun disconnect() {
         connectionState.set(Disconnecting)
+        disconnectUsecase.go{
+            connectionState.set(Disconnected)
+        }
         service?.let {
             it.stopSelf()
             unbindService()

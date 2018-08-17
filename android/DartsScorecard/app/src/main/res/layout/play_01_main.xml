@@ -33,6 +33,7 @@
             android:background="@drawable/stats_bg"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:animateLayoutChanges="true"
             tools:alpha="1">
 
             <TextView
@@ -40,28 +41,38 @@
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/match_stats" />
+                android:paddingStart="@dimen/large"
+                android:paddingEnd="@dimen/large"
+                tools:drawableEnd="@drawable/stream_state_live"
+                app:streamState="@{controlStreamViewModel.state}"
+                app:streamVisibility="@{controlStreamViewModel.state}"
+                tools:text="@string/live_stream_start"/>
 
             <LinearLayout
                 android:id="@+id/streamControls"
                 android:layout_below="@id/streamTitle"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
+                android:padding="@dimen/def"
+                app:streamVisibility="@{controlStreamViewModel.state}"
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/control1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/def"
                     android:background="@null"
+                    android:onClick="@{() -> controlStreamViewModel.toggleCamera(navigator)}"
                     android:src="@drawable/ic_camera_rear" />
 
                 <ImageView
+                    android:id="@+id/control2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/def"
                     android:background="@null"
-                    android:src="@android:drawable/stat_notify_call_mute" />
+                    android:src="@drawable/ic_mute" />
 
             </LinearLayout>
 

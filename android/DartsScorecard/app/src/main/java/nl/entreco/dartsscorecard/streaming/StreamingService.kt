@@ -37,7 +37,9 @@ class StreamingService : Service() {
 
     private val app by lazy { application as App }
     private val component by lazy { app.appComponent.plus(ServiceModule(this)) }
-    private val streamingController : StreamingController by lazy { component.plus(StreamingModule()).streamingController()}
+    private val streamingController: StreamingController by lazy {
+        component.plus(StreamingModule()).streamingController()
+    }
     private val binder = LocalBinder()
 
     private val notificationManager: NotificationManager by lazy {
@@ -87,22 +89,25 @@ class StreamingService : Service() {
         streamingController.attachLocalView(localView)
     }
 
-    fun onStop()= stopSelf()
+    fun onStop() {
+        hideBackground()
+        stopSelf()
+    }
 
     fun detachViews() {
         streamingController.detachViews()
     }
 
-//    fun getRemoteUuid() = streamingController.remoteUuid
+    fun switchCamera(
+            handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(
+            handler)
 
-    fun switchCamera(handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(handler)
-
-    fun showBackground(){
+    fun showBackground() {
         registerChannel()
         notificationManager.notify(NOTIF_ID, notif.build())
     }
 
-    fun hideBackground(){
+    fun hideBackground() {
         notificationManager.cancel(NOTIF_ID)
     }
 

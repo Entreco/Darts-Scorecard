@@ -7,21 +7,18 @@ import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import javax.inject.Inject
 
-class DisconnectFromSignallingUsecase @Inject constructor(
+class DisconnectUsecase @Inject constructor(
         private val logger: Logger,
         private val signallingRepository: SignallingRepository,
         bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun go(request: DisconnectFromSignallingRequest, done: () -> Unit) {
+    fun go(done:()->Unit) {
         onBackground({
 
-            if(request.uuid != null) {
-                signallingRepository.sendDisconnectOrderToOtherParty(request.uuid) {
-                    done()
-                }
-            } else {
-                done()
-            }
+            signallingRepository.disconnect()
+            signallingRepository.stopListenForDisconnects()
+            onUi(done)
+
         }, onError())
     }
 

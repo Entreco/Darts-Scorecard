@@ -1,67 +1,34 @@
 package nl.entreco.dartsscorecard.streaming
 
-import android.os.Handler
-import android.os.Looper
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
-import nl.entreco.dartsscorecard.streaming.constraints.*
+import nl.entreco.dartsscorecard.streaming.constraints.OfferAnswerConstraints
+import nl.entreco.dartsscorecard.streaming.constraints.WebRtcConstraints
+import nl.entreco.dartsscorecard.streaming.constraints.addConstraints
 import nl.entreco.domain.streaming.ice.*
-import nl.entreco.domain.streaming.p2p.RemoveIceCandidateRequest
-import nl.entreco.domain.streaming.p2p.RemoveIceCandidateUsecase
-import nl.entreco.domain.streaming.p2p.SendIceCandidateRequest
-import nl.entreco.domain.streaming.p2p.SendIceCandidateUsecase
 import nl.entreco.shared.log.Logger
 import org.webrtc.*
-import java.util.concurrent.Executors
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class StreamingController @Inject constructor(
         @ApplicationScope private val logger: Logger,
+        @StreamingScope private val singleThreadExecutor: ExecutorService,
+        @StreamingScope private val webRtcController: WebRtcController,
         @ServiceScope private val listenForAnswersUsecase: ListenForAnswersUsecase,
-        @ServiceScope private val sendIceCandidateUsecase: SendIceCandidateUsecase,
-        @ServiceScope private val removeIceCandidateUsecase: RemoveIceCandidateUsecase,
-        @ServiceScope private val fetchIceServersUsecase: FetchIceServerUsecase,
-        @ServiceScope private val listenForIceServersUsecase: ListenForIceCandidatesUsecase,
         @ServiceScope private val createOfferUsecase: CreateOfferUsecase,
-        @StreamingScope private val peerConnectionFactory: PeerConnectionFactory,
         @StreamingScope private val videoCameraCapturer: CameraVideoCapturer?) {
 
-    private val eglBase = EglProvider.get()
     private var service: StreamingService? = null
+    var serviceListener: StreamingServiceListener? = null
+    private var remoteUuid: String? = null
 
-    private val singleThreadExecutor = Executors.newSingleThreadExecutor()
-    private val mainThreadHandler = Handler(Looper.getMainLooper())
-
-    private val counter = AtomicInteger(0)
     private var finishedInitializing = AtomicBoolean(false)
     private var shouldCreateOffer = AtomicBoolean(false)
 
-    private var videoSource: VideoSource? = null
-    private var localView: SurfaceViewRenderer? = null
-    private var localVideoTrack: VideoTrack? = null
-
-    var serviceListener: StreamingServiceListener? = null
-    private var remoteUuid: String? = null
-    private var peerConnection: PeerConnection? = null
-    private val isPeerConnectionInitialized = AtomicBoolean(false)
-
-    private lateinit var audioSource: AudioSource
-    private lateinit var localAudioTrack: AudioTrack
-
     private lateinit var offeringPartyHandler: WebRtcOfferingPartyHandler
-
-    private val audioBooleanConstraints by lazy {
-        WebRtcConstraints<BooleanAudioConstraints, Boolean>().apply {
-            addMandatoryConstraint(BooleanAudioConstraints.DISABLE_AUDIO_PROCESSING, true)
-        }
-    }
-
-    private val audioIntegerConstraints by lazy {
-        WebRtcConstraints<IntegerAudioConstraints, Int>()
-    }
 
     private val offerAnswerConstraints by lazy {
         WebRtcConstraints<OfferAnswerConstraints, Boolean>().apply {
@@ -77,144 +44,64 @@ class StreamingController @Inject constructor(
     }
 
     private fun initialize() {
-
+        webRtcController.initializeStreamer(videoCameraCapturer)
         if (videoCameraCapturer != null) {
-            peerConnectionFactory.setVideoHwAccelerationOptions(eglBase.eglBaseContext,
-                    eglBase.eglBaseContext)
-            videoSource = peerConnectionFactory.createVideoSource(videoCameraCapturer)
-            localVideoTrack = peerConnectionFactory.createVideoTrack(
-                    counter.getAndIncrement().toString(), videoSource)
             enableVideo(cameraEnabled, videoCameraCapturer)
         }
-
-        audioSource = peerConnectionFactory.createAudioSource(getAudioMediaConstraints())
-        localAudioTrack = peerConnectionFactory.createAudioTrack(getCounterStringValueAndIncrement(), audioSource)
     }
 
     fun attachService(service: StreamingService) {
         this.service = service
-        fetchIceServersUsecase.go(onServersRetrieved(), onCriticalError())
+        this.webRtcController.fetchIceServers(onServersRetrieved(), onCriticalError())
     }
 
     private fun onServersRetrieved(): (FetchIceServerResponse) -> Unit {
         return { response ->
-            initializeWebRtcStreamer(response.iceServers, object : WebRtcOfferingPartyHandler.Listener {
-                override fun onError(error: String) {
-                    logger.e("WEBRTC: Error in offering party: $error")
-                }
+            initializeWebRtcStreamer(response.iceServers,
+                    object : WebRtcOfferingPartyHandler.Listener {
+                        override fun onError(error: String) {
+                            logger.e("WEBRTC: Error in offering party: $error")
+                        }
 
-                override fun onOfferRemoteDescription(localSessionDescription: SessionDescription) {
-                    logger.w("WEBRTC: onOfferRemoteDescription $localSessionDescription")
-                    listenForAnswers()
-                    sendOffer(localSessionDescription)
-                }
-            })
+                        override fun onOfferRemoteDescription(
+                                localSessionDescription: SessionDescription) {
+                            logger.w("WEBRTC: onOfferRemoteDescription $localSessionDescription")
+                            listenForAnswers()
+                            sendOffer(localSessionDescription)
+                        }
+                    })
         }
     }
 
 
     private fun initializeWebRtcStreamer(servers: List<DscIceServer>,
                                          listener: WebRtcOfferingPartyHandler.Listener) {
-        val iceServers = servers.map { PeerConnection.IceServer.builder(it.uri).createIceServer() }
-        peerConnection = peerConnectionFactory.createPeerConnection(iceServers,
-                object : PeerConnection.Observer {
-                    override fun onIceCandidate(iceCandidate: IceCandidate?) {
-                        logger.w("PEER: onIceCandidate")
-                        sendIceCandidate(iceCandidate)
-                    }
 
-                    override fun onDataChannel(p0: DataChannel?) {
-                        logger.w("PEER: onDataChannel")
+        val peerConnection = webRtcController.createStreamerConnection(servers,
+                connectionChange = {
+                    if (it == PeerConnection.IceConnectionState.DISCONNECTED) {
+                        restart()
                     }
-
-                    override fun onIceConnectionReceivingChange(p0: Boolean) {
-                        logger.w("PEER: onIceConnectionReceivingChange")
-                    }
-
-                    override fun onIceConnectionChange(
-                            iceConnectionState: PeerConnection.IceConnectionState?) {
-                        logger.w("PEER: onIceConnectionChange")
-                        logger.w("WEBRTC: onIceConnectionChange $iceConnectionState")
-                        if (iceConnectionState == PeerConnection.IceConnectionState.DISCONNECTED) {
-                            restart()
-                        }
-                        mainThreadHandler.post {
-                            serviceListener?.connectionStateChange(iceConnectionState)
-                        }
-                    }
-
-                    override fun onIceGatheringChange(p0: PeerConnection.IceGatheringState?) {
-                        logger.w("PEER: onIceGatheringChange")
-                    }
-
-                    override fun onAddStream(p0: MediaStream?) {
-                        logger.w("PEER: onAddStream")
-                    }
-
-                    override fun onSignalingChange(p0: PeerConnection.SignalingState?) {
-                        logger.w("PEER: onSignalingChange")
-                    }
-
-                    override fun onIceCandidatesRemoved(iceCandidates: Array<out IceCandidate>?) {
-                        logger.w("PEER: onIceCandidatesRemoved")
-                        removeIceCandidates(iceCandidates)
-                    }
-
-                    override fun onRemoveStream(p0: MediaStream?) {
-                        logger.w("PEER: onRemoveStream")
-                    }
-
-                    override fun onRenegotiationNeeded() {
-                        logger.w("PEER: onRenegotiationNeeded")
-                    }
-
-                    override fun onAddTrack(p0: RtpReceiver?, p1: Array<out MediaStream>?) {
-                        logger.w("PEER: onAddTrack")
-                    }
+                    serviceListener?.connectionStateChange(it)
                 })
 
-        isPeerConnectionInitialized.set(true)
-
-        val localMediaStream = peerConnectionFactory.createLocalMediaStream(getCounterStringValueAndIncrement())
-        localMediaStream.addTrack(localAudioTrack)
-        localVideoTrack?.let { localMediaStream.addTrack(it) }
-
-        peerConnection?.addStream(localMediaStream)
         offeringPartyHandler = WebRtcOfferingPartyHandler(logger, peerConnection!!, listener)
-
 
         if (shouldCreateOffer.get()) createOffer()
         finishedInitializing.set(true)
     }
 
-    private fun restart(){
+    private fun restart() {
         singleThreadExecutor.execute {
             offeringPartyHandler.createOffer(getOfferAnswerRestartConstraints())
         }
     }
 
-    private fun sendIceCandidate(iceCandidate: IceCandidate?) {
-        iceCandidate?.let { ice ->
-            val candidate = DscIceCandidate(ice.sdpMid, ice.sdpMLineIndex, ice.sdp)
-            sendIceCandidateUsecase.go(SendIceCandidateRequest(candidate),
-                    done = { logger.i("Added IceCandidate $candidate") },
-                    fail = { logger.w("Unable to add IceCandidate $candidate") })
-        }
-    }
-
-    private fun removeIceCandidates(iceCandidates: Array<out IceCandidate>?) {
-        iceCandidates?.let { ices ->
-            val candidates = ices.map { DscIceCandidate(it.sdpMid, it.sdpMLineIndex, it.sdp) }
-                    .toTypedArray()
-            removeIceCandidateUsecase.go(RemoveIceCandidateRequest(candidates),
-                    done = { logger.i("Removed IceCandidate $candidates") },
-                    fail = { logger.w("Unable to Remove IceCandidates $candidates") })
-        }
-    }
-
     private fun sendOffer(localDescription: SessionDescription) {
-        val recipientUuid = remoteUuid ?: throw IllegalArgumentException("Remote uuid should be set first")
-        val session = DscSessionDescription(localDescription.type.ordinal, localDescription.description)
+        val recipientUuid = remoteUuid ?: throw IllegalArgumentException(
+                "Remote uuid should be set first")
+        val session = DscSessionDescription(localDescription.type.ordinal,
+                localDescription.description)
         createOfferUsecase.go(CreateOfferRequest(recipientUuid, session), onCriticalError())
     }
 
@@ -234,84 +121,19 @@ class StreamingController @Inject constructor(
     }
 
     fun detachViews() {
-        detachLocalView()
+        webRtcController.detachViews()
     }
 
     fun offerDevice(deviceUuid: String) {
         remoteUuid = deviceUuid
-        listenForIceCandidate(deviceUuid)
+        webRtcController.listenForIceCandidate(deviceUuid, onCriticalError())
 
         if (finishedInitializing.get()) createOffer() else shouldCreateOffer.set(true)
 
     }
 
-    /**
-     * Adds ice candidate from remote party to webrtc client
-     */
-    private fun addRemoteIceCandidate(iceCandidate: IceCandidate) {
-        singleThreadExecutor.execute {
-            peerConnection?.addIceCandidate(iceCandidate)
-        }
-    }
-
-    /**
-     * Removes ice candidates
-     */
-    private fun removeRemoteIceCandidate(iceCandidates: Array<IceCandidate>) {
-        singleThreadExecutor.execute {
-            peerConnection?.removeIceCandidates(iceCandidates)
-        }
-    }
-
-    private fun listenForIceCandidate(deviceUuid: String) {
-        listenForIceServersUsecase.go(ListenForIceCandidatesRequest(deviceUuid), { response ->
-
-            val candidate = IceCandidate(response.candidate.sdpMid, response.candidate.sdpMLineIndex, response.candidate.sdp)
-            if (response.shouldAdd) {
-                // Add DscIceCandidate to webRtc
-                addRemoteIceCandidate(candidate)
-            } else {
-                // Remove DscIceCandidate from webRtc
-                removeRemoteIceCandidate(arrayOf(candidate))
-            }
-
-        }, onCriticalError())
-    }
-
     fun attachLocalView(localView: SurfaceViewRenderer) {
-        mainThreadHandler.post {
-            localView.init(eglBase.eglBaseContext, null)
-            this@StreamingController.localView = localView
-            singleThreadExecutor.execute {
-                localVideoTrack?.addSink(localView)
-            }
-        }
-    }
-
-    private fun detachLocalView() {
-        singleThreadExecutor.execute {
-            localVideoTrack?.removeSink(localView)
-        }
-        mainThreadHandler.post {
-            localView?.release()
-            localView = null
-        }
-    }
-
-
-    private fun dispose() {
-        singleThreadExecutor.execute {
-            if (isPeerConnectionInitialized.get()) {
-                peerConnection?.close()
-                peerConnection?.dispose()
-            }
-            eglBase.release()
-            audioSource.dispose()
-            videoCameraCapturer?.dispose()
-            videoSource?.dispose()
-            peerConnectionFactory.dispose()
-        }
-        singleThreadExecutor.shutdown()
+        webRtcController.attachLocalView(localView)
     }
 
     /**
@@ -322,7 +144,9 @@ class StreamingController @Inject constructor(
     @Suppress("unused", "ProtectedInFinal")
     protected fun finalize() {
         if (!singleThreadExecutor.isShutdown) {
-            dispose()
+            webRtcController.dispose()
+            videoCameraCapturer?.dispose()
+            singleThreadExecutor.shutdown()
         }
     }
 
@@ -376,12 +200,6 @@ class StreamingController @Inject constructor(
         singleThreadExecutor.execute {
             videoCameraCapturer?.switchCamera(cameraSwitchHandler)
         }
-    }
-
-    private fun getCounterStringValueAndIncrement() = counter.getAndIncrement().toString()
-
-    private fun getAudioMediaConstraints() = MediaConstraints().apply {
-        addConstraints(audioBooleanConstraints, audioIntegerConstraints)
     }
 
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {

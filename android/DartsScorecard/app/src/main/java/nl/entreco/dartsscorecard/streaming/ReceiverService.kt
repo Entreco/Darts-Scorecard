@@ -82,14 +82,14 @@ class ReceiverService: Service() {
         receivingController.attachRemoteView(remoteView)
     }
 
-    fun onStop()= stopSelf()
+    fun onStop() {
+        hideBackground()
+        stopSelf()
+    }
 
     fun detachViews() {
         receivingController.detachViews()
     }
-
-//    fun getRemoteUuid() = receivingController.remoteUuid
-
 
     fun showBackground(){
         registerChannel()

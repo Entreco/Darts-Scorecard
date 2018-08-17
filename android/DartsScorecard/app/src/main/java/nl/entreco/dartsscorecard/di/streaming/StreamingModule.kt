@@ -3,14 +3,43 @@ package nl.entreco.dartsscorecard.di.streaming
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
+import nl.entreco.dartsscorecard.streaming.WebRtcController
+import nl.entreco.domain.streaming.ice.FetchIceServerUsecase
+import nl.entreco.domain.streaming.ice.ListenForIceCandidatesUsecase
+import nl.entreco.domain.streaming.p2p.RemoveIceCandidateUsecase
+import nl.entreco.domain.streaming.p2p.SendIceCandidateUsecase
+import nl.entreco.shared.log.Logger
 import org.webrtc.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
 @Module
 class StreamingModule {
 
     private val factoryInitialized = AtomicBoolean(false)
+
+    @Provides
+    @StreamingScope
+    fun provideSingleThreadExecutor(): ExecutorService {
+        return Executors.newSingleThreadExecutor()
+    }
+
+    @Provides
+    @StreamingScope
+    fun provideWebRtcController(@ApplicationScope logger: Logger,
+                                @StreamingScope singleThread : ExecutorService,
+                                @ServiceScope sendIceCandidateUsecase: SendIceCandidateUsecase,
+                                @ServiceScope removeIceCandidateUsecase: RemoveIceCandidateUsecase,
+                                @ServiceScope fetchIceServersUsecase: FetchIceServerUsecase,
+                                @ServiceScope listenForIceServersUsecase: ListenForIceCandidatesUsecase,
+                                @StreamingScope peerConnectionFactory: PeerConnectionFactory
+    ): WebRtcController {
+        return WebRtcController(logger, singleThread, sendIceCandidateUsecase, removeIceCandidateUsecase,
+                fetchIceServersUsecase, listenForIceServersUsecase, peerConnectionFactory)
+    }
 
     @Provides
     @StreamingScope

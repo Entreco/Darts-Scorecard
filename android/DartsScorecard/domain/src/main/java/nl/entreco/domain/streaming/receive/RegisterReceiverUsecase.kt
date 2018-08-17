@@ -11,6 +11,8 @@ class RegisterReceiverUsecase @Inject constructor(
         private val signallingRepository: SignallingRepository,
         bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
+    private var connectCode = ""
+
     fun go(request: RegisterReceiverRequest, done: (RegisterReceiverResponse) -> Unit,
            fail: (Throwable) -> Unit) {
 
@@ -29,7 +31,7 @@ class RegisterReceiverUsecase @Inject constructor(
         // done
         // Start UseCase that listens for Disconnects
         // signallingRepository.listenForDisconnectOrders(request.onDisconnect)
-        val connectCode = (0..4).map { Random().nextInt(9) }.joinToString("") { it.toString() }
+        connectCode = (0..4).map { Random().nextInt(9) }.joinToString("") { it.toString() }
         signallingRepository.setReceiverOnline(
                 connectCode,
                 onFoundDevice(done),
