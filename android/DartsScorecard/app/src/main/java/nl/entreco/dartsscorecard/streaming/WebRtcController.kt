@@ -57,9 +57,8 @@ class WebRtcController @Inject constructor(
 
     fun initializeStreamer(videoCameraCapturer: CameraVideoCapturer?) {
         if (videoCameraCapturer != null) {
-            peerConnectionFactory.setVideoHwAccelerationOptions(eglBase.eglBaseContext,
-                    eglBase.eglBaseContext)
-            videoSource = peerConnectionFactory.createVideoSource(videoCameraCapturer)
+//            peerConnectionFactory.setVideoHwAccelerationOptions(eglBase.eglBaseContext, eglBase.eglBaseContext)
+            videoSource = peerConnectionFactory.createVideoSource(true)
             localVideoTrack = peerConnectionFactory.createVideoTrack(
                     counter.getAndIncrement().toString(), videoSource)
         }
