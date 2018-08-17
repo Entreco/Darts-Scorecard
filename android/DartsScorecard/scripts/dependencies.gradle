@@ -44,7 +44,7 @@ ext {
     fabricVersion = '1.25.1'
 
     androidCompileSdkVersion = 27
-    androidMinSdkVersion = 24
+    androidMinSdkVersion = 23
     androidTargetSdkVersion = 27
 
     versionCode = versionCode()

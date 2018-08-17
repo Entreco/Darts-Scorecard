@@ -8,6 +8,7 @@ apply from: '../scripts/coverage.gradle'
 apply from: '../scripts/android_common.gradle'
 
 android {
+
     def config = rootProject.extensions.getByName("ext")
     defaultConfig {
         applicationId "nl.entreco.dartsscorecard"
@@ -36,7 +37,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(":shared")
     implementation project(':domain')

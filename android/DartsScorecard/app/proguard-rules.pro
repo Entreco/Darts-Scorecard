@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepattributes Signature
+-keepattributes Signature,InnerClasses
 
 # Crashlytics
 -keepattributes *Annotation*
@@ -51,7 +51,10 @@
 
 # WebRtc
 -keep class org.webrtc.** { *; }
+-dontnote org.apache.http.**
 -dontwarn org.apache.http.**
+-dontnote android.net.http.*
 -dontwarn android.net.http.**
--dontwarn org.chromium.build.**
--dontwarn org.webrtc.Logging**
+-dontnote org.apache.commons.codec.**
+-dontwarn com.google.android.gms.**
+

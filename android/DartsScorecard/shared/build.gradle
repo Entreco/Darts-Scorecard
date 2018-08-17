@@ -10,8 +10,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     // Annotation Processing
     kapt "com.github.bumptech.glide:compiler:$glide"
 
