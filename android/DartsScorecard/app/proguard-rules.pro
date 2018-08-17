@@ -45,16 +45,6 @@
   public *;
 }
 
-# Databinding
--dontwarn android.databinding.**
--keep class android.databinding.** { *; }
-
 # WebRtc
 -keep class org.webrtc.** { *; }
--dontnote org.apache.http.**
--dontwarn org.apache.http.**
--dontnote android.net.http.*
--dontwarn android.net.http.**
--dontnote org.apache.commons.codec.**
--dontwarn com.google.android.gms.**
 
