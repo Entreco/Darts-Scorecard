@@ -59,7 +59,13 @@ class SwipeToDeleteCallbackTest {
     class TestSwipeToDeleteCallback(context: Context) : SwipeToDeleteCallback(context){
         val swiped = AtomicBoolean(false)
         val drawed = AtomicBoolean(false)
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+
+        override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder,
+                            p2: RecyclerView.ViewHolder): Boolean {
+            return false
+        }
+
+        override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
             swiped.set(true)
         }
 
