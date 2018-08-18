@@ -9,6 +9,7 @@ import nl.entreco.dartsscorecard.streaming.constraints.addConstraints
 import nl.entreco.domain.streaming.ice.*
 import nl.entreco.shared.log.Logger
 import org.webrtc.*
+import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class StreamingController @Inject constructor(
     private var service: StreamingService? = null
     var serviceListener: StreamingServiceListener? = null
     private var remoteUuid: String? = null
+
+    private var dataChannel : DataChannel? = null
 
     private var finishedInitializing = AtomicBoolean(false)
     private var shouldCreateOffer = AtomicBoolean(false)
@@ -85,6 +88,9 @@ class StreamingController @Inject constructor(
                     serviceListener?.connectionStateChange(it)
                 })
 
+        val init = DataChannel.Init()
+        init.id = 501
+        dataChannel = peerConnection?.createDataChannel("match", init)
         offeringPartyHandler = WebRtcOfferingPartyHandler(logger, peerConnection!!, listener)
 
         if (shouldCreateOffer.get()) createOffer()
@@ -144,6 +150,7 @@ class StreamingController @Inject constructor(
     @Suppress("unused", "ProtectedInFinal")
     protected fun finalize() {
         if (!singleThreadExecutor.isShutdown) {
+            dataChannel?.dispose()
             webRtcController.dispose()
             videoCameraCapturer?.dispose()
             singleThreadExecutor.shutdown()
@@ -204,6 +211,11 @@ class StreamingController @Inject constructor(
 
     fun toggleMic() {
         webRtcController.toggleMic()
+    }
+
+    fun sendMessage(msg: String) {
+        val buffer = DataChannel.Buffer(ByteBuffer.wrap(msg.toByteArray()), false)
+        dataChannel?.send(buffer)
     }
 
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {

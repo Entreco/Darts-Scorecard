@@ -13,6 +13,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
 import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
@@ -210,5 +211,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         load = null
         loaders = null
         super.onCleared()
+    }
+
+    fun addRemoteListener(listener: ControlStreamViewModel) {
+        gameListeners.playerListeners.add(listener as PlayerListener)
+        gameListeners.scoreListeners.add(listener as ScoreListener)
     }
 }

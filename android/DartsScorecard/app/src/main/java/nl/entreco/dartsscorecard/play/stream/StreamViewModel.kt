@@ -159,6 +159,10 @@ class StreamViewModel @Inject constructor(
         service?.toggleMicrophone()
     }
 
+    fun sendMessage(msg: String) {
+        service?.sendMessage(msg)
+    }
+
     fun onStart() {
         service?.hideBackground()
     }

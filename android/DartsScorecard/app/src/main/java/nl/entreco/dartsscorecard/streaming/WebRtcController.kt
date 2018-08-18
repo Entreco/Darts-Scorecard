@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.streaming
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import com.google.gson.GsonBuilder
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
 import nl.entreco.dartsscorecard.di.service.ServiceScope
 import nl.entreco.dartsscorecard.di.streaming.StreamingScope
@@ -17,6 +18,7 @@ import nl.entreco.domain.streaming.p2p.SendIceCandidateRequest
 import nl.entreco.domain.streaming.p2p.SendIceCandidateUsecase
 import nl.entreco.shared.log.Logger
 import org.webrtc.*
+import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -100,6 +102,30 @@ class WebRtcController @Inject constructor(
 
                     override fun onDataChannel(p0: DataChannel?) {
                         logger.w("PEER: onDataChannel")
+                        p0?.registerObserver(object : DataChannel.Observer{
+                            override fun onMessage(p0: DataChannel.Buffer?) {
+                                logger.w("PEER: onDataChannel onMessage: $p0")
+                                val msg1 = p0?.data?.toString()
+                                logger.w("PEER: onDataChannel onMessage: $msg1")
+                                val ba = ByteArray(p0?.data?.capacity() ?: 0)
+                                p0?.data?.get(ba)
+                                val msg2 = String(ba)
+                                logger.w("PEER: onDataChannel onMessage: $msg2")
+
+                                val msg3 = p0?.data?.array()?.let {
+                                    String(it)
+                                }
+                                logger.w("PEER: onDataChannel onMessage: $msg3")
+                            }
+
+                            override fun onBufferedAmountChange(p0: Long) {
+                                logger.w("PEER: onDataChannel onBufferedAmountChange: $p0")
+                            }
+
+                            override fun onStateChange() {
+                                logger.w("PEER: onDataChannel onStateChange")
+                            }
+                        })
                     }
 
                     override fun onIceConnectionReceivingChange(p0: Boolean) {
@@ -114,6 +140,7 @@ class WebRtcController @Inject constructor(
                         mainThreadHandler.post {
                             connectionChange(iceConnectionState)
                         }
+
                     }
 
                     override fun onIceGatheringChange(p0: PeerConnection.IceGatheringState?) {
@@ -162,7 +189,6 @@ class WebRtcController @Inject constructor(
                 getCounterStringValueAndIncrement())
         localMediaStream.addTrack(localAudioTrack)
         localVideoTrack?.let { localMediaStream.addTrack(it) }
-
         peerConnection?.addStream(localMediaStream)
 
         return peerConnection

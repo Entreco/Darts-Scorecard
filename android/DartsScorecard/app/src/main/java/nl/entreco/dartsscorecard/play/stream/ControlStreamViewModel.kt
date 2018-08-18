@@ -9,13 +9,19 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.dartsscorecard.play.Play01Navigator
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.streaming.ConnectionState
 import nl.entreco.domain.streaming.Unknown
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 
-class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
+class ControlStreamViewModel @Inject constructor() : BaseViewModel(), ScoreListener, PlayerListener {
 
     private val isStreaming = AtomicBoolean(false)
     val micEnabled = ObservableBoolean(true)
@@ -61,6 +67,24 @@ class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
     @StringRes
     fun menuTitle(): Int {
         return if (isStreaming.get()) R.string.stream_stop else R.string.stream_start
+    }
+
+    private var streamController : StreamController? = null
+
+    fun setStreamController(streamController: StreamController?) {
+        this.streamController = streamController
+    }
+
+    override fun onDartThrown(turn: Turn, by: Player) {
+        this.streamController?.sendMessage("turn $turn by $by")
+    }
+
+    override fun onScoreChange(scores: Array<Score>, by: Player) {
+        this.streamController?.sendMessage("score $scores by $by")
+    }
+
+    override fun onNext(next: Next) {
+        this.streamController?.sendMessage("next $next")
     }
 
 }

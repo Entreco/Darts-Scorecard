@@ -21,7 +21,9 @@ import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
+import nl.entreco.domain.streaming.Connected
 import nl.entreco.domain.streaming.ConnectionState
+import org.webrtc.PeerConnection
 
 class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
@@ -66,6 +68,13 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
     override fun onConnectionStateChanged(connectionState: ConnectionState) {
         controlStreamViewModel.connectionState(connectionState)
+        when(connectionState) {
+            // Add DataMessenger to ScoreViewModel
+            is Connected -> {
+                controlStreamViewModel.setStreamController(navigator.streamController())
+                viewModel.addRemoteListener(controlStreamViewModel)
+            }
+        }
     }
 
     override fun onDestroy() {

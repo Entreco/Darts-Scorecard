@@ -124,6 +124,10 @@ class StreamFragment : BaseFragment(), StreamController, CameraVideoCapturer.Cam
         viewModel.toggleMic()
     }
 
+    override fun sendMessage(msg: String) {
+        viewModel.sendMessage(msg)
+    }
+
     override fun onCameraSwitchDone(p0: Boolean) {
         isShowingFrontCamera.set(!isShowingFrontCamera.get())
         activity?.invalidateOptionsMenu()

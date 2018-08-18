@@ -102,6 +102,10 @@ class StreamingService : Service() {
 
     fun toggleMicrophone() = streamingController.toggleMic()
 
+    fun sendMessage(msg: String) {
+        streamingController.sendMessage(msg)
+    }
+
     fun showBackground() {
         registerChannel()
         notificationManager.notify(NOTIF_ID, notif.build())
