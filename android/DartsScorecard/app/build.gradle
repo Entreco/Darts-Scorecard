@@ -6,6 +6,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply from: '../scripts/coverage.gradle'
 apply from: '../scripts/android_common.gradle'
+apply from: '../scripts/versioning.gradle'
 
 android {
 
