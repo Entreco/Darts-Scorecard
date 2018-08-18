@@ -27,9 +27,7 @@ class StreamFragment : BaseFragment(), StreamController, CameraVideoCapturer.Cam
     }
 
     private lateinit var binding: FragmentStreamBinding
-    private val component by componentProvider {
-        it.plus(StreamModule(this, activityListener, binding.localVideoView))
-    }
+    private val component by componentProvider { it.plus(StreamModule(this, activityListener, binding.localVideoView)) }
     private val viewModel by lazy { component.viewModel() }
     private val permissionHelper by lazy { component.permissionHelper() }
 
@@ -44,6 +42,8 @@ class StreamFragment : BaseFragment(), StreamController, CameraVideoCapturer.Cam
     override fun onDetach() {
         super.onDetach()
         activityListener = null
+        binding.localVideoView.clearImage()
+        binding.localVideoView.release()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -118,6 +118,10 @@ class StreamFragment : BaseFragment(), StreamController, CameraVideoCapturer.Cam
 
     override fun toggleCamera() {
         viewModel.switchCamera()
+    }
+
+    override fun toggleMic() {
+        viewModel.toggleMic()
     }
 
     override fun onCameraSwitchDone(p0: Boolean) {

@@ -202,6 +202,10 @@ class StreamingController @Inject constructor(
         }
     }
 
+    fun toggleMic() {
+        webRtcController.toggleMic()
+    }
+
     private fun getOfferAnswerConstraints() = MediaConstraints().apply {
         addConstraints(offerAnswerConstraints)
     }

@@ -102,7 +102,6 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_stream -> {
-                controlStreamViewModel.sendDisconnect(navigator)
                 controlStreamViewModel.toggleStream(navigator, animator)
                 invalidateOptionsMenu()
             }

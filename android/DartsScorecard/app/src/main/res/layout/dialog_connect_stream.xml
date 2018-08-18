@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.circularreveal.CircularRevealLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Animation.AppCompat.Dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/def"
+    android:orientation="vertical"
+    android:padding="@dimen/large">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stream to TV"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Experimental Feature"
+        android:layout_marginBottom="@dimen/def"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/def"
+        app:boxBackgroundColor="@color/bdo_red_dark"
+        android:hint="@string/enter_tv_code"
+        app:hintAnimationEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enter"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLength="6"
+            android:textSize="40sp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+</android.support.design.circularreveal.CircularRevealLinearLayout>

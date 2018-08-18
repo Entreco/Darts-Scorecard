@@ -235,6 +235,12 @@ class WebRtcController @Inject constructor(
         }
     }
 
+    fun toggleMic(){
+        singleThreadExecutor.execute {
+            localAudioTrack.setEnabled(!localAudioTrack.enabled())
+        }
+    }
+
     fun attachLocalView(localView: SurfaceViewRenderer) {
         mainThreadHandler.post {
             localView.init(eglBase.eglBaseContext, null)
@@ -250,6 +256,7 @@ class WebRtcController @Inject constructor(
             localVideoTrack?.removeSink(localView)
         }
         mainThreadHandler.post {
+            localView?.clearImage()
             localView?.release()
             localView = null
         }
@@ -268,7 +275,7 @@ class WebRtcController @Inject constructor(
 
     private fun detachRemoteView() {
         mainThreadHandler.post {
-            remoteView?.visibility = View.GONE
+            remoteView?.clearImage()
             remoteView?.release()
             remoteView = null
         }

@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.stream
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
 
     private val isStreaming = AtomicBoolean(false)
+    val micEnabled = ObservableBoolean(true)
+    val isShowingFront = ObservableBoolean(true)
     val state = ObservableField<ConnectionState>(Unknown)
 
     fun toggleStream(navigator: Play01Navigator, animator: Play01Animator) {
@@ -24,6 +27,7 @@ class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
             isStreaming.set(false)
             animator.expand()
             navigator.detachVideoStream()
+            sendDisconnect(navigator)
         } else {
             isStreaming.set(true)
             animator.collapse()
@@ -36,7 +40,13 @@ class ControlStreamViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun toggleCamera(navigator: Play01Navigator){
+        isShowingFront.set(!isShowingFront.get())
         navigator.streamController()?.toggleCamera()
+    }
+
+    fun toggleMic(navigator: Play01Navigator){
+        micEnabled.set(!micEnabled.get())
+        navigator.streamController()?.toggleMic()
     }
 
     fun connectionState(connectionState: ConnectionState) {

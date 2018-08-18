@@ -100,6 +100,8 @@ class StreamingService : Service() {
             handler: CameraVideoCapturer.CameraSwitchHandler? = null) = streamingController.switchCamera(
             handler)
 
+    fun toggleMicrophone() = streamingController.toggleMic()
+
     fun showBackground() {
         registerChannel()
         notificationManager.notify(NOTIF_ID, notif.build())

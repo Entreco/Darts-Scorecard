@@ -155,6 +155,10 @@ class StreamViewModel @Inject constructor(
         service?.switchCamera(cameraSwitchHandler)
     }
 
+    fun toggleMic(){
+        service?.toggleMicrophone()
+    }
+
     fun onStart() {
         service?.hideBackground()
     }

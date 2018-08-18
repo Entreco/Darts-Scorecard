@@ -1,7 +1,9 @@
 package nl.entreco.dartsscorecard.base
 
+import android.support.design.widget.TextInputEditText
 import android.support.v7.app.AlertDialog
 import android.text.InputType
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import nl.entreco.dartsscorecard.R
@@ -41,12 +43,15 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder)
     private fun moreThanOneTeam(teams: Array<Team>) = teams.size > 1
 
     fun showStreamDialog(done: (String) -> Unit, cancel: ()->Unit) {
-        val editText : EditText = createCodeEditText()
+        val view = createCodeEditText()
+        val et = view.findViewById<TextInputEditText>(R.id.enter)
+        et.maxLines = 1
+        et.inputType = InputType.TYPE_CLASS_NUMBER
+
         builder
-                .setTitle(R.string.streaming_dialog_title)
-                .setView(editText)
+                .setView(view)
                 .setPositiveButton(R.string.live_stream_connect) { dialog, _ ->
-                    done(editText.text.toString())
+                    done(et.text.toString())
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -57,11 +62,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder)
                 .show()
     }
 
-    private fun createCodeEditText(): EditText {
-        val edittext = EditText(builder.context)
-        edittext.setHint(R.string.enter_tv_code)
-        edittext.maxLines = 1
-        edittext.inputType = InputType.TYPE_CLASS_NUMBER
-        return edittext
+    private fun createCodeEditText(): View {
+        return LayoutInflater.from(builder.context).inflate(R.layout.dialog_connect_stream, null, false)
     }
 }

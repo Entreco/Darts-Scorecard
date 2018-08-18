@@ -64,7 +64,7 @@
                     android:layout_margin="@dimen/def"
                     android:background="@null"
                     android:onClick="@{() -> controlStreamViewModel.toggleCamera(navigator)}"
-                    android:src="@drawable/ic_camera_rear" />
+                    android:src="@{controlStreamViewModel.isShowingFront ? @drawable/ic_camera_front : @drawable/ic_camera_rear}" />
 
                 <ImageView
                     android:id="@+id/control2"
@@ -72,7 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/def"
                     android:background="@null"
-                    android:src="@drawable/ic_mute" />
+                    android:onClick="@{() -> controlStreamViewModel.toggleMic(navigator)}"
+                    android:src="@{controlStreamViewModel.micEnabled ? @drawable/ic_mute : @drawable/ic_unmute}" />
 
             </LinearLayout>
 
