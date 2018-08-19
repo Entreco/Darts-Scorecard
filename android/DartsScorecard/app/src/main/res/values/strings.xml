@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Darts Scorecard</string>
+    <string name="app_name" translatable="false">Darts Scorecard</string>
 
     <!-- General Darts -->
     <string name="first_to">First to %1$s</string>
@@ -99,8 +99,8 @@
     <string name="enter_tv_code">Enter code</string>
 
     <!-- Streaming Service -->
-    <string name="streaming_channel_name">Archive stats</string>
-    <string name="streaming_channel_description">Calculating stats &amp; averages</string>
+    <string name="streaming_channel_name">Streaming</string>
+    <string name="streaming_channel_description">Your camera output is being streamed to the TV</string>
     <string name="streaming_notif_title">Streaming to Television</string>
 
     <!-- Profile -->
