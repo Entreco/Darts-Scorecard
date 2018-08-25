@@ -95,7 +95,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder,
                 .create()
                 .show()
     }
-    
+
     private fun tryLaunchMarket(context: Context) {
         val clean = context.packageName.removeSuffix(".dev")
         val uri = Uri.parse("market://details?id=$clean")
