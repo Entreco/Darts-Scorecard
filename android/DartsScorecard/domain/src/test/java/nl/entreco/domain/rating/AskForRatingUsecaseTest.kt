@@ -34,14 +34,14 @@ class AskForRatingUsecaseTest {
     @Test
     fun `it should ask for rating when not asked before and more than 3 games finished`() {
         givenRatedBefore(false)
-        givenGamesFinished(3)
+        givenGamesFinished(5)
         thenShouldAskForRating(true)
     }
 
     @Test
     fun `it should NOT ask for rating when asked before and more than 3 games finished`() {
         givenRatedBefore(true)
-        givenGamesFinished(3)
+        givenGamesFinished(5)
         thenShouldAskForRating(false)
     }
 

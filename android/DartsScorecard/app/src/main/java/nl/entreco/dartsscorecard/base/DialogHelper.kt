@@ -80,7 +80,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder,
         builder
                 .setTitle(R.string.rating_title)
                 .setMessage(R.string.rating_message)
-                .setView(createRatingBar())
+//                .setView(createRatingBar())
                 .setPositiveButton(android.R.string.ok) { dialog, _ ->
                     dialog.dismiss()
                     ratingPrefRepository.neverAskAgain()

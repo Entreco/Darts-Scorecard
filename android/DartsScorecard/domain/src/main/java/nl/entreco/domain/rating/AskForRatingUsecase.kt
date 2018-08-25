@@ -17,7 +17,7 @@ class AskForRatingUsecase @Inject constructor(
             var shouldRateApp = false
             if (ratingPrefRepository.shouldAskToRateApp()) {
                 val finishedGames = gameRepository.countFinishedGames()
-                shouldRateApp = finishedGames >= 3
+                shouldRateApp = finishedGames >= 5
             }
             onUi { done(AskForRatingResponse(shouldRateApp)) }
         }, fail)
