@@ -15,6 +15,7 @@ import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
@@ -36,6 +37,7 @@ class Play01ViewModelUndoTest {
     @Mock private lateinit var mockResponse: Play01Response
     @Mock private lateinit var mockAdProvider: AdViewModel
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
+    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>
     @Mock private lateinit var mockLoaders: GameLoadedNotifier<Play01Response>
@@ -82,7 +84,7 @@ class Play01ViewModelUndoTest {
         whenever(mockResponse.teamIds).thenReturn("")
         whenever(mockResponse.settings).thenReturn(mockSettings)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

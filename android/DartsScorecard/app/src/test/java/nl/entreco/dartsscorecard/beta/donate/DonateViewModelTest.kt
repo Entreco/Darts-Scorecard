@@ -253,7 +253,7 @@ class DonateViewModelTest {
     }
 
     private fun whenMakingDonationFails() {
-        subject.onMakeDonationFailed()
+        subject.onMakeDonationFailed(true)
     }
 
     private fun whenConsumingDonationSucceeds(productId: String, responseCode: Int) {

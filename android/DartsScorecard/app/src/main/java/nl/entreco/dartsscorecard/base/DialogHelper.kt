@@ -80,7 +80,6 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder,
         builder
                 .setTitle(R.string.rating_title)
                 .setMessage(R.string.rating_message)
-//                .setView(createRatingBar())
                 .setPositiveButton(android.R.string.ok) { dialog, _ ->
                     dialog.dismiss()
                     ratingPrefRepository.neverAskAgain()
@@ -96,17 +95,7 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder,
                 .create()
                 .show()
     }
-
-    private fun createRatingBar() : RatingBar {
-        val ratingBar = RatingBar(builder.context)
-        ratingBar.setPadding(16, 0, 16, 0)
-        ratingBar.numStars = 5
-        ratingBar.stepSize = 1F
-        ratingBar.rating = 5F
-        ratingBar.isEnabled = false
-        return ratingBar
-    }
-
+    
     private fun tryLaunchMarket(context: Context) {
         val clean = context.packageName.removeSuffix(".dev")
         val uri = Uri.parse("market://details?id=$clean")
