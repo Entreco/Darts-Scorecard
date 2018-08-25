@@ -6,9 +6,11 @@ import com.google.firebase.firestore.PropertyName
 
 @Keep
 @IgnoreExtraProperties
-internal data class StreamerFirebaseData(
+internal data class ReceiverFirebaseApiData(
+
         @PropertyName("code")
-        val code: String,
+        val code: String = "",
+
         @PropertyName("inCall")
         val inCall: Boolean = false
 )

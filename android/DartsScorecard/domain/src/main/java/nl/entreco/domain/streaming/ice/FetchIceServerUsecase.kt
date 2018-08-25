@@ -21,5 +21,4 @@ class FetchIceServerUsecase @Inject constructor(
         }, fail)
 
     }
-
 }

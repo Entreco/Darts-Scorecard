@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 @IgnoreExtraProperties
-internal class IceCandidateFirebaseApiData {
+internal data class IceCandidateFirebaseApiData(
 
     @SerializedName("sdpMid")
-    var sdpMid: String = ""
+    var sdpMid: String = "",
 
     @SerializedName("sdpMLineIndex")
-    var sdpMLineIndex: Int = -1
+    var sdpMLineIndex: Int = -1,
 
     @SerializedName("sdp")
     var sdp: String = ""
-}
+)

@@ -51,7 +51,6 @@ class SelectProfileActivity : ViewModelActivity() {
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.isDrawingCacheEnabled = true
         addSwipeToDelete(binding, recyclerView)
         recyclerView.adapter = adapter
     }

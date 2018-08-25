@@ -1,7 +1,6 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.animation.ValueAnimator
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.databinding.BindingAdapter
 import android.graphics.Color
@@ -51,7 +50,8 @@ object TeamScoreBindings {
         val diff = oldScore - score
         when (diff) {
             180 -> handle180(view)
-            0 -> { /* nothing */ }
+            0 -> { /* nothing */
+            }
             else -> clear(view)
         }
     }
@@ -105,9 +105,12 @@ object TeamScoreBindings {
         view.setTarget(score.toLong())
         view.measure(0, 0)
         if (score <= 0) {
-            view.animate().translationX(view.measuredWidth.toFloat() * 3).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
+            view.animate().translationX(view.measuredWidth.toFloat() * 3)
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .setDuration(DEFAULT_ANIMATION_TIME).start()
         } else {
-            view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
+            view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator())
+                    .setDuration(DEFAULT_ANIMATION_TIME).start()
             view.setTextColor(fromAttr(view.context, R.attr.scoreText))
         }
     }
@@ -122,7 +125,8 @@ object TeamScoreBindings {
             target = if (w == 0F) 50F else w
         }
 
-        view.animate().translationX(target).setInterpolator(AccelerateDecelerateInterpolator()).setDuration(DEFAULT_ANIMATION_TIME).start()
+        view.animate().translationX(target).setInterpolator(AccelerateDecelerateInterpolator())
+                .setDuration(DEFAULT_ANIMATION_TIME).start()
     }
 
     @ColorInt
@@ -147,10 +151,12 @@ object TeamScoreBindings {
             val startColor = colorToHex(view.currentTextColor)
             val endColor = if (isCurrentTeam) "#FFFFFFFF" else "#aaFFFFFF"
             if (startColor != endColor) {
-                val valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f).setDuration(DEFAULT_ANIMATION_TIME)
+                val valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
+                        .setDuration(DEFAULT_ANIMATION_TIME)
                 valueAnimator.addUpdateListener {
                     val fractionAnim = it.animatedValue as Float
-                    view.setTextColor(ColorUtils.blendARGB(Color.parseColor(startColor), Color.parseColor(endColor), fractionAnim))
+                    view.setTextColor(ColorUtils.blendARGB(Color.parseColor(startColor),
+                            Color.parseColor(endColor), fractionAnim))
                 }
                 valueAnimator.start()
             }
@@ -171,7 +177,8 @@ object TeamScoreBindings {
 
     private fun show(view: TextView) {
         view.measure(0, 0)
-        val animator = ValueAnimator.ofInt(view.width, view.measuredWidth).setDuration(DEFAULT_ANIMATION_TIME)
+        val animator = ValueAnimator.ofInt(view.width, view.measuredWidth)
+                .setDuration(DEFAULT_ANIMATION_TIME)
         animator.addUpdateListener {
             val lp = view.layoutParams
             lp.width = it.animatedValue as Int

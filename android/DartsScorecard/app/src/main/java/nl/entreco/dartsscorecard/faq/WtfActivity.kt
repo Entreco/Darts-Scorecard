@@ -66,7 +66,6 @@ class WtfActivity : ViewModelActivity() {
         recyclerView.setItemViewCacheSize(20)
         recyclerView.layoutManager = GridLayoutManager(binding.root.context, 1)
         recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
     }
 

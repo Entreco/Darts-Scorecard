@@ -16,5 +16,4 @@ class SendAnswerUsecase @Inject constructor(
         }, fail)
 
     }
-
 }

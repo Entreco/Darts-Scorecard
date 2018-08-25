@@ -106,7 +106,6 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         recyclerView.setItemViewCacheSize(20)
         recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
         recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
     }
 

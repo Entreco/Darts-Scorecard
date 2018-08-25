@@ -6,14 +6,14 @@ import com.google.firebase.firestore.PropertyName
 
 @Keep
 @IgnoreExtraProperties
-internal class SessionDescriptionFirebaseApiData {
+internal data class SessionDescriptionFirebaseApiData(
 
-    @PropertyName("uuid")
-    var uuid: String = ""
+        @PropertyName("uuid")
+        var uuid: String = "",
 
-    @PropertyName("type")
-    var type: Int = 0
+        @PropertyName("type")
+        var type: Int = 0,
 
-    @PropertyName("description")
-    var description: String? = null
-}
+        @PropertyName("description")
+        var description: String? = null
+)

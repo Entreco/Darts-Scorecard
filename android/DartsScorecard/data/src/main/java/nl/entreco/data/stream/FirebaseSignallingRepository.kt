@@ -78,7 +78,7 @@ class FirebaseSignallingRepository(private val db: FirebaseDatabase,
         val firebaseOnlineReference = db.getReference(onlineReceivers)
         with(firebaseOnlineReference) {
             onDisconnect().removeValue()
-            setValue(ReceiverFirebaseData(connectCode, false)) { _, _ ->
+            setValue(ReceiverFirebaseApiData(connectCode, false)) { _, _ ->
                 done(connectCode)
             }
         }

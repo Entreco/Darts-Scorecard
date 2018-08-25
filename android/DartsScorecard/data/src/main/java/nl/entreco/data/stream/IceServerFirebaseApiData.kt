@@ -6,13 +6,13 @@ import com.google.firebase.firestore.PropertyName
 
 @Keep
 @IgnoreExtraProperties
-internal class IceServerFirebaseApiData {
+internal data class IceServerFirebaseApiData(
     @PropertyName("uri")
-    val uri: String? = null
+    val uri: String? = null,
 
     @PropertyName("username")
-    val username: String? = null
+    val username: String? = null,
 
     @PropertyName("password")
     val password: String? = null
-}
+)
