@@ -135,7 +135,7 @@ class DonateViewModelTest {
     fun `it should track Purchase Failed when make donation fails`() {
         givenSubject()
         whenMakingDonationFails()
-        thenPurchaseFailedIstracked("ActivityResult failed")
+        thenPurchaseFailedIstracked("Donation ActivityResult failed")
     }
 
     @Test
