@@ -106,7 +106,6 @@ class Play01ViewModelMasterCallerTest {
         val score = Score(501)
         whenever(mockGame.id).thenReturn(1)
         whenever(mockGame.previousScore()).thenReturn(score)
-        whenever(mockGame.isNewMatchLegOrSet()).thenReturn(false)
         whenever(mockGame.getTurnCount()).thenReturn(1)
         whenever(mockGame.wasBreakMade(any())).thenReturn(false)
         whenever(mockGame.next).thenReturn(Next(State.NORMAL, Team(arrayOf(player)), 0, player, score))
