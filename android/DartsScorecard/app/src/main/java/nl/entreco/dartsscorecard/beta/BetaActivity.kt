@@ -130,7 +130,8 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
             donateOk(requestCode, resultCode, data) -> donateViewModel.onMakeDonationSuccess(data)
-            requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed()
+            resultCode == Activity.RESULT_CANCELED -> donateViewModel.onMakeDonationFailed(true)
+            requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed(false)
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }

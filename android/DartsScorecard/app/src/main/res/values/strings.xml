@@ -59,6 +59,12 @@
     <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
 
+    <!-- Dialogs -->
+    <string name="rating_title">Enjoying Darts Scorecard?</string>
+    <string name="rating_message">Do you have a second to rate our app?\nWe would really appreciate that</string>
+    <string name="rating_never_ask_again">Nope</string>
+    <string name="rating_not_now">Not now</string>
+
     <!-- Game States -->
     <string name="to_throw">to throw</string>
     <string name="to_throw_first">to throw first</string>

@@ -59,6 +59,13 @@
     <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
 
+
+    <!-- Dialogs -->
+    <string name="rating_title">Geniet je van Darts Scorecard?</string>
+    <string name="rating_message">Heb je even om de app te beoordelen?\nDat zouden we enorm waarderen</string>
+    <string name="rating_never_ask_again">Nee</string>
+    <string name="rating_not_now">Nu ff niet</string>
+
     <!-- Game States -->
     <string name="to_throw">to throw</string>
     <string name="to_throw_first">to throw first</string>

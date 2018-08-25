@@ -10,10 +10,13 @@ import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.application.ApplicationScope
+import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.data.billing.BillingServiceConnection
 import nl.entreco.data.billing.PlayStoreBillingRepository
+import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.data.stream.FirebaseSignallingRepository
 import nl.entreco.domain.repository.BillingRepository
+import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.domain.repository.SignallingRepository
 import nl.entreco.shared.log.Logger
 import javax.inject.Named
@@ -23,6 +26,9 @@ import javax.inject.Named
  */
 @Module
 class ViewModelModule(private val activity: FragmentActivity) {
+
+    private val prefs = activity.getSharedPreferences("rating", Context.MODE_PRIVATE)
+
     @Provides
     @ActivityScope
     fun context(): Context = activity
@@ -39,6 +45,12 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @ActivityScope
     fun lifeCycle(): Lifecycle {
         return activity.lifecycle
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideRatingPreferences(): RatingPrefRepository {
+        return SharedRatingPrefRepo(prefs)
     }
 
     @Provides
