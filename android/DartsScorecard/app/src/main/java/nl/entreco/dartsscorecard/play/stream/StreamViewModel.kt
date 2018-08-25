@@ -140,6 +140,8 @@ class StreamViewModel @Inject constructor(
             it.detachServiceActionsListener()
             serviceLauncher.unbindServiceConnection(serviceConnection)
             service = null
+            localVideoView.clearImage()
+            localVideoView.release()
             connectionState.set(Unknown)
         }
     }

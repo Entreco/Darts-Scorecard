@@ -45,4 +45,8 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
     fun streamController(): StreamController? {
         return fm.findFragmentById(R.id.streamContainer) as? StreamController
     }
+
+    fun stop() {
+        streamController()?.apply { sendDisconnect() }
+    }
 }

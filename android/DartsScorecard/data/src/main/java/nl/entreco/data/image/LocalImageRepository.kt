@@ -16,7 +16,8 @@ import kotlin.math.min
 /**
  * Created by entreco on 11/03/2018.
  */
-class LocalImageRepository(private val context: Context, private val contentResolver: ContentResolver) : ImageRepository {
+class LocalImageRepository(private val context: Context,
+                           private val contentResolver: ContentResolver) : ImageRepository {
 
     override fun copyImageToPrivateAppData(imageUri: String?, size: Float): String? {
         if (imageUri == null || size == 0F) return imageUri
@@ -36,10 +37,10 @@ class LocalImageRepository(private val context: Context, private val contentReso
         }
     }
 
-    private fun copyInput(originalUri: Uri?, output: File) {
+    private fun copyInput(originalUri: Uri, output: File) {
         contentResolver.openInputStream(originalUri).use { input ->
             FileOutputStream(output).use { output ->
-                input.copyTo(output)
+                input?.copyTo(output)
             }
         }
     }
@@ -53,7 +54,7 @@ class LocalImageRepository(private val context: Context, private val contentReso
 
     private fun getPhotoOrientation(uri: Uri): Float {
         contentResolver.openInputStream(uri).use { input ->
-            val exif = ExifInterface(input)
+            val exif = if (input != null) ExifInterface(input) else return 0F
             return when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
                 ExifInterface.ORIENTATION_ROTATE_270 -> 270F
                 ExifInterface.ORIENTATION_ROTATE_180 -> 180F
@@ -76,11 +77,13 @@ class LocalImageRepository(private val context: Context, private val contentReso
 
         val shortSide = min(width, height) / 2
         val src = Rect(0, 0, width, height)
-        val dst = Rect(src.centerX() - shortSide, src.centerY() - shortSide, src.centerX() + shortSide, src.centerY() + shortSide)
+        val dst = Rect(src.centerX() - shortSide, src.centerY() - shortSide,
+                src.centerX() + shortSide, src.centerY() + shortSide)
 
         val matrix = Matrix()
         matrix.postRotate(degrees)
-        val tmp = Bitmap.createBitmap(bitmap, dst.left, dst.top, dst.width(), dst.height(), matrix, true)
+        val tmp = Bitmap.createBitmap(bitmap, dst.left, dst.top, dst.width(), dst.height(), matrix,
+                true)
 
 
         val resized = Bitmap.createScaledBitmap(tmp, size.toInt(), size.toInt(), true)
@@ -90,7 +93,8 @@ class LocalImageRepository(private val context: Context, private val contentReso
         return resized
     }
 
-    private fun determineSampleSize(options: BitmapFactory.Options, startScale: Int, size: Float): Int {
+    private fun determineSampleSize(options: BitmapFactory.Options, startScale: Int,
+                                    size: Float): Int {
         var scale = startScale
         while (options.outWidth / scale / 2 >= size && options.outHeight / scale / 2 >= size) {
             scale *= 2

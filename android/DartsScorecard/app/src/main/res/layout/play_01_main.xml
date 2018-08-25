@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0"
+            android:animateLayoutChanges="true"
             android:background="@drawable/stats_bg"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:animateLayoutChanges="true"
             tools:alpha="1">
 
             <TextView
@@ -41,21 +41,22 @@
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/large"
                 android:paddingEnd="@dimen/large"
-                tools:drawableEnd="@drawable/stream_state_live"
+                android:paddingStart="@dimen/large"
+                android:visibility="gone"
                 app:streamState="@{controlStreamViewModel.state}"
-                app:streamVisibility="@{controlStreamViewModel.state}"
-                tools:text="@string/live_stream_start"/>
+                tools:drawableEnd="@drawable/stream_state_live"
+                tools:text="@string/live_stream_start" />
+
 
             <LinearLayout
                 android:id="@+id/streamControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/streamTitle"
                 android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
                 android:padding="@dimen/def"
-                app:streamVisibility="@{controlStreamViewModel.state}"
-                android:layout_height="wrap_content">
+                app:streamVisibility="@{controlStreamViewModel.state}">
 
                 <ImageView
                     android:id="@+id/control1"
@@ -78,23 +79,23 @@
             </LinearLayout>
 
             <TextView
-                android:layout_below="@id/streamControls"
                 android:id="@+id/title"
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/streamControls"
                 android:text="@string/match_stats" />
 
             <nl.entreco.dartsscorecard.base.widget.WrapContentViewPager
                 android:id="@+id/statPager"
-                android:layout_below="@id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
+                android:layout_below="@id/title"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                app:currentTeam="@{viewModel.currentTeam}"
+                android:minHeight="200dp"
                 app:adapter="@{viewModel.adapter}"
+                app:currentTeam="@{viewModel.currentTeam}"
                 app:liveStats="@{viewModel.teamStats}" />
 
             <TextView

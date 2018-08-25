@@ -80,6 +80,7 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stop()
+        navigator.stop()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 

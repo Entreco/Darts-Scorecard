@@ -63,7 +63,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
 
         return if (bundle?.getInt(FETCH_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
 
-            bundle.getStringArrayList(EXTRA_DETAILS_LIST).mapNotNull { response ->
+            bundle.getStringArrayList(EXTRA_DETAILS_LIST)!!.mapNotNull { response ->
                 val donation = gson.fromJson(response, DonationApiData::class.java)
                 val votes = donations.getVotes(donation.productId)
 
@@ -81,7 +81,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
         val bundle = service.getService()?.getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
 
         return if (bundle?.getInt(BUY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-            val intent: PendingIntent = bundle.getParcelable(EXTRA_BUY_INTENT)
+            val intent: PendingIntent = bundle.getParcelable(EXTRA_BUY_INTENT)!!
 
             MakeDonationResponse(intent, payload)
         } else {
@@ -100,7 +100,7 @@ class PlayStoreBillingRepository(private val context: Context, private val servi
         val bundle = service.getService()?.getPurchases(apiVersion, packageName, purchases.type(), purchases.token())
 
         return if (bundle?.getInt(QUERY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-            bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)
+            bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)!!
         } else {
             throw Throwable("Unable to getPurchases(), $bundle")
         }
