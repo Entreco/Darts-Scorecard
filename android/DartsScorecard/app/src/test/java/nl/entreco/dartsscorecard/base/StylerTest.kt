@@ -28,7 +28,7 @@ class StylerTest {
     @Mock private lateinit var mockActivity: Activity
     @InjectMocks private lateinit var subject: Styler
 
-    @Captor private lateinit var styleCaptor: ArgumentCaptor<Int>
+    @Captor private lateinit var styleCaptor: ArgumentCaptor<String>
 
     @Test
     fun `it should return 'PDC' style`() {
@@ -82,16 +82,16 @@ class StylerTest {
         assertEquals(R.style.Bdo, actualStyle)
     }
 
-    private fun givenStyle(@StyleRes style: Int) {
-        whenever(mockPrefs.getInt("curStyle", Styler.Style.PDC_2018.style)).thenReturn(style)
+    private fun givenStyle(style: String) {
+        whenever(mockPrefs.getString("curStyle", Styler.Style.PDC_2018.style)).thenReturn(style)
     }
 
     private fun whenSwapping(): Int {
         whenever(mockPrefs.edit()).thenReturn(mockEditor)
-        whenever(mockEditor.putInt(eq("curStyle"), any())).thenReturn(mockEditor)
+        whenever(mockEditor.putString(eq("curStyle"), any())).thenReturn(mockEditor)
 
         subject.switch()
-        verify(mockEditor).putInt(eq("curStyle"), styleCaptor.capture())
+        verify(mockEditor).putString(eq("curStyle"), styleCaptor.capture())
         givenStyle(styleCaptor.value)
 
         verify(mockActivity).recreate()

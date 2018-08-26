@@ -11,24 +11,29 @@ import javax.inject.Inject
  */
 class Styler @Inject constructor(private val prefs: SharedPreferences, private val activity: Activity) {
 
-    enum class Style(@StyleRes val style: Int) {
-        PDC_2018(R.style.Pdc_2018),
-        BDO_2018(R.style.Bdo_2018),
-        BDO(R.style.Bdo),
-        PDC(R.style.Pdc);
+    enum class Style(val style: String) {
+        PDC_2018("Pdc_2018"),
+        BDO_2018("Bdo_2018"),
+        BDO("Bdo"),
+        PDC("Pdc");
     }
 
     fun get(): Int {
-        return prefs.getInt("curStyle", Style.PDC_2018.style)
+        return when(prefs.getString("curStyle", Style.PDC_2018.style)){
+            Style.PDC_2018.style -> R.style.Pdc_2018
+            Style.BDO_2018.style -> R.style.Bdo_2018
+            Style.PDC.style -> R.style.Pdc
+            Style.BDO.style -> R.style.Bdo
+            else -> R.style.Pdc_2018
+        }
     }
 
     fun switch() {
-        val curStyle = prefs.getInt("curStyle", Style.PDC_2018.style)
-        prefs.edit().putInt("curStyle", swap(curStyle)).apply()
+        prefs.edit().putString("curStyle", swap(get())).apply()
         activity.recreate()
     }
 
-    private fun swap(style: Int): Int {
+    private fun swap(style: Int): String {
         return when (style) {
             R.style.Pdc_2018 -> Style.BDO_2018.style
             R.style.Bdo_2018 -> Style.PDC.style
