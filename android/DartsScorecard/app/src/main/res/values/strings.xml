@@ -73,7 +73,7 @@
     <string name="select_starting_team">Select Team to throw first</string>
 
     <!-- Profile -->
-    <string name="favourite_double">Favourite double %1$s</string>
+    <string name="favourite_double">Favourite double: %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
     <string name="edit_player_double">Favourite double</string>
     <string name="confirm_delete_profile">Profile deleted</string>

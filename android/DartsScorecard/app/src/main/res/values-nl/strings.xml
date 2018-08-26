@@ -74,7 +74,7 @@
     <string name="select_starting_team">Kies Team dat eerst mag gooien</string>
 
     <!-- Profile -->
-    <string name="favourite_double">Favoriete dubbel %1$s</string>
+    <string name="favourite_double">Favoriete dubbel: %1$s</string>
     <string name="edit_player_name_hint">Spelersnaam</string>
     <string name="edit_player_double">Favoriete dubbel</string>
     <string name="confirm_delete_profile">Profiel verwijderd</string>
@@ -85,9 +85,9 @@
     <!-- Match Stats -->
     <string name="match_stats">Match Statistieken</string>
     <string name="live_breaks_made">Breaks Made</string>
-    <string name="live_double_success">Double Success</string>
-    <string name="live_highest_score">Highest Score</string>
-    <string name="live_highest_out">Highest Out</string>
+    <string name="live_double_success">Dubbel Success</string>
+    <string name="live_highest_score">Hoogste Score</string>
+    <string name="live_highest_out">Hoogste Out</string>
     <string name="live_180s">180\'s</string>
     <string name="live_140s">140+</string>
     <string name="live_100s">100+</string>
@@ -113,9 +113,9 @@
     <!-- Profile -->
     <string name="no_stats_available">Nog geen statistieken beschikbaar</string>
     <string name="no_stats_available_sub">Speel een volledige wedstrijd en check daana hier hoe je het doet</string>
-    <string name="profile_games_played">Games Played</string>
-    <string name="profile_overall_average">Overall average</string>
-    <string name="profile_first9_average">1st 9 average</string>
+    <string name="profile_games_played">Matches Gespeeld</string>
+    <string name="profile_overall_average">Totale gemiddelde</string>
+    <string name="profile_first9_average">1e 9 gemiddelde</string>
     <string name="profile_win_percentage">Win %</string>
     <string name="profile_checkout_percentage">Checkout %</string>
     <string name="profile_num_180">#180\'s</string>
