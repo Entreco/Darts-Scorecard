@@ -47,7 +47,7 @@ class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) : Coordinat
         finalLeftAvatarPadding = context.resources.getDimension(R.dimen.large)
     }
 
-    override fun layoutDependsOn(parent: CoordinatorLayout?, child: CircleImageView?, dependency: View?): Boolean {
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: CircleImageView, dependency: View): Boolean {
         return dependency is Toolbar || dependency is AppBarLayout
     }
 
@@ -113,5 +113,4 @@ class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) : Coordinat
             changeBehaviorPoint = (child.height - customFinalHeight) / (2f * (startYPosition - finalYPosition))
         }
     }
-
 }

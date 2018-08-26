@@ -2,13 +2,12 @@ package nl.entreco.dartsscorecard.beta
 
 import android.databinding.BindingAdapter
 import android.net.Uri
-import android.os.Build
 import android.text.Html
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
-import nl.entreco.dartsscorecard.di.glide.GlideApp
+import nl.entreco.shared.libs.GlideApp
 
 /**
  * Created by entreco on 03/02/2018.
@@ -26,13 +25,13 @@ object BetaBindings {
         }
     }
 
-
     @JvmStatic
     @BindingAdapter("progress")
     fun animateProgress(view: View, oldProgress: Float, progress: Float) {
         view.pivotX = 0F
         view.scaleX = oldProgress
-        view.animate().scaleX(progress).setDuration(duration).setStartDelay(startDelay).setInterpolator(AccelerateDecelerateInterpolator()).start()
+        view.animate().scaleX(progress).setDuration(duration).setStartDelay(startDelay)
+                .setInterpolator(AccelerateDecelerateInterpolator()).start()
     }
 
     @Suppress("DEPRECATION")
@@ -40,11 +39,7 @@ object BetaBindings {
     @BindingAdapter("textWithTags")
     fun setTextWithTags(view: TextView, message: String?) {
         if (message != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                view.text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
-            } else {
-                view.text = Html.fromHtml(message)
-            }
+            view.text = Html.fromHtml(message, Html.FROM_HTML_MODE_COMPACT)
         }
     }
 }

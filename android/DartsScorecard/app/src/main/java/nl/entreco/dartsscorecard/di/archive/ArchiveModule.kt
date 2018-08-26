@@ -5,7 +5,6 @@ import dagger.Provides
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.ArchiveServiceRepository
 import nl.entreco.data.db.profile.ArchiveStatMapper
-import nl.entreco.domain.common.log.Logger
 import nl.entreco.domain.repository.ArchiveRepository
 
 

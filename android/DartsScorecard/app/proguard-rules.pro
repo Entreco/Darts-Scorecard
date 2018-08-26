@@ -20,17 +20,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepattributes Signature
+-keepattributes Signature,InnerClasses
 
 # Crashlytics
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
-
-# Google Play Services
--keep public class com.google.android.gms.* { public *; }
--dontwarn com.google.android.gms.**
--dontnote com.google.android.gms.**
 
 # Okio
 -dontwarn okio.**
@@ -49,3 +44,7 @@
   **[] $VALUES;
   public *;
 }
+
+# WebRtc
+-keep class org.webrtc.** { *; }
+

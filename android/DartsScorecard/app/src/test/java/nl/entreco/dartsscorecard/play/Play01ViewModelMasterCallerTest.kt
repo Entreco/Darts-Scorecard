@@ -10,7 +10,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -21,6 +21,7 @@ import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import org.junit.Assert.assertEquals
@@ -38,6 +39,7 @@ class Play01ViewModelMasterCallerTest {
     @Mock private lateinit var mockMenu: Menu
     @Mock private lateinit var mockMenuItem: MenuItem
     @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
+    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockAdProvider: AdViewModel
@@ -97,7 +99,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 
@@ -106,7 +108,6 @@ class Play01ViewModelMasterCallerTest {
         val score = Score(501)
         whenever(mockGame.id).thenReturn(1)
         whenever(mockGame.previousScore()).thenReturn(score)
-        whenever(mockGame.isNewMatchLegOrSet()).thenReturn(false)
         whenever(mockGame.getTurnCount()).thenReturn(1)
         whenever(mockGame.wasBreakMade(any())).thenReturn(false)
         whenever(mockGame.next).thenReturn(Next(State.NORMAL, Team(arrayOf(player)), 0, player, score))

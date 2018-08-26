@@ -22,9 +22,7 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val revealAnimator = RevealAnimator(appBarLayout)
 
     init {
-        appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            animator.onOffsetChanged(appBarLayout, verticalOffset)
-        }
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 -> animator.onOffsetChanged(p0, p1) })
 
         revealAnimator.setupEnterAnimation(inflater, window, true)
         animator.startAlphaAnimation(title, 0, View.INVISIBLE)

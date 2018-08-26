@@ -26,7 +26,6 @@ object ScoreBindings {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
         recyclerView.itemAnimator = null
-        recyclerView.isDrawingCacheEnabled = true
         recyclerView.adapter = adapter
         adapter.clear()
 

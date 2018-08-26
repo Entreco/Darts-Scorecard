@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup
 
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.launch.ExtractTeamsRequest
 import nl.entreco.domain.launch.ExtractTeamsResponse
 import nl.entreco.domain.launch.ExtractTeamsUsecase

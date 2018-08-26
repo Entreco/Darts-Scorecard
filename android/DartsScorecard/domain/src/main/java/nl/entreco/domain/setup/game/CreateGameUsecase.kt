@@ -2,8 +2,8 @@ package nl.entreco.domain.setup.game
 
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.GameRepository
 import javax.inject.Inject
 

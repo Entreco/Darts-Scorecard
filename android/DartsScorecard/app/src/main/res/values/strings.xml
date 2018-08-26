@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Darts Scorecard</string>
+    <string name="app_name" translatable="false">Darts Scorecard</string>
 
     <!-- General Darts -->
     <string name="first_to">First to %1$s</string>
@@ -28,6 +28,11 @@
     <string name="profiles">Manage Profiles</string>
     <string name="beta">Beta</string>
     <string name="wtf">What the FAQ</string>
+    <string name="stream_start">Start Stream</string>
+    <string name="stream_stop">Stop Stream</string>
+    <string name="msg_permissions">Camera and audio access is needed to Stream</string>
+    <string name="error_permissions_couldnt_start_settings">Couldn\'t open app settings. To grant permissions please visit settings of this app.</string>
+    <string name="action_settings">Settings</string>
 
     <!-- Beta -->
     <string name="vote">VOTE</string>
@@ -54,6 +59,12 @@
     <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
 
+    <!-- Dialogs -->
+    <string name="rating_title">Enjoying Darts Scorecard?</string>
+    <string name="rating_message">Do you have a second to rate our app?\nWe would really appreciate that</string>
+    <string name="rating_never_ask_again">Nope</string>
+    <string name="rating_not_now">Not now</string>
+
     <!-- Game States -->
     <string name="to_throw">to throw</string>
     <string name="to_throw_first">to throw first</string>
@@ -62,7 +73,7 @@
     <string name="select_starting_team">Select Team to throw first</string>
 
     <!-- Profile -->
-    <string name="favourite_double">Favourite double %1$s</string>
+    <string name="favourite_double">Favourite double: %1$s</string>
     <string name="edit_player_name_hint">Player name</string>
     <string name="edit_player_double">Favourite double</string>
     <string name="confirm_delete_profile">Profile deleted</string>
@@ -82,6 +93,21 @@
     <string name="live_60s">60+</string>
     <string name="live_20s">20+</string>
     <string name="live_average">average</string>
+
+    <!-- Streaming -->
+    <string name="streaming_dialog_title">Enter Code</string>
+    <string name="streaming_service">Streaming Service</string>
+    <string name="receiving_service">Receiving Service</string>
+    <string name="live_stream_start">Start Streaming</string>
+    <string name="live_stream_connecting">Connecting…</string>
+    <string name="live_stream_connect">Connect</string>
+    <string name="live_stream">Live Stream</string>
+    <string name="enter_tv_code">Enter code</string>
+
+    <!-- Streaming Service -->
+    <string name="streaming_channel_name">Streaming</string>
+    <string name="streaming_channel_description">Your camera output is being streamed to the TV</string>
+    <string name="streaming_notif_title">Streaming to Television</string>
 
     <!-- Profile -->
     <string name="no_stats_available">No stats available yet</string>
@@ -103,9 +129,9 @@
 
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
-    <string name="channel_name">Archive stats</string>
-    <string name="channel_description">Calculating stats &amp; averages</string>
-    <string name="notif_title">Calculating new stats, averages &amp; hiscores</string>
+    <string name="archive_channel_name">Archive stats</string>
+    <string name="archive_channel_description">Calculating stats &amp; averages</string>
+    <string name="archive_notif_title">Calculating new stats, averages &amp; hiscores</string>
 
     <!-- Specific -->
     <string name="bdo_match">BDO World Cup - semi finals</string>

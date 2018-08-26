@@ -21,8 +21,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet, binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
-            binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header, binding.root.includeScore.footer, binding.root.includeToolbar)
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
+            binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header,
+            binding.root.includeScore.footer, binding.root.includeToolbar, binding.includeMain.control1, binding.includeMain.control2)
 
     init {
         animator.calculateHeightForScoreView()
@@ -53,7 +54,8 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
     internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
                                          private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View,
-                                         private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View) {
+                                         private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View,
+                                         private val control1: View, private val control2: View) {
 
         private var animatorPosition: Int = 0
         internal var animator: LiveStatSlideAnimator? = null
@@ -63,13 +65,16 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             // Slide Out ScoreViewModel
             scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
 
-
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
 
             // Fade In MainSheet
             mainSheet.animate().alpha(1 - sqrt(slideOffset)).setDuration(0).start()
             mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
+
+            // Fly In Stream Controls
+            animateState(control1.animate(), 1, slideOffset)
+            animateState(control2.animate(), 1, slideOffset)
 
             // Also, Fly In Version
             animateState(version.animate(), 8, slideOffset)

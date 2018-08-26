@@ -92,8 +92,8 @@ class DonateViewModel @Inject constructor(
 
     private fun donationWithId(response: ConsumeDonationResponse) = donations.firstOrNull { it.sku == response.productId }
 
-    fun onMakeDonationFailed() {
-        analytics.trackPurchaseFailed(productId, "ActivityResult failed")
+    fun onMakeDonationFailed(cancelled: Boolean) {
+        analytics.trackPurchaseFailed(productId, if(cancelled) "Donation ActivityResult cancelled" else "Donation ActivityResult failed")
         loading.set(false)
         productId = ""
         requiresConsumption.set(false)

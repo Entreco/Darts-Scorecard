@@ -31,6 +31,13 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+    }
+
+    dataBinding {
+        enabled = true
     }
 
     configurations.all {
@@ -39,4 +46,8 @@ android {
         resolutionStrategy.force "com.android.support:support-media-compat:$support"
         resolutionStrategy.force "com.android.support:customtabs:$support"
     }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }

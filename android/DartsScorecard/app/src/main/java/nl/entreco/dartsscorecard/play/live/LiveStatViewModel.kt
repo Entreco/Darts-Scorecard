@@ -6,7 +6,7 @@ import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.StatListener

@@ -1,9 +1,9 @@
 package nl.entreco.domain.play.mastercaller
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.log.Logger
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.log.Logger
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.SoundRepository
 import javax.inject.Inject
 

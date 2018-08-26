@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.Score

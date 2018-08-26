@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../scripts/coverage_library.gradle'
+apply from: '../scripts/android_common.gradle'
+
+android {
+    defaultPublishConfig "debug"
+}
+
+dependencies {
+    // Annotation Processing
+    kapt "com.github.bumptech.glide:compiler:$glide"
+
+    // Implementation
+    implementation "com.android.support:appcompat-v7:$support"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "com.github.bumptech.glide:glide:$glide"
+
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+}

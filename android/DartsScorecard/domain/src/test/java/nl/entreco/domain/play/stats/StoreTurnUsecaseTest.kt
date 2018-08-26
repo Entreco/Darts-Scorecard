@@ -1,8 +1,8 @@
 package nl.entreco.domain.play.stats
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.Dart

@@ -9,11 +9,11 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
+import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.Analytics
-import nl.entreco.domain.common.log.Logger
+import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -31,8 +31,11 @@ import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
+import nl.entreco.domain.rating.AskForRatingResponse
+import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.shared.log.Logger
 import javax.inject.Inject
 
 /**
@@ -42,11 +45,13 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val revancheUsecase: RevancheUsecase,
                                           private val gameListeners: Play01Listeners,
                                           private val masterCaller: MasterCaller,
-                                          private val dialogHelper: DialogHelper,
+                                          @ActivityScope private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
+                                          private val askForRatingUsecase: AskForRatingUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
                                           private val adViewModel: AdViewModel,
-                                          private val logger: Logger) : BaseViewModel(), UiCallback, InputListener {
+                                          @ActivityScope private val logger: Logger) :
+        BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
     val finished = ObservableBoolean(false)
@@ -57,7 +62,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private var load: GameLoadedNotifier<ScoreSettings>? = null
     private var loaders: Array<GameLoadedNotifier<Play01Response>>? = null
 
-    fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>, vararg loaders: GameLoadedNotifier<Play01Response>) {
+    fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>,
+             vararg loaders: GameLoadedNotifier<Play01Response>) {
         this.load = load
         this.loaders = arrayOf(*loaders)
         this.playGameUsecase.loadGameAndStart(request,
@@ -72,13 +78,15 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
             val nextTeam = (startIndex) % teams.size
             revancheUsecase.recreateGameAndStart(RevancheRequest(request, teams, nextTeam),
                     { revenge ->
-                        onGameOk(this.request.copy(gameId = revenge.game.id, startIndex = nextTeam), null, revenge)
+                        onGameOk(this.request.copy(gameId = revenge.game.id, startIndex = nextTeam),
+                                null, revenge)
                     },
                     onGameFailed(R.string.err_unable_to_revanche))
         }
     }
 
-    private fun onGameOk(request: Play01Request, response: Play01Response?, revancheResponse: RevancheResponse?) {
+    private fun onGameOk(request: Play01Request, response: Play01Response?,
+                         revancheResponse: RevancheResponse?) {
         this.request = request
         this.game = response?.game ?: revancheResponse!!.game
         this.teams = response?.teams ?: revancheResponse!!.teams
@@ -86,7 +94,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val settings = response?.settings ?: revancheResponse!!.settings
         this.load?.onLoaded(teams, game.scores, settings, this)
         this.loaders?.forEach {
-            it.onLoaded(teams, game.scores, response ?: Play01Response(game, settings, teams, teamIds), null)
+            it.onLoaded(teams, game.scores,
+                    response ?: Play01Response(game, settings, teams, teamIds), null)
         }
     }
 
@@ -98,8 +107,11 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         }
     }
 
-    fun registerListeners(scoreListener: ScoreListener, statListener: StatListener, specialEventListener: SpecialEventListener<*>, vararg playerListeners: PlayerListener) {
-        gameListeners.registerListeners(scoreListener, statListener, specialEventListener, *playerListeners)
+    fun registerListeners(scoreListener: ScoreListener, statListener: StatListener,
+                          specialEventListener: SpecialEventListener<*>,
+                          vararg playerListeners: PlayerListener) {
+        gameListeners.registerListeners(scoreListener, statListener, specialEventListener,
+                *playerListeners)
     }
 
     override fun onLetsPlayDarts(listeners: List<TeamScoreListener>) {
@@ -150,7 +162,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private fun storeTurn(turn: Turn, by: Player, next: Next) {
         val turnRequest = StoreTurnRequest(by.id, game.id, turn, next.state)
         val score = game.previousScore()
-        val started = game.isNewMatchLegOrSet()
+//        val started = game.isNewMatchLegOrSet()
         val turnCounter = game.getTurnCount()
         val breakMade = game.wasBreakMade(by)
         val turnMeta = TurnMeta(by.id, turnCounter, score, breakMade)
@@ -163,8 +175,16 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val gameFinished = next.state == State.MATCH
         finished.set(gameFinished)
         if (gameFinished) {
-            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId, teams.first { it.contains(winnerId) }.toTeamString()))
+            askForRatingUsecase.go(onShouldAskForRating(), {})
+            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId,
+                    teams.first { it.contains(winnerId) }.toTeamString()))
             gameListeners.onGameFinished(gameId)
+        }
+    }
+
+    private fun onShouldAskForRating(): (AskForRatingResponse) -> Unit = { response ->
+        if (response.shouldAskForRating) {
+            dialogHelper.showRatingDialog()
         }
     }
 
@@ -189,7 +209,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
             State.LEG -> adViewModel.provideInterstitial()
             State.SET -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else -> { /* ignore */ }
+            else -> { /* ignore */
+            }
         }
     }
 
@@ -198,7 +219,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     fun initToggleMenuItem(menu: Menu?) {
-        menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
+        menu?.findItem(R.id.menu_sound_settings)
+                ?.isChecked = audioPrefRepository.isMasterCallerEnabled()
     }
 
     fun toggleMasterCaller(item: MenuItem) {
@@ -210,5 +232,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         load = null
         loaders = null
         super.onCleared()
+    }
+
+    fun addRemoteListener(listener: ControlStreamViewModel) {
+        gameListeners.playerListeners.add(listener as PlayerListener)
+        gameListeners.scoreListeners.add(listener as ScoreListener)
     }
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General Darts -->
+    <string name="first_to">First to %1$s</string>
+    <string name="single_mode">individueel</string>
+    <string name="all_mode">totaal</string>
+    <string name="set">Set</string>
+    <string name="leg">Leg</string>
+    <string name="no_score">No Score</string>
+    <string name="bust">Bust</string>
+    <string name="undo">Undo</string>
+    <string name="tap_to_resume">Klik om te hervatten</string>
+    <string name="resume">Hervatten</string>
+
+    <!-- Title -->
+    <string name="title_create_profile">Profiel Maken</string>
+    <string name="title_select_profile">Profiel selecteren</string>
+    <string name="title_select_player">Speler selecteren</string>
+    <string name="title_edit_profile">Profiel wijzigen</string>
+    <string name="title_setup">01 Match instellen</string>
+    <string name="title_beta">Beta Features</string>
+    <string name="title_wtf">@string/wtf</string>
+
+    <!-- Launch -->
+    <string name="resume_x01">@string/resume</string>
+    <string name="play_x01">Start new 01</string>
+    <string name="profiles">Profielen beheren</string>
+    <string name="beta">Beta</string>
+    <string name="wtf">What the FAQ</string>
+    <string name="stream_start">Start Stream</string>
+    <string name="stream_stop">Stop Stream</string>
+    <string name="msg_permissions">Camera and audio toegang is vereist om te Streamen</string>
+    <string name="error_permissions_couldnt_start_settings">Kan app settings niet openen. Om permissies toe te kennen, ga je naar de instellingen van deze app.</string>
+    <string name="action_settings">Instellingen</string>
+
+    <!-- Beta -->
+    <string name="vote">STEM</string>
+    <string name="number_votes">%1$s STEMMEN</string>
+    <string name="donation_button">%1$s %2$s</string>
+    <string name="donation_thanks">You are AWESOME &amp; will no longer see those annoying ads ;)</string>
+    <string name="donation_ok">THNX</string>
+    <string name="votes_explained">&lt;p>Zodra deze feature &lt;b>%1$s&lt;/b> stemmen heeft, zullen we de implementatie starten.&lt;/p>&lt;p>Alle donaties &lt;b>verwijderen ook alle advertenties&lt;/b> in de app&lt;/p></string>
+    <string name="beta_video">&lt;b>Bekijk de video&lt;/b></string>
+
+    <!-- Setup -->
+    <string name="select_players">Selecteer spelers</string>
+    <string name="choose_player_name">Kies spelersnaam</string>
+    <string name="choose_existing_player">Of kies een bestaande speler</string>
+    <string name="team">Team</string>
+    <string name="select_x01_score">Kies x01 score</string>
+    <string name="start_score">Start score</string>
+    <string name="number_of_sets">Aantal sets</string>
+    <string name="number_of_legs">Aantal legs</string>
+    <string name="cancel">Annuleren</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="cont">Doorgaan</string>
+    <string name="sponsored_by">Sponsored by</string>
+    <string name="powered_by">Powered by</string>
+
+
+    <!-- Dialogs -->
+    <string name="rating_title">Geniet je van Darts Scorecard?</string>
+    <string name="rating_message">Heb je even om de app te beoordelen?\nDat zouden we enorm waarderen</string>
+    <string name="rating_never_ask_again">Nee</string>
+    <string name="rating_not_now">Nu ff niet</string>
+
+    <!-- Game States -->
+    <string name="to_throw">to throw</string>
+    <string name="to_throw_first">to throw first</string>
+    <string name="game_on">Game on</string>
+    <string name="game_shot_and_match">Revanche?</string>
+    <string name="select_starting_team">Kies Team dat eerst mag gooien</string>
+
+    <!-- Profile -->
+    <string name="favourite_double">Favoriete dubbel: %1$s</string>
+    <string name="edit_player_name_hint">Spelersnaam</string>
+    <string name="edit_player_double">Favoriete dubbel</string>
+    <string name="confirm_delete_profile">Profiel verwijderd</string>
+
+    <!-- Input -->
+    <string name="darts_used">Hoeveel Darts heb je gebruikt?</string>
+
+    <!-- Match Stats -->
+    <string name="match_stats">Match Statistieken</string>
+    <string name="live_breaks_made">Breaks Made</string>
+    <string name="live_double_success">Dubbel Success</string>
+    <string name="live_highest_score">Hoogste Score</string>
+    <string name="live_highest_out">Hoogste Out</string>
+    <string name="live_180s">180\'s</string>
+    <string name="live_140s">140+</string>
+    <string name="live_100s">100+</string>
+    <string name="live_60s">60+</string>
+    <string name="live_20s">20+</string>
+    <string name="live_average">gemiddelde</string>
+
+    <!-- Streaming -->
+    <string name="streaming_dialog_title">Code invoeren</string>
+    <string name="streaming_service">Streaming Service</string>
+    <string name="receiving_service">Receiving Service</string>
+    <string name="live_stream_start">Start Streaming</string>
+    <string name="live_stream_connecting">Verbinden…</string>
+    <string name="live_stream_connect">Connect</string>
+    <string name="live_stream">Live Stream</string>
+    <string name="enter_tv_code">Enter code</string>
+
+    <!-- Streaming Service -->
+    <string name="streaming_channel_name">Streaming</string>
+    <string name="streaming_channel_description">Uw camera beelden worden naar de tv gestreamed</string>
+    <string name="streaming_notif_title">Streaming to Television</string>
+
+    <!-- Profile -->
+    <string name="no_stats_available">Nog geen statistieken beschikbaar</string>
+    <string name="no_stats_available_sub">Speel een volledige wedstrijd en check daana hier hoe je het doet</string>
+    <string name="profile_games_played">Matches Gespeeld</string>
+    <string name="profile_overall_average">Totale gemiddelde</string>
+    <string name="profile_first9_average">1e 9 gemiddelde</string>
+    <string name="profile_win_percentage">Win %</string>
+    <string name="profile_checkout_percentage">Checkout %</string>
+    <string name="profile_num_180">#180\'s</string>
+    <string name="profile_num_140">#140+</string>
+    <string name="profile_num_100">#100+</string>
+    <string name="profile_num_60">#60+</string>
+    <string name="profile_num_20">#20+</string>
+    <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
+
+    <!-- What The FAQ -->
+    <string name="search_wtf">F.A.Q. doorzoeken</string>
+
+    <!-- Archive Service -->
+    <string name="archive_service">Statistieken archiveer Service</string>
+    <string name="archive_channel_name">Archiveer statistieken</string>
+    <string name="archive_channel_description">Bereken je stats en gemiddeldes</string>
+    <string name="archive_notif_title">Nieuwe stats, gemiddeldes en hiscores aan het berekenen</string>
+
+    <!-- Specific -->
+    <string name="bdo_match">BDO World Cup - halve finales</string>
+    <string name="pdc_match">PDC World Cup - halve finales</string>
+
+    <!-- Errors -->
+    <string name="err_player_was_deleted">Profielen van spelers die zijn verwijderd, kunnen niet worden bekeken</string>
+    <string name="err_unable_to_retrieve_game">Kan match niet ophalen.</string>
+    <string name="err_unable_to_revanche">Je kunt je momenteel niet revancheren.</string>
+    <string name="err_unable_to_create_player">Speler niet aangemaakt.</string>
+    <string name="err_unable_to_donate">Momenteel kun je geen donaties maken.</string>
+    <string name="err_unable_to_fetch_players">Kan de spelers lijst niet ophalen.</string>
+    <string name="err_unable_to_fetch_stats">Kan momenteel de statistieken niet ophalen</string>
+    <string name="err_player_already_exists">Een speler met dezelfde naam bestaat al. Kies een andere naam</string>
+    <string name="err_invalid_player_name">Ongeldige spelersnaam</string>
+    <string name="err_player_name_is_empty">Kies de gewenste spelersnaam</string>
+    <string name="err_no_players_yet">Nog geen profielen. Speel een Match, of voeg profielen toe met de + button</string>
+    <string name="err_player_already_in_match">Deze speler doet al mee aan deze wedstrijd</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_score_back">delete</string>
+    <string name="cd_throw">Submit darts</string>
+    <string name="cd_add_player">Add player</string>
+    <string name="cd_player_name">Enter Player name</string>
+    <string name="cd_existing_players">Existing Players</string>
+    <string name="cd_add_profile_picture">Add profile picture</string>
+    <string name="cd_vote">Vote for this feature</string>
+    <string name="cd_choose_sets">@string/number_of_sets</string>
+    <string name="cd_choose_legs">@string/number_of_legs</string>
+    <string name="cd_increase_sets">Plus 1 set</string>
+    <string name="cd_decrease_sets">Minus 1 set</string>
+    <string name="cd_increase_legs">Plus 1 leg</string>
+    <string name="cd_decrease_legs">Minus 1 leg</string>
+    <string name="cd_list_of_profiles">Player Profiles</string>
+    <string name="cd_list_of_wtfs">FAQ items</string>
+    <string name="cd_list_of_beta_features">Which features would you like to see added to the app</string>
+
+</resources>

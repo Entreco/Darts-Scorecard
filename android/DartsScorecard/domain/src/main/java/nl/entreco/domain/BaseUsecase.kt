@@ -1,7 +1,7 @@
 package nl.entreco.domain
 
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 
 /**
  * Created by Entreco on 17/12/2017.

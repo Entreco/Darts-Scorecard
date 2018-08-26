@@ -1,8 +1,8 @@
 package nl.entreco.domain.play.stats
 
 import nl.entreco.domain.BaseUsecase
-import nl.entreco.domain.common.executors.Background
-import nl.entreco.domain.common.executors.Foreground
+import nl.entreco.shared.threading.Background
+import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.MetaRepository
 import nl.entreco.domain.repository.TurnRepository

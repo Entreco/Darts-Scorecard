@@ -102,7 +102,7 @@ class LocalGameRepositoryTest {
     fun `it should return finished game count (10)`() {
         givenFinishedGames(4)
         whenCountingFinishedGames()
-        thenNumberOfFinishedGamesIs(0)
+        thenNumberOfFinishedGamesIs(4)
     }
 
     private fun givenExistingGames() {

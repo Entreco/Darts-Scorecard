@@ -2,11 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="nl.entreco.dartsscorecard">
 
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:banner="@drawable/tv_promo"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -43,14 +58,29 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".tv.splash.SplashTvActivity"
+            android:banner="@drawable/tv_promo"
+            android:icon="@drawable/tv_promo"
+            android:label="@string/app_name"
+            android:logo="@drawable/tv_promo"
+            android:noHistory="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".launch.LaunchActivity" />
+        <activity android:name=".tv.launch.LaunchTvActivity" />
         <activity
             android:name=".beta.BetaActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
-            android:name=".wtf.WtfActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".launch.LaunchActivity" />
+            android:name=".faq.WtfActivity"
+            android:parentActivityName=".launch.LaunchActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".setup.Setup01Activity"
             android:parentActivityName=".launch.LaunchActivity" />
@@ -59,6 +89,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".play.Play01Activity"
+            android:launchMode="singleTop"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
             android:name=".profile.select.SelectProfileActivity"
@@ -75,6 +106,16 @@
             android:description="@string/archive_service"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name=".streaming.StreamingService"
+            android:description="@string/streaming_service"
+            android:exported="true" />
+
+        <service
+            android:name=".streaming.ReceiverService"
+            android:description="@string/receiving_service"
+            android:exported="true" />
 
     </application>
 

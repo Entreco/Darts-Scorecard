@@ -11,16 +11,21 @@ android {
 
 dependencies {
     implementation project(":domain")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "com.google.firebase:firebase-core:$firebase"
-    implementation "com.google.firebase:firebase-firestore:$firebase"
-    implementation "com.google.firebase:firebase-config:$firebase"
+    implementation project(":shared")
+
+    // Annotation Processing
+    kapt "android.arch.persistence.room:compiler:$room"
+
+    // Implementation
+    implementation "com.google.firebase:firebase-core:$fbCore"
+    implementation "com.google.firebase:firebase-firestore:$fbStore"
+    implementation "com.google.firebase:firebase-config:$fbConfig"
+    implementation "com.google.firebase:firebase-database:$fbDatabase"
+    implementation "android.arch.persistence.room:runtime:$room"
+
     implementation "com.android.support:appcompat-v7:$support"
     implementation "com.android.support:exifinterface:$support"
     implementation "android.arch.lifecycle:livedata:$architecture"
-    implementation "android.arch.persistence.room:runtime:$room"
-    kapt "android.arch.persistence.room:compiler:$room"
-
     implementation "com.google.code.gson:gson:$gson"
 
     testImplementation "junit:junit:$junit"

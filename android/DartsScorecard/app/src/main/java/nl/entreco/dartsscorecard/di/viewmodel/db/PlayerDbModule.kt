@@ -25,5 +25,4 @@ class PlayerDbModule {
     fun providePlayerRepository(db: DscDatabase, mapper: PlayerMapper): PlayerRepository {
         return LocalPlayerRepository(db, mapper)
     }
-
 }

@@ -23,7 +23,7 @@ class BetaModel(val feature: Feature) {
     private fun format(value: Int): String {
         return when {
             value < 1000 -> "$value"
-            else -> "${value / 1000}k"
+            else -> "%.1f".format(value / 1000.0).removeSuffix(".0") + "k"
         }
     }
 

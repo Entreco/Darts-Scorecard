@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.di.play
 import android.content.ComponentName
 import android.content.Context
 import android.media.SoundPool
-import android.support.v7.app.AlertDialog
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides
@@ -14,10 +13,12 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.description.RemoteMatchDescriptionRepository
 import nl.entreco.data.prefs.SharedAudioPrefRepo
+import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.data.sound.LocalSoundRepository
 import nl.entreco.data.sound.SoundMapper
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.MatchDescriptionRepository
+import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.domain.repository.SoundRepository
 
 /**
@@ -32,12 +33,6 @@ class Play01Module(private val activity: Play01Activity) {
     @Play01Scope
     fun provide01Activity(): Play01Activity {
         return activity
-    }
-
-    @Provides
-    @Play01Scope
-    fun provideAlertDialogBuilder(@ActivityScope context: Context): AlertDialog.Builder {
-        return AlertDialog.Builder(context)
     }
 
     @Provides

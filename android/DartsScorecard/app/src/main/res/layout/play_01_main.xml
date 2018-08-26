@@ -10,6 +10,10 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
+            name="controlStreamViewModel"
+            type="nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel" />
+
+        <variable
             name="navigator"
             type="nl.entreco.dartsscorecard.play.Play01Navigator" />
     </data>
@@ -26,28 +30,72 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0"
+            android:animateLayoutChanges="true"
             android:background="@drawable/stats_bg"
             android:clipChildren="false"
             android:clipToPadding="false"
             tools:alpha="1">
 
             <TextView
+                android:id="@+id/streamTitle"
+                style="@style/Main.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/large"
+                android:paddingStart="@dimen/large"
+                android:visibility="gone"
+                app:streamState="@{controlStreamViewModel.state}"
+                tools:drawableEnd="@drawable/stream_state_live"
+                tools:text="@string/live_stream_start" />
+
+
+            <LinearLayout
+                android:id="@+id/streamControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/streamTitle"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/def"
+                app:streamVisibility="@{controlStreamViewModel.state}">
+
+                <ImageView
+                    android:id="@+id/control1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/def"
+                    android:background="@null"
+                    android:onClick="@{() -> controlStreamViewModel.toggleCamera(navigator)}"
+                    android:src="@{controlStreamViewModel.isShowingFront ? @drawable/ic_camera_front : @drawable/ic_camera_rear}" />
+
+                <ImageView
+                    android:id="@+id/control2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/def"
+                    android:background="@null"
+                    android:onClick="@{() -> controlStreamViewModel.toggleMic(navigator)}"
+                    android:src="@{controlStreamViewModel.micEnabled ? @drawable/ic_mute : @drawable/ic_unmute}" />
+
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/title"
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/streamControls"
                 android:text="@string/match_stats" />
 
             <nl.entreco.dartsscorecard.base.widget.WrapContentViewPager
                 android:id="@+id/statPager"
-                android:layout_below="@id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="200dp"
+                android:layout_below="@id/title"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                app:currentTeam="@{viewModel.currentTeam}"
+                android:minHeight="200dp"
                 app:adapter="@{viewModel.adapter}"
+                app:currentTeam="@{viewModel.currentTeam}"
                 app:liveStats="@{viewModel.teamStats}" />
 
             <TextView
