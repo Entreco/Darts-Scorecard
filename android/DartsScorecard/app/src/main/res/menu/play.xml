@@ -6,6 +6,7 @@
         android:id="@+id/menu_stream"
         android:icon="@drawable/ic_live_start"
         android:title="@string/stream_start"
+        android:visible="false"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_sound_settings"
