@@ -11,6 +11,10 @@ import javax.inject.Inject
  */
 class Styler @Inject constructor(private val prefs: SharedPreferences, private val activity: Activity) {
 
+    companion object {
+        private const val CURRENT_STYLE = "currentStyle"
+    }
+
     enum class Style(val style: String) {
         PDC_2018("Pdc_2018"),
         BDO_2018("Bdo_2018"),
@@ -19,7 +23,7 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
     }
 
     fun get(): Int {
-        return when(prefs.getString("curStyle", Style.PDC_2018.style)){
+        return when(prefs.getString(CURRENT_STYLE, Style.PDC_2018.style)){
             Style.PDC_2018.style -> R.style.Pdc_2018
             Style.BDO_2018.style -> R.style.Bdo_2018
             Style.PDC.style -> R.style.Pdc
@@ -29,7 +33,7 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
     }
 
     fun switch() {
-        prefs.edit().putString("curStyle", swap(get())).apply()
+        prefs.edit().putString(CURRENT_STYLE, swap(get())).apply()
         activity.recreate()
     }
 

@@ -83,15 +83,15 @@ class StylerTest {
     }
 
     private fun givenStyle(style: String) {
-        whenever(mockPrefs.getString("curStyle", Styler.Style.PDC_2018.style)).thenReturn(style)
+        whenever(mockPrefs.getString("currentStyle", Styler.Style.PDC_2018.style)).thenReturn(style)
     }
 
     private fun whenSwapping(): Int {
         whenever(mockPrefs.edit()).thenReturn(mockEditor)
-        whenever(mockEditor.putString(eq("curStyle"), any())).thenReturn(mockEditor)
+        whenever(mockEditor.putString(eq("currentStyle"), any())).thenReturn(mockEditor)
 
         subject.switch()
-        verify(mockEditor).putString(eq("curStyle"), styleCaptor.capture())
+        verify(mockEditor).putString(eq("currentStyle"), styleCaptor.capture())
         givenStyle(styleCaptor.value)
 
         verify(mockActivity).recreate()
