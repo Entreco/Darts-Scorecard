@@ -2,6 +2,7 @@ package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.ObservableArrayMap
 import android.databinding.ObservableInt
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier

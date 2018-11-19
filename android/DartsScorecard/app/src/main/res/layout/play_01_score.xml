@@ -35,7 +35,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_name_w"
-                android:text="@{@string/first_to(viewModel.numSets)}" />
+                android:text="@{@string/first_to(viewModel.firstTo)}" />
 
             <TextView
                 style="@style/Score.Hdr"
@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="@dimen/score_leg_w"
                 android:gravity="center"
-                android:text="@string/set" />
+                android:text="@string/set"
+                app:showIf="@{viewModel.showSets}" />
 
             <TextView
                 style="@style/Score.Hdr"
@@ -91,5 +92,6 @@
                 app:description="@{viewModel.description}" />
 
         </LinearLayout>
+
     </LinearLayout>
 </layout>

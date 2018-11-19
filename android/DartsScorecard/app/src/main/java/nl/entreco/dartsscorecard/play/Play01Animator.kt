@@ -5,11 +5,13 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
+import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import kotlin.math.max
 import kotlin.math.sqrt
 

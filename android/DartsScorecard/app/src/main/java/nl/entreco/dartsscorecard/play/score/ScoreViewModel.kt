@@ -1,8 +1,10 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.databinding.ObservableArrayList
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -23,7 +25,9 @@ class ScoreViewModel @Inject constructor(
         private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
     val description = ObservableField<String>("")
+    val firstTo = ObservableInt(0)
     val numSets = ObservableInt(0)
+    val showSets = ObservableBoolean(true)
     val teams = ObservableArrayList<Team>()
     val currentTeam = ObservableInt()
     val scores = ObservableArrayList<Score>()
@@ -38,6 +42,8 @@ class ScoreViewModel @Inject constructor(
         this.teams.clear()
         this.teams.addAll(teams)
         this.numSets.set(info.numSets)
+        this.showSets.set(info.numSets > 1)
+        this.firstTo.set(if(info.numSets > 1) info.numSets else info.numLegs)
         this.fetchMatchDescriptionUsecase.go({ response -> description.set(response.description.description) }, { /* TODO: Set default value */})
     }
 

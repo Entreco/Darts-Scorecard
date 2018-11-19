@@ -62,6 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="@dimen/score_leg_w"
                 app:score="@{viewModel.score.set}"
+                app:showIf="@{viewModel.showSets}"
                 tools:text="1" />
 
             <nl.entreco.dartsscorecard.base.widget.CounterTextView

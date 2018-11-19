@@ -25,6 +25,7 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
                          starter: Boolean) : BaseViewModel(), TeamScoreListener {
 
     val finish = ObservableField<String>("")
+    val showSets = ObservableBoolean(startScore.settings.numSets > 1)
     val nineDarter = ObservableBoolean(false)
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)

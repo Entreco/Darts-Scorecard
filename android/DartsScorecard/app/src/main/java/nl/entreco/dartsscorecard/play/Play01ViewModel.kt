@@ -88,6 +88,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     private fun onGameOk(request: Play01Request, response: Play01Response?,
                          revancheResponse: RevancheResponse?) {
         this.request = request
+        this.masterCaller.play(MasterCallerRequest(start = true))
         this.game = response?.game ?: revancheResponse!!.game
         this.teams = response?.teams ?: revancheResponse!!.teams
         val teamIds = response?.teamIds ?: revancheResponse!!.teamIds

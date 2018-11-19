@@ -2,10 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.view.Menu
 import android.view.MenuItem
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
@@ -113,6 +110,8 @@ class Play01ViewModelMasterCallerTest {
         whenever(mockGame.next).thenReturn(Next(State.NORMAL, Team(arrayOf(player)), 0, player, score))
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, ScoreSettings(501, 1, 1, 0), emptyArray(), "1"))
+        verify(mockMasterCaller).play(any())
+        reset(mockMasterCaller)
     }
 
     private fun whenSubmittingTurn(turn: Turn) {

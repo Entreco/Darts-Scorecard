@@ -112,6 +112,15 @@
                 android:text="@string/version"
                 android:textColor="#aaffffff" />
 
+            <!-- Ad -->
+            <!--<include-->
+                <!--android:id="@+id/include_ad"-->
+                <!--layout="@layout/include_main_ad"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/version"-->
+                <!--app:viewModel="@{viewModel.adViewModel}" />-->
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
