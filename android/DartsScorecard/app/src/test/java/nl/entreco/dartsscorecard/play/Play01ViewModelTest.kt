@@ -227,6 +227,8 @@ class Play01ViewModelTest {
     }
 
     private fun givenFullyLoadedMockGame() {
+        whenever(mockNext.state).thenReturn(State.START)
+        whenever(mockGame.next).thenReturn(mockNext)
         subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
