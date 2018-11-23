@@ -49,10 +49,10 @@
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/large"
-                android:paddingStart="@dimen/large"
-                android:layout_below="@id/include_ad"
                 android:layout_alignWithParentIfMissing="true"
+                android:layout_below="@id/include_ad"
+                android:paddingStart="@dimen/large"
+                android:paddingEnd="@dimen/large"
                 android:visibility="gone"
                 app:streamState="@{controlStreamViewModel.state}"
                 tools:drawableEnd="@drawable/stream_state_live"
@@ -107,6 +107,30 @@
                 app:adapter="@{viewModel.adapter}"
                 app:currentTeam="@{viewModel.currentTeam}"
                 app:liveStats="@{viewModel.teamStats}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/header_profile_pic_size"
+                android:layout_below="@id/title"
+                android:contentDescription="@null"
+                android:onClick="@{() -> viewModel.prev(statPager)}"
+                android:padding="@dimen/def"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_start"
+                android:tint="@color/white"
+                app:showIf="@{viewModel.showPrev}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/header_profile_pic_size"
+                android:layout_below="@id/title"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@null"
+                android:onClick="@{() -> viewModel.next(statPager)}"
+                android:padding="@dimen/def"
+                android:src="@drawable/ic_arrow_start"
+                android:tint="@color/white"
+                app:showIf="@{viewModel.showNext}" />
 
             <TextView
                 android:id="@+id/version"
