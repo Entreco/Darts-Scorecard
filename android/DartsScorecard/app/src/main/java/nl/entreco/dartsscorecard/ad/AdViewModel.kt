@@ -34,17 +34,17 @@ class AdViewModel @Inject constructor(
     }
 
     fun provideAdd(view: AdView) {
-//        if(!debug) {
+        if(!debug) {
             adLoader.loadAd(view, object : AdLoader.AdListener {
                 override fun onAdLoaded() {
-                    showAd.set(true)
+                    showAd.set(serveAds.get())
                 }
 
                 override fun onAdFailed() {
                     showAd.set(false)
                 }
             })
-//        }
+        }
     }
 
     fun provideInterstitial() {
