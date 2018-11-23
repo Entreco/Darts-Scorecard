@@ -22,4 +22,7 @@ interface GameDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(game: GameTable): Long
+
+    @Delete
+    fun delete(vararg games: GameTable)
 }

@@ -24,10 +24,7 @@ import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
-import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
-import nl.entreco.domain.play.start.Play01Request
-import nl.entreco.domain.play.start.Play01Response
-import nl.entreco.domain.play.start.Play01Usecase
+import nl.entreco.domain.play.start.*
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
@@ -231,6 +228,16 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     fun toggleMasterCaller(item: MenuItem) {
         item.isChecked = !item.isChecked
         toggleSoundUsecase.toggle()
+    }
+
+    fun askToDeleteMatch(onConfirm: ()->Unit){
+        dialogHelper.showConfirmDeleteDialog{
+            loading.set(true)
+            playGameUsecase.deleteMatch(DeleteGameRequest(game.id)) {
+                loading.set(false)
+                onConfirm()
+            }
+        }
     }
 
     override fun onCleared() {

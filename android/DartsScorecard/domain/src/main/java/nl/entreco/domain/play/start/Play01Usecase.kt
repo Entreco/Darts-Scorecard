@@ -16,6 +16,7 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
                                         private val storeMetaUsecase: StoreMetaUsecase,
                                         private val undoTurnUsecase: UndoTurnUsecase,
                                         private val markGameAsFinishedUsecase: MarkGameAsFinishedUsecase,
+                                        private val deleteGameUsecase: DeleteGameUsecase,
                                         private val logger: Logger) {
 
     fun loadGameAndStart(req: Play01Request, done: (Play01Response) -> Unit, fail: (Throwable) -> Unit) {
@@ -34,6 +35,10 @@ class Play01Usecase @Inject constructor(private val retrieveGameUsecase: Retriev
 
     fun markGameAsFinished(finishRequest: MarkGameAsFinishedRequest) {
         markGameAsFinishedUsecase.exec(finishRequest)
+    }
+
+    fun deleteMatch(deleteRequest: DeleteGameRequest, done: ()->Unit){
+        deleteGameUsecase.exec(deleteRequest, done)
     }
 
     private fun onStoreTurnSuccess(gameId: Long, turnMeta: TurnMeta, done: (Long, Long) -> Unit) = { response: StoreTurnResponse ->

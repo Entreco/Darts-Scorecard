@@ -66,6 +66,8 @@
     <string name="rating_message">Heb je even om de app te beoordelen?\nDat zouden we enorm waarderen</string>
     <string name="rating_never_ask_again">Nee</string>
     <string name="rating_not_now">Nu ff niet</string>
+    <string name="confirm_delete_title">Deze Game verwijderen?</string>
+    <string name="confirm_delete_message">Je voortgang en statistieken voor deze Wedstrijd zullen worden verwijderd</string>
 
     <!-- Game States -->
     <string name="to_throw">to throw</string>

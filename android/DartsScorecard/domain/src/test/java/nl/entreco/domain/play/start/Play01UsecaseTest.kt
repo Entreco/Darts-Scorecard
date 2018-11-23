@@ -42,6 +42,7 @@ class Play01UsecaseTest {
     @Mock private lateinit var mockStatsUc: StoreMetaUsecase
     @Mock private lateinit var mockUndo: UndoTurnUsecase
     @Mock private lateinit var mockMarkUc: MarkGameAsFinishedUsecase
+    @Mock private lateinit var mockDelUc: DeleteGameUsecase
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockDone: (Long, Long) -> Unit
@@ -56,7 +57,7 @@ class Play01UsecaseTest {
 
     @Before
     fun setUp() {
-        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockLogger)
+        subject = Play01Usecase(mockGameUc, mockTurnsUc, mockTeamUc, mockTurnUc, mockStatsUc, mockUndo, mockMarkUc, mockDelUc, mockLogger)
     }
 
     @Test

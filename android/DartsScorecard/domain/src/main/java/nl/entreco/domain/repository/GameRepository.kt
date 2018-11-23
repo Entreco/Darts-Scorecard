@@ -35,4 +35,8 @@ interface GameRepository {
     @Throws
     @WorkerThread
     fun countFinishedGames(): Int
+
+    @Throws
+    @WorkerThread
+    fun delete(id: Long)
 }

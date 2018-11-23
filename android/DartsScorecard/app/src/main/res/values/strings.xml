@@ -65,6 +65,8 @@
     <string name="rating_message">Do you have a second to rate our app?\nWe would really appreciate that</string>
     <string name="rating_never_ask_again">Nope</string>
     <string name="rating_not_now">Not now</string>
+    <string name="confirm_delete_title">Delete this Game?</string>
+    <string name="confirm_delete_message">All progress and stats for this Game will be removed</string>
 
     <!-- Game States -->
     <string name="to_throw">to throw</string>

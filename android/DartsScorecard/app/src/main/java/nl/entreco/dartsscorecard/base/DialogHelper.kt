@@ -76,6 +76,21 @@ class DialogHelper @Inject constructor(private val builder: AlertDialog.Builder,
                 .inflate(R.layout.dialog_connect_stream, null, false)
     }
 
+    fun showConfirmDeleteDialog(onConfirmed: ()->Unit){
+        builder
+                .setTitle(R.string.confirm_delete_title)
+                .setMessage(R.string.confirm_delete_message)
+                .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                    onConfirmed()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+    }
+
     fun showRatingDialog() {
         builder
                 .setTitle(R.string.rating_title)

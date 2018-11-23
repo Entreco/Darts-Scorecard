@@ -16,6 +16,9 @@
         android:id="@+id/menu_play_settings"
         android:title="@string/menu_title_swap" />
     <item
+        android:id="@+id/menu_delete_match"
+        android:title="@string/menu_title_delete" />
+    <item
         android:id="@+id/menu_faq"
         android:icon="@drawable/ic_wtf"
         android:title="@string/wtf" />

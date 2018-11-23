@@ -16,14 +16,13 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.dartsscorecard.play.stream.StreamFragment
 import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
+import nl.entreco.dartsscorecard.play.stream.StreamFragment
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.streaming.Connected
 import nl.entreco.domain.streaming.ConnectionState
-import org.webrtc.PeerConnection
 
 class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
@@ -68,7 +67,7 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
     override fun onConnectionStateChanged(connectionState: ConnectionState) {
         controlStreamViewModel.connectionState(connectionState)
-        when(connectionState) {
+        when (connectionState) {
             // Add DataMessenger to ScoreViewModel
             is Connected -> {
                 controlStreamViewModel.setStreamController(navigator.streamController())
@@ -121,6 +120,11 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
             }
             R.id.menu_sound_settings -> {
                 viewModel.toggleMasterCaller(item)
+            }
+            R.id.menu_delete_match -> {
+                viewModel.askToDeleteMatch {
+                    onBackPressed()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

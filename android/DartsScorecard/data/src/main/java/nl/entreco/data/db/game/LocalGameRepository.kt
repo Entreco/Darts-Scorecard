@@ -10,13 +10,15 @@ import nl.entreco.domain.repository.GameRepository
 /**
  * Created by Entreco on 15/11/2017.
  */
-class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable, Game>) : GameRepository {
+class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable, Game>) :
+        GameRepository {
 
     private val gameDao: GameDao = db.gameDao()
 
     @Throws
     @WorkerThread
-    override fun create(teams: String, startScore: Int, startIndex: Int, numLegs: Int, numSets: Int): Long {
+    override fun create(teams: String, startScore: Int, startIndex: Int, numLegs: Int,
+                        numSets: Int): Long {
         val table = GameTable()
 
         table.teams = teams
@@ -46,8 +48,7 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     @Throws
     @WorkerThread
     override fun fetchBy(id: Long): Game {
-        val gameTable = gameDao.fetchBy(id)
-                ?: throw IllegalStateException("Game $id does not exist")
+        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
         return mapper.to(gameTable)
     }
 
@@ -70,5 +71,12 @@ class LocalGameRepository(db: DscDatabase, private val mapper: Mapper<GameTable,
     @WorkerThread
     override fun countFinishedGames(): Int {
         return gameDao.fetchAll().count { it.finished }
+    }
+
+    @Throws
+    @WorkerThread
+    override fun delete(id: Long) {
+        val gameTable = gameDao.fetchBy(id) ?: throw IllegalStateException("Game $id does not exist")
+        gameDao.delete(gameTable)
     }
 }
