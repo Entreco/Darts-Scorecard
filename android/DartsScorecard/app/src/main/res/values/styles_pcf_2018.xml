@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pcf_primaryDark">#04875C</color>
+    <color name="pcf_green">#07D290</color>
+    <color name="pcf_black">#0F0D12</color>
+    <color name="pcf_white">#FFFFFF</color>
+    <color name="pcf_light_gray">#BBC7C7</color>
+    <color name="pcf_dark_gray">#747B77</color>
+    <color name="pcf_light_green">#F2FAF1</color>
+    <color name="pcf_dark_green">#E6F5E6</color>
+
+    <style name="Pcf" parent="AppTheme">
+        <item name="colorPrimary">@color/pcf_green</item>
+        <item name="colorPrimaryDark">@color/pcf_primaryDark</item>
+        <item name="colorEditProfile">@color/pcf_primaryDark</item>
+        <item name="gradient_angle">135</item>
+        <item name="match_description">@string/pcf_match</item>
+        <item name="colorAccent">@color/pcf_green</item>
+        <item name="highlightColor">@android:color/transparent</item>
+        <item name="statBorderColor">@color/pcf_black</item>
+        <item name="colorOneEighty">@color/bdo_gray_light</item>
+        <item name="colorNineDart">@color/black</item>
+        <item name="launchText">@color/pcf_light_green</item>
+        <item name="nameText">@color/white</item>
+        <item name="scoreText">@color/white</item>
+        <item name="ptsText">@color/black</item>
+        <item name="scoreBorderColor">@color/pcf_black</item>
+        <item name="scoreBorderAlpha">0.2</item>
+        <item name="inputToggle">@color/bdo_yellow_accent</item>
+        <item name="grad_score_header_start">@color/pcf_black</item>
+        <item name="grad_score_header_stop">@color/pcf_black</item>
+        <item name="grad_score_footer_start">@color/pcf_black</item>
+        <item name="grad_score_footer_stop">@color/pcf_black</item>
+        <item name="grad_score_name_start">@color/pcf_light_gray</item>
+        <item name="grad_score_name_stop">@color/pcf_dark_gray</item>
+        <item name="grad_score_start">@color/pcf_light_gray</item>
+        <item name="grad_score_stop">@color/pcf_dark_gray</item>
+        <item name="grad_score_pts_start">@color/pcf_light_green</item>
+        <item name="grad_score_pts_stop">@color/pcf_dark_green</item>
+        <item name="grad_score_hint_start">@color/pcf_green</item>
+        <item name="grad_score_hint_stop">@color/pcf_green</item>
+        <item name="grad_score_nine_start">@color/pcf_green</item>
+        <item name="grad_score_nine_stop">@color/pcf_green</item>
+        <item name="grad_current_start">@color/pcf_green</item>
+        <item name="grad_current_stop">@color/pcf_green</item>
+        <item name="grad_launch_btn_start">@color/pcf_green</item>
+        <item name="grad_launch_btn_stop">@color/pcf_green</item>
+        <item name="grad_score_starter_start">@color/pcf_green</item>
+        <item name="grad_score_starter_stop">@color/pcf_green</item>
+        <item name="header_text_color">@color/pcf_white</item>
+    </style>
+
+</resources>

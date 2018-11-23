@@ -138,6 +138,7 @@
     <string name="archive_notif_title">Calculating new stats, averages &amp; hiscores</string>
 
     <!-- Specific -->
+    <string name="pcf_match">Players Championship Finals</string>
     <string name="bdo_match">BDO World Cup - semi finals</string>
     <string name="pdc_match">PDC World Cup - semi finals</string>
 

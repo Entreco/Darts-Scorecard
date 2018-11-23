@@ -19,7 +19,8 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
         PDC_2018("Pdc_2018"),
         BDO_2018("Bdo_2018"),
         BDO("Bdo"),
-        PDC("Pdc");
+        PDC("Pdc"),
+        PCF("Pcf");
     }
 
     fun get(): Int {
@@ -28,6 +29,7 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
             Style.BDO_2018.style -> R.style.Bdo_2018
             Style.PDC.style -> R.style.Pdc
             Style.BDO.style -> R.style.Bdo
+            Style.PCF.style -> R.style.Pcf
             else -> R.style.Pdc_2018
         }
     }
@@ -42,6 +44,7 @@ class Styler @Inject constructor(private val prefs: SharedPreferences, private v
             R.style.Pdc_2018 -> Style.BDO_2018.style
             R.style.Bdo_2018 -> Style.PDC.style
             R.style.Pdc -> Style.BDO.style
+            R.style.Bdo -> Style.PCF.style
             else -> Style.PDC_2018.style
         }
     }

@@ -139,6 +139,7 @@
     <string name="archive_notif_title">Nieuwe stats, gemiddeldes en hiscores aan het berekenen</string>
 
     <!-- Specific -->
+    <string name="pcf_match">Players Championship Finales</string>
     <string name="bdo_match">BDO World Cup - halve finales</string>
     <string name="pdc_match">PDC World Cup - halve finales</string>
 
