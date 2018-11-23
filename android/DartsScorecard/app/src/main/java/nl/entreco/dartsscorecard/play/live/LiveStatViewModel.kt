@@ -1,7 +1,9 @@
 package nl.entreco.dartsscorecard.play.live
 
 import android.databinding.ObservableArrayMap
+import android.databinding.ObservableFloat
 import android.databinding.ObservableInt
+import android.databinding.ObservableLong
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
@@ -20,6 +22,7 @@ import javax.inject.Inject
  */
 class LiveStatViewModel @Inject constructor(
         val adapter: LiveStatAdapter,
+        val adViewModel: AdViewModel,
         private val fetchGameStatsUsecase: FetchGameStatsUsecase,
         private val fetchLiveStatUsecase: FetchLiveStatUsecase,
         private val archiveServiceLauncher: ArchiveServiceLauncher,

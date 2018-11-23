@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.ad
 
 import android.databinding.BindingAdapter
+import android.os.Handler
 import android.view.View
 import com.google.android.gms.ads.AdView
 
@@ -9,9 +10,12 @@ import com.google.android.gms.ads.AdView
  */
 object AdBindings {
     @JvmStatic
-    @BindingAdapter("viewModel")
-    fun loadAd(view: AdView, viewModel: AdViewModel?) {
-        viewModel?.provideAdd(view)
+    @BindingAdapter("viewModel", "adDelay", requireAll = false)
+    fun loadAd(view: AdView, viewModel: AdViewModel?, adDelay: Int?) {
+        val delay = adDelay?.toLong() ?: 0L
+        Handler().postDelayed({
+            viewModel?.provideAdd(view)
+        }, delay)
     }
 
     @JvmStatic

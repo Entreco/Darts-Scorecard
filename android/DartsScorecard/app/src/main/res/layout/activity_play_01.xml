@@ -69,8 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/input_peek_height"
-            android:layout_marginEnd="@dimen/def"
-            android:layout_marginStart="@dimen/def"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navigator="@{navigator}"
             app:viewModel="@{statViewModel}"

@@ -6,7 +6,6 @@
     tools:showIn="@layout/play_01_score">
 
     <data>
-
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.ad.AdViewModel" />
@@ -19,18 +18,19 @@
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible"
-        android:layout_marginTop="@dimen/small"
         app:showAd="@{viewModel.showAd}">
 
         <TextView
             style="@style/Setup.Hdr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large"
             android:background="@drawable/score_header"
             android:orientation="horizontal"
+            android:gravity="center"
             android:padding="@dimen/xsmall"
-            android:text="@string/sponsored_by" />
+            android:textSize="11sp"
+            android:text="@string/tired_of_ads"
+            tools:ignore="SmallSp" />
 
         <!-- Ad -->
         <com.google.android.gms.ads.AdView
@@ -39,10 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/main_stats_unit_id"
+            ads:adUnitId="@string/live_ad_unit_id"
             app:viewModel="@{viewModel}" />
 
-        <!-- Footer -->
-        <TextView style="@style/Setup.Ftr" />
     </LinearLayout>
 </layout>

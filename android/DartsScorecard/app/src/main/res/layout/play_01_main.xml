@@ -36,6 +36,14 @@
             android:clipToPadding="false"
             tools:alpha="1">
 
+            <!-- Ad -->
+            <include
+                android:id="@+id/include_ad"
+                layout="@layout/include_main_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:viewModel="@{viewModel.adViewModel}" />
+
             <TextView
                 android:id="@+id/streamTitle"
                 style="@style/Main.Title"
@@ -43,6 +51,8 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/large"
                 android:paddingStart="@dimen/large"
+                android:layout_below="@id/include_ad"
+                android:layout_alignWithParentIfMissing="true"
                 android:visibility="gone"
                 app:streamState="@{controlStreamViewModel.state}"
                 tools:drawableEnd="@drawable/stream_state_live"
@@ -111,15 +121,6 @@
                 android:shadowDy="1.0"
                 android:text="@string/version"
                 android:textColor="#aaffffff" />
-
-            <!-- Ad -->
-            <!--<include-->
-                <!--android:id="@+id/include_ad"-->
-                <!--layout="@layout/include_main_ad"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@id/version"-->
-                <!--app:viewModel="@{viewModel.adViewModel}" />-->
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

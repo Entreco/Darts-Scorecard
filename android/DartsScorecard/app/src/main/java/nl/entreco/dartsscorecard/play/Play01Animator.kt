@@ -5,13 +5,11 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
-import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
-import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -23,9 +21,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
-            binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet, binding.root.includeScore.header,
-            binding.root.includeScore.footer, binding.root.includeToolbar, binding.includeMain.control1, binding.includeMain.control2)
+    private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,
+            binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
+            binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
+            binding.root.includeScore.header,
+            binding.root.includeScore.footer, binding.root.includeToolbar,
+            binding.includeMain.control1, binding.includeMain.control2)
 
     init {
         animator.calculateHeightForScoreView()
@@ -54,9 +55,15 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View, private val fab: View, private val mainSheet: View, private val version: View,
-                                         private val inputResume: View, private val pager: ViewPager, private val teamSheet: MaxHeightRecyclerView, private val inputSheet: View,
-                                         private val scoreHeader: View, private val scoreFooter: View, private val toolbar: View,
+    internal class Play01AnimatorHandler(private val root: View, private val scoreSheet: View,
+                                         private val fab: View, private val mainSheet: View,
+                                         private val version: View,
+                                         private val inputResume: View,
+                                         private val pager: ViewPager,
+                                         private val teamSheet: MaxHeightRecyclerView,
+                                         private val inputSheet: View,
+                                         private val scoreHeader: View,
+                                         private val scoreFooter: View, private val toolbar: View,
                                          private val control1: View, private val control2: View) {
 
         private var animatorPosition: Int = 0
@@ -65,7 +72,8 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
         fun onSlide(slideOffset: Float) {
             // Slide Out ScoreViewModel
-            scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+            scoreSheet.animate().alpha(slideOffset)
+                    .translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
@@ -82,7 +90,8 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             animateState(version.animate(), 8, slideOffset)
 
             // Show Resume
-            inputResume.animate().alpha(1 - slideOffset).translationX(slideOffset * -inputResume.width).setDuration(0).start()
+            inputResume.animate().alpha(1 - slideOffset)
+                    .translationX(slideOffset * -inputResume.width).setDuration(0).start()
 
             // Animate Stats
             getAnimatorForPosition(animatorPosition)?.onSlide(slideOffset)
@@ -115,13 +124,17 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         }
 
         private fun animateState(anim: ViewPropertyAnimator, index: Int, slideOffset: Float) {
-            anim.translationY(-index * 50 * slideOffset * index).scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset).setDuration(0).start()
+            anim.translationY(-index * 50 * slideOffset * index)
+                    .scaleX(max(0f, (1 - slideOffset * index))).alpha(1 - slideOffset)
+                    .setDuration(0).start()
         }
 
         private fun getAnimatorForPosition(position: Int): LiveStatSlideAnimator? {
             synchronized(lock) {
                 if (animator == null) {
-                    animator = LiveStatSlideAnimator(pager.findViewWithTag(position), pager.findViewWithTag(position - 1), pager.findViewWithTag(position + 1))
+                    animator = LiveStatSlideAnimator(pager.findViewWithTag(position),
+                            pager.findViewWithTag(position - 1),
+                            pager.findViewWithTag(position + 1))
                 }
                 return animator
             }
