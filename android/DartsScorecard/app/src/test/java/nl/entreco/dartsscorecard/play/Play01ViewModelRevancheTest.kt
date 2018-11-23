@@ -3,11 +3,14 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
@@ -42,6 +45,7 @@ class Play01ViewModelRevancheTest {
     @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockGame: Game
+    @Mock private lateinit var mockNext: Next
     @Mock private lateinit var mockScoreSettings: ScoreSettings
     @Mock private lateinit var team1: Team
     @Mock private lateinit var team2: Team
@@ -61,6 +65,8 @@ class Play01ViewModelRevancheTest {
     }
 
     private fun givenFullyLoadedSubject() {
+        whenever(mockNext.state).thenReturn(State.START)
+        whenever(mockGame.next).thenReturn(mockNext)
         subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())

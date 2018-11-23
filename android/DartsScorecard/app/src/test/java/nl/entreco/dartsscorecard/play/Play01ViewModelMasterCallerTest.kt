@@ -70,7 +70,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     @Test
-    fun `it should set initial toggle state (false0`() {
+    fun `it should set initial toggle state (false)`() {
         givenSubject()
         whenInitializingToggle(false)
         thenMenuIs(false)
@@ -110,7 +110,7 @@ class Play01ViewModelMasterCallerTest {
         whenever(mockGame.next).thenReturn(Next(State.NORMAL, Team(arrayOf(player)), 0, player, score))
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, ScoreSettings(501, 1, 1, 0), emptyArray(), "1"))
-        verify(mockMasterCaller).play(any())
+        verify(mockMasterCaller, never()).play(any())
         reset(mockMasterCaller)
     }
 

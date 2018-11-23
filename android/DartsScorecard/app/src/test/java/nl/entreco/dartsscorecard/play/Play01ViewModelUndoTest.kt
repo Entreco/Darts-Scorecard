@@ -6,6 +6,8 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.mastercaller.MasterCaller
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
@@ -30,6 +32,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class Play01ViewModelUndoTest {
 
+    @Mock private lateinit var mockNext: Next
     @Mock private lateinit var mockGame: Game
     @Mock private lateinit var mockTeam: Team
     @Mock private lateinit var mockSettings: ScoreSettings
@@ -79,6 +82,8 @@ class Play01ViewModelUndoTest {
 
     private fun givenSubject() {
         whenever(mockGame.id).thenReturn(5)
+        whenever(mockNext.state).thenReturn(State.START)
+        whenever(mockGame.next).thenReturn(mockNext)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teams).thenReturn(arrayOf(mockTeam, mockTeam))
         whenever(mockResponse.teamIds).thenReturn("")
