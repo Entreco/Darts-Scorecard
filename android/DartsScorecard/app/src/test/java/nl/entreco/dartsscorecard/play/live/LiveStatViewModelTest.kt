@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
@@ -24,6 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class LiveStatViewModelTest {
 
     @Mock private lateinit var mockAdapter: LiveStatAdapter
+    @Mock private lateinit var mockAdViewModel: AdViewModel
     @Mock private lateinit var mockFetchGameStatsUsecase: FetchGameStatsUsecase
     @Mock private lateinit var mockFetchLiveStatUsecase: FetchLiveStatUsecase
     @Mock private lateinit var mockArchiveServiceLauncher: ArchiveServiceLauncher
@@ -131,7 +133,7 @@ class LiveStatViewModelTest {
         whenever(mockGame.id).thenReturn(givenGameId)
         whenever(mockResponse.game).thenReturn(mockGame)
         whenever(mockResponse.teamIds).thenReturn(givenTeamIds)
-        subject = LiveStatViewModel(mockAdapter, mockFetchGameStatsUsecase, mockFetchLiveStatUsecase, mockArchiveServiceLauncher, mockLogger)
+        subject = LiveStatViewModel(mockAdapter, mockAdViewModel, mockFetchGameStatsUsecase, mockFetchLiveStatUsecase, mockArchiveServiceLauncher, mockLogger)
         subject.onLoaded(givenTeams, givenScores, mockResponse, null)
     }
 
