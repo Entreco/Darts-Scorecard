@@ -23,6 +23,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
     val hScore = ObservableField<String>(empty)
     val hCo = ObservableField<String>(empty)
     val co = ObservableField<String>(empty)
+    val coRatio = ObservableField<String>(empty)
     val breaks = ObservableField<String>(empty)
     val image = ObservableField<String>(team.imageUrl())
 
@@ -61,6 +62,11 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
         val aggregator = liveStats.sumBy { it.nCheckouts }
         val denominator = liveStats.sumBy { it.nAtCheckout }
         co.set("%d/%d".format(aggregator, denominator))
+
+        when (denominator) {
+            0 -> coRatio.set(empty)
+            else -> coRatio.set("%.2f".format(100 * aggregator / denominator.toDouble()))
+        }
     }
 
     private fun updateHighestScore() {

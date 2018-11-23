@@ -86,6 +86,7 @@
     <string name="match_stats">Match Statistics</string>
     <string name="live_breaks_made">Breaks Made</string>
     <string name="live_double_success">Double Success</string>
+    <string name="live_double_ratio">Double %</string>
     <string name="live_highest_score">Highest Score</string>
     <string name="live_highest_out">Highest Out</string>
     <string name="live_180s">180\'s</string>

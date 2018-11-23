@@ -384,6 +384,33 @@
                 style="@style/Main.Value"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
+                android:text="@{team0.coRatio.toString()}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_double_ratio" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.coRatio.toString()}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stat11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
                 android:text="@{team0.breaks.toString()}" />
 
             <TextView
