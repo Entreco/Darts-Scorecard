@@ -17,6 +17,7 @@
     <attr name="statBorderColor" format="color" />
     <attr name="colorOneEighty" format="color" />
     <attr name="colorNineDart" format="color" />
+    <attr name="colorFinishDart" format="color" />
     <attr name="colorEditProfile" format="color" />
     <attr name="grad_score_header_start" format="color" />
     <attr name="grad_score_header_stop" format="color" />
@@ -30,6 +31,8 @@
     <attr name="grad_score_pts_stop" format="color" />
     <attr name="grad_score_hint_start" format="color" />
     <attr name="grad_score_hint_stop" format="color" />
+    <attr name="grad_score_finish_start" format="color" />
+    <attr name="grad_score_finish_stop" format="color" />
     <attr name="grad_score_nine_start" format="color" />
     <attr name="grad_score_nine_stop" format="color" />
     <attr name="grad_current_start" format="color" />
@@ -40,7 +43,7 @@
     <attr name="grad_score_starter_stop" format="color" />
 
     <!-- Input View -->
-    <attr name="inputToggle" format="color" />
+    <attr name="inputScoredText" format="color" />
 
     <!-- ProfileHeaderBehavior -->
     <declare-styleable name="ProfileHeaderBehavior" >

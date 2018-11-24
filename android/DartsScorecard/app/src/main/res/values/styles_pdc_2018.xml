@@ -22,13 +22,14 @@
         <item name="statBorderColor">@android:color/transparent</item>
         <item name="colorOneEighty">@color/pdc_2018_yellow</item>
         <item name="colorNineDart">@color/black</item>
+        <item name="colorFinishDart">@color/white</item>
         <item name="launchText">@color/white</item>
         <item name="nameText">@color/black</item>
         <item name="scoreText">@color/white</item>
         <item name="ptsText">@color/white</item>
         <item name="scoreBorderColor">@android:color/transparent</item>
         <item name="scoreBorderAlpha">.1</item>
-        <item name="inputToggle">@color/pdc_2018_green_dark</item>
+        <item name="inputScoredText">@color/white</item>
         <item name="grad_score_header_start">@color/pdc_2018_black_light</item>
         <item name="grad_score_header_stop">@color/pdc_2018_black_dark</item>
         <item name="grad_score_footer_start">@color/pdc_2018_black_light</item>
@@ -43,6 +44,8 @@
         <item name="grad_score_hint_stop">@color/pdc_2018_red_light</item>
         <item name="grad_score_nine_start">#FFD71B</item>
         <item name="grad_score_nine_stop">#FCC804</item>
+        <item name="grad_score_finish_start">@color/pdc_2018_red_light</item>
+        <item name="grad_score_finish_stop">@color/pdc_2018_red_light</item>
         <item name="grad_current_start">@color/pdc_2018_red_light</item>
         <item name="grad_current_stop">@color/pdc_2018_red_light</item>
         <item name="grad_launch_btn_start">@color/pdc_2018_green_light</item>

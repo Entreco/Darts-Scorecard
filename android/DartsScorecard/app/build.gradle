@@ -15,7 +15,7 @@ android {
         applicationId "nl.entreco.dartsscorecard"
         resValue "string", "version", "${config.versionName}"
 
-        ndk {abiFilters "armeabi", "armeabi-v7a", "x86", "mips"}
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
     }
     buildTypes {
         debug {
@@ -42,7 +42,6 @@ dependencies {
     implementation project(":shared")
     implementation project(':domain')
     implementation project(':data')
-
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
