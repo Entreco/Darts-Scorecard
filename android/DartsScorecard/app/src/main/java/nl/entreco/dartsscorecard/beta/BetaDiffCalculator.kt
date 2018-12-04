@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import nl.entreco.domain.beta.Feature
 
 class BetaDiffCalculator(private val old: List<Feature>, private val new: List<Feature>) : DiffUtil.Callback() {

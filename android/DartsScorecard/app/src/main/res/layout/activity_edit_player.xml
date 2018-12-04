@@ -17,7 +17,7 @@
             type="nl.entreco.dartsscorecard.setup.edit.EditPlayerNavigator" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/choose_player_name" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/EditPlayer.Input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 app:errorEnabled="true">
 
                 <!--suppress AndroidUnknownAttribute -->
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     style="@style/EditPlayer.Edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     android:onEditorAction="@{(tv,code,event) -> viewModel.onActionDone(tv,code,navigator)}"
                     android:onTextChanged="@{(text,start,before,count) -> viewModel.filter(text)}"
                     app:suggestion="@{viewModel.suggestedName}" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 style="@style/EditPlayer.Middle"
@@ -83,6 +83,6 @@
             <TextView style="@style/Setup.Ftr" />
 
         </LinearLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

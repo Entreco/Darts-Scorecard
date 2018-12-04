@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile.view
 
-import android.support.design.widget.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window
@@ -22,7 +22,8 @@ class ProfileAnimator(binding: ActivityProfileBinding, inflater: TransitionInfla
     private val revealAnimator = RevealAnimator(appBarLayout)
 
     init {
-        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 -> animator.onOffsetChanged(p0, p1) })
+        appBarLayout.addOnOffsetChangedListener(
+                AppBarLayout.OnOffsetChangedListener { p0, p1 -> animator.onOffsetChanged(p0, p1) })
 
         revealAnimator.setupEnterAnimation(inflater, window, true)
         animator.startAlphaAnimation(title, 0, View.INVISIBLE)

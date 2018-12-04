@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import android.view.View
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.never
@@ -19,7 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class Play01BindingTest {
 
-    @Mock private lateinit var mockCoordinator: CoordinatorLayout
+    @Mock private lateinit var mockCoordinator: androidx.coordinatorlayout.widget.CoordinatorLayout
     @Mock private lateinit var mockAnimator: Play01Animator
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockView: View

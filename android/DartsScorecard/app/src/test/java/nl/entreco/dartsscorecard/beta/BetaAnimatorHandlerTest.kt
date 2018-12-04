@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.support.design.widget.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout
 import android.view.View
 import android.view.ViewPropertyAnimator
 import com.nhaarman.mockito_kotlin.*

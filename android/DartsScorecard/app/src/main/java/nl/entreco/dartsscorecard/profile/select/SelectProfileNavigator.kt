@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.profile.select
 
 import android.app.Activity
-import android.support.v4.app.ActivityOptionsCompat
+import androidx.core.app.ActivityOptionsCompat
 import android.view.View
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity

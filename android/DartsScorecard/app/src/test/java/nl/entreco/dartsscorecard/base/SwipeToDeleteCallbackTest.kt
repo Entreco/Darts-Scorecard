@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.base
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,8 +18,8 @@ class SwipeToDeleteCallbackTest {
 
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockCanvas: Canvas
-    @Mock private lateinit var mockRecyclerView: RecyclerView
-    @Mock private lateinit var mockViewHolder: RecyclerView.ViewHolder
+    @Mock private lateinit var mockRecyclerView: androidx.recyclerview.widget.RecyclerView
+    @Mock private lateinit var mockViewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder
     private lateinit var subject : TestSwipeToDeleteCallback
 
     @Test(expected = NullPointerException::class)
@@ -60,16 +60,16 @@ class SwipeToDeleteCallbackTest {
         val swiped = AtomicBoolean(false)
         val drawed = AtomicBoolean(false)
 
-        override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder,
-                            p2: RecyclerView.ViewHolder): Boolean {
+        override fun onMove(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                            p2: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
             return false
         }
 
-        override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
+        override fun onSwiped(p0: androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
             swiped.set(true)
         }
 
-        override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        override fun onChildDraw(canvas: Canvas, recyclerView: androidx.recyclerview.widget.RecyclerView, viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
             super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             drawed.set(true)
         }

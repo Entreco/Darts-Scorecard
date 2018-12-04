@@ -1,6 +1,6 @@
 package nl.entreco.data.db.turn
 
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository

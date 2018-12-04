@@ -10,7 +10,7 @@
             type="nl.entreco.dartsscorecard.faq.WtfViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
@@ -19,7 +19,7 @@
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_wtf" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wtf_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,6 +30,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/wtf_view" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

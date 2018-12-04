@@ -1,8 +1,8 @@
 package nl.entreco.data.db.turn
 
-import android.arch.persistence.room.Room
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.room.Room
+import androidx.test.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import nl.entreco.data.TestProvider
 import nl.entreco.data.db.DscDatabase
 import org.junit.After

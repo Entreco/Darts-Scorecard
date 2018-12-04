@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:paddingTop="20dp">
 
-            <android.support.v4.widget.Space
+            <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -50,7 +50,7 @@
                 android:transitionName="profile"
                 app:profileImage="@{team0.image}" />
 
-            <android.support.v4.widget.Space
+            <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -66,7 +66,7 @@
                 app:hideIfOneTeam="@{team1 == null}"
                 app:profileImage="@{team1.image}" />
 
-            <android.support.v4.widget.Space
+            <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -93,7 +93,7 @@
                     app:centerIfOneTeam="@{team1 == null}"
                     android:text="@{team0.name}" />
 
-                <android.support.v7.widget.AppCompatSpinner
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0" />
@@ -122,7 +122,7 @@
                     android:gravity="center|start"
                     android:text="@{team1.name}" />
 
-                <android.support.v7.widget.AppCompatSpinner
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alpha="0" />

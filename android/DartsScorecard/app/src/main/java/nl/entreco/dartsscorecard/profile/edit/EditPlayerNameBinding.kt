@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.profile.edit
 
 import android.content.Context
-import android.databinding.BindingAdapter
-import android.support.annotation.StringRes
-import android.support.design.widget.TextInputLayout
+import androidx.databinding.BindingAdapter
+import androidx.annotation.StringRes
+import com.google.android.material.textfield.TextInputLayout
 import android.transition.TransitionInflater
 import android.view.Window
 import android.view.inputmethod.InputMethodManager

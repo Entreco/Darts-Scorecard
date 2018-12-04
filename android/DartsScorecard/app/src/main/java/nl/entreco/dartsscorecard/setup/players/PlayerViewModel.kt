@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
-import android.databinding.ObservableLong
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableLong
 import android.widget.AdapterView
 
 /**

@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.setup
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.support.v4.view.PagerAdapter.POSITION_NONE
+import androidx.viewpager.widget.PagerAdapter.POSITION_NONE
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.setup.edit.EditPlayerActivity
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor

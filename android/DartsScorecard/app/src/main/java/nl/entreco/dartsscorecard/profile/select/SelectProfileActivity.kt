@@ -3,12 +3,12 @@ package nl.entreco.dartsscorecard.profile.select
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
@@ -47,15 +47,16 @@ class SelectProfileActivity : ViewModelActivity() {
 
     private fun initRecyclerView(binding: ActivitySelectProfileBinding) {
         val recyclerView = binding.profileRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                binding.root.context!!)
+        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
         addSwipeToDelete(binding, recyclerView)
         recyclerView.adapter = adapter
     }
 
-    private fun addSwipeToDelete(binding: ActivitySelectProfileBinding, recyclerView: RecyclerView) {
+    private fun addSwipeToDelete(binding: ActivitySelectProfileBinding, recyclerView: androidx.recyclerview.widget.RecyclerView) {
         val swipeToDeleteHelper = SelectProfileSwiper(binding.root,
                 onSwiped = { viewModel.hidePlayerProfile(adapter.playerIdAt(it), adapter) },
                 deleteAction = { viewModel.deletePlayerProfiles(adapter) },

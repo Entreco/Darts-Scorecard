@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup.settings
 
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import android.widget.AdapterView
 import android.widget.SeekBar
 import nl.entreco.dartsscorecard.base.BaseViewModel

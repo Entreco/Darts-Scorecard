@@ -8,7 +8,7 @@ import android.app.job.JobService
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher.Companion.EXTRA_GAME_ID

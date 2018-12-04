@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.di.viewmodel
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import android.content.Context
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.billing.BillingServiceConnection
 import org.junit.Assert.assertEquals
@@ -22,7 +22,7 @@ class ViewModelModuleTest {
     @Mock private lateinit var mockLifeCycle: Lifecycle
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockBillingConnection: BillingServiceConnection
-    @Mock private lateinit var mockActivity: FragmentActivity
+    @Mock private lateinit var mockActivity: androidx.fragment.app.FragmentActivity
     private lateinit var subject: ViewModelModule
 
     @Before

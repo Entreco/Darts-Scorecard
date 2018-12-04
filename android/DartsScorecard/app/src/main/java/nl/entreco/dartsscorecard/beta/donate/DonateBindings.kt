@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingUtil
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R

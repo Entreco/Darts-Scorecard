@@ -1,16 +1,16 @@
 package nl.entreco.dartsscorecard.beta
 
 import android.app.Activity
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.Toolbar
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
@@ -104,8 +104,9 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         val recyclerView = binding.betaRecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+                binding.root.context, 2)
+        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         recyclerView.adapter = adapter
     }
 

@@ -2,9 +2,9 @@ package nl.entreco.dartsscorecard.faq
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import android.net.Uri
 import android.view.View
 import nl.entreco.domain.wtf.WtfItem

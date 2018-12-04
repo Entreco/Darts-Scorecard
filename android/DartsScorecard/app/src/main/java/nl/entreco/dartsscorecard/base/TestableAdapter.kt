@@ -1,13 +1,13 @@
 package nl.entreco.dartsscorecard.base
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 
 /**
  * Created by Entreco on 31/12/2017.
  */
-abstract class TestableAdapter<T : RecyclerView.ViewHolder?> : RecyclerView.Adapter<T>() {
+abstract class TestableAdapter<T : androidx.recyclerview.widget.RecyclerView.ViewHolder?> : androidx.recyclerview.widget.RecyclerView.Adapter<T>() {
 
     protected class LazyInflater(context: Context) {
         val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }

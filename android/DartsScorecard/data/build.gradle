@@ -14,18 +14,18 @@ dependencies {
     implementation project(":shared")
 
     // Annotation Processing
-    kapt "android.arch.persistence.room:compiler:$room"
+    kapt "androidx.room:room-compiler:$room"
 
     // Implementation
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
-    implementation "android.arch.persistence.room:runtime:$room"
+    implementation "androidx.room:room-runtime:$room"
 
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:exifinterface:$support"
-    implementation "android.arch.lifecycle:livedata:$architecture"
+    implementation "androidx.appcompat:appcompat:$xSupport"
+    implementation "androidx.exifinterface:exifinterface:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-livedata:$livedata"
     implementation "com.google.code.gson:gson:$gson"
 
     testImplementation "junit:junit:$junit"
@@ -33,5 +33,5 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 
     // AndroidTest
-    androidTestImplementation "com.android.support.test:runner:$espressoRunner"
+    androidTestImplementation 'androidx.test:runner:1.1.0'
 }

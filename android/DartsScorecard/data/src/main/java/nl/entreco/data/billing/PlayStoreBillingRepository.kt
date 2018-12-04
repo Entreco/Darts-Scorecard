@@ -3,8 +3,8 @@ package nl.entreco.data.billing
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.annotation.UiThread
-import android.support.annotation.WorkerThread
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import com.google.gson.GsonBuilder
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse

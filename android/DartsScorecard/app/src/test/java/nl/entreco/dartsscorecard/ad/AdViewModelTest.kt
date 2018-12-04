@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.ad
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.shared.log.Logger

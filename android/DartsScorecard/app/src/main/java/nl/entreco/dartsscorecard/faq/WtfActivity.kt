@@ -2,11 +2,11 @@ package nl.entreco.dartsscorecard.faq
 
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import com.yalantis.jellytoolbar.listener.JellyListener
@@ -64,8 +64,9 @@ class WtfActivity : ViewModelActivity() {
         val recyclerView = binding.wtfRecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 1)
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+                binding.root.context, 1)
+        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         recyclerView.adapter = adapter
     }
 

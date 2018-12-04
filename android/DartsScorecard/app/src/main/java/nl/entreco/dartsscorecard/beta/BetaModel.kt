@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
-import android.databinding.ObservableFloat
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableFloat
 import nl.entreco.domain.beta.Feature
 
 /**

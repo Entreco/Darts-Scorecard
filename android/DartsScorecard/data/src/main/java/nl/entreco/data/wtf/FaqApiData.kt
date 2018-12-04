@@ -1,6 +1,6 @@
 package nl.entreco.data.wtf
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 

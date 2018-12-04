@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.launch
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.view.View
 import nl.entreco.domain.setup.game.CreateGameResponse
 

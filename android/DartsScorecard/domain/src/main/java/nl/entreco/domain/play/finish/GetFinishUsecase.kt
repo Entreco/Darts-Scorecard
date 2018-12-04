@@ -1,7 +1,7 @@
 package nl.entreco.domain.play.finish
 
-import android.support.annotation.VisibleForTesting
-import android.support.annotation.WorkerThread
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import nl.entreco.shared.threading.Background
 import nl.entreco.domain.model.Dart
 import java.util.concurrent.Future

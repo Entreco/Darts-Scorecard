@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 
 /**
@@ -9,7 +9,7 @@ import android.util.AttributeSet
  */
 class MaxHeightRecyclerView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+) : androidx.recyclerview.widget.RecyclerView(context, attrs, defStyleAttr) {
 
     var maxHeight: Int = 400
 

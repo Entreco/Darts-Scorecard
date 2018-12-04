@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.BottomSheetBehavior
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.view.View
 import kotlinx.android.synthetic.main.include_beta_detail.view.*
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
@@ -28,7 +28,8 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     }
 
     init {
-        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, slideOffset -> animator.onOffsetChanged(appBarLayout, slideOffset) })
+        appBar.addOnOffsetChangedListener(
+                AppBarLayout.OnOffsetChangedListener { appBarLayout, slideOffset -> animator.onOffsetChanged(appBarLayout, slideOffset) })
         behaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 animator.onSlide(slideOffset)

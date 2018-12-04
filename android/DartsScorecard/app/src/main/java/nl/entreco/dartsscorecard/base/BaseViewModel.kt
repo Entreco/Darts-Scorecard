@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.base
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * Created by Entreco on 16/11/2017.

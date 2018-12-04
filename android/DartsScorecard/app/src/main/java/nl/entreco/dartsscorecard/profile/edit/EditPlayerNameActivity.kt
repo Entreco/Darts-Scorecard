@@ -2,10 +2,10 @@ package nl.entreco.dartsscorecard.profile.edit
 
 import android.app.Activity
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.widget.Toolbar
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 
 /**
  * Created by Entreco on 30/12/2017.

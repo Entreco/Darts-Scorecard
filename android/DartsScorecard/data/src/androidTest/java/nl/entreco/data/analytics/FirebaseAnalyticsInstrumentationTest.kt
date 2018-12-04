@@ -1,7 +1,7 @@
 package nl.entreco.data.analytics
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.runner.AndroidJUnit4
 import nl.entreco.domain.beta.Feature
 import org.junit.Before
 import org.junit.Test

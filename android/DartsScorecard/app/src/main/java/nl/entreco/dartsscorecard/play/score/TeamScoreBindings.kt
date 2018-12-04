@@ -2,10 +2,10 @@ package nl.entreco.dartsscorecard.play.score
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.v4.graphics.ColorUtils
+import androidx.annotation.ColorInt
+import androidx.core.graphics.ColorUtils
 import android.util.TypedValue
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator

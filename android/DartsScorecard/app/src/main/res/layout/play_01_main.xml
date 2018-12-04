@@ -10,15 +10,11 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
-            name="controlStreamViewModel"
-            type="nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel" />
-
-        <variable
             name="navigator"
             type="nl.entreco.dartsscorecard.play.Play01Navigator" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
@@ -45,55 +41,11 @@
                 app:viewModel="@{viewModel.adViewModel}" />
 
             <TextView
-                android:id="@+id/streamTitle"
-                style="@style/Main.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignWithParentIfMissing="true"
-                android:layout_below="@id/include_ad"
-                android:paddingStart="@dimen/large"
-                android:paddingEnd="@dimen/large"
-                android:visibility="gone"
-                app:streamState="@{controlStreamViewModel.state}"
-                tools:drawableEnd="@drawable/stream_state_live"
-                tools:text="@string/live_stream_start" />
-
-
-            <LinearLayout
-                android:id="@+id/streamControls"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/streamTitle"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/def"
-                app:streamVisibility="@{controlStreamViewModel.state}">
-
-                <ImageView
-                    android:id="@+id/control1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/def"
-                    android:background="@null"
-                    android:onClick="@{() -> controlStreamViewModel.toggleCamera(navigator)}"
-                    android:src="@{controlStreamViewModel.isShowingFront ? @drawable/ic_camera_front : @drawable/ic_camera_rear}" />
-
-                <ImageView
-                    android:id="@+id/control2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/def"
-                    android:background="@null"
-                    android:onClick="@{() -> controlStreamViewModel.toggleMic(navigator)}"
-                    android:src="@{controlStreamViewModel.micEnabled ? @drawable/ic_mute : @drawable/ic_unmute}" />
-
-            </LinearLayout>
-
-            <TextView
                 android:id="@+id/title"
                 style="@style/Main.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/streamControls"
+                android:layout_below="@id/include_ad"
                 android:text="@string/match_stats" />
 
             <nl.entreco.dartsscorecard.base.widget.WrapContentViewPager
@@ -147,5 +99,5 @@
                 android:textColor="#aaffffff" />
 
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,8 +1,9 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify
@@ -10,7 +11,9 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.purchases.connect.SubscribeToFeaturesUsecase
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -21,6 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BetaViewModelTest {
 
+    @get:Rule var rule: TestRule = InstantTaskExecutorRule()
     @Mock private lateinit var mockLifeCycle: Lifecycle
     @Mock private lateinit var mockOwner: LifecycleOwner
     @Mock private lateinit var mockObserver: Observer<List<Feature>>
@@ -37,7 +41,7 @@ class BetaViewModelTest {
         thenSubscribeIsCalled()
     }
 
-    @Test(expected = NullPointerException::class)
+    @Test
     fun `it should unsubscribe`() {
         givenSubject()
         whenUnsubscribing()

@@ -1,6 +1,6 @@
 package nl.entreco.data.db.player
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * Created by Entreco on 16/12/2017.

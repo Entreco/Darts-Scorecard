@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.play.live
 
-import android.databinding.ObservableArrayMap
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableInt
-import android.support.v4.view.ViewPager
+import androidx.databinding.ObservableArrayMap
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
+import androidx.viewpager.widget.ViewPager
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
@@ -88,7 +88,7 @@ class LiveStatViewModel @Inject constructor(
         archiveServiceLauncher.launch(gameId)
     }
 
-    fun prev(pager: ViewPager) {
+    fun prev(pager: androidx.viewpager.widget.ViewPager) {
         val prev = when {
             pager.currentItem - 1 < 0 -> adapter.count
             else -> pager.currentItem - 1
@@ -96,7 +96,7 @@ class LiveStatViewModel @Inject constructor(
         pager.setCurrentItem(prev, true)
     }
 
-    fun next(pager: ViewPager) {
+    fun next(pager: androidx.viewpager.widget.ViewPager) {
         val next = when {
             pager.currentItem + 1 >= adapter.count -> 0
             else -> pager.currentItem + 1

@@ -1,6 +1,6 @@
 package nl.entreco.data.db.game
 
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.Mapper
 import nl.entreco.domain.launch.FetchLatestGameResponse

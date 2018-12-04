@@ -1,7 +1,7 @@
 package nl.entreco.data.db.game
 
-import android.arch.persistence.room.Room
-import android.support.test.InstrumentationRegistry
+import androidx.room.Room
+import androidx.test.InstrumentationRegistry
 import nl.entreco.data.TestProvider
 import nl.entreco.data.db.DscDatabase
 import org.junit.After

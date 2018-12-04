@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.live
 
-import android.databinding.DataBindingUtil
-import android.support.v4.view.PagerAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.viewpager.widget.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import kotlin.math.max
 /**
  * Created by entreco on 24/03/2018.
  */
-class LiveStatAdapter @Inject constructor(private val navigator: Play01Navigator) : PagerAdapter() {
+class LiveStatAdapter @Inject constructor(private val navigator: Play01Navigator) : androidx.viewpager.widget.PagerAdapter() {
 
     private val items: MutableList<TeamLiveStatModel> = mutableListOf()
 

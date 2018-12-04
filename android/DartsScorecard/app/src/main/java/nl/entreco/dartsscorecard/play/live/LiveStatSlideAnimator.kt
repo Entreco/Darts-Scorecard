@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.live
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.view.View
 import android.view.ViewPropertyAnimator
 import nl.entreco.dartsscorecard.R.id.stat11

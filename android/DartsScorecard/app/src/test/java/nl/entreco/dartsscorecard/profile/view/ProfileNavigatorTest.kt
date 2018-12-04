@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.profile.view
 
 import android.content.res.Resources
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq

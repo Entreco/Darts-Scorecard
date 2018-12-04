@@ -14,7 +14,9 @@ import nl.entreco.dartsscorecard.di.application.DaggerAppComponent
  */
 class App : Application() {
 
-    val appComponent: AppComponent by lazy { DaggerAppComponent.builder().appModule(AppModule(this)).build() }
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder().appModule(AppModule(this)).build()
+    }
 
     override fun onCreate() {
         super.onCreate()

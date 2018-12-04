@@ -51,7 +51,7 @@
             android:layout_alignParentEnd="true"
             android:text="@{@string/number(player.teamIndex + 1)}" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             style="@style/Setup.Spinner"
             android:layout_width="@dimen/setup_width"
             android:layout_height="match_parent"

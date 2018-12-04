@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile
 
-import android.support.design.widget.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window

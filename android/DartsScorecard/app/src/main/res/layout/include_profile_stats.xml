@@ -20,7 +20,7 @@
             type="nl.entreco.dartsscorecard.ad.AdViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true">
@@ -332,12 +332,12 @@
             android:visibility="@{stats.isEmpty ? View.VISIBLE : View.GONE}"
             tools:visibility="gone" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{stats.isEmpty ? View.GONE : View.VISIBLE}"
             app:constraint_referenced_ids="stat_1, stat_2, stat_3, stat_4, stat_5, stat_6, stat_7, stat_8, stat_9, stat_10, stat_11, stat_12" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

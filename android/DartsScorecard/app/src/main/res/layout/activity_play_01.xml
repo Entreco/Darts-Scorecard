@@ -17,10 +17,6 @@
             type="nl.entreco.dartsscorecard.play.live.LiveStatViewModel" />
 
         <variable
-            name="controlStreamViewModel"
-            type="nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel" />
-
-        <variable
             name="scoreViewModel"
             type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
 
@@ -38,7 +34,7 @@
 
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:animator="@{animator}"
@@ -53,12 +49,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/play01_bg_image" />
 
-        <FrameLayout
-            android:id="@+id/streamContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
         <include
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_setup_01" />
@@ -71,8 +61,7 @@
             android:layout_marginBottom="@dimen/input_peek_height"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:navigator="@{navigator}"
-            app:viewModel="@{statViewModel}"
-            app:controlStreamViewModel="@{controlStreamViewModel}"/>
+            app:viewModel="@{statViewModel}" />
 
         <include
             android:id="@+id/includeScore"
@@ -88,5 +77,5 @@
             app:listener="@{viewModel}"
             app:viewModel="@{inputViewModel}" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

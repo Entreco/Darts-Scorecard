@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.ad
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.os.Handler
 import android.view.View
 import com.google.android.gms.ads.AdView

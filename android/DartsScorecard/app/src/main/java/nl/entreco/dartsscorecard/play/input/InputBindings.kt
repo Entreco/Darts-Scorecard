@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.input
 
-import android.databinding.BindingAdapter
-import android.support.design.widget.FloatingActionButton
+import androidx.databinding.BindingAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView

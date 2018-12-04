@@ -3,9 +3,9 @@ package nl.entreco.dartsscorecard.setup
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
-import android.support.v4.view.PagerAdapter.POSITION_NONE
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import androidx.viewpager.widget.PagerAdapter.POSITION_NONE
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel

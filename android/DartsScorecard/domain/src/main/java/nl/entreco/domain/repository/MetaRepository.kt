@@ -1,6 +1,6 @@
 package nl.entreco.domain.repository
 
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import nl.entreco.domain.model.TurnMeta
 
 /**

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
 

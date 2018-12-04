@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import android.content.Intent
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.Analytics

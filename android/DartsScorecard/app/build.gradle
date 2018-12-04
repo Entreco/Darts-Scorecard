@@ -45,26 +45,24 @@ dependencies {
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt "android.arch.persistence.room:compiler:$room"
+    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
 
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "com.android.support:design:$support"
-    implementation "com.android.support:appcompat-v7:$support"
-    implementation "com.android.support:leanback-v17:$support"
-    implementation "com.android.support.constraint:constraint-layout:$constraint"
+    implementation "com.google.android.material:material:$material"
+    implementation "androidx.appcompat:appcompat:$xSupport"
+    implementation "androidx.constraintlayout:constraintlayout:$xConstraint"
     implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
-    implementation "android.arch.persistence.room:runtime:$room"
-    implementation "android.arch.lifecycle:extensions:$architecture"
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
     implementation "com.google.code.gson:gson:$gson"
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
-    implementation "org.webrtc:google-webrtc:$webRtc"
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
         transitive = true
@@ -78,10 +76,11 @@ dependencies {
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "android.arch.core:core-testing:$xCoreTesting"
 
     // AndroidTest
-    androidTestImplementation "com.android.support.test:runner:$espressoRunner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCore"
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,6 +1,6 @@
 package nl.entreco.data.sound
 
-import android.support.annotation.RawRes
+import androidx.annotation.RawRes
 import nl.entreco.data.R
 import nl.entreco.domain.play.mastercaller.*
 

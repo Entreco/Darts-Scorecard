@@ -1,6 +1,6 @@
 package nl.entreco.data.db.game
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * Created by Entreco on 12/12/2017.

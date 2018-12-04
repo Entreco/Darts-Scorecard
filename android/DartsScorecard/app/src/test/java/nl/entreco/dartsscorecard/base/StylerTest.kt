@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
 import android.content.SharedPreferences
-import android.support.annotation.StyleRes
+import androidx.annotation.StyleRes
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.verify

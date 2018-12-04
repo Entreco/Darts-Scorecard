@@ -31,7 +31,7 @@
                 layout="@layout/include_launch_header" />
         </FrameLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/launch_resume"
             style="@style/Launch.Btn"
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:text="@string/resume_x01"
             app:resumeGame="@{viewModel.resumedGame}" />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/launch_play"
             style="@style/Launch.Btn"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:onClick="@{() -> viewModel.onNewGamePressed(context)}"
             android:text="@string/play_x01" />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/launch_players"
             style="@style/Launch.Btn"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:onClick="@{() -> viewModel.onProfilePressed(context)}"
             android:text="@string/profiles" />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/launch_beta"
             style="@style/Launch.Btn"
             android:layout_width="match_parent"

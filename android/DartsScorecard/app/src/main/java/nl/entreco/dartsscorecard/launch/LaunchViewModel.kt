@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.launch
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity

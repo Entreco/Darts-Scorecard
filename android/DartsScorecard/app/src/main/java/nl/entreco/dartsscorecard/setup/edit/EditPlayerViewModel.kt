@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.databinding.ObservableArrayList
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.input
 
-import android.support.design.widget.FloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.ViewPropertyAnimator
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any

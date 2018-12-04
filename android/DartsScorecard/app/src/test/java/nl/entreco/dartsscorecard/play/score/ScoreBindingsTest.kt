@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.never
@@ -23,7 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class ScoreBindingsTest {
 
     @Mock private lateinit var mockTextView: TextView
-    @Mock private lateinit var mockRecyclerView: RecyclerView
+    @Mock private lateinit var mockRecyclerView: androidx.recyclerview.widget.RecyclerView
     @Mock private lateinit var mockScoreAdapter: ScoreAdapter
     @Mock private lateinit var mockGetFinishUsecase: GetFinishUsecase
     @Mock private lateinit var mockUiCallback: UiCallback

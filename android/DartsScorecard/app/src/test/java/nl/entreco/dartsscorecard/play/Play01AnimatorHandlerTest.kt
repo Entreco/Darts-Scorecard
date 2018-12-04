@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 import android.view.ViewPropertyAnimator
 import com.nhaarman.mockito_kotlin.any
@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class Play01AnimatorHandlerTest {
 
-    @Mock private lateinit var mockViewPager: ViewPager
+    @Mock private lateinit var mockViewPager: androidx.viewpager.widget.ViewPager
     @Mock private lateinit var mockMaxHeightView: MaxHeightRecyclerView
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
     @Mock private lateinit var mockView: View
@@ -36,7 +36,7 @@ class Play01AnimatorHandlerTest {
         whenever(mockAnimator.scaleY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.scaleX(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
-        subject = Play01Animator.Play01AnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockViewPager, mockMaxHeightView, mockView, mockView, mockView, mockView, mockView, mockView)
+        subject = Play01Animator.Play01AnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockViewPager, mockMaxHeightView, mockView, mockView, mockView, mockView)
     }
 
     @Test(expected = KotlinNullPointerException::class)

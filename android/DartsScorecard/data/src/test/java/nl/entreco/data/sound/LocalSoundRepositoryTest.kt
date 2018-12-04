@@ -2,7 +2,7 @@ package nl.entreco.data.sound
 
 import android.content.Context
 import android.media.SoundPool
-import android.support.annotation.RawRes
+import androidx.annotation.RawRes
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever

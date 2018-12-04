@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.base
 
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.RatingPrefRepository

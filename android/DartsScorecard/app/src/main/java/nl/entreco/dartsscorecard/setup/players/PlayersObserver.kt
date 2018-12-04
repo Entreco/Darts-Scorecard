@@ -1,11 +1,11 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Entreco on 31/12/2017.
  */
-class PlayersObserver(private val callback: Callback) : RecyclerView.AdapterDataObserver() {
+class PlayersObserver(private val callback: Callback) : androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
     interface Callback {
         fun onPlayersInserted(positionStart: Int, itemCount: Int)
     }

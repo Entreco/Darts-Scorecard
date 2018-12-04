@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.play.score
 
-import android.databinding.BindingAdapter
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.players.Team
@@ -16,7 +16,7 @@ import nl.entreco.domain.settings.ScoreSettings
 object ScoreBindings {
     @JvmStatic
     @BindingAdapter("adapter", "teams", "scores", "scoreSettings", "finishUsecase", "uiCallback", requireAll = true)
-    fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings,
+    fun addTeams(recyclerView: androidx.recyclerview.widget.RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings,
                  finishUsecase: GetFinishUsecase, uiCallback: UiCallback?) {
 
         if (teams.size != scores.size) {
@@ -24,7 +24,8 @@ object ScoreBindings {
         }
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                recyclerView.context)
         recyclerView.itemAnimator = null
         recyclerView.adapter = adapter
         adapter.clear()
@@ -41,7 +42,7 @@ object ScoreBindings {
 
     @JvmStatic
     @BindingAdapter("currentTeam")
-    fun scrollToCurrentTeam(recyclerView: RecyclerView, currentTeamIndex: Int) {
+    fun scrollToCurrentTeam(recyclerView: androidx.recyclerview.widget.RecyclerView, currentTeamIndex: Int) {
         recyclerView.smoothScrollToPosition(currentTeamIndex)
     }
 

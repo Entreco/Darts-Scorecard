@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.beta.votes
 
 import android.content.Context
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.view.View
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.beta.BetaModel

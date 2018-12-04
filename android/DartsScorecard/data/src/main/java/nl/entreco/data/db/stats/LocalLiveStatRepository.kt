@@ -1,6 +1,6 @@
 package nl.entreco.data.db.stats
 
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.repository.LiveStatRepository

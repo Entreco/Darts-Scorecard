@@ -1,15 +1,15 @@
 package nl.entreco.dartsscorecard.profile.select
 
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.View
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.SwipeToDeleteCallback
 
 
 class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: () -> Unit, undoAction: () -> Unit) : ItemTouchHelper(object : SwipeToDeleteCallback(view.context) {
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, p1: Int) {
+    override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
         onSwiped(viewHolder.adapterPosition)
 
         val snack = Snackbar.make(view, R.string.confirm_delete_profile, Snackbar.LENGTH_LONG)
@@ -27,7 +27,7 @@ class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: () 
         snack.show()
     }
 
-    override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+    override fun onMove(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder, p2: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
         return false
     }
 })

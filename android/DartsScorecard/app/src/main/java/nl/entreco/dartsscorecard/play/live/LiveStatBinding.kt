@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.live
 
-import android.databinding.BindingAdapter
-import android.support.v4.view.ViewPager
+import androidx.databinding.BindingAdapter
+import androidx.viewpager.widget.ViewPager
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
@@ -15,7 +15,7 @@ import nl.entreco.dartsscorecard.R
 object LiveStatBinding {
     @JvmStatic
     @BindingAdapter("liveStats", "adapter")
-    fun setupViewPager(view: ViewPager, stats: Map<Int, TeamLiveStatModel>, adapter: LiveStatAdapter) {
+    fun setupViewPager(view: androidx.viewpager.widget.ViewPager, stats: Map<Int, TeamLiveStatModel>, adapter: LiveStatAdapter) {
         adapter.populate(stats)
         view.setPageTransformer(false, LiveStatTransformer(view.context.resources.getDimension(R.dimen.match_stat_width)))
         view.adapter = adapter
@@ -40,7 +40,7 @@ object LiveStatBinding {
 
     @JvmStatic
     @BindingAdapter("currentTeam")
-    fun scrollToCurrentTeam(pager: ViewPager, currentTeamIndex: Int) {
+    fun scrollToCurrentTeam(pager: androidx.viewpager.widget.ViewPager, currentTeamIndex: Int) {
         pager.setCurrentItem(currentTeamIndex, true)
     }
 }

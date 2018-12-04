@@ -1,6 +1,6 @@
 package nl.entreco.domain.repository
 
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 
 /**
  * Created by entreco on 11/03/2018.

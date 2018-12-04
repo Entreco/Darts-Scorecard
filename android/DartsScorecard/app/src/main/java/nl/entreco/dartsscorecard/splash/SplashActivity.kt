@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.splash
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import nl.entreco.dartsscorecard.launch.LaunchActivity
 
 

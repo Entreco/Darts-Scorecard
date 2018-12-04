@@ -2,9 +2,9 @@ package nl.entreco.dartsscorecard.play
 
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -16,21 +16,16 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
-import nl.entreco.dartsscorecard.play.stream.ControlStreamViewModel
-import nl.entreco.dartsscorecard.play.stream.StreamFragment
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.setup.game.CreateGameResponse
-import nl.entreco.domain.streaming.Connected
-import nl.entreco.domain.streaming.ConnectionState
 
-class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
+class Play01Activity : ViewModelActivity() {
 
     private lateinit var binding: ActivityPlay01Binding
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
-    private val controlStreamViewModel: ControlStreamViewModel by viewModelProvider { component.streamViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
@@ -45,7 +40,6 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
         binding.statViewModel = statViewModel
-        binding.controlStreamViewModel = controlStreamViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
         binding.animator = animator
@@ -59,27 +53,9 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
         resumeGame()
     }
 
-    override fun onPleaseKillMe() {
-        controlStreamViewModel.sendDisconnect(navigator)
-        controlStreamViewModel.toggleStream(navigator, animator)
-        invalidateOptionsMenu()
-    }
-
-    override fun onConnectionStateChanged(connectionState: ConnectionState) {
-        controlStreamViewModel.connectionState(connectionState)
-        when (connectionState) {
-            // Add DataMessenger to ScoreViewModel
-            is Connected -> {
-                controlStreamViewModel.setStreamController(navigator.streamController())
-                viewModel.addRemoteListener(controlStreamViewModel)
-            }
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stop()
-        navigator.stop()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
@@ -103,17 +79,11 @@ class Play01Activity : ViewModelActivity(), StreamFragment.Listener {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         viewModel.initToggleMenuItem(menu)
-        menu?.findItem(R.id.menu_stream)?.setIcon(controlStreamViewModel.menuIcon())
-        menu?.findItem(R.id.menu_stream)?.setTitle(controlStreamViewModel.menuTitle())
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.menu_stream -> {
-                controlStreamViewModel.toggleStream(navigator, animator)
-                invalidateOptionsMenu()
-            }
             R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)

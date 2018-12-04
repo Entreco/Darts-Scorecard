@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.play
 
-import android.databinding.BindingAdapter
-import android.support.annotation.StringRes
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
+import androidx.databinding.BindingAdapter
+import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +39,7 @@ object Play01Binding {
 
     @JvmStatic
     @BindingAdapter("finished", "animator")
-    fun showGameFinished(view: CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
+    fun showGameFinished(view: androidx.coordinatorlayout.widget.CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
         if (finished) {
             animator?.collapse()
         }

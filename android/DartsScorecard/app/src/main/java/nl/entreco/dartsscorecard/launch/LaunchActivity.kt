@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.launch
 
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
 import nl.entreco.dartsscorecard.R

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter

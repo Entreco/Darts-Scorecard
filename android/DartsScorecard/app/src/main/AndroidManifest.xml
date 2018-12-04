@@ -3,13 +3,6 @@
     package="nl.entreco.dartsscorecard">
 
     <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
-    <uses-feature
-        android:name="android.software.leanback"
-        android:required="false" />
-
-    <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
@@ -27,6 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Required per Admob v17.0.0 -->
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3793327349392749~1846337901"/>
+
         <activity
             android:name=".splash.SplashActivity"
             android:noHistory="true"
@@ -58,22 +55,7 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".tv.splash.SplashTvActivity"
-            android:banner="@drawable/tv_promo"
-            android:icon="@drawable/tv_promo"
-            android:label="@string/app_name"
-            android:logo="@drawable/tv_promo"
-            android:noHistory="true"
-            android:screenOrientation="landscape"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".launch.LaunchActivity" />
-        <activity android:name=".tv.launch.LaunchTvActivity" />
         <activity
             android:name=".beta.BetaActivity"
             android:parentActivityName=".launch.LaunchActivity" />
@@ -106,16 +88,6 @@
             android:description="@string/archive_service"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
-            android:name=".streaming.StreamingService"
-            android:description="@string/streaming_service"
-            android:exported="true" />
-
-        <service
-            android:name=".streaming.ReceiverService"
-            android:description="@string/receiving_service"
-            android:exported="true" />
 
     </application>
 

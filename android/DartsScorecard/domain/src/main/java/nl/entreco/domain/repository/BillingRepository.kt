@@ -1,7 +1,7 @@
 package nl.entreco.domain.repository
 
-import android.support.annotation.UiThread
-import android.support.annotation.WorkerThread
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
 

@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.View
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -22,7 +22,7 @@ class Play01NavigatorTest {
 
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockActivity: Play01Activity
-    @Mock private lateinit var mockFragmentManager: FragmentManager
+    @Mock private lateinit var mockFragmentManager: androidx.fragment.app.FragmentManager
     private lateinit var subject: Play01Navigator
 
     @Test(expected = NotAMockException::class)

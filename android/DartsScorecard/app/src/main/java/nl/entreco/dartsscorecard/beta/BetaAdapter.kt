@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
-import android.support.v7.util.DiffUtil
+import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R

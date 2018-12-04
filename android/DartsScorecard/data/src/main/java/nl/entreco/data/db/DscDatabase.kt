@@ -1,7 +1,7 @@
 package nl.entreco.data.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameTable
 import nl.entreco.data.db.meta.MetaDao

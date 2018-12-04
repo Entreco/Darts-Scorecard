@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.profile.view
 
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import nl.entreco.domain.profile.ProfileStat
 
 

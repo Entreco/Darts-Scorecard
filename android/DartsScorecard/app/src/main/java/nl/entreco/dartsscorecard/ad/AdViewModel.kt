@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.ad
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableBoolean
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableBoolean
 import com.google.android.gms.ads.AdView
 import nl.entreco.dartsscorecard.BuildConfig
 import nl.entreco.dartsscorecard.base.BaseViewModel

@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingUtil
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView

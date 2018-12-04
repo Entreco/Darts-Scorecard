@@ -1,6 +1,6 @@
 package nl.entreco.domain.purchases.connect
 
-import android.support.annotation.UiThread
+import androidx.annotation.UiThread
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground

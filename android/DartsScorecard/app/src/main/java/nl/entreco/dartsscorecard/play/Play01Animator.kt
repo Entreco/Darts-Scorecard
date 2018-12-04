@@ -1,10 +1,9 @@
 package nl.entreco.dartsscorecard.play
 
-import android.support.design.widget.BottomSheetBehavior
-import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
@@ -25,12 +24,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
             binding.root.includeScore.header,
-            binding.root.includeScore.footer, binding.root.includeToolbar,
-            binding.includeMain.control1, binding.includeMain.control2)
+            binding.root.includeScore.footer, binding.root.includeToolbar)
 
     init {
         animator.calculateHeightForScoreView()
-        pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        pager.addOnPageChangeListener(object :
+                androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 animator.storePositionForAnimator(position)
             }
@@ -59,12 +58,11 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                                          private val fab: View, private val mainSheet: View,
                                          private val version: View,
                                          private val inputResume: View,
-                                         private val pager: ViewPager,
+                                         private val pager: androidx.viewpager.widget.ViewPager,
                                          private val teamSheet: MaxHeightRecyclerView,
                                          private val inputSheet: View,
                                          private val scoreHeader: View,
-                                         private val scoreFooter: View, private val toolbar: View,
-                                         private val control1: View, private val control2: View) {
+                                         private val scoreFooter: View, private val toolbar: View) {
 
         private var animatorPosition: Int = 0
         internal var animator: LiveStatSlideAnimator? = null
@@ -81,10 +79,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             // Fade In MainSheet
             mainSheet.animate().alpha(1 - sqrt(slideOffset)).setDuration(0).start()
             mainSheet.animate().translationY((slideOffset) * -100).setDuration(0).start()
-
-            // Fly In Stream Controls
-            animateState(control1.animate(), 1, slideOffset)
-            animateState(control2.animate(), 1, slideOffset)
 
             // Also, Fly In Version
             animateState(version.animate(), 8, slideOffset)

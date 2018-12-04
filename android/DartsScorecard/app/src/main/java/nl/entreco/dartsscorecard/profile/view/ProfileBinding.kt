@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile.view
 
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView

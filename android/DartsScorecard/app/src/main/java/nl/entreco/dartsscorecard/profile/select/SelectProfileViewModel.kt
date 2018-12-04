@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile.select
 
-import android.databinding.ObservableBoolean
+import androidx.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.profile.Profile
 import nl.entreco.domain.setup.players.*
