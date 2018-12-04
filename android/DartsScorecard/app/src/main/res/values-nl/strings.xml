@@ -26,6 +26,7 @@
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Profielen beheren</string>
+    <string name="hiscores">Hiscores</string>
     <string name="beta">Beta</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>

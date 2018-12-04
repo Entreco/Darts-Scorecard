@@ -60,6 +60,15 @@
             android:text="@string/profiles" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/launch_hiscore"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_hiscore"
+            android:onClick="@{() -> viewModel.onHiscorePressed(context)}"
+            android:text="@string/hiscores" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/launch_beta"
             style="@style/Launch.Btn"
             android:layout_width="match_parent"
