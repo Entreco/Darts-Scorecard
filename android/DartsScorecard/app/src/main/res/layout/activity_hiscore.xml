@@ -2,10 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="viewModel"
-            type="nl.entreco.dartsscorecard.hiscores.HiscoreViewModel" />
+            type="nl.entreco.dartsscorecard.hiscores.HiScoreViewModel" />
 
     </data>
 
@@ -13,7 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:background="@color/white">
+        android:background="@drawable/stats_bg">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/hiscore_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

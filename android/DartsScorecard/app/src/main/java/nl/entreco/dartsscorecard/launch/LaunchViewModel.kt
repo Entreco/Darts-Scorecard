@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaActivity
-import nl.entreco.dartsscorecard.hiscores.HiscoreActivity
+import nl.entreco.dartsscorecard.hiscores.HiScoreActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
@@ -36,7 +36,7 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
     }
 
     fun onHiscorePressed(context: Context) {
-        HiscoreActivity.launch(context)
+        HiScoreActivity.launch(context)
     }
 
     fun onBetaPressed(context: Context) {
