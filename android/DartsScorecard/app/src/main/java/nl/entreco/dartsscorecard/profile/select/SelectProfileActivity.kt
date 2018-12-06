@@ -47,9 +47,9 @@ class SelectProfileActivity : ViewModelActivity() {
 
     private fun initRecyclerView(binding: ActivitySelectProfileBinding) {
         val recyclerView = binding.profileRecyclerView
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+        recyclerView.layoutManager = LinearLayoutManager(
                 binding.root.context!!)
-        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
         addSwipeToDelete(binding, recyclerView)

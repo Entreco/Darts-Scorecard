@@ -36,7 +36,7 @@ class LaunchAnimatorTest {
         whenever(mockAnimator.translationY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
-        subject = LaunchAnimator.LaunchAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView)
+        subject = LaunchAnimator.LaunchAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView)
     }
 
     private fun whenInitializing() {

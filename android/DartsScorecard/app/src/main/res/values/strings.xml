@@ -21,6 +21,7 @@
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
     <string name="title_wtf">@string/wtf</string>
+    <string name="title_hiscores">HiScores</string>
 
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>

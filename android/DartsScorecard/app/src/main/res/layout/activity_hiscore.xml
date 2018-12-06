@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.hiscores.HiScoreViewModel" />
@@ -11,13 +14,51 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/stats_bg">
+        android:background="@drawable/stats_bg"
+        app:loading="@{viewModel.isLoading}">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/hiscore_pager"
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_hiscores" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/hiscore_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorPrimary"
+                android:gravity="center"
+                android:padding="@dimen/def"
+                android:text="@{viewModel.title}"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                tools:text="This is for the Players" />
+
+            <TextView
+                android:id="@+id/hiscore_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/hiscore_title"
+                android:gravity="center"
+                android:padding="@dimen/def"
+                android:text="@{viewModel.description}"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="This is for the Players" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/hiscore_pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hiscore_description" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
