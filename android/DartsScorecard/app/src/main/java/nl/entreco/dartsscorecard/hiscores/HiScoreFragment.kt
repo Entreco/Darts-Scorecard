@@ -44,10 +44,6 @@ class HiScoreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val position = arguments?.getInt(EXTRA_POS) ?: 0
-        viewModel.hiScores().observe(activity!!, Observer { hiscores ->
-            val hiscore = hiscores.map { Pair(it.playerName, it.hiscores[position].value) }.sortedBy { it.second }
-            val positions = hiscore.groupBy { it.second }
-            adapter.submitList(hiscore)
-        })
+        adapter.submitList(viewModel.hiScores(position))
     }
 }
