@@ -17,9 +17,7 @@ import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.*
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MasterCallerRequest
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.play.mastercaller.*
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
@@ -41,8 +39,10 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
                                           private val revancheUsecase: RevancheUsecase,
                                           private val gameListeners: Play01Listeners,
                                           private val masterCaller: MasterCaller,
+                                          private val musicPlayer: MusicPlayer,
                                           @ActivityScope private val dialogHelper: DialogHelper,
                                           private val toggleSoundUsecase: ToggleSoundUsecase,
+                                          private val toggleMusicUsecase: ToggleMusicUsecase,
                                           private val askForRatingUsecase: AskForRatingUsecase,
                                           private val audioPrefRepository: AudioPrefRepository,
                                           private val adViewModel: AdViewModel,
@@ -216,17 +216,39 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
     }
 
     fun stop() {
+        musicPlayer.stop()
         masterCaller.stop()
     }
 
     fun initToggleMenuItem(menu: Menu?) {
-        menu?.findItem(R.id.menu_sound_settings)
-                ?.isChecked = audioPrefRepository.isMasterCallerEnabled()
+        menu?.findItem(R.id.menu_sound_settings)?.isChecked = audioPrefRepository.isMasterCallerEnabled()
+        menu?.findItem(R.id.menu_music_settings)?.isChecked = audioPrefRepository.isBackgroundMusicEnabled()
+    }
+
+    fun resume(){
+        if(audioPrefRepository.isBackgroundMusicEnabled()){
+            musicPlayer.resume()
+        }
+    }
+
+    fun pause() {
+        musicPlayer.pause()
     }
 
     fun toggleMasterCaller(item: MenuItem) {
         item.isChecked = !item.isChecked
         toggleSoundUsecase.toggle()
+    }
+
+    fun toggleBgMusic(item: MenuItem){
+        item.isChecked = !item.isChecked
+        toggleMusicUsecase.toggle()
+
+        if(item.isChecked){
+            musicPlayer.play()
+        } else {
+            musicPlayer.pause()
+        }
     }
 
     fun askToDeleteMatch(onConfirm: ()->Unit){

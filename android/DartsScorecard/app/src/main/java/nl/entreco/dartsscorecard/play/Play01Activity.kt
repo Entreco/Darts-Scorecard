@@ -53,6 +53,16 @@ class Play01Activity : ViewModelActivity() {
         resumeGame()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stop()
@@ -87,6 +97,9 @@ class Play01Activity : ViewModelActivity() {
             R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)
+            }
+            R.id.menu_music_settings -> {
+                viewModel.toggleBgMusic(item)
             }
             R.id.menu_sound_settings -> {
                 viewModel.toggleMasterCaller(item)

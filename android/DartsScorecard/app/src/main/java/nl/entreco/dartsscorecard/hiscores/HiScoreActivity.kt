@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityHiscoreBinding
-import nl.entreco.dartsscorecard.databinding.ActivitySelectProfileBinding
 import nl.entreco.dartsscorecard.di.hiscore.HiscoreComponent
 import nl.entreco.dartsscorecard.di.hiscore.HiscoreModule
 
@@ -38,8 +37,11 @@ class HiScoreActivity : ViewModelActivity() {
 
         viewModel.hiScores().observe(this, Observer { hiscores ->
             if(hiscores.isNotEmpty()) {
-                adapter.show(hiscores[0].hiscores)
+                adapter.show(hiscores[0].hiScores)
             }
+        })
+        viewModel.title().observe(this, Observer { title ->
+            setTitle(title)
         })
     }
 

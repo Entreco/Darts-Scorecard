@@ -8,12 +8,12 @@ object HiScoreBinding {
 
     @JvmStatic
     @BindingAdapter("medal")
-    fun showMedalForPosition(view: ImageView, position: String){
-        val medal = when(position){
-            "0" -> R.drawable.ic_medal_gold
-            "1" -> R.drawable.ic_medal_silver
-            "2" -> R.drawable.ic_medal_bronze
-            else -> 0
+    fun showMedalForPosition(view: ImageView, position: Int) {
+        val (width, medal) = when (position) {
+            1 -> Pair(2, R.drawable.ic_medal_1)
+            2 -> Pair(2, R.drawable.ic_medal_2)
+            3 -> Pair(2, R.drawable.ic_medal_3)
+            else -> Pair(0, 0)
         }
         view.setImageResource(medal)
     }

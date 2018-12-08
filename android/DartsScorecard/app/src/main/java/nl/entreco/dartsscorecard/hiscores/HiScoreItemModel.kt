@@ -1,3 +1,11 @@
 package nl.entreco.dartsscorecard.hiscores
 
-data class HiScoreItemModel(val name: String, val score: String, val position: String)
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import nl.entreco.domain.hiscores.HiScoreItem
+
+data class HiScoreItemModel(val name: String, val hiScore: HiScoreItem, val pos: Int){
+    val score = ObservableField<String>(hiScore.value())
+    val position = ObservableField<String>("$pos")
+    val hasMedal = ObservableBoolean(pos <= 3)
+}

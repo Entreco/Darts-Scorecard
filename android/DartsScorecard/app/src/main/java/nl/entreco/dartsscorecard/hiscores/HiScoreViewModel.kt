@@ -18,9 +18,9 @@ class HiScoreViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val hiscores = MutableLiveData<List<HiScore>>()
+    private val titles = MutableLiveData<Int>()
 
     val isLoading = ObservableBoolean(true)
-    val title = ObservableInt(R.string.empty)
     val description = ObservableInt(R.string.empty)
 
     init {
@@ -33,35 +33,40 @@ class HiScoreViewModel @Inject constructor(
     }
 
     private fun onSuccess(): (FetchHiScoreResponse) -> Unit = { response ->
-        updateDescription(0)
         hiscores.postValue(response.hiScores)
         isLoading.set(false)
+        updateDescription(0)
     }
 
     fun hiScores(): LiveData<List<HiScore>> {
         return hiscores
     }
 
+    fun title() : LiveData<Int>{
+        return titles
+    }
+
     fun hiScores(position: Int): List<HiScoreItemModel>? {
-        val sorted = hiscores.value?.mapIndexed { index, hiScore ->
-            HiScoreItemModel(hiScore.playerName, hiScore.hiscores[position].value, "$index")
+        val sorted = hiscores.value?.map { hiScore ->
+            HiScoreItemModel(hiScore.playerName, hiScore.hiScores[position], 0)
         }?.sortedByDescending {
-            it.score.toDoubleOrNull()
+            it.hiScore.sort()
         }
 
-        return sorted
+        return sorted?.mapIndexed { index, item ->
+            item.copy(pos = index + 1)
+        }
     }
 
     fun updateDescription(position: Int) {
-        val (tit, desc) = when (hiscores.value?.get(0)?.hiscores?.get(position)) {
-            is HiScoreItem.OverallAverage -> Pair(R.string.app_name, R.string.app_name)
+        val (tit, desc) = when (hiscores.value?.get(0)?.hiScores?.get(position)) {
             is HiScoreItem.Num180 -> Pair(R.string.profile_num_180, R.string.profile_num_180)
             is HiScoreItem.Num140 -> Pair(R.string.profile_num_140, R.string.profile_num_140)
             is HiScoreItem.Num100 -> Pair(R.string.profile_num_100, R.string.profile_num_100)
             is HiScoreItem.Num60 -> Pair(R.string.profile_num_60, R.string.profile_num_60)
-            else -> Pair(R.string.undo, R.string.undo)
+            else -> Pair(R.string.profile_overall_average, R.string.profile_overall_average)
         }
-        title.set(tit)
+        titles.postValue(tit)
         description.set(desc)
     }
 }

@@ -16,16 +16,15 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/def">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="@dimen/icon_size_large"
             android:layout_height="@dimen/icon_size_large"
             android:layout_margin="@dimen/small"
-            android:background="@drawable/profile_bg_xsmall"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            app:medal="@{item.position}"
-            app:civ_border_color="?attr/colorPrimary"
-            app:civ_border_width="@dimen/xsmall"
+            app:medal="@{item.pos}"
+            app:showIf="@{item.hasMedal}"
+            tools:src="@drawable/ic_medal_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

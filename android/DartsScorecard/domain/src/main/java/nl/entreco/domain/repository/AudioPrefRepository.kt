@@ -6,4 +6,6 @@ package nl.entreco.domain.repository
 interface AudioPrefRepository {
     fun isMasterCallerEnabled() : Boolean
     fun setMasterCallerEnabled(enabled: Boolean)
+    fun isBackgroundMusicEnabled() : Boolean
+    fun setBackgroundMusicEnabled(enabled: Boolean)
 }

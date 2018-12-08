@@ -16,6 +16,13 @@ class HiScorePager(
 
     override fun getCount() = items.size
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when(items[position]){
+            is HiScoreItem.OverallAverage -> "Avg."
+            else -> ""
+        }
+    }
+
     fun show(hiScores: List<HiScoreItem>) {
         items.clear()
         items.addAll(hiScores)
