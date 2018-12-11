@@ -8,20 +8,25 @@ import nl.entreco.domain.hiscores.HiScoreItem
 class HiScoreMapper {
     fun to(player: PlayerTable, stats: List<ProfileTable>): HiScore {
 
-        val aggregator = stats.sumBy { it.totalScore }
-        val denominator = stats.sumBy { it.numDarts }
+        val avg: Float = avg(stats.sumBy { it.numDarts }, stats.sumBy { it.totalScore })
+        val firstNineAvg: Float = avg(stats.sumBy { it.numDarts9 }, stats.sumBy { it.totalScore9 })
+        val scores = listOf(
+            HiScoreItem.OverallAverage(avg),
+            HiScoreItem.FirstNineAvg(firstNineAvg),
+            HiScoreItem.Num180(stats.sumBy { it.num180s }),
+            HiScoreItem.Num140(stats.sumBy { it.num140s }),
+            HiScoreItem.Num100(stats.sumBy { it.num100s }),
+            HiScoreItem.Num60(stats.sumBy { it.num60s }),
+            HiScoreItem.Num20(stats.sumBy { it.num20s }),
+            HiScoreItem.NumBust(stats.sumBy { it.num0s })
+        )
+        return HiScore(player.id, player.name, scores)
+    }
 
-        val avg : Float = when (denominator) {
+    private fun avg(denominator: Int, aggregator: Int): Float {
+        return when (denominator) {
             0 -> 0.0F
-            else -> (aggregator / denominator * 3).toFloat()
+            else -> (aggregator.toFloat() / denominator.toFloat() * 3F)
         }
-
-        val overallAverage = HiScoreItem.OverallAverage( avg )
-        val num180s = HiScoreItem.Num180(stats.sumBy { it.num180s })
-        val num140s = HiScoreItem.Num140(stats.sumBy { it.num140s } )
-        val num100s = HiScoreItem.Num100(stats.sumBy { it.num100s } )
-        val num60s = HiScoreItem.Num60(stats.sumBy { it.num60s } )
-        val hiscores = listOf(overallAverage, num180s, num140s, num100s, num60s)
-        return HiScore(player.id, player.name, hiscores)
     }
 }

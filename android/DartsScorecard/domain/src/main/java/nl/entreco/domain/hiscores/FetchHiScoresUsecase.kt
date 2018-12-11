@@ -15,7 +15,7 @@ class FetchHiScoresUsecase @Inject constructor(
     fun go(done: (FetchHiScoreResponse) -> Unit,
            fail: (Throwable) -> Unit) {
         onBackground({
-            val hiscores = service.fetchHiscores()
+            val hiscores = service.fetchHiScores()
             onUi { done(FetchHiScoreResponse(hiscores)) }
         }, fail)
     }

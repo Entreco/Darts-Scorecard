@@ -130,6 +130,30 @@
     <string name="profile_num_20">#20+</string>
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
 
+    <!--- HiScores -->
+    <string name="hiscore_title_games_played">Games Played</string>
+    <string name="hiscore_title_overall_average">Overall average</string>
+    <string name="hiscore_title_first9_average">1st 9 average</string>
+    <string name="hiscore_title_win_percentage">Win %</string>
+    <string name="hiscore_title_checkout_percentage">Checkout %</string>
+    <string name="hiscore_title_num_180">#180\'s</string>
+    <string name="hiscore_title_num_140">#140+</string>
+    <string name="hiscore_title_num_100">#100+</string>
+    <string name="hiscore_title_num_60">#60+</string>
+    <string name="hiscore_title_num_20">#20+</string>
+    <string name="hiscore_title_num_0">#Bust/ Bounce/ NoScore</string>
+    <string name="hiscore_description_games_played">Total number of finished games</string>
+    <string name="hiscore_description_overall_average">Overall 3-dart average</string>
+    <string name="hiscore_description_first9_average">Overall 3-dart average of the 1st nine darts</string>
+    <string name="hiscore_description_win_percentage">Overall % of games won</string>
+    <string name="hiscore_description_checkout_percentage">Overall checkout %</string>
+    <string name="hiscore_description_num_180">Overal #180\'s scored</string>
+    <string name="hiscore_description_num_140">Overall #140+ scored</string>
+    <string name="hiscore_description_num_100">Overall #100+ scored</string>
+    <string name="hiscore_description_num_60">Overall #60+ scored</string>
+    <string name="hiscore_description_num_20">Overall #20+ scored</string>
+    <string name="hiscore_description_num_0">Overall #Bust/ Bounce/ NoScore scored</string>
+
     <!-- What The FAQ -->
     <string name="search_wtf">Search in F.A.Q.</string>
 

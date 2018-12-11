@@ -15,18 +15,17 @@ import nl.entreco.dartsscorecard.di.hiscore.HiscoreModule
 
 class HiScoreActivity : ViewModelActivity() {
 
-    private val component: HiscoreComponent by componentProvider {
-        it.plus(HiscoreModule(supportFragmentManager))
-    }
+    private val component: HiscoreComponent by componentProvider { it.plus(HiscoreModule()) }
     private val viewModel: HiScoreViewModel by viewModelProvider { component.viewModel() }
-    private val adapter: HiScorePager by lazy { HiScorePager(supportFragmentManager) }
+    private val pageAdapter: HiScorePager by lazy { component.pager() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityHiscoreBinding>(this, R.layout.activity_hiscore)
+        val binding = DataBindingUtil.setContentView<ActivityHiscoreBinding>(this,
+                R.layout.activity_hiscore)
         binding.viewModel = viewModel
-        binding.hiscorePager.adapter = adapter
-        binding.hiscorePager.addOnPageChangeListener(object:
+        binding.hiscorePager.adapter = pageAdapter
+        binding.hiscorePager.addOnPageChangeListener(object :
                 ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDescription(position)
@@ -36,12 +35,9 @@ class HiScoreActivity : ViewModelActivity() {
         initToolbar(toolbar(binding), R.string.title_hiscores)
 
         viewModel.hiScores().observe(this, Observer { hiscores ->
-            if(hiscores.isNotEmpty()) {
-                adapter.show(hiscores[0].hiScores)
+            if (hiscores.isNotEmpty()) {
+                pageAdapter.show(hiscores[0].hiScore)
             }
-        })
-        viewModel.title().observe(this, Observer { title ->
-            setTitle(title)
         })
     }
 

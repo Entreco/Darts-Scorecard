@@ -4,12 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.appbar.AppBarLayout
 import de.hdodenhof.circleimageview.CircleImageView
 import nl.entreco.dartsscorecard.R
 
 class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) :
-        androidx.coordinatorlayout.widget.CoordinatorLayout.Behavior<CircleImageView>(context,
+        CoordinatorLayout.Behavior<CircleImageView>(context,
                 attrs) {
 
     private var customFinalYPosition: Float = 0F
@@ -52,12 +53,12 @@ class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) :
         finalLeftAvatarPadding = context.resources.getDimension(R.dimen.large)
     }
 
-    override fun layoutDependsOn(parent: androidx.coordinatorlayout.widget.CoordinatorLayout,
+    override fun layoutDependsOn(parent: CoordinatorLayout,
                                  child: CircleImageView, dependency: View): Boolean {
         return dependency is Toolbar || dependency is AppBarLayout
     }
 
-    override fun onDependentViewChanged(parent: androidx.coordinatorlayout.widget.CoordinatorLayout,
+    override fun onDependentViewChanged(parent: CoordinatorLayout,
                                         child: CircleImageView, dependency: View): Boolean {
 
         if (dependency is AppBarLayout) return false
@@ -76,7 +77,7 @@ class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) :
             child.y = startYPosition - distanceYToSubtract
 
             val heightToSubtract = ((startHeight - customFinalHeight) * heightFactor)
-            val lp = child.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+            val lp = child.layoutParams as CoordinatorLayout.LayoutParams
             lp.width = startHeight - heightToSubtract.toInt()
             lp.height = startHeight - heightToSubtract.toInt()
             child.layoutParams = lp
@@ -88,7 +89,7 @@ class ProfileHeaderBehavior(context: Context?, attrs: AttributeSet?) :
             child.y = startYPosition - distanceYToSubtract
 
 
-            val lp = child.layoutParams as androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+            val lp = child.layoutParams as CoordinatorLayout.LayoutParams
             lp.width = startHeight
             lp.height = startHeight
             child.layoutParams = lp

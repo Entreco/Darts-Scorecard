@@ -1,7 +1,6 @@
 package nl.entreco.dartsscorecard.hiscores
 
 import androidx.databinding.ObservableBoolean
-
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,9 +17,6 @@ class HiScoreViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val hiscores = MutableLiveData<List<HiScore>>()
-    private val titles = MutableLiveData<Int>()
-
-    val isLoading = ObservableBoolean(true)
     val description = ObservableInt(R.string.empty)
 
     init {
@@ -29,12 +25,10 @@ class HiScoreViewModel @Inject constructor(
 
     private fun onFailed(): (Throwable) -> Unit = {
         hiscores.postValue(emptyList())
-        isLoading.set(false)
     }
 
     private fun onSuccess(): (FetchHiScoreResponse) -> Unit = { response ->
         hiscores.postValue(response.hiScores)
-        isLoading.set(false)
         updateDescription(0)
     }
 
@@ -42,31 +36,22 @@ class HiScoreViewModel @Inject constructor(
         return hiscores
     }
 
-    fun title() : LiveData<Int>{
-        return titles
-    }
-
-    fun hiScores(position: Int): List<HiScoreItemModel>? {
-        val sorted = hiscores.value?.map { hiScore ->
-            HiScoreItemModel(hiScore.playerName, hiScore.hiScores[position], 0)
-        }?.sortedByDescending {
-            it.hiScore.sort()
-        }
-
-        return sorted?.mapIndexed { index, item ->
-            item.copy(pos = index + 1)
-        }
-    }
-
     fun updateDescription(position: Int) {
-        val (tit, desc) = when (hiscores.value?.get(0)?.hiScores?.get(position)) {
-            is HiScoreItem.Num180 -> Pair(R.string.profile_num_180, R.string.profile_num_180)
-            is HiScoreItem.Num140 -> Pair(R.string.profile_num_140, R.string.profile_num_140)
-            is HiScoreItem.Num100 -> Pair(R.string.profile_num_100, R.string.profile_num_100)
-            is HiScoreItem.Num60 -> Pair(R.string.profile_num_60, R.string.profile_num_60)
-            else -> Pair(R.string.profile_overall_average, R.string.profile_overall_average)
+        val desc = when (hiscores.value?.get(0)?.hiScore?.get(position)) {
+            is HiScoreItem.Num180 -> R.string.hiscore_description_num_180
+            is HiScoreItem.Num140 -> R.string.hiscore_description_num_140
+            is HiScoreItem.Num100 -> R.string.hiscore_description_num_100
+            is HiScoreItem.Num60 -> R.string.hiscore_description_num_60
+            is HiScoreItem.Num20 -> R.string.hiscore_description_num_20
+            is HiScoreItem.NumBust -> R.string.hiscore_description_num_0
+            is HiScoreItem.FirstNineAvg -> R.string.hiscore_description_first9_average
+            else -> R.string.hiscore_description_overall_average
         }
-        titles.postValue(tit)
         description.set(desc)
+    }
+
+    fun dataAtPosition(position: Int): Map<String, HiScoreItem> {
+        val items = hiscores.value?.map { it.playerName to it.hiScore[position] }?.toMap() ?: throw IllegalStateException("No data at position $position")
+        return items
     }
 }

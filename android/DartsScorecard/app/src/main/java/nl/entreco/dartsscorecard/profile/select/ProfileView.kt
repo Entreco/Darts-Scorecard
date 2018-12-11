@@ -7,7 +7,7 @@ import nl.entreco.domain.profile.Profile
 /**
  * Created by entreco on 04/03/2018.
  */
-class ProfileView(private val binding: ProfileViewBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
+class ProfileView(private val binding: ProfileViewBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(profile: Profile, navigator: SelectProfileNavigator) {
         binding.profile = ProfileModel(profile)
         binding.navigator = navigator

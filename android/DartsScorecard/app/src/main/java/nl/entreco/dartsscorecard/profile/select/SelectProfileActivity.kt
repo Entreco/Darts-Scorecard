@@ -3,13 +3,13 @@ package nl.entreco.dartsscorecard.profile.select
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivitySelectProfileBinding
@@ -22,14 +22,17 @@ import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
  */
 class SelectProfileActivity : ViewModelActivity() {
 
-    private val component: SelectProfileComponent by componentProvider { it.plus(SelectProfileModule()) }
+    private val component: SelectProfileComponent by componentProvider {
+        it.plus(SelectProfileModule())
+    }
     private val viewModel: SelectProfileViewModel by viewModelProvider { component.viewModel() }
     private val navigator: SelectProfileNavigator by lazy { SelectProfileNavigator(this) }
     private val adapter: SelectProfileAdapter by lazy { SelectProfileAdapter(navigator) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivitySelectProfileBinding>(this, R.layout.activity_select_profile)
+        val binding = DataBindingUtil.setContentView<ActivitySelectProfileBinding>(this,
+                R.layout.activity_select_profile)
         binding.viewModel = viewModel
         binding.navigator = navigator
         initToolbar(toolbar(binding), R.string.title_select_profile)
@@ -47,8 +50,7 @@ class SelectProfileActivity : ViewModelActivity() {
 
     private fun initRecyclerView(binding: ActivitySelectProfileBinding) {
         val recyclerView = binding.profileRecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(
-                binding.root.context!!)
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context!!)
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
@@ -56,7 +58,8 @@ class SelectProfileActivity : ViewModelActivity() {
         recyclerView.adapter = adapter
     }
 
-    private fun addSwipeToDelete(binding: ActivitySelectProfileBinding, recyclerView: androidx.recyclerview.widget.RecyclerView) {
+    private fun addSwipeToDelete(binding: ActivitySelectProfileBinding,
+                                 recyclerView: RecyclerView) {
         val swipeToDeleteHelper = SelectProfileSwiper(binding.root,
                 onSwiped = { viewModel.hidePlayerProfile(adapter.playerIdAt(it), adapter) },
                 deleteAction = { viewModel.deletePlayerProfiles(adapter) },

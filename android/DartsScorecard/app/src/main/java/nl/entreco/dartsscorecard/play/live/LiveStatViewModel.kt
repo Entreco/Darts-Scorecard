@@ -88,7 +88,7 @@ class LiveStatViewModel @Inject constructor(
         archiveServiceLauncher.launch(gameId)
     }
 
-    fun prev(pager: androidx.viewpager.widget.ViewPager) {
+    fun prev(pager: ViewPager) {
         val prev = when {
             pager.currentItem - 1 < 0 -> adapter.count
             else -> pager.currentItem - 1
@@ -96,7 +96,7 @@ class LiveStatViewModel @Inject constructor(
         pager.setCurrentItem(prev, true)
     }
 
-    fun next(pager: androidx.viewpager.widget.ViewPager) {
+    fun next(pager: ViewPager) {
         val next = when {
             pager.currentItem + 1 >= adapter.count -> 0
             else -> pager.currentItem + 1

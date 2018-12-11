@@ -16,12 +16,15 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/def">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="@dimen/icon_size_large"
             android:layout_height="@dimen/icon_size_large"
             android:layout_margin="@dimen/small"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
+            android:background="@drawable/profile_bg_xsmall"
+            app:civ_border_color="?attr/colorPrimary"
+            app:civ_border_width="@dimen/xsmall"
             app:medal="@{item.pos}"
             app:showIf="@{item.hasMedal}"
             tools:src="@drawable/ic_medal_1"
@@ -44,13 +47,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/SelectProfileName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
             android:padding="@dimen/def"
             android:text="@{item.name}"
-            android:textColor="?attr/header_text_color"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/value"
             app:layout_constraintStart_toEndOf="@id/medal"
@@ -58,14 +59,12 @@
             tools:text="@string/app_name" />
 
         <TextView
+            style="@style/SelectProfileName"
             android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
             android:padding="@dimen/def"
             android:text="@{item.score}"
-            android:textColor="?attr/header_text_color"
-            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

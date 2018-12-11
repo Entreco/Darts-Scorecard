@@ -2,11 +2,11 @@ package nl.entreco.dartsscorecard.play.live
 
 import android.content.Context
 import android.content.res.Resources
-import androidx.viewpager.widget.ViewPager
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -26,7 +26,7 @@ class LiveStatBindingTest {
     @Mock private lateinit var mockView: View
     @Mock private lateinit var mockResources: Resources
     @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockPager: androidx.viewpager.widget.ViewPager
+    @Mock private lateinit var mockPager: ViewPager
     @Mock private lateinit var mockAdapter: LiveStatAdapter
 
     @Test
@@ -65,6 +65,6 @@ class LiveStatBindingTest {
     @Test
     fun `it should scroll to currentTeam`() {
         LiveStatBinding.scrollToCurrentTeam(mockPager, 0)
-        verify(mockPager).setCurrentItem( 0, true)
+        verify(mockPager).setCurrentItem(0, true)
     }
 }

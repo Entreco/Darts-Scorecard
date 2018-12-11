@@ -10,7 +10,7 @@ class LocalHiScoresRepository(db: DscDatabase, private val mapper: HiScoreMapper
     private val playerDao: PlayerDao = db.playerDao()
     private val profileDao: ProfileDao = db.profileDao()
 
-    override fun fetchHiscores(): List<HiScore> {
+    override fun fetchHiScores(): List<HiScore> {
         return playerDao.fetchAll().map {
             val profile = profileDao.fetchByPlayerId(it.id)
             mapper.to(it, profile)

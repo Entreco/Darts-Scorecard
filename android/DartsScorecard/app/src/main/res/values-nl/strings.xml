@@ -119,7 +119,7 @@
     <!-- Profile -->
     <string name="no_stats_available">Nog geen statistieken beschikbaar</string>
     <string name="no_stats_available_sub">Speel een volledige wedstrijd en check daana hier hoe je het doet</string>
-    <string name="profile_games_played">Matches Gespeeld</string>
+    <string name="profile_games_played">Wedstrijden Gespeeld</string>
     <string name="profile_overall_average">Totale gemiddelde</string>
     <string name="profile_first9_average">1e 9 gemiddelde</string>
     <string name="profile_win_percentage">Win %</string>
@@ -130,6 +130,30 @@
     <string name="profile_num_60">#60+</string>
     <string name="profile_num_20">#20+</string>
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
+
+    <!--- HiScores -->
+    <string name="hiscore_title_games_played">Wedstrijden gespeeld</string>
+    <string name="hiscore_title_overall_average">Totale gemiddelde</string>
+    <string name="hiscore_title_first9_average">1e 9 gemiddelde</string>
+    <string name="hiscore_title_win_percentage">Win %</string>
+    <string name="hiscore_title_checkout_percentage">Checkout %</string>
+    <string name="hiscore_title_num_180">#180\'s</string>
+    <string name="hiscore_title_num_140">#140+</string>
+    <string name="hiscore_title_num_100">#100+</string>
+    <string name="hiscore_title_num_60">#60+</string>
+    <string name="hiscore_title_num_20">#20+</string>
+    <string name="hiscore_title_num_0">#Bust/ Bounce/ NoScore</string>
+    <string name="hiscore_description_games_played">Totaal aantal afgemaakte wedstrijden</string>
+    <string name="hiscore_description_overall_average">Totale 3-darts gemiddelde</string>
+    <string name="hiscore_description_first9_average">Totale 3-darts gemiddelde van de 1ste negen darts</string>
+    <string name="hiscore_description_win_percentage">Totale % van gewonnen matches</string>
+    <string name="hiscore_description_checkout_percentage">Totale checkout %</string>
+    <string name="hiscore_description_num_180">Totaal aantal #180\'s gegooid</string>
+    <string name="hiscore_description_num_140">Totaal aantal #140+ gegooid</string>
+    <string name="hiscore_description_num_100">Totaal aantal #100+ gegooid</string>
+    <string name="hiscore_description_num_60">Totaal aantal #60+ gegooid</string>
+    <string name="hiscore_description_num_20">Totaal aantal #20+ gegooid</string>
+    <string name="hiscore_description_num_0">Totaal aantal #Bust/ Bounce/ NoScore gegooid</string>
 
     <!-- What The FAQ -->
     <string name="search_wtf">F.A.Q. doorzoeken</string>

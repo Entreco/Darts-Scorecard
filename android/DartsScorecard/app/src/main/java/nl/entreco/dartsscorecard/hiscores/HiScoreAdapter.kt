@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.hiscores
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -20,17 +21,22 @@ class HiScoreAdapter : ListAdapter<HiScoreItemModel, HiScoreViewHolder>(HiScoreD
     override fun onBindViewHolder(holder: HiScoreViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    override fun submitList(list: List<HiScoreItemModel>?) {
+        Log.i("REMCO", "REMCO submitList: $this, $list")
+        super.submitList(list)
+    }
 }
 
 class HiScoreDif : DiffUtil.ItemCallback<HiScoreItemModel>() {
     override fun areItemsTheSame(oldItem: HiScoreItemModel,
                                  newItem: HiScoreItemModel): Boolean {
-        return oldItem == newItem
+        return true
     }
 
     override fun areContentsTheSame(oldItem: HiScoreItemModel,
                                     newItem: HiScoreItemModel): Boolean {
-        return oldItem.name == newItem.name
+        return true
     }
 }
 
