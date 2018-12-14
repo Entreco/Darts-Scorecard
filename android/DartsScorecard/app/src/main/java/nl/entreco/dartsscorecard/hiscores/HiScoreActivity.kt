@@ -15,20 +15,22 @@ import nl.entreco.dartsscorecard.di.hiscore.HiscoreModule
 
 class HiScoreActivity : ViewModelActivity() {
 
+    private lateinit var binding: ActivityHiscoreBinding
     private val component: HiscoreComponent by componentProvider { it.plus(HiscoreModule()) }
     private val viewModel: HiScoreViewModel by viewModelProvider { component.viewModel() }
     private val pageAdapter: HiScorePager by lazy { component.pager() }
+    private val animator: HiScoreAnimator by lazy { HiScoreAnimator(binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityHiscoreBinding>(this,
-                R.layout.activity_hiscore)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_hiscore)
         binding.viewModel = viewModel
         binding.hiscorePager.adapter = pageAdapter
         binding.hiscorePager.addOnPageChangeListener(object :
                 ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 viewModel.updateDescription(position)
+                animator.onPageSelected(position)
             }
         })
 

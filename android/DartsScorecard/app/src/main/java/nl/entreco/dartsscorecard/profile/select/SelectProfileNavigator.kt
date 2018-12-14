@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.profile.select
 import android.app.Activity
 import androidx.core.app.ActivityOptionsCompat
 import android.view.View
+import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import javax.inject.Inject
@@ -10,11 +11,12 @@ import javax.inject.Inject
 /**
  * Created by entreco on 05/03/2018.
  */
-class SelectProfileNavigator @Inject constructor(private val activity: Activity) {
+class SelectProfileNavigator @Inject constructor(
+        @ActivityScope private val activity: Activity) {
 
     fun onProfileSelected(view: View, profile: ProfileModel) {
         val id = longArrayOf(profile.id)
-        ProfileActivity.launch(activity, view, id)
+        ProfileActivity.launch(activity, id, view)
     }
 
     fun onCreateProfile(view: View){

@@ -22,9 +22,9 @@ class SortHiScoresUsecase @Inject constructor(
         }, fail)
     }
 
-    private fun sortByHiScore(items: Map<String, HiScoreItem>): List<SortHiScoresResponse> {
+    private fun sortByHiScore(items: Map<HiScore, HiScoreItem>): List<SortHiScoresResponse> {
         return items.toList().sortedByDescending { it.second.value }.map {
-            SortHiScoresResponse(it.first, it.second.display, it.second.value, 0)
+            SortHiScoresResponse(it.first.playerId, it.first.playerName, it.second.display, it.second.value, 0)
         }
     }
 

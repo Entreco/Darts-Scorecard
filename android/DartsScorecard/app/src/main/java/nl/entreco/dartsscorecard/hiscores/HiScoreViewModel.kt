@@ -1,19 +1,17 @@
 package nl.entreco.dartsscorecard.hiscores
 
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.viewpager.widget.ViewPager
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.hiscores.FetchHiScoreResponse
-import nl.entreco.domain.hiscores.FetchHiScoresUsecase
-import nl.entreco.domain.hiscores.HiScore
-import nl.entreco.domain.hiscores.HiScoreItem
+import nl.entreco.domain.hiscores.*
 import javax.inject.Inject
 
 class HiScoreViewModel @Inject constructor(
-        fetchHiScoresUsecase: FetchHiScoresUsecase
+        fetchHiScoresUsecase: FetchHiScoresUsecase,
+        private val sortHiScoresUsecase: SortHiScoresUsecase
 ) : BaseViewModel() {
 
     private val hiscores = MutableLiveData<List<HiScore>>()
@@ -36,6 +34,14 @@ class HiScoreViewModel @Inject constructor(
         return hiscores
     }
 
+    fun prev(pager: ViewPager){
+        pager.currentItem--
+    }
+
+    fun next(pager: ViewPager){
+        pager.currentItem++
+    }
+
     fun updateDescription(position: Int) {
         val desc = when (hiscores.value?.get(0)?.hiScore?.get(position)) {
             is HiScoreItem.Num180 -> R.string.hiscore_description_num_180
@@ -50,8 +56,15 @@ class HiScoreViewModel @Inject constructor(
         description.set(desc)
     }
 
-    fun dataAtPosition(position: Int): Map<String, HiScoreItem> {
-        val items = hiscores.value?.map { it.playerName to it.hiScore[position] }?.toMap() ?: throw IllegalStateException("No data at position $position")
-        return items
+    private val liveDatas = mutableMapOf<Int, MutableLiveData<List<HiScoreItemModel>>>()
+    fun dataAtPosition(position: Int): LiveData<List<HiScoreItemModel>> {
+        val liveData = liveDatas.getOrDefault(position, MutableLiveData())
+        val items = hiscores.value?.map { it to it.hiScore[position] }?.toMap() ?: throw IllegalStateException("No data at position $position")
+        // Sort in the background
+        sortHiScoresUsecase.go(SortHiScoresRequest(items), { scores ->
+            val mapped = scores.map { HiScoreItemModel(it.id, it.name, it.display, it.pos) }
+            liveData.postValue(mapped)
+        }, {})
+        return liveData
     }
 }

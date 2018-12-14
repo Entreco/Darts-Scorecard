@@ -10,9 +10,9 @@ object HiScoreBinding {
     @BindingAdapter("medal")
     fun showMedalForPosition(view: ImageView, position: Int) {
         val (width, medal) = when (position) {
-            1 -> Pair(2, R.drawable.ic_medal_1)
-            2 -> Pair(2, R.drawable.ic_medal_2)
-            3 -> Pair(2, R.drawable.ic_medal_3)
+            1 -> Pair(2, R.drawable.medal_1)
+            2 -> Pair(2, R.drawable.medal_2)
+            3 -> Pair(2, R.drawable.medal_3)
             else -> Pair(0, 0)
         }
         view.setImageResource(medal)

@@ -88,12 +88,12 @@ class ProfileActivity : ViewModelActivity() {
         private const val REQUEST_CODE_CHANGE_NAME = 1223
 
         @JvmStatic
-        fun launch(activity: Activity, view: View, teams: LongArray) {
+        fun launch(activity: Activity, teams: LongArray, view: View? = null) {
             val intent = Intent(activity, ProfileActivity::class.java)
             intent.putExtra(EXTRA_TEAM_IDS, teams)
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
-            activity.startActivityForResult(intent, SelectProfileActivity.REQUEST_CODE_VIEW, options.toBundle())
+            val options = if(view != null) ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName) else null
+            activity.startActivityForResult(intent, SelectProfileActivity.REQUEST_CODE_VIEW, options?.toBundle())
         }
 
         @JvmStatic

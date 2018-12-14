@@ -1,7 +1,6 @@
 package nl.entreco.dartsscorecard.play
 
 import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.FragmentManager
 import android.view.View
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
@@ -22,7 +21,7 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
                     .setAction(android.R.string.ok) { }
                     .show()
         } else {
-            ProfileActivity.launch(activity, view, teams)
+            ProfileActivity.launch(activity, teams, view)
         }
     }
 }

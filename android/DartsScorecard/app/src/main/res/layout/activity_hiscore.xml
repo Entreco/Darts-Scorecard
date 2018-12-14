@@ -30,13 +30,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/colorPrimary"
+                android:ellipsize="marquee"
                 android:gravity="center"
-                android:padding="@dimen/large"
+                android:lines="2"
+                android:paddingStart="48dp"
+                android:paddingTop="@dimen/def"
+                android:paddingEnd="48dp"
+                android:paddingBottom="@dimen/def"
                 android:text="@{viewModel.description}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="This is for the Players" />
+                tools:text="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/hiscore_prev"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:drawableTint="@color/white"
+                android:onClick="@{() -> viewModel.prev(hiscorePager)}"
+                android:padding="@dimen/large"
+                android:rotation="180"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_start"
+                app:layout_constraintBottom_toBottomOf="@id/hiscore_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hiscore_description" />
+
+            <ImageView
+                android:id="@+id/hiscore_next"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:drawableTint="@color/white"
+                android:onClick="@{() -> viewModel.next(hiscorePager)}"
+                android:padding="@dimen/large"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_start"
+                app:layout_constraintBottom_toBottomOf="@id/hiscore_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hiscore_description" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/hiscore_pager"
@@ -48,9 +82,9 @@
                 <androidx.viewpager.widget.PagerTitleStrip
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/black"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:background="?android:attr/colorPrimary"/>
+                    android:textSize="12sp" />
             </androidx.viewpager.widget.ViewPager>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

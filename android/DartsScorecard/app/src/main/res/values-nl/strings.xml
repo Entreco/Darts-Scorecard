@@ -153,7 +153,7 @@
     <string name="hiscore_description_num_100">Totaal aantal #100+ gegooid</string>
     <string name="hiscore_description_num_60">Totaal aantal #60+ gegooid</string>
     <string name="hiscore_description_num_20">Totaal aantal #20+ gegooid</string>
-    <string name="hiscore_description_num_0">Totaal aantal #Bust/ Bounce/ NoScore gegooid</string>
+    <string name="hiscore_description_num_0">Totaal aantal #Bust/ Bounce/ NoScore\'s gegooid</string>
 
     <!-- What The FAQ -->
     <string name="search_wtf">F.A.Q. doorzoeken</string>
