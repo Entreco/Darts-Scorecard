@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.base.PagerAnimator
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityHiscoreBinding
 import nl.entreco.dartsscorecard.di.hiscore.HiscoreComponent
@@ -19,12 +20,15 @@ class HiScoreActivity : ViewModelActivity() {
     private val component: HiscoreComponent by componentProvider { it.plus(HiscoreModule()) }
     private val viewModel: HiScoreViewModel by viewModelProvider { component.viewModel() }
     private val pageAdapter: HiScorePager by lazy { component.pager() }
-    private val animator: HiScoreAnimator by lazy { HiScoreAnimator(binding) }
+    private val animator: PagerAnimator by lazy {
+        PagerAnimator(binding.hiscorePager, binding.hiscorePrev, binding.hiscoreNext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_hiscore)
         binding.viewModel = viewModel
+        binding.animator = animator
         binding.hiscorePager.adapter = pageAdapter
         binding.hiscorePager.addOnPageChangeListener(object :
                 ViewPager.SimpleOnPageChangeListener() {

@@ -21,14 +21,14 @@
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
     <string name="title_wtf">@string/wtf</string>
-    <string name="title_hiscores">HiScores</string>
+    <string name="title_hiscores">Hiscores</string>
 
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Manage Profiles</string>
     <string name="hiscores">Hiscores</string>
-    <string name="beta">Beta</string>
+    <string name="beta">New Features</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>
@@ -44,6 +44,8 @@
     <string name="donation_ok">THANKS</string>
     <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p>&lt;p>All Donations &lt;b>include removing all ads&lt;/b> from the app&lt;/p></string>
     <string name="beta_video">&lt;b>Watch the video&lt;/b></string>
+    <string name="beta_tagline">Most popular features, will be developed first</string>
+    <string name="beta_explained">Let us know which feature you would like to see next. Select \'VOTE\' &amp; click the \u2764! We\'ll do our best</string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>

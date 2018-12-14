@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.hiscores.HiScoreViewModel" />
+        
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.base.PagerAnimator" />
 
     </data>
 
@@ -52,6 +56,7 @@
                 android:onClick="@{() -> viewModel.prev(hiscorePager)}"
                 android:padding="@dimen/large"
                 android:rotation="180"
+                android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_arrow_start"
                 app:layout_constraintBottom_toBottomOf="@id/hiscore_description"
@@ -64,6 +69,7 @@
                 android:layout_height="0dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:drawableTint="@color/white"
+                android:contentDescription="@null"
                 android:onClick="@{() -> viewModel.next(hiscorePager)}"
                 android:padding="@dimen/large"
                 android:scaleType="fitCenter"

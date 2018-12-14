@@ -1,16 +1,19 @@
-package nl.entreco.dartsscorecard.hiscores
+package nl.entreco.dartsscorecard.base
 
 import android.view.View
-import nl.entreco.dartsscorecard.databinding.ActivityHiscoreBinding
+import android.view.ViewTreeObserver
+import androidx.viewpager.widget.ViewPager
 
-class HiScoreAnimator(val binding: ActivityHiscoreBinding) {
-    private val pager = binding.hiscorePager
-    private val prev = binding.hiscorePrev.also {
-        flyOutStart(it)
-    }
+class PagerAnimator(private val pager: ViewPager, private val prev: View, private val next: View) {
 
-    private val next = binding.hiscoreNext.also {
-        flyOutEnd(it)
+    init {
+        pager.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                pager.viewTreeObserver.removeOnPreDrawListener(this)
+                onPageSelected(0)
+                return true
+            }
+        })
     }
 
     fun onPageSelected(position: Int) {
