@@ -45,7 +45,7 @@ dependencies {
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
+    kapt "androidx.room:room-compiler:2$room"
 
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
@@ -79,8 +79,8 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$xCoreTesting"
 
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
