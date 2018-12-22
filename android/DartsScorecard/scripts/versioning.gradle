@@ -4,6 +4,10 @@ android.applicationVariants.all { variant ->
         outputFileName = "${appName}-${variant.versionName}.apk"
     }
 }
+android.defaultConfig{
+    def appName = "Dsc"
+    setProperty("archivesBaseName", "${appName}-${versionName}")
+}
 
 task showVersionName {
     doLast {
@@ -21,5 +25,11 @@ task showApiVersion {
 task showAppName {
     doLast {
         println android.applicationVariants[0].outputs[0].outputFileName
+    }
+}
+
+task showBundleName {
+    doLast {
+        println "${android.defaultConfig.versionName}.aab"
     }
 }
