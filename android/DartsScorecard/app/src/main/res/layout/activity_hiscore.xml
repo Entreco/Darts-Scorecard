@@ -88,7 +88,7 @@
                 <androidx.viewpager.widget.PagerTitleStrip
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/black"
+                    android:background="?attr/colorAccent"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </androidx.viewpager.widget.ViewPager>

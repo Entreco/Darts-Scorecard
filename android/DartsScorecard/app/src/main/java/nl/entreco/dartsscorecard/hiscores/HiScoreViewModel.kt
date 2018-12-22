@@ -44,15 +44,20 @@ class HiScoreViewModel @Inject constructor(
 
     fun updateDescription(position: Int) {
         val desc = when (hiscores.value?.get(0)?.hiScore?.get(position)) {
+            is HiScoreItem.ScoringAvg -> R.string.hiscore_description_first9_average
+            is HiScoreItem.CheckoutPerc -> R.string.hiscore_description_checkout_percentage
+            is HiScoreItem.WinRatio -> R.string.hiscore_description_games_win_ratio
             is HiScoreItem.Num180 -> R.string.hiscore_description_num_180
             is HiScoreItem.Num140 -> R.string.hiscore_description_num_140
             is HiScoreItem.Num100 -> R.string.hiscore_description_num_100
             is HiScoreItem.Num60 -> R.string.hiscore_description_num_60
             is HiScoreItem.Num20 -> R.string.hiscore_description_num_20
             is HiScoreItem.NumBust -> R.string.hiscore_description_num_0
-            is HiScoreItem.FirstNineAvg -> R.string.hiscore_description_first9_average
+            is HiScoreItem.BestMatchAvg -> R.string.hiscore_description_best_avg
+            is HiScoreItem.BestMatchCheckout -> R.string.hiscore_description_best_co
             else -> R.string.hiscore_description_overall_average
         }
+
         description.set(desc)
     }
 

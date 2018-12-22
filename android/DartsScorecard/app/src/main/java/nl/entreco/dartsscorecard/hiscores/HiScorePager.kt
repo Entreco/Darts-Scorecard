@@ -24,15 +24,18 @@ class HiScorePager @Inject constructor(
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (items[position]) {
-            is HiScoreItem.OverallAverage -> context.getString(
-                    R.string.hiscore_title_overall_average)
-            is HiScoreItem.FirstNineAvg -> context.getString(R.string.hiscore_title_first9_average)
+            is HiScoreItem.OverallAvg -> context.getString(R.string.hiscore_title_overall_average)
+            is HiScoreItem.ScoringAvg -> context.getString(R.string.hiscore_title_first9_average)
+            is HiScoreItem.CheckoutPerc -> context.getString(R.string.hiscore_title_checkout_percentage)
+            is HiScoreItem.WinRatio -> context.getString(R.string.hiscore_title_games_ratio)
             is HiScoreItem.Num180 -> context.getString(R.string.hiscore_title_num_180)
             is HiScoreItem.Num140 -> context.getString(R.string.hiscore_title_num_140)
             is HiScoreItem.Num100 -> context.getString(R.string.hiscore_title_num_100)
             is HiScoreItem.Num60 -> context.getString(R.string.hiscore_title_num_60)
             is HiScoreItem.Num20 -> context.getString(R.string.hiscore_title_num_20)
             is HiScoreItem.NumBust -> context.getString(R.string.hiscore_title_num_0)
+            is HiScoreItem.BestMatchAvg -> context.getString(R.string.hiscore_title_best_avg)
+            is HiScoreItem.BestMatchCheckout -> context.getString(R.string.hiscore_title_best_co)
             else -> ""
         }
     }

@@ -133,7 +133,9 @@
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
 
     <!--- HiScores -->
-    <string name="hiscore_title_games_played">Games Played</string>
+    <string name="hiscore_title_games_ratio">Win Ratio</string>
+    <string name="hiscore_title_best_avg">Best Avg</string>
+    <string name="hiscore_title_best_co">Best Checkout %</string>
     <string name="hiscore_title_overall_average">Overall average</string>
     <string name="hiscore_title_first9_average">1st 9 average</string>
     <string name="hiscore_title_win_percentage">Win %</string>
@@ -144,9 +146,11 @@
     <string name="hiscore_title_num_60">#60+</string>
     <string name="hiscore_title_num_20">#20+</string>
     <string name="hiscore_title_num_0">#Bust/ Bounce/ NoScore</string>
-    <string name="hiscore_description_games_played">Total number of finished games</string>
-    <string name="hiscore_description_overall_average">Overall 3-dart average</string>
-    <string name="hiscore_description_first9_average">Overall 3-dart average of the 1st nine darts</string>
+    <string name="hiscore_description_games_win_ratio">Won vs Played ratio</string>
+    <string name="hiscore_description_best_avg">Best average during a single match</string>
+    <string name="hiscore_description_best_co">Best checkout % during a single match</string>
+    <string name="hiscore_description_overall_average">Overall average</string>
+    <string name="hiscore_description_first9_average">Overall average of the 1st nine darts</string>
     <string name="hiscore_description_win_percentage">Overall % of games won</string>
     <string name="hiscore_description_checkout_percentage">Overall checkout %</string>
     <string name="hiscore_description_num_180">Overall #180\'s scored</string>
