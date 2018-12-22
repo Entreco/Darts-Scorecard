@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".profile.view.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/xxlarge"
         android:paddingTop="@dimen/xxlarge"
+        android:paddingBottom="@dimen/xxlarge"
         tools:showIn="@layout/include_profile_stats">
 
         <TextView
@@ -24,12 +24,12 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:lottie_colorFilter="?attr/colorAccent"
+            android:layout_margin="@dimen/large"
             android:scaleType="fitCenter"
-            app:lottie_rawRes="@raw/doh"
-            app:lottie_loop="true"
             app:lottie_autoPlay="true"
-            />
+            app:lottie_colorFilter="?attr/colorAccent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/doh" />
 
         <TextView
             android:layout_width="match_parent"

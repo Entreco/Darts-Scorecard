@@ -104,9 +104,6 @@
             <!-- Empty Stats -->
             <include
                 layout="@layout/include_profile_empty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/large"
                 android:visibility="@{viewModel.isNotEmpty ? View.GONE : View.VISIBLE}"
                 tools:visibility="gone" />
 
