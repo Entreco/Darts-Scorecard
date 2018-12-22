@@ -11,9 +11,7 @@ import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MasterCallerRequest
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.play.mastercaller.*
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
@@ -40,6 +38,8 @@ class Play01ViewModelMasterCallerTest {
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockAdProvider: AdViewModel
+    @Mock private lateinit var mockToggleMusicUsecase: ToggleMusicUsecase
+    @Mock private lateinit var mockMusicPlayer: MusicPlayer
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
@@ -96,7 +96,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 

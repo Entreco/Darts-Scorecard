@@ -28,7 +28,7 @@ class SelectProfileNavigatorTest {
     fun onProfileSelected() {
         givenSubject()
         subject.onProfileSelected(mockView, mockProfile)
-        verify(ProfileActivity).launch(mockActivity, mockView, longArrayOf(1))
+        verify(ProfileActivity).launch(mockActivity, longArrayOf(1), mockView)
     }
 
     @Test

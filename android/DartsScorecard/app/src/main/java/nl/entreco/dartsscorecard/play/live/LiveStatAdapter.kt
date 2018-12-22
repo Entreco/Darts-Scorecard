@@ -14,7 +14,7 @@ import kotlin.math.max
 /**
  * Created by entreco on 24/03/2018.
  */
-class LiveStatAdapter @Inject constructor(private val navigator: Play01Navigator) : androidx.viewpager.widget.PagerAdapter() {
+class LiveStatAdapter @Inject constructor(private val navigator: Play01Navigator) : PagerAdapter() {
 
     private val items: MutableList<TeamLiveStatModel> = mutableListOf()
 

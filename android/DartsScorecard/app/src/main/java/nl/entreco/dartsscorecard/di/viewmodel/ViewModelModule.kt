@@ -28,7 +28,7 @@ class ViewModelModule(private val activity: androidx.fragment.app.FragmentActivi
 
     @Provides
     @ActivityScope
-    fun fragmentManager(): androidx.fragment.app.FragmentManager = activity.supportFragmentManager
+    fun fragmentManager(): FragmentManager = activity.supportFragmentManager
 
     @Provides
     @ActivityScope

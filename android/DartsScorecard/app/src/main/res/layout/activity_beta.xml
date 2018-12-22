@@ -38,8 +38,22 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/cd_list_of_beta_features"
             android:layoutAnimation="@anim/layout_animation_from_bottom"
+            android:paddingTop="52dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/beta_view" />
+
+        <TextView
+            style="@style/Beta.Description"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:lines="2"
+            android:textColor="?attr/colorPrimary"
+            android:padding="@dimen/def"
+            android:text="@string/beta_explained"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <LinearLayout
             android:id="@+id/sheet"

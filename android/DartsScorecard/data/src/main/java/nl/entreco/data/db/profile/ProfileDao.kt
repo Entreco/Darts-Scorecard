@@ -8,6 +8,7 @@ import androidx.room.Query
 
 @Dao
 interface ProfileDao {
+
     @Query("SELECT * FROM Profile WHERE player = :id")
     fun fetchByPlayerId(id: Long): List<ProfileTable>
 

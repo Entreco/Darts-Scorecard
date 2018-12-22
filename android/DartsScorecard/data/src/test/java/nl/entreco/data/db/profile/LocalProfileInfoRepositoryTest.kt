@@ -19,14 +19,14 @@ class LocalProfileInfoRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockPlayerDao: PlayerDao
-    private lateinit var subject: LocalProfileInfoInfoRepository
+    private lateinit var subject: LocalProfileInfoRepository
     private lateinit var mapper: ProfileMapper
 
     @Before
     fun setUp() {
         whenever(mockDb.playerDao()).thenReturn(mockPlayerDao)
         mapper = ProfileMapper()
-        subject = LocalProfileInfoInfoRepository(mockDb, mapper)
+        subject = LocalProfileInfoRepository(mockDb, mapper)
     }
 
     @Test

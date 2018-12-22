@@ -82,6 +82,9 @@
         <activity
             android:name=".profile.edit.EditPlayerNameActivity"
             android:parentActivityName=".profile.view.ProfileActivity" />
+        <activity
+            android:name=".hiscores.HiScoreActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
 
         <service
             android:name=".archive.ArchiveJobService"

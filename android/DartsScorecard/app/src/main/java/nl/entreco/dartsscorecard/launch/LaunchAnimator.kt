@@ -11,14 +11,15 @@ import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
 class LaunchAnimator(binding: ActivityLaunchBinding) {
 
     private val animator = LaunchAnimatorHandler(binding.includeLaunchHeader.lets, binding.includeLaunchHeader.play,
-            binding.includeLaunchHeader.dart, binding.launchResume, binding.launchPlay, binding.launchPlayers, binding.launchBeta)
+            binding.includeLaunchHeader.dart, binding.launchResume, binding.launchPlay, binding.launchPlayers, binding.launchHiscore, binding.launchBeta)
 
     init {
         animator.init()
     }
 
     internal class LaunchAnimatorHandler(private val lets: View, private val play: View, private val darts: View,
-                                         private val btn1: View, private val btn2: View, private val btn3: View, private val btn4: View) {
+                                         private val btn1: View, private val btn2: View, private val btn3: View,
+                                         private val btn4: View, private val btn5: View) {
 
         private val horizontalTranslation: Float = 800F
         private val verticalTranslation = 100F
@@ -34,6 +35,7 @@ class LaunchAnimator(binding: ActivityLaunchBinding) {
             btn2.also(buttonStart(1))
             btn3.also(buttonStart(2))
             btn4.also(buttonStart(3))
+            btn5.also(buttonStart(4))
         }
 
 
@@ -42,6 +44,7 @@ class LaunchAnimator(binding: ActivityLaunchBinding) {
             buttonAnimation(btn2, 1)
             buttonAnimation(btn3, 2)
             buttonAnimation(btn4, 2)
+            buttonAnimation(btn5, 2)
 
             lets.animate().translationX(0F).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).start()
             play.animate().translationX(0F).setStartDelay(duration).setDuration(duration).setInterpolator(AccelerateDecelerateInterpolator()).start()

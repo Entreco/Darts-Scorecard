@@ -15,6 +15,8 @@ import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.listeners.StatListener
 import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.MusicPlayer
+import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
@@ -46,6 +48,7 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockScoreSettings: ScoreSettings
     @Mock private lateinit var mockScore: Score
     @Mock private lateinit var mockRequest: Play01Request
+    @Mock private lateinit var mockToggleMusicUsecase: ToggleMusicUsecase
     @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
     @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
     @Mock private lateinit var mockAdProvider: AdViewModel
@@ -54,6 +57,7 @@ class Play01ViewModelTest {
     @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
     @Mock private lateinit var mock01Listeners: Play01Listeners
     @Mock private lateinit var mockMasterCaller: MasterCaller
+    @Mock private lateinit var mockMusicPlayer: MusicPlayer
     @Mock private lateinit var mockDialogHelper: DialogHelper
     @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
@@ -85,7 +89,7 @@ class Play01ViewModelTest {
 
     @Test
     fun `it should stop mastercaller on stop`() {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.stop()
         verify(mockMasterCaller).stop()
     }
@@ -222,14 +226,14 @@ class Play01ViewModelTest {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller,mockMusicPlayer,  mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(req, mockCreatedNotifier, *loaders)
     }
 
     private fun givenFullyLoadedMockGame() {
         whenever(mockNext.state).thenReturn(State.START)
         whenever(mockGame.next).thenReturn(mockNext)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, mockScoreSettings, givenTeams, teamIds))

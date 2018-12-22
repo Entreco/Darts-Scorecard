@@ -1,18 +1,18 @@
 package nl.entreco.dartsscorecard.beta
 
 import android.app.Activity
-import androidx.lifecycle.Lifecycle
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.beta.donate.DonateCallback
@@ -94,7 +94,8 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     }
 
     private fun showTankYouToast() {
-        val snack = Snackbar.make(binding.root, R.string.donation_thanks, Snackbar.LENGTH_INDEFINITE)
+        val snack = Snackbar.make(binding.root, R.string.donation_thanks,
+                Snackbar.LENGTH_INDEFINITE)
         snack.setAction(R.string.donation_ok) { snack.dismiss() }
         snack.setActionTextColor(getColor(R.color.colorAccent))
         snack.show()
@@ -104,9 +105,8 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         val recyclerView = binding.betaRecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
-                binding.root.context, 2)
-        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
+        recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
     }
 
@@ -158,6 +158,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         }
 
         private fun donateOk(requestCode: Int, resultCode: Int, data: Intent?) =
-                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra("RESPONSE_CODE", -1) == 0
+                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra(
+                        "RESPONSE_CODE", -1) == 0
     }
 }

@@ -21,12 +21,14 @@
     <string name="title_setup">01 Match instellen</string>
     <string name="title_beta">Beta Features</string>
     <string name="title_wtf">@string/wtf</string>
+    <string name="title_hiscores">Hiscores</string>
 
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Profielen beheren</string>
-    <string name="beta">Beta</string>
+    <string name="hiscores">Hiscores</string>
+    <string name="beta">Nieuwe features</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>
@@ -42,6 +44,8 @@
     <string name="donation_ok">THNX</string>
     <string name="votes_explained">&lt;p>Zodra deze feature &lt;b>%1$s&lt;/b> stemmen heeft, zullen we de implementatie starten.&lt;/p>&lt;p>Alle donaties &lt;b>verwijderen ook alle advertenties&lt;/b> in de app&lt;/p></string>
     <string name="beta_video">&lt;b>Bekijk de video&lt;/b></string>
+    <string name="beta_tagline">De populairste features worden als eerste ontwikkeld</string>
+    <string name="beta_explained">Laat ons weten welke features je graag in de nieuwe versie ziet. Kies \'STEM\' &amp; klik op het \u2764! We doen ons best</string>
 
     <!-- Setup -->
     <string name="select_players">Selecteer spelers</string>
@@ -117,7 +121,7 @@
     <!-- Profile -->
     <string name="no_stats_available">Nog geen statistieken beschikbaar</string>
     <string name="no_stats_available_sub">Speel een volledige wedstrijd en check daana hier hoe je het doet</string>
-    <string name="profile_games_played">Matches Gespeeld</string>
+    <string name="profile_games_played">Wedstrijden Gespeeld</string>
     <string name="profile_overall_average">Totale gemiddelde</string>
     <string name="profile_first9_average">1e 9 gemiddelde</string>
     <string name="profile_win_percentage">Win %</string>
@@ -128,6 +132,34 @@
     <string name="profile_num_60">#60+</string>
     <string name="profile_num_20">#20+</string>
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
+
+    <!--- HiScores -->
+    <string name="hiscore_title_games_ratio">Win Ratio</string>
+    <string name="hiscore_title_best_avg">Beste gemiddelde</string>
+    <string name="hiscore_title_best_co">Beste Checkout %</string>
+    <string name="hiscore_title_overall_average">Totale gemiddelde</string>
+    <string name="hiscore_title_first9_average">1e 9 gemiddelde</string>
+    <string name="hiscore_title_win_percentage">Win %</string>
+    <string name="hiscore_title_checkout_percentage">Checkout %</string>
+    <string name="hiscore_title_num_180">#180\'s</string>
+    <string name="hiscore_title_num_140">#140+</string>
+    <string name="hiscore_title_num_100">#100+</string>
+    <string name="hiscore_title_num_60">#60+</string>
+    <string name="hiscore_title_num_20">#20+</string>
+    <string name="hiscore_title_num_0">#Bust/ Bounce/ NoScore</string>
+    <string name="hiscore_description_games_win_ratio">Gewonnen vs Gespeeld ratio</string>
+    <string name="hiscore_description_best_avg">Beste gemiddelde gedurende 1 enkele partij</string>
+    <string name="hiscore_description_best_co">Beste checkout % gedurende 1 enkele partij</string>
+    <string name="hiscore_description_overall_average">Totale gemiddelde</string>
+    <string name="hiscore_description_first9_average">Totale gemiddelde van de 1ste negen darts</string>
+    <string name="hiscore_description_win_percentage">Totale % gewonnen wedstrijden</string>
+    <string name="hiscore_description_checkout_percentage">Totale checkout %</string>
+    <string name="hiscore_description_num_180">Totaal #180\'s gegooid</string>
+    <string name="hiscore_description_num_140">Totaal #140+ gegooid</string>
+    <string name="hiscore_description_num_100">Totaal #100+ gegooid</string>
+    <string name="hiscore_description_num_60">Totaal #60+ gegooid</string>
+    <string name="hiscore_description_num_20">Totaal #20+ gegooid</string>
+    <string name="hiscore_description_num_0">Totaal #Bust/ Bounce/ NoScore\'s gegooid</string>
 
     <!-- What The FAQ -->
     <string name="search_wtf">F.A.Q. doorzoeken</string>

@@ -11,7 +11,7 @@ import nl.entreco.domain.repository.ProfileInfoRepository
 /**
  * Created by entreco on 23/02/2018.
  */
-class LocalProfileInfoInfoRepository(db: DscDatabase, private val mapper: Mapper<PlayerTable, Profile>) : ProfileInfoRepository {
+class LocalProfileInfoRepository(db: DscDatabase, private val mapper: Mapper<PlayerTable, Profile>) : ProfileInfoRepository {
     private val playerDao: PlayerDao = db.playerDao()
 
     @WorkerThread

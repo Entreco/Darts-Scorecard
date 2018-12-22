@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.hiscores.HiScoreViewModel" />
+        
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.base.PagerAnimator" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_hiscores" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/hiscore_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/colorPrimary"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:lines="2"
+                android:paddingStart="48dp"
+                android:paddingTop="@dimen/def"
+                android:paddingEnd="48dp"
+                android:paddingBottom="@dimen/def"
+                android:text="@{viewModel.description}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/hiscore_prev"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:drawableTint="@color/white"
+                android:onClick="@{() -> viewModel.prev(hiscorePager)}"
+                android:padding="@dimen/large"
+                android:rotation="180"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_start"
+                app:layout_constraintBottom_toBottomOf="@id/hiscore_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hiscore_description" />
+
+            <ImageView
+                android:id="@+id/hiscore_next"
+                android:layout_width="48dp"
+                android:layout_height="0dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:drawableTint="@color/white"
+                android:contentDescription="@null"
+                android:onClick="@{() -> viewModel.next(hiscorePager)}"
+                android:padding="@dimen/large"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_start"
+                app:layout_constraintBottom_toBottomOf="@id/hiscore_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/hiscore_description" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/hiscore_pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hiscore_description">
+
+                <androidx.viewpager.widget.PagerTitleStrip
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorAccent"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </androidx.viewpager.widget.ViewPager>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

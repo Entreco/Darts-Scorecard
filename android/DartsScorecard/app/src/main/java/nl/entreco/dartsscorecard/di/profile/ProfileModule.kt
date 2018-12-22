@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.data.db.DscDatabase
-import nl.entreco.data.db.profile.LocalProfileInfoInfoRepository
+import nl.entreco.data.db.profile.LocalProfileInfoRepository
 import nl.entreco.data.db.profile.LocalProfileStatRepository
 import nl.entreco.data.db.profile.ProfileMapper
 import nl.entreco.data.db.profile.ProfileStatMapper
@@ -48,7 +48,7 @@ class ProfileModule {
     @Provides
     @ProfileScope
     fun provideProfileRepository(db: DscDatabase, mapper: ProfileMapper): ProfileInfoRepository {
-        return LocalProfileInfoInfoRepository(db, mapper)
+        return LocalProfileInfoRepository(db, mapper)
     }
 
     @Provides

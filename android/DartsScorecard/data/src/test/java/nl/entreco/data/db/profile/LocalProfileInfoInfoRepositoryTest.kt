@@ -1,7 +1,5 @@
 package nl.entreco.data.db.profile
 
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.player.PlayerDao
@@ -19,7 +17,7 @@ class LocalProfileInfoInfoRepositoryTest {
 
     @Mock private lateinit var mockDb: DscDatabase
     @Mock private lateinit var mockPlayerDao: PlayerDao
-    private lateinit var subject: LocalProfileInfoInfoRepository
+    private lateinit var subject: LocalProfileInfoRepository
     private var fetchedProfiles: List<Profile>? = null
     private var updatedProfile: Profile? = null
 
@@ -51,7 +49,7 @@ class LocalProfileInfoInfoRepositoryTest {
 
     private fun givenSubject() {
         whenever(mockDb.playerDao()).thenReturn(mockPlayerDao)
-        subject = LocalProfileInfoInfoRepository(mockDb, ProfileMapper())
+        subject = LocalProfileInfoRepository(mockDb, ProfileMapper())
     }
 
     private fun whenFetchingAll() {

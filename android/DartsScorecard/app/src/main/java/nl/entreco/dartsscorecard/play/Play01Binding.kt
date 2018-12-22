@@ -1,12 +1,12 @@
 package nl.entreco.dartsscorecard.play
 
-import androidx.databinding.BindingAdapter
-import androidx.annotation.StringRes
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.databinding.BindingAdapter
+import com.google.android.material.snackbar.Snackbar
 import nl.entreco.dartsscorecard.R
 
 /**
@@ -17,7 +17,8 @@ object Play01Binding {
     @BindingAdapter("loading")
     fun showLoading(view: ViewGroup, loading: Boolean) {
         if (loading) {
-            val loadingView = LayoutInflater.from(view.context).inflate(R.layout.play_01_loading, view, false)
+            val loadingView = LayoutInflater.from(view.context)
+                    .inflate(R.layout.play_01_loading, view, false)
             view.addView(loadingView)
             loadingView.animate().alpha(1F).start()
         } else {
@@ -39,7 +40,7 @@ object Play01Binding {
 
     @JvmStatic
     @BindingAdapter("finished", "animator")
-    fun showGameFinished(view: androidx.coordinatorlayout.widget.CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
+    fun showGameFinished(view: CoordinatorLayout, finished: Boolean, animator: Play01Animator?) {
         if (finished) {
             animator?.collapse()
         }

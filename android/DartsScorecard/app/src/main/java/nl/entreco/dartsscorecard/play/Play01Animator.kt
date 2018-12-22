@@ -3,9 +3,11 @@ package nl.entreco.dartsscorecard.play
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_play_01.view.*
 import kotlinx.android.synthetic.main.play_01_score.view.*
+import nl.entreco.dartsscorecard.base.PagerAnimator
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
@@ -20,6 +22,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
+    private val pageAnimator = PagerAnimator(pager, binding.includeMain.statPrev, binding.includeMain.statNext)
     private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,
             binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
@@ -29,8 +32,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     init {
         animator.calculateHeightForScoreView()
         pager.addOnPageChangeListener(object :
-                androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener() {
+                ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
+                pageAnimator.onPageSelected(position)
                 animator.storePositionForAnimator(position)
             }
         })
