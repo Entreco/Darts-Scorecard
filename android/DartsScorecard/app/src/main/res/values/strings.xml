@@ -118,7 +118,7 @@
     <string name="streaming_notif_title">Streaming to Television</string>
 
     <!-- Profile -->
-    <string name="no_stats_available">No stats available yet</string>
+    <string name="no_stats_available">No Data available yet</string>
     <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
     <string name="profile_games_played">Games Played</string>
     <string name="profile_overall_average">Overall average</string>

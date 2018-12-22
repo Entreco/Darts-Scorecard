@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.hiscores
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +17,7 @@ class HiScoreViewModel @Inject constructor(
 
     private val hiscores = MutableLiveData<List<HiScore>>()
     val description = ObservableInt(R.string.empty)
+    val isNotEmpty = ObservableBoolean(false)
 
     init {
         fetchHiScoresUsecase.go(onSuccess(), onFailed())
@@ -27,6 +29,7 @@ class HiScoreViewModel @Inject constructor(
 
     private fun onSuccess(): (FetchHiScoreResponse) -> Unit = { response ->
         hiscores.postValue(response.hiScores)
+        isNotEmpty.set(response.hiScores.isNotEmpty())
         updateDescription(0)
     }
 

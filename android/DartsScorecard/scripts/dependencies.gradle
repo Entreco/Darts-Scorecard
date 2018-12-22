@@ -68,6 +68,7 @@ ext {
             glide = '4.8.0',
             circleImageView = '2.2.0',
             jelly = 'v1.0',
+            lottieVersion = '2.8.0',
             crash = '2.9.1@aar',
             gson = '2.8.2',
             leakCanary = '1.6.1',

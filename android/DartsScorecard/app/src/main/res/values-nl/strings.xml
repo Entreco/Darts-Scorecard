@@ -119,7 +119,7 @@
     <string name="streaming_notif_title">Streaming to Television</string>
 
     <!-- Profile -->
-    <string name="no_stats_available">Nog geen statistieken beschikbaar</string>
+    <string name="no_stats_available">Nog geen data beschikbaar</string>
     <string name="no_stats_available_sub">Speel een volledige wedstrijd en check daana hier hoe je het doet</string>
     <string name="profile_games_played">Wedstrijden Gespeeld</string>
     <string name="profile_overall_average">Totale gemiddelde</string>
