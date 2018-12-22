@@ -48,13 +48,13 @@ before_install:
 - chmod +x gradlew
 - ./gradlew dependencies || true
 script:
-- ./gradlew clean build -PdisablePreDex --stacktrace
+- ./gradlew clean bundle -PdisablePreDex --stacktrace
 after_success:
 - ./gradlew jacocoFullReport coveralls
 before_deploy:
-- APP_NAME=$(./gradlew -q showAppName | tail -n 1)
+- APP_NAME="app.aab"
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME
-- cd app/build/outputs/apk/release
+- cd app/build/outputs/bundle/release
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 $APP_NAME _${APP_NAME}
 - ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
   --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --in _${APP_NAME} --out $APP_NAME
