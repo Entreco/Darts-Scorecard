@@ -53,10 +53,10 @@ after_success:
 - ./gradlew jacocoFullReport coveralls
 before_deploy:
 - APP_NAME=$(./gradlew -q showBundleName | tail -n 1) 
+- echo -e "appName $APP_NAME"
+- echo -e "home $HOME"
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME
 - cd app/build/outputs/bundle/release
-- echo $APP_NAME
-- echo $HOME/dsc_keystore
 #- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v -p 4 $APP_NAME _${APP_NAME}
 #- ${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/apksigner sign --ks $HOME/dsc_keystore
 #  --ks-key-alias Entreco --ks-pass pass:$storepass --key-pass pass:$keypass --in _${APP_NAME} --out $APP_NAME
