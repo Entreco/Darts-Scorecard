@@ -30,6 +30,6 @@ task showAppName {
 
 task showBundleName {
     doLast {
-        println "${android.defaultConfig.versionName}.aab"
+        println "Dsc-${android.defaultConfig.versionName}.aab"
     }
 }
