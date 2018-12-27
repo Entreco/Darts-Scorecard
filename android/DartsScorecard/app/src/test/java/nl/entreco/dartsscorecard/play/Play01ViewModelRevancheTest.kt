@@ -7,7 +7,6 @@ import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.State
@@ -24,6 +23,7 @@ import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.liblog.Logger
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

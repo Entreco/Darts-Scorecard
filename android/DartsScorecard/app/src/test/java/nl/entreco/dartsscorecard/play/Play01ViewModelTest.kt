@@ -5,7 +5,6 @@ import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
@@ -27,6 +26,7 @@ import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test

@@ -1,5 +1,6 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.liblog
 
+import nl.entreco.liblog.AppLogger
 import org.junit.Test
 
 /**

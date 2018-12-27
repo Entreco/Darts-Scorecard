@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.ad
 import androidx.lifecycle.Lifecycle
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

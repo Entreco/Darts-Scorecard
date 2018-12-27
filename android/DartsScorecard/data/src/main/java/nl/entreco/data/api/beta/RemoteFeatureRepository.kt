@@ -1,9 +1,9 @@
 package nl.entreco.data.api.beta
 
 import com.google.firebase.firestore.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.repository.FeatureRepository
+import nl.entreco.liblog.Logger
 
 /**
  * Created by entreco on 03/02/2018.

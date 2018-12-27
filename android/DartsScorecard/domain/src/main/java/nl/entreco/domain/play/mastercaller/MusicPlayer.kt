@@ -2,7 +2,7 @@ package nl.entreco.domain.play.mastercaller
 
 import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.repository.MusicRepository
-import nl.entreco.shared.log.Logger
+import nl.entreco.liblog.Logger
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import javax.inject.Inject

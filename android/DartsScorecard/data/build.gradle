@@ -12,6 +12,7 @@ android {
 dependencies {
     implementation project(":domain")
     implementation project(":shared")
+    implementation project(":libLog")
 
     // Annotation Processing
     kapt "androidx.room:room-compiler:$room"

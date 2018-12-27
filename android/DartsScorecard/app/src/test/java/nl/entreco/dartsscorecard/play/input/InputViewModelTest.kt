@@ -5,7 +5,6 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.NoPlayer
 import nl.entreco.domain.model.players.Player
@@ -14,6 +13,7 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.liblog.Logger
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

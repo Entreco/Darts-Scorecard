@@ -1,4 +1,4 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.liblog
 
 import org.junit.Test
 

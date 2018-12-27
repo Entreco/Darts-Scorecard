@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nl.entreco.liblog" >
+
+    <application>
+        <provider
+            android:authorities="${applicationId}.loginitprovider"
+            android:exported="false"
+            android:enabled="true"
+            android:name=".LogInitProvider" />
+    </application>
+
+</manifest>

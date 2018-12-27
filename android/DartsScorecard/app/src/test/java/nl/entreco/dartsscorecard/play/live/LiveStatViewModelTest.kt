@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.play.live
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.Score
@@ -11,6 +10,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test

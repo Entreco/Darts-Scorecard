@@ -14,7 +14,7 @@ import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.StatListener
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
-import nl.entreco.shared.log.Logger
+import nl.entreco.liblog.Logger
 import javax.inject.Inject
 
 /**

@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.shared.log.Logger
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith

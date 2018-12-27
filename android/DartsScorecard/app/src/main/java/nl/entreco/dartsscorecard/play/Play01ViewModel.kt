@@ -29,7 +29,7 @@ import nl.entreco.domain.rating.AskForRatingResponse
 import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
-import nl.entreco.shared.log.Logger
+import nl.entreco.liblog.Logger
 import javax.inject.Inject
 
 /**

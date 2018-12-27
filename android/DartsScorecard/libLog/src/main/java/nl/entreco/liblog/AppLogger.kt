@@ -1,7 +1,6 @@
-package nl.entreco.dartsscorecard
+package nl.entreco.liblog
 
 import android.util.Log
-import nl.entreco.shared.log.Logger
 
 /**
  * Created by Entreco on 27/11/2017.
@@ -90,7 +89,11 @@ internal class AppLogger(private val tag: String) : Logger {
 
     private fun withArgs(message: String, args: Array<out String>): String {
         return StringBuilder(message).append(
-                SEPARATOR).apply { args.take(args.size - 1).forEach { append(it).append(
-                SEPARATOR) }.apply { append(args.last()) } }.toString()
+                SEPARATOR).apply {
+            args.take(args.size - 1).forEach {
+                append(it).append(
+                        SEPARATOR)
+            }.apply { append(args.last()) }
+        }.toString()
     }
 }
