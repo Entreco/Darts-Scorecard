@@ -62,7 +62,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
     fun getSetCount(): Int {
         val score = arbiter.getScores().sumBy { it.set }
-        val isNew : Boolean = arbiter.getScores().count { it.score == it.settings.startScore } == arbiter.getScores().size
+        val isNew : Boolean = arbiter.getScores().count { it.score == it.settings.startScore && it.leg == 0 } == arbiter.getScores().size
         return max(0, score - if(isNew) 1 else 0)
     }
 
