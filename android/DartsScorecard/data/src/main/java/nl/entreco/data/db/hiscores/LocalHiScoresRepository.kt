@@ -6,7 +6,8 @@ import nl.entreco.data.db.profile.ProfileDao
 import nl.entreco.domain.hiscores.HiScore
 import nl.entreco.domain.repository.HiScoreRepository
 
-class LocalHiScoresRepository(db: DscDatabase, private val mapper: HiScoreMapper) : HiScoreRepository {
+class LocalHiScoresRepository(db: DscDatabase, private val mapper: HiScoreMapper) :
+        HiScoreRepository {
     private val playerDao: PlayerDao = db.playerDao()
     private val profileDao: ProfileDao = db.profileDao()
 
