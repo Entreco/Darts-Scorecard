@@ -90,6 +90,7 @@
 
     <!-- Match Stats -->
     <string name="match_stats">Match Statistics</string>
+    <string name="set_stats">Set %1$s Statistics</string>
     <string name="live_breaks_made">Breaks Made</string>
     <string name="live_double_success">Double Success</string>
     <string name="live_double_ratio">Double %</string>

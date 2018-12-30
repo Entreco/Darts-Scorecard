@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.play.live
 
+import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableField
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Team
@@ -7,7 +8,8 @@ import nl.entreco.domain.model.players.Team
 /**
  * Created by entreco on 11/01/2018.
  */
-class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveStat> = mutableListOf()) {
+class TeamLiveStatModel(val team: Team,
+                        private val liveStats: MutableList<LiveStat> = mutableListOf()) {
 
     companion object {
         const val empty = "--"
@@ -26,6 +28,7 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
     val coRatio = ObservableField<String>(empty)
     val breaks = ObservableField<String>(empty)
     val image = ObservableField<String>(team.imageUrl())
+    val breakdown = ObservableArrayMap<Int, TeamSetStat>()
 
     init {
         if (liveStats.isNotEmpty()) {
@@ -51,6 +54,12 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
         updateHighestCheckout()
         updateDoublePercentage()
         updateBreaksMade()
+
+        liveStats.forEach { stat ->
+            stat.setDarts.forEach {
+                updateSetAverage(it.key)
+            }
+        }
     }
 
     private fun updateBreaksMade() {
@@ -124,5 +133,29 @@ class TeamLiveStatModel(val team: Team, private val liveStats: MutableList<LiveS
             0 -> avg.set(empty)
             else -> avg.set("%.2f".format(aggregator / denominator.toDouble() * 3))
         }
+    }
+
+    private fun updateSetAverage(setIndex: Int) {
+        val total = liveStats.sumBy { it.setTotals.getOrDefault(setIndex, 0) }
+        val darts = liveStats.sumBy { it.setDarts.getOrDefault(setIndex, 0) }
+        val outs = liveStats.sumBy { it.setOuts.getOrDefault(setIndex, 0) }
+        val legs = liveStats.sumBy { it.setLegs.getOrDefault(setIndex, 0) }
+        update(setIndex, darts, total, outs, legs)
+    }
+
+    private fun update(set: Int, darts: Int, total: Int, nAtCheckout: Int, checkouts: Int) {
+        val avg = when (darts) {
+            0 -> empty
+            else ->  "%.2f".format(total / darts.toDouble() * 3)
+        }
+        val co = when (nAtCheckout) {
+            0 -> empty
+            else -> "$checkouts/$nAtCheckout"
+        }
+        val du = when (nAtCheckout) {
+            0 -> empty
+            else -> "%.2f".format(100 * checkouts / nAtCheckout.toDouble())
+        }
+        breakdown[set] = TeamSetStat(set, avg, co, du)
     }
 }

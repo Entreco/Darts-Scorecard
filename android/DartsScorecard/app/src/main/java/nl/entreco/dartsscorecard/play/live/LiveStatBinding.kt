@@ -3,10 +3,15 @@ package nl.entreco.dartsscorecard.play.live
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.R.string.set
+import nl.entreco.dartsscorecard.databinding.WidgetSetStatBinding
 
 /**
  * Created by entreco on 24/03/2018.
@@ -15,7 +20,7 @@ import nl.entreco.dartsscorecard.R
 object LiveStatBinding {
     @JvmStatic
     @BindingAdapter("liveStats", "adapter")
-    fun setupViewPager(view: androidx.viewpager.widget.ViewPager, stats: Map<Int, TeamLiveStatModel>, adapter: LiveStatAdapter) {
+    fun setupViewPager(view: ViewPager, stats: Map<Int, TeamLiveStatModel>, adapter: LiveStatAdapter) {
         adapter.populate(stats)
         view.setPageTransformer(false, LiveStatTransformer(view.context.resources.getDimension(R.dimen.match_stat_width)))
         view.adapter = adapter
@@ -40,7 +45,23 @@ object LiveStatBinding {
 
     @JvmStatic
     @BindingAdapter("currentTeam")
-    fun scrollToCurrentTeam(pager: androidx.viewpager.widget.ViewPager, currentTeamIndex: Int) {
+    fun scrollToCurrentTeam(pager: ViewPager, currentTeamIndex: Int) {
         pager.setCurrentItem(currentTeamIndex, true)
+    }
+
+    @JvmStatic
+    @BindingAdapter("breakdown1", "breakdown2", requireAll = true)
+    fun showSetBreakdown(view: ViewGroup, breakdown1: Map<Int, TeamSetStat>?, breakdown2: Map<Int, TeamSetStat>?) {
+        view.removeAllViews()
+        val layoutInflater = LayoutInflater.from(view.context)
+        breakdown1?.forEach { setNumber, setStat ->
+            val binding = DataBindingUtil.inflate<WidgetSetStatBinding>(layoutInflater, R.layout.widget_set_stat, view, false)
+            binding.number = setNumber + 1
+            binding.team0 = setStat
+            breakdown2?.get(setNumber)?.let{
+                binding.team1 = it
+            }
+            view.addView(binding.root)
+        }
     }
 }

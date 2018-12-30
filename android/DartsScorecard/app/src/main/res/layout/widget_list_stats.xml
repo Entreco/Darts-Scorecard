@@ -25,7 +25,6 @@
         android:clipToPadding="false"
         android:orientation="vertical">
 
-
         <!-- Players -->
         <LinearLayout
             android:id="@+id/players"
@@ -90,8 +89,8 @@
                     style="@style/Main.Player"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:centerIfOneTeam="@{team1 == null}"
-                    android:text="@{team0.name}" />
+                    android:text="@{team0.name}"
+                    app:centerIfOneTeam="@{team1 == null}" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="match_parent"
@@ -428,7 +427,15 @@
                 app:hideIfOneTeam="@{team1 == null}" />
         </LinearLayout>
 
-
+        <LinearLayout
+            android:id="@+id/set_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            app:breakdown1="@{team0.breakdown}"
+            app:breakdown2="@{team1.breakdown}" />
     </LinearLayout>
 
 </layout>

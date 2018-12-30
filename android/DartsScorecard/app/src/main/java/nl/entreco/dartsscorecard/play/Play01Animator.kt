@@ -22,7 +22,8 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
-    private val pageAnimator = PagerAnimator(pager, binding.includeMain.statPrev, binding.includeMain.statNext)
+    private val pageAnimator = PagerAnimator(pager, binding.includeMain.statPrev,
+            binding.includeMain.statNext)
     private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,
             binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
@@ -129,8 +130,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
         private fun getAnimatorForPosition(position: Int): LiveStatSlideAnimator? {
             synchronized(lock) {
-                if (animator == null) {
-                    animator = LiveStatSlideAnimator(pager.findViewWithTag(position),
+                val current = pager.findViewWithTag<View>(position)
+                if (animator == null && current != null) {
+                    animator = LiveStatSlideAnimator(current,
                             pager.findViewWithTag(position - 1),
                             pager.findViewWithTag(position + 1))
                 }

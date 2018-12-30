@@ -56,6 +56,22 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
         return arbiter.getTurnCount()
     }
 
+    fun getSetCount(state: State): Int {
+        val sets = scores.sumBy { it.set }
+        return when(state){
+            State.SET -> sets - 1
+            else -> sets
+        }
+    }
+
+    fun getLegCount(state: State): Int {
+        val legs = scores.sumBy { it.leg }
+        return when(state){
+            State.LEG -> legs - 1
+            else -> legs
+        }
+    }
+
     fun wasBreakMade(by: Player): Boolean {
         if (starters.size < 2) return false
         return newMatchSetOrLeg && !starters[1].contains(by)
