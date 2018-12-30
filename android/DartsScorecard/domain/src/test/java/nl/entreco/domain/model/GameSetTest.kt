@@ -63,6 +63,24 @@ class GameSetTest {
     }
 
     @Test
+    fun `it should return 0 after 3rd leg in 2nd set (2 players)`() {
+        givenScores(Score(501, 1, 0), Score(501, 1, 0))
+        thenSetCounterIs(0)
+    }
+
+    @Test
+    fun `it should return 0 after 1st leg in 2nd set (2 players)`() {
+        givenScores(Score(501, 0, 1), Score(501, 0, 0))
+        thenSetCounterIs(0)
+    }
+
+    @Test
+    fun `it should return 1 after 1st leg in 2nd set (2 players)`() {
+        givenScores(Score(501, 0, 1), Score(500, 0, 0))
+        thenSetCounterIs(1)
+    }
+
+    @Test
     fun `it should return 2 after 1st leg in 2nd set (2 players)`() {
         givenScores(Score(501, 1, 1), Score(501, 1, 1))
         thenSetCounterIs(2)
