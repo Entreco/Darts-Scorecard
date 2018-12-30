@@ -26,7 +26,7 @@ class TeamLiveStatModelTest {
 
     @Test
     fun `it should update stats at the start`() {
-        subject = TeamLiveStatModel(mockTeam, mutableListOf(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11))))
+        subject = TeamLiveStatModel(mockTeam, mutableListOf(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11), emptyMap(), emptyMap(), emptyMap(), emptyMap())))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
@@ -45,28 +45,28 @@ class TeamLiveStatModelTest {
     @Test
     fun `it should update stats (normal case)`() {
         givenSubject("Team name")
-        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11), emptyMap(), emptyMap(), emptyMap(), emptyMap()))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
     @Test
     fun `it should update stats (no average)`() {
         givenSubject("Team name")
-        whenUpdating(LiveStat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 0, 0, 4, 5, 6, 2, 3, 15, 5, 9, listOf(10), listOf(11), emptyMap(), emptyMap(), emptyMap(), emptyMap()))
         thenStatsAre("--", "4", "5", "6", "2", "3", "11", "5/15", "9")
     }
 
     @Test
     fun `it should update stats (no percentage)`() {
         givenSubject("Team name")
-        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, listOf(10), listOf(11)))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, listOf(10), listOf(11), emptyMap(), emptyMap(), emptyMap(), emptyMap()))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "11", "0/0", "9")
     }
 
     @Test
     fun `it should update stats (no high checkout)`() {
         givenSubject("Team name")
-        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, emptyList(), emptyList()))
+        whenUpdating(LiveStat(1, 2, 3, 4, 5, 6, 2, 3, 0, 0, 9, emptyList(), emptyList(), emptyMap(), emptyMap(), emptyMap(), emptyMap()))
         thenStatsAre("2.00", "4", "5", "6", "2", "3", "--", "0/0", "9")
     }
 
