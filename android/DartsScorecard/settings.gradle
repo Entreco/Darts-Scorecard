@@ -1,1 +1,1 @@
-include ':app', ':domain', ':data', ':shared', ':libLog'
+include ':app', ':domain', ':data', ':shared', ':libLog', ':libCore'

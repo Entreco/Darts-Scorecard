@@ -23,7 +23,6 @@ class Play01ModuleTest {
     @Mock private lateinit var mockSharedPrefs: SharedPreferences
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockMapper: SoundMapper
-    @Mock private lateinit var mockSoundPool: SoundPool
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockActivity: Play01Activity
 
@@ -39,7 +38,7 @@ class Play01ModuleTest {
 
     @Test
     fun `it should provide SoundRepository`() {
-        assertNotNull(subject().provideSoundRepository(mockContext, mockSoundPool, mockMapper, mockAudioPrefs))
+        assertNotNull(subject().provideSoundRepository(mockContext, mockMapper, mockAudioPrefs))
     }
 
     @Test
@@ -57,12 +56,7 @@ class Play01ModuleTest {
         assertNotNull(subject().provideArchiveServiceLauncher(mockContext))
     }
 
-    @Test(expected = NullPointerException::class) // SoundPool.Builder() cannot be mocked
-    fun `it should provide soundPool`() {
-        assertNotNull(subject().provideSoundPool())
-    }
-
-    private fun subject() : Play01Module{
+    private fun subject(): Play01Module {
         whenever(mockActivity.getSharedPreferences("audio", Context.MODE_PRIVATE)).thenReturn(mockSharedPrefs)
         return Play01Module(mockActivity)
     }
