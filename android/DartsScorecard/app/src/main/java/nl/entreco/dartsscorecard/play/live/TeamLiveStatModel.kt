@@ -148,10 +148,7 @@ class TeamLiveStatModel(val team: Team,
             0 -> empty
             else ->  "%.2f".format(total / darts.toDouble() * 3)
         }
-        val co = when (nAtCheckout) {
-            0 -> empty
-            else -> "$checkouts/$nAtCheckout"
-        }
+        val co = "$checkouts/$nAtCheckout"
         val du = when (nAtCheckout) {
             0 -> empty
             else -> "%.2f".format(100 * checkouts / nAtCheckout.toDouble())

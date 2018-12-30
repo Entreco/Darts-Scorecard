@@ -60,6 +60,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
         val sets = scores.sumBy { it.set }
         return when(state){
             State.SET -> sets - 1
+            State.MATCH -> sets - 1
             else -> sets
         }
     }
@@ -68,6 +69,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
         val legs = scores.sumBy { it.leg }
         return when(state){
             State.LEG -> legs - 1
+            State.MATCH -> legs - 1
             else -> legs
         }
     }

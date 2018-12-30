@@ -70,7 +70,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                                          private val scoreFooter: View, private val toolbar: View) {
 
         private var animatorPosition: Int = 0
-        internal var animator: LiveStatSlideAnimator? = null
         private val lock = Object()
 
         fun onSlide(slideOffset: Float) {
@@ -99,7 +98,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         fun storePositionForAnimator(position: Int) {
             synchronized(lock) {
                 animatorPosition = position
-                animator = null
             }
         }
 
@@ -131,12 +129,13 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         private fun getAnimatorForPosition(position: Int): LiveStatSlideAnimator? {
             synchronized(lock) {
                 val current = pager.findViewWithTag<View>(position)
-                if (animator == null && current != null) {
-                    animator = LiveStatSlideAnimator(current,
+                return if (current != null) {
+                    LiveStatSlideAnimator(current,
                             pager.findViewWithTag(position - 1),
                             pager.findViewWithTag(position + 1))
+                } else {
+                    null
                 }
-                return animator
             }
         }
     }
