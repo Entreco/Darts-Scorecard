@@ -102,6 +102,6 @@ class LiveStatTest {
     private fun statWith(playerId: Long = 0, totalScore: Int = 0, nDarts: Int = 0,
                          n180: Int = 0, n140: Int = 0, n100: Int = 0, n60: Int = 0, n20: Int = 0, nAtCheckout: Int = 0, nCheckouts: Int = 0,
                          nBreaks: Int = 0, highest: List<Int> = emptyList(), highestCo: List<Int> = emptyList()): LiveStat {
-        return LiveStat(playerId, totalScore, nDarts, n180, n140, n100, n60, n20, nAtCheckout, nCheckouts, nBreaks, highest, highestCo)
+        return LiveStat(playerId, totalScore, nDarts, n180, n140, n100, n60, n20, nAtCheckout, nCheckouts, nBreaks, highest, highestCo, emptyMap(), emptyMap(), emptyMap(), emptyMap())
     }
 }

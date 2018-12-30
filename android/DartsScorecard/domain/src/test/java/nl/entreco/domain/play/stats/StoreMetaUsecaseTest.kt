@@ -57,7 +57,7 @@ class StoreMetaUsecaseTest {
     private fun givenMeta(){
         givenTurnId = 5
         givenMetaId = 8
-        givenMeta = TurnMeta(3, 4, Score(), false)
+        givenMeta = TurnMeta(3, 4, 0, 0, Score(), false)
         givenRequest = StoreMetaRequest(givenTurnId,2, Turn(), givenMeta)
     }
 

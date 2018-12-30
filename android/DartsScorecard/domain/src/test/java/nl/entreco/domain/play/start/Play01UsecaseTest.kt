@@ -118,7 +118,7 @@ class Play01UsecaseTest {
 
     private fun whenStoringTurn(turn: Turn, state: State = State.NORMAL) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
-        expectedTurnMeta = TurnMeta(1, 2, Score())
+        expectedTurnMeta = TurnMeta(1, 2, 0, 0, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
     }
 

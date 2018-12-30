@@ -30,7 +30,7 @@ class LiveStatPageAnimatorHandlerTest {
     }
 
     private fun givenSubject() {
-        subject = LiveStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, 100F)
+        subject = LiveStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, 100F)
     }
 
     private fun whenTransforming() {

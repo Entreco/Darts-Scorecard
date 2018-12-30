@@ -39,7 +39,7 @@ class LiveStatViewModelTest {
     private var givenScores: Array<Score> = emptyArray()
     private var givenExistingStats: Map<Long, LiveStat> = emptyMap()
 
-    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList())
+    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList(), emptyMap(), emptyMap(), emptyMap(), emptyMap())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchLiveStatResponse) -> Unit>()
 
