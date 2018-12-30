@@ -74,5 +74,4 @@ class MasterCallerTest {
     private fun thenRepositoryIsReleased() {
         verify(mockSoundRepository).release()
     }
-
 }

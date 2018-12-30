@@ -15,12 +15,10 @@ import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.description.RemoteMatchDescriptionRepository
 import nl.entreco.data.prefs.SharedAudioPrefRepo
-import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.data.sound.LocalMusicRepository
 import nl.entreco.data.sound.LocalSoundRepository
 import nl.entreco.data.sound.SoundMapper
 import nl.entreco.domain.repository.*
-import javax.inject.Named
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -50,22 +48,16 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provideSoundPool(): SoundPool {
-        return SoundPool.Builder().setMaxStreams(2).build()
-    }
-
-    @Provides
-    @Play01Scope
-    fun provideSoundRepository(@ActivityScope context: Context, @Play01Scope soundPool: SoundPool, @Play01Scope mapper: SoundMapper, @Play01Scope prefs: AudioPrefRepository): SoundRepository {
+    fun provideSoundRepository(@ActivityScope context: Context, @Play01Scope mapper: SoundMapper, @Play01Scope prefs: AudioPrefRepository): SoundRepository {
+        val soundPool = SoundPool.Builder().setMaxStreams(2).build()
         return LocalSoundRepository(context, soundPool, prefs, mapper)
     }
 
     @Provides
     @Play01Scope
     fun provideMusicRepository(@ActivityScope context: Context): MusicRepository {
-        val mediaPlayer = MediaPlayer.create(context, R.raw.dsc_loop)
+        val mediaPlayer = MediaPlayer.create(context, R.raw.pdc_tune)
         mediaPlayer.isLooping = true
-
         return LocalMusicRepository(mediaPlayer)
     }
 
