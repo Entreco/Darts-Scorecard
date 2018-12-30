@@ -3,6 +3,10 @@ package nl.entreco.domain.model
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
 
 data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
@@ -56,22 +60,14 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
         return arbiter.getTurnCount()
     }
 
-    fun getSetCount(state: State): Int {
-        val sets = scores.sumBy { it.set }
-        return when(state){
-            State.SET -> sets - 1
-            State.MATCH -> sets - 1
-            else -> sets
-        }
+    fun getSetCount(): Int {
+        val score = arbiter.getScores().sumBy { it.set }
+        val isNew : Boolean = arbiter.getScores().count { it.score == it.settings.startScore } == arbiter.getScores().size
+        return max(0, score - if(isNew) 1 else 0)
     }
 
-    fun getLegCount(state: State): Int {
-        val legs = scores.sumBy { it.leg }
-        return when(state){
-            State.LEG -> legs - 1
-            State.MATCH -> legs - 1
-            else -> legs
-        }
+    fun getLegCount(): Int {
+        return arbiter.getScores().sumBy { it.set * 100 + it.leg }
     }
 
     fun wasBreakMade(by: Player): Boolean {
