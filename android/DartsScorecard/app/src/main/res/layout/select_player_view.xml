@@ -46,6 +46,7 @@
         <TextView
             android:id="@+id/teamIndex"
             style="@style/Setup.Entry.Spinner"
+            android:importantForAccessibility="no"
             android:layout_width="@dimen/setup_width"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

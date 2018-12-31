@@ -21,8 +21,6 @@
     </style>
 
     <style name="Main.Section">
-        <item name="android:layout_marginTop">@dimen/large</item>
-        <item name="android:background">@drawable/stats_section</item>
         <item name="android:padding">@dimen/xsmall</item>
         <item name="android:textSize">14sp</item>
     </style>

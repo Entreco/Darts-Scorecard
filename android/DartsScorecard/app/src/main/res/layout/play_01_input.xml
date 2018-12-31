@@ -82,6 +82,7 @@
                 android:layout_alignBottom="@id/input_escape"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@id/input_escape"
+                android:importantForAccessibility="no"
                 app:scoreInput="@{viewModel.scoredTxt}" />
 
             <TextView

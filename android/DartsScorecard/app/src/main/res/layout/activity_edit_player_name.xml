@@ -45,6 +45,7 @@
                 style="@style/EditPlayer.Hdr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
                 android:text="@string/choose_player_name" />
 
             <FrameLayout
@@ -58,6 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/def"
+                    android:importantForAccessibility="no"
                     android:text="@{viewModel.name}"
                     android:contentDescription="@null"
                     android:transitionName="profileName" />
@@ -93,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
+                android:importantForAccessibility="no"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:text="@string/edit_player_double" />
 
@@ -105,12 +108,14 @@
                     style="@style/Setup.Entry.Txt"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
                     android:gravity="start|center_vertical"
                     android:text="@string/edit_player_double" />
 
                 <TextView
                     style="@style/Setup.Entry.Spinner"
                     android:layout_width="@dimen/setup_width"
+                    android:importantForAccessibility="no"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:text="@{viewModel.favDouble}" />
@@ -121,6 +126,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:entries="@array/fav_doubles"
+                    android:importantForAccessibility="yes"
                     android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onFavouriteDoubleSelected(adapter,index)}"
                     android:selectedItemPosition="@={viewModel.favDoubleIndex}" />
             </RelativeLayout>
