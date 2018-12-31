@@ -64,7 +64,7 @@ object LiveStatBinding {
                 binding.number = setNumber + 1
                 binding.team0 = setStat
                 binding.team1 = breakdown2?.getOrDefault(setNumber, TeamSetStat(setNumber, "--", "0/0", "--"))
-                view.addView(binding.root)
+                view.addView(binding.root, 0)
             }
         } else {
             breakdown2?.forEach { setNumber, setStat ->
@@ -73,7 +73,7 @@ object LiveStatBinding {
                 binding.number = setNumber + 1
                 binding.team0 = breakdown1?.getOrDefault(setNumber, TeamSetStat(setNumber, "--", "0/0", "--"))
                 binding.team1 = setStat
-                view.addView(binding.root)
+                view.addView(binding.root, 0)
             }
         }
     }
