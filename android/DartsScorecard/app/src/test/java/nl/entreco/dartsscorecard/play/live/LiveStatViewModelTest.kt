@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.LiveStat

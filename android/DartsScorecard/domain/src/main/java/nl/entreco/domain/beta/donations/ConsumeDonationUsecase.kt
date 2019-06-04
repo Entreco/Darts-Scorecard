@@ -2,7 +2,7 @@ package nl.entreco.domain.beta.donations
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import nl.entreco.domain.BaseUsecase
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.BillingRepository

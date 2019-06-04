@@ -4,7 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
+import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.LocalProfileInfoRepository
 import nl.entreco.data.db.profile.LocalProfileStatRepository

@@ -10,6 +10,7 @@ import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
 import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
+import nl.entreco.libads.Ads
 
 
 /**
@@ -19,6 +20,7 @@ class LaunchActivity : ViewModelActivity() {
 
     private val component: LaunchComponent by componentProvider { it.plus(LaunchModule()) }
     private val viewModel: LaunchViewModel by viewModelProvider { component.viewModel() }
+    private val ads: Ads by lazy { component.ads() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.BLACK
@@ -26,6 +28,8 @@ class LaunchActivity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityLaunchBinding>(this, R.layout.activity_launch)
         binding.viewModel = viewModel
         binding.animator = LaunchAnimator(binding)
+
+        ads.init(resources.getString(R.string.app_id))
     }
 
     override fun onResume() {

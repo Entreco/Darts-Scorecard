@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.di.profile
 
 import dagger.Subcomponent
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.profile.view.ProfileViewModel
 
 /**

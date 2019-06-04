@@ -4,7 +4,7 @@ import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.viewpager.widget.ViewPager
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier

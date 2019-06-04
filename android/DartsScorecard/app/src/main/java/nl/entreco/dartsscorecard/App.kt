@@ -23,7 +23,6 @@ class App : Application() {
         initDagger()
         initStrictMode()
         initLeakCanary()
-        initAdMob()
     }
 
     private fun initDagger() {
@@ -47,11 +46,5 @@ class App : Application() {
     private fun initLeakCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) return
         LeakCanary.install(this)
-    }
-
-    private fun initAdMob() {
-        Thread {
-            MobileAds.initialize(this, resources.getString(R.string.app_id))
-        }.start()
     }
 }

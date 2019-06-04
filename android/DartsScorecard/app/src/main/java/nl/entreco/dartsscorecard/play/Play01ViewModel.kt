@@ -6,10 +6,10 @@ import androidx.annotation.StringRes
 import android.view.Menu
 import android.view.MenuItem
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
-import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
+import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback

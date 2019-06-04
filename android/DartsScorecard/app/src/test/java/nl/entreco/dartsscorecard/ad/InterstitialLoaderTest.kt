@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.ad
 import android.os.Handler
 import com.google.android.gms.ads.InterstitialAd
 import com.nhaarman.mockito_kotlin.*
+import nl.entreco.libads.ui.InterstitialLoader
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

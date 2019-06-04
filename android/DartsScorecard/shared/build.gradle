@@ -13,6 +13,9 @@ dependencies {
     // Annotation Processing
     kapt "com.github.bumptech.glide:compiler:$glide"
 
+    // Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+
     // Implementation
     implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "com.google.code.gson:gson:$gson"

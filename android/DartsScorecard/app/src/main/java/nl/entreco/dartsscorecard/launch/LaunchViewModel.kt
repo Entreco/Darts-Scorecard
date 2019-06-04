@@ -16,7 +16,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 12/12/2017.
  */
-class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: RetrieveLatestGameUsecase) : BaseViewModel() {
+class LaunchViewModel @Inject constructor(
+        private val retrieveGameUsecase: RetrieveLatestGameUsecase
+) : BaseViewModel() {
 
     val resumedGame = ObservableField<CreateGameResponse?>()
 

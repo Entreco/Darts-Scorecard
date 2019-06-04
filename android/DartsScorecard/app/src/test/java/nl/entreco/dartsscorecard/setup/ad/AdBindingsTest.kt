@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.setup.ad
 import android.view.View
 import com.google.android.gms.ads.AdListener
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.dartsscorecard.ad.AdBindings
+import nl.entreco.libads.ui.AdBindings
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith

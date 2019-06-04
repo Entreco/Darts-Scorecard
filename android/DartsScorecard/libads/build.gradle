@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: '../scripts/android_common.gradle'
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':shared')
+
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "androidx.appcompat:appcompat:$xSupport"
+    implementation "com.google.firebase:firebase-core:$fbCore"
+    implementation "com.google.firebase:firebase-ads:$fbAds"
+
+    testImplementation "junit:junit:$junit"
+}

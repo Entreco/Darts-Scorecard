@@ -17,7 +17,7 @@
 
         <variable
             name="adViewModel"
-            type="nl.entreco.dartsscorecard.ad.AdViewModel" />
+            type="nl.entreco.libads.ui.AdViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

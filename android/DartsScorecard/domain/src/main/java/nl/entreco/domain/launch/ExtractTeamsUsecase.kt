@@ -1,6 +1,6 @@
 package nl.entreco.domain.launch
 
-import nl.entreco.domain.BaseUsecase
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.model.players.Player

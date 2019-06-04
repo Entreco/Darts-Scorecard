@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.di.viewmodel
 import androidx.lifecycle.Lifecycle
 import android.content.Context
 import android.content.res.Resources
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AlertDialog
 import dagger.Module
@@ -13,6 +12,7 @@ import nl.entreco.data.billing.PlayStoreBillingRepository
 import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.domain.repository.RatingPrefRepository
+import nl.entreco.shared.scopes.ActivityScope
 
 /**
  * Created by Entreco on 14/11/2017.

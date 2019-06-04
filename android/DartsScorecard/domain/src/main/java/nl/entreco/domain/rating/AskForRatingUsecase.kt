@@ -1,6 +1,6 @@
 package nl.entreco.domain.rating
 
-import nl.entreco.domain.BaseUsecase
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.shared.threading.Background

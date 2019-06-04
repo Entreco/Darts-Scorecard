@@ -4,7 +4,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.model.*

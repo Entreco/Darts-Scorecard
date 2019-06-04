@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nl.entreco.libads" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <!-- Required per Admob v17.0.0 -->
+        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3793327349392749~1846337901"/>
+    </application>
+
+</manifest>

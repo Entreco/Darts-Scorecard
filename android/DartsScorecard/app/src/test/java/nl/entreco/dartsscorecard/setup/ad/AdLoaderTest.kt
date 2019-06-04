@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.setup.ad
 
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.dartsscorecard.ad.AdLoader
+import nl.entreco.libads.ui.AdLoader
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

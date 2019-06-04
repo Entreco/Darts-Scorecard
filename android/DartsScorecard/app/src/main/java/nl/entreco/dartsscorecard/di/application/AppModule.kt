@@ -14,7 +14,9 @@ import nl.entreco.data.analytics.FirebaseAnalytics
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
 import nl.entreco.liblog.Logger
-import java.util.*
+import nl.entreco.shared.scopes.AppContext
+import nl.entreco.shared.scopes.ApplicationScope
+import java.util.UUID
 import javax.inject.Named
 
 
@@ -27,6 +29,11 @@ class AppModule(val app: App) {
     @Provides
     @ApplicationScope
     fun application() = app
+
+    @Provides
+    @AppContext
+    @ApplicationScope
+    fun applicationContext() = app.applicationContext
 
     @Provides
     @ApplicationScope
