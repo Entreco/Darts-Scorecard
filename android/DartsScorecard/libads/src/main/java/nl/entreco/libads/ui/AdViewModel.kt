@@ -22,7 +22,7 @@ class AdViewModel @Inject constructor(
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
         private val adLoader: AdLoader,
         private val interstitialLoader: InterstitialLoader,
-        @Named("debugMode") private val debug: Boolean = BuildConfig.DEBUG) : ViewModel(), LifecycleObserver {
+        @Named("debugMode") private val debug: Boolean = !BuildConfig.DEBUG) : ViewModel(), LifecycleObserver {
 
     val showAd = ObservableBoolean(false)
     private var serveAds = AtomicBoolean(false) // Let's give the user no Ads by default
@@ -35,7 +35,7 @@ class AdViewModel @Inject constructor(
         if(!debug) {
             adLoader.loadAd(view, object : AdLoader.AdListener {
                 override fun onAdLoaded() {
-                    showAd.set(serveAds.get())
+                    showAd.set(true)
                 }
 
                 override fun onAdFailed() {

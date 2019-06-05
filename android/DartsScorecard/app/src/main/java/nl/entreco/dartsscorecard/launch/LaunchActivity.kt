@@ -2,15 +2,17 @@ package nl.entreco.dartsscorecard.launch
 
 import android.content.Context
 import android.content.Intent
-import androidx.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
 import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.libads.Ads
+import nl.entreco.libconsent.ask.AskConsentUsecase
+import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 
 
 /**
@@ -21,6 +23,8 @@ class LaunchActivity : ViewModelActivity() {
     private val component: LaunchComponent by componentProvider { it.plus(LaunchModule()) }
     private val viewModel: LaunchViewModel by viewModelProvider { component.viewModel() }
     private val ads: Ads by lazy { component.ads() }
+    private val fetch: FetchCurrentConsentUsecase by lazy { component.fetch() }
+    private val ask: AskConsentUsecase by lazy { component.ask() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.BLACK
@@ -29,7 +33,12 @@ class LaunchActivity : ViewModelActivity() {
         binding.viewModel = viewModel
         binding.animator = LaunchAnimator(binding)
 
-        ads.init(resources.getString(R.string.app_id))
+        fetch.go {response ->
+            when(response.shouldAskForConsent){
+                true -> ask.askForConsent(this)
+                false -> ads.init(getString(R.string.app_id))
+            }
+        }
     }
 
     override fun onResume() {

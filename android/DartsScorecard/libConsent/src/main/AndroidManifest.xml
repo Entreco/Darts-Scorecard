@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nl.entreco.libconsent" />
+    package="nl.entreco.libconsent" >
+    <application>
+
+        <provider
+            android:authorities="${applicationId}.consentinitprovider"
+            android:exported="false"
+            android:enabled="true"
+            android:name=".di.ConsentInitProvider" />
+    </application>
+</manifest>

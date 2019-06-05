@@ -6,6 +6,11 @@
     <application>
         <!-- Required per Admob v17.0.0 -->
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3793327349392749~1846337901"/>
+
+        <!-- Delay app measurement until MobileAds.initialize() is called. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+            android:value="true"/>
     </application>
 
 </manifest>

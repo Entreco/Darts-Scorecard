@@ -1,4 +1,4 @@
-package nl.entreco.libconsent
+package nl.entreco.libconsent.di
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -7,16 +7,21 @@ import android.content.pm.ProviderInfo
 import android.database.Cursor
 import android.net.Uri
 import nl.entreco.libconsent.retrieve.RetrieveConsentResponse
-import nl.entreco.libconsent.retrieve.RetrieveConsentUsecase
 
 class ConsentInitProvider : ContentProvider() {
+
+    private val component by lazy {
+        DaggerConsentComponent.builder()
+                .context(context!!)
+                .build()
+    }
+
     override fun onCreate(): Boolean {
-        // Init library here
         context?.let {
-            RetrieveConsentUsecase(it.applicationContext).go { response ->
+            component.retrieve().go { response ->
                 when (response) {
                     is RetrieveConsentResponse.Success -> handleSuccess(response)
-                    else                               -> handleError(response)
+                    is RetrieveConsentResponse.Error   -> handleError(response)
                 }
             }
         }
@@ -24,17 +29,18 @@ class ConsentInitProvider : ContentProvider() {
     }
 
     private fun handleSuccess(response: RetrieveConsentResponse.Success) {
-        // Initialize SDK
+        component.store().go(response.status, response.eu)
     }
 
-    private fun handleError(response: RetrieveConsentResponse) {
+    private fun handleError(response: RetrieveConsentResponse.Error) {
         // Error retrieving Consent Status
+        component.store().clear()
     }
 
     override fun attachInfo(context: Context?, info: ProviderInfo?) {
         if (info == null) throw NullPointerException("info cannot be null")
         // So if the authorities equal the library internal ones, the developer forgot to set his applicationId
-        if ("nl.entreco.libconsent.loginitprovider" == info.authority) {
+        if ("nl.entreco.libconsent.consentinitprovider" == info.authority) {
             throw IllegalStateException("Incorrect provider authority in manifest. Most likely due to a "
                     + "missing applicationId variable in application\'s build.gradle.");
         }

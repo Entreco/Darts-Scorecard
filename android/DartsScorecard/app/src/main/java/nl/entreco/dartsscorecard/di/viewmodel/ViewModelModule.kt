@@ -1,10 +1,11 @@
 package nl.entreco.dartsscorecard.di.viewmodel
 
-import androidx.lifecycle.Lifecycle
 import android.content.Context
 import android.content.res.Resources
-import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
 import nl.entreco.data.billing.BillingServiceConnection
@@ -18,7 +19,7 @@ import nl.entreco.shared.scopes.ActivityScope
  * Created by Entreco on 14/11/2017.
  */
 @Module
-class ViewModelModule(private val activity: androidx.fragment.app.FragmentActivity) {
+class ViewModelModule(private val activity: FragmentActivity) {
 
     private val prefs = activity.getSharedPreferences("rating", Context.MODE_PRIVATE)
 

@@ -13,7 +13,7 @@ object AdModule {
 
     @Provides
     @JvmStatic
-    fun provideAd(@AppContext context: Context): Ads = AdMobAds(context)
+    fun provideAds(@AppContext context: Context): Ads = AdMobAds(context)
 
     @Provides
     @JvmStatic

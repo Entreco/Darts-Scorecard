@@ -13,8 +13,8 @@ android {
 }
 
 dependencies {
-    implementation project(':libads')
-    
+    implementation project(':shared')
+
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     implementation "com.google.dagger:dagger:$daggerVersion"

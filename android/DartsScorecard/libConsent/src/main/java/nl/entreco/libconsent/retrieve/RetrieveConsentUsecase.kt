@@ -17,7 +17,7 @@ class RetrieveConsentUsecase @Inject constructor(
         val publisherIds = arrayOf(context.resources.getString(R.string.publisher_id))
         consentInformation.requestConsentInfoUpdate(publisherIds, object : ConsentInfoUpdateListener {
             override fun onConsentInfoUpdated(consentStatus: ConsentStatus) {
-                done(RetrieveConsentResponse.success(consentStatus.name))
+                done(RetrieveConsentResponse.success(consentStatus.name, consentInformation.isRequestLocationInEeaOrUnknown))
             }
 
             override fun onFailedToUpdateConsentInfo(errorDescription: String) {
