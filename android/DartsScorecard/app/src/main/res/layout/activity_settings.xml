@@ -7,6 +7,11 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.settings.SettingsViewModel" />
+
+        <variable
+            name="donations"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -30,69 +35,222 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/Settings.Header"
+                    style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Preferences" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    style="@style/Settings.Switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="@={viewModel.hasMasterCaller}"
+                    android:background="@drawable/score_header"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
                     android:text="Mastercaller" />
 
-                <TextView
-                    style="@style/Settings.Description"
+                <RelativeLayout
+                    style="@style/Setup.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Read scores aloud" />
+                    android:layout_height="wrap_content">
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    style="@style/Settings.Switch"
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:checked="@={viewModel.hasMasterCaller}"
+                        android:paddingStart="@dimen/def"
+                        android:paddingTop="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:paddingBottom="@dimen/def"
+                        android:text="Read all scores out a loud" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="@={viewModel.hasBackground}"
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
                     android:text="Music" />
 
-                <TextView
-                    style="@style/Settings.Description"
+                <RelativeLayout
+                    style="@style/Setup.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Play PDC anthem in the background" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:checked="@={viewModel.hasBackground}"
+                        android:paddingStart="@dimen/def"
+                        android:paddingTop="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:paddingBottom="@dimen/def"
+                        android:text="Play sound loop in the background" />
+                </RelativeLayout>
+
 
                 <TextView
-                    style="@style/Settings.Toggle"
+                    style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.swapStyle()}"
-                    android:text="Style" />
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
+                    android:text="THeming" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:text="Swap the available themes" />
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:importantForAccessibility="no" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:background="@null"
+                        android:minHeight="36dp"
+                        android:onClick="@{() -> viewModel.swapStyle()}"
+                        android:padding="0dp" />
+                </RelativeLayout>
+
+                <!-- Footer -->
+                <TextView style="@style/Setup.Ftr" />
 
                 <TextView
-                    style="@style/Settings.Description"
+                    style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.swapStyle()}"
-                    android:text="Toggle between different styles" />
-
-                <TextView
-                    style="@style/Settings.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/score_header"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
                     android:text="Privacy / Ads" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    style="@style/Settings.Btn"
+                <RelativeLayout
+                    style="@style/Setup.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.askForConsent()}"
-                    android:text="Change Ad Consent" />
+                    android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    style="@style/Settings.Btn"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        app:showIf="@{donations.canRemoveAds}"
+                        android:text="Change Policy Preference" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        app:showIf="@{!donations.canRemoveAds}"
+                        android:text="Thanks for your Support. You will NOT see ads\nSo you are awesome" />
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:importantForAccessibility="no" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:background="@null"
+                        android:minHeight="36dp"
+                        android:onClick="@{() -> viewModel.askForConsent()}"
+                        app:showIf="@{donations.canRemoveAds}"
+                        android:padding="0dp" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Remove Ads" />
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    app:showIf="@{donations.canRemoveAds}"
+                    android:padding="@dimen/xsmall" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showIf="@{donations.canRemoveAds}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:text="Remove Ads" />
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:importantForAccessibility="no" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:background="@null"
+                        android:minHeight="36dp"
+                        android:onClick="@{() -> viewModel.removeAds()}"
+                        android:padding="0dp" />
+
+                </RelativeLayout>
+
+                <!-- Footer -->
+                <TextView style="@style/Setup.Ftr" />
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
