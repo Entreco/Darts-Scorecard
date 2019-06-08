@@ -4,7 +4,7 @@
 
     <style name="Settings.Header">
         <item name="android:gravity">center</item>
-        <item name="android:textColor">?attr/launchText</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">@dimen/xlarge</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:padding">@dimen/def</item>
@@ -17,7 +17,7 @@
     </style>
 
     <style name="Settings.Switch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
-        <item name="android:textColor">?attr/launchText</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">@dimen/def</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:paddingStart">@dimen/def</item>
@@ -27,7 +27,7 @@
     </style>
 
     <style name="Settings.Toggle">
-        <item name="android:textColor">?attr/launchText</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">@dimen/def</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:paddingStart">@dimen/def</item>
@@ -37,7 +37,7 @@
     </style>
 
     <style name="Settings.Description">
-        <item name="android:textColor">?attr/launchText</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:paddingStart">@dimen/def</item>
         <item name="android:paddingEnd">@dimen/def</item>
@@ -60,15 +60,4 @@
         <item name="android:drawablePadding">-20dp</item>
     </style>
 
-    <style name="Settings.Powered">
-        <item name="android:fontFamily">sans-serif-condensed</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/large</item>
-        <item name="android:shadowColor">@color/colorAccent</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">5</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:textSize">8sp</item>
-    </style>
 </resources>

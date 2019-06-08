@@ -28,17 +28,14 @@ class SettingsActivity : ViewModelActivity() {
         binding.viewModel = viewModel
 
         initToolbar(toolbar(binding), R.string.title_settings)
-    }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.style().observe(this, Observer {
-            swapStyle()
-        })
         viewModel.ask().observe(this, Observer { consent ->
             when (consent) {
                 true -> ask.askForConsent(this) {}
             }
+        })
+        viewModel.style().observe(this, Observer {
+            swapStyle()
         })
     }
 

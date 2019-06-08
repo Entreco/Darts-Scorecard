@@ -8,16 +8,15 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
-import nl.entreco.libconsent.ask.AskConsentUsecase
+import nl.entreco.shared.toSingleEvent
 import javax.inject.Inject
-import kotlin.random.Random
 
 class SettingsViewModel @Inject constructor(
         audioPrefRepository: AudioPrefRepository,
         private val toggleMusicUsecase: ToggleMusicUsecase,
-        private val toggleMasterCaller: ToggleSoundUsecase,
-        private val askConsentUsecase: AskConsentUsecase
+        private val toggleMasterCaller: ToggleSoundUsecase
 ) : BaseViewModel() {
+
     val hasMasterCaller = ObservableBoolean(audioPrefRepository.isMasterCallerEnabled()).apply {
         addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -25,6 +24,7 @@ class SettingsViewModel @Inject constructor(
             }
         })
     }
+
     val hasBackground = ObservableBoolean(audioPrefRepository.isBackgroundMusicEnabled()).apply {
         addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -34,14 +34,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     private val style = MutableLiveData<Int>()
-    fun style() : LiveData<Int> = style
-    fun swapStyle(){
-        style.postValue(Random.nextInt(100))
+    fun style(): LiveData<Int> = style.toSingleEvent()
+    fun swapStyle() {
+//        style.postValue(Random.nextInt(100))
     }
 
     private val ask = MutableLiveData<Boolean>()
-    fun ask() : LiveData<Boolean> = ask
-    fun askForConsent(){
+    fun ask(): LiveData<Boolean> = ask.toSingleEvent()
+    fun askForConsent() {
         ask.postValue(true)
     }
 }

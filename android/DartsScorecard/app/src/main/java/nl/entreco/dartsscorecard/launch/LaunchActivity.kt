@@ -33,10 +33,6 @@ class LaunchActivity : ViewModelActivity() {
         val binding = DataBindingUtil.setContentView<ActivityLaunchBinding>(this, R.layout.activity_launch)
         binding.viewModel = viewModel
         binding.animator = LaunchAnimator(binding)
-    }
-
-    override fun onStart() {
-        super.onStart()
         adViewModel.consent().observe(this, Observer { consent ->
             when (consent) {
                 true  -> ask.askForConsent(this) { response ->

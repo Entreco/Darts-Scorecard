@@ -13,6 +13,7 @@ import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.shared.toSingleEvent
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Named
@@ -28,14 +29,14 @@ class AdViewModel @Inject constructor(
         @Named("debugMode") private val debug: Boolean) : ViewModel(), LifecycleObserver {
 
     val showAd = ObservableBoolean(false)
-    private val showConsent = MutableLiveData<Boolean>()
+    private val showConsent by lazy { MutableLiveData<Boolean>() }
     private var serveAds = AtomicBoolean(false) // Let's give the user no Ads by default
 
     init {
         lifeCycle.addObserver(this)
     }
 
-    fun consent(): LiveData<Boolean> = showConsent
+    fun consent(): LiveData<Boolean> = showConsent.toSingleEvent()
 
     fun provideAdd(view: AdView) {
         if (!debug) {
