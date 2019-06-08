@@ -9,6 +9,7 @@ import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.ui.AdLoader
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.libads.ui.InterstitialLoader
+import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -22,9 +23,9 @@ class AdViewModelTest {
     @Mock private lateinit var mockAdView: AdView
     @Mock private lateinit var mockBillingUsecas: ConnectToBillingUsecase
     @Mock private lateinit var mockFetchItemsUsecase: FetchPurchasedItemsUsecase
+    @Mock private lateinit var mockFetchCurrentConsent: FetchCurrentConsentUsecase
     @Mock private lateinit var mockAdLoader: AdLoader
     @Mock private lateinit var mockInterstitialLoader: InterstitialLoader
-    @Mock private lateinit var mockLogger: Logger
     @Mock private lateinit var mockLifecycle: Lifecycle
     private lateinit var subject : AdViewModel
 
@@ -111,7 +112,7 @@ class AdViewModelTest {
     }
 
     private fun givenSubject() {
-        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockAdLoader, mockInterstitialLoader, mockLogger, false)
+        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockFetchCurrentConsent, mockAdLoader, mockInterstitialLoader, false)
     }
 
     private fun givenPurchasedItems(purchasedItems: Boolean){

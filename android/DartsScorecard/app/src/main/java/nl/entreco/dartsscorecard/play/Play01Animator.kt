@@ -63,7 +63,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                                          private val fab: View, private val mainSheet: View,
                                          private val version: View,
                                          private val inputResume: View,
-                                         private val pager: androidx.viewpager.widget.ViewPager,
+                                         private val pager: ViewPager,
                                          private val teamSheet: MaxHeightRecyclerView,
                                          private val inputSheet: View,
                                          private val scoreHeader: View,

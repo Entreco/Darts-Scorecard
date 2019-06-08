@@ -54,7 +54,7 @@ class AdViewModel @Inject constructor(
 
     fun provideInterstitial() {
         if (!debug && serveAds.get()) {
-            interstitialLoader.showInterstitial() //// TODO entreco - 2019-06-08: nonPersonalized.get())
+            interstitialLoader.showInterstitial()
         }
     }
 

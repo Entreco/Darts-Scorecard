@@ -34,22 +34,22 @@ class SettingsViewModel @Inject constructor(
         })
     }
 
-    private val style = MutableLiveData<Int>()
-    fun style(): LiveData<Int> = style.toSingleEvent()
+    private val style = MutableLiveData<Boolean>()
+    fun style(): LiveData<Boolean> = style.toSingleEvent()
     fun swapStyle() {
-        style.postValue(Random.nextInt(180))
+        // TODO entreco - 2019-06-08: Swap Style is hanging -> some loop maybe?
+        style.postValue(true)
     }
 
     private val ask = MutableLiveData<Boolean>()
     fun ask(): LiveData<Boolean> = ask.toSingleEvent()
     fun askForConsent() {
-        // TODO entreco - 2019-06-08: Swap Style is hanging -> some loop maybe?
-//        ask.postValue(true)
+        ask.postValue(true)
     }
 
-    private val donation = MutableLiveData<Int>()
-    fun donate(): LiveData<Int> = donation.toSingleEvent()
+    private val donation = MutableLiveData<Boolean>()
+    fun donate(): LiveData<Boolean> = donation.toSingleEvent()
     fun removeAds(){
-        donation.postValue(Random.nextInt(180))
+        donation.postValue(true)
     }
 }

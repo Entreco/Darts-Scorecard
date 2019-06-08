@@ -43,12 +43,15 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
             }
         })
         viewModel.style().observe(this, Observer {
-            swapStyle()
+            viewModel.style().removeObservers(this)
+            if(it) swapStyle()
         })
 
         viewModel.donate().observe(this, Observer {
-            donateViewModel.donations.firstOrNull()?.let {
-                donateViewModel.onDonate(it)
+            if(it) {
+                donateViewModel.donations.firstOrNull()?.let {donation ->
+                    donateViewModel.onDonate(donation)
+                }
             }
         })
     }

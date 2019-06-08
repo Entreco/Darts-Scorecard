@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.live
 
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.atLeastOnce
@@ -18,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class LiveStatPageAnimatorHandlerTest {
 
     @Mock private lateinit var mockView: View
+    @Mock private lateinit var mockViewGroup: ViewGroup
     @Mock private lateinit var mockAnimator: ViewPropertyAnimator
 
     private lateinit var subject: LiveStatPageAnimator.MatchStatPageAnimatorHandler
@@ -30,7 +32,7 @@ class LiveStatPageAnimatorHandlerTest {
     }
 
     private fun givenSubject() {
-        subject = LiveStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, 100F)
+        subject = LiveStatPageAnimator.MatchStatPageAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockViewGroup, 100F)
     }
 
     private fun whenTransforming() {

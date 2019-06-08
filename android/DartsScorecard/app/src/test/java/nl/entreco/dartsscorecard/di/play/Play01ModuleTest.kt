@@ -47,17 +47,11 @@ class Play01ModuleTest {
     }
 
     @Test
-    fun `it should provide audioPrefs`() {
-        assertNotNull(subject().provideAudioPreferences())
-    }
-
-    @Test
     fun `it should provide ArchiveServiceLauncher`() {
         assertNotNull(subject().provideArchiveServiceLauncher(mockContext))
     }
 
     private fun subject(): Play01Module {
-        whenever(mockActivity.getSharedPreferences("audio", Context.MODE_PRIVATE)).thenReturn(mockSharedPrefs)
         return Play01Module(mockActivity)
     }
 }
