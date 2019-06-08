@@ -35,9 +35,8 @@ class LaunchActivity : ViewModelActivity() {
         binding.animator = LaunchAnimator(binding)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.retrieveLatestGame()
+    override fun onStart() {
+        super.onStart()
         adViewModel.consent().observe(this, Observer { consent ->
             when (consent) {
                 true  -> ask.askForConsent(this) { response ->
@@ -48,6 +47,11 @@ class LaunchActivity : ViewModelActivity() {
                 false -> ads.init(getString(R.string.app_id))
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveLatestGame()
     }
 
     companion object {

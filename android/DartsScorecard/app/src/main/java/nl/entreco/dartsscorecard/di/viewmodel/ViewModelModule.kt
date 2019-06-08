@@ -8,9 +8,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
+import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.data.billing.BillingServiceConnection
 import nl.entreco.data.billing.PlayStoreBillingRepository
+import nl.entreco.data.prefs.SharedAudioPrefRepo
 import nl.entreco.data.prefs.SharedRatingPrefRepo
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.shared.scopes.ActivityScope
@@ -21,7 +24,8 @@ import nl.entreco.shared.scopes.ActivityScope
 @Module
 class ViewModelModule(private val activity: FragmentActivity) {
 
-    private val prefs = activity.getSharedPreferences("rating", Context.MODE_PRIVATE)
+    private val prefsRating = activity.getSharedPreferences("rating", Context.MODE_PRIVATE)
+    private val prefsAudio = activity.getSharedPreferences("audio", Context.MODE_PRIVATE)
 
     @Provides
     @ActivityScope
@@ -44,7 +48,13 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @Provides
     @ActivityScope
     fun provideRatingPreferences(): RatingPrefRepository {
-        return SharedRatingPrefRepo(prefs)
+        return SharedRatingPrefRepo(prefsRating)
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideAudioPreferences(): AudioPrefRepository {
+        return SharedAudioPrefRepo(prefsAudio)
     }
 
     @Provides

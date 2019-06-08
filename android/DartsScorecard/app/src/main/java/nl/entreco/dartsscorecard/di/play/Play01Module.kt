@@ -26,8 +26,6 @@ import nl.entreco.domain.repository.*
 @Module
 class Play01Module(private val activity: Play01Activity) {
 
-    private val prefs = activity.getSharedPreferences("audio", Context.MODE_PRIVATE)
-
     @Provides
     @Play01Scope
     fun provide01Activity(): Play01Activity {
@@ -38,12 +36,6 @@ class Play01Module(private val activity: Play01Activity) {
     @Play01Scope
     fun provideSoundMapper(): SoundMapper {
         return SoundMapper()
-    }
-
-    @Provides
-    @Play01Scope
-    fun provideAudioPreferences(): AudioPrefRepository {
-        return SharedAudioPrefRepo(prefs)
     }
 
     @Provides

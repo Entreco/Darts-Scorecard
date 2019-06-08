@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.settings.SettingsViewModel" />
@@ -15,6 +17,84 @@
             android:id="@+id/includeToolbar"
             layout="@layout/toolbar_settings" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Settings.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preferences" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    style="@style/Settings.Switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@={viewModel.hasMasterCaller}"
+                    android:text="Mastercaller" />
+
+                <TextView
+                    style="@style/Settings.Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Read scores aloud" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    style="@style/Settings.Switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@={viewModel.hasBackground}"
+                    android:text="Music" />
+
+                <TextView
+                    style="@style/Settings.Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Play PDC anthem in the background" />
+
+                <TextView
+                    style="@style/Settings.Toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.swapStyle()}"
+                    android:text="Style" />
+
+                <TextView
+                    style="@style/Settings.Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.swapStyle()}"
+                    android:text="Toggle between different styles" />
+
+                <TextView
+                    style="@style/Settings.Header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy / Ads" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/Settings.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.askForConsent()}"
+                    android:text="Change Ad Consent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/Settings.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove Ads" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
