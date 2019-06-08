@@ -17,6 +17,8 @@ import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.dartsscorecard.di.profile.SelectProfileComponent
 import nl.entreco.dartsscorecard.di.profile.SelectProfileModule
+import nl.entreco.dartsscorecard.di.settings.SettingsComponent
+import nl.entreco.dartsscorecard.di.settings.SettingsModule
 import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
 import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
 import nl.entreco.dartsscorecard.di.setup.Setup01Component
@@ -44,6 +46,7 @@ interface ViewModelComponent {
     // Where can this be used
     fun plus(module: LaunchModule): LaunchComponent
 
+    fun plus(module: SettingsModule): SettingsComponent
     fun plus(module: BetaModule): BetaComponent
     fun plus(module: HiscoreModule): HiscoreComponent
     fun plus(module: WtfModule): WtfComponent

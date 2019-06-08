@@ -19,7 +19,8 @@
     <string name="title_select_player">Speler selecteren</string>
     <string name="title_edit_profile">Profiel wijzigen</string>
     <string name="title_setup">01 Match instellen</string>
-    <string name="title_beta">Verwijder Ads</string>
+    <string name="title_beta">Donaties</string>
+    <string name="title_settings">Instellingen</string>
     <string name="title_wtf">@string/wtf</string>
     <string name="title_hiscores">Hiscores</string>
 
@@ -28,7 +29,8 @@
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Profielen beheren</string>
     <string name="hiscores">Hiscores</string>
-    <string name="beta">Nieuwe features</string>
+    <string name="beta">Nieuwe Features</string>
+    <string name="settings">Instellingen</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>

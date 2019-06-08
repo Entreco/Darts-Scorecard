@@ -11,6 +11,7 @@
         <variable
             name="viewModel"
             type="nl.entreco.dartsscorecard.launch.LaunchViewModel" />
+
     </data>
 
     <LinearLayout
@@ -76,6 +77,15 @@
             android:drawableEnd="@drawable/ic_beta"
             android:onClick="@{() -> viewModel.onBetaPressed(context)}"
             android:text="@string/beta" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/launch_settings"
+            style="@style/Launch.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_settings"
+            android:onClick="@{() -> viewModel.onSettingsPressed(context)}"
+            android:text="@string/settings" />
 
         <TextView
             style="@style/Launch.Powered"

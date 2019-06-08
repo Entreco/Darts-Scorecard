@@ -90,6 +90,6 @@ class AppModule(val app: App) {
     @Named("debugMode")
     @ApplicationScope
     fun provideDebugMode(): Boolean {
-        return BuildConfig.DEBUG
+        return !BuildConfig.DEBUG
     }
 }

@@ -9,25 +9,29 @@ import javax.inject.Inject
 
 class AskConsentUsecase @Inject constructor() {
     private var form: ConsentForm? = null
+    private var onSelected: (AskConsentResponse) -> Unit = {}
     private val consentFormListener = object : ConsentFormListener() {
         override fun onConsentFormClosed(consentStatus: ConsentStatus?, userPrefersAdFree: Boolean?) {
             super.onConsentFormClosed(consentStatus, userPrefersAdFree)
-        }
+            val response = when {
+                userPrefersAdFree == true                       -> AskConsentResponse.paid()
+                consentStatus == ConsentStatus.PERSONALIZED     -> AskConsentResponse.normal()
+                consentStatus == ConsentStatus.NON_PERSONALIZED -> AskConsentResponse.npa()
+                else                                            -> null
+            }
 
-        override fun onConsentFormError(reason: String?) {
-            super.onConsentFormError(reason)
+            response?.let{
+                onSelected(it)
+            }
         }
 
         override fun onConsentFormLoaded() {
             form?.show()
         }
-
-        override fun onConsentFormOpened() {
-            super.onConsentFormOpened()
-        }
     }
 
-    fun askForConsent(context: Context) {
+    fun askForConsent(context: Context, done: (AskConsentResponse) -> Unit) {
+        onSelected = done
         form = ConsentForm.Builder(context, URL("https://dsc.entreco.nl/privacy-policy.html"))
                 .withListener(consentFormListener)
                 .withPersonalizedAdsOption()

@@ -60,6 +60,9 @@
             android:name=".beta.BetaActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
             android:name=".faq.WtfActivity"
             android:parentActivityName=".launch.LaunchActivity"
             android:windowSoftInputMode="stateHidden" />
