@@ -18,7 +18,6 @@ import nl.entreco.dartsscorecard.di.settings.SettingsComponent
 import nl.entreco.dartsscorecard.di.settings.SettingsModule
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
-import nl.entreco.libconsent.ask.AskConsentUsecase
 
 class SettingsActivity : ViewModelActivity(), DonateCallback {
 
@@ -26,7 +25,7 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
     private val component: SettingsComponent by componentProvider { it.plus(SettingsModule(this)) }
     private val viewModel: SettingsViewModel by viewModelProvider { component.viewModel() }
     private val donateViewModel: DonateViewModel by viewModelProvider { component.donate() }
-    private val ask: AskConsentUsecase by lazy { component.ask() }
+//    private val ask: AskConsentUsecase by lazy { component.ask() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +37,18 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
         initToolbar(toolbar(binding), R.string.title_settings)
 
         viewModel.ask().observe(this, Observer { consent ->
-            when (consent) {
-                true -> ask.askForConsent(this) {}
-            }
+            //            when (consent) {
+//                true -> ask.askForConsent(this) {}
+//            }
         })
         viewModel.style().observe(this, Observer { swap ->
             viewModel.style().removeObservers(this)
-            if(swap) swapStyle()
+            if (swap) swapStyle()
         })
 
         viewModel.donate().observe(this, Observer { donate ->
-            if(donate) {
-                donateViewModel.donations.firstOrNull()?.let {donation ->
+            if (donate) {
+                donateViewModel.donations.firstOrNull()?.let { donation ->
                     donateViewModel.onDonate(donation)
                 }
             }

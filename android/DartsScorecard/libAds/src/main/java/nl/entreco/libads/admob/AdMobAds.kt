@@ -5,15 +5,13 @@ import android.view.View
 import com.google.android.gms.ads.MobileAds
 import nl.entreco.libads.Ads
 import nl.entreco.libads.ui.AdLoader
-import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
 
 internal class AdMobAds(
-        @ActivityScope private val context: Context,
-        fetchCurrentConsentUsecase: FetchCurrentConsentUsecase
+        @ActivityScope private val context: Context
 ) : Ads {
 
-    private val adLoader: AdLoader = AdLoader(fetchCurrentConsentUsecase)
+    private val adLoader: AdLoader = AdLoader()
 
     override fun init(appId: String) {
         Thread {

@@ -13,7 +13,6 @@ import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.Ads
 import nl.entreco.libads.Interstitials
-import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.shared.toSingleEvent
 import java.util.concurrent.atomic.AtomicBoolean
@@ -25,7 +24,6 @@ class AdViewModel @Inject constructor(
         @ActivityScope private val lifeCycle: Lifecycle,
         @ActivityScope private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
-        private val fetch: FetchCurrentConsentUsecase,
         private val adLoader: Ads,
         private val interstitialLoader: Interstitials,
         @Named("debugMode") private val debug: Boolean) : ViewModel(), LifecycleObserver {
@@ -64,10 +62,10 @@ class AdViewModel @Inject constructor(
 
     private fun onPurchasesRetrieved(): (FetchPurchasedItemsResponse) -> Unit {
         return { adResponse ->
-            fetch.go { consentResponse ->
-                showConsent.postValue(consentResponse.shouldAskForConsent)
-                serveAds.set(adResponse.serveAds)
-            }
+            //            fetch.go { consentResponse ->
+//                showConsent.postValue(consentResponse.shouldAskForConsent)
+//                serveAds.set(adResponse.serveAds)
+//            }
         }
     }
 

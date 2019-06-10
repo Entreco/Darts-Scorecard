@@ -6,16 +6,12 @@ import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import nl.entreco.libconsent.fetch.FetchConsentResponse
-import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 29/12/2017.
  */
-internal class AdLoader @Inject constructor(
-        private val fetchCurrentConsentUsecase: FetchCurrentConsentUsecase
-) : AdListener() {
+internal class AdLoader @Inject constructor() : AdListener() {
 
     interface AdListener {
         fun onAdLoaded()
@@ -39,15 +35,15 @@ internal class AdLoader @Inject constructor(
         listener = adListener
         (view as? AdView)?.let { v ->
             v.adListener = this
-            fetchCurrentConsentUsecase.go {
-                val request = buildRequest(it)
-                v.loadAd(request)
-            }
+//            fetchCurrentConsentUsecase.go {
+            val request = buildRequest(true)
+            v.loadAd(request)
+//            }
         }
     }
 
-    private fun buildRequest(it: FetchConsentResponse): AdRequest? {
-        return if (it.nonPersonalized) {
+    private fun buildRequest(it: Boolean): AdRequest? {
+        return if (it) {
             val bundle = Bundle().apply { putString("npa", "1") }
             adRequestBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, bundle).build()
         } else adRequestBuilder.build()
