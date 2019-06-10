@@ -11,17 +11,16 @@ import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
-import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
+import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import org.junit.Assert.*
 import org.junit.Test
-import org.mockito.Mock
 
 class AdViewModelTest {
 
     private val mockAdView: AdView = mock()
     private val mockBillingUsecas: ConnectToBillingUsecase = mock()
     private val mockFetchItemsUsecase: FetchPurchasedItemsUsecase = mock()
-    private val mockFetchCurrentConsent: FetchCurrentConsentUsecase = mock()
+    private val mockFetchConsent: FetchConsentUsecase = mock()
     private val mockAdLoader: AdLoader = mock()
     private val mockInterstitialLoader: InterstitialLoader = mock()
     private val mockLifecycle: Lifecycle = mock()
@@ -110,7 +109,7 @@ class AdViewModelTest {
     }
 
     private fun givenSubject() {
-        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockFetchCurrentConsent, mockAdLoader, mockInterstitialLoader, false)
+        subject = AdViewModel(mockLifecycle, mockBillingUsecas, mockFetchItemsUsecase, mockFetchConsent, mockAdLoader, mockInterstitialLoader, false)
     }
 
     private fun givenPurchasedItems(purchasedItems: Boolean){

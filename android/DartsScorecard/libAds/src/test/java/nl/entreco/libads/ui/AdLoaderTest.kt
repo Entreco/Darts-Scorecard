@@ -3,22 +3,20 @@ package nl.entreco.libads.ui
 import com.google.android.gms.ads.AdView
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
-import org.junit.Assert.*
+import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 
 class AdLoaderTest {
 
     private val mockView: AdView = mock()
-    private val mockFetchCurrentConsentUsecase: FetchCurrentConsentUsecase = mock()
+    private val mockFetchConsentUsecase: FetchConsentUsecase = mock()
     private val mockListener: AdLoader.AdListener = mock()
     private lateinit var subject: AdLoader
 
     @Before
     fun setUp() {
-        subject = AdLoader(mockFetchCurrentConsentUsecase)
+        subject = AdLoader(mockFetchConsentUsecase)
     }
 
     @Test

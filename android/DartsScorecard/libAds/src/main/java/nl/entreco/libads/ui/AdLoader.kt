@@ -6,12 +6,15 @@ import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 29/12/2017.
  */
-internal class AdLoader @Inject constructor() : AdListener() {
+internal class AdLoader @Inject constructor(
+        private val fetch: FetchConsentUsecase
+) : AdListener() {
 
     interface AdListener {
         fun onAdLoaded()
@@ -35,10 +38,10 @@ internal class AdLoader @Inject constructor() : AdListener() {
         listener = adListener
         (view as? AdView)?.let { v ->
             v.adListener = this
-//            fetchCurrentConsentUsecase.go {
-            val request = buildRequest(true)
-            v.loadAd(request)
-//            }
+            fetch.go {
+                val request = buildRequest(it.nonPersonalized)
+                v.loadAd(request)
+            }
         }
     }
 

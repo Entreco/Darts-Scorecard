@@ -4,7 +4,7 @@ import com.google.ads.consent.ConsentStatus
 import nl.entreco.libconsent.ConsentPrefs
 import javax.inject.Inject
 
-class FetchCurrentConsentUsecase @Inject constructor(
+class FetchConsentUsecase @Inject constructor(
         private val prefs: ConsentPrefs
 ) {
 
