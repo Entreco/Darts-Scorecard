@@ -10,14 +10,12 @@ import nl.entreco.libconsent.Consent
 import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.retrieve.RetrieveConsentResponse
 import nl.entreco.libconsent.retrieve.RetrieveConsentUsecase
-import nl.entreco.libconsent.ask.StoreCurrentConsentUsecase
 
 class ConsentInitProvider : ContentProvider() {
 
     private val prefs by lazy { context!!.getSharedPreferences(Consent.Prefs, Context.MODE_PRIVATE) }
     private val consent by lazy { ConsentPrefs(prefs) }
     private val retrieve by lazy { RetrieveConsentUsecase(context!!) }
-    private val store by lazy { StoreCurrentConsentUsecase(consent) }
 
     override fun onCreate(): Boolean {
         context?.let {
@@ -32,12 +30,12 @@ class ConsentInitProvider : ContentProvider() {
     }
 
     private fun handleSuccess(response: RetrieveConsentResponse.Success) {
-        store.go(response.status, response.eu)
+        consent.store(response.status, response.eu)
     }
 
     private fun handleError(response: RetrieveConsentResponse.Error) {
         // Error retrieving Consent Status
-        store.clear()
+        consent.clear()
     }
 
     override fun attachInfo(context: Context?, info: ProviderInfo?) {

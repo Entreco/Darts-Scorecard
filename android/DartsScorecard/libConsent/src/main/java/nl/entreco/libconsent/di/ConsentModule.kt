@@ -6,7 +6,6 @@ import dagger.Provides
 import nl.entreco.libconsent.Consent
 import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.ask.AskConsentUsecase
-import nl.entreco.libconsent.ask.StoreCurrentConsentUsecase
 import nl.entreco.shared.scopes.AppContext
 
 @Module
@@ -22,7 +21,6 @@ object ConsentModule {
     @Provides
     @JvmStatic
     fun provideAskConsent(prefs: ConsentPrefs): AskConsentUsecase {
-        val store = StoreCurrentConsentUsecase(prefs)
-        return AskConsentUsecase(store)
+        return AskConsentUsecase(prefs)
     }
 }

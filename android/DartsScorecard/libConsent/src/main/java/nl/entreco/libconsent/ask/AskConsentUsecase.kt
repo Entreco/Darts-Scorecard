@@ -4,18 +4,19 @@ import android.content.Context
 import com.google.ads.consent.ConsentForm
 import com.google.ads.consent.ConsentFormListener
 import com.google.ads.consent.ConsentStatus
+import nl.entreco.libconsent.ConsentPrefs
 import java.net.URL
 import javax.inject.Inject
 
 class AskConsentUsecase @Inject constructor(
-        private val storeCurrentConsentUsecase: StoreCurrentConsentUsecase
+        private val prefs: ConsentPrefs
 ) {
     private var form: ConsentForm? = null
     private var onSelected: (AskConsentResponse) -> Unit = {}
     private val consentFormListener = object : ConsentFormListener() {
         override fun onConsentFormClosed(consentStatus: ConsentStatus?, userPrefersAdFree: Boolean?) {
             super.onConsentFormClosed(consentStatus, userPrefersAdFree)
-            storeCurrentConsentUsecase.go(consentStatus?.name)
+            prefs.store(consentStatus?.name, null)
             val response = when {
                 userPrefersAdFree == true                       -> AskConsentResponse.paid()
                 consentStatus == ConsentStatus.PERSONALIZED     -> AskConsentResponse.normal()
