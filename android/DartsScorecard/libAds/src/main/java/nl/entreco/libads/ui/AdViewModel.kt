@@ -72,7 +72,7 @@ class AdViewModel @Inject constructor(
     }
 
     private fun onPurchasesError(): (Throwable) -> Unit {
-        return { err ->
+        return { _ ->
             // TODO entreco - 2019-06-04: logger.w("Unable to fetchPurchasedItems, $err")
         }
     }

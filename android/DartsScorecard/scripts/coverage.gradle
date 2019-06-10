@@ -20,9 +20,6 @@ android.applicationVariants.all { variant ->
                          '**/*Lambda.class',
                          '**/*Lambda*.class']
 
-    // Generates Lint reports based off the source code.
-    variant.assemble.dependsOn "lint$variantName"
-
     /**
      * Generates Jacoco coverage reports based off the unit tests.
      */
