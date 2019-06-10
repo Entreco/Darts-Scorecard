@@ -79,10 +79,8 @@ class AppModule(val app: App) {
     @ApplicationScope
     fun provideRemoteConfig(): FirebaseRemoteConfig {
         return FirebaseRemoteConfig.getInstance().apply {
-            val configSettings = FirebaseRemoteConfigSettings.Builder()
-                    .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                    .build()
-            setConfigSettings(configSettings)
+            val configSettings = FirebaseRemoteConfigSettings.Builder().build()
+            setConfigSettingsAsync(configSettings)
             setDefaults(R.xml.remote_config_defaults)
         }
     }

@@ -24,7 +24,7 @@ class AskConsentUsecase @Inject constructor(
                 else                                            -> null
             }
 
-            response?.let{
+            response?.let {
                 onSelected(it)
             }
         }
