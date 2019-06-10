@@ -15,7 +15,7 @@ android {
 dependencies {
     implementation project(':shared')
 
-//    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "androidx.appcompat:appcompat:$xSupport"
