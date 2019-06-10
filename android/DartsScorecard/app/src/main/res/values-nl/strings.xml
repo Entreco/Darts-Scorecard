@@ -165,6 +165,18 @@
     <!-- What The FAQ -->
     <string name="search_wtf">F.A.Q. doorzoeken</string>
 
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Mastercaller</string>
+    <string name="settings_mastercaller_desc">Roep alle scores om, zoals op TV</string>
+    <string name="settings_sound_title">Audio</string>
+    <string name="settings_sound_desc">Speel achtergrond muziek</string>
+    <string name="settings_theme_title">Theming</string>
+    <string name="settings_theme_desc">Blader door de verschillende thema\'s</string>
+    <string name="settings_privacy_title">Privacy / Ads</string>
+    <string name="settings_privacy_desc">Wijzig je advertentie voorkeuren</string>
+    <string name="settings_privacy_thanks">Bedankt voor je steun!\nEr wordt GEEN data verzameld om advertenties te tonen</string>
+    <string name="settings_ads_remove">Verwijder advertenties</string>
+
     <!-- Archive Service -->
     <string name="archive_service">Statistieken archiveer Service</string>
     <string name="archive_channel_name">Archiveer statistieken</string>

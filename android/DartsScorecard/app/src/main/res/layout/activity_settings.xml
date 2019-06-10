@@ -42,7 +42,7 @@
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
                     android:padding="@dimen/xsmall"
-                    android:text="Mastercaller" />
+                    android:text="@string/settings_mastercaller_title" />
 
                 <RelativeLayout
                     style="@style/Setup.Entry"
@@ -64,7 +64,7 @@
                         android:paddingTop="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         android:paddingBottom="@dimen/def"
-                        android:text="Read all scores out a loud" />
+                        android:text="@string/settings_mastercaller_desc" />
                 </RelativeLayout>
 
                 <TextView
@@ -75,7 +75,7 @@
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
                     android:padding="@dimen/xsmall"
-                    android:text="Music" />
+                    android:text="@string/settings_sound_title" />
 
                 <RelativeLayout
                     style="@style/Setup.Entry"
@@ -97,7 +97,7 @@
                         android:paddingTop="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         android:paddingBottom="@dimen/def"
-                        android:text="Play sound loop in the background" />
+                        android:text="@string/settings_sound_desc" />
                 </RelativeLayout>
 
 
@@ -109,7 +109,7 @@
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
                     android:padding="@dimen/xsmall"
-                    android:text="THeming" />
+                    android:text="@string/settings_theme_title" />
 
                 <RelativeLayout
                     style="@style/Setup.Entry"
@@ -124,7 +124,7 @@
                         android:importantForAccessibility="no"
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
-                        android:text="Swap the available themes" />
+                        android:text="@string/settings_theme_desc" />
 
                     <TextView
                         style="@style/Setup.Entry.Value"
@@ -155,7 +155,7 @@
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
                     android:padding="@dimen/xsmall"
-                    android:text="Privacy / Ads" />
+                    android:text="@string/settings_privacy_title" />
 
                 <RelativeLayout
                     style="@style/Setup.Entry"
@@ -171,7 +171,7 @@
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         app:showIf="@{donations.canRemoveAds}"
-                        android:text="Change Policy Preference" />
+                        android:text="@string/settings_privacy_desc" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         app:showIf="@{!donations.canRemoveAds}"
-                        android:text="Thanks for your Support. You will NOT see ads\nSo you are awesome" />
+                        android:text="@string/settings_privacy_thanks" />
 
                     <TextView
                         style="@style/Setup.Entry.Value"
@@ -227,7 +227,7 @@
                         android:importantForAccessibility="no"
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
-                        android:text="Remove Ads" />
+                        android:text="@string/settings_ads_remove" />
 
                     <TextView
                         style="@style/Setup.Entry.Value"

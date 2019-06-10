@@ -164,6 +164,18 @@
     <!-- What The FAQ -->
     <string name="search_wtf">Search in F.A.Q.</string>
 
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Mastercaller</string>
+    <string name="settings_mastercaller_desc">Read all scores aloud</string>
+    <string name="settings_sound_title">Sound</string>
+    <string name="settings_sound_desc">Play music in the background</string>
+    <string name="settings_theme_title">Theming</string>
+    <string name="settings_theme_desc">Swap the available themes</string>
+    <string name="settings_privacy_title">Privacy / Ads</string>
+    <string name="settings_privacy_desc">Change Ad Preference</string>
+    <string name="settings_privacy_thanks">Thanks for your Support!\nNo data is collected for the purpose of showing ads</string>
+    <string name="settings_ads_remove">Remove Ads</string>
+
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
     <string name="archive_channel_name">Archive stats</string>
