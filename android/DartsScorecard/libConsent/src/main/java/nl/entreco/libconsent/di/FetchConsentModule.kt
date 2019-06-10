@@ -22,14 +22,8 @@ object FetchConsentModule {
 
     @Provides
     @JvmStatic
-    fun provideFetchConsent(prefs: ConsentPrefs): FetchCurrentConsentUsecase = FetchCurrentConsentUsecase(prefs)
-
-    @Provides
-    @JvmStatic
-    fun provideStoreConsent(prefs: ConsentPrefs): StoreCurrentConsentUsecase = StoreCurrentConsentUsecase(prefs)
-
-    @Provides
-    @JvmStatic
-    fun provideAskConsent(store: StoreCurrentConsentUsecase): AskConsentUsecase = AskConsentUsecase(store)
-
+    fun provideAskConsent(prefs: ConsentPrefs): AskConsentUsecase {
+        val store = StoreCurrentConsentUsecase(prefs)
+        return AskConsentUsecase(store)
+    }
 }

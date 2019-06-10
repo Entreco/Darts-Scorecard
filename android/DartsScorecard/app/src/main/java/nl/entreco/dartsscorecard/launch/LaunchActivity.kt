@@ -12,6 +12,8 @@ import nl.entreco.dartsscorecard.databinding.ActivityLaunchBinding
 import nl.entreco.dartsscorecard.di.launch.LaunchComponent
 import nl.entreco.dartsscorecard.di.launch.LaunchModule
 import nl.entreco.libads.Ads
+import nl.entreco.libconsent.ask.AskConsentResponse
+import nl.entreco.libconsent.ask.AskConsentUsecase
 
 
 /**
@@ -23,7 +25,7 @@ class LaunchActivity : ViewModelActivity() {
     private val viewModel: LaunchViewModel by viewModelProvider { component.viewModel() }
     private val adViewModel by viewModelProvider { component.adViewModel() }
     private val ads: Ads by lazy { component.ads() }
-//    private val ask: AskConsentUsecase by lazy { component.ask() }
+    private val ask: AskConsentUsecase by lazy { component.ask() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.statusBarColor = Color.BLACK
@@ -33,7 +35,10 @@ class LaunchActivity : ViewModelActivity() {
         binding.animator = LaunchAnimator(binding)
         adViewModel.consent().observe(this, Observer { consent ->
             when (consent) {
-                true  -> {
+                true  -> ask.askForConsent(this) { response ->
+                    if (response is AskConsentResponse.PreferPaid) {
+                        viewModel.onSettingsPressed(this)
+                    }
                 }
                 false -> ads.init(getString(R.string.app_id))
             }
