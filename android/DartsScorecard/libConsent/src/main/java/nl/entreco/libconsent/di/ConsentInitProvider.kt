@@ -15,10 +15,12 @@ class ConsentInitProvider : ContentProvider() {
                 .context(context!!)
                 .build()
     }
+    private val retrieve by lazy { component.retrieve() }
+    private val store by lazy { component.store() }
 
     override fun onCreate(): Boolean {
         context?.let {
-            component.retrieve().go { response ->
+            retrieve.go { response ->
                 when (response) {
                     is RetrieveConsentResponse.Success -> handleSuccess(response)
                     is RetrieveConsentResponse.Error   -> handleError(response)
@@ -29,12 +31,12 @@ class ConsentInitProvider : ContentProvider() {
     }
 
     private fun handleSuccess(response: RetrieveConsentResponse.Success) {
-        component.store().go(response.status, response.eu)
+        store.go(response.status, response.eu)
     }
 
     private fun handleError(response: RetrieveConsentResponse.Error) {
         // Error retrieving Consent Status
-        component.store().clear()
+        store.clear()
     }
 
     override fun attachInfo(context: Context?, info: ProviderInfo?) {
@@ -42,7 +44,7 @@ class ConsentInitProvider : ContentProvider() {
         // So if the authorities equal the library internal ones, the developer forgot to set his applicationId
         if ("nl.entreco.libconsent.consentinitprovider" == info.authority) {
             throw IllegalStateException("Incorrect provider authority in manifest. Most likely due to a "
-                    + "missing applicationId variable in application\'s build.gradle.");
+                    + "missing applicationId variable in application\'s build.gradle.")
         }
         super.attachInfo(context, info)
     }

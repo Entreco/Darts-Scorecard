@@ -30,6 +30,7 @@
             android:drawableEnd="@drawable/ic_arrow_drop_down"
             android:drawableTint="?attr/colorAccent"
             android:onClick="@{() -> wtf.toggle()}"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@{wtf.title}"
             tools:text="@string/wtf" />
 
@@ -50,6 +51,7 @@
             android:scaleType="centerCrop"
             android:visibility="@{wtf.showImage}"
             app:imageUrl="@{wtf.image}"
+            android:contentDescription="@string/cd_wtf"
             app:layout_constraintDimensionRatio="H,16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

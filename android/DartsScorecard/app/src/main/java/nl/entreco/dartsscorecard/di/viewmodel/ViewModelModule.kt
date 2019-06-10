@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
-import nl.entreco.dartsscorecard.di.play.Play01Scope
 import nl.entreco.data.billing.BillingServiceConnection
 import nl.entreco.data.billing.PlayStoreBillingRepository
 import nl.entreco.data.prefs.SharedAudioPrefRepo

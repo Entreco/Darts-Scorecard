@@ -36,6 +36,8 @@ class HiScorePager @Inject constructor(
             is HiScoreItem.NumBust -> context.getString(R.string.hiscore_title_num_0)
             is HiScoreItem.BestMatchAvg -> context.getString(R.string.hiscore_title_best_avg)
             is HiScoreItem.BestMatchCheckout -> context.getString(R.string.hiscore_title_best_co)
+            is HiScoreItem.HighestScore -> context.getString(R.string.hiscore_title_highest_score)
+            is HiScoreItem.HighestCheckout -> context.getString(R.string.hiscore_title_highest_co)
             else -> ""
         }
     }

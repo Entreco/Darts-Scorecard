@@ -19,7 +19,7 @@ class SelectProfileSwiper(view: View, onSwiped: (Int) -> Unit, deleteAction: () 
                 snack.setAction(R.string.undo) {}
                 snack.addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                        if (event == DISMISS_EVENT_TIMEOUT) {
                             deleteAction()
                         } else {
                             undoAction()

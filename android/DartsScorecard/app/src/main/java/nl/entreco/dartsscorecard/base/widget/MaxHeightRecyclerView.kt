@@ -1,7 +1,6 @@
 package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 
 /**

@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.di.application
 
+import android.content.Context
 import androidx.room.Room
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,7 +34,7 @@ class AppModule(val app: App) {
     @Provides
     @AppContext
     @ApplicationScope
-    fun applicationContext() = app.applicationContext
+    fun applicationContext() : Context = app.applicationContext
 
     @Provides
     @ApplicationScope

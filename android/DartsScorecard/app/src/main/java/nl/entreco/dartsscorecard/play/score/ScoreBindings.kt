@@ -16,7 +16,7 @@ import nl.entreco.domain.settings.ScoreSettings
 object ScoreBindings {
     @JvmStatic
     @BindingAdapter("adapter", "teams", "scores", "scoreSettings", "finishUsecase", "uiCallback", requireAll = true)
-    fun addTeams(recyclerView: androidx.recyclerview.widget.RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings,
+    fun addTeams(recyclerView: RecyclerView, adapter: ScoreAdapter, teams: ArrayList<Team>, scores: ArrayList<Score>, scoreSettings: ScoreSettings,
                  finishUsecase: GetFinishUsecase, uiCallback: UiCallback?) {
 
         if (teams.size != scores.size) {
@@ -24,8 +24,7 @@ object ScoreBindings {
         }
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
-                recyclerView.context)
+        recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
         recyclerView.itemAnimator = null
         recyclerView.adapter = adapter
         adapter.clear()
@@ -42,7 +41,7 @@ object ScoreBindings {
 
     @JvmStatic
     @BindingAdapter("currentTeam")
-    fun scrollToCurrentTeam(recyclerView: androidx.recyclerview.widget.RecyclerView, currentTeamIndex: Int) {
+    fun scrollToCurrentTeam(recyclerView: RecyclerView, currentTeamIndex: Int) {
         recyclerView.smoothScrollToPosition(currentTeamIndex)
     }
 

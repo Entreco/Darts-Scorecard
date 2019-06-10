@@ -79,22 +79,20 @@ class TeamLiveStatModel(val team: Team,
     }
 
     private fun updateHighestScore() {
-        val value = liveStats
+        when (val value = liveStats
                 .filter { it.highest.isNotEmpty() }
                 .maxBy { it.highest[0] }
-                ?.highest?.firstOrNull()
-        when (value) {
+                ?.highest?.firstOrNull()) {
             null -> hScore.set(empty)
             else -> hScore.set("$value")
         }
     }
 
     private fun updateHighestCheckout() {
-        val value = liveStats
+        when (val value = liveStats
                 .filter { it.highestCo.isNotEmpty() }
                 .maxBy { it.highestCo[0] }
-                ?.highestCo?.firstOrNull()
-        when (value) {
+                ?.highestCo?.firstOrNull()) {
             null -> hCo.set(empty)
             else -> hCo.set("$value")
         }

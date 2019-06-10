@@ -10,7 +10,6 @@ import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.shared.toSingleEvent
 import javax.inject.Inject
-import kotlin.random.Random
 
 class SettingsViewModel @Inject constructor(
         audioPrefRepository: AudioPrefRepository,

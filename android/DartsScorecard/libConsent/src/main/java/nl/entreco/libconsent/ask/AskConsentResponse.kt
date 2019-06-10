@@ -1,6 +1,6 @@
 package nl.entreco.libconsent.ask
 
-sealed class AskConsentResponse() {
+sealed class AskConsentResponse {
     object Normal : AskConsentResponse()
     object NonPersonalized : AskConsentResponse()
     object PreferPaid : AskConsentResponse()

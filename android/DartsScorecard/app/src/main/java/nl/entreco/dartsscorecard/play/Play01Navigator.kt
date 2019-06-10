@@ -12,8 +12,6 @@ import javax.inject.Inject
  */
 class Play01Navigator @Inject constructor(private val activity: Play01Activity) {
 
-    private val fm : androidx.fragment.app.FragmentManager = activity.supportFragmentManager
-
     fun gotoTeamProfile(view: View, team: Team) {
         val teams = team.players.map { it.id }.filter { it > 0 }.toLongArray()
         if (teams.isEmpty()) {

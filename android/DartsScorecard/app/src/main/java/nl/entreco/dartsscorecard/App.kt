@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard
 
 import android.app.Application
 import android.os.StrictMode
-import com.google.android.gms.ads.MobileAds
 import com.squareup.leakcanary.LeakCanary
 import nl.entreco.dartsscorecard.di.application.AppComponent
 import nl.entreco.dartsscorecard.di.application.AppModule

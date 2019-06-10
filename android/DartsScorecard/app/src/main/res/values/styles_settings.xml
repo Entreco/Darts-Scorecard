@@ -55,7 +55,7 @@
         <item name="android:paddingStart">@dimen/def</item>
         <item name="android:paddingEnd">@dimen/def</item>
         <item name="android:drawableTint">?attr/launchText</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:drawablePadding">-20dp</item>
     </style>

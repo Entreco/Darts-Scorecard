@@ -41,7 +41,7 @@ class ArchiveJobService : JobService() {
                 .setContentTitle(getString(R.string.archive_notif_title))
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setColor(Color.parseColor(NOTIF_COLOR))
-                .setBadgeIconType(R.mipmap.ic_launcher_foreground)
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                 .setLocalOnly(true)
                 .setWhen(System.currentTimeMillis())
                 .setUsesChronometer(true)

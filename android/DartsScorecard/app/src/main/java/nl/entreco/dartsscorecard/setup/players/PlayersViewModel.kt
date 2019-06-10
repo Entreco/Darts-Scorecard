@@ -20,7 +20,7 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
 
     private fun appendTeams(players: Map<Int, List<PlayerViewModel>>, teamString: StringBuilder) {
         players.forEach {
-            if (!teamString.isEmpty()) {
+            if (teamString.isNotEmpty()) {
                 teamString.append(TeamSeperator)
             }
             appendPlayers(it.value, teamString)
