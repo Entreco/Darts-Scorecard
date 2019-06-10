@@ -44,7 +44,7 @@ dependencies {
     implementation project(':data')
     implementation project(':libLog')
     implementation project(':libConsent')
-    implementation project(':libads')
+    implementation project(':libAds')
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

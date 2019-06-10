@@ -7,7 +7,7 @@ import dagger.Provides
 import nl.entreco.libconsent.Consent
 
 @Module
-internal object ConsentModule {
+object ConsentModule {
 
     @Provides
     @JvmStatic
