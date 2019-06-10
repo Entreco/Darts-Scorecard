@@ -11,6 +11,8 @@ import com.google.android.gms.ads.AdView
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
+import nl.entreco.libads.Ads
+import nl.entreco.libads.Interstitials
 import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.shared.toSingleEvent
@@ -24,8 +26,8 @@ class AdViewModel @Inject constructor(
         @ActivityScope private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
         private val fetch: FetchCurrentConsentUsecase,
-        private val adLoader: AdLoader,
-        private val interstitialLoader: InterstitialLoader,
+        private val adLoader: Ads,
+        private val interstitialLoader: Interstitials,
         @Named("debugMode") private val debug: Boolean) : ViewModel(), LifecycleObserver {
 
     val showAd = ObservableBoolean(false)
@@ -40,21 +42,15 @@ class AdViewModel @Inject constructor(
 
     fun provideAdd(view: AdView) {
         if (!debug) {
-            adLoader.loadAd(view, object : AdLoader.AdListener {
-                override fun onAdLoaded() {
-                    showAd.set(true)
-                }
-
-                override fun onAdFailed() {
-                    showAd.set(false)
-                }
-            })
+            adLoader.load(view) {
+                showAd.set(it)
+            }
         }
     }
 
     fun provideInterstitial() {
         if (!debug && serveAds.get()) {
-            interstitialLoader.showInterstitial()
+            interstitialLoader.show()
         }
     }
 

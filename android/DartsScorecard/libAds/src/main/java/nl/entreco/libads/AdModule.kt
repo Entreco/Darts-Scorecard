@@ -1,10 +1,12 @@
 package nl.entreco.libads
 
 import android.content.Context
-import com.google.android.gms.ads.InterstitialAd
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import nl.entreco.libads.admob.AdMobAds
+import nl.entreco.libads.admob.AdMobInterstitials
+import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.shared.scopes.AppContext
 import javax.inject.Named
 
@@ -13,13 +15,11 @@ object AdModule {
 
     @Provides
     @JvmStatic
-    fun provideAds(@AppContext context: Context): Ads = AdMobAds(context)
+    fun provideAds(@AppContext context: Context, fetch: FetchCurrentConsentUsecase): Ads = AdMobAds(context, fetch)
 
     @Provides
     @JvmStatic
-    fun provideInterstialAd(@AppContext context: Context): InterstitialAd {
-        return InterstitialAd(context)
-    }
+    fun provideInterstials(@AppContext context: Context): Interstitials = AdMobInterstitials(context)
 
     @Provides
     @JvmStatic

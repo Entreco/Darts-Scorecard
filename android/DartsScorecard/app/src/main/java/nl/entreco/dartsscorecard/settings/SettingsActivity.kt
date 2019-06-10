@@ -42,13 +42,13 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
                 true -> ask.askForConsent(this) {}
             }
         })
-        viewModel.style().observe(this, Observer {
+        viewModel.style().observe(this, Observer { swap ->
             viewModel.style().removeObservers(this)
-            if(it) swapStyle()
+            if(swap) swapStyle()
         })
 
-        viewModel.donate().observe(this, Observer {
-            if(it) {
+        viewModel.donate().observe(this, Observer { donate ->
+            if(donate) {
                 donateViewModel.donations.firstOrNull()?.let {donation ->
                     donateViewModel.onDonate(donation)
                 }

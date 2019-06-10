@@ -1,32 +1,30 @@
-package nl.entreco.dartsscorecard.ad
+package nl.entreco.libads.ui
 
 import androidx.lifecycle.Lifecycle
 import com.google.android.gms.ads.AdView
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
-import nl.entreco.libads.ui.AdLoader
-import nl.entreco.libads.ui.AdViewModel
-import nl.entreco.libads.ui.InterstitialLoader
 import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
-import nl.entreco.liblog.Logger
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class AdViewModelTest {
 
-    @Mock private lateinit var mockAdView: AdView
-    @Mock private lateinit var mockBillingUsecas: ConnectToBillingUsecase
-    @Mock private lateinit var mockFetchItemsUsecase: FetchPurchasedItemsUsecase
-    @Mock private lateinit var mockFetchCurrentConsent: FetchCurrentConsentUsecase
-    @Mock private lateinit var mockAdLoader: AdLoader
-    @Mock private lateinit var mockInterstitialLoader: InterstitialLoader
-    @Mock private lateinit var mockLifecycle: Lifecycle
+    private val mockAdView: AdView = mock()
+    private val mockBillingUsecas: ConnectToBillingUsecase = mock()
+    private val mockFetchItemsUsecase: FetchPurchasedItemsUsecase = mock()
+    private val mockFetchCurrentConsent: FetchCurrentConsentUsecase = mock()
+    private val mockAdLoader: AdLoader = mock()
+    private val mockInterstitialLoader: InterstitialLoader = mock()
+    private val mockLifecycle: Lifecycle = mock()
     private lateinit var subject : AdViewModel
 
     @Test

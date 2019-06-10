@@ -1,23 +1,17 @@
-package nl.entreco.dartsscorecard.setup.ad
+package nl.entreco.libads.ui
 
 import android.view.View
-import com.google.android.gms.ads.AdListener
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.libads.ui.AdBindings
+import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-/**
- * Created by Entreco on 29/12/2017.
- */
-@RunWith(MockitoJUnitRunner::class)
 class AdBindingsTest {
 
-    @Mock private lateinit var mockAdListener: AdListener
-    @Mock private lateinit var mockView: View
+    private val mockAdListener: AdLoader.AdListener = mock()
+    private val mockView: View = mock()
 
     @Ignore("Mockito cannot mock this class: class com.google.android.gms.ads.AdView.\n" +
             "Can not mock final classes with the following settings :\n" +

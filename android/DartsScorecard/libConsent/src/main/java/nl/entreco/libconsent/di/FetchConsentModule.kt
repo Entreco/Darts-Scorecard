@@ -1,10 +1,10 @@
 package nl.entreco.libconsent.di
 
 import android.content.Context
-import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import nl.entreco.libconsent.Consent
+import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.ask.AskConsentUsecase
 import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
 import nl.entreco.libconsent.store.StoreCurrentConsentUsecase
@@ -15,15 +15,18 @@ object FetchConsentModule {
 
     @Provides
     @JvmStatic
-    internal fun providePrefs(@AppContext context: Context): SharedPreferences = context.getSharedPreferences(Consent.Prefs, Context.MODE_PRIVATE)
+    internal fun provideConsentPrefs(@AppContext context: Context): ConsentPrefs {
+        val prefs = context.getSharedPreferences(Consent.Prefs, Context.MODE_PRIVATE)
+        return ConsentPrefs(prefs)
+    }
 
     @Provides
     @JvmStatic
-    fun provideFetchConsent(prefs: SharedPreferences): FetchCurrentConsentUsecase = FetchCurrentConsentUsecase(prefs)
+    fun provideFetchConsent(prefs: ConsentPrefs): FetchCurrentConsentUsecase = FetchCurrentConsentUsecase(prefs)
 
     @Provides
     @JvmStatic
-    fun provideStoreConsent(prefs: SharedPreferences): StoreCurrentConsentUsecase = StoreCurrentConsentUsecase(prefs)
+    fun provideStoreConsent(prefs: ConsentPrefs): StoreCurrentConsentUsecase = StoreCurrentConsentUsecase(prefs)
 
     @Provides
     @JvmStatic

@@ -1,6 +1,7 @@
 package nl.entreco.libads.ui
 
 import android.os.Bundle
+import android.view.View
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -12,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 29/12/2017.
  */
-class AdLoader @Inject constructor(
+internal class AdLoader @Inject constructor(
         private val fetchCurrentConsentUsecase: FetchCurrentConsentUsecase
 ) : AdListener() {
 
@@ -34,13 +35,14 @@ class AdLoader @Inject constructor(
         listener?.onAdFailed()
     }
 
-    fun loadAd(view: AdView, adListener: AdListener) {
+    fun loadAd(view: View, adListener: AdListener) {
         listener = adListener
-        view.adListener = this
-
-        fetchCurrentConsentUsecase.go {
-            val request = buildRequest(it)
-            view.loadAd(request)
+        (view as? AdView)?.let { v ->
+            v.adListener = this
+            fetchCurrentConsentUsecase.go {
+                val request = buildRequest(it)
+                v.loadAd(request)
+            }
         }
     }
 

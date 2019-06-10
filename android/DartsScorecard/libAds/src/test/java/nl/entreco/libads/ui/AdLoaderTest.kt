@@ -1,24 +1,19 @@
-package nl.entreco.dartsscorecard.setup.ad
+package nl.entreco.libads.ui
 
 import com.google.android.gms.ads.AdView
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.libads.ui.AdLoader
 import nl.entreco.libconsent.fetch.FetchCurrentConsentUsecase
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-/**
- * Created by Entreco on 29/12/2017.
- */
-@RunWith(MockitoJUnitRunner::class)
 class AdLoaderTest {
 
-    @Mock private lateinit var mockView: AdView
-    @Mock private lateinit var mockFetchCurrentConsentUsecase: FetchCurrentConsentUsecase
-    @Mock private lateinit var mockListener: AdLoader.AdListener
+    private val mockView: AdView = mock()
+    private val mockFetchCurrentConsentUsecase: FetchCurrentConsentUsecase = mock()
+    private val mockListener: AdLoader.AdListener = mock()
     private lateinit var subject: AdLoader
 
     @Before

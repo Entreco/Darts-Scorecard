@@ -1,20 +1,21 @@
-package nl.entreco.dartsscorecard.ad
+package nl.entreco.libads.ui
 
 import android.os.Handler
 import com.google.android.gms.ads.InterstitialAd
-import com.nhaarman.mockito_kotlin.*
-import nl.entreco.libads.ui.InterstitialLoader
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.times
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.Mockito
 
-@RunWith(MockitoJUnitRunner::class)
 class InterstitialLoaderTest {
 
-    @Mock private lateinit var mockInterstitial: InterstitialAd
-    @Mock private lateinit var mockHandler: Handler
+    private val mockInterstitial: InterstitialAd = mock()
+    private val mockHandler: Handler = mock()
     private lateinit var subject: InterstitialLoader
 
     private var runnableCaptor = argumentCaptor<Runnable>()
@@ -48,7 +49,7 @@ class InterstitialLoaderTest {
     private fun whenShowingInterstitial(loaded: Boolean) {
         subject.showInterstitial()
 
-        if(loaded) {
+        if (loaded) {
             verify(mockHandler).postDelayed(runnableCaptor.capture(), eq(250))
             runnableCaptor.lastValue.run()
         }
@@ -67,6 +68,6 @@ class InterstitialLoaderTest {
     }
 
     private fun thenNewInterstitialIsLoaded() {
-        verify(mockInterstitial, times(2)).loadAd(any())
+        verify(mockInterstitial, Mockito.times(2)).loadAd(any())
     }
 }
