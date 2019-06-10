@@ -12,6 +12,7 @@ android {
 dependencies {
     // Annotation Processing
     kapt "com.github.bumptech.glide:compiler:$glide"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"

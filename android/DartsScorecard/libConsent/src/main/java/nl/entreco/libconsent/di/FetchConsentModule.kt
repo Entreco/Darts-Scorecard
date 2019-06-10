@@ -15,7 +15,7 @@ object FetchConsentModule {
 
     @Provides
     @JvmStatic
-    internal fun provideConsentPrefs(@AppContext context: Context): ConsentPrefs {
+    fun provideConsentPrefs(@AppContext context: Context): ConsentPrefs {
         val prefs = context.getSharedPreferences(Consent.Prefs, Context.MODE_PRIVATE)
         return ConsentPrefs(prefs)
     }
