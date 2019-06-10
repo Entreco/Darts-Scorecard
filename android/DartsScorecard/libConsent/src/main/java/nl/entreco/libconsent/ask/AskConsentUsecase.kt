@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.ads.consent.ConsentForm
 import com.google.ads.consent.ConsentFormListener
 import com.google.ads.consent.ConsentStatus
-import nl.entreco.libconsent.store.StoreCurrentConsentUsecase
 import java.net.URL
 import javax.inject.Inject
 

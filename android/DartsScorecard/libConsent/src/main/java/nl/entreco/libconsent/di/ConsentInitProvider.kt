@@ -10,7 +10,7 @@ import nl.entreco.libconsent.Consent
 import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.retrieve.RetrieveConsentResponse
 import nl.entreco.libconsent.retrieve.RetrieveConsentUsecase
-import nl.entreco.libconsent.store.StoreCurrentConsentUsecase
+import nl.entreco.libconsent.ask.StoreCurrentConsentUsecase
 
 class ConsentInitProvider : ContentProvider() {
 
