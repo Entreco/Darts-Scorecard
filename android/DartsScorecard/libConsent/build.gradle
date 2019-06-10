@@ -19,7 +19,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "com.google.android.ads.consent:consent-library:$consent"
 
     testImplementation "junit:junit:$junit"

@@ -7,14 +7,14 @@ import nl.entreco.dartsscorecard.di.service.ServiceModule
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 import nl.entreco.libads.AdModule
-import nl.entreco.libconsent.di.FetchConsentModule
+import nl.entreco.libconsent.di.ConsentModule
 import nl.entreco.shared.scopes.ApplicationScope
 
 /**
  * Created by Entreco on 14/11/2017.
  */
 @ApplicationScope
-@Component(modules = [AppModule::class, AdModule::class, FetchConsentModule::class])
+@Component(modules = [AppModule::class, AdModule::class, ConsentModule::class])
 interface AppComponent {
     fun inject(app: App)
 

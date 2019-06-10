@@ -6,17 +6,18 @@ import android.content.Context
 import android.content.pm.ProviderInfo
 import android.database.Cursor
 import android.net.Uri
+import nl.entreco.libconsent.Consent
+import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.retrieve.RetrieveConsentResponse
+import nl.entreco.libconsent.retrieve.RetrieveConsentUsecase
+import nl.entreco.libconsent.store.StoreCurrentConsentUsecase
 
 class ConsentInitProvider : ContentProvider() {
 
-    private val component by lazy {
-        DaggerConsentComponent.builder()
-                .context(context!!)
-                .build()
-    }
-    private val retrieve by lazy { component.retrieve() }
-    private val store by lazy { component.store() }
+    private val prefs by lazy { context!!.getSharedPreferences(Consent.Prefs, Context.MODE_PRIVATE) }
+    private val consent by lazy { ConsentPrefs(prefs) }
+    private val retrieve by lazy { RetrieveConsentUsecase(context!!) }
+    private val store by lazy { StoreCurrentConsentUsecase(consent) }
 
     override fun onCreate(): Boolean {
         context?.let {
