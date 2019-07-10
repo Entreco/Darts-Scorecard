@@ -168,10 +168,12 @@
     <string name="search_wtf">F.A.Q. doorzoeken</string>
 
     <!-- Settings -->
-    <string name="settings_mastercaller_title">Mastercaller</string>
-    <string name="settings_mastercaller_desc">Roep alle scores om, zoals op TV</string>
+    <string name="settings_mastercaller_title">Geluids Instellingen</string>
+    <string name="settings_mastercaller_desc_on">Roep alle scores om, zoals op TV</string>
+    <string name="settings_mastercaller_desc_off">Scores niet omroepen</string>
     <string name="settings_sound_title">Audio</string>
-    <string name="settings_sound_desc">Speel achtergrond muziek</string>
+    <string name="settings_sound_desc_on">Speel achtergrond muziek</string>
+    <string name="settings_sound_desc_off">Speel geen achtergrond muziek</string>
     <string name="settings_theme_title">Theming</string>
     <string name="settings_theme_desc">Blader door de verschillende thema\'s</string>
     <string name="settings_privacy_title">Privacy / Ads</string>

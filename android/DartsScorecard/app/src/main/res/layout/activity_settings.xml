@@ -64,18 +64,18 @@
                         android:paddingTop="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         android:paddingBottom="@dimen/def"
-                        android:text="@string/settings_mastercaller_desc" />
+                        android:textColor="?attr/nameText"
+                        android:text="@{viewModel.hasMasterCaller ? @string/settings_mastercaller_desc_on : @string/settings_mastercaller_desc_off}" />
                 </RelativeLayout>
 
                 <TextView
                     style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="2dp"
                     android:background="@drawable/score_header_middle"
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
-                    android:padding="@dimen/xsmall"
-                    android:text="@string/settings_sound_title" />
+                    android:padding="@dimen/xsmall" />
 
                 <RelativeLayout
                     style="@style/Setup.Entry"
@@ -97,7 +97,8 @@
                         android:paddingTop="@dimen/def"
                         android:paddingEnd="@dimen/large"
                         android:paddingBottom="@dimen/def"
-                        android:text="@string/settings_sound_desc" />
+                        android:textColor="?attr/nameText"
+                        android:text="@{viewModel.hasBackground ? @string/settings_sound_desc_on : @string/settings_sound_desc_off}" />
                 </RelativeLayout>
 
 
@@ -116,31 +117,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:gravity="start"
-                        android:importantForAccessibility="no"
-                        android:paddingStart="@dimen/def"
-                        android:paddingEnd="@dimen/large"
-                        android:text="@string/settings_theme_desc" />
-
-                    <TextView
-                        style="@style/Setup.Entry.Value"
-                        android:layout_width="@dimen/setup_width"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:importantForAccessibility="no" />
-
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Launch.Btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
-                        android:background="@null"
-                        android:minHeight="36dp"
                         android:onClick="@{() -> viewModel.swapStyle()}"
+                        android:text="@string/settings_theme_desc"
                         android:padding="0dp" />
                 </RelativeLayout>
 
@@ -164,31 +147,37 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:gravity="start"
                         android:importantForAccessibility="no"
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
+                        android:textColor="?attr/nameText"
                         app:showIf="@{donations.canRemoveAds}"
                         android:text="@string/settings_privacy_desc" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/val"
                         android:gravity="start"
                         android:importantForAccessibility="no"
                         android:paddingStart="@dimen/def"
                         android:paddingEnd="@dimen/large"
-                        app:showIf="@{!donations.canRemoveAds}"
-                        android:text="@string/settings_privacy_thanks" />
+                        android:textColor="?attr/nameText"
+                        android:text="@string/settings_privacy_thanks"
+                        app:showIf="@{!donations.canRemoveAds}" />
 
-                    <TextView
+                    <ImageView
+                        android:id="@+id/val"
                         style="@style/Setup.Entry.Value"
                         android:layout_width="@dimen/setup_width"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
+                        android:tint="?attr/ptsText"
+                        android:src="@drawable/ic_edit_profile"
                         android:importantForAccessibility="no" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -206,7 +195,7 @@
                 <TextView
                     style="@style/Setup.Hdr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="2dp"
                     android:background="@drawable/score_header_middle"
                     android:importantForAccessibility="no"
                     android:orientation="horizontal"
@@ -219,30 +208,12 @@
                     android:layout_height="wrap_content"
                     app:showIf="@{donations.canRemoveAds}">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:gravity="start"
-                        android:importantForAccessibility="no"
-                        android:paddingStart="@dimen/def"
-                        android:paddingEnd="@dimen/large"
-                        android:text="@string/settings_ads_remove" />
-
-                    <TextView
-                        style="@style/Setup.Entry.Value"
-                        android:layout_width="@dimen/setup_width"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:importantForAccessibility="no" />
-
                     <androidx.appcompat.widget.AppCompatButton
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Launch.Btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0dp"
-                        android:background="@null"
-                        android:minHeight="36dp"
+                        android:text="@string/settings_ads_remove"
                         android:onClick="@{() -> viewModel.removeAds()}"
                         android:padding="0dp" />
 

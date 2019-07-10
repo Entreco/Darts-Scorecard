@@ -2,8 +2,10 @@ package nl.entreco.dartsscorecard.settings
 
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
@@ -36,9 +38,9 @@ class SettingsViewModel @Inject constructor(
     private val style = MutableLiveData<Boolean>()
     fun style(): LiveData<Boolean> = style.toSingleEvent()
     fun swapStyle() {
-        // TODO entreco - 2019-06-08: Swap Style is hanging -> some loop maybe?
         style.postValue(true)
     }
+    fun stopStyler() = if(style.value == true) style.postValue(false) else {}
 
     private val ask = MutableLiveData<Boolean>()
     fun ask(): LiveData<Boolean> = ask.toSingleEvent()

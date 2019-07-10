@@ -167,10 +167,12 @@
     <string name="search_wtf">Search in F.A.Q.</string>
 
     <!-- Settings -->
-    <string name="settings_mastercaller_title">Mastercaller</string>
-    <string name="settings_mastercaller_desc">Read all scores aloud</string>
+    <string name="settings_mastercaller_title">Sound Settings</string>
+    <string name="settings_mastercaller_desc_on">Read all scores aloud</string>
+    <string name="settings_mastercaller_desc_off">Don\'t user Mastercaller</string>
     <string name="settings_sound_title">Sound</string>
-    <string name="settings_sound_desc">Play music in the background</string>
+    <string name="settings_sound_desc_on">Play music in the background</string>
+    <string name="settings_sound_desc_off">No music in the background</string>
     <string name="settings_theme_title">Theming</string>
     <string name="settings_theme_desc">Swap the available themes</string>
     <string name="settings_privacy_title">Privacy / Ads</string>

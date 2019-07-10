@@ -18,6 +18,7 @@ import nl.entreco.dartsscorecard.di.settings.SettingsComponent
 import nl.entreco.dartsscorecard.di.settings.SettingsModule
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
+import nl.entreco.libconsent.ask.AskConsentResponse
 import nl.entreco.libconsent.ask.AskConsentUsecase
 
 class SettingsActivity : ViewModelActivity(), DonateCallback {
@@ -39,21 +40,27 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
 
         viewModel.ask().observe(this, Observer { consent ->
             when (consent) {
-                true -> ask.askForConsent(this) {}
+                true -> ask.askForConsent(this) { response ->
+                    when (response) {
+                        is AskConsentResponse.PreferPaid -> donate()
+                    }
+                }
             }
         })
         viewModel.style().observe(this, Observer { swap ->
-            viewModel.style().removeObservers(this)
+            viewModel.stopStyler()
             if (swap) swapStyle()
         })
 
         viewModel.donate().observe(this, Observer { donate ->
-            if (donate) {
-                donateViewModel.donations.firstOrNull()?.let { donation ->
-                    donateViewModel.onDonate(donation)
-                }
-            }
+            if (donate) donate()
         })
+    }
+
+    private fun donate() {
+        donateViewModel.donations.firstOrNull()?.let { donation ->
+            donateViewModel.onDonate(donation)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -33,7 +33,7 @@ class DonateViewModel @Inject constructor(
     internal var requiresConsumption = AtomicBoolean(true)
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(false)
-    val canRemoveAds = ObservableBoolean(true)
+    val canRemoveAds = ObservableBoolean(false)
 
     fun onDonate(donation: Donation) {
         loading.set(true)
