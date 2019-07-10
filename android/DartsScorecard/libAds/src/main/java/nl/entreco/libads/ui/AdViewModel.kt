@@ -12,6 +12,7 @@ import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.Ads
+import nl.entreco.libads.BuildConfig
 import nl.entreco.libads.Interstitials
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
@@ -28,7 +29,7 @@ class AdViewModel @Inject constructor(
         private val fetchConsentUsecase: FetchConsentUsecase,
         private val adLoader: Ads,
         private val interstitialLoader: Interstitials,
-        @Named("debugMode") private val debug: Boolean) : ViewModel(), LifecycleObserver {
+        @Named("debugMode") private val debug: Boolean = BuildConfig.DEBUG) : ViewModel(), LifecycleObserver {
 
     val showAd = ObservableBoolean(false)
     private val showConsent by lazy { MutableLiveData<Boolean>() }
@@ -43,7 +44,7 @@ class AdViewModel @Inject constructor(
     fun provideAdd(view: AdView) {
         if (!debug) {
             adLoader.load(view) {
-                showAd.set(it)
+                showAd.set(serveAds.get())
             }
         }
     }
