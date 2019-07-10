@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.beta
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.view.View
-import kotlinx.android.synthetic.main.include_beta_detail.view.*
+import kotlinx.android.synthetic.main.include_beta_detail.view.voteFab
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
 import kotlin.math.abs
 import kotlin.math.max

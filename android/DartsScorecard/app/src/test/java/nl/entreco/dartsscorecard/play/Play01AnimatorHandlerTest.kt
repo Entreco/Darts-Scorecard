@@ -49,12 +49,6 @@ class Play01AnimatorHandlerTest {
     }
 
     @Test
-    fun setPage() {
-        subject.storePositionForAnimator(0)
-        assertNull(subject.animator)
-    }
-
-    @Test
     fun onPreDraw() {
         subject.handlePreDraw()
         verify(mockMaxHeightView).requestLayout()

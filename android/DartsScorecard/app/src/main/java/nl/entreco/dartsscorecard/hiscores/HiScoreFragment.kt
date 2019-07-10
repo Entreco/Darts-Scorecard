@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.FragmentHiscoreBinding
 
@@ -36,14 +38,22 @@ class HiScoreFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentHiscoreBinding>(inflater,
                 R.layout.fragment_hiscore, container, false)
-        binding.hiscoreRecycler.setHasFixedSize(true)
-        binding.hiscoreRecycler.layoutManager = GridLayoutManager(context, 1)
-        binding.hiscoreRecycler.adapter = adapter
+        initRecyclerView(binding.hiscoreRecycler)
+        handlePagerPosition()
+        return binding.root
+    }
 
+    private fun handlePagerPosition() {
         val position = arguments?.getInt(EXTRA_POS) ?: 0
         viewModel.dataAtPosition(position).observe(this, Observer {
             adapter.submitList(it)
         })
-        return binding.root
+    }
+
+    private fun initRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
     }
 }

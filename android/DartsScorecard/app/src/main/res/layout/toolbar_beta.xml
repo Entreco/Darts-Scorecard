@@ -51,7 +51,7 @@
                 android:text="@string/beta_tagline"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

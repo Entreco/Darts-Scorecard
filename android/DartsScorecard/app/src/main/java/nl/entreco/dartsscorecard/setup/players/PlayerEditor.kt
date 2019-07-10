@@ -8,7 +8,7 @@ import android.content.Intent
 interface PlayerEditor {
     fun onEditPlayer(position: Int, player: PlayerViewModel, otherPlayers: List<Long>)
     fun onAddNewPlayer(index: Int, otherPlayers: List<Long>)
-    fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: PlayerEditor.Callback)
+    fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: Callback)
 
     interface Callback {
         fun onPlayerEdited(position: Int, teamIndex: Int, playerName: String, playerId: Long)

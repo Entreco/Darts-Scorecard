@@ -1,7 +1,7 @@
 package nl.entreco.domain.wtf
 
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.BaseUsecase
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.WtfRepository

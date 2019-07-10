@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.di.application
 
+import android.content.Context
 import androidx.room.Room
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,7 +15,9 @@ import nl.entreco.data.analytics.FirebaseAnalytics
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
 import nl.entreco.liblog.Logger
-import java.util.*
+import nl.entreco.shared.scopes.AppContext
+import nl.entreco.shared.scopes.ApplicationScope
+import java.util.UUID
 import javax.inject.Named
 
 
@@ -27,6 +30,11 @@ class AppModule(val app: App) {
     @Provides
     @ApplicationScope
     fun application() = app
+
+    @Provides
+    @AppContext
+    @ApplicationScope
+    fun applicationContext() : Context = app.applicationContext
 
     @Provides
     @ApplicationScope
@@ -71,10 +79,8 @@ class AppModule(val app: App) {
     @ApplicationScope
     fun provideRemoteConfig(): FirebaseRemoteConfig {
         return FirebaseRemoteConfig.getInstance().apply {
-            val configSettings = FirebaseRemoteConfigSettings.Builder()
-                    .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                    .build()
-            setConfigSettings(configSettings)
+            val configSettings = FirebaseRemoteConfigSettings.Builder().build()
+            setConfigSettingsAsync(configSettings)
             setDefaults(R.xml.remote_config_defaults)
         }
     }

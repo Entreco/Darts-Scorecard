@@ -12,7 +12,7 @@ cache:
 env:
   global:
   - ANDROID_API=28
-  - ANDROID_BUILD_TOOLS=28.0.3
+  - ANDROID_BUILD_TOOLS=29.0.0
   - ADB_INSTALL_TIMEOUT=5
   - secure: UH6Td9+MFk1nsYYMKN9t6/XcMmSZtB+L4sWMUmYBMaK1Q6YnGCnyHmU5RWkP+9a3AiZQ+n9XK+9TV+azMxJzyOoPMEzvBYtienvI1ZwTg+gqVOsMGG8TKubdgBfYQKm+mtdc3ctgucqjRg0yb4aUDp4CeNwwCuX1zuzIaAYp8IgRElkJzhJMeTcrCUWTBNk2F9ix0eRyOKOCIwgiAa6wNn1zMRvpbPh3esJ7CcnC0xesBtWriFtJDKFhPPWowPrWhGerLe3y5oNySqPpjxfBDIU9HPThNLNwBgp25Ww2c4Ib4Im0p59dPyKBU8mv3eoHvWtrSYW0bZQfKuJD6JsI0wg7Afx2hOxhPWw2evwjmhYWEfspSTUDUZIV/BhLhR2WbeZgAgd1gBh1ulxe79kne1FLsojVr+wZXA5Cn1TF2R4pnTj8EYLctbz/J1/sbcKwut6+I4z7FgbLDOEvaHTJZiscotR0ofML6OoYkKba8LznCES8RqYc3oyCKJvRD5oiVyHhMScAptMeignnPCGmhzm2evpclZfjoZ6vGyI/MgZML4as7WWz1FuiaNV+vJx6PyuNzBjYyNpKJ7O/G4yUT6EITrw3UPVCaSJr6eM3o8eAjy8XTkFsuRJ4iEhMAGiDRlvIlAMrUQyp8PxxvKB9YS6skFfAXXAUp59m/PLbRc0=
   - secure: b9RwM5JGKpo0axCpeqDx9WZfZppiJWKF6d1zxTpO6cIiUmsgpL2GQy1fK/jHzKA1mlFIgq87pu11M696PqPJq7RadkeqlhKAq0zw8lBphg5Tn50wZUglusvIbMPC4VnsFLNeBd3elZIepglbh994sQxxpCpc8IF29x8cj//xrR6Z+EvyWYjnLgtbQjjdql6K0JRhGyTn+FXe5qLxmgu2lc4QL/RBcpnF+gpLrFfzBf/M/ruSyLjjpLZLCtzz90dAD/Ewb+sLvlfM0SUbXvFg+P2YoSo7rbDum+l45S6meIs6ygqcpb/3ByL9pSK3XEzrqLFQFggST8Puy8pHkwL8IVLuOtTPiO2HUtyzbTJLbEmupwEr6nXF2xtQE4vqgCNCLd63JxldRf3D2nrLG9OXJMlQRzkAfYtXj15tqyDfiLlCzIocfASsj/MF8XKzeR45+6GC9KLULpR0s1MdxYYhhb+Ss4sV8VElC3C4mlQiCA6G5AOJtPcnUshGNXbw3oWotJgY76IEJG2gSnb2SSI94VuXCI/39DLxXoTF1knixdaFJOO2QvBU2b8eZKrU4w1+rUrSfIMnBdn27hdqs+uKYNuJIwtMMCcrFtZmZnKjXcBwjgQdm51gWuMiJN5S8xM8turo23jL2Cak7rXn8RUmLHbhu3Jpl8iQzQOPFm1zmkg=
@@ -40,7 +40,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_60401f83f63b_key -iv $encrypted_60401f83f63b_iv -in android/DartsScorecard/app/google-services.json.enc -out android/DartsScorecard/app/google-services.json -d
   
 - mkdir "$ANDROID_HOME/licenses" || true
-- echo -e "\nd56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license"
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 - echo -e "\n601085b94cd77f0b54ff86406957099ebe79c4d6" > "$ANDROID_HOME/licenses/android-googletv-license"
 - echo -e "\n33b6a2b64607f11b759f320ef9dff4ae5c47d97a" > "$ANDROID_HOME/licenses/google-gdk-license"
@@ -50,7 +50,7 @@ before_install:
 - chmod +x gradlew
 - ./gradlew dependencies || true
 script:
-- ./gradlew clean bundle -PdisablePreDex --stacktrace
+- ./gradlew clean :app:bundle -PdisablePreDex --stacktrace
 after_success:
 - ./gradlew jacocoFullReport coveralls
 before_deploy:

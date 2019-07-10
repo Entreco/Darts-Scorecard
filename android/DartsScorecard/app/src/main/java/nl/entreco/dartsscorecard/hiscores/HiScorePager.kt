@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.di.viewmodel.ActivityScope
+import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.domain.hiscores.HiScoreItem
 import javax.inject.Inject
 
@@ -36,6 +36,8 @@ class HiScorePager @Inject constructor(
             is HiScoreItem.NumBust -> context.getString(R.string.hiscore_title_num_0)
             is HiScoreItem.BestMatchAvg -> context.getString(R.string.hiscore_title_best_avg)
             is HiScoreItem.BestMatchCheckout -> context.getString(R.string.hiscore_title_best_co)
+            is HiScoreItem.HighestScore -> context.getString(R.string.hiscore_title_highest_score)
+            is HiScoreItem.HighestCheckout -> context.getString(R.string.hiscore_title_highest_co)
             else -> ""
         }
     }

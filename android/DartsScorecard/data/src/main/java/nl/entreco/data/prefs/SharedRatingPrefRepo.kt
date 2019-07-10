@@ -1,7 +1,6 @@
 package nl.entreco.data.prefs
 
 import android.content.SharedPreferences
-import nl.entreco.data.prefs.SharedAudioPrefRepo.Companion.PREF_MASTER_CALLER
 import nl.entreco.domain.repository.RatingPrefRepository
 
 class SharedRatingPrefRepo(private val prefs: SharedPreferences) : RatingPrefRepository {

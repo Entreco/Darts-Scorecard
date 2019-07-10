@@ -47,11 +47,9 @@ object TeamScoreBindings {
     @JvmStatic
     @BindingAdapter("special")
     fun showSpecials(view: TextView, oldScore: Int, score: Int) {
-        val diff = oldScore - score
-        when (diff) {
+        when (oldScore - score) {
             180 -> handle180(view)
-            0 -> { /* nothing */
-            }
+            0 -> { /* nothing */ }
             else -> clear(view)
         }
     }

@@ -43,6 +43,8 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation project(':libLog')
+    implementation project(':libConsent')
+    implementation project(':libAds')
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -53,11 +55,11 @@ dependencies {
     implementation "com.google.android.material:material:$material"
     implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "androidx.constraintlayout:constraintlayout:$xConstraint"
-    implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
+    implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
     implementation "com.google.code.gson:gson:$gson"

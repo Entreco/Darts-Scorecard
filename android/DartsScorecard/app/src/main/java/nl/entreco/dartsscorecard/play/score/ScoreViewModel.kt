@@ -4,7 +4,6 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score

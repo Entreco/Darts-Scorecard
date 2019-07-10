@@ -19,7 +19,7 @@ class LogInitProvider : ContentProvider() {
         // So if the authorities equal the library internal ones, the developer forgot to set his applicationId
         if ("nl.entreco.liblog.loginitprovider" == info.authority) {
             throw IllegalStateException("Incorrect provider authority in manifest. Most likely due to a "
-                    + "missing applicationId variable in application\'s build.gradle.");
+                    + "missing applicationId variable in application\'s build.gradle.")
         }
         super.attachInfo(context, info)
     }

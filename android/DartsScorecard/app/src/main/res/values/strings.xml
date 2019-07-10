@@ -20,6 +20,7 @@
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
+    <string name="title_settings">Settings</string>
     <string name="title_wtf">@string/wtf</string>
     <string name="title_hiscores">Hiscores</string>
 
@@ -29,6 +30,7 @@
     <string name="profiles">Manage Profiles</string>
     <string name="hiscores">Hiscores</string>
     <string name="beta">New Features</string>
+    <string name="settings">Settings</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>
@@ -60,9 +62,7 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="cont">Continue</string>
-    <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
-    <string name="tired_of_ads">Visit \'Beta\' to remove Ads</string>
 
     <!-- Dialogs -->
     <string name="rating_title">Enjoying Darts Scorecard?</string>
@@ -137,6 +137,8 @@
     <string name="hiscore_title_games_ratio">Win Ratio</string>
     <string name="hiscore_title_best_avg">Best Avg</string>
     <string name="hiscore_title_best_co">Best Checkout %</string>
+    <string name="hiscore_title_highest_score">Highest Score</string>
+    <string name="hiscore_title_highest_co">Highest Checkout</string>
     <string name="hiscore_title_overall_average">Overall average</string>
     <string name="hiscore_title_first9_average">1st 9 average</string>
     <string name="hiscore_title_win_percentage">Win %</string>
@@ -163,6 +165,20 @@
 
     <!-- What The FAQ -->
     <string name="search_wtf">Search in F.A.Q.</string>
+
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Sound Settings</string>
+    <string name="settings_mastercaller_desc_on">Read all scores aloud</string>
+    <string name="settings_mastercaller_desc_off">Don\'t user Mastercaller</string>
+    <string name="settings_sound_title">Sound</string>
+    <string name="settings_sound_desc_on">Play music in the background</string>
+    <string name="settings_sound_desc_off">No music in the background</string>
+    <string name="settings_theme_title">Theming</string>
+    <string name="settings_theme_desc">Swap the available themes</string>
+    <string name="settings_privacy_title">Privacy / Ads</string>
+    <string name="settings_privacy_desc">Change Ad Preference</string>
+    <string name="settings_privacy_thanks">Thanks for your Support!\nNo data is collected for the purpose of showing ads</string>
+    <string name="settings_ads_remove">Remove Ads</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
@@ -207,6 +223,7 @@
     <string name="cd_list_of_wtfs">FAQ items</string>
     <string name="cd_next">Next</string>
     <string name="cd_prev">Prev</string>
+    <string name="cd_wtf">Help</string>
     <string name="cd_select_start_score">Select start score</string>
     <string name="cd_number_of_sets">First to %1$s sets</string>
     <string name="cd_number_of_legs">First to %1$s legs</string>

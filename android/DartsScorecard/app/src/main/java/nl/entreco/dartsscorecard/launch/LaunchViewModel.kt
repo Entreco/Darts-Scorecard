@@ -7,6 +7,7 @@ import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.hiscores.HiScoreActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
+import nl.entreco.dartsscorecard.settings.SettingsActivity
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import nl.entreco.domain.launch.FetchLatestGameResponse
 import nl.entreco.domain.launch.RetrieveLatestGameUsecase
@@ -16,7 +17,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 12/12/2017.
  */
-class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: RetrieveLatestGameUsecase) : BaseViewModel() {
+class LaunchViewModel @Inject constructor(
+        private val retrieveGameUsecase: RetrieveLatestGameUsecase
+) : BaseViewModel() {
 
     val resumedGame = ObservableField<CreateGameResponse?>()
 
@@ -41,6 +44,10 @@ class LaunchViewModel @Inject constructor(private val retrieveGameUsecase: Retri
 
     fun onBetaPressed(context: Context) {
         BetaActivity.launch(context)
+    }
+
+    fun onSettingsPressed(context: Context) {
+        SettingsActivity.launch(context)
     }
 
     fun retrieveLatestGame() {

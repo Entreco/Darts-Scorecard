@@ -20,6 +20,7 @@
     <string name="title_edit_profile">Profiel wijzigen</string>
     <string name="title_setup">01 Match instellen</string>
     <string name="title_beta">Beta Features</string>
+    <string name="title_settings">Instellingen</string>
     <string name="title_wtf">@string/wtf</string>
     <string name="title_hiscores">Hiscores</string>
 
@@ -28,7 +29,8 @@
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Profielen beheren</string>
     <string name="hiscores">Hiscores</string>
-    <string name="beta">Nieuwe features</string>
+    <string name="beta">Nieuwe Features</string>
+    <string name="settings">Instellingen</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>
@@ -60,9 +62,7 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="cont">Doorgaan</string>
-    <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
-    <string name="tired_of_ads">Ga naar \'Beta\' om advertenties te verwijderen</string>
 
 
     <!-- Dialogs -->
@@ -138,6 +138,8 @@
     <string name="hiscore_title_games_ratio">Win Ratio</string>
     <string name="hiscore_title_best_avg">Beste gemiddelde</string>
     <string name="hiscore_title_best_co">Beste Checkout %</string>
+    <string name="hiscore_title_highest_score">Hoogste Score</string>
+    <string name="hiscore_title_highest_co">Hoogste Checkout</string>
     <string name="hiscore_title_overall_average">Totale gemiddelde</string>
     <string name="hiscore_title_first9_average">1e 9 gemiddelde</string>
     <string name="hiscore_title_win_percentage">Win %</string>
@@ -164,6 +166,20 @@
 
     <!-- What The FAQ -->
     <string name="search_wtf">F.A.Q. doorzoeken</string>
+
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Geluids Instellingen</string>
+    <string name="settings_mastercaller_desc_on">Roep alle scores om, zoals op TV</string>
+    <string name="settings_mastercaller_desc_off">Scores niet omroepen</string>
+    <string name="settings_sound_title">Audio</string>
+    <string name="settings_sound_desc_on">Speel achtergrond muziek</string>
+    <string name="settings_sound_desc_off">Speel geen achtergrond muziek</string>
+    <string name="settings_theme_title">Theming</string>
+    <string name="settings_theme_desc">Blader door de verschillende thema\'s</string>
+    <string name="settings_privacy_title">Privacy / Ads</string>
+    <string name="settings_privacy_desc">Wijzig je advertentie voorkeuren</string>
+    <string name="settings_privacy_thanks">Bedankt voor je steun!\nEr wordt GEEN data verzameld om advertenties te tonen</string>
+    <string name="settings_ads_remove">Verwijder advertenties</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Statistieken archiveer Service</string>
@@ -208,6 +224,7 @@
     <string name="cd_list_of_wtfs">FAQ items</string>
     <string name="cd_next">Volgende</string>
     <string name="cd_prev">Vorige</string>
+    <string name="cd_wtf">Help</string>
     <string name="cd_select_start_score">Choose start score</string>
     <string name="cd_number_of_sets">First to %1$s sets</string>
     <string name="cd_number_of_legs">First to %1$s legs</string>

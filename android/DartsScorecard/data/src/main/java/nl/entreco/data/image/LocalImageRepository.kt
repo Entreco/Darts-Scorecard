@@ -54,11 +54,11 @@ class LocalImageRepository(private val context: Context,
 
     private fun getPhotoOrientation(uri: Uri): Float {
         contentResolver.openInputStream(uri).use { input ->
-            val exif = if (input != null) androidx.exifinterface.media.ExifInterface(input) else return 0F
-            return when (exif.getAttributeInt(androidx.exifinterface.media.ExifInterface.TAG_ORIENTATION, androidx.exifinterface.media.ExifInterface.ORIENTATION_NORMAL)) {
-                androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_270 -> 270F
-                androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_180 -> 180F
-                androidx.exifinterface.media.ExifInterface.ORIENTATION_ROTATE_90 -> 90F
+            val exif = if (input != null) ExifInterface(input) else return 0F
+            return when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270F
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180F
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90F
                 else -> 0F
             }
         }

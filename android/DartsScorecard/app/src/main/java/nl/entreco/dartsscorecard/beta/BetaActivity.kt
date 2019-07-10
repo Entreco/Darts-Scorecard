@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -70,9 +69,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun lifeCycle(): Lifecycle {
-        return lifecycle
-    }
+    override fun lifeCycle() = lifecycle
 
     override fun onSwapToolbar(showDetails: Boolean, title: String) {
         if (showDetails) {
@@ -148,7 +145,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         }
 
         @JvmStatic
-        fun donate(activity: BetaActivity, sender: IntentSender) {
+        fun donate(activity: Activity, sender: IntentSender) {
             activity.startIntentSenderForResult(sender,
                     REQ_CODE_DONATE,
                     Intent(),

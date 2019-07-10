@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="nl.entreco.libads.ui.AdViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/adContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:showAd="@{viewModel.showAd}">
+
+        <TextView
+            style="@style/Setup.Hdr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_header"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="@dimen/xsmall"
+            android:textSize="11sp"
+            android:text="@string/tired_of_ads"
+            tools:ignore="SmallSp" />
+
+        <!-- Ad -->
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ad"
+            style="@style/Setup.Ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/live_ad_unit_id"
+            app:viewModel="@{viewModel}" />
+
+    </LinearLayout>
+</layout>
