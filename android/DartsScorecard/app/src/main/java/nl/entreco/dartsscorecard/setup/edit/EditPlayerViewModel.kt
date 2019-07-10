@@ -22,7 +22,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     : BaseViewModel() {
 
     val filteredPlayers = ObservableArrayList<Player>()
-    val suggestedName = ObservableField<String>(suggestedName)
+    val suggestedName = ObservableField(suggestedName)
     val errorMsg = ObservableInt()
     private val allPlayers = emptyList<Player>().toMutableList()
 

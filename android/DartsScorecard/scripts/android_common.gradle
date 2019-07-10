@@ -41,6 +41,14 @@ android {
     }
 
     configurations.all {
+        resolutionStrategy {
+            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+            force "androidx.annotation:annotation:$xAnnotation"
+            force "androidx.arch.core:core-common:$xCoreCommon"
+            force "androidx.arch.core:core-runtime:$xCoreRuntime"
+            force "androidx.core:core:$xCore"
+            force "com.google.code.gson:gson:$gson"
+        }
     }
 }
 

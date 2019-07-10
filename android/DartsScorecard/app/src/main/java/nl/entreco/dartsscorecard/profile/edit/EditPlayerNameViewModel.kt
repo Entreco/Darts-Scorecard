@@ -29,8 +29,8 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
                                                   fetchExistingPlayersUsecase: FetchExistingPlayersUsecase) : BaseViewModel() {
 
     val isTyping = ObservableBoolean(false)
-    val name = ObservableField<String>("")
-    val favDouble = ObservableField<String>("")
+    val name = ObservableField("")
+    val favDouble = ObservableField("")
     val favDoubleIndex = ObservableInt()
     val errorMsg = ObservableInt()
     internal lateinit var initialProfileName: String

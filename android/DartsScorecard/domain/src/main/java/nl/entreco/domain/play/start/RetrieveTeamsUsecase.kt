@@ -28,8 +28,8 @@ class RetrieveTeamsUsecase @Inject constructor(private val playerRepository: Pla
             val players = ArrayList<Player>()
 
             val playerSplit = it.split(",")
-            playerSplit.forEach {
-                val dbPlayer = playerRepository.fetchById(it.toLong())
+            playerSplit.forEach { s ->
+                val dbPlayer = playerRepository.fetchById(s.toLong())
                 if(dbPlayer == null){
                     players.add(DeletedPlayer())
                 } else {

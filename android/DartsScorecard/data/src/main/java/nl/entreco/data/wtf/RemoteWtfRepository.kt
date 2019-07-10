@@ -22,7 +22,7 @@ class RemoteWtfRepository(private val db: FirebaseFirestore, private val logger:
 
         p0?.documents?.forEach { doc ->
             convertToFaqItem(doc)
-        }.also { onChange(ArrayList<WtfItem>(wtfItems.values)) }
+        }.also { onChange(ArrayList(wtfItems.values)) }
     }
 
     private fun convertToFaqItem(doc: DocumentSnapshot) {
@@ -46,7 +46,7 @@ class RemoteWtfRepository(private val db: FirebaseFirestore, private val logger:
 
     override fun subscribe(onChange: (List<WtfItem>) -> Unit): List<WtfItem> {
         this.onChange = onChange
-        return ArrayList<WtfItem>(wtfItems.values)
+        return ArrayList(wtfItems.values)
     }
 
     override fun unsubscribe() {

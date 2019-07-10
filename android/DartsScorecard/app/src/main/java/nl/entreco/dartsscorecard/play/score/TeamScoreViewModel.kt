@@ -24,12 +24,12 @@ class TeamScoreViewModel(val team: Team, startScore: Score,
                          private val handler: Handler = Handler(),
                          starter: Boolean) : BaseViewModel(), TeamScoreListener {
 
-    val finish = ObservableField<String>("")
+    val finish = ObservableField("")
     val showSets = ObservableBoolean(startScore.settings.numSets > 1)
     val nineDarter = ObservableBoolean(false)
     val started = ObservableBoolean(starter)
     val scored = ObservableInt(0)
-    val score = ObservableField<Score>(startScore)
+    val score = ObservableField(startScore)
     val currentTeam = ObservableBoolean()
     private var currentPlayer : Player = team.players[0]
 

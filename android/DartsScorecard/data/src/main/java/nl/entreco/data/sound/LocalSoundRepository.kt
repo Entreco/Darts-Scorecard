@@ -16,7 +16,7 @@ class LocalSoundRepository(private val context: Context,
                            private val mapper: SoundMapper) : SoundRepository {
 
     private val priorityNormal = 1
-    internal val queue: Deque<Int> = ArrayDeque<Int>()
+    internal val queue: Deque<Int> = ArrayDeque()
     internal val sounds: HashMap<Sound, Int> = hashMapOf()
     private val ready: HashMap<Sound, Int> = hashMapOf()
 

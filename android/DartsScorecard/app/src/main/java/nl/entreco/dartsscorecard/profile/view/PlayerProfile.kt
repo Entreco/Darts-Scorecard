@@ -10,6 +10,6 @@ import nl.entreco.domain.profile.Profile
 data class PlayerProfile(private val profile: Profile) {
     val id = profile.id
     val fav = ObservableInt(profile.prefs.favoriteDouble)
-    val name = ObservableField<String>(profile.name)
-    val image = ObservableField<String>(profile.image)
+    val name = ObservableField(profile.name)
+    val image = ObservableField(profile.image)
 }

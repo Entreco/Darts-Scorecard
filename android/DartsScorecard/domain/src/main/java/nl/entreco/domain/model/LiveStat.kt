@@ -62,7 +62,7 @@ data class LiveStat(val playerId: Long, val totalScore: Int, val nDarts: Int, va
     }
 
     private fun setDarts(liveStat: LiveStat): Map<Int, Int> {
-        val darts = HashMap<Int, Int>(setDarts)
+        val darts = HashMap(setDarts)
         liveStat.setDarts.forEach { (set, tot) ->
             val current = darts.getOrDefault(set, setDarts[set] ?: 0)
             darts[set] = current + tot
@@ -71,7 +71,7 @@ data class LiveStat(val playerId: Long, val totalScore: Int, val nDarts: Int, va
     }
 
     private fun setOuts(liveStat: LiveStat): Map<Int, Int> {
-        val outs = HashMap<Int, Int>(setOuts)
+        val outs = HashMap(setOuts)
         liveStat.setOuts.forEach { (set, tot) ->
             val current = outs.getOrDefault(set, setOuts[set] ?: 0)
             outs[set] = current + tot
@@ -80,7 +80,7 @@ data class LiveStat(val playerId: Long, val totalScore: Int, val nDarts: Int, va
     }
 
     private fun setLegs(liveStat: LiveStat): Map<Int, Int> {
-        val legs = HashMap<Int, Int>(setLegs)
+        val legs = HashMap(setLegs)
         liveStat.setLegs.forEach { (set, tot) ->
             val current = legs.getOrDefault(set, setLegs[set] ?: 0)
             legs[set] = current + tot

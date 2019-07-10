@@ -12,7 +12,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
     private val starters = emptyList<Team>().toMutableList()
     private var newMatchSetOrLeg: Boolean = false
 
-    var scores = emptyArray<Score>()
+    val scores
         get() = arbiter.getScores()
 
     fun start(startIndex: Int, teams: Array<Team>): Game {

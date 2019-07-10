@@ -34,5 +34,5 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation "androidx.test:runner:$xCoreTesting"
 }

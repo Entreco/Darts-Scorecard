@@ -10,7 +10,7 @@ import android.widget.AdapterView
  */
 class PlayerViewModel(id: Long, teamIndex: Int, name: String = "Player $teamIndex") {
     val playerId = ObservableLong(id)
-    val name = ObservableField<String>(name)
+    val name = ObservableField(name)
     val teamIndex = ObservableInt(teamIndex - 1)
 
     fun onTeamSelected(adapter: AdapterView<*>, index: Int) {

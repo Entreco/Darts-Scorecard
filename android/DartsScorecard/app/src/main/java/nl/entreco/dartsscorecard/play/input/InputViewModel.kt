@@ -30,9 +30,9 @@ class InputViewModel @Inject constructor(
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
-    val scoredTxt = ObservableField<String>("")
+    val scoredTxt = ObservableField("")
     val nextDescription = ObservableInt(R.string.empty)
-    val hintProvider = ObservableField<HintKeyProvider>(HintKeyProvider(toggle.get()))
+    val hintProvider = ObservableField(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
     val required = ObservableField<Score>()
     val finalTurn = ObservableField<Turn?>()

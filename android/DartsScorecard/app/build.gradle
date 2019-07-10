@@ -83,8 +83,8 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$xCoreTesting"
 
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation "androidx.test:runner:$xCoreTesting"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
 }
 
 apply plugin: 'com.google.gms.google-services'

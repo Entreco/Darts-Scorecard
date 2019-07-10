@@ -2,10 +2,8 @@ package nl.entreco.dartsscorecard.settings
 
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
 import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase

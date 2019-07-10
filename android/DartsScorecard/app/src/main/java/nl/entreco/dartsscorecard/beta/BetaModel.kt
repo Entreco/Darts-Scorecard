@@ -12,13 +12,13 @@ class BetaModel(val feature: Feature) {
 
     val total = format(feature.required)
     val votable = ObservableBoolean(feature.votes < feature.required)
-    val title = ObservableField<String>(feature.title)
-    val description = ObservableField<String>(feature.description)
-    val goal = ObservableField<String>("${feature.votes} / $total")
+    val title = ObservableField(feature.title)
+    val description = ObservableField(feature.description)
+    val goal = ObservableField("${feature.votes} / $total")
     val progress = ObservableFloat(((feature.votes.toFloat() / feature.required.toFloat())))
-    val image = ObservableField<String>(feature.image)
-    val remarks = ObservableField<String>(formatHtml(feature.remarks))
-    val video = ObservableField<String>(feature.video)
+    val image = ObservableField(feature.image)
+    val remarks = ObservableField(formatHtml(feature.remarks))
+    val video = ObservableField(feature.video)
 
     private fun format(value: Int): String {
         return when {

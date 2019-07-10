@@ -5,7 +5,6 @@ import android.view.View
 import com.google.android.gms.ads.MobileAds
 import nl.entreco.libads.Ads
 import nl.entreco.libads.ui.AdLoader
-import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import nl.entreco.shared.scopes.ActivityScope
 
 internal class AdMobAds(

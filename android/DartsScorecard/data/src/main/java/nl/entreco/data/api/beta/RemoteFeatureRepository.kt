@@ -24,7 +24,7 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
 
         p0?.documents?.forEach { doc ->
             convertToFeature(doc)
-        }.also { onChange(ArrayList<Feature>(features.values)) }
+        }.also { onChange(ArrayList(features.values)) }
     }
 
     private fun convertToFeature(doc: DocumentSnapshot) {
@@ -38,7 +38,7 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
 
     override fun subscribe(onChange: (List<Feature>) -> Unit): List<Feature> {
         this.onChange = onChange
-        return ArrayList<Feature>(features.values)
+        return ArrayList(features.values)
     }
 
     override fun submitVote(featureId: String, amount: Int) {
