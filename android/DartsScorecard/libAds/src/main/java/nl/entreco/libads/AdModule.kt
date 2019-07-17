@@ -8,11 +8,10 @@ import nl.entreco.libads.admob.AdMobInterstitials
 import nl.entreco.libads.ui.AdLoader
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import nl.entreco.shared.scopes.AppContext
-import javax.inject.Named
 
 @Module
 object AdModule {
-    
+
     @Provides
     @JvmStatic
     fun provideAds(@AppContext context: Context, fetch: FetchConsentUsecase): Ads {
@@ -22,12 +21,8 @@ object AdModule {
 
     @Provides
     @JvmStatic
-    fun provideInterstials(@AppContext context: Context): Interstitials = AdMobInterstitials(context)
+    fun provideInterstials(@AppContext context: Context): Interstitials =
+            AdMobInterstitials(context,
+                    context.resources.getString(R.string.setup_interstitial_unit_id))
 
-    @Provides
-    @JvmStatic
-    @Named("interstitialId")
-    fun provideInterstitialUnitId(@AppContext context: Context): String {
-        return context.resources.getString(R.string.setup_interstitial_unit_id)
-    }
 }

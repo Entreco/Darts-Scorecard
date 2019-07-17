@@ -5,22 +5,26 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import nl.entreco.libads.Interstitials
+import javax.inject.Named
 
-internal class AdMobInterstitials(context: Context) : Interstitials {
+internal class AdMobInterstitials(
+        context: Context,
+        @Named("interstitialId") private val interstitialId: String
+) : Interstitials {
     private val adRequest: AdRequest by lazy { AdRequest.Builder().build() }
     private val interstitial = InterstitialAd(context)
 
-    override fun init(interstitialId: String) {
+    init {
         interstitial.adUnitId = interstitialId
         interstitial.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
                 if (interstitial.isLoaded) {
                     interstitial.show()
                 }
             }
         }
-        load()
     }
 
     override fun show() {
