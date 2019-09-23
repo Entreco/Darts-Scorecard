@@ -51,7 +51,7 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            xSupport = '1.0.2',
+            xSupport = '1.1.0',
             daggerVersion = '2.23.1',
             xConstraint = '2.0.0-beta2',
             xAnnotation = '1.1.0',
@@ -62,13 +62,13 @@ ext {
             architecture = '1.1.1',
             room = '2.1.0',
             consent = '1.0.7',
-            lifecycle = '2.0.0',
+            lifecycle = '2.1.0',
             livedata = '2.0.0',
-            fbAds = '18.1.0',
-            fbCore = '17.0.0',
-            fbStore = '20.1.0',
-            fbConfig = '18.0.0',
-            fbDatabase = '18.0.0',
+            fbAds = '18.2.0',
+            fbCore = '17.2.0',
+            fbStore = '21.1.1',
+            fbConfig = '19.0.1',
+            fbDatabase = '19.1.0',
             glide = '4.9.0',
             circleImageView = '2.2.0',
             jelly = 'v1.0',
