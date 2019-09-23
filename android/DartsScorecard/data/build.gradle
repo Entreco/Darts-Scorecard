@@ -23,6 +23,7 @@ dependencies {
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "androidx.room:room-runtime:$room"
+    implementation "com.android.billingclient:billing:$playBilling"
 
     implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "androidx.exifinterface:exifinterface:1.0.0"
