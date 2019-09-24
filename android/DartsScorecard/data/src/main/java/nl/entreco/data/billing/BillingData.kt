@@ -38,7 +38,7 @@ sealed class InAppProducts(private val billingData: List<BillingData>) {
         return billingData
     }
 
-    private fun listOfProducts(): List<String> {
+    fun listOfProducts(): List<String> {
         return listOfDonations().map { it.productId }
     }
 

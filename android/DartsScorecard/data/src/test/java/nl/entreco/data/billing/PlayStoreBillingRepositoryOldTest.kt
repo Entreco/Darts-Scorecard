@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * Created by entreco on 18/02/2018.
  */
 @RunWith(MockitoJUnitRunner::class)
-class PlayStoreBillingRepositoryTest {
+class PlayStoreBillingRepositoryOldTest {
 
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockServiceConnection: BillingServiceConnection
@@ -30,7 +30,7 @@ class PlayStoreBillingRepositoryTest {
     @Mock private lateinit var mockBundle: Bundle
     @Mock private lateinit var mockDoneCallback: (Boolean) -> Unit
 
-    private lateinit var subject: PlayStoreBillingRepository
+    private lateinit var subject: PlayStoreBillingRepositoryOld
     private lateinit var expectedResponse: MakeDonationResponse
     private var expectedConsumtionResponse: Int = 0
     private var expectedDonation = emptyList<Donation>()
@@ -120,7 +120,7 @@ class PlayStoreBillingRepositoryTest {
     }
 
     private fun givenSubject() {
-        subject = PlayStoreBillingRepository(mockContext, mockServiceConnection)
+        subject = PlayStoreBillingRepositoryOld(mockContext, mockServiceConnection)
     }
 
     private fun whenBindingToBillingService() {

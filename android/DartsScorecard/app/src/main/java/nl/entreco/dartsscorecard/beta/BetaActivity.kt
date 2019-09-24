@@ -1,9 +1,7 @@
 package nl.entreco.dartsscorecard.beta
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -82,7 +80,7 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
     }
 
     override fun makeDonation(response: MakeDonationResponse) {
-        donate(this, response.intent.intentSender)
+        handleDonation(response)
     }
 
     override fun onDonationMade(donation: Donation) {
@@ -125,37 +123,21 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
         animator.onBackPressed() ?: super.onBackPressed()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when {
-            donateOk(requestCode, resultCode, data) -> donateViewModel.onMakeDonationSuccess(data)
-            resultCode == Activity.RESULT_CANCELED -> donateViewModel.onMakeDonationFailed(true)
-            requestCode == REQ_CODE_DONATE -> donateViewModel.onMakeDonationFailed(false)
-            else -> super.onActivityResult(requestCode, resultCode, data)
+    private fun handleDonation(result: MakeDonationResponse) {
+        when (result) {
+            is MakeDonationResponse.Purchased -> donateViewModel.onMakeDonationSuccess(result)
+            is MakeDonationResponse.Success   -> { /* Yeah, also consumed */ }
+            is MakeDonationResponse.Error     -> donateViewModel.onMakeDonationFailed(true)
+            is MakeDonationResponse.Unknown   -> donateViewModel.onMakeDonationFailed(false)
         }
     }
 
     companion object {
-
-        private const val REQ_CODE_DONATE = 180
 
         @JvmStatic
         fun launch(context: Context) {
             val intent = Intent(context, BetaActivity::class.java)
             context.startActivity(intent)
         }
-
-        @JvmStatic
-        fun donate(activity: Activity, sender: IntentSender) {
-            activity.startIntentSenderForResult(sender,
-                    REQ_CODE_DONATE,
-                    Intent(),
-                    Integer.valueOf(0),
-                    Integer.valueOf(0),
-                    Integer.valueOf(0))
-        }
-
-        private fun donateOk(requestCode: Int, resultCode: Int, data: Intent?) =
-                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra(
-                        "RESPONSE_CODE", -1) == 0
     }
 }

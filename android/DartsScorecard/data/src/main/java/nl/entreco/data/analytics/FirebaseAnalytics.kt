@@ -119,7 +119,7 @@ class FirebaseAnalytics(context: Context) : Analytics {
         return ecommerceBundle
     }
 
-    internal fun formatMicros(priceMicros: String): Double {
+    internal fun formatMicros(priceMicros: Long): Double {
         return try {
             priceMicros.toDouble() / 1000000
         } catch (invalidFormat: NumberFormatException) {

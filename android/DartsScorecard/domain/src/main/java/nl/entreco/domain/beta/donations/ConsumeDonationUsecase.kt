@@ -25,8 +25,13 @@ class ConsumeDonationUsecase @Inject constructor(private val billingRepository: 
             val productId = json.productId!!
             val orderId = json.orderId!!
 
-            val result = if(req.requiresConsumption) billingRepository.consume(token) else ConsumeDonationResponse.CONSUME_OK
-            onUi { done(ConsumeDonationResponse(result, productId, orderId)) }
+            if(req.requiresConsumption){
+                billingRepository.consume(token){
+                    onUi { done(ConsumeDonationResponse(it, productId, orderId)) }
+                }
+            } else {
+                onUi { done(ConsumeDonationResponse(ConsumeDonationResponse.CONSUME_OK, productId, orderId)) }
+            }
         }, fail)
     }
 

@@ -1,9 +1,9 @@
 package nl.entreco.domain.beta.donations
 
+import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
-import nl.entreco.domain.repository.BillingRepository
 import javax.inject.Inject
 
 /**
@@ -13,8 +13,9 @@ class MakeDonationUsecase @Inject constructor(private val billingRepository: Bil
 
     fun exec(req: MakeDonationRequest, done: (MakeDonationResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-            val response = billingRepository.donate(req.donation)
-            onUi { done(response) }
+            billingRepository.donate(req.donation) {
+                onUi { done(it) }
+            }
         }, fail)
     }
 }

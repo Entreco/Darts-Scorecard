@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
-import nl.entreco.data.billing.BillingServiceConnection
+import nl.entreco.data.billing.GooglePlayConnection
 import nl.entreco.data.billing.PlayStoreBillingRepository
 import nl.entreco.data.prefs.SharedAudioPrefRepo
 import nl.entreco.data.prefs.SharedRatingPrefRepo
@@ -64,13 +64,8 @@ class ViewModelModule(private val activity: FragmentActivity) {
 
     @Provides
     @ActivityScope
-    fun provideServiceConnection(): BillingServiceConnection {
-        return BillingServiceConnection()
-    }
-
-    @Provides
-    @ActivityScope
-    fun provideBillingRepository(@ActivityScope context: Context, @ActivityScope serviceConnection: BillingServiceConnection): BillingRepository {
-        return PlayStoreBillingRepository(context, serviceConnection)
+    fun provideBillingRepository(): BillingRepository {
+        val playConnection = GooglePlayConnection()
+        return PlayStoreBillingRepository(activity, playConnection)
     }
 }

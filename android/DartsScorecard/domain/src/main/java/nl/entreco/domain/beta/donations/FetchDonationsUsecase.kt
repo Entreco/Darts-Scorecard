@@ -1,9 +1,9 @@
 package nl.entreco.domain.beta.donations
 
+import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
-import nl.entreco.domain.repository.BillingRepository
 import javax.inject.Inject
 
 /**
@@ -16,11 +16,14 @@ class FetchDonationsUsecase @Inject constructor(private val billingRepository: B
 
             val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
             if (hasPreviouslyBoughtItems) {
-                val donations = billingRepository.fetchDonationsExclAds().sortedBy { it.priceMicros.toLong() }
-                onUi { done(FetchDonationsResponse(donations, true)) }
+                billingRepository.fetchDonationsExclAds { donations ->
+                    onUi { done(FetchDonationsResponse(donations.sortedBy { it.priceMicros }, true)) }
+                }
+
             } else {
-                val donations = billingRepository.fetchDonationsInclAds().sortedBy { it.priceMicros.toLong() }
-                onUi { done(FetchDonationsResponse(donations, false)) }
+                billingRepository.fetchDonationsInclAds { donations ->
+                    onUi { done(FetchDonationsResponse(donations.sortedBy { it.priceMicros }, false)) }
+                }
             }
         }, fail)
     }

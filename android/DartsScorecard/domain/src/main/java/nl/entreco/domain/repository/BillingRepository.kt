@@ -16,16 +16,16 @@ interface BillingRepository {
     fun unbind()
 
     @WorkerThread
-    fun fetchDonationsExclAds(): List<Donation>
+    fun fetchDonationsExclAds(done: (List<Donation>)->Unit)
 
     @WorkerThread
-    fun fetchDonationsInclAds(): List<Donation>
+    fun fetchDonationsInclAds(done: (List<Donation>)->Unit)
 
     @WorkerThread
-    fun donate(donation: Donation) : MakeDonationResponse
+    fun donate(donation: Donation, update:(MakeDonationResponse)->Unit)
 
     @WorkerThread
-    fun consume(token: String): Int
+    fun consume(token: String, done: (Int)->Unit)
 
     @WorkerThread
     fun fetchPurchasedItems(): List<String>
