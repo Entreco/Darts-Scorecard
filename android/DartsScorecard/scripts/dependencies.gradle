@@ -37,7 +37,6 @@ ext {
     kotlinVersion = '1.3.41'
     gradleVersion = '3.5.0'
     gmsVersion = '4.0.1'
-    dexCountVersion = '0.8.5'
     detektVersion = '1.0.0.RC7'
     jacocoCoverageVersion = '0.4.0'
     coverallsVersion = '2.8.2'
