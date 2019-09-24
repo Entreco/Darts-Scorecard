@@ -21,7 +21,7 @@ ext.gitCommit = { ->
 }
 
 ext.branchName = { ->
-    return "Gerwen"
+    return "Henderson"
 }
 
 ext.versionCode = { ->
