@@ -32,7 +32,6 @@ ext.versionName = { ->
     return "${gitTag()}-${branchName()}-${gitCommit()}"
 }
 
-
 ext {
     kotlinVersion = '1.3.41'
     gradleVersion = '3.5.0'

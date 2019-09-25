@@ -2,34 +2,17 @@ android.applicationVariants.all { variant ->
     def appName = "Dsc"
     variant.outputs.all { output ->
         outputFileName = "${appName}-${variant.versionName}.apk"
+        println outputFileName
     }
 }
 android.defaultConfig{
     def appName = "Dsc"
-    setProperty("archivesBaseName", "${appName}-${versionName}")
-}
-
-task showVersionName {
-    doLast {
-        println android.defaultConfig.versionName
-    }
-}
-
-task showApiVersion {
-    doLast {
-        def config = rootProject.extensions.getByName("ext")
-        println config.androidTargetSdkVersion
-    }
-}
-
-task showAppName {
-    doLast {
-        println android.applicationVariants[0].outputs[0].outputFileName
-    }
+    archivesBaseName = "${appName}-${versionName}"
+    println archivesBaseName
 }
 
 task showBundleName {
     doLast {
-        println "Dsc-${android.defaultConfig.versionName}.aab"
+        println "Dsc-${android.defaultConfig.versionName}-release.aab"
     }
 }
