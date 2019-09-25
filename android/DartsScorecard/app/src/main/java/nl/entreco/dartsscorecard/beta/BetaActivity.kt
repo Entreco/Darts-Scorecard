@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -125,11 +126,17 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
 
     private fun handleDonation(result: MakeDonationResponse) {
         when (result) {
-            is MakeDonationResponse.Purchased -> donateViewModel.onMakeDonationSuccess(result)
-            is MakeDonationResponse.Success   -> { /* Yeah, also consumed */ }
-            is MakeDonationResponse.Error     -> donateViewModel.onMakeDonationFailed(true)
-            is MakeDonationResponse.Unknown   -> donateViewModel.onMakeDonationFailed(false)
+            is MakeDonationResponse.Success      -> { /* Yeah, also consumed */ }
+            is MakeDonationResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
+            is MakeDonationResponse.AlreadyOwned -> failAndToast("Donation Already Owned")
+            is MakeDonationResponse.Cancelled    -> failAndToast("Donation Cancelled")
+            is MakeDonationResponse.Error        -> failAndToast("Donation Error:$result")
         }
+    }
+
+    private fun failAndToast(message: String) {
+        donateViewModel.onMakeDonationFailed(message)
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {

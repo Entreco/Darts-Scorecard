@@ -1,14 +1,13 @@
 package nl.entreco.domain.beta.donations
 
-import android.app.PendingIntent
-
 /**
  * Created by entreco on 09/02/2018.
  */
-sealed class MakeDonationResponse{
-    object Purchased : MakeDonationResponse()
+sealed class MakeDonationResponse {
+    data class Error(val code: Int? = -180) : MakeDonationResponse()
+    data class Purchased(val purchaseToken: String, val productId: String, val orderId: String) : MakeDonationResponse()
     object Success : MakeDonationResponse()
-    object Error : MakeDonationResponse()
     object Cancelled : MakeDonationResponse()
-    object Unknown : MakeDonationResponse()
+    object Pending : MakeDonationResponse()
+    object AlreadyOwned : MakeDonationResponse()
 }

@@ -3,9 +3,11 @@ package nl.entreco.data.billing
 import android.app.Activity
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import nl.entreco.domain.beta.Donation
@@ -71,28 +73,32 @@ class PlayStoreBillingRepository(
                 .build()
 
         val responseCode = playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
-        when (responseCode?.responseCode) {
-            BillingClient.BillingResponseCode.OK            -> update(MakeDonationResponse.Success)
-            BillingClient.BillingResponseCode.ERROR         -> update(MakeDonationResponse.Error)
-            BillingClient.BillingResponseCode.USER_CANCELED -> update(MakeDonationResponse.Cancelled)
-            else                                            -> update(MakeDonationResponse.Unknown)
+        when (val code = responseCode?.responseCode) {
+            BillingClient.BillingResponseCode.OK                 -> update(MakeDonationResponse.Success)
+            BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakeDonationResponse.Cancelled)
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> update(MakeDonationResponse.AlreadyOwned)
+            else                                                 -> update(MakeDonationResponse.Error(code))
         }
     }
 
     override fun consume(token: String, done: (Int) -> Unit) {
-        val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(token).build()
+        val consumeParams = ConsumeParams.newBuilder()
+                .setPurchaseToken(token)
+                .build()
         playConnection.getClient()?.consumeAsync(consumeParams) { result, token ->
             done(result.responseCode)
         }
+    }
+
+    override fun acknowledge(token: String, done: (Int) -> Unit) {
+        playConnection.acknowledge(token)
     }
 
     override fun fetchPurchasedItems(): List<String> {
         val purchases = FetchPurchasesData()
         val result = playConnection.getClient()?.queryPurchases(purchases.type())
         return if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-            result.purchasesList.map { it.sku }
-        } else {
-            emptyList()
-        }
+            result.purchasesList.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }.map { it.sku }
+        } else throw Throwable("Unable to getPurchases(), $result")
     }
 }

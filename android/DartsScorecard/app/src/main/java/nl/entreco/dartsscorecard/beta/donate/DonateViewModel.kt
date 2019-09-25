@@ -52,16 +52,11 @@ class DonateViewModel @Inject constructor(
         donateCallback?.makeDonation(response)
     }
 
-    fun onMakeDonationSuccess(data: MakeDonationResponse) {
-        val purchaseData = "todo purchase data"
-        val dataSignature = "data signature"
-        if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
-        else {
-            analytics.trackAchievement("Donation $data")
-            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature, requiresConsumption.get()),
-                    onConsumeDonationSuccess(),
-                    onConsumeDonationFailed())
-        }
+    fun onMakeDonationSuccess(data: MakeDonationResponse.Purchased) {
+        analytics.trackAchievement("Donation $data")
+        consumeDonation.exec(ConsumeDonationRequest(data.purchaseToken, data.productId, data.orderId, requiresConsumption.get()),
+                onConsumeDonationSuccess(),
+                onConsumeDonationFailed())
     }
 
     private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
@@ -99,8 +94,8 @@ class DonateViewModel @Inject constructor(
 
     private fun donationWithId(response: ConsumeDonationResponse) = donations.firstOrNull { it.sku == response.productId }
 
-    fun onMakeDonationFailed(cancelled: Boolean) {
-        analytics.trackPurchaseFailed(productId, if (cancelled) "Donation ActivityResult cancelled" else "Donation ActivityResult failed")
+    fun onMakeDonationFailed(msg: String) {
+        analytics.trackPurchaseFailed(productId, msg)
         loading.set(false)
         productId = ""
         requiresConsumption.set(false)
