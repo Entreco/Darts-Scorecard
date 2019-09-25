@@ -56,9 +56,10 @@ class GooglePlayConnection : PurchasesUpdatedListener {
                 handlePurchase(purchase)
             }
         } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-            // Handle an error caused by a user cancelling the purchase flow.
+            updater.invoke(MakeDonationResponse.Cancelled)
         } else {
             // Handle any other error codes.
+            updater.invoke(MakeDonationResponse.Error(billingResult.responseCode))
         }
     }
 
