@@ -33,13 +33,13 @@ class PlayStoreBillingRepository(
 
     @WorkerThread
     override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit) {
-        val donations = FetchDonationsTestData()
+        val donations = FetchDonationsData()
         return fetchProducts(donations, done)
     }
 
     @WorkerThread
     override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit) {
-        val donations = FetchDonationsInclAdsTestData()
+        val donations = FetchDonationsInclAdsData()
         return fetchProducts(donations, done)
     }
 
