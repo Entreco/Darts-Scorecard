@@ -62,6 +62,23 @@
                 style="@style/EditPlayer.Middle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/choose_available_bot"
+                android:visibility="@{viewModel.availableBots.isEmpty() ? View.GONE: View.VISIBLE}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/score_name"
+                android:orientation="vertical"
+                app:clicker="@{navigator}"
+                app:availableBots="@{viewModel.availableBots}"
+                android:visibility="@{viewModel.availableBots.isEmpty() ? View.GONE: View.VISIBLE}" />
+
+            <TextView
+                style="@style/EditPlayer.Middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/choose_existing_player"
                 android:visibility="@{viewModel.filteredPlayers.isEmpty() ? View.GONE: View.VISIBLE}" />
 

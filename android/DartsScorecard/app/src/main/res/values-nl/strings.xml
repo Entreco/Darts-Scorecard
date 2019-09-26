@@ -52,6 +52,7 @@
     <!-- Setup -->
     <string name="select_players">Selecteer spelers</string>
     <string name="choose_player_name">Kies spelersnaam</string>
+    <string name="choose_available_bot">Speel tegen een Robot</string>
     <string name="choose_existing_player">Of kies een bestaande speler</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Kies x01 score</string>

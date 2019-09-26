@@ -24,8 +24,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class LocalSoundRepositoryTest {
 
     private val normalPriority = 1
-    private val fx0 = Fx00()
-    private val fx1 = Fx01()
+    private val fx0 = Fx00
+    private val fx1 = Fx01
 
     @Mock private lateinit var mockAudioRepo: AudioPrefRepository
     @Mock private lateinit var mockSoundPool: SoundPool
@@ -49,7 +49,7 @@ class LocalSoundRepositoryTest {
     @Test
     fun `it should load correct sound`() {
         givenSubject()
-        whenPlaying(Fx01())
+        whenPlaying(Fx01)
         thenSoundIsLoaded(R.raw.dsc_pro1)
     }
 
