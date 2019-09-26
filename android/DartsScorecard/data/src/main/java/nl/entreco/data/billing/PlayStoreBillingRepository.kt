@@ -33,13 +33,13 @@ class PlayStoreBillingRepository(
 
     @WorkerThread
     override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit) {
-        val donations = FetchDonationsData()
+        val donations = FetchDonationsTestData()
         return fetchProducts(donations, done)
     }
 
     @WorkerThread
     override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit) {
-        val donations = FetchDonationsInclAdsData()
+        val donations = FetchDonationsInclAdsTestData()
         return fetchProducts(donations, done)
     }
 
@@ -64,7 +64,6 @@ class PlayStoreBillingRepository(
 
     @UiThread
     override fun donate(donation: Donation, update: (MakeDonationResponse) -> Unit) {
-
         playConnection.donation(update)
 
         // Retrieve a value for "skuDetails" by calling querySkuDetailsAsync().
@@ -74,7 +73,7 @@ class PlayStoreBillingRepository(
 
         val responseCode = playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
         when (val code = responseCode?.responseCode) {
-            BillingClient.BillingResponseCode.OK                 -> update(MakeDonationResponse.Success)
+            BillingClient.BillingResponseCode.OK                 -> {}
             BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakeDonationResponse.Cancelled)
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> update(MakeDonationResponse.AlreadyOwned)
             else                                                 -> update(MakeDonationResponse.Error(code))

@@ -1,12 +1,20 @@
 package nl.entreco.data.billing
 
+import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Bundle
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetailsResponseListener
 import com.android.vending.billing.IInAppBillingService
 import com.google.gson.GsonBuilder
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Donation
@@ -20,21 +28,24 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 18/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class PlayStoreBillingRepositoryOldTest {
 
-    @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockServiceConnection: BillingServiceConnection
-    @Mock private lateinit var mockInappBillingService: IInAppBillingService
-    @Mock private lateinit var mockPendingIntent: PendingIntent
-    @Mock private lateinit var mockBundle: Bundle
-    @Mock private lateinit var mockDoneCallback: (Boolean) -> Unit
+    private val mockBillingClient: BillingClient = mock()
+    private val mockContext: Activity = mock()
+    private val mockServiceConnection: GooglePlayConnection = mock{
+        on { getClient() } doReturn mockBillingClient
+    }
+    private val mockInappBillingService: IInAppBillingService = mock()
+    private val mockPendingIntent: PendingIntent = mock()
+    private val mockBundle: Bundle = mock()
+    private val mockDoneCallback: (Boolean) -> Unit = mock()
 
-    private lateinit var subject: PlayStoreBillingRepositoryOld
+    private lateinit var subject: PlayStoreBillingRepository
     private lateinit var expectedResponse: MakeDonationResponse
     private var expectedConsumtionResponse: Int = 0
-    private var expectedDonation = emptyList<Donation>()
     private var expectedPurchasedItems = emptyList<String>()
+
+    private var mockFetchDone : (List<Donation>)->Unit = mock()
 
     private val gson = GsonBuilder().create()
 
@@ -120,7 +131,7 @@ class PlayStoreBillingRepositoryOldTest {
     }
 
     private fun givenSubject() {
-        subject = PlayStoreBillingRepositoryOld(mockContext, mockServiceConnection)
+        subject = PlayStoreBillingRepository(mockContext, mockServiceConnection)
     }
 
     private fun whenBindingToBillingService() {
@@ -132,13 +143,9 @@ class PlayStoreBillingRepositoryOldTest {
     }
 
     private fun whenFetchingDonationsSucceeds() {
-        val product = gson.toJson(DonationApiData("10_feature_votes", "price", "title", "desc", "$", "120000"))
-
-        whenever(mockBundle.getStringArrayList("DETAILS_LIST")).thenReturn(arrayListOf(product))
-        whenever(mockInappBillingService.getSkuDetails(any(), eq(null), any(), any())).thenReturn(mockBundle)
-        whenever(mockServiceConnection.getService()).thenReturn(mockInappBillingService)
-
-        expectedDonation = subject.fetchDonationsExclAds()
+        val queryCaptor = argumentCaptor<(BillingResult, List<SkuDetails>)->Unit>()
+        subject.fetchDonationsExclAds(mockFetchDone)
+        verify(mockBillingClient).querySkuDetailsAsync(any(), queryCaptor.capture())
     }
 
     private fun whenFetchingDonationsFails() {

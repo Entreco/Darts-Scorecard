@@ -66,28 +66,9 @@ class FetchDonationsData : InAppProducts(listOf(Donate10Votes(), Donate20Votes()
 class FetchDonationsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
 class FetchDonationsInclAdsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
 
-class MakeDonationData(private val donation: Donation) {
-
-    fun sku(): String {
-        return donation.sku
-    }
-
-    fun type(): String {
-        return type
-    }
-
-    fun payload(): String {
-        return (0..100).joinToString { chars[Random().nextInt(chars.size - 1)].toString() }
-    }
-}
-
 class FetchPurchasesData {
     fun type(): String {
         return type
-    }
-
-    fun token(): String {
-        return "unused token"
     }
 }
 
