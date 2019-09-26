@@ -33,6 +33,16 @@ object EditPlayerBindings {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("availableBots", "clicker")
+    fun showAvailableBots(view: ViewGroup, players: List<Player>, clicker: ExistingPlayerSelectedClicker) {
+        view.removeAllViews()
+        players.forEach {
+            val binding = DataBindingUtil.inflate<ExistingPlayerViewBinding>(LayoutInflater.from(view.context), R.layout.existing_player_view, view, false)
+            bind(binding, it, clicker, view)
+        }
+    }
+
     internal fun bind(binding: ExistingPlayerViewBinding, player: Player, clicker: ExistingPlayerSelectedClicker, view: ViewGroup) {
         binding.player = player
         binding.clicker = clicker

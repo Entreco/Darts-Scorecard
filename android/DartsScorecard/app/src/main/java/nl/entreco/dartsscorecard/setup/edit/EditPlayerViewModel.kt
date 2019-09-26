@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.*
 import javax.inject.Inject
@@ -18,19 +19,26 @@ import javax.inject.Named
 class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: CreatePlayerUsecase,
                                               @Named("otherPlayers") private val otherPlayers: LongArray,
                                               @Named("suggestion") suggestedName: String,
-                                              fetchExistingPlayersUsecase: FetchExistingPlayersUsecase)
+                                              fetchExistingPlayersUsecase: FetchExistingPlayersUsecase,
+                                              fetchBotsUsecase: FetchBotsUsecase)
     : BaseViewModel() {
 
     val filteredPlayers = ObservableArrayList<Player>()
+    val availableBots = ObservableArrayList<Player>()
     val suggestedName = ObservableField(suggestedName)
     val errorMsg = ObservableInt()
     private val allPlayers = emptyList<Player>().toMutableList()
+    private val allBots = emptyList<Player>().toMutableList()
 
     init {
         fetchExistingPlayersUsecase.exec(
                 { response -> onPlayersRetrieved(response.players) },
                 { onPlayersFailed() }
         )
+
+        fetchBotsUsecase.exec(
+                { response -> onBotsRetrieved(response.bots)},
+                { onBotsFailed() })
     }
 
     private fun onPlayersFailed() {
@@ -44,6 +52,16 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         allPlayers.addAll(players)
         filteredPlayers.addAll(remainingPlayers)
         filter("")
+    }
+
+    private fun onBotsFailed(){
+        allBots.clear()
+    }
+
+    private fun onBotsRetrieved(bots: List<Player>) {
+        val remainingPlayers = bots.filterNot { otherPlayers.contains(it.id) }
+        allBots.addAll(bots)
+        availableBots.addAll(remainingPlayers)
     }
 
     fun filter(text: CharSequence) {
