@@ -59,14 +59,15 @@
                     layout="@layout/include_setup_settings"
                     app:viewModel="@{settingsViewModel}" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    style="@style/Setup.Btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.onStartPressed(navigator, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
-                    android:text="@string/cont" />
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Setup.Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="@{() -> viewModel.onStartPressed(navigator, settingsViewModel.setupRequest() ,playersViewModel.setupTeams())}"
+            android:text="@string/cont" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
