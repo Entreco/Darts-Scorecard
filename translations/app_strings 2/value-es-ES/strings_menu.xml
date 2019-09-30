@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <string name="menu_title_delete">Eliminar partida</string>
+    <string name="menu_title_swap">Cambiar tema</string>
+    <string name="menu_music_swap">Música de fondo</string>
+    <string name="menu_sound_swap">Comentarista</string>
+    <string name="menu_title_done">Hecho</string>
+    <string name="menu_profile_edit">Editar</string>
+</resources>
