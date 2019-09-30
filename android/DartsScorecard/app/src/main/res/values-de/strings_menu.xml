@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <string name="menu_title_delete">Spiel löschen</string>
+    <string name="menu_title_swap">Motiv tauschen</string>
+    <string name="menu_music_swap">Hintergrundmusik</string>
+    <string name="menu_sound_swap">Mastercaller</string>
+    <string name="menu_title_done">Erledigt</string>
+    <string name="menu_profile_edit">Bearbeiten</string>
+</resources>
