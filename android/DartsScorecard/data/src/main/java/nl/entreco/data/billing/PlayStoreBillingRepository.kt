@@ -3,7 +3,6 @@ package nl.entreco.data.billing
 import android.app.Activity
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ConsumeParams
@@ -34,30 +33,34 @@ class PlayStoreBillingRepository(
     @WorkerThread
     override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit) {
         val donations = FetchDonationsData()
-        return fetchProducts(donations, done)
+        fetchProducts(donations, done)
     }
 
     @WorkerThread
     override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit) {
         val donations = FetchDonationsInclAdsData()
-        return fetchProducts(donations, done)
+        fetchProducts(donations, done)
     }
 
     @WorkerThread
     private fun fetchProducts(donations: InAppProducts, done: (List<Donation>) -> Unit) {
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(donations.listOfProducts()).setType(BillingClient.SkuType.INAPP)
-        playConnection.getClient()?.querySkuDetailsAsync(params.build()) { result, skuDetailsList ->
-            if (result.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
-                val items = skuDetailsList.map { details ->
-                    val votes = donations.getVotes(details.sku)
-                    val donation = Donation(details.title, details.description, details.sku, details.price, votes, details.priceCurrencyCode, details.priceAmountMicros)
-                    productList.putIfAbsent(details.sku, details)
-                    donation
+        val client = playConnection.getClient()
+        if (client == null) throw Throwable("Unable to retrieve donations, play client == null, $params")
+        else {
+            client.querySkuDetailsAsync(params.build()) { result, skuDetailsList ->
+                if (result.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                    val items = skuDetailsList.map { details ->
+                        val votes = donations.getVotes(details.sku)
+                        val donation = Donation(details.title, details.description, details.sku, details.price, votes, details.priceCurrencyCode, details.priceAmountMicros)
+                        productList.putIfAbsent(details.sku, details)
+                        donation
+                    }
+                    done(items)
+                } else {
+                    throw Throwable("Unable to retrieve donations, $params")
                 }
-                done(items)
-            } else {
-                throw Throwable("Unable to retrieve donations, $params")
             }
         }
     }
@@ -73,7 +76,7 @@ class PlayStoreBillingRepository(
 
         val responseCode = playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
         when (val code = responseCode?.responseCode) {
-            BillingClient.BillingResponseCode.OK                 -> {}
+            BillingClient.BillingResponseCode.OK                 -> { /** Flow launched, we'll get a callback in onPurchasesUpdated() */ }
             BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakeDonationResponse.Cancelled)
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> update(MakeDonationResponse.AlreadyOwned)
             else                                                 -> update(MakeDonationResponse.Error(code))
@@ -84,7 +87,7 @@ class PlayStoreBillingRepository(
         val consumeParams = ConsumeParams.newBuilder()
                 .setPurchaseToken(token)
                 .build()
-        playConnection.getClient()?.consumeAsync(consumeParams) { result, token ->
+        playConnection.getClient()?.consumeAsync(consumeParams) { result, _ ->
             done(result.responseCode)
         }
     }
