@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <string name="app_name" translatable="false">Darts Scorecard</string>
 
     <!-- General Darts -->
@@ -8,8 +9,8 @@
     <string name="set">Satz</string>
     <string name="leg">Leg</string>
     <string name="no_score">Kein Ergebnis</string>
-    <string name="bust">Überwurf</string>
-    <string name="undo">Rückgängig machen</string>
+    <string name="bust">Bust</string>
+    <string name="undo">Rückgängig</string>
     <string name="tap_to_resume">Tippen, um fortzufahren</string>
     <string name="resume">Fortsetzen</string>
 
