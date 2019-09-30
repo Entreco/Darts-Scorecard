@@ -1,108 +1,106 @@
 package nl.entreco.data.billing
 
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
+import android.app.Activity
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
-import com.google.gson.GsonBuilder
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetailsParams
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakeDonationResponse
 import nl.entreco.domain.repository.BillingRepository
 
-/**
- * Created by entreco on 08/02/2018.
- */
-class PlayStoreBillingRepository(private val context: Context, private val service: BillingServiceConnection) : BillingRepository {
+class PlayStoreBillingRepository(
+        private val activityContext: Activity,
+        private val playConnection: GooglePlayConnection
+) : BillingRepository {
 
-    companion object {
-        private const val BILLING_RESPONSE_RESULT_OK = 0
-        private const val BILLING_INTENT = "com.android.vending.billing.InAppBillingService.BIND"
-        private const val BILLING_PACKAGE = "com.android.vending"
-        private const val FETCH_RESPONSE_CODE = "RESPONSE_CODE"
-        private const val EXTRA_DETAILS_LIST = "DETAILS_LIST"
-        private const val BUY_RESPONSE_CODE = "RESPONSE_CODE"
-        private const val EXTRA_BUY_INTENT = "BUY_INTENT"
-        private const val QUERY_RESPONSE_CODE = "RESPONSE_CODE"
-        private const val EXTRA_INAPP_PURCHASE_ITEM_LIST = "INAPP_PURCHASE_ITEM_LIST"
-    }
+    private val productList: MutableMap<String, SkuDetails> = mutableMapOf()
 
-    private val gson by lazy { GsonBuilder().create() }
-    private val apiVersion = 5
-    private val packageName = context.packageName
-
-    @UiThread
     override fun bind(done: (Boolean) -> Unit) {
-        service.setCallback(done)
-        val intent = Intent(BILLING_INTENT)
-        intent.`package` = BILLING_PACKAGE
-        context.bindService(intent, service, Context.BIND_AUTO_CREATE)
+        playConnection.setCallback(done)
+        playConnection.onServiceConnected(activityContext)
+    }
+
+    override fun unbind() {
+        playConnection.setCallback { }
+        playConnection.onServiceDisconnected()
+    }
+
+    @WorkerThread
+    override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit) {
+        val donations = FetchDonationsData()
+        fetchProducts(donations, done)
+    }
+
+    @WorkerThread
+    override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit) {
+        val donations = FetchDonationsInclAdsData()
+        fetchProducts(donations, done)
+    }
+
+    @WorkerThread
+    private fun fetchProducts(donations: InAppProducts, done: (List<Donation>) -> Unit) {
+        val params = SkuDetailsParams.newBuilder()
+        params.setSkusList(donations.listOfProducts()).setType(BillingClient.SkuType.INAPP)
+        val client = playConnection.getClient()
+        if (client == null) throw Throwable("Unable to retrieve donations, play client == null, $params")
+        else {
+            client.querySkuDetailsAsync(params.build()) { result, skuDetailsList ->
+                if (result.responseCode == BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
+                    val items = skuDetailsList.map { details ->
+                        val votes = donations.getVotes(details.sku)
+                        val donation = Donation(details.title, details.description, details.sku, details.price, votes, details.priceCurrencyCode, details.priceAmountMicros)
+                        productList.putIfAbsent(details.sku, details)
+                        donation
+                    }
+                    done(items)
+                } else {
+                    throw Throwable("Unable to retrieve donations, $params")
+                }
+            }
+        }
     }
 
     @UiThread
-    override fun unbind() {
-        service.setCallback {}
-        context.unbindService(service)
-    }
+    override fun donate(donation: Donation, update: (MakeDonationResponse) -> Unit) {
+        playConnection.donation(update)
 
-    @WorkerThread
-    override fun fetchDonationsExclAds(): List<Donation> {
-        val donations = FetchDonationsData()
-        return fetchProducts(donations)
-    }
+        // Retrieve a value for "skuDetails" by calling querySkuDetailsAsync().
+        val flowParams = BillingFlowParams.newBuilder()
+                .setSkuDetails(productList[donation.sku])
+                .build()
 
-    @WorkerThread
-    override fun fetchDonationsInclAds(): List<Donation> {
-        val donations = FetchDonationsInclAdsData()
-        return fetchProducts(donations)
-    }
-
-    @WorkerThread
-    private fun fetchProducts(donations: InAppProducts): List<Donation> {
-        val bundle = service.getService()?.getSkuDetails(apiVersion, packageName, donations.type(), donations.skuBundle())
-
-        return if (bundle?.getInt(FETCH_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-
-            bundle.getStringArrayList(EXTRA_DETAILS_LIST)!!.mapNotNull { response ->
-                val donation = gson.fromJson(response, DonationApiData::class.java)
-                val votes = donations.getVotes(donation.productId)
-
-                Donation(donation.title, donation.description, donation.productId, donation.price, votes, donation.priceCurrencyCode, donation.priceAmountMicros)
-            }.filter { donations.contains(it.sku) }
-        } else {
-            throw Throwable("Unable to retrieve donations, $bundle")
+        val responseCode = playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
+        when (val code = responseCode?.responseCode) {
+            BillingClient.BillingResponseCode.OK                 -> { /** Flow launched, we'll get a callback in onPurchasesUpdated() */ }
+            BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakeDonationResponse.Cancelled)
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> update(MakeDonationResponse.AlreadyOwned)
+            else                                                 -> update(MakeDonationResponse.Error(code))
         }
     }
 
-    @WorkerThread
-    override fun donate(donation: Donation): MakeDonationResponse {
-        val buy = MakeDonationData(donation)
-        val payload = buy.payload()
-        val bundle = service.getService()?.getBuyIntent(apiVersion, packageName, buy.sku(), buy.type(), payload)
-
-        return if (bundle?.getInt(BUY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-            val intent: PendingIntent = bundle.getParcelable(EXTRA_BUY_INTENT)!!
-
-            MakeDonationResponse(intent, payload)
-        } else {
-            throw Throwable("Unable to getBuyIntent() $bundle")
+    override fun consume(token: String, done: (Int) -> Unit) {
+        val consumeParams = ConsumeParams.newBuilder()
+                .setPurchaseToken(token)
+                .build()
+        playConnection.getClient()?.consumeAsync(consumeParams) { result, _ ->
+            done(result.responseCode)
         }
     }
 
-    @WorkerThread
-    override fun consume(token: String): Int {
-        return service.getService()?.consumePurchase(apiVersion, packageName, token)!!
+    override fun acknowledge(token: String, done: (Int) -> Unit) {
+        playConnection.acknowledge(token)
     }
 
-    @WorkerThread
     override fun fetchPurchasedItems(): List<String> {
         val purchases = FetchPurchasesData()
-        val bundle = service.getService()?.getPurchases(apiVersion, packageName, purchases.type(), purchases.token())
-
-        return if (bundle?.getInt(QUERY_RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-            bundle.getStringArrayList(EXTRA_INAPP_PURCHASE_ITEM_LIST)!!
-        } else {
-            throw Throwable("Unable to getPurchases(), $bundle")
-        }
+        val result = playConnection.getClient()?.queryPurchases(purchases.type())
+        return if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+            result.purchasesList.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }.map { it.sku }
+        } else throw Throwable("Unable to getPurchases(), $result")
     }
 }

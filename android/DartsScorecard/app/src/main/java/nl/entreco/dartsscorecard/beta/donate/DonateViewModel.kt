@@ -1,15 +1,21 @@
 package nl.entreco.dartsscorecard.beta.donate
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import android.content.Intent
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableBoolean
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.beta.donations.*
+import nl.entreco.domain.beta.donations.ConsumeDonationRequest
+import nl.entreco.domain.beta.donations.ConsumeDonationResponse
+import nl.entreco.domain.beta.donations.ConsumeDonationUsecase
+import nl.entreco.domain.beta.donations.FetchDonationsResponse
+import nl.entreco.domain.beta.donations.FetchDonationsUsecase
+import nl.entreco.domain.beta.donations.MakeDonationRequest
+import nl.entreco.domain.beta.donations.MakeDonationResponse
+import nl.entreco.domain.beta.donations.MakeDonationUsecase
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -46,16 +52,11 @@ class DonateViewModel @Inject constructor(
         donateCallback?.makeDonation(response)
     }
 
-    fun onMakeDonationSuccess(data: Intent?) {
-        val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
-        val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-        if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
-        else {
-            analytics.trackAchievement("Donation $data")
-            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature, requiresConsumption.get()),
-                    onConsumeDonationSuccess(),
-                    onConsumeDonationFailed())
-        }
+    fun onMakeDonationSuccess(data: MakeDonationResponse.Purchased) {
+        analytics.trackAchievement("Donation $data")
+        consumeDonation.exec(ConsumeDonationRequest(data.purchaseToken, data.productId, data.orderId, requiresConsumption.get()),
+                onConsumeDonationSuccess(),
+                onConsumeDonationFailed())
     }
 
     private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
@@ -68,7 +69,7 @@ class DonateViewModel @Inject constructor(
     private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
         when (response.resultCode) {
             ConsumeDonationResponse.CONSUME_OK -> donationDone(response)
-            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
+            else                               -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
         }
 
         loading.set(false)
@@ -93,8 +94,8 @@ class DonateViewModel @Inject constructor(
 
     private fun donationWithId(response: ConsumeDonationResponse) = donations.firstOrNull { it.sku == response.productId }
 
-    fun onMakeDonationFailed(cancelled: Boolean) {
-        analytics.trackPurchaseFailed(productId, if(cancelled) "Donation ActivityResult cancelled" else "Donation ActivityResult failed")
+    fun onMakeDonationFailed(msg: String) {
+        analytics.trackPurchaseFailed(productId, msg)
         loading.set(false)
         productId = ""
         requiresConsumption.set(false)

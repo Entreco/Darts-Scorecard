@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply from: '../scripts/coverage.gradle'
 apply from: '../scripts/android_common.gradle'
 apply from: '../scripts/versioning.gradle'
@@ -74,7 +73,6 @@ dependencies {
 
     // Leaks
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
 
     // Test
     testImplementation "junit:junit:$junit"

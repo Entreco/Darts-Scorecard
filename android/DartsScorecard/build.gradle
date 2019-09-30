@@ -12,7 +12,6 @@ buildscript {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.gms:google-services:$gmsVersion"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$dexCountVersion"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
         classpath "com.palantir:jacoco-coverage:$jacocoCoverageVersion"
         classpath "io.fabric.tools:gradle:$fabricVersion"

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <string name="app_name" translatable="false">Darts Scorecard</string>
+
+    <!-- General Darts -->
+    <string name="first_to">Primero a %1$s</string>
+    <string name="single_mode">individual</string>
+    <string name="all_mode">total</string>
+    <string name="set">Set</string>
+    <string name="leg">Partido</string>
+    <string name="no_score">Sin puntuación</string>
+    <string name="bust">Bust</string>
+    <string name="undo">Deshacer</string>
+    <string name="tap_to_resume">Toca para reanudar</string>
+    <string name="resume">Reanudar</string>
+
+    <!-- Title -->
+    <string name="title_create_profile">Crear perfil</string>
+    <string name="title_select_profile">Seleccionar un perfil</string>
+    <string name="title_select_player">Seleccionar jugador</string>
+    <string name="title_edit_profile">Editar perfil</string>
+    <string name="title_setup">Configurar Partida 01</string>
+    <string name="title_beta">Funciones beta</string>
+    <string name="title_settings">Ajustes</string>
+    <string name="title_wtf">@string/wtf</string>
+    <string name="title_hiscores">Records</string>
+
+    <!-- Launch -->
+    <string name="resume_x01">@string/resume</string>
+    <string name="play_x01">Comenzar nuevo 01</string>
+    <string name="profiles">Administrar perfiles</string>
+    <string name="hiscores">Records</string>
+    <string name="beta">Nuevas características</string>
+    <string name="settings">Configuraciones</string>
+    <string name="wtf">Preguntas frecuentes</string>
+    <string name="stream_start">Iniciar transmisión</string>
+    <string name="stream_stop">Pausar Retransmisión</string>
+    <string name="msg_permissions">Se necesita acceso a la cámara y al audio para transmitir</string>
+    <string name="error_permissions_couldnt_start_settings">No se pudo abrir la configuración de la aplicación. Para otorgar permisos, visita la configuración de esta aplicación.</string>
+    <string name="action_settings">Ajustes</string>
+
+    <!-- Beta -->
+    <string name="vote">VOTAR</string>
+    <string name="number_votes">%1$s VOTOS</string>
+    <string name="donation_button">%1$s %2$s</string>
+    <string name="donation_thanks">Eres IMPRESIONANTE y ya no verás esos molestos anuncios ;)</string>
+    <string name="donation_ok">GRACIAS</string>
+    <string name="votes_explained">&lt;p&gt;Una vez que esta función tenga &lt;b&gt;%1$s&lt;/b&gt; votos, comenzará el desarrollo. &lt;/p&gt;&lt;p&gt;Todas las donaciones &lt;b&gt;incluyen eliminar todos los anuncios&lt;/b&gt; de la aplicación&lt;/p&gt;</string>
+    <string name="beta_video">&lt;b&gt;Mira el video&lt;/b&gt;</string>
+    <string name="beta_tagline">Las características más populares se desarrollarán primero</string>
+    <string name="beta_explained">Déjanos saber qué característica te gustaría ver a continuación. ¡Selecciona \'VOTAR\' y haz clic en ❤! Trataremos de hacerlo</string>
+
+    <!-- Setup -->
+    <string name="select_players">Seleccionar jugadores</string>
+    <string name="choose_player_name">Elige el nombre del jugador</string>
+    <string name="choose_existing_player">O elige jugadores existentes</string>
+    <string name="team">Equipo</string>
+    <string name="select_x01_score">Seleccionar puntuación x01</string>
+    <string name="start_score">Puntuación inicial</string>
+    <string name="number_of_sets">Número de sets</string>
+    <string name="number_of_legs">Número de partidos</string>
+    <string name="cancel">Cancelar</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="cont">Continuar</string>
+    <string name="powered_by">Creado por</string>
+
+    <!-- Dialogs -->
+    <string name="rating_title">¿Te está gustando Darts Scorecard?</string>
+    <string name="rating_message">¿Tienes un segundo para calificar nuestra aplicación?\nLo agradeceríamos si lo hicieses</string>
+    <string name="rating_never_ask_again">No</string>
+    <string name="rating_not_now">Ahora no</string>
+    <string name="confirm_delete_title">¿Eliminar este juego?</string>
+    <string name="confirm_delete_message">Se eliminarán todos los progresos y estadísticas de este juego.</string>
+
+    <!-- Game States -->
+    <string name="to_throw">lanzar</string>
+    <string name="to_throw_first">lanzar primero</string>
+    <string name="game_on">Listo para jugar</string>
+    <string name="game_shot_and_match">¿Revancha?</string>
+    <string name="select_starting_team">Selecciona el equipo para lanzar primero</string>
+
+    <!-- Profile -->
+    <string name="favourite_double">Doble favorito: %1$s</string>
+    <string name="edit_player_name_hint">Nombre del jugador</string>
+    <string name="edit_player_double">Doble favoritp</string>
+    <string name="confirm_delete_profile">Perfil eliminado</string>
+
+    <!-- Input -->
+    <string name="darts_used">¿Cuántos dardos usaste?</string>
+
+    <!-- Match Stats -->
+    <string name="match_stats">Estadísticas del partido</string>
+    <string name="set_stats">Estadísticas de set %1$s</string>
+    <string name="live_breaks_made">Pausas realizadas</string>
+    <string name="live_double_success">Doble éxito</string>
+    <string name="live_double_ratio">% doble</string>
+    <string name="live_highest_score">Puntuación más alta</string>
+    <string name="live_highest_out">Más alto fuera</string>
+    <string name="live_180s">180\'s</string>
+    <string name="live_140s">Más de 140</string>
+    <string name="live_100s">Más de 100</string>
+    <string name="live_60s">Más de 60</string>
+    <string name="live_20s">Más de 20</string>
+    <string name="live_average">promedio</string>
+
+    <!-- Streaming -->
+    <string name="streaming_dialog_title">Introduce el código</string>
+    <string name="streaming_service">Servicio de transmisión</string>
+    <string name="receiving_service">Servicio de recepción</string>
+    <string name="live_stream_start">Comienza a transmitir</string>
+    <string name="live_stream_connecting">Conectando...</string>
+    <string name="live_stream_connect">Conectar</string>
+    <string name="live_stream">Transmisión en vivo</string>
+    <string name="enter_tv_code">Introduce el código</string>
+
+    <!-- Streaming Service -->
+    <string name="streaming_channel_name">Transmisión</string>
+    <string name="streaming_channel_description">La salida de tu cámara se transmite al televisor</string>
+    <string name="streaming_notif_title">Transmisión a la televisión</string>
+
+    <!-- Profile -->
+    <string name="no_stats_available">No hay datos disponibles todavía</string>
+    <string name="no_stats_available_sub">Completa un juego y vuelve aquí para ver cómo te va.</string>
+    <string name="profile_games_played">Partidas jugadas</string>
+    <string name="profile_overall_average">Media general</string>
+    <string name="profile_first9_average">1ª media de 9</string>
+    <string name="profile_win_percentage">% de victorias</string>
+    <string name="profile_checkout_percentage">% de cierres</string>
+    <string name="profile_num_180">180s</string>
+    <string name="profile_num_140">Más de 140</string>
+    <string name="profile_num_100">Más de 100</string>
+    <string name="profile_num_60">Más de 60</string>
+    <string name="profile_num_20">Más de 20</string>
+    <string name="profile_num_0">#Bust/Rebote/Sinpuntuación</string>
+
+    <!--- HiScores -->
+    <string name="hiscore_title_games_ratio">Proporcion de victorias</string>
+    <string name="hiscore_title_best_avg">Mejor media</string>
+    <string name="hiscore_title_best_co">Mejor % de cierre</string>
+    <string name="hiscore_title_highest_score">Puntuación más alta</string>
+    <string name="hiscore_title_highest_co">Cierre más alto</string>
+    <string name="hiscore_title_overall_average">Media general</string>
+    <string name="hiscore_title_first9_average">1a media de 9</string>
+    <string name="hiscore_title_win_percentage">% de victorias</string>
+    <string name="hiscore_title_checkout_percentage">% de cierres</string>
+    <string name="hiscore_title_num_180">180s</string>
+    <string name="hiscore_title_num_140">Más de 140</string>
+    <string name="hiscore_title_num_100">Más de 100</string>
+    <string name="hiscore_title_num_60">Más de 60</string>
+    <string name="hiscore_title_num_20">Más de 20</string>
+    <string name="hiscore_title_num_0">#Bust/Rebote/Sinpuntuación</string>
+    <string name="hiscore_description_games_win_ratio">Proporción victorias vs jugadas</string>
+    <string name="hiscore_description_best_avg">Mejor media durante una sola partida</string>
+    <string name="hiscore_description_best_co">Mejor cierre % d durante una sola partida</string>
+    <string name="hiscore_description_overall_average">Media general</string>
+    <string name="hiscore_description_first9_average">Promedio general de los primeros nueve dardos</string>
+    <string name="hiscore_description_win_percentage">Media de % o juegos ganados</string>
+    <string name="hiscore_description_checkout_percentage">% de media de cierres</string>
+    <string name="hiscore_description_num_180">Media de 180 conseguidos</string>
+    <string name="hiscore_description_num_140">Media de más de 140 conseguidos</string>
+    <string name="hiscore_description_num_100">Media de más de 100 conseguidos</string>
+    <string name="hiscore_description_num_60">Media de más de 60 conseguidos</string>
+    <string name="hiscore_description_num_20">Media de más de 20 conseguidos</string>
+    <string name="hiscore_description_num_0">Media de #Bust/Rebotes/Sinpuntuación conseguidos</string>
+
+    <!-- What The FAQ -->
+    <string name="search_wtf">Buscar en F.A.Q.</string>
+
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Ajustes de sonido</string>
+    <string name="settings_mastercaller_desc_on">Leer todos las puntuaciones en voz alta</string>
+    <string name="settings_mastercaller_desc_off">No utilizar Comentarista</string>
+    <string name="settings_sound_title">Sonido</string>
+    <string name="settings_sound_desc_on">Reproducir música de fondo</string>
+    <string name="settings_sound_desc_off">No hay música de fondo.</string>
+    <string name="settings_theme_title">Temática</string>
+    <string name="settings_theme_desc">Cambiar los temas disponibles</string>
+    <string name="settings_privacy_title">Privacidad/Anuncios</string>
+    <string name="settings_privacy_desc">Cambiar preferencia de anuncio</string>
+    <string name="settings_privacy_thanks">¡Gracias por tu apoyo!\nNo se recopilan datos con el fin de mostrar anuncios</string>
+    <string name="settings_ads_remove">Eliminar anuncios</string>
+
+    <!-- Archive Service -->
+    <string name="archive_service">Servicio de estadísticas de archivo</string>
+    <string name="archive_channel_name">Estadísticas de archivo</string>
+    <string name="archive_channel_description">Cálculo de estadísticas y medias</string>
+    <string name="archive_notif_title">Cálculo de nuevas estadísticas, medias y mejores puntuaciones</string>
+
+    <!-- Specific -->
+    <string name="pcf_match">Finales del campeonato de jugadores</string>
+    <string name="bdo_match">BDO World Cup - semifinales</string>
+    <string name="pdc_match">PDC World Cup - semifinales</string>
+
+    <!-- Errors -->
+    <string name="err_player_was_deleted">No se puede ver el perfil de los jugadores que se han eliminado.</string>
+    <string name="err_unable_to_retrieve_game">No se puede recuperar la partida.</string>
+    <string name="err_unable_to_revanche">No te puedes vengar.</string>
+    <string name="err_unable_to_create_player">No se puede crear el jugador.</string>
+    <string name="err_unable_to_donate">No se puede donar para funciones en este momento.</string>
+    <string name="err_unable_to_fetch_players">No se pueden buscar jugadores.</string>
+    <string name="err_unable_to_fetch_stats">No se pueden obtener estadísticas para el jugador</string>
+    <string name="err_player_already_exists">El nombre del jugador ya existe. Por favor elige un nombre diferente</string>
+    <string name="err_invalid_player_name">Nombre de jugador no válido</string>
+    <string name="err_player_name_is_empty">Por favor escribe el nombre  del jugador que quieras</string>
+    <string name="err_no_players_yet">No hay perfiles todavía. Juega una partida o crea jugadores con el botón +</string>
+    <string name="err_player_already_in_match">El jugador ya está participando en esta partida.</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_score_back">eliminar</string>
+    <string name="cd_throw">Enviar dardos</string>
+    <string name="cd_add_player">Añadir jugador</string>
+    <string name="cd_player_name">Introduce el nombre del jugador</string>
+    <string name="cd_existing_players">Jugadores actuales</string>
+    <string name="cd_add_profile_picture">Añadir foto de perfil</string>
+    <string name="cd_vote">Vota por esta característica</string>
+    <string name="cd_choose_sets">@string/number_of_sets</string>
+    <string name="cd_choose_legs">@string/number_of_legs</string>
+    <string name="cd_increase_sets">Más 1 set</string>
+    <string name="cd_decrease_sets">Menos 1 set</string>
+    <string name="cd_increase_legs">Más 1 partido</string>
+    <string name="cd_decrease_legs">Menos 1 partido</string>
+    <string name="cd_list_of_profiles">Perfiles de jugador</string>
+    <string name="cd_list_of_wtfs">Preguntas frecuentes</string>
+    <string name="cd_next">Siguiente</string>
+    <string name="cd_prev">Anterior</string>
+    <string name="cd_wtf">Ayuda</string>
+    <string name="cd_select_start_score">Seleccionar puntuación inicial</string>
+    <string name="cd_number_of_sets">Primero en %1$s sets</string>
+    <string name="cd_number_of_legs">Primero en %1$s partidos</string>
+    <string name="cd_list_of_beta_features">¿Qué características te gustaría ver agregadas a la aplicación?</string>
+</resources>

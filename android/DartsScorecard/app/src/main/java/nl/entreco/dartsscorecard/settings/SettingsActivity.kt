@@ -1,11 +1,10 @@
 package nl.entreco.dartsscorecard.settings
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -80,16 +79,22 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
     override fun lifeCycle() = lifecycle
 
     override fun makeDonation(response: MakeDonationResponse) {
-        donate(this, response.intent.intentSender)
+        handleDonation(response)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when {
-            donateOk(requestCode, resultCode, data) -> donateViewModel.onMakeDonationSuccess(data)
-            resultCode == Activity.RESULT_CANCELED  -> donateViewModel.onMakeDonationFailed(true)
-            requestCode == REQ_CODE_DONATE          -> donateViewModel.onMakeDonationFailed(false)
-            else                                    -> super.onActivityResult(requestCode, resultCode, data)
+    private fun handleDonation(result: MakeDonationResponse) {
+        when (result) {
+            is MakeDonationResponse.Success      -> { /* Yeah, also consumed */ }
+            is MakeDonationResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
+            is MakeDonationResponse.AlreadyOwned -> failAndToast("Donation Already Owned")
+            is MakeDonationResponse.Cancelled    -> failAndToast("Donation Cancelled")
+            is MakeDonationResponse.Error        -> failAndToast("Donation Error:$result")
         }
+    }
+
+    private fun failAndToast(message: String) {
+        donateViewModel.onMakeDonationFailed(message)
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDonationMade(donation: Donation) {
@@ -98,26 +103,10 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
 
     companion object {
 
-        private const val REQ_CODE_DONATE = 181
-
         @JvmStatic
         fun launch(context: Context) {
             val intent = Intent(context, SettingsActivity::class.java)
             context.startActivity(intent)
         }
-
-        @JvmStatic
-        fun donate(activity: Activity, sender: IntentSender) {
-            activity.startIntentSenderForResult(sender,
-                    REQ_CODE_DONATE,
-                    Intent(),
-                    Integer.valueOf(0),
-                    Integer.valueOf(0),
-                    Integer.valueOf(0))
-        }
-
-        private fun donateOk(requestCode: Int, resultCode: Int, data: Intent?) =
-                requestCode == REQ_CODE_DONATE && resultCode == Activity.RESULT_OK && data?.getIntExtra(
-                        "RESPONSE_CODE", -1) == 0
     }
 }
