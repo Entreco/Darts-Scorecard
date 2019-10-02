@@ -82,6 +82,9 @@ class GooglePlayConnection : PurchasesUpdatedListener {
             // pending.
             updater.invoke(MakeDonationResponse.Pending)
         } else {
+            // State is Purchase.PurchaseState.UNSPECIFIED_STATE
+            // TODO: determine what to do here.
+            // For now -> handle as Pending -> votes will be added.
             updater.invoke(MakeDonationResponse.Pending)
         }
     }
