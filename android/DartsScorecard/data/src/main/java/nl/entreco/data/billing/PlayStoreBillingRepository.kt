@@ -59,7 +59,7 @@ class PlayStoreBillingRepository(
                     }
                     done(items)
                 } else {
-                    fail(throw Throwable("Unable to retrieve donations, $params"))
+                    fail(Throwable("Unable to retrieve donations, $params"))
                 }
             }
         }
