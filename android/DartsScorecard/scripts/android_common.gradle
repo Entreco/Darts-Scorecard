@@ -9,7 +9,7 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
-        resConfigs "en", "nl", "de"
+        resConfigs "en", "nl", "de", "es"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
