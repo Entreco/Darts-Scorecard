@@ -5,8 +5,8 @@ package nl.entreco.domain.beta.donations
  */
 sealed class MakeDonationResponse {
     data class Error(val code: Int? = -180) : MakeDonationResponse()
-    data class Purchased(val purchaseToken: String, val productId: String, val orderId: String) : MakeDonationResponse()
-    object Success : MakeDonationResponse()
+    data class Success(val purchaseToken: String, val productId: String, val orderId: String) : MakeDonationResponse()
+    object Purchased : MakeDonationResponse()
     object Cancelled : MakeDonationResponse()
     object Pending : MakeDonationResponse()
     object AlreadyOwned : MakeDonationResponse()

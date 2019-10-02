@@ -52,7 +52,7 @@ class DonateViewModel @Inject constructor(
         donateCallback?.makeDonation(response)
     }
 
-    fun onMakeDonationSuccess(data: MakeDonationResponse.Purchased) {
+    fun onMakeDonationSuccess(data: MakeDonationResponse.Success) {
         analytics.trackAchievement("Donation $data")
         consumeDonation.exec(ConsumeDonationRequest(data.purchaseToken, data.productId, data.orderId, requiresConsumption.get()),
                 onConsumeDonationSuccess(),
