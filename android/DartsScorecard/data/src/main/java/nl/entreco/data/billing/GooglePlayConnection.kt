@@ -81,6 +81,8 @@ class GooglePlayConnection : PurchasesUpdatedListener {
             // future to complete the purchase if you detect that it is still
             // pending.
             updater.invoke(MakeDonationResponse.Pending)
+        } else {
+            updater.invoke(MakeDonationResponse.Pending)
         }
     }
 
