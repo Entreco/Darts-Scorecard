@@ -84,7 +84,7 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
 
     private fun handleDonation(result: MakeDonationResponse) {
         when (result) {
-            is MakeDonationResponse.Success      -> { /* Yeah, also consumed */ }
+            is MakeDonationResponse.Success      -> { /* Yeah, also acknowledged */ }
             is MakeDonationResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
             is MakeDonationResponse.AlreadyOwned -> failAndToast("Donation Already Owned")
             is MakeDonationResponse.Cancelled    -> failAndToast("Donation Cancelled")
