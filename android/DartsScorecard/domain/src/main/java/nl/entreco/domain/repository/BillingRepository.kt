@@ -16,10 +16,10 @@ interface BillingRepository {
     fun unbind()
 
     @WorkerThread
-    fun fetchDonationsExclAds(done: (List<Donation>)->Unit)
+    fun fetchDonationsExclAds(done: (List<Donation>)->Unit, fail: (Throwable)->Unit)
 
     @WorkerThread
-    fun fetchDonationsInclAds(done: (List<Donation>)->Unit)
+    fun fetchDonationsInclAds(done: (List<Donation>)->Unit, fail: (Throwable)->Unit)
 
     @WorkerThread
     fun donate(donation: Donation, update:(MakeDonationResponse)->Unit)

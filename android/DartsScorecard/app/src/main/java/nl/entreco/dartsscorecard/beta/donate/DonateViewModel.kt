@@ -52,7 +52,7 @@ class DonateViewModel @Inject constructor(
         donateCallback?.makeDonation(response)
     }
 
-    fun onMakeDonationSuccess(data: MakeDonationResponse.Success) {
+    fun onMakeDonationSuccess(data: MakeDonationResponse.Purchased) {
         analytics.trackAchievement("Donation $data")
         consumeDonation.exec(ConsumeDonationRequest(data.purchaseToken, data.productId, data.orderId, requiresConsumption.get()),
                 onConsumeDonationSuccess(),
@@ -102,14 +102,23 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onFetchDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->
-        requiresConsumption.set(result.needToBeConsumed)
-        canRemoveAds.set(!result.needToBeConsumed)
-        donations.clear()
-        donations.addAll(result.donations)
+        when (result) {
+            is FetchDonationsResponse.Ok    -> {
+                requiresConsumption.set(result.needToBeConsumed)
+                canRemoveAds.set(!result.needToBeConsumed)
+                donations.clear()
+                donations.addAll(result.donations)
+            }
+            is FetchDonationsResponse.Error -> {
+                requiresConsumption.set(result.hasPreviouslyBoughtItems)
+                canRemoveAds.set(!result.hasPreviouslyBoughtItems)
+                donations.clear()
+                onFetchDonationsFailed().invoke(result.error)
+            }
+        }
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
-        requiresConsumption.set(false)
         analytics.trackPurchaseFailed(productId, "FetchDonations failed")
     }
 

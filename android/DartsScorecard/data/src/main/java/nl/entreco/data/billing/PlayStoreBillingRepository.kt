@@ -31,19 +31,19 @@ class PlayStoreBillingRepository(
     }
 
     @WorkerThread
-    override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit) {
+    override fun fetchDonationsExclAds(done: (List<Donation>) -> Unit, fail: (Throwable)->Unit) {
         val donations = FetchDonationsData()
-        fetchProducts(donations, done)
+        fetchProducts(donations, done, fail)
     }
 
     @WorkerThread
-    override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit) {
+    override fun fetchDonationsInclAds(done: (List<Donation>) -> Unit, fail: (Throwable)->Unit) {
         val donations = FetchDonationsInclAdsData()
-        fetchProducts(donations, done)
+        fetchProducts(donations, done, fail)
     }
 
     @WorkerThread
-    private fun fetchProducts(donations: InAppProducts, done: (List<Donation>) -> Unit) {
+    private fun fetchProducts(donations: InAppProducts, done: (List<Donation>) -> Unit, fail: (Throwable)->Unit) {
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(donations.listOfProducts()).setType(BillingClient.SkuType.INAPP)
         val client = playConnection.getClient()
@@ -59,7 +59,7 @@ class PlayStoreBillingRepository(
                     }
                     done(items)
                 } else {
-                    throw Throwable("Unable to retrieve donations, $params")
+                    fail(throw Throwable("Unable to retrieve donations, $params"))
                 }
             }
         }

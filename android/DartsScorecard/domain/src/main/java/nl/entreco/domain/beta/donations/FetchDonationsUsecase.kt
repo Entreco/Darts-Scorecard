@@ -16,13 +16,17 @@ class FetchDonationsUsecase @Inject constructor(private val billingRepository: B
 
             val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
             if (hasPreviouslyBoughtItems) {
-                billingRepository.fetchDonationsExclAds { donations ->
-                    onUi { done(FetchDonationsResponse(donations.sortedBy { it.priceMicros }, true)) }
+                billingRepository.fetchDonationsExclAds({ donations ->
+                    onUi { done(FetchDonationsResponse.Ok(donations.sortedBy { it.priceMicros }, true)) }
+                }) {
+                    onUi { done(FetchDonationsResponse.Error(it, true)) }
                 }
 
             } else {
-                billingRepository.fetchDonationsInclAds { donations ->
-                    onUi { done(FetchDonationsResponse(donations.sortedBy { it.priceMicros }, false)) }
+                billingRepository.fetchDonationsInclAds({ donations ->
+                    onUi { done(FetchDonationsResponse.Ok(donations.sortedBy { it.priceMicros }, false)) }
+                }) {
+                    onUi { done(FetchDonationsResponse.Error(it, false)) }
                 }
             }
         }, fail)
