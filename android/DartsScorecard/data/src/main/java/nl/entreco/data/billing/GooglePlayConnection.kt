@@ -7,13 +7,13 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
-import nl.entreco.domain.beta.donations.MakeDonationResponse
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 
 class GooglePlayConnection : PurchasesUpdatedListener {
     private var service: BillingClient? = null
 
     private var callback: (Boolean) -> Unit = {}
-    private var updater: (MakeDonationResponse) -> Unit = {}
+    private var updater: (MakePurchaseResponse) -> Unit = {}
 
     fun onServiceDisconnected() {
         this.service?.endConnection()
@@ -56,23 +56,23 @@ class GooglePlayConnection : PurchasesUpdatedListener {
                 handlePurchase(purchase)
             }
         } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-            updater.invoke(MakeDonationResponse.Cancelled)
+            updater.invoke(MakePurchaseResponse.Cancelled)
         } else {
             // Handle any other error codes.
-            updater.invoke(MakeDonationResponse.Error(billingResult.responseCode))
+            updater.invoke(MakePurchaseResponse.Error(billingResult.responseCode))
         }
     }
 
     private fun handlePurchase(purchase: Purchase) {
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
             // Grant entitlement to the user.
-            updater.invoke(MakeDonationResponse.Purchased(purchase.purchaseToken, purchase.sku, purchase.orderId))
+            updater.invoke(MakePurchaseResponse.Purchased(purchase.purchaseToken, purchase.sku, purchase.orderId))
 
             // Acknowledge the purchase if it hasn't already been acknowledged.
             if (!purchase.isAcknowledged) {
-                acknowledge(purchase.purchaseToken)
+                acknowledge(purchase.purchaseToken, updater)
             } else {
-                updater.invoke(MakeDonationResponse.Success)
+                updater.invoke(MakePurchaseResponse.Acknowledged)
             }
         } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
             // Here you can confirm to the user that they've started the pending
@@ -80,29 +80,29 @@ class GooglePlayConnection : PurchasesUpdatedListener {
             // are given to them. You can also choose to remind the user in the
             // future to complete the purchase if you detect that it is still
             // pending.
-            updater.invoke(MakeDonationResponse.Pending)
+            updater.invoke(MakePurchaseResponse.Pending)
         } else {
             // State is Purchase.PurchaseState.UNSPECIFIED_STATE
             // TODO: determine what to do here.
             // For now -> handle as Pending -> votes will be added.
-            updater.invoke(MakeDonationResponse.Pending)
+            updater.invoke(MakePurchaseResponse.Pending)
         }
     }
 
-    fun acknowledge(purchaseToken: String) {
+    fun acknowledge(purchaseToken: String, updater: (MakePurchaseResponse) -> Unit) {
         val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                 .setPurchaseToken(purchaseToken)
                 .build()
 
         service?.acknowledgePurchase(acknowledgePurchaseParams) { result ->
             when (val code = result.responseCode) {
-                BillingClient.BillingResponseCode.OK -> updater.invoke(MakeDonationResponse.Success)
-                else                                 -> updater.invoke(MakeDonationResponse.Error(code))
+                BillingClient.BillingResponseCode.OK -> updater.invoke(MakePurchaseResponse.Acknowledged)
+                else                                 -> updater.invoke(MakePurchaseResponse.Error(code))
             }
         }
     }
 
-    fun donation(update: (MakeDonationResponse) -> Unit) {
+    fun donation(update: (MakePurchaseResponse) -> Unit) {
         updater = update
     }
 }

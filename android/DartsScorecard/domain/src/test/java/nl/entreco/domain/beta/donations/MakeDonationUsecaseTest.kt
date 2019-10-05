@@ -24,7 +24,7 @@ class MakeDonationUsecaseTest{
     private val fg = TestForeground()
 
     @Mock private lateinit var mockFail : (Throwable) -> Unit
-    @Mock private lateinit var mockDone : (MakeDonationResponse) -> Unit
+    @Mock private lateinit var mockDone : (MakePurchaseResponse) -> Unit
     @Mock private lateinit var mockBillingRepo : BillingRepository
     private lateinit var subject : MakeDonationUsecase
 
@@ -46,7 +46,7 @@ class MakeDonationUsecaseTest{
     }
 
     private fun whenMakingDonationSucceeds(payload: String) {
-        whenever(mockBillingRepo.donate(any())).thenReturn(MakeDonationResponse(mock(), payload))
+        whenever(mockBillingRepo.donate(any())).thenReturn(MakePurchaseResponse(mock(), payload))
         subject.exec(MakeDonationRequest(mock()),mockDone, mockFail)
     }
 

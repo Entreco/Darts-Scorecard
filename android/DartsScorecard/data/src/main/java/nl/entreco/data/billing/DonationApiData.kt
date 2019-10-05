@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 @Keep
 @IgnoreExtraProperties
 internal data class DonationApiData(
-        @SerializedName("productId")
+        @SerializedName("sku")
         var productId: String,
 
         @SerializedName("price")
