@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.score.ScoreViewModel" />
+
+        <variable
+            name="finishUsecase"
+            type="nl.entreco.domain.play.finish.GetFinishUsecase" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/scoreSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Header -->
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_header"
+            android:orientation="horizontal"
+            android:padding="@dimen/xsmall">
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_name_w"
+                android:text="@{@string/first_to(viewModel.firstTo)}" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_leg_w"
+                android:gravity="center"
+                android:text="@string/set"
+                app:showIf="@{viewModel.showSets}" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_set_w"
+                android:gravity="center"
+                android:text="@string/leg" />
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="@dimen/score_pts_w" />
+        </LinearLayout>
+
+        <!-- TeamScoreView's -->
+        <nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
+            android:id="@+id/teamContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:adapter="@{viewModel.adapter}"
+            app:currentTeam="@{viewModel.currentTeam}"
+            app:finishUsecase="@{finishUsecase}"
+            app:scoreSettings="@{viewModel.scoreSettings}"
+            app:scores="@{viewModel.scores}"
+            app:teams="@{viewModel.teams}"
+            app:uiCallback="@{viewModel.uiCallback}"
+            tools:listitem="@layout/team_score_view" />
+
+        <!-- Footer -->
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_footer"
+            android:orientation="horizontal"
+            android:padding="@dimen/xsmall">
+
+            <TextView
+                style="@style/Score.Hdr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="?attr/match_description"
+                app:description="@{viewModel.description}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
