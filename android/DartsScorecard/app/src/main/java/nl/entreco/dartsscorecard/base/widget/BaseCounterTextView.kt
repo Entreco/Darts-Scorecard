@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.base.widget
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.round
 
 
@@ -17,7 +18,7 @@ abstract class BaseCounterTextView @JvmOverloads constructor(
     private val speed: Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
-    @Volatile private var stopped = false
+    private val stopped = AtomicBoolean(false)
 
     private fun tick() {
         if (mCurrent != mTarget) {
@@ -29,7 +30,7 @@ abstract class BaseCounterTextView @JvmOverloads constructor(
     }
 
     private fun stopTick() {
-        stopped = true
+        stopped.set(true)
         display(mTarget)
     }
 
@@ -65,7 +66,7 @@ abstract class BaseCounterTextView @JvmOverloads constructor(
             }
         }
 
-        if (!stopped) {
+        if (!stopped.get()) {
             postDelayed({ tick() }, speed)
         }
     }
@@ -78,7 +79,7 @@ abstract class BaseCounterTextView @JvmOverloads constructor(
         if (mTarget != target) {
             mTarget = target
         }
-        stopped = false
+        stopped.set(false)
         tick()
     }
 }

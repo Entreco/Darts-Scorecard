@@ -30,7 +30,7 @@ class DonateViewModelTest {
 
     private val bindDoneCaptor = argumentCaptor<(Boolean) -> Unit>()
     private val fetchDoneCaptor = argumentCaptor<(FetchDonationsResponse) -> Unit>()
-    private val doneMakeCaptor = argumentCaptor<(MakeDonationResponse) -> Unit>()
+    private val doneMakeCaptor = argumentCaptor<(MakePurchaseResponse) -> Unit>()
     private val doneConsumeCaptor = argumentCaptor<(ConsumeDonationResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
 
@@ -234,7 +234,7 @@ class DonateViewModelTest {
     private fun whenMakingDonationSucceeds(sku: String) {
         whenMakingDonation(sku)
         verify(mockMakeDonationsUsecase).exec(any(), doneMakeCaptor.capture(), any())
-        val response = mock<MakeDonationResponse>()
+        val response = mock<MakePurchaseResponse>()
         doneMakeCaptor.lastValue.invoke(response)
     }
 
@@ -320,7 +320,7 @@ class DonateViewModelTest {
     }
 
     private fun thenProductIdIs(expected: String) {
-        assertEquals(expected, subject.productId)
+        assertEquals(expected, subject.productSku)
     }
 
     private fun thenDonationsAreFetched() {

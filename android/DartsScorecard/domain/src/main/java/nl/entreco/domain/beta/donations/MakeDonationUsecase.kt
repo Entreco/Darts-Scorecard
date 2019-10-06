@@ -11,7 +11,7 @@ import javax.inject.Inject
  */
 class MakeDonationUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
-    fun exec(req: MakeDonationRequest, done: (MakeDonationResponse) -> Unit, fail: (Throwable) -> Unit) {
+    fun exec(req: MakeDonationRequest, done: (MakePurchaseResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             billingRepository.donate(req.donation) {
                 onUi { done(it) }

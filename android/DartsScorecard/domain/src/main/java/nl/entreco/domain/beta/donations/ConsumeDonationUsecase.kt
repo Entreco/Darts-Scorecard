@@ -1,7 +1,5 @@
 package nl.entreco.domain.beta.donations
 
-import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
@@ -21,16 +19,26 @@ class ConsumeDonationUsecase @Inject constructor(
         onBackground({
 
             val token = req.purchaseToken
-            val productId = req.productId
+            val sku = req.sku
             val orderId = req.orderId
 
             if (req.requiresConsumption) {
-                billingRepository.consume(token) {
-                    onUi { done(ConsumeDonationResponse(it, productId, orderId)) }
+                billingRepository.consume(token) { response ->
+                    val result = when (response) {
+                        is MakePurchaseResponse.Consumed -> ConsumeDonationResponse.Success(sku, orderId)
+                        is MakePurchaseResponse.Error    -> ConsumeDonationResponse.Error(sku, response.code)
+                        else                             -> ConsumeDonationResponse.Error(sku, -180)
+                    }
+                    onUi { done(result) }
                 }
             } else {
-                billingRepository.acknowledge(token){
-                    onUi { done(ConsumeDonationResponse(ConsumeDonationResponse.CONSUME_OK, productId, orderId)) }
+                billingRepository.acknowledge(token) { response ->
+                    val result = when (response) {
+                        is MakePurchaseResponse.Acknowledged -> ConsumeDonationResponse.Success(sku, orderId)
+                        is MakePurchaseResponse.Error        -> ConsumeDonationResponse.Error(sku, response.code)
+                        else                                 -> ConsumeDonationResponse.Error(sku, -180)
+                    }
+                    onUi { done(result) }
                 }
             }
         }, fail)

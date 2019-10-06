@@ -3,8 +3,7 @@ package nl.entreco.domain.beta.donations
 /**
  * Created by entreco on 09/02/2018.
  */
-class ConsumeDonationResponse(val resultCode: Int, val productId: String, val orderId: String){
-    companion object {
-        const val CONSUME_OK = 0
-    }
+sealed class ConsumeDonationResponse {
+    data class Success(val sku: String, val orderId: String) : ConsumeDonationResponse()
+    data class Error(val sku: String, val errorCode: Int) : ConsumeDonationResponse()
 }

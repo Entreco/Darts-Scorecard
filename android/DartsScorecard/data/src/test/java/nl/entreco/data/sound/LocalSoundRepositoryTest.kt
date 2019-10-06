@@ -3,6 +3,8 @@ package nl.entreco.data.sound
 import android.content.Context
 import android.media.SoundPool
 import androidx.annotation.RawRes
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -24,8 +26,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class LocalSoundRepositoryTest {
 
     private val normalPriority = 1
-    private val fx0 = Fx00()
-    private val fx1 = Fx01()
+    private val fx0 = Fx00
+    private val fx1 = Fx01
 
     @Mock private lateinit var mockAudioRepo: AudioPrefRepository
     @Mock private lateinit var mockSoundPool: SoundPool
@@ -49,7 +51,7 @@ class LocalSoundRepositoryTest {
     @Test
     fun `it should load correct sound`() {
         givenSubject()
-        whenPlaying(Fx01())
+        whenPlaying(Fx01)
         thenSoundIsLoaded(R.raw.dsc_pro1)
     }
 
@@ -93,7 +95,7 @@ class LocalSoundRepositoryTest {
     }
 
     private fun givenSubject(enabled: Boolean = true) {
-        whenever(mockAudioRepo.isMasterCallerEnabled()).thenReturn(enabled)
+        whenever(mockAudioRepo.isMasterCallerEnabled()).doReturn(enabled)
         subject = LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, SoundMapper())
     }
 
@@ -103,7 +105,7 @@ class LocalSoundRepositoryTest {
 
     private fun whenPlaying(sound: Sound) {
         val res = SoundMapper().toRaw(sound)
-        whenever(mockSoundPool.load(mockContext, res, normalPriority)).thenReturn(sound.hashCode())
+        whenever(mockSoundPool.load(mockContext, res, normalPriority)).doReturn(sound.hashCode())
         subject.play(sound)
     }
 
@@ -119,7 +121,7 @@ class LocalSoundRepositoryTest {
     }
 
     private fun whenReleasingThrows() {
-        whenever(mockSoundPool.release()).thenThrow(RuntimeException("Unable to release sound Pool"))
+        whenever(mockSoundPool.release()).doThrow(RuntimeException("Unable to release sound Pool"))
         subject.release()
     }
 

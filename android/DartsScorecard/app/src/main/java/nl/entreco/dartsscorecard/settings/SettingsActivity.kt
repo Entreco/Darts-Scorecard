@@ -16,7 +16,7 @@ import nl.entreco.dartsscorecard.databinding.ActivitySettingsBinding
 import nl.entreco.dartsscorecard.di.settings.SettingsComponent
 import nl.entreco.dartsscorecard.di.settings.SettingsModule
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.beta.donations.MakeDonationResponse
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.libconsent.ask.AskConsentResponse
 import nl.entreco.libconsent.ask.AskConsentUsecase
 
@@ -78,22 +78,28 @@ class SettingsActivity : ViewModelActivity(), DonateCallback {
 
     override fun lifeCycle() = lifecycle
 
-    override fun makeDonation(response: MakeDonationResponse) {
+    override fun makeDonation(response: MakePurchaseResponse) {
         handleDonation(response)
     }
 
-    private fun handleDonation(result: MakeDonationResponse) {
+    private fun handleDonation(result: MakePurchaseResponse) {
         when (result) {
-            is MakeDonationResponse.Success      -> { /* Yeah, also acknowledged */ }
-            is MakeDonationResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
-            is MakeDonationResponse.AlreadyOwned -> failAndToast("Donation Already Owned")
-            is MakeDonationResponse.Cancelled    -> failAndToast("Donation Cancelled")
-            is MakeDonationResponse.Error        -> failAndToast("Donation Error:$result")
+            is MakePurchaseResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
+            is MakePurchaseResponse.Acknowledged -> toast("Donation Acknowledged")
+            is MakePurchaseResponse.Consumed     -> toast("Donation Consumed")
+            is MakePurchaseResponse.Cancelled    -> failAndToast("Donation Cancelled")
+            is MakePurchaseResponse.Error        -> failAndToast("Donation Error:$result")
+            is MakePurchaseResponse.Pending      -> toast("Donation Pending - Please follow instructions")
+            else -> failAndToast("Donation not confirmed - Unknown error")
         }
     }
 
     private fun failAndToast(message: String) {
         donateViewModel.onMakeDonationFailed(message)
+        toast(message)
+    }
+
+    private fun toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
