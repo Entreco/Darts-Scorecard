@@ -15,6 +15,12 @@ android {
         resValue "string", "version", "${config.versionName}"
 
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental":"true"]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -28,11 +34,6 @@ android {
     sourceSets.main {
         jniLibs.srcDir 'libs'
         jni.srcDirs = [] //disable automatic ndk-build call
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

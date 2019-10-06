@@ -5,6 +5,7 @@ import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
@@ -74,7 +75,9 @@ class PlayStoreBillingRepository(
                 .setSkuDetails(productList[donation.sku])
                 .build()
 
-        val responseCode = playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
+        val responseCode = try {
+            playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
+        } catch (err: Throwable){ BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.BILLING_UNAVAILABLE).build() }
         when (val code = responseCode?.responseCode) {
             BillingClient.BillingResponseCode.OK                 -> { /** Flow launched, we'll get a callback in onPurchasesUpdated() */ }
             BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakePurchaseResponse.Cancelled)
