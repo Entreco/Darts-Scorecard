@@ -11,10 +11,14 @@ import javax.inject.Inject
  */
 class FetchDonationsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
 
+    companion object{
+        private const val PURCHASED = 1
+    }
+
     fun exec(done: (FetchDonationsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
 
-            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
+            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().any { it.second == PURCHASED }
             if (hasPreviouslyBoughtItems) {
                 billingRepository.fetchDonationsExclAds({ donations ->
                     onUi { done(FetchDonationsResponse.Ok(donations.sortedBy { it.priceMicros }, true)) }

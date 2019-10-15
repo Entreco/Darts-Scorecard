@@ -21,7 +21,7 @@ class PlayStoreBillingRepository(
 
     private val productList: MutableMap<String, SkuDetails> = mutableMapOf()
 
-    override fun bind(done: (Boolean) -> Unit) {
+    override fun bind(done: (MakePurchaseResponse) -> Unit) {
         playConnection.setCallback(done)
         playConnection.onServiceConnected(activityContext)
     }
@@ -68,8 +68,7 @@ class PlayStoreBillingRepository(
 
     @UiThread
     override fun donate(donation: Donation, update: (MakePurchaseResponse) -> Unit) {
-        playConnection.donation(update)
-
+        playConnection.setCallback(update)
         // Retrieve a value for "skuDetails" by calling querySkuDetailsAsync().
         val flowParams = BillingFlowParams.newBuilder()
                 .setSkuDetails(productList[donation.sku])
@@ -98,15 +97,20 @@ class PlayStoreBillingRepository(
         }
     }
 
-    override fun acknowledge(token: String, updater: (MakePurchaseResponse) -> Unit) {
-        playConnection.acknowledge(token, updater)
+    override fun acknowledge(token: String, updater: ((MakePurchaseResponse) -> Unit)?) {
+        if(updater == null) playConnection.acknowledge(token)
+        else playConnection.acknowledge(token, updater)
     }
 
-    override fun fetchPurchasedItems(): List<String> {
+    override fun fetchPurchasedItems(): List<Pair<String, Int>> {
+
+        Purchase.PurchaseState.PURCHASED
+
         val purchases = FetchPurchasesData()
         val result = playConnection.getClient()?.queryPurchases(purchases.type())
         return if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
-            result.purchasesList.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }.map { it.sku }
+            result.purchasesList.filter { !it.isAcknowledged }.forEach { acknowledge(it.purchaseToken) }
+            result.purchasesList.map { it.sku to it.purchaseState }
         } else throw Throwable("Unable to getPurchases(), $result")
     }
 }

@@ -10,7 +10,7 @@ import nl.entreco.domain.beta.donations.MakePurchaseResponse
  */
 interface BillingRepository {
     @UiThread
-    fun bind(done: (Boolean) -> Unit)
+    fun bind(done: (MakePurchaseResponse) -> Unit)
 
     @UiThread
     fun unbind()
@@ -28,8 +28,8 @@ interface BillingRepository {
     fun consume(token: String, done: (MakePurchaseResponse) -> Unit)
 
     @WorkerThread
-    fun acknowledge(token: String, updater: (MakePurchaseResponse) -> Unit)
+    fun acknowledge(token: String, updater: ((MakePurchaseResponse) -> Unit)? = null)
 
     @WorkerThread
-    fun fetchPurchasedItems(): List<String>
+    fun fetchPurchasedItems(): List<Pair<String, Int>>
 }

@@ -6,6 +6,8 @@ package nl.entreco.domain.beta.donations
 sealed class MakePurchaseResponse {
     data class Error(val code: Int) : MakePurchaseResponse()
     data class Purchased(val purchaseToken: String, val sku: String, val orderId: String) : MakePurchaseResponse()
+    object Connected : MakePurchaseResponse()
+    object Disconnected : MakePurchaseResponse()
     object Consumed : MakePurchaseResponse()
     object Acknowledged : MakePurchaseResponse()
     object Cancelled : MakePurchaseResponse()

@@ -1,6 +1,7 @@
 package nl.entreco.domain.purchases.connect
 
 import androidx.annotation.UiThread
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
@@ -17,7 +18,12 @@ class ConnectToBillingUsecase @Inject constructor(
 
     @UiThread
     fun bind(done: (Boolean) -> Unit) {
-        billingRepository.bind(done)
+        billingRepository.bind { response ->
+            when (response) {
+                is MakePurchaseResponse.Connected    -> done(true)
+                is MakePurchaseResponse.Disconnected -> done(false)
+            }
+        }
     }
 
     @UiThread
