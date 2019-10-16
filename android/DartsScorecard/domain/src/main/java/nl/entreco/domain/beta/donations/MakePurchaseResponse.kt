@@ -11,5 +11,6 @@ sealed class MakePurchaseResponse {
     object Consumed : MakePurchaseResponse()
     object Acknowledged : MakePurchaseResponse()
     object Cancelled : MakePurchaseResponse()
+    object Launched : MakePurchaseResponse()
     object Pending : MakePurchaseResponse()
 }

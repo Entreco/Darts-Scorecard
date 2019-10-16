@@ -13,7 +13,7 @@ interface BillingRepository {
     fun bind(done: (MakePurchaseResponse) -> Unit)
 
     @UiThread
-    fun unbind()
+    fun unbind(done: (MakePurchaseResponse) -> Unit)
 
     @WorkerThread
     fun fetchDonationsExclAds(done: (List<Donation>) -> Unit, fail: (Throwable) -> Unit)
@@ -28,8 +28,8 @@ interface BillingRepository {
     fun consume(token: String, done: (MakePurchaseResponse) -> Unit)
 
     @WorkerThread
-    fun acknowledge(token: String, updater: ((MakePurchaseResponse) -> Unit)? = null)
+    fun acknowledge(token: String)
 
     @WorkerThread
-    fun fetchPurchasedItems(): List<Pair<String, Int>>
+    fun fetchPurchasedItems(): List<String>
 }

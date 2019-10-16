@@ -22,7 +22,7 @@ class ConnectToBillingUsecase @Inject constructor(
     }
 
     @UiThread
-    fun unbind() {
-        billingRepository.unbind()
+    fun unbind(done: (MakePurchaseResponse) -> Unit) {
+        billingRepository.unbind(done)
     }
 }

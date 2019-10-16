@@ -9,16 +9,16 @@ import javax.inject.Inject
 /**
  * Created by entreco on 09/02/2018.
  */
-class FetchDonationsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
-
-    companion object{
-        private const val PURCHASED = 1
-    }
+class FetchDonationsUsecase @Inject constructor(
+        private val billingRepository: BillingRepository,
+        bg: Background,
+        fg: Foreground
+) : BaseUsecase(bg, fg) {
 
     fun exec(done: (FetchDonationsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
 
-            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().any { it.second == PURCHASED }
+            val hasPreviouslyBoughtItems = billingRepository.fetchPurchasedItems().isNotEmpty()
             if (hasPreviouslyBoughtItems) {
                 billingRepository.fetchDonationsExclAds({ donations ->
                     onUi { done(FetchDonationsResponse.Ok(donations.sortedBy { it.priceMicros }, true)) }

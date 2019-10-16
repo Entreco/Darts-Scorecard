@@ -125,7 +125,16 @@ class DonateViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun bind() {
-        connectToBillingUsecase.bind { response ->
+        connectToBillingUsecase.bind(handler)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun unbind() {
+        connectToBillingUsecase.unbind(handler)
+    }
+
+    private val handler = object : (MakePurchaseResponse) -> Unit {
+        override fun invoke(response: MakePurchaseResponse) {
             if (response is MakePurchaseResponse.Connected && donations.isEmpty()) {
                 fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
             } else {
@@ -133,11 +142,6 @@ class DonateViewModel @Inject constructor(
                 onStartMakeDonation().invoke(response)
             }
         }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun unbind() {
-        connectToBillingUsecase.unbind()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
