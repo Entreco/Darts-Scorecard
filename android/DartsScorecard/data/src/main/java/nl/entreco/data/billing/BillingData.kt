@@ -10,7 +10,6 @@ import java.util.*
 sealed class BillingData(val productId: String, val votes: Int)
 
 const val type = "inapp"
-internal val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/:".toCharArray()
 
 class Donate10Votes : BillingData("10_feature_votes", 10)
 class Donate20Votes : BillingData("20_feature_votes", 20)

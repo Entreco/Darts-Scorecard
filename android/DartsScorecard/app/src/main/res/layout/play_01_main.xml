@@ -94,7 +94,7 @@
                 android:id="@+id/version"
                 style="@style/Input.Mini"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/input_peek_height"
                 android:layout_below="@id/statPager"
                 android:gravity="center"
                 android:padding="@dimen/def"

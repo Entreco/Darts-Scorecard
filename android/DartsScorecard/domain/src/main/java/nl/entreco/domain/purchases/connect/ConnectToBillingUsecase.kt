@@ -1,6 +1,7 @@
 package nl.entreco.domain.purchases.connect
 
 import androidx.annotation.UiThread
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
@@ -16,12 +17,12 @@ class ConnectToBillingUsecase @Inject constructor(
 ) : BaseUsecase(bg, fg) {
 
     @UiThread
-    fun bind(done: (Boolean) -> Unit) {
+    fun bind(done: (MakePurchaseResponse) -> Unit) {
         billingRepository.bind(done)
     }
 
     @UiThread
-    fun unbind() {
-        billingRepository.unbind()
+    fun unbind(done: (MakePurchaseResponse) -> Unit) {
+        billingRepository.unbind(done)
     }
 }
