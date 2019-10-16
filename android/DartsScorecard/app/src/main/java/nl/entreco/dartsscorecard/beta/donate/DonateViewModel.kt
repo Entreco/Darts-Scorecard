@@ -76,7 +76,6 @@ class DonateViewModel @Inject constructor(
         loading.set(false)
         productSku.set("")
         requiresConsumption.set(false)
-        fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
     }
 
     private fun donationDone(response: ConsumeDonationResponse.Success) {
@@ -120,14 +119,18 @@ class DonateViewModel @Inject constructor(
     }
 
     private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
+        loading.set(false)
         analytics.trackPurchaseFailed(productSku.get(), "FetchDonations failed")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun bind() {
-        connectToBillingUsecase.bind { connected ->
-            if (connected && donations.isEmpty()) {
+        connectToBillingUsecase.bind { response ->
+            if (response is MakePurchaseResponse.Connected && donations.isEmpty()) {
                 fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
+            } else {
+                loading.set(false)
+                onStartMakeDonation().invoke(response)
             }
         }
     }

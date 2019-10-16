@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdView
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.Ads
 import nl.entreco.libads.BuildConfig
@@ -57,7 +58,7 @@ class AdViewModel @Inject constructor(
 
     private fun checkIfUserHasPurchasedItems() {
         connectToBillingUsecase.bind { connected ->
-            if (connected) {
+            if (connected is MakePurchaseResponse.Connected) {
                 fetchPurchasedItemsUsecase.exec(onPurchasesRetrieved(), onPurchasesError())
             }
         }

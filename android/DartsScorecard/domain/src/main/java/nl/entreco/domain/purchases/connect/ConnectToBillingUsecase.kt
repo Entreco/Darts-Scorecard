@@ -17,13 +17,8 @@ class ConnectToBillingUsecase @Inject constructor(
 ) : BaseUsecase(bg, fg) {
 
     @UiThread
-    fun bind(done: (Boolean) -> Unit) {
-        billingRepository.bind { response ->
-            when (response) {
-                is MakePurchaseResponse.Connected    -> done(true)
-                is MakePurchaseResponse.Disconnected -> done(false)
-            }
-        }
+    fun bind(done: (MakePurchaseResponse) -> Unit) {
+        billingRepository.bind(done)
     }
 
     @UiThread

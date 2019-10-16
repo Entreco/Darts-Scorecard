@@ -78,7 +78,7 @@ class PlayStoreBillingRepository(
             playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
         } catch (err: Throwable){ BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.BILLING_UNAVAILABLE).build() }
         when (val code = responseCode?.responseCode) {
-            BillingClient.BillingResponseCode.OK                 -> { /** Flow launched, we'll get a callback in onPurchasesUpdated() */ }
+            BillingClient.BillingResponseCode.OK                 -> update(MakePurchaseResponse.Pending)
             BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakePurchaseResponse.Cancelled)
             else                                                 -> update(MakePurchaseResponse.Error(code ?: -100))
         }
@@ -103,9 +103,6 @@ class PlayStoreBillingRepository(
     }
 
     override fun fetchPurchasedItems(): List<Pair<String, Int>> {
-
-        Purchase.PurchaseState.PURCHASED
-
         val purchases = FetchPurchasesData()
         val result = playConnection.getClient()?.queryPurchases(purchases.type())
         return if (result?.billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
