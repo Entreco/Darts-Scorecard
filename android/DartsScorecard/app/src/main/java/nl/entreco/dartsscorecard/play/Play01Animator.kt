@@ -15,6 +15,9 @@ import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
+import android.R.attr.orientation
+import android.content.res.Configuration
+
 
 /**
  * Created by Entreco on 02/12/2017.
@@ -73,9 +76,12 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         private val lock = Object()
 
         fun onSlide(slideOffset: Float) {
-            // Slide Out ScoreViewModel
-            scoreSheet.animate().alpha(slideOffset)
-                    .translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+
+//            val orientation = root.resources.configuration.orientation
+//            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                // In portrait Slide Out ScoreViewModel
+                scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+//            }
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()

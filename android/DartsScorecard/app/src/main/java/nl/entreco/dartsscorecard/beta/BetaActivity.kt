@@ -126,12 +126,13 @@ class BetaActivity : ViewModelActivity(), DonateCallback, BetaAnimator.Swapper {
 
     private fun handleDonation(result: MakePurchaseResponse) {
         when (result) {
+            is MakePurchaseResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
             is MakePurchaseResponse.Acknowledged -> toast("Donation Acknowledged")
             is MakePurchaseResponse.Consumed     -> toast("Donation Consumed")
-            is MakePurchaseResponse.Purchased    -> donateViewModel.onMakeDonationSuccess(result)
             is MakePurchaseResponse.Cancelled    -> failAndToast("Donation Cancelled")
             is MakePurchaseResponse.Error        -> failAndToast("Donation Error:$result")
             is MakePurchaseResponse.Pending      -> toast("Donation Pending - Please follow instructions")
+//            else -> failAndToast("Donation not confirmed - Unknown error")
         }
     }
 

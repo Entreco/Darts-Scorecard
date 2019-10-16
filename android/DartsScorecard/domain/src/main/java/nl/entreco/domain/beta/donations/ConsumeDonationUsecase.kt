@@ -32,14 +32,7 @@ class ConsumeDonationUsecase @Inject constructor(
                     onUi { done(result) }
                 }
             } else {
-                billingRepository.acknowledge(token) { response ->
-                    val result = when (response) {
-                        is MakePurchaseResponse.Acknowledged -> ConsumeDonationResponse.Success(sku, orderId)
-                        is MakePurchaseResponse.Error        -> ConsumeDonationResponse.Error(sku, response.code)
-                        else                                 -> ConsumeDonationResponse.Error(sku, -180)
-                    }
-                    onUi { done(result) }
-                }
+                billingRepository.acknowledge(token)
             }
         }, fail)
     }

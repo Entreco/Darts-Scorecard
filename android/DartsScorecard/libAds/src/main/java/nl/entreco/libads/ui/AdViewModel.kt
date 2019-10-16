@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdView
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.Ads
 import nl.entreco.libads.BuildConfig
@@ -55,12 +56,13 @@ class AdViewModel @Inject constructor(
         }
     }
 
-    private fun checkIfUserHasPurchasedItems() {
-        connectToBillingUsecase.bind { connected ->
-            if (connected) {
+    private val handler = object : (MakePurchaseResponse)->Unit{
+        override fun invoke(response: MakePurchaseResponse) {
+            if (response is MakePurchaseResponse.Connected) {
                 fetchPurchasedItemsUsecase.exec(onPurchasesRetrieved(), onPurchasesError())
             }
         }
+
     }
 
     private fun onPurchasesRetrieved(): (FetchPurchasedItemsResponse) -> Unit {
@@ -80,12 +82,12 @@ class AdViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun bind() {
-        checkIfUserHasPurchasedItems()
+        connectToBillingUsecase.bind (handler)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun unbind() {
-        connectToBillingUsecase.unbind()
+        connectToBillingUsecase.unbind(handler)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

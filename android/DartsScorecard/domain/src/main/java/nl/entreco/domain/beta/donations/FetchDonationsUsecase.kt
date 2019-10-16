@@ -9,7 +9,11 @@ import javax.inject.Inject
 /**
  * Created by entreco on 09/02/2018.
  */
-class FetchDonationsUsecase @Inject constructor(private val billingRepository: BillingRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+class FetchDonationsUsecase @Inject constructor(
+        private val billingRepository: BillingRepository,
+        bg: Background,
+        fg: Foreground
+) : BaseUsecase(bg, fg) {
 
     fun exec(done: (FetchDonationsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

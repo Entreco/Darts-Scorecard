@@ -21,13 +21,13 @@ class PlayStoreBillingRepository(
 
     private val productList: MutableMap<String, SkuDetails> = mutableMapOf()
 
-    override fun bind(done: (Boolean) -> Unit) {
-        playConnection.setCallback(done)
+    override fun bind(done: (MakePurchaseResponse) -> Unit) {
+        playConnection.addCallback(done)
         playConnection.onServiceConnected(activityContext)
     }
 
-    override fun unbind() {
-        playConnection.setCallback { }
+    override fun unbind(done: (MakePurchaseResponse) -> Unit) {
+        playConnection.removeCallback(done)
         playConnection.onServiceDisconnected()
     }
 
@@ -68,8 +68,7 @@ class PlayStoreBillingRepository(
 
     @UiThread
     override fun donate(donation: Donation, update: (MakePurchaseResponse) -> Unit) {
-        playConnection.donation(update)
-
+        playConnection.addCallback(update)
         // Retrieve a value for "skuDetails" by calling querySkuDetailsAsync().
         val flowParams = BillingFlowParams.newBuilder()
                 .setSkuDetails(productList[donation.sku])
@@ -77,11 +76,14 @@ class PlayStoreBillingRepository(
 
         val responseCode = try {
             playConnection.getClient()?.launchBillingFlow(activityContext, flowParams)
-        } catch (err: Throwable){ BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.BILLING_UNAVAILABLE).build() }
+        } catch (err: Throwable) {
+            BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.BILLING_UNAVAILABLE).build()
+        }
         when (val code = responseCode?.responseCode) {
-            BillingClient.BillingResponseCode.OK                 -> { /** Flow launched, we'll get a callback in onPurchasesUpdated() */ }
-            BillingClient.BillingResponseCode.USER_CANCELED      -> update(MakePurchaseResponse.Cancelled)
-            else                                                 -> update(MakePurchaseResponse.Error(code ?: -100))
+            BillingClient.BillingResponseCode.OK            -> update(MakePurchaseResponse.Launched)
+            BillingClient.BillingResponseCode.USER_CANCELED -> update(MakePurchaseResponse.Cancelled)
+            else                                            -> update(MakePurchaseResponse.Error(code
+                    ?: -100))
         }
     }
 
@@ -98,8 +100,8 @@ class PlayStoreBillingRepository(
         }
     }
 
-    override fun acknowledge(token: String, updater: (MakePurchaseResponse) -> Unit) {
-        playConnection.acknowledge(token, updater)
+    override fun acknowledge(token: String) {
+        playConnection.acknowledge(token)
     }
 
     override fun fetchPurchasedItems(): List<String> {

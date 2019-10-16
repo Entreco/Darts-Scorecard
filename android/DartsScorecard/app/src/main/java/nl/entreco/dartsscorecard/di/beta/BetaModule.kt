@@ -12,7 +12,7 @@ class BetaModule(private val donateCallback: DonateCallback) {
 
     @Provides
     @BetaScope
-    fun provideDonateCallback(): DonateCallback {
+    fun provideDonateCallback(): DonateCallback? {
         return donateCallback
     }
 }

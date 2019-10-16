@@ -20,7 +20,7 @@ object InputBindings {
 
     private const val defaultAnimationDuration: Long = 150
     private const val horizontalTranslation: Float = 0F
-    private const val clearTranslation: Float = 2000F
+    private const val clearTranslation: Float = 10000F
     private const val delay: Long = 500
 
     @JvmStatic
