@@ -33,13 +33,13 @@ class PlayBillingRepository(
     private val serviceConnected = AtomicBoolean(false)
     private val billingClientResponseCode = AtomicInteger(BILLING_MANAGER_NOT_INITIALIZED)
     private val skuDetails: MutableMap<String, SkuDetails?> = mutableMapOf()
-    private val purchases: MutableList<Purchase> = mutableListOf()
+    private val tokensToBeConsumed: MutableSet<String> = mutableSetOf()
 
     private val purchaseListener = PurchasesUpdatedListener { billingResult, purchases ->
         when (billingResult?.responseCode) {
             BillingClient.BillingResponseCode.OK            -> {
                 purchases?.forEach { purchase ->
-                    handlePurchase(purchase)
+                    if(!purchases.contains(purchase)) handlePurchase(purchase)
                 }
 
                 val donations = purchases?.map { nl.entreco.domain.beta.donations.Purchase(it.sku, it.isAcknowledged, it.purchaseState) } ?: emptyList()
@@ -115,7 +115,6 @@ class PlayBillingRepository(
         }
 
         Log.d("IAB", "Got a verified purchase: $purchase")
-        purchases.add(purchase)
 
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
             // Grant entitlement to the user.
@@ -127,7 +126,6 @@ class PlayBillingRepository(
 
                 // Acknowledge the purchase if it hasn't already been acknowledged.
                 if (!purchase.isAcknowledged) {
-
                     val permanentPurchase = FetchDonationsInclAdsData().contains(purchase.sku) || FetchDonationsInclAdsTestData().contains(purchase.sku)
                     if (permanentPurchase) {
                         // Acknowledge
@@ -137,8 +135,6 @@ class PlayBillingRepository(
                         consume(purchase)
                     }
 
-                } else {
-                    listener(MakePurchaseResponse.Acknowledged)
                 }
             }
         } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
@@ -157,24 +153,36 @@ class PlayBillingRepository(
     }
 
     private fun acknowledge(purchase: Purchase) {
+
+        if (tokensToBeConsumed.contains(purchase.purchaseToken)) {
+            Log.i("IAB", "Token was already scheduled to be consumed - skipping...");
+            return;
+        }
+        tokensToBeConsumed.add(purchase.purchaseToken)
+
         val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                 .setPurchaseToken(purchase.purchaseToken)
                 .build()
         client.acknowledgePurchase(acknowledgePurchaseParams) { result ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                purchases.remove(purchase)
                 listener(MakePurchaseResponse.Acknowledged)
             }
         }
     }
 
     private fun consume(purchase: Purchase) {
+
+        if (tokensToBeConsumed.contains(purchase.purchaseToken)) {
+            Log.i("IAB", "Token was already scheduled to be consumed - skipping...");
+            return;
+        }
+        tokensToBeConsumed.add(purchase.purchaseToken)
+
         val consumeParams = ConsumeParams.newBuilder()
                 .setPurchaseToken(purchase.purchaseToken)
                 .build()
         client.consumeAsync(consumeParams) { result, token ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                purchases.remove(purchase)
                 listener(MakePurchaseResponse.Consumed)
             }
         }
@@ -194,10 +202,10 @@ class PlayBillingRepository(
 
             val donations = if (purchasesResult.purchasesList.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }) {
                 // Needs to be consumed
-                FetchDonationsTestData()
+                FetchDonationsData()
             } else {
                 // Needs to be acknowledged
-                FetchDonationsInclAdsTestData()
+                FetchDonationsInclAdsData()
             }
 
             val params = SkuDetailsParams.newBuilder().setSkusList(donations.listOfProducts()).setType(SkuType.INAPP)
@@ -229,7 +237,7 @@ class PlayBillingRepository(
         Log.d("AIB", "Query inventory was successful.")
 
         // Update the UI and purchases inventory with new list of purchases
-        purchases.clear()
+        tokensToBeConsumed.clear()
         purchaseListener.onPurchasesUpdated(BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.OK).build(), result.purchasesList)
     }
 

@@ -8,12 +8,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
-import nl.entreco.data.billing.GooglePlayConnection
-import nl.entreco.data.billing.PlayStoreBillingRepository
 import nl.entreco.data.prefs.SharedAudioPrefRepo
 import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.domain.repository.AudioPrefRepository
-import nl.entreco.domain.repository.BillingRepository
 import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.shared.scopes.ActivityScope
 
@@ -60,12 +57,5 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @ActivityScope
     fun provideAlertDialogBuilder(@ActivityScope context: Context): AlertDialog.Builder {
         return AlertDialog.Builder(context)
-    }
-
-    @Provides
-    @ActivityScope
-    fun provideBillingRepository(): BillingRepository {
-        val playConnection = GooglePlayConnection()
-        return PlayStoreBillingRepository(activity, playConnection)
     }
 }

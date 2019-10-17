@@ -67,6 +67,16 @@ class SettingsActivity : ViewModelActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        billingService.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billingService.stop()
+    }
+
     private fun donate() {
         donateViewModel.donations.firstOrNull()?.let { donation ->
             donateViewModel.onDonate(donation)
