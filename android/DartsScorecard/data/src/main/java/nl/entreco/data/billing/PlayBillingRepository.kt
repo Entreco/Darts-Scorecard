@@ -39,7 +39,7 @@ class PlayBillingRepository(
         when (billingResult?.responseCode) {
             BillingClient.BillingResponseCode.OK            -> {
                 purchases?.forEach { purchase ->
-                    if(!purchases.contains(purchase)) handlePurchase(purchase)
+                    handlePurchase(purchase)
                 }
 
                 val donations = purchases?.map { nl.entreco.domain.beta.donations.Purchase(it.sku, it.isAcknowledged, it.purchaseState) } ?: emptyList()
@@ -116,39 +116,40 @@ class PlayBillingRepository(
 
         Log.d("IAB", "Got a verified purchase: $purchase")
 
-        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-            // Grant entitlement to the user.
-            skuDetails.getOrDefault(purchase.sku, null)?.let { details ->
+        when {
+            purchase.purchaseState == Purchase.PurchaseState.PURCHASED ->
+                // Grant entitlement to the user.
+                skuDetails.getOrDefault(purchase.sku, null)?.let { details ->
 
-                val donation = Donation(details.title, details.description, details.sku, details.price, details.getVotes(), details.priceCurrencyCode, details.priceAmountMicros)
-                listener(MakePurchaseResponse.Purchased(donation, purchase.orderId))
+                    val donation = Donation(details.title, details.description, details.sku, details.price, details.getVotes(), details.priceCurrencyCode, details.priceAmountMicros)
+                    listener(MakePurchaseResponse.Purchased(donation, purchase.orderId))
 
 
-                // Acknowledge the purchase if it hasn't already been acknowledged.
-                if (!purchase.isAcknowledged) {
-                    val permanentPurchase = FetchDonationsInclAdsData().contains(purchase.sku) || FetchDonationsInclAdsTestData().contains(purchase.sku)
-                    if (permanentPurchase) {
-                        // Acknowledge
-                        acknowledge(purchase)
-                    } else {
-                        // Consume
-                        consume(purchase)
+                    // Acknowledge the purchase if it hasn't already been acknowledged.
+                    if (!purchase.isAcknowledged) {
+                        val permanentPurchase = FetchDonationsInclAdsData().contains(purchase.sku) || FetchDonationsInclAdsTestData().contains(purchase.sku)
+                        if (permanentPurchase) {
+                            // Acknowledge
+                            acknowledge(purchase)
+                        } else {
+                            // Consume
+                            consume(purchase)
+                        }
+
                     }
-
                 }
-            }
-        } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
-            // Here you can confirm to the user that they've started the pending
-            // purchase, and to complete it, they should follow instructions that
-            // are given to them. You can also choose to remind the user in the
-            // future to complete the purchase if you detect that it is still
-            // pending.
-            listener(MakePurchaseResponse.Pending(purchase.sku))
-        } else {
-            // State is Purchase.PurchaseState.UNSPECIFIED_STATE
-            // TODO: determine what to do here.
-            // For now -> handle as Pending -> votes will be added.
-            listener(MakePurchaseResponse.Unknown)
+            purchase.purchaseState == Purchase.PurchaseState.PENDING   ->
+                // Here you can confirm to the user that they've started the pending
+                // purchase, and to complete it, they should follow instructions that
+                // are given to them. You can also choose to remind the user in the
+                // future to complete the purchase if you detect that it is still
+                // pending.
+                listener(MakePurchaseResponse.Pending(purchase.sku))
+            else                                                       ->
+                // State is Purchase.PurchaseState.UNSPECIFIED_STATE
+                // TODO: determine what to do here.
+                // For now -> handle as Pending -> votes will be added.
+                listener(MakePurchaseResponse.Unknown)
         }
     }
 
