@@ -38,9 +38,9 @@ class DonateViewModel @Inject constructor(private val analytics: Analytics) : Ba
         donations.addAll(_donations.sortedBy { it.priceMicros })
     }
 
-    fun onCancelled() {
+    fun onCancelled(step: String) {
         loading.set(false)
-        analytics.trackPurchaseFailed(skuToPurchase.getAndSet(""), "User Cancelled")
+        analytics.trackPurchaseFailed(skuToPurchase.getAndSet(""), step)
     }
 
     fun onDonated(donation: Donation, orderId: String) {

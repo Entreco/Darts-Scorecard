@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.beta
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -32,6 +33,8 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
     private val component: BetaComponent by componentProvider {
         it.plus(BetaModule(this) { response ->
 
+            Log.i("IAB", "BetaActivity: $response")
+
             when(response){
                 is MakePurchaseResponse.Updated -> donateViewModel.onUpdate(response.purchases)
                 is MakePurchaseResponse.Purchased -> {
@@ -42,7 +45,8 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
                 }
                 is MakePurchaseResponse.Donations -> donateViewModel.showDonations(response.donations)
                 is MakePurchaseResponse.Unavailable -> donateViewModel.showDonations(emptyList())
-                is MakePurchaseResponse.Cancelled -> donateViewModel.onCancelled()
+                is MakePurchaseResponse.Cancelled -> donateViewModel.onCancelled("User Cancelled")
+                is MakePurchaseResponse.Unknown -> donateViewModel.onCancelled("Unknown error: $response")
             }
         })
     }

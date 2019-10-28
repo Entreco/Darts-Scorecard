@@ -5,9 +5,7 @@ import android.content.ContentResolver
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import nl.entreco.dartsscorecard.di.beta.BetaScope
 import nl.entreco.data.billing.PlayBillingRepository
-import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.LocalProfileInfoRepository
 import nl.entreco.data.db.profile.LocalProfileStatRepository
@@ -19,6 +17,9 @@ import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.repository.ImageRepository
 import nl.entreco.domain.repository.ProfileInfoRepository
 import nl.entreco.domain.repository.ProfileStatRepository
+import nl.entreco.liblog.Logger
+import nl.entreco.shared.scopes.ActivityScope
+import java.lang.ref.WeakReference
 
 /**
  * Created by entreco on 21/02/2018.
@@ -31,8 +32,8 @@ class ProfileModule(
 
     @Provides
     @ProfileScope
-    fun provideBillingService(): BillingRepo {
-        return PlayBillingRepository(activity, listener)
+    fun provideBillingService(logger: Logger): BillingRepo {
+        return PlayBillingRepository(WeakReference(activity), logger, listener)
     }
 
     @Provides

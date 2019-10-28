@@ -6,6 +6,8 @@ import dagger.Provides
 import nl.entreco.data.billing.PlayBillingRepository
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.repository.BillingRepo
+import nl.entreco.liblog.Logger
+import java.lang.ref.WeakReference
 
 /**
  * Created by entreco on 30/01/2018.
@@ -18,7 +20,7 @@ class BetaModule(
 
     @Provides
     @BetaScope
-    fun provideBillingService(): BillingRepo {
-        return PlayBillingRepository(activity, listener)
+    fun provideBillingService(logger: Logger): BillingRepo {
+        return PlayBillingRepository(WeakReference(activity), logger, listener)
     }
 }

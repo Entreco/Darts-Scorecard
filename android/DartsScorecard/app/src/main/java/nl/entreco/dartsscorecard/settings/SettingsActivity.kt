@@ -28,7 +28,8 @@ class SettingsActivity : ViewModelActivity() {
                 is MakePurchaseResponse.Purchased   -> donateViewModel.onDonated(response.donation, response.orderId)
                 is MakePurchaseResponse.Donations   -> donateViewModel.showDonations(response.donations)
                 is MakePurchaseResponse.Unavailable -> donateViewModel.showDonations(emptyList())
-                is MakePurchaseResponse.Cancelled   -> donateViewModel.onCancelled()
+                is MakePurchaseResponse.Cancelled   -> donateViewModel.onCancelled("User Cancelled")
+                is MakePurchaseResponse.Unknown -> donateViewModel.onCancelled("Unknown error: $response")
             }
         })
     }

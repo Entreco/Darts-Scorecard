@@ -1,7 +1,6 @@
 package nl.entreco.data.billing
 
 import android.app.Activity
-import android.util.Log
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.SkuType
@@ -17,12 +16,15 @@ import com.android.billingclient.api.SkuDetailsParams
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.repository.BillingRepo
+import nl.entreco.liblog.Logger
+import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 
 class PlayBillingRepository(
-        private val activity: Activity,
+        private val reference: WeakReference<Activity>,
+        private val logger: Logger,
         private var listener: (MakePurchaseResponse) -> Unit
 ) : BillingRepo {
 
@@ -46,20 +48,23 @@ class PlayBillingRepository(
                 listener(MakePurchaseResponse.Updated(donations))
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
-                Log.i("IAB", "onPurchasesUpdated() - user cancelled the purchase flow - skipping")
+                logger.i("IAB", "onPurchasesUpdated() - user cancelled the purchase flow - skipping")
                 listener(MakePurchaseResponse.Cancelled)
             }
-            else                                            -> Log.w("IAB", "onPurchasesUpdated() got unknown resultCode: ${billingResult?.responseCode}")
+            else                                            -> {
+                logger.w("IAB", "onPurchasesUpdated() got unknown resultCode: ${billingResult?.responseCode}")
+                listener(MakePurchaseResponse.Unknown)
+            }
         }
     }
 
-    private val client = BillingClient.newBuilder(activity).setListener(purchaseListener).enablePendingPurchases().build();
+    private val client = BillingClient.newBuilder(reference.get()!!).setListener(purchaseListener).enablePendingPurchases().build()
 
     override fun start() {
         startServiceConnection {
             listener(MakePurchaseResponse.Connected)
             // IAB is fully set up. Now, let's get an inventory of stuff we own.
-            Log.d("IAB", "Setup successful. Querying inventory.")
+            logger.d("IAB", "Setup successful. Querying inventory.")
             fetchPurchases()
         }
     }
@@ -92,10 +97,13 @@ class PlayBillingRepository(
 
     override fun purchase(skuId: String) {
         executeServiceRequest {
-            skuDetails.getOrDefault(skuId, null)?.let { detail ->
-                val purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(detail).build()
-                client.launchBillingFlow(activity, purchaseParams)
+            reference.get()?.let { ctx ->
+                skuDetails.getOrDefault(skuId, null)?.let { detail ->
+                    val purchaseParams = BillingFlowParams.newBuilder().setSkuDetails(detail).build()
+                    client.launchBillingFlow(ctx, purchaseParams)
+                }
             }
+
         }
     }
 
@@ -110,11 +118,11 @@ class PlayBillingRepository(
      */
     private fun handlePurchase(purchase: Purchase) {
         if (!verifyValidSignature(purchase.originalJson, purchase.signature)) {
-            Log.i("IAB", "Got a purchase: $purchase; but signature is bad. Skipping...")
+            logger.i("IAB", "Got a purchase: $purchase but signature is bad. Skipping...")
             return
         }
 
-        Log.d("IAB", "Got a verified purchase: $purchase")
+        logger.d("IAB", "Got a verified purchase: $purchase")
 
         when {
             purchase.purchaseState == Purchase.PurchaseState.PURCHASED ->
@@ -135,7 +143,6 @@ class PlayBillingRepository(
                             // Consume
                             consume(purchase)
                         }
-
                     }
                 }
             purchase.purchaseState == Purchase.PurchaseState.PENDING   ->
@@ -156,8 +163,8 @@ class PlayBillingRepository(
     private fun acknowledge(purchase: Purchase) {
 
         if (tokensToBeConsumed.contains(purchase.purchaseToken)) {
-            Log.i("IAB", "Token was already scheduled to be consumed - skipping...");
-            return;
+            logger.i("IAB", "Token was already scheduled to be consumed - skipping...")
+            return
         }
         tokensToBeConsumed.add(purchase.purchaseToken)
 
@@ -166,7 +173,10 @@ class PlayBillingRepository(
                 .build()
         client.acknowledgePurchase(acknowledgePurchaseParams) { result ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                logger.i("IAB", "Acknowledged purchase OK: $purchase")
                 listener(MakePurchaseResponse.Acknowledged)
+            } else {
+                logger.i("IAB", "Acknowledged purchase FAILED: $purchase, result: $result")
             }
         }
     }
@@ -174,8 +184,8 @@ class PlayBillingRepository(
     private fun consume(purchase: Purchase) {
 
         if (tokensToBeConsumed.contains(purchase.purchaseToken)) {
-            Log.i("IAB", "Token was already scheduled to be consumed - skipping...");
-            return;
+            logger.i("IAB", "Token was already scheduled to be consumed - skipping...")
+            return
         }
         tokensToBeConsumed.add(purchase.purchaseToken)
 
@@ -184,7 +194,10 @@ class PlayBillingRepository(
                 .build()
         client.consumeAsync(consumeParams) { result, token ->
             if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                logger.i("IAB", "Consumed purchase OK: $purchase")
                 listener(MakePurchaseResponse.Consumed)
+            } else {
+                logger.i("IAB", "Consumed purchase FAILED: $purchase, result: $result")
             }
         }
     }
@@ -193,12 +206,8 @@ class PlayBillingRepository(
         executeServiceRequest {
             val time = System.currentTimeMillis()
             val purchasesResult = client.queryPurchases(SkuType.INAPP)
-            Log.i("IAB", "Querying purchases elapsed time: ${System.currentTimeMillis() - time}ms")
-            if (purchasesResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                Log.i("IAB", "Skipped subscription purchases query since they are not supported")
-            } else {
-                Log.w("IAB", "queryPurchases() got an error response code: ${purchasesResult.responseCode}")
-            }
+            logger.i("IAB", "Querying purchases elapsed time: ${System.currentTimeMillis() - time}ms")
+
             onQueryPurchasesFinished(purchasesResult)
 
             val donations = if (purchasesResult.purchasesList.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }) {
@@ -231,11 +240,11 @@ class PlayBillingRepository(
     private fun onQueryPurchasesFinished(result: PurchasesResult) {
         // Have we been disposed of in the meantime? If so, or bad result code, then quit
         if (client == null || result.responseCode != BillingClient.BillingResponseCode.OK) {
-            Log.w("AIB", "Billing client was null or result code (${result.responseCode}) was bad - quitting")
+            logger.w("IAB", "Billing client was null or result code (${result.responseCode}) was bad - quitting")
             return
         }
 
-        Log.d("AIB", "Query inventory was successful.")
+        logger.d("IAB", "Query inventory was successful. ${result.purchasesList}")
 
         // Update the UI and purchases inventory with new list of purchases
         tokensToBeConsumed.clear()
@@ -269,7 +278,7 @@ class PlayBillingRepository(
 //        try {
 //            return Security.verifyPurchase(BASE_64_ENCODED_PUBLIC_KEY, signedData, signature)
 //        } catch (e: IOException) {
-//            Log.e(TAG, "Got an exception trying to validate a purchase: $e")
+//            logger.e(TAG, "Got an exception trying to validate a purchase: $e")
 //            return false
 //        }
         return true
@@ -279,8 +288,10 @@ class PlayBillingRepository(
 
     override fun stop() {
         if (client.isReady) {
-            client.endConnection();
+            client.endConnection()
         }
+        reference.clear()
+        listener = {}
     }
 }
 
