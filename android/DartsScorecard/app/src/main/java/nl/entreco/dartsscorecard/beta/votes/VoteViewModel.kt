@@ -55,7 +55,11 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
         }
     }
 
-    fun submitVote(amount: Int, done:()->Unit) {
+    fun submitVote(amount: Int) {
+        submitVote(amount)
+    }
+
+    fun submitVote(amount: Int, done:()->Unit = {}) {
         feature.get()?.let { betaModel ->
             val currentFeature = betaModel.feature
             if (allowedToVote(betaModel, currentFeature)) {
