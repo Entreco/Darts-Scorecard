@@ -2,11 +2,11 @@ package nl.entreco.dartsscorecard.beta.votes
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
+import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import android.net.Uri
-import android.view.View
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.beta.BetaAnimator
 import nl.entreco.dartsscorecard.beta.BetaModel
@@ -31,38 +31,40 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
 
     override fun onFeatureSelected(feature: BetaModel) {
         this.feature.set(feature)
-        this.showVideo.set(if(feature.video.get()!!.isNotBlank()) View.VISIBLE else View.GONE)
+        this.showVideo.set(if (feature.video.get()!!.isNotBlank()) View.VISIBLE else View.GONE)
         this.didAlreadyVote.set(votes.contains(feature.feature.ref))
         this.analytics.trackAchievement("viewed Feature ${feature.title.get()}")
     }
 
-    fun submitDonation(donation: Donation) {
-        submitVote(donation.votes)
+    fun submitDonation(donation: Donation, done: ()->Unit) {
+        submitVote(donation.votes, done)
     }
 
-    fun launchVideo(view: View){
-        if(showVideo.get() == View.VISIBLE){
+    fun launchVideo(view: View) {
+        if (showVideo.get() == View.VISIBLE) {
             val uri = Uri.parse(feature.get()?.video?.get())
-            val id = uri.getQueryParameter( "v" )
+            val id = uri.getQueryParameter("v")
             val app = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
             val web = Intent(Intent.ACTION_VIEW, uri)
 
             try {
                 view.context.startActivity(app)
-            } catch(youtubeNotInstalled: ActivityNotFoundException){
+            } catch (youtubeNotInstalled: ActivityNotFoundException) {
                 view.context.startActivity(web)
             }
         }
     }
 
-    fun submitVote(amount: Int) {
-        val betaModel = feature.get()!!
-        val currentFeature = betaModel.feature
-        if (allowedToVote(betaModel, currentFeature)) {
-            feature.set(BetaModel(currentFeature.copy(votes = min(currentFeature.required ,currentFeature.votes + amount))))
-            votes.add(currentFeature.ref)
-            analytics.trackViewFeature(currentFeature, amount)
-            submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))
+    fun submitVote(amount: Int, done:()->Unit) {
+        feature.get()?.let { betaModel ->
+            val currentFeature = betaModel.feature
+            if (allowedToVote(betaModel, currentFeature)) {
+                feature.set(BetaModel(currentFeature.copy(votes = min(currentFeature.required, currentFeature.votes + amount))))
+                votes.add(currentFeature.ref)
+                analytics.trackViewFeature(currentFeature, amount)
+                submitVoteUsecase.exec(SubmitVoteRequest(betaModel.feature.ref, amount), onVoteSuccess(currentFeature), onVoteFailed(currentFeature))
+                done()
+            }
         }
     }
 

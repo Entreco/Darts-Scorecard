@@ -36,8 +36,9 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
                 is MakePurchaseResponse.Updated -> donateViewModel.onUpdate(response.purchases)
                 is MakePurchaseResponse.Purchased -> {
                     donateViewModel.onDonated(response.donation, response.orderId)
-                    votesViewModel.submitDonation(response.donation)
-                    showTankYouToast()
+                    votesViewModel.submitDonation(response.donation){
+                        showTankYouToast()
+                    }
                 }
                 is MakePurchaseResponse.Donations -> donateViewModel.showDonations(response.donations)
                 is MakePurchaseResponse.Unavailable -> donateViewModel.showDonations(emptyList())
