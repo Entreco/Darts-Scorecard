@@ -1,6 +1,7 @@
 package nl.entreco.libconsent.ask
 
 import android.content.Context
+import android.view.WindowManager
 import com.google.ads.consent.ConsentForm
 import com.google.ads.consent.ConsentFormListener
 import com.google.ads.consent.ConsentStatus
@@ -30,7 +31,11 @@ class AskConsentUsecase @Inject constructor(
         }
 
         override fun onConsentFormLoaded() {
-            form?.show()
+            try {
+                form?.show()
+            } catch (badWindowToken: WindowManager.BadTokenException){
+                // Shame on you, for catching this exception and silently ignoring it ;(
+            }
         }
     }
 

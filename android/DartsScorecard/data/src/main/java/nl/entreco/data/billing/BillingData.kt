@@ -28,9 +28,9 @@ class DonateAds500Votes : BillingData("500_remove_ads_votes", 500)
 class DonateAds1000Votes : BillingData("1000_remove_ads_votes", 1000)
 
 class DonateTestPurchased : BillingData("android.test.purchased", 10)
-class DonateTestCancelled : BillingData("android.test.canceled", 10)
-class DonateTestRefunded : BillingData("android.test.refunded", 10)
-class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
+class DonateTestCancelled : BillingData("android.test.canceled", 20)
+class DonateTestRefunded : BillingData("android.test.refunded", 50)
+class DonateTestUnavailable : BillingData("android.test.item_unavailable", 100)
 
 sealed class InAppProducts(private val billingData: List<BillingData>) {
     private fun listOfDonations(): List<BillingData> {
