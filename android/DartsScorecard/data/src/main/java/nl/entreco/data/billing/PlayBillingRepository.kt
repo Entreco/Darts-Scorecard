@@ -210,7 +210,7 @@ class PlayBillingRepository(
 
             onQueryPurchasesFinished(purchasesResult)
 
-            val donations = if (purchasesResult.purchasesList.any { it.purchaseState == Purchase.PurchaseState.PURCHASED }) {
+            val donations = if (purchasesResult.purchasesList?.any { it.purchaseState == Purchase.PurchaseState.PURCHASED } == true) {
                 // Needs to be consumed
                 FetchDonationsData()
             } else {
@@ -244,11 +244,11 @@ class PlayBillingRepository(
             return
         }
 
-        logger.d("IAB", "Query inventory was successful. ${result.purchasesList}")
+        logger.d("IAB", "Query inventory was successful. ${result.purchasesList ?: emptyList()}")
 
         // Update the UI and purchases inventory with new list of purchases
         tokensToBeConsumed.clear()
-        purchaseListener.onPurchasesUpdated(BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.OK).build(), result.purchasesList)
+        purchaseListener.onPurchasesUpdated(BillingResult.newBuilder().setResponseCode(BillingClient.BillingResponseCode.OK).build(), result.purchasesList ?: emptyList())
     }
 
     private fun executeServiceRequest(runnable: () -> Unit) {
