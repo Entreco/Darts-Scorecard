@@ -1,17 +1,14 @@
 package nl.entreco.libads.ui
 
 import androidx.databinding.ObservableBoolean
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.ads.AdView
 import nl.entreco.domain.ad.FetchPurchasedItemsResponse
 import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
-import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
 import nl.entreco.libads.Ads
 import nl.entreco.libads.BuildConfig
 import nl.entreco.libads.Interstitials
@@ -24,8 +21,6 @@ import javax.inject.Named
 
 @ActivityScope
 class AdViewModel @Inject constructor(
-        @ActivityScope private val lifeCycle: Lifecycle,
-        @ActivityScope private val connectToBillingUsecase: ConnectToBillingUsecase,
         private val fetchPurchasedItemsUsecase: FetchPurchasedItemsUsecase,
         private val fetchConsentUsecase: FetchConsentUsecase,
         private val adLoader: Ads,
@@ -35,10 +30,6 @@ class AdViewModel @Inject constructor(
     val showAd = ObservableBoolean(false)
     private val showConsent by lazy { MutableLiveData<Boolean>() }
     private var serveAds = AtomicBoolean(false) // Let's give the user no Ads by default
-
-    init {
-        lifeCycle.addObserver(this)
-    }
 
     fun consent(): LiveData<Boolean> = showConsent.toSingleEvent()
 
@@ -56,42 +47,16 @@ class AdViewModel @Inject constructor(
         }
     }
 
-    private val handler = object : (MakePurchaseResponse)->Unit{
-        override fun invoke(response: MakePurchaseResponse) {
-            if (response is MakePurchaseResponse.Connected) {
-                fetchPurchasedItemsUsecase.exec(onPurchasesRetrieved(), onPurchasesError())
-            }
-        }
-
+    fun onPurchasesRetrieved(response: MakePurchaseResponse.Updated) {
+        fetchPurchasedItemsUsecase.exec(done(response), {})
     }
 
-    private fun onPurchasesRetrieved(): (FetchPurchasedItemsResponse) -> Unit {
+    private fun done(response: MakePurchaseResponse.Updated): (FetchPurchasedItemsResponse) -> Unit {
         return { adResponse ->
             fetchConsentUsecase.go { consentResponse ->
                 showConsent.postValue(consentResponse.shouldAskForConsent)
-                serveAds.set(adResponse.serveAds)
+                serveAds.set(response.purchases.none { it.state == 1 } && adResponse.serveAds)
             }
         }
-    }
-
-    private fun onPurchasesError(): (Throwable) -> Unit {
-        return { _ ->
-            // TODO entreco - 2019-06-04: logger.w("Unable to fetchPurchasedItems, $err")
-        }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun bind() {
-        connectToBillingUsecase.bind (handler)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun unbind() {
-        connectToBillingUsecase.unbind(handler)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun destroy() {
-        lifeCycle.removeObserver(this)
     }
 }
