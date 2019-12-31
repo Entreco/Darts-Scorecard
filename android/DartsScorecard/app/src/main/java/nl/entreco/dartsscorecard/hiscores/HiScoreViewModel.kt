@@ -46,6 +46,10 @@ class HiScoreViewModel @Inject constructor(
     }
 
     fun updateDescription(position: Int) {
+        val current = hiscores.value ?: return
+        if(current.isEmpty()) return
+        if(current[0].hiScore.isEmpty()) return
+        
         val desc = when (hiscores.value?.get(0)?.hiScore?.get(position)) {
             is HiScoreItem.ScoringAvg -> R.string.hiscore_description_first9_average
             is HiScoreItem.CheckoutPerc -> R.string.hiscore_description_checkout_percentage
