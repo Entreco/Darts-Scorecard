@@ -22,6 +22,7 @@ class ArchiveServiceRepository(db: DscDatabase, private val mapper: ArchiveStatM
                 .split(TeamSeperator)
                 .map { it.split(PlayerSeperator) }
                 .flatten()
+                .filterNot { it.startsWith("#") }
 
         players.forEach { player ->
             val profileTable = mapper.to(gameId, player.toLong(), game.winningTeam, turnTable, metaTable)
