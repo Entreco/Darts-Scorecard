@@ -30,7 +30,6 @@
         android:id="@+id/inputSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="@dimen/input_peek_height"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -46,8 +45,8 @@
                 android:id="@+id/input_arrow"
                 android:layout_width="@dimen/large"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_escape"
                 android:layout_alignTop="@id/input_escape"
+                android:layout_alignBottom="@id/input_escape"
                 android:contentDescription="@null"
                 android:rotation="180"
                 android:src="@drawable/ic_current_team" />
@@ -57,9 +56,9 @@
                 style="@style/Input.Score.No"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@id/input_arrow"
                 android:layout_alignBottom="@id/input_arrow"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@id/input_arrow"
                 android:layout_toStartOf="@id/input_score"
                 app:special="@{viewModel.special}" />
 
@@ -99,8 +98,8 @@
                 style="@style/Input.Sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@id/input_next"
+                android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/input_score"
                 android:text="@{viewModel.nextDescription}" />
 
@@ -108,10 +107,10 @@
                 android:id="@+id/input_resume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/input_arrow"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignTop="@id/input_arrow"
+                android:layout_alignBottom="@id/input_arrow"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/score_hint"
                 android:focusable="true"
                 android:onClick="@{() -> viewModel.onResume(animator, listener)}"
@@ -129,8 +128,8 @@
             android:id="@+id/input_keys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/input_top"
+            android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/fab"
             android:background="@color/neutral_black"
             android:columnCount="3"
@@ -224,9 +223,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/input_top"
             android:layout_alignBottom="@id/input_keys"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/input_top"
             android:layout_toEndOf="@id/input_keys"
             android:background="@drawable/panel"
             android:orientation="vertical">
@@ -256,10 +255,10 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:layout_margin="16dp"
+            android:contentDescription="@string/cd_throw"
             android:onClick="@{() -> viewModel.onSubmitScore(inputScore, listener)}"
             android:scaleType="fitXY"
             android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
-            android:contentDescription="@string/cd_throw"
             app:numDarts="@{viewModel.dartsLeft}"
             fab:fabSize="normal"
             fab:useCompatPadding="true" />
@@ -269,16 +268,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/input_keys"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:animateLayoutChanges="true"
             android:background="@drawable/panel"
             android:elevation="120dp"
             android:orientation="vertical"
             android:padding="@dimen/def"
-            fab:visibility="gone"
-            app:ask4finish="@{viewModel.finalTurn != null}">
+            app:ask4finish="@{viewModel.finalTurn != null}"
+            fab:visibility="gone">
 
             <TextView
                 style="@style/Input.Score"
@@ -320,5 +319,22 @@
 
         </LinearLayout>
 
+        <!-- Bot's Turn -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:animateLayoutChanges="true"
+            android:background="#aaff6600"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:elevation="120dp"
+            android:focusable="true"
+            android:padding="@dimen/xxlarge"
+            android:src="@drawable/ic_bot"
+            app:showIf="@{viewModel.botsTurn}" />
     </RelativeLayout>
 </layout>

@@ -320,5 +320,18 @@
 
         </LinearLayout>
 
+        <!-- Bot's Turn -->
+        <ImageView
+            android:elevation="120dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#aaff6600"
+            android:padding="@dimen/xxlarge"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_bot"
+            app:showIf="@{viewModel.botsTurn}"/>
+
     </RelativeLayout>
 </layout>

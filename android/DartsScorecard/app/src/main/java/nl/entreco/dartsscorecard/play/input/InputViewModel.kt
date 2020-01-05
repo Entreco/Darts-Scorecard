@@ -1,15 +1,20 @@
 package nl.entreco.dartsscorecard.play.input
 
+import android.widget.TextView
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.model.*
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.NoPlayer
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.play.ScoreEstimator
@@ -26,7 +31,8 @@ import javax.inject.Inject
  */
 class InputViewModel @Inject constructor(
         private val analytics: Analytics,
-        private val logger: Logger) : BaseViewModel(), PlayerListener, InputEventsListener {
+        private val logger: Logger
+) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
@@ -38,6 +44,7 @@ class InputViewModel @Inject constructor(
     val finalTurn = ObservableField<Turn?>()
     val dartsLeft = ObservableInt()
     val resumeDescription = ObservableInt(R.string.game_on)
+    val botsTurn = ObservableBoolean(false)
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
@@ -48,7 +55,6 @@ class InputViewModel @Inject constructor(
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 updateKeyboardHints()
             }
-
         })
     }
 
@@ -141,7 +147,7 @@ class InputViewModel @Inject constructor(
         listener.onDartThrown(turn.copy(), nextUp?.player!!)
 
         when {
-            lastDart() -> submitScore(turn.copy(), listener)
+            lastDart()     -> submitScore(turn.copy(), listener)
             didFinishLeg() -> submitScore(turn.copy(), listener)
         }
     }
@@ -187,31 +193,35 @@ class InputViewModel @Inject constructor(
         finalTurn.set(null)
         turn = Turn()
         dartsLeft.set(turn.dartsLeft())
+
+
+        // If next.player is Bot () -> let the bot do it's thing
+        // Disable inputs from user
+        botsTurn.set(next.player is Bot)
     }
+
 
     private fun descriptionFromNext(next: Next): Int {
         return when (next.state) {
             State.START -> R.string.game_on
-            State.LEG -> R.string.to_throw_first
-            State.SET -> R.string.to_throw_first
+            State.LEG   -> R.string.to_throw_first
+            State.SET   -> R.string.to_throw_first
             State.MATCH -> R.string.game_shot_and_match
-            else -> R.string.to_throw
+            else        -> R.string.to_throw
         }
     }
 
     private fun resumeDescriptionFromNext(next: Next): Int {
         return when (next.state) {
             State.START -> R.string.game_on
-            State.LEG -> R.string.tap_to_resume
-            State.SET -> R.string.tap_to_resume
+            State.LEG   -> R.string.tap_to_resume
+            State.SET   -> R.string.tap_to_resume
             State.MATCH -> R.string.game_shot_and_match
-            else -> R.string.tap_to_resume
+            else        -> R.string.tap_to_resume
         }
     }
 
-    private fun didFinishLeg(): Boolean {
-        return required.get()!!.score == turn.total()
-    }
+    private fun didFinishLeg() = required.get()!!.score == turn.total()
 
     private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
 }
