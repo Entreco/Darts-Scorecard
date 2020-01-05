@@ -25,6 +25,7 @@ import nl.entreco.dartsscorecard.di.setup.Setup01Component
 import nl.entreco.dartsscorecard.di.setup.Setup01Module
 import nl.entreco.dartsscorecard.di.viewmodel.api.FaqApiModule
 import nl.entreco.dartsscorecard.di.viewmodel.api.FeatureApiModule
+import nl.entreco.dartsscorecard.di.viewmodel.db.BotDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.GameDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.MetaDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.PlayerDbModule
@@ -37,10 +38,10 @@ import nl.entreco.shared.scopes.ActivityScope
  * Created by Entreco on 14/11/2017.
  */
 @ActivityScope
-@Subcomponent(modules = [(ViewModelModule::class), (ThreadingModule::class),
-    (GameDbModule::class), (PlayerDbModule::class), (TurnDbModule::class),
-    (MetaDbModule::class), (StatDbModule::class), (FeatureApiModule::class),
-    (FaqApiModule::class)])
+@Subcomponent(modules = [ViewModelModule::class, ThreadingModule::class,
+    GameDbModule::class, PlayerDbModule::class, BotDbModule::class,
+    TurnDbModule::class, MetaDbModule::class, StatDbModule::class,
+    FeatureApiModule::class, FaqApiModule::class])
 interface ViewModelComponent {
 
     // Where can this be used

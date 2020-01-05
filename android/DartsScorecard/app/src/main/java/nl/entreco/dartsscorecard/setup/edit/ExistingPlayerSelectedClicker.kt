@@ -1,5 +1,6 @@
 package nl.entreco.dartsscorecard.setup.edit
 
+import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 
 /**
@@ -7,5 +8,6 @@ import nl.entreco.domain.model.players.Player
  */
 interface ExistingPlayerSelectedClicker {
     fun onSelected(player: Player)
+    fun onSelected(bot: Bot)
     fun onBackPressed()
 }

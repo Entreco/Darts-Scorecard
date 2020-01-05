@@ -54,6 +54,7 @@
     <string name="choose_player_name">Choose player name</string>
     <string name="choose_existing_player">Or choose existing players</string>
     <string name="choose_available_bot">Play against a bot</string>
+    <string name="cannot_change_bot_name">It\'s not possible to change the bots name</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Select x01 score</string>
     <string name="start_score">Start score</string>

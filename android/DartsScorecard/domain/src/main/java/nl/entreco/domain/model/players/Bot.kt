@@ -1,5 +1,10 @@
 package nl.entreco.domain.model.players
 
-class Bot : Player("Bot") {
-    override val isHuman: Boolean = false
+open class Bot(val displayName: String,  _id: Long = 0) : Player(displayName, _id) {
+    override fun toString(): String {
+        return displayName
+    }
+
+    object Easy : Bot("\uD83E\uDD16 Easy")
+    object Pro : Bot("\uD83E\uDD16 Pro")
 }

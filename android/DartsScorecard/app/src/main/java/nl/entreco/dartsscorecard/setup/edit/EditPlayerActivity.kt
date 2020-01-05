@@ -16,7 +16,7 @@ import nl.entreco.dartsscorecard.setup.Setup01Navigator
  */
 class EditPlayerActivity : ViewModelActivity() {
 
-    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers())) }
+    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers(), otherBots())) }
     private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
     private val navigator: EditPlayerNavigator by lazy { EditPlayerNavigator(this) }
 
@@ -34,6 +34,10 @@ class EditPlayerActivity : ViewModelActivity() {
 
     private fun otherPlayers(): LongArray {
         return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_PLAYERS)
+    }
+
+    private fun otherBots(): LongArray {
+        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_BOTS)
     }
 
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {

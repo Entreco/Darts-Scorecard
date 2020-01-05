@@ -52,8 +52,9 @@
     <!-- Setup -->
     <string name="select_players">Selecteer spelers</string>
     <string name="choose_player_name">Kies spelersnaam</string>
-    <string name="choose_available_bot">Speel tegen een Robot</string>
     <string name="choose_existing_player">Of kies een bestaande speler</string>
+    <string name="choose_available_bot">Speel tegen een Robot</string>
+    <string name="cannot_change_bot_name">Je kunt de naam van de Robot niet wijzigen</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Kies x01 score</string>
     <string name="start_score">Start score</string>

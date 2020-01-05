@@ -9,13 +9,13 @@ import org.junit.Test
 class PlayerMapperTest {
     private val subject = PlayerMapper()
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = IllegalArgumentException::class)
     fun `should throw exception when invalid table`() {
         val table = givenPlayer()
         subject.to(table)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test(expected = IllegalArgumentException::class)
     fun `should throw exception when invalid favourite double`() {
         val table = givenPlayer(fav = 22)
         subject.to(table)

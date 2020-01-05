@@ -53,6 +53,8 @@
     <string name="select_players">Seleccionar jugadores</string>
     <string name="choose_player_name">Elige el nombre del jugador</string>
     <string name="choose_existing_player">O elige jugadores existentes</string>
+    <string name="choose_available_bot">Jugar contra un bot</string>
+    <string name="cannot_change_bot_name">No es posible cambiar el nombre del bot</string>
     <string name="team">Equipo</string>
     <string name="select_x01_score">Seleccionar puntuación x01</string>
     <string name="start_score">Puntuación inicial</string>

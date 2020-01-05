@@ -8,7 +8,11 @@ import javax.inject.Named
  * Created by Entreco on 02/01/2018.
  */
 @Module
-class EditPlayerModule(private val suggestedName: String, private val otherPlayers: LongArray) {
+class EditPlayerModule(
+        private val suggestedName: String,
+        private val otherPlayers: LongArray,
+        private val otherBots: LongArray
+) {
 
     @Provides
     @Named("suggestion")
@@ -22,5 +26,12 @@ class EditPlayerModule(private val suggestedName: String, private val otherPlaye
     @EditPlayerScope
     fun provideOtherPlayers(): LongArray {
         return otherPlayers
+    }
+
+    @Provides
+    @Named("otherBots")
+    @EditPlayerScope
+    fun provideOtherBots(): LongArray {
+        return otherBots
     }
 }

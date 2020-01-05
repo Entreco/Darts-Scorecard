@@ -24,20 +24,20 @@ class PlayerAdapterTest {
     @Test
     fun `it should have zero players by default in playersMap`() {
         assertEquals(0, subject.itemCount)
-        assertEquals(0, subject.playersMap().size)
+        assertEquals(0, subject.participants().size)
     }
 
     @Test
     fun `it should add new player`() {
         givenPlayer("remco")
         assertEquals(1, subject.itemCount)
-        assertEquals(1, subject.playersMap().size)
+        assertEquals(1, subject.participants().size)
     }
 
     @Test
     fun `it should add new player with correct name`() {
         givenPlayer("remco")
-        assertEquals("remco", subject.playersMap()[0].name.get())
+        assertEquals("remco", subject.participants()[0].name.get())
     }
 
     @Test
@@ -51,7 +51,7 @@ class PlayerAdapterTest {
     fun `it should replace existing player`() {
         givenPlayer("Frankie")
         subject.onPlayerEdited(0, 1, "new player", 0)
-        assertTrue(subject.playersMap().map { it.name.get() }.contains("new player"))
+        assertTrue(subject.participants().map { it.name.get() }.contains("new player"))
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
@@ -62,7 +62,7 @@ class PlayerAdapterTest {
     @Test(expected = IndexOutOfBoundsException::class)
     fun `it should throw exception if replace non-existing player`() {
         subject.onPlayerEdited(500, 1, "player that does not exist", 0)
-        assertTrue(subject.playersMap().map { it.name.get() }.contains("two"))
+        assertTrue(subject.participants().map { it.name.get() }.contains("two"))
     }
 
     private fun givenPlayer(name: String) {

@@ -85,9 +85,9 @@ class PlayersViewModelTest {
 
     private fun givenPlayersMap(vararg players: TeamPlayer) {
         if (players.isEmpty()) {
-            whenever(mockAdapter.playersMap()).thenReturn(emptyArray())
+            whenever(mockAdapter.participants()).thenReturn(emptyArray())
         } else {
-            whenever(mockAdapter.playersMap()).thenReturn(createMap(*players))
+            whenever(mockAdapter.participants()).thenReturn(createMap(*players))
         }
     }
 
