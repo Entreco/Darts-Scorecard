@@ -20,7 +20,7 @@ class GetFinishUsecase @Inject constructor(private val bg: Background) {
     }
 
     private val impossible = arrayOf(169, 168, 166, 165, 163, 162, 159)
-    val notPossible = ""
+    internal val notPossible = ""
 
     @WorkerThread
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
