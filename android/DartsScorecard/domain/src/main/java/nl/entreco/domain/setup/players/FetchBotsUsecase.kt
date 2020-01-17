@@ -27,7 +27,12 @@ class FetchBotsUsecase @Inject constructor(
     }
 
     private fun insertBots() {
-        val easy = botRepository.create(Bot.Easy.displayName)
-        val pro = botRepository.create(Bot.Pro.displayName)
+        val rand = botRepository.create(Bot.Rand.displayName, Bot.Rand.level)
+        val noob = botRepository.create(Bot.Noob.displayName, Bot.Noob.level)
+        val easy = botRepository.create(Bot.Easy.displayName, Bot.Easy.level)
+        val midi = botRepository.create(Bot.Midi.displayName, Bot.Midi.level)
+        val oki = botRepository.create(Bot.Oki.displayName, Bot.Oki.level)
+        val gui = botRepository.create(Bot.Gui.displayName, Bot.Gui.level)
+        val pro = botRepository.create(Bot.Pro.displayName, Bot.Pro.level)
     }
 }

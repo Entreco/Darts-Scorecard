@@ -2,10 +2,12 @@ package nl.entreco.dartsscorecard.play
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
@@ -32,27 +34,27 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 19/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class Play01ViewModelRevancheTest {
 
-    @Mock private lateinit var mockPlay01Usecamse: Play01Usecase
-    @Mock private lateinit var mockToggleMusicUsecase: ToggleMusicUsecase
-    @Mock private lateinit var mockMusicPlayer: MusicPlayer
-    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockAdProvider: AdViewModel
-    @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
-    @Mock private lateinit var mockGameListeners: Play01Listeners
-    @Mock private lateinit var mockMasterCaller: MasterCaller
-    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
-    @Mock private lateinit var mockLoadNotifier: GameLoadedNotifier<ScoreSettings>
-    @Mock private lateinit var mockDialogHelper: DialogHelper
-    @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockGame: Game
-    @Mock private lateinit var mockNext: Next
-    @Mock private lateinit var mockScoreSettings: ScoreSettings
-    @Mock private lateinit var team1: Team
-    @Mock private lateinit var team2: Team
+    private val mockCalc: CalculateBotScoreUsecase = mock()
+    private val mockPlay01Usecamse: Play01Usecase = mock()
+    private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
+    private val mockMusicPlayer: MusicPlayer = mock()
+    private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
+    private val mockAdProvider: AdViewModel = mock()
+    private val mockRevancheUsecase: RevancheUsecase = mock()
+    private val mockGameListeners: Play01Listeners = mock()
+    private val mockMasterCaller: MasterCaller = mock()
+    private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
+    private val mockLoadNotifier: GameLoadedNotifier<ScoreSettings> = mock()
+    private val mockDialogHelper: DialogHelper = mock()
+    private val mockLogger: Logger = mock()
+    private val mockGame: Game = mock()
+    private val mockNext: Next = mock()
+    private val mockScoreSettings: ScoreSettings = mock()
+    private val team1: Team = mock()
+    private val team2: Team = mock()
 
     private val revancheCaptor = argumentCaptor<(RevancheResponse) -> Unit>()
 
@@ -71,7 +73,7 @@ class Play01ViewModelRevancheTest {
     private fun givenFullyLoadedSubject() {
         whenever(mockNext.state).thenReturn(State.START)
         whenever(mockGame.next).thenReturn(mockNext)
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalc, mockAdProvider, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))

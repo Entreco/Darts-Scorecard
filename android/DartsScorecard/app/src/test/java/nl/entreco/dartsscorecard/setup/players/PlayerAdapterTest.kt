@@ -44,7 +44,7 @@ class PlayerAdapterTest {
     fun `it should bind to correct item`() {
         givenPlayer("cor")
         subject.onBindViewHolder(mockPlayerViewHolder, 0)
-        verify(mockPlayerViewHolder).bind(any(), eq(mockEditor), any(), any(), eq(0))
+        verify(mockPlayerViewHolder).bind(any(), eq(mockEditor), any(), any(), any(), eq(0))
     }
 
     @Test

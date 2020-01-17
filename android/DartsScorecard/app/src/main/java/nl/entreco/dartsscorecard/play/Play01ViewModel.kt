@@ -8,18 +8,15 @@ import androidx.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
-import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.TurnMeta
-import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.listeners.InputListener
@@ -66,7 +63,6 @@ class Play01ViewModel @Inject constructor(
         private val toggleMusicUsecase: ToggleMusicUsecase,
         private val askForRatingUsecase: AskForRatingUsecase,
         private val audioPrefRepository: AudioPrefRepository,
-        private val botUsecase: CalculateBotScoreUsecase,
         private val adViewModel: AdViewModel,
         @ActivityScope private val logger: Logger
 ) : BaseViewModel(), UiCallback, InputListener {
@@ -217,10 +213,6 @@ class Play01ViewModel @Inject constructor(
 
     private fun notifyListeners(next: Next, turn: Turn, by: Player, scores: Array<Score>) {
         gameListeners.onTurnSubmitted(next, turn, by, scores)
-
-        botUsecase.go(next) {
-            handleTurn(it, next.player)
-        }
     }
 
     private fun notifyMasterCaller(next: Next, turn: Turn) {

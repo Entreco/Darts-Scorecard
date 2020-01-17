@@ -85,7 +85,7 @@ class PlayersViewModelTest {
 
     private fun givenPlayersMap(vararg players: TeamPlayer) {
         if (players.isEmpty()) {
-            whenever(mockAdapter.participants()).thenReturn(emptyArray())
+            whenever(mockAdapter.participants()).thenReturn(emptyList())
         } else {
             whenever(mockAdapter.participants()).thenReturn(createMap(*players))
         }
@@ -99,9 +99,9 @@ class PlayersViewModelTest {
 
     private data class TeamPlayer(val name: String, val index: Int)
 
-    private fun createMap(vararg players: TeamPlayer): Array<PlayerViewModel> {
+    private fun createMap(vararg players: TeamPlayer): List<PlayerViewModel> {
         return players.toList().map {
             PlayerViewModel(-1, it.index, it.name)
-        }.toTypedArray()
+        }
     }
 }

@@ -1,6 +1,9 @@
 package nl.entreco.dartsscorecard.play.input
 
+import android.os.Handler
+import android.view.View
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -8,6 +11,7 @@ import androidx.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.play.Play01Animator
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Next
@@ -31,9 +35,11 @@ import javax.inject.Inject
  */
 class InputViewModel @Inject constructor(
         private val analytics: Analytics,
-        private val logger: Logger
+        private val logger: Logger,
+        private val botUsecase: CalculateBotScoreUsecase
 ) : BaseViewModel(), PlayerListener, InputEventsListener {
 
+    val nextUp = ObservableField<Next>()
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField("")
@@ -44,11 +50,9 @@ class InputViewModel @Inject constructor(
     val finalTurn = ObservableField<Turn?>()
     val dartsLeft = ObservableInt()
     val resumeDescription = ObservableInt(R.string.game_on)
-    val botsTurn = ObservableBoolean(false)
 
     private val estimator = ScoreEstimator()
     private var turn = Turn()
-    private var nextUp: Next? = null
 
     init {
         toggle.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
@@ -142,13 +146,16 @@ class InputViewModel @Inject constructor(
     }
 
     private fun submitDart(dart: Dart, listener: InputListener) {
+        logger.i("Target submit: $dart")
         turn += dart
+        logger.i("Target submit: $turn")
         dartsLeft.set(turn.dartsLeft())
-        listener.onDartThrown(turn.copy(), nextUp?.player!!)
+        listener.onDartThrown(turn.copy(), nextUp.get()?.player!!)
 
         when {
             lastDart()     -> submitScore(turn.copy(), listener)
             didFinishLeg() -> submitScore(turn.copy(), listener)
+            didBust()      -> submitScore(turn.copy(), listener)
         }
     }
 
@@ -170,7 +177,7 @@ class InputViewModel @Inject constructor(
     }
 
     private fun done(turn: Turn, listener: InputListener) {
-        listener.onTurnSubmitted(turn.copy(), nextUp?.player!!)
+        listener.onTurnSubmitted(turn.copy(), nextUp.get()?.player!!)
         this.scoredTxt.set(turn.total().toString())
         this.analytics.trackScore("scored: $turn", turn.total())
         clearScoreInput()
@@ -184,7 +191,7 @@ class InputViewModel @Inject constructor(
 
     override fun onNext(next: Next) {
         clearScoreInput()
-        nextUp = next
+        nextUp.set(next)
         toggle.set(false)
         required.set(next.requiredScore)
         nextDescription.set(descriptionFromNext(next))
@@ -193,11 +200,36 @@ class InputViewModel @Inject constructor(
         finalTurn.set(null)
         turn = Turn()
         dartsLeft.set(turn.dartsLeft())
+    }
 
+    fun goBotGo(handler: Handler, listener: InputListener) {
+        nextUp.get()?.let { next ->
+            botUsecase.go(next) { turn ->
+                toggle.set(true)
 
-        // If next.player is Bot () -> let the bot do it's thing
-        // Disable inputs from user
-        botsTurn.set(next.player is Bot)
+                val delay = 350L
+
+                // No Bust
+                val d1 = turn.first()
+                handler.postDelayed({
+                    submitDart(d1, listener)
+                }, delay * 1)
+
+                val d2 = turn.second()
+                if (d2 != Dart.NONE) {
+                    handler.postDelayed({
+                        submitDart(d2, listener)
+                    }, delay * 2)
+                }
+
+                val d3 = turn.third()
+                if (d3 != Dart.NONE) {
+                    handler.postDelayed({
+                        submitDart(d3, listener)
+                    }, delay * 3)
+                }
+            }
+        }
     }
 
 
@@ -221,7 +253,16 @@ class InputViewModel @Inject constructor(
         }
     }
 
+    private fun didBust() = required.get()!!.score - turn.total() <= 1
     private fun didFinishLeg() = required.get()!!.score == turn.total()
+    private fun gameIsFinished() = nextUp.get() == null || nextUp.get()?.state == State.MATCH
+}
 
-    private fun gameIsFinished() = nextUp == null || nextUp?.state == State.MATCH
+object Binding {
+    @JvmStatic
+    @BindingAdapter("next", "vm", "listener")
+    fun doBot(view: View, next: Next?, vm: InputViewModel, listener: InputListener) {
+        view.visibility = if (next?.player is Bot) View.VISIBLE else View.GONE
+        if (next?.player is Bot) vm.goBotGo(Handler(), listener)
+    }
 }

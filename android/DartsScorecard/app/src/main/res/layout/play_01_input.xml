@@ -320,7 +320,7 @@
         </LinearLayout>
 
         <!-- Bot's Turn -->
-        <ImageView
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/input_keys"
@@ -328,13 +328,22 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:animateLayoutChanges="true"
-            android:background="#aaff6600"
+            android:layout_marginTop="48dp"
             android:clickable="true"
-            android:contentDescription="@null"
             android:elevation="120dp"
             android:focusable="true"
-            android:padding="@dimen/xxlarge"
-            android:src="@drawable/ic_bot"
-            app:showIf="@{viewModel.botsTurn}" />
+            app:next="@{viewModel.nextUp}"
+            app:listener="@{listener}"
+            app:vm="@{viewModel}">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="#aaff6600"
+                android:contentDescription="@null"
+                android:padding="@dimen/xxlarge"
+                android:src="@drawable/ic_bot" />
+        </FrameLayout>
     </RelativeLayout>
 </layout>

@@ -7,7 +7,7 @@ interface BotRepository {
 
     @Throws
     @WorkerThread
-    fun create(name: String): Long
+    fun create(name: String, level: Float): Long
 
     @Throws
     @WorkerThread

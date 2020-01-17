@@ -11,4 +11,7 @@ class BotTable {
 
     @ColumnInfo(name = "name")
     var name: String = ""
+
+    @ColumnInfo(name = "level")
+    var level: Float = 1F
 }

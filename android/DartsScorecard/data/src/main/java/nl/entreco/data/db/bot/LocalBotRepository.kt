@@ -13,9 +13,10 @@ class LocalBotRepository(
     private val botDao: BotDao = db.botDao()
 
     @WorkerThread
-    override fun create(name: String): Long {
+    override fun create(name: String, level: Float): Long {
         val bot = BotTable()
         bot.name = name.toLowerCase()
+        bot.level = if(level == 0F) 1F else level
         return botDao.create(bot)
     }
 

@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.domain.model.*
@@ -38,31 +39,32 @@ import org.mockito.MockitoAnnotations
  */
 class Play01ViewModelTest {
 
+    private val mockCalcUsecase: CalculateBotScoreUsecase = mock()
     private lateinit var subject: Play01ViewModel
     private lateinit var game: Game
     private lateinit var req: Play01Request
     private lateinit var givenTeamScoreListeners: List<TeamScoreListener>
 
-    @Mock private lateinit var mockNext: Next
-    @Mock private lateinit var mockGame: Game
-    @Mock private lateinit var mockScoreSettings: ScoreSettings
-    @Mock private lateinit var mockScore: Score
-    @Mock private lateinit var mockRequest: Play01Request
-    @Mock private lateinit var mockToggleMusicUsecase: ToggleMusicUsecase
-    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
-    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
-    @Mock private lateinit var mockAdProvider: AdViewModel
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
-    @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
-    @Mock private lateinit var mock01Listeners: Play01Listeners
-    @Mock private lateinit var mockMasterCaller: MasterCaller
-    @Mock private lateinit var mockMusicPlayer: MusicPlayer
-    @Mock private lateinit var mockDialogHelper: DialogHelper
-    @Mock private lateinit var mockLogger: Logger
-    @Mock private lateinit var mockCreatedNotifier: GameLoadedNotifier<ScoreSettings>
-    @Mock private lateinit var mockGameLoadedNotifier: GameLoadedNotifier<Play01Response>
-    @Mock private lateinit var mockTeamScoreListener: TeamScoreListener
+    private val mockNext: Next = mock()
+    private val mockGame: Game = mock()
+    private val mockScoreSettings: ScoreSettings = mock()
+    private val mockScore: Score = mock()
+    private val mockRequest: Play01Request = mock()
+    private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
+    private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
+    private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
+    private val mockAdProvider: AdViewModel = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
+    private val mockPlayGameUsecase: Play01Usecase = mock()
+    private val mockRevancheUsecase: RevancheUsecase = mock()
+    private val mock01Listeners: Play01Listeners = mock()
+    private val mockMasterCaller: MasterCaller = mock()
+    private val mockMusicPlayer: MusicPlayer = mock()
+    private val mockDialogHelper: DialogHelper = mock()
+    private val mockLogger: Logger = mock()
+    private val mockCreatedNotifier: GameLoadedNotifier<ScoreSettings> = mock()
+    private val mockGameLoadedNotifier: GameLoadedNotifier<Play01Response> = mock()
+    private val mockTeamScoreListener: TeamScoreListener = mock()
 
     private val metaDoneCaptor = argumentCaptor<(Long, Long) -> Unit>()
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
@@ -89,7 +91,7 @@ class Play01ViewModelTest {
 
     @Test
     fun `it should stop mastercaller on stop`() {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalcUsecase, mockAdProvider, mockLogger)
         subject.stop()
         verify(mockMasterCaller).stop()
     }
@@ -226,14 +228,14 @@ class Play01ViewModelTest {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller,mockMusicPlayer,  mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller,mockMusicPlayer,  mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalcUsecase, mockAdProvider, mockLogger)
         subject.load(req, mockCreatedNotifier, *loaders)
     }
 
     private fun givenFullyLoadedMockGame() {
         whenever(mockNext.state).thenReturn(State.START)
         whenever(mockGame.next).thenReturn(mockNext)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalcUsecase, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, mockScoreSettings, givenTeams, teamIds))
