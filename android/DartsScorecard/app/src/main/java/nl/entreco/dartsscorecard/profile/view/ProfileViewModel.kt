@@ -8,7 +8,12 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.profile.Profile
 import nl.entreco.domain.profile.ProfileStat
-import nl.entreco.domain.profile.fetch.*
+import nl.entreco.domain.profile.fetch.FetchProfileRequest
+import nl.entreco.domain.profile.fetch.FetchProfileResponse
+import nl.entreco.domain.profile.fetch.FetchProfileStatRequest
+import nl.entreco.domain.profile.fetch.FetchProfileStatResponse
+import nl.entreco.domain.profile.fetch.FetchProfileStatsUsecase
+import nl.entreco.domain.profile.fetch.FetchProfileUsecase
 import nl.entreco.domain.profile.update.UpdateProfileRequest
 import nl.entreco.domain.profile.update.UpdateProfileResponse
 import nl.entreco.domain.profile.update.UpdateProfileUsecase
@@ -17,9 +22,11 @@ import javax.inject.Inject
 /**
  * Created by entreco on 21/02/2018.
  */
-class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: FetchProfileUsecase,
-                                           private val updateProfileUsecase: UpdateProfileUsecase,
-                                           private val fetchProfileStatsUsecase: FetchProfileStatsUsecase) : BaseViewModel() {
+class ProfileViewModel @Inject constructor(
+        private val fetchProfileUsecase: FetchProfileUsecase,
+        private val updateProfileUsecase: UpdateProfileUsecase,
+        private val fetchProfileStatsUsecase: FetchProfileStatsUsecase
+) : BaseViewModel() {
 
     val numberOfProfiles = ObservableInt()
     val profile = ObservableField<PlayerProfile>()
@@ -58,7 +65,7 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
 
     private fun onProfileSuccess(): (FetchProfileResponse) -> Unit = { response ->
         val teamProfile = if (response.profiles.size <= 1) {
-            response.profiles[0]
+            response.profiles.firstOrNull()
         } else {
             Profile(response.profiles.joinToString("&") { it.name },
                     0,
@@ -67,7 +74,9 @@ class ProfileViewModel @Inject constructor(private val fetchProfileUsecase: Fetc
         }
 
         this.numberOfProfiles.set(response.profiles.size)
-        this.profile.set(PlayerProfile(teamProfile))
+        teamProfile?.let {
+            this.profile.set(PlayerProfile(it))
+        }
     }
 
     private fun onProfileFailed(): (Throwable) -> Unit = {

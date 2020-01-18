@@ -43,6 +43,11 @@ class InputViewModel @Inject constructor(
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField("")
+    val botText = ObservableField("")
+    val botScore1 = ObservableField("")
+    val botScore2 = ObservableField("")
+    val botScore3 = ObservableField("")
+    val botScore = ObservableInt(0)
     val nextDescription = ObservableInt(R.string.empty)
     val hintProvider = ObservableField(HintKeyProvider(toggle.get()))
     val special = ObservableField<SpecialEvent?>()
@@ -80,6 +85,7 @@ class InputViewModel @Inject constructor(
 
     fun clear(): Boolean {
         scoredTxt.set("")
+        botText.set("")
         return true
     }
 
@@ -150,6 +156,7 @@ class InputViewModel @Inject constructor(
         turn += dart
         logger.i("Target submit: $turn")
         dartsLeft.set(turn.dartsLeft())
+        botScore.set(turn.total())
         listener.onDartThrown(turn.copy(), nextUp.get()?.player!!)
 
         when {
@@ -185,6 +192,10 @@ class InputViewModel @Inject constructor(
 
     private fun clearScoreInput() {
         scoredTxt.set("")
+        botScore.set(0)
+        botScore1.set("")
+        botScore2.set("")
+        botScore3.set("")
     }
 
     private fun lastDart() = turn.dartsLeft() <= 0
@@ -211,22 +222,26 @@ class InputViewModel @Inject constructor(
 
                 // No Bust
                 val d1 = turn.first()
+                val d2 = turn.second()
+                val d3 = turn.third()
+
+                botScore1.set(d1.toString().replace("_", " "))
                 handler.postDelayed({
+                    botScore2.set(d2.toString().replace("_", " "))
                     submitDart(d1, listener)
                 }, delay * 1)
 
-                val d2 = turn.second()
                 if (d2 != Dart.NONE) {
                     handler.postDelayed({
+                        botScore3.set(d3.toString().replace("_", " "))
                         submitDart(d2, listener)
                     }, delay * 2)
                 }
 
-                val d3 = turn.third()
                 if (d3 != Dart.NONE) {
                     handler.postDelayed({
                         submitDart(d3, listener)
-                    }, delay * 3)
+                    }, delay * 4)
                 }
             }
         }

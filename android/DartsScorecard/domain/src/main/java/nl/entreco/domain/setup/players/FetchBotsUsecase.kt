@@ -14,7 +14,7 @@ class FetchBotsUsecase @Inject constructor(
     fun exec(done: (FetchBotsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             val existingBots = botRepository.fetchAll()
-            if(existingBots.isEmpty()){
+            if (existingBots.isEmpty()) {
                 // Create all supported bots now
                 insertBots()
                 val bots = botRepository.fetchAll()
@@ -27,12 +27,9 @@ class FetchBotsUsecase @Inject constructor(
     }
 
     private fun insertBots() {
-        val rand = botRepository.create(Bot.Rand.displayName, Bot.Rand.level)
-        val noob = botRepository.create(Bot.Noob.displayName, Bot.Noob.level)
-        val easy = botRepository.create(Bot.Easy.displayName, Bot.Easy.level)
-        val midi = botRepository.create(Bot.Midi.displayName, Bot.Midi.level)
-        val oki = botRepository.create(Bot.Oki.displayName, Bot.Oki.level)
-        val gui = botRepository.create(Bot.Gui.displayName, Bot.Gui.level)
-        val pro = botRepository.create(Bot.Pro.displayName, Bot.Pro.level)
+        botRepository.create(Bot.Beginner.displayName, Bot.Beginner.level)
+        botRepository.create(Bot.Average.displayName, Bot.Average.level)
+        botRepository.create(Bot.Trained.displayName, Bot.Trained.level)
+        botRepository.create(Bot.Pro.displayName, Bot.Pro.level)
     }
 }

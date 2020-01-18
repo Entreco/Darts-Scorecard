@@ -42,7 +42,7 @@ object InputBindings {
 
     @JvmStatic
     @BindingAdapter("numDarts")
-    fun numDartsState(view: FloatingActionButton, dartsLeft: Int) {
+    fun numDartsState(view: View, dartsLeft: Int) {
         when (dartsLeft) {
             3 -> selectThreeDarts(view)
             2 -> selectTwoDarts(view)
@@ -50,17 +50,17 @@ object InputBindings {
         }
     }
 
-    private fun selectOneDart(view: FloatingActionButton) {
+    private fun selectOneDart(view: View) {
         view.isSelected = false
         view.isActivated = false
     }
 
-    private fun selectTwoDarts(view: FloatingActionButton) {
+    private fun selectTwoDarts(view: View) {
         view.isSelected = false
         view.isActivated = true
     }
 
-    private fun selectThreeDarts(view: FloatingActionButton) {
+    private fun selectThreeDarts(view: View) {
         view.isSelected = true
         view.isActivated = false
     }
