@@ -27,6 +27,7 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.repository.BotPrefRepository
 import nl.entreco.liblog.Logger
 import javax.inject.Inject
 
@@ -36,14 +37,14 @@ import javax.inject.Inject
 class InputViewModel @Inject constructor(
         private val analytics: Analytics,
         private val logger: Logger,
-        private val botUsecase: CalculateBotScoreUsecase
+        private val botUsecase: CalculateBotScoreUsecase,
+        private val botPrefRepository: BotPrefRepository
 ) : BaseViewModel(), PlayerListener, InputEventsListener {
 
     val nextUp = ObservableField<Next>()
     val toggle = ObservableBoolean(false)
     val current = ObservableField<Player>(NoPlayer())
     val scoredTxt = ObservableField("")
-    val botText = ObservableField("")
     val botScore1 = ObservableField("")
     val botScore2 = ObservableField("")
     val botScore3 = ObservableField("")
@@ -85,7 +86,7 @@ class InputViewModel @Inject constructor(
 
     fun clear(): Boolean {
         scoredTxt.set("")
-        botText.set("")
+        botScore.set(0)
         return true
     }
 
@@ -156,7 +157,6 @@ class InputViewModel @Inject constructor(
         turn += dart
         logger.i("Target submit: $turn")
         dartsLeft.set(turn.dartsLeft())
-        botScore.set(turn.total())
         listener.onDartThrown(turn.copy(), nextUp.get()?.player!!)
 
         when {
@@ -218,31 +218,43 @@ class InputViewModel @Inject constructor(
             botUsecase.go(next) { turn ->
                 toggle.set(true)
 
-                val delay = 350L
+                val delay = botPrefRepository.getBotSpeed().toLong()
 
                 // No Bust
                 val d1 = turn.first()
                 val d2 = turn.second()
                 val d3 = turn.third()
 
+
                 botScore1.set(d1.toString().replace("_", " "))
+                botScore.set(Turn(d1).total())
                 handler.postDelayed({
-                    botScore2.set(d2.toString().replace("_", " "))
                     submitDart(d1, listener)
+                    if (d2 != Dart.NONE) {
+                        botScore2.set(d2.toString().replace("_", " "))
+                        botScore.set(Turn(d1, d2).total())
+                    }
                 }, delay * 1)
 
                 if (d2 != Dart.NONE) {
                     handler.postDelayed({
-                        botScore3.set(d3.toString().replace("_", " "))
                         submitDart(d2, listener)
+                        if (d3 != Dart.NONE) {
+                            botScore3.set(d3.toString().replace("_", " "))
+                            botScore.set(Turn(d1, d2, d3).total())
+                        }
                     }, delay * 2)
                 }
 
                 if (d3 != Dart.NONE) {
                     handler.postDelayed({
                         submitDart(d3, listener)
-                    }, delay * 4)
+                    }, delay * 3)
                 }
+
+                handler.postDelayed({
+                    clearScoreInput()
+                }, delay * 3 + 10)
             }
         }
     }

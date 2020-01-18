@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -35,7 +36,7 @@ object TeamScoreBindings {
     @JvmStatic
     @BindingAdapter("botText")
     fun showBotText(view: CounterTextView, score: String) {
-        view.isVisible = score.isNotBlank()
+        view.visibility = if(score.isNotBlank()) View.VISIBLE else View.INVISIBLE
         if(score.isNotBlank()) view.setText(score)
         else view.setText("")
     }

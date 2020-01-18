@@ -353,7 +353,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="spread"
-                fab:text="triple 1" />
+                fab:text="triple 1"
+                fab:visibility="gone"/>
 
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 android:id="@+id/bot_score_2"
@@ -370,6 +371,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bot_score_1"
+                fab:visibility="gone"
                 fab:text="triple 2" />
 
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
@@ -387,6 +389,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bot_score_2"
+                fab:visibility="gone"
                 fab:text="triple 3" />
 
             <View
@@ -405,7 +408,7 @@
             <nl.entreco.dartsscorecard.base.widget.CounterTextView
                 android:id="@+id/bot_total"
                 style="@style/Score.Name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="48sp"
