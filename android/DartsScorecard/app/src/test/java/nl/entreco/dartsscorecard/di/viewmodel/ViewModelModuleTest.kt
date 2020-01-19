@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.data.billing.BillingServiceConnection
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -23,7 +22,6 @@ class ViewModelModuleTest {
     @Mock private lateinit var mockSharedPrefs: SharedPreferences
     @Mock private lateinit var mockLifeCycle: Lifecycle
     @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockBillingConnection: BillingServiceConnection
     @Mock private lateinit var mockActivity: FragmentActivity
     private lateinit var subject: ViewModelModule
 
@@ -49,16 +47,6 @@ class ViewModelModuleTest {
     fun `it should provide lifecycle`() {
         whenever(mockActivity.lifecycle).thenReturn(mockLifeCycle)
         assertNotNull(subject.lifeCycle())
-    }
-
-    @Test
-    fun `it should provide service Connection`() {
-        assertNotNull(subject.provideServiceConnection())
-    }
-
-    @Test
-    fun `it should provide BillingRepository`() {
-        assertNotNull(subject.provideBillingRepository(mockContext, mockBillingConnection))
     }
 
     @Test

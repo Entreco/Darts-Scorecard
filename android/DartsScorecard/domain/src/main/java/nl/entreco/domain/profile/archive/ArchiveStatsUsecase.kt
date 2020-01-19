@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class ArchiveStatsUsecase @Inject constructor(
         private val archiveRepository: ArchiveRepository,
-        bg: Background, fg: Foreground)
-    : BaseUsecase(bg, fg) {
+        bg: Background, fg: Foreground
+) : BaseUsecase(bg, fg) {
 
     fun exec(request: ArchiveStatsRequest, done: (ArchiveStatsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
+import nl.entreco.dartsscorecard.databinding.BotPlayerViewBinding
 import nl.entreco.dartsscorecard.databinding.ExistingPlayerViewBinding
+import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 
 /**
@@ -29,13 +31,21 @@ object EditPlayerBindings {
         view.removeAllViews()
         players.forEach {
             val binding = DataBindingUtil.inflate<ExistingPlayerViewBinding>(LayoutInflater.from(view.context), R.layout.existing_player_view, view, false)
-            bind(binding, it, clicker, view)
+            binding.player = it
+            binding.clicker = clicker
+            view.addView(binding.root)
         }
     }
 
-    internal fun bind(binding: ExistingPlayerViewBinding, player: Player, clicker: ExistingPlayerSelectedClicker, view: ViewGroup) {
-        binding.player = player
-        binding.clicker = clicker
-        view.addView(binding.root)
+    @JvmStatic
+    @BindingAdapter("availableBots", "clicker")
+    fun showAvailableBots(view: ViewGroup, bots: List<Bot>, clicker: ExistingPlayerSelectedClicker) {
+        view.removeAllViews()
+        bots.forEach {
+            val binding = DataBindingUtil.inflate<BotPlayerViewBinding>(LayoutInflater.from(view.context), R.layout.bot_player_view, view, false)
+            binding.bot = it
+            binding.clicker = clicker
+            view.addView(binding.root)
+        }
     }
 }

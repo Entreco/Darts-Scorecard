@@ -41,7 +41,7 @@ class Setup01Activity : ViewModelActivity() {
 
         if (savedInstanceState == null) {
             initialLaunch = true
-            navigator.onAddNewPlayer(0, emptyList())
+            navigator.onAddNewPlayer(0, emptyList(), emptyList())
         }
     }
 

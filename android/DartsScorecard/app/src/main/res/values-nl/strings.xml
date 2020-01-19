@@ -53,6 +53,8 @@
     <string name="select_players">Selecteer spelers</string>
     <string name="choose_player_name">Kies spelersnaam</string>
     <string name="choose_existing_player">Of kies een bestaande speler</string>
+    <string name="choose_available_bot">Speel tegen een Robot</string>
+    <string name="cannot_change_bot_name">Je kunt de naam van de Robot niet wijzigen</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Kies x01 score</string>
     <string name="start_score">Start score</string>
@@ -194,6 +196,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">Profielen van spelers die zijn verwijderd, kunnen niet worden bekeken</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">Kan match niet ophalen.</string>
     <string name="err_unable_to_revanche">Je kunt je momenteel niet revancheren.</string>
     <string name="err_unable_to_create_player">Speler niet aangemaakt.</string>

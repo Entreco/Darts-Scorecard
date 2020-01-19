@@ -36,14 +36,14 @@ class Setup01NavigatorTest {
     fun `it should start EditPlayerActivity when editing player`() {
         givenEditRequest()
         givenSubject()
-        subject.onEditPlayer(0, mockPlayerViewModel, emptyList())
+        subject.onEditPlayer(0, mockPlayerViewModel, emptyList(), emptyList())
         verify(mockActivity).startActivityForResult(any(), eq(1002))
     }
 
     @Test
     fun `it should add new player with index`() {
         givenSubject()
-        subject.onAddNewPlayer(2, emptyList())
+        subject.onAddNewPlayer(2, emptyList(), emptyList())
         verify(mockActivity).startActivityForResult(any(), eq(1002))
     }
 

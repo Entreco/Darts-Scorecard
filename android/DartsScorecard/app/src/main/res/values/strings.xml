@@ -53,6 +53,8 @@
     <string name="select_players">Select Players</string>
     <string name="choose_player_name">Choose player name</string>
     <string name="choose_existing_player">Or choose existing players</string>
+    <string name="choose_available_bot">Play against a bot</string>
+    <string name="cannot_change_bot_name">It\'s not possible to change the bots name</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Select x01 score</string>
     <string name="start_score">Start score</string>
@@ -193,6 +195,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">Cannot view profile of Players that have been deleted.</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
     <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>

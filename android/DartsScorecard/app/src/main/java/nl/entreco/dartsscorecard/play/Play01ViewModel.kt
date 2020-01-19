@@ -1,27 +1,42 @@
 package nl.entreco.dartsscorecard.play
 
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableInt
-import androidx.annotation.StringRes
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.StringRes
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
-import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
-import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
-import nl.entreco.domain.model.*
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
+import nl.entreco.domain.model.TurnMeta
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.listeners.*
-import nl.entreco.domain.play.mastercaller.*
+import nl.entreco.domain.play.listeners.InputListener
+import nl.entreco.domain.play.listeners.PlayerListener
+import nl.entreco.domain.play.listeners.ScoreListener
+import nl.entreco.domain.play.listeners.SpecialEventListener
+import nl.entreco.domain.play.listeners.StatListener
+import nl.entreco.domain.play.mastercaller.MasterCaller
+import nl.entreco.domain.play.mastercaller.MasterCallerRequest
+import nl.entreco.domain.play.mastercaller.MusicPlayer
+import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
+import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
-import nl.entreco.domain.play.start.*
+import nl.entreco.domain.play.start.DeleteGameRequest
+import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
+import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.play.start.Play01Response
+import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.play.stats.StoreTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnRequest
 import nl.entreco.domain.play.stats.UndoTurnResponse
@@ -29,32 +44,37 @@ import nl.entreco.domain.rating.AskForRatingResponse
 import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.liblog.Logger
+import nl.entreco.shared.scopes.ActivityScope
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
-class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Usecase,
-                                          private val revancheUsecase: RevancheUsecase,
-                                          private val gameListeners: Play01Listeners,
-                                          private val masterCaller: MasterCaller,
-                                          private val musicPlayer: MusicPlayer,
-                                          @ActivityScope private val dialogHelper: DialogHelper,
-                                          private val toggleSoundUsecase: ToggleSoundUsecase,
-                                          private val toggleMusicUsecase: ToggleMusicUsecase,
-                                          private val askForRatingUsecase: AskForRatingUsecase,
-                                          private val audioPrefRepository: AudioPrefRepository,
-                                          private val adViewModel: AdViewModel,
-                                          @ActivityScope private val logger: Logger) :
-        BaseViewModel(), UiCallback, InputListener {
+class Play01ViewModel @Inject constructor(
+        private val playGameUsecase: Play01Usecase,
+        private val revancheUsecase: RevancheUsecase,
+        private val gameListeners: Play01Listeners,
+        private val masterCaller: MasterCaller,
+        private val musicPlayer: MusicPlayer,
+        @ActivityScope private val dialogHelper: DialogHelper,
+        private val toggleSoundUsecase: ToggleSoundUsecase,
+        private val toggleMusicUsecase: ToggleMusicUsecase,
+        private val askForRatingUsecase: AskForRatingUsecase,
+        private val audioPrefRepository: AudioPrefRepository,
+        private val adViewModel: AdViewModel,
+        @ActivityScope private val logger: Logger
+) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
     val finished = ObservableBoolean(false)
     val errorMsg = ObservableInt()
+
     private lateinit var game: Game
     private lateinit var request: Play01Request
     private lateinit var teams: Array<Team>
+
     private var load: GameLoadedNotifier<ScoreSettings>? = null
     private var loaders: Array<GameLoadedNotifier<Play01Response>>? = null
 
@@ -89,7 +109,7 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         val teamIds = response?.teamIds ?: revancheResponse!!.teamIds
         val settings = response?.settings ?: revancheResponse!!.settings
 
-        if(this.game.next.state == State.START){
+        if (this.game.next.state == State.START) {
             this.masterCaller.play(MasterCallerRequest(start = true))
         }
 
@@ -179,8 +199,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         finished.set(gameFinished)
         if (gameFinished) {
             askForRatingUsecase.go(onShouldAskForRating(), {})
-            playGameUsecase.markGameAsFinished(MarkGameAsFinishedRequest(gameId,
-                    teams.first { it.contains(winnerId) }.toTeamString()))
+            val finishedRequest = MarkGameAsFinishedRequest(gameId, teams.first { it.contains(winnerId) }.toTeamString())
+            playGameUsecase.markGameAsFinished(finishedRequest)
             gameListeners.onGameFinished(gameId)
         }
     }
@@ -197,22 +217,22 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
 
     private fun notifyMasterCaller(next: Next, turn: Turn) {
         when (next.state) {
-            State.START -> masterCaller.play(MasterCallerRequest(start = true))
-            State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
-            State.SET -> masterCaller.play(MasterCallerRequest(set = true))
-            State.MATCH -> masterCaller.play(MasterCallerRequest(match = true))
+            State.START    -> masterCaller.play(MasterCallerRequest(start = true))
+            State.LEG      -> masterCaller.play(MasterCallerRequest(leg = true))
+            State.SET      -> masterCaller.play(MasterCallerRequest(set = true))
+            State.MATCH    -> masterCaller.play(MasterCallerRequest(match = true))
             State.ERR_BUST -> masterCaller.play(MasterCallerRequest(0))
-            else -> masterCaller.play(MasterCallerRequest(turn.total()))
+            else           -> masterCaller.play(MasterCallerRequest(turn.total()))
         }
     }
 
     private fun showInterstitial(next: Next) {
         when (next.state) {
             State.START -> adViewModel.provideInterstitial()
-            State.LEG -> adViewModel.provideInterstitial()
-            State.SET -> adViewModel.provideInterstitial()
+            State.LEG   -> adViewModel.provideInterstitial()
+            State.SET   -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else -> { /* ignore */
+            else        -> { /* ignore */
             }
         }
     }
@@ -227,8 +247,8 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         menu?.findItem(R.id.menu_music_settings)?.isChecked = audioPrefRepository.isBackgroundMusicEnabled()
     }
 
-    fun resume(){
-        if(audioPrefRepository.isBackgroundMusicEnabled()){
+    fun resume() {
+        if (audioPrefRepository.isBackgroundMusicEnabled()) {
             musicPlayer.resume()
         }
     }
@@ -242,19 +262,19 @@ class Play01ViewModel @Inject constructor(private val playGameUsecase: Play01Use
         toggleSoundUsecase.toggle()
     }
 
-    fun toggleBgMusic(item: MenuItem){
+    fun toggleBgMusic(item: MenuItem) {
         item.isChecked = !item.isChecked
         toggleMusicUsecase.toggle()
 
-        if(item.isChecked){
+        if (item.isChecked) {
             musicPlayer.play()
         } else {
             musicPlayer.pause()
         }
     }
 
-    fun askToDeleteMatch(onConfirm: ()->Unit){
-        dialogHelper.showConfirmDeleteDialog{
+    fun askToDeleteMatch(onConfirm: () -> Unit) {
+        dialogHelper.showConfirmDeleteDialog {
             loading.set(true)
             playGameUsecase.deleteMatch(DeleteGameRequest(game.id)) {
                 loading.set(false)

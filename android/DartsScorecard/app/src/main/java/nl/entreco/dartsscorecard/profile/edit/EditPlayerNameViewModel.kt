@@ -1,15 +1,15 @@
 package nl.entreco.dartsscorecard.profile.edit
 
 import android.content.Context
-import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableInt
 import android.os.Handler
-import androidx.annotation.StringRes
 import android.text.Editable
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
@@ -24,9 +24,11 @@ private const val NAME_OK = 2
 /**
  * Created by entreco on 02/03/2018.
  */
-class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
-                                                  private val analytics: Analytics,
-                                                  fetchExistingPlayersUsecase: FetchExistingPlayersUsecase) : BaseViewModel() {
+class EditPlayerNameViewModel @Inject constructor(
+        private val handler: Handler,
+        private val analytics: Analytics,
+        fetchExistingPlayersUsecase: FetchExistingPlayersUsecase
+) : BaseViewModel() {
 
     val isTyping = ObservableBoolean(false)
     val name = ObservableField("")
@@ -100,10 +102,10 @@ class EditPlayerNameViewModel @Inject constructor(private val handler: Handler,
         }
 
         return when (isValidName(existing, desiredName)) {
-            NAME_OK -> navigator.onDoneEditing(desiredName, desiredDouble)
-            ERR_EMPTY -> handleError(R.string.err_player_name_is_empty)
+            NAME_OK       -> navigator.onDoneEditing(desiredName, desiredDouble)
+            ERR_EMPTY     -> handleError(R.string.err_player_name_is_empty)
             ERR_DUPLICATE -> handleError(R.string.err_player_already_exists)
-            else -> handleError(R.string.err_unable_to_create_player)
+            else          -> handleError(R.string.err_unable_to_create_player)
         }
     }
 

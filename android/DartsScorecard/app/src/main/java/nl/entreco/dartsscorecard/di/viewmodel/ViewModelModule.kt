@@ -9,8 +9,10 @@ import androidx.lifecycle.Lifecycle
 import dagger.Module
 import dagger.Provides
 import nl.entreco.data.prefs.SharedAudioPrefRepo
+import nl.entreco.data.prefs.SharedBotPrefRepo
 import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.domain.repository.AudioPrefRepository
+import nl.entreco.domain.repository.BotPrefRepository
 import nl.entreco.domain.repository.RatingPrefRepository
 import nl.entreco.shared.scopes.ActivityScope
 
@@ -22,6 +24,7 @@ class ViewModelModule(private val activity: FragmentActivity) {
 
     private val prefsRating = activity.getSharedPreferences("rating", Context.MODE_PRIVATE)
     private val prefsAudio = activity.getSharedPreferences("audio", Context.MODE_PRIVATE)
+    private val prefsBot = activity.getSharedPreferences("bot", Context.MODE_PRIVATE)
 
     @Provides
     @ActivityScope
@@ -51,6 +54,12 @@ class ViewModelModule(private val activity: FragmentActivity) {
     @ActivityScope
     fun provideAudioPreferences(): AudioPrefRepository {
         return SharedAudioPrefRepo(prefsAudio)
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideBotPreferences(): BotPrefRepository {
+        return SharedBotPrefRepo(prefsBot)
     }
 
     @Provides

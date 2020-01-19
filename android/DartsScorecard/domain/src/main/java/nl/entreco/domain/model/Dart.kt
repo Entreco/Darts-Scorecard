@@ -110,5 +110,11 @@ enum class Dart(private val description: String, private val number: Int, privat
                     .forEach { return it }
             return ZERO
         }
+
+        fun random() = values()
+                .filter { it != NONE }
+                .filter { it != TEST_501 }
+                .filter { it != TEST_D250 }
+                .random()
     }
 }

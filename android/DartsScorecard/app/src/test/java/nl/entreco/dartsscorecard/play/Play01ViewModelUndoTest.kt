@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
@@ -31,30 +32,30 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 25/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class Play01ViewModelUndoTest {
 
-    @Mock private lateinit var mockNext: Next
-    @Mock private lateinit var mockGame: Game
-    @Mock private lateinit var mockTeam: Team
-    @Mock private lateinit var mockSettings: ScoreSettings
-    @Mock private lateinit var mockRequest: Play01Request
-    @Mock private lateinit var mockResponse: Play01Response
-    @Mock private lateinit var mockAdProvider: AdViewModel
-    @Mock private lateinit var mockToggleMusicUsecase: ToggleMusicUsecase
-    @Mock private lateinit var mockMusicPlayer: MusicPlayer
-    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
-    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockLoad: GameLoadedNotifier<ScoreSettings>
-    @Mock private lateinit var mockLoaders: GameLoadedNotifier<Play01Response>
+    private val mockCalculateBotUsecase: CalculateBotScoreUsecase = mock()
+    private val mockNext: Next = mock()
+    private val mockGame: Game = mock()
+    private val mockTeam: Team = mock()
+    private val mockSettings: ScoreSettings = mock()
+    private val mockRequest: Play01Request = mock()
+    private val mockResponse: Play01Response = mock()
+    private val mockAdProvider: AdViewModel = mock()
+    private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
+    private val mockMusicPlayer: MusicPlayer = mock()
+    private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
+    private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
+    private val mockLoad: GameLoadedNotifier<ScoreSettings> = mock()
+    private val mockLoaders: GameLoadedNotifier<Play01Response> = mock()
 
-    @Mock private lateinit var mockPlay01Usecase: Play01Usecase
-    @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
-    @Mock private lateinit var mockGameListeners: Play01Listeners
-    @Mock private lateinit var mockMasterCaller: MasterCaller
-    @Mock private lateinit var mockDialogHelper: DialogHelper
-    @Mock private lateinit var mockLogger: Logger
+    private val mockPlay01Usecase: Play01Usecase = mock()
+    private val mockRevancheUsecase: RevancheUsecase = mock()
+    private val mockGameListeners: Play01Listeners = mock()
+    private val mockMasterCaller: MasterCaller = mock()
+    private val mockDialogHelper: DialogHelper = mock()
+    private val mockLogger: Logger = mock()
     private lateinit var subject: Play01ViewModel
 
     private val undoRequestCaptor = argumentCaptor<UndoTurnRequest>()
@@ -93,7 +94,7 @@ class Play01ViewModelUndoTest {
         whenever(mockResponse.teamIds).thenReturn("")
         whenever(mockResponse.settings).thenReturn(mockSettings)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalculateBotUsecase, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

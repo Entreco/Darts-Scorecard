@@ -54,8 +54,9 @@ class AdViewModel @Inject constructor(
     private fun done(response: MakePurchaseResponse.Updated): (FetchPurchasedItemsResponse) -> Unit {
         return { adResponse ->
             fetchConsentUsecase.go { consentResponse ->
-                showConsent.postValue(consentResponse.shouldAskForConsent)
-                serveAds.set(response.purchases.none { it.state == 1 } && adResponse.serveAds)
+                val shouldServeAds = response.purchases.none { it.state == 1 } && adResponse.serveAds
+                showConsent.postValue(consentResponse.shouldAskForConsent && shouldServeAds)
+                serveAds.set(shouldServeAds)
             }
         }
     }

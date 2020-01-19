@@ -13,7 +13,7 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
 
     fun setupTeams(): ExtractTeamsRequest {
         val teamString = StringBuilder()
-        val players = adapter.playersMap().groupBy { it.teamIndex.get() }.toSortedMap()
+        val players = adapter.participants().groupBy { it.teamIndex.get() }.toSortedMap()
         appendTeams(players, teamString)
         return ExtractTeamsRequest(teamString.toString())
     }
@@ -29,6 +29,7 @@ class PlayersViewModel @Inject constructor(val adapter: PlayerAdapter) : BaseVie
 
     private fun appendPlayers(team: List<PlayerViewModel>, teamString: StringBuilder) {
         team.forEachIndexed { index, player ->
+            if(!player.isHuman.get()) teamString.append("#")
             teamString.append(player.name.get())
             if (index < team.size - 1) {
                 teamString.append(PlayerSeperator)
