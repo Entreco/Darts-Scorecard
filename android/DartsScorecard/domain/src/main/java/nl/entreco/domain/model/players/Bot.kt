@@ -5,8 +5,8 @@ open class Bot(val displayName: String, val level: Float, _id: Long = 0) : Playe
         return displayName
     }
 
-    object Beginner : Bot("\uD83E\uDD16 Beginner", 0.7F)
-    object Average : Bot("\uD83E\uDD16 Average", 1.3F)
-    object Trained : Bot("\uD83E\uDD16 Trained", 1.8F)
-    object Pro : Bot("\uD83E\uDD16 Pro", 2.6F)
+    object Beginner : Bot("\uD83E\uDD16 Beginner", 0.4F)
+    object Medium : Bot("\uD83E\uDD16 Medium", 1F)
+    object Hard : Bot("\uD83E\uDD16 Hard", 2F)
+    object Pro : Bot("\uD83E\uDD16 Pro", 3F)
 }

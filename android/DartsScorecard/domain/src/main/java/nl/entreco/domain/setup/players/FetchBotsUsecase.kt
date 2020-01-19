@@ -28,8 +28,8 @@ class FetchBotsUsecase @Inject constructor(
 
     private fun insertBots() {
         botRepository.create(Bot.Beginner.displayName, Bot.Beginner.level)
-        botRepository.create(Bot.Average.displayName, Bot.Average.level)
-        botRepository.create(Bot.Trained.displayName, Bot.Trained.level)
+        botRepository.create(Bot.Medium.displayName, Bot.Medium.level)
+        botRepository.create(Bot.Hard.displayName, Bot.Hard.level)
         botRepository.create(Bot.Pro.displayName, Bot.Pro.level)
     }
 }
