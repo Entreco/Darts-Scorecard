@@ -3,6 +3,7 @@ package nl.entreco.dartsscorecard.play.input
 import android.os.Handler
 import android.view.View
 import android.widget.TextView
+import androidx.core.os.postDelayed
 import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
@@ -153,16 +154,14 @@ class InputViewModel @Inject constructor(
     }
 
     private fun submitDart(dart: Dart, listener: InputListener) {
-        logger.i("Target submit: $dart")
         turn += dart
-        logger.i("Target submit: $turn")
         dartsLeft.set(turn.dartsLeft())
         listener.onDartThrown(turn.copy(), nextUp.get()?.player!!)
 
         when {
             lastDart()     -> submitScore(turn.copy(), listener)
             didFinishLeg() -> submitScore(turn.copy(), listener)
-            didBust()      -> submitScore(turn.copy(), listener)
+            didBust(turn)  -> submitScore(turn.copy(), listener)
         }
     }
 
@@ -176,6 +175,7 @@ class InputViewModel @Inject constructor(
         } else {
             done(turn, listener)
         }
+        clearScoreInput()
     }
 
     fun onFinishWith(dartsUsed: Int, listener: InputListener) {
@@ -219,44 +219,40 @@ class InputViewModel @Inject constructor(
                 toggle.set(true)
 
                 val delay = botPrefRepository.getBotSpeed().toLong()
+                var displayTurn = Turn()
 
-                // No Bust
-                val d1 = turn.first()
-                val d2 = turn.second()
-                val d3 = turn.third()
-
-
-                botScore1.set(d1.toString().replace("_", " "))
-                botScore.set(Turn(d1).total())
-                handler.postDelayed({
-                    submitDart(d1, listener)
-                    if (d2 != Dart.NONE) {
-                        botScore2.set(d2.toString().replace("_", " "))
-                        botScore.set(Turn(d1, d2).total())
-                    }
-                }, delay * 1)
-
-                if (d2 != Dart.NONE) {
-                    handler.postDelayed({
-                        submitDart(d2, listener)
-                        if (d3 != Dart.NONE) {
-                            botScore3.set(d3.toString().replace("_", " "))
-                            botScore.set(Turn(d1, d2, d3).total())
+                listOf(turn.first(), turn.second(), turn.third()).filter { it != Dart.NONE }.forEachIndexed { index, dart ->
+                    if (!didBust(displayTurn)) {
+                        displayTurn += dart
+                        handler.postDelayed(delay * index) {
+                            updateBotScore(index, dart, displayTurn)
                         }
-                    }, delay * 2)
+
+                        handler.postDelayed(delay * (index + 1)) {
+                            submitDart(dart, listener)
+                        }
+                    }
                 }
 
-                if (d3 != Dart.NONE) {
-                    handler.postDelayed({
-                        submitDart(d3, listener)
-                    }, delay * 3)
-                }
-
-                handler.postDelayed({
-                    clearScoreInput()
-                }, delay * 3 + 10)
             }
         }
+    }
+
+    private fun updateBotScore(index: Int, dart: Dart, turn: Turn) {
+        val score = dart.toString().replace("_", " ")
+        when (index) {
+            0 -> botScore1.set(score)
+            1 -> botScore2.set(score)
+            2 -> botScore3.set(score)
+        }
+
+        val display = when (index) {
+            0 -> Turn(turn.first())
+            1 -> Turn(turn.first(), turn.second())
+            else -> turn
+        }
+
+        botScore.set(display.total())
     }
 
 
@@ -280,7 +276,7 @@ class InputViewModel @Inject constructor(
         }
     }
 
-    private fun didBust() = required.get()!!.score - turn.total() <= 1
+    private fun didBust(turn: Turn) = required.get()!!.score - turn.total() <= 1
     private fun didFinishLeg() = required.get()!!.score == turn.total()
     private fun gameIsFinished() = nextUp.get() == null || nextUp.get()?.state == State.MATCH
 }

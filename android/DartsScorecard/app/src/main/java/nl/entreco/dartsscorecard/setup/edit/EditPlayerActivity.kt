@@ -16,9 +16,9 @@ import nl.entreco.dartsscorecard.setup.Setup01Navigator
  */
 class EditPlayerActivity : ViewModelActivity() {
 
-    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers(), otherBots())) }
-    private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
-    private val navigator: EditPlayerNavigator by lazy { EditPlayerNavigator(this) }
+    private val component by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers(), otherBots())) }
+    private val viewModel by viewModelProvider { component.viewModel() }
+    private val navigator by lazy { EditPlayerNavigator(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
