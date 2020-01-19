@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 /**
  * Created by Entreco on 31/12/2017.
  */
-abstract class TestableAdapter<T : androidx.recyclerview.widget.RecyclerView.ViewHolder?> : androidx.recyclerview.widget.RecyclerView.Adapter<T>() {
+abstract class TestableAdapter<T : RecyclerView.ViewHolder?> : RecyclerView.Adapter<T>() {
 
     protected class LazyInflater(context: Context) {
         val inflater: LayoutInflater by lazy { LayoutInflater.from(context) }

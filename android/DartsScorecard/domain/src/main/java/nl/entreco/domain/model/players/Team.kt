@@ -8,8 +8,8 @@ const val PlayerSeperator = ","
  */
 class Team(val players: Array<Player> = emptyArray()) {
 
-    private val STARTTURN = -1
-    private var turns = STARTTURN
+    private val startTurn = -1
+    private var turns = startTurn
     private var offset = 0
     private var lastLeg = 0
     private var lastSet = 0
@@ -31,12 +31,12 @@ class Team(val players: Array<Player> = emptyArray()) {
     }
 
     private fun newSet() {
-        turns = STARTTURN
+        turns = startTurn
         offset++
     }
 
     private fun newLeg() {
-        turns = STARTTURN
+        turns = startTurn
         offset++
     }
 

@@ -10,7 +10,9 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 30/12/2017.
  */
-class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : TestableAdapter<SelectPlayerView>(), PlayerEditor.Callback {
+class PlayerAdapter @Inject constructor(
+        private val editor: PlayerEditor
+) : TestableAdapter<SelectPlayerView>(), PlayerEditor.Callback {
 
     private val items = mutableListOf<PlayerViewModel>()
     private val teams = mutableListOf<Int>()
@@ -23,7 +25,7 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
 
     @Synchronized
     override fun onBindViewHolder(holder: SelectPlayerView, position: Int) {
-        holder.bind(items[position], editor, teams, entries(), position)
+        holder.bind(items[position], editor, teams, players(), bots(), position)
     }
 
     override fun getItemCount(): Int {
@@ -39,18 +41,29 @@ class PlayerAdapter @Inject constructor(private val editor: PlayerEditor) : Test
     }
 
     override fun onPlayerAdded(playerName: String, playerId: Long) {
-        val viewModel = PlayerViewModel(playerId, items.size + 1, playerName)
+        val viewModel = PlayerViewModel(playerId, items.size + 1, playerName, true)
         items.add(viewModel)
         updateTeamCount()
         tryNotifyItemInserted(itemCount)
     }
 
-    fun playersMap(): Array<PlayerViewModel> {
-        return items.toTypedArray()
+    override fun onBotAdded(botName: String, botId: Long) {
+        val viewModel = PlayerViewModel(botId, items.size + 1, botName, false)
+        items.add(viewModel)
+        updateTeamCount()
+        tryNotifyItemInserted(itemCount)
     }
 
-    fun entries(): List<Long> {
-        return items.map { it.playerId.get() }
+    fun participants(): List<PlayerViewModel> {
+        return items
+    }
+
+    fun players(): List<Long> {
+        return items.filter { it.isHuman.get() }.map { it.playerId.get() }
+    }
+
+    fun bots(): List<Long> {
+        return items.filterNot { it.isHuman.get() }.map { it.playerId.get() }
     }
 
     @Synchronized

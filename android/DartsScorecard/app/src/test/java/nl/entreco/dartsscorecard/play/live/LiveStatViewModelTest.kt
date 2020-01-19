@@ -1,9 +1,8 @@
 package nl.entreco.dartsscorecard.play.live
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.Score
@@ -11,6 +10,7 @@ import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.stats.*
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -39,7 +39,7 @@ class LiveStatViewModelTest {
     private var givenScores: Array<Score> = emptyArray()
     private var givenExistingStats: Map<Long, LiveStat> = emptyMap()
 
-    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList())
+    private var givenUpdatedLiveStat: LiveStat = LiveStat(1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, emptyList(), emptyList(), emptyMap(), emptyMap(), emptyMap(), emptyMap())
     private val statsDoneCaptor = argumentCaptor<(FetchGameStatsResponse) -> Unit>()
     private val statDoneCaptor = argumentCaptor<(FetchLiveStatResponse) -> Unit>()
 

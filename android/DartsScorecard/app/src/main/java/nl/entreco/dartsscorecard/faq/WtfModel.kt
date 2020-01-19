@@ -10,8 +10,8 @@ import android.view.View
 import nl.entreco.domain.wtf.WtfItem
 
 class WtfModel(private val item: WtfItem, private val toggler: WtfToggler, collapse: Boolean = true) {
-    val title = ObservableField<String>(item.title)
-    val description = ObservableField<String>(item.description)
+    val title = ObservableField(item.title)
+    val description = ObservableField(item.description)
     val image = ObservableField<String>(item.image)
     val showImage = ObservableInt(if(!collapse && item.image?.isNotBlank() == true) View.VISIBLE else View.GONE)
     val showVideo = ObservableInt(if(!collapse && item.video?.isNotBlank() == true) View.VISIBLE else View.GONE)

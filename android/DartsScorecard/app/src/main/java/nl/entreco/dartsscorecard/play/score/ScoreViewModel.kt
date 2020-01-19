@@ -4,7 +4,6 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -24,14 +23,14 @@ class ScoreViewModel @Inject constructor(
         val adapter: ScoreAdapter,
         private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
-    val description = ObservableField<String>("")
+    val description = ObservableField("")
     val firstTo = ObservableInt(0)
     val numSets = ObservableInt(0)
     val showSets = ObservableBoolean(true)
     val teams = ObservableArrayList<Team>()
     val currentTeam = ObservableInt()
     val scores = ObservableArrayList<Score>()
-    val scoreSettings = ObservableField<ScoreSettings>(ScoreSettings())
+    val scoreSettings = ObservableField(ScoreSettings())
     val uiCallback = ObservableField<UiCallback>()
 
     override fun onLoaded(teams: Array<Team>, scores: Array<Score>, info: ScoreSettings, uiCallback: UiCallback?) {

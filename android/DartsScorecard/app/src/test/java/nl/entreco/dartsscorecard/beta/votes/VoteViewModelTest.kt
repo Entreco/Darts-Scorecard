@@ -21,15 +21,15 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 07/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class VoteViewModelTest {
 
-    @Mock private lateinit var mockObservableField: ObservableField<String>
-    @Mock private lateinit var mockVoteUsecase: SubmitVoteUsecase
-    @Mock private lateinit var mockAnalytics: Analytics
-    @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockModel: BetaModel
-    @Mock private lateinit var mockView: View
+    private val mockDone: () -> Unit = mock()
+    private val mockObservableField: ObservableField<String> = mock()
+    private val mockVoteUsecase: SubmitVoteUsecase = mock()
+    private val mockAnalytics: Analytics = mock()
+    private val mockContext: Context = mock()
+    private val mockModel: BetaModel = mock()
+    private val mockView: View = mock()
     private lateinit var subject: VoteViewModel
 
     private lateinit var givenDonation: Donation
@@ -112,7 +112,7 @@ class VoteViewModelTest {
     }
 
     private fun givenDonation(amount: Int) {
-        givenDonation = Donation("title", "desc", "sku", "price", amount, "e", "12222")
+        givenDonation = Donation("title", "desc", "sku", "price", amount, "e", 12222)
     }
 
     private fun givenSubject() {
@@ -135,13 +135,13 @@ class VoteViewModelTest {
 
     private fun whenSubmittingDonation() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
-        subject.submitDonation(givenDonation)
+        subject.submitDonation(givenDonation, mockDone)
     }
 
     private fun whenSubmittingDonationSucceeds() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
 
-        subject.submitDonation(givenDonation)
+        subject.submitDonation(givenDonation, mockDone)
 
         verify(mockVoteUsecase).exec(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(SubmitVoteResponse(true))
@@ -150,7 +150,7 @@ class VoteViewModelTest {
     private fun whenSubmittingDonationFails() {
         whenever(mockModel.votable).thenReturn(ObservableBoolean(true))
 
-        subject.submitDonation(givenDonation)
+        subject.submitDonation(givenDonation, mockDone)
 
         verify(mockVoteUsecase).exec(any(), any(), failCaptor.capture())
         failCaptor.lastValue.invoke(Throwable("oops"))

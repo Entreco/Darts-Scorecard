@@ -16,7 +16,7 @@ class TurnHandler(private val teamStartIndex: Int = 0, private var teams: Array<
     private var legs = 0
     private var sets = 0
 
-    private var currentPlayer: Player = NoPlayer()
+    private val currentPlayer: Player
         get() = if (teams.isEmpty() || turns < 0) NoPlayer() else team().next(legs, sets)
 
     private fun team() = teams[(teamStartIndex + turns + legs + sets) % teams.size]

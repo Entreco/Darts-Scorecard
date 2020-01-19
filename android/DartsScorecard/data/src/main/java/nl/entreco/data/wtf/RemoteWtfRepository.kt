@@ -1,9 +1,9 @@
 package nl.entreco.data.wtf
 
 import com.google.firebase.firestore.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.repository.WtfRepository
 import nl.entreco.domain.wtf.WtfItem
+import nl.entreco.liblog.Logger
 
 class RemoteWtfRepository(private val db: FirebaseFirestore, private val logger: Logger) : WtfRepository, EventListener<QuerySnapshot> {
 
@@ -22,7 +22,7 @@ class RemoteWtfRepository(private val db: FirebaseFirestore, private val logger:
 
         p0?.documents?.forEach { doc ->
             convertToFaqItem(doc)
-        }.also { onChange(ArrayList<WtfItem>(wtfItems.values)) }
+        }.also { onChange(ArrayList(wtfItems.values)) }
     }
 
     private fun convertToFaqItem(doc: DocumentSnapshot) {
@@ -46,7 +46,7 @@ class RemoteWtfRepository(private val db: FirebaseFirestore, private val logger:
 
     override fun subscribe(onChange: (List<WtfItem>) -> Unit): List<WtfItem> {
         this.onChange = onChange
-        return ArrayList<WtfItem>(wtfItems.values)
+        return ArrayList(wtfItems.values)
     }
 
     override fun unsubscribe() {

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.settings.SettingsViewModel" />
+
+        <variable
+            name="donations"
+            type="nl.entreco.dartsscorecard.beta.donate.DonateViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/includeToolbar"
+            layout="@layout/toolbar_settings" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Setup.Hdr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/score_header"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
+                    android:text="@string/settings_mastercaller_title" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:checked="@={viewModel.hasMasterCaller}"
+                        android:paddingStart="@dimen/def"
+                        android:paddingTop="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:paddingBottom="@dimen/def"
+                        android:text="@{viewModel.hasMasterCaller ? @string/settings_mastercaller_desc_on : @string/settings_mastercaller_desc_off}"
+                        android:textColor="?attr/nameText" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/Setup.Hdr"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:checked="@={viewModel.hasBackground}"
+                        android:paddingStart="@dimen/def"
+                        android:paddingTop="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:paddingBottom="@dimen/def"
+                        android:text="@{viewModel.hasBackground ? @string/settings_sound_desc_on : @string/settings_sound_desc_off}"
+                        android:textColor="?attr/nameText" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/score_header_middle"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Setup.Hdr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/xsmall"
+                        android:text="Bot delay" />
+
+                    <TextView
+                        style="@style/Setup.Hdr.End"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/xsmall"
+                        android:text="Sec." />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Setup.Entry.Txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/cd_decrease_sets"
+                        android:onClick="@{() -> viewModel.onSpeedChanged(setupSpeed, -1)}"
+                        android:text="@string/minus" />
+
+                    <SeekBar
+                        android:id="@+id/setup_speed"
+                        style="@style/Setup.Progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="@{viewModel.maxSpeed}"
+                        android:onProgressChanged="@{(view, speed, user) -> viewModel.onSpeedProgressChanged(speed)}"
+                        android:progress="@{viewModel.speed}" />
+
+                    <TextView
+                        style="@style/Setup.Entry.Txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.onSpeedChanged(setupSpeed, +1)}"
+                        android:text="@string/plus" />
+
+                    <TextView
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/score_pts"
+                        android:importantForAccessibility="yes"
+                        android:text="@{@string/number(viewModel.speedValue)}" />
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/Setup.Hdr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
+                    android:text="@string/settings_theme_title" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Launch.Btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:onClick="@{() -> viewModel.swapStyle()}"
+                        android:padding="0dp"
+                        android:lines="1"
+                        android:text="@string/settings_theme_desc" />
+                </RelativeLayout>
+
+                <!-- Footer -->
+                <TextView style="@style/Setup.Ftr" />
+
+                <TextView
+                    style="@style/Setup.Hdr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/score_header"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
+                    android:text="@string/settings_privacy_title" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/edit_ads"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:text="@string/settings_privacy_desc"
+                        android:textColor="?attr/nameText"
+                        app:showIf="@{donations.canRemoveAds}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:gravity="start"
+                        android:importantForAccessibility="no"
+                        android:paddingStart="@dimen/def"
+                        android:paddingEnd="@dimen/large"
+                        android:text="@string/settings_privacy_thanks"
+                        android:textColor="?attr/nameText"
+                        app:showIf="@{!donations.canRemoveAds}" />
+
+                    <ImageView
+                        android:id="@+id/edit_ads"
+                        style="@style/Setup.Entry.Value"
+                        android:layout_width="@dimen/setup_width"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_edit_profile"
+                        android:tint="?attr/ptsText"
+                        app:showIf="@{donations.canRemoveAds}" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:background="@null"
+                        android:minHeight="36dp"
+                        android:onClick="@{() -> viewModel.askForConsent()}"
+                        android:padding="0dp"
+                        app:showIf="@{donations.canRemoveAds}" />
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/Setup.Hdr"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/score_header_middle"
+                    android:importantForAccessibility="no"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/xsmall"
+                    app:showIf="@{donations.canRemoveAds}" />
+
+                <RelativeLayout
+                    style="@style/Setup.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showIf="@{donations.canRemoveAds}">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/Launch.Btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
+                        android:onClick="@{() -> viewModel.removeAds()}"
+                        android:padding="0dp"
+                        android:text="@string/settings_ads_remove" />
+
+                </RelativeLayout>
+
+                <!-- Footer -->
+                <TextView style="@style/Setup.Ftr" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

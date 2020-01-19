@@ -95,20 +95,26 @@ enum class Dart(private val description: String, private val number: Int, privat
 
     companion object {
         fun fromString(dart: String): Dart {
-            Dart.values()
+            values()
                     .filter { it.desc() == dart }
                     .forEach { return it }
-            return Dart.NONE
+            return NONE
         }
 
         fun fromInt(number: Int, multiplier: Int): Dart {
             if (multiplier < 0) throw IllegalStateException("illegal multiplier($multiplier) should be 0,1,2 or 3")
-            if (multiplier == 0) return Dart.NONE
-            Dart.values()
+            if (multiplier == 0) return NONE
+            values()
                     .filter { it.multiplier() == multiplier }
                     .filter { it.number() == number }
                     .forEach { return it }
-            return Dart.ZERO
+            return ZERO
         }
+
+        fun random() = values()
+                .filter { it != NONE }
+                .filter { it != TEST_501 }
+                .filter { it != TEST_D250 }
+                .random()
     }
 }

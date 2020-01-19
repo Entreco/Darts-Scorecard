@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.tv
 
 import androidx.databinding.BindingAdapter
 import android.view.View
-import android.view.ViewGroup
 
 object TvBinding {
 

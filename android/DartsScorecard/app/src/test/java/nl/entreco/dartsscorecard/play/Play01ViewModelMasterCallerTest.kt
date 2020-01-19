@@ -4,16 +4,14 @@ import android.view.Menu
 import android.view.MenuItem
 import com.nhaarman.mockito_kotlin.*
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdViewModel
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MasterCallerRequest
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.play.mastercaller.*
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
@@ -21,6 +19,7 @@ import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.rating.AskForRatingUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,25 +29,27 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 14/03/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class Play01ViewModelMasterCallerTest {
 
-    @Mock private lateinit var mockMenu: Menu
-    @Mock private lateinit var mockMenuItem: MenuItem
-    @Mock private lateinit var mockPlayGameUsecase: Play01Usecase
-    @Mock private lateinit var mockAskForRatingUsecase: AskForRatingUsecase
-    @Mock private lateinit var mockToggleSoundUsecase: ToggleSoundUsecase
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockAdProvider: AdViewModel
-    @Mock private lateinit var mockRevancheUsecase: RevancheUsecase
-    @Mock private lateinit var mock01Listeners: Play01Listeners
-    @Mock private lateinit var mockMasterCaller: MasterCaller
-    @Mock private lateinit var mockDialogHelper: DialogHelper
-    @Mock private lateinit var mockLogger: Logger
+    private val mockCalc: CalculateBotScoreUsecase = mock()
+    private val mockMenu: Menu = mock()
+    private val mockMenuItem: MenuItem = mock()
+    private val mockPlayGameUsecase: Play01Usecase = mock()
+    private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
+    private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
+    private val mockAdProvider: AdViewModel = mock()
+    private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
+    private val mockMusicPlayer: MusicPlayer = mock()
+    private val mockRevancheUsecase: RevancheUsecase = mock()
+    private val mock01Listeners: Play01Listeners = mock()
+    private val mockMasterCaller: MasterCaller = mock()
+    private val mockDialogHelper: DialogHelper = mock()
+    private val mockLogger: Logger = mock()
 
-    @Mock private lateinit var mockGame: Game
-    @Mock private lateinit var mockRequest: Play01Request
-    @Mock private lateinit var mockGameLoaded: GameLoadedNotifier<ScoreSettings>
+    private val mockGame: Game = mock()
+    private val mockRequest: Play01Request = mock()
+    private val mockGameLoaded: GameLoadedNotifier<ScoreSettings> = mock()
     private val doneCaptor = argumentCaptor<(Play01Response) -> Unit>()
 
     private lateinit var subject: Play01ViewModel
@@ -96,7 +97,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockDialogHelper, mockToggleSoundUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalc, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 

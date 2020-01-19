@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.launch.LaunchAnimator" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.launch.LaunchViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:animateLayoutChanges="true"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <include
+                    android:id="@+id/include_launch_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    layout="@layout/include_launch_header" />
+            </FrameLayout>
+
+
+            <TextView
+                style="@style/Launch.Powered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/powered_by" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/large"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_entreco_black_bg" />
+
+            <TextView
+                style="@style/Launch.Powered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.4"
+                android:gravity="center"
+                android:paddingTop="0dp"
+                android:text="@string/version" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_resume"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_dart"
+                    android:onClick="@{() -> viewModel.onResumePressed(context)}"
+                    android:text="@string/resume_x01"
+                    app:resumeGame="@{viewModel.resumedGame}" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_play"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_darts_3"
+                    android:onClick="@{() -> viewModel.onNewGamePressed(context)}"
+                    android:text="@string/play_x01" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_players"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_profile"
+                    android:onClick="@{() -> viewModel.onProfilePressed(context)}"
+                    android:text="@string/profiles" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_hiscore"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_hiscore"
+                    android:onClick="@{() -> viewModel.onHiscorePressed(context)}"
+                    android:text="@string/hiscores" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_beta"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_beta"
+                    android:onClick="@{() -> viewModel.onBetaPressed(context)}"
+                    android:text="@string/beta" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/launch_settings"
+                    style="@style/Launch.Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_settings"
+                    android:onClick="@{() -> viewModel.onSettingsPressed(context)}"
+                    android:text="@string/settings" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

@@ -2,16 +2,20 @@ package nl.entreco.dartsscorecard.play.score
 
 import android.animation.ValueAnimator
 import android.content.Context
-import androidx.databinding.BindingAdapter
 import android.graphics.Color
-import androidx.annotation.ColorInt
-import androidx.core.graphics.ColorUtils
 import android.util.TypedValue
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.doOnLayout
+import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
+import androidx.databinding.BindingAdapter
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
 
@@ -27,6 +31,14 @@ object TeamScoreBindings {
     @BindingAdapter("score")
     fun showScore(view: CounterTextView, score: Int) {
         view.setTarget(score.toLong())
+    }
+
+    @JvmStatic
+    @BindingAdapter("botText")
+    fun showBotText(view: CounterTextView, score: String) {
+        view.visibility = if(score.isNotBlank()) View.VISIBLE else View.INVISIBLE
+        if(score.isNotBlank()) view.setText(score)
+        else view.setText("")
     }
 
     @JvmStatic
@@ -47,11 +59,9 @@ object TeamScoreBindings {
     @JvmStatic
     @BindingAdapter("special")
     fun showSpecials(view: TextView, oldScore: Int, score: Int) {
-        val diff = oldScore - score
-        when (diff) {
+        when (oldScore - score) {
             180 -> handle180(view)
-            0 -> { /* nothing */
-            }
+            0 -> { /* nothing */ }
             else -> clear(view)
         }
     }
@@ -103,11 +113,12 @@ object TeamScoreBindings {
     @BindingAdapter("currentScore")
     fun showCurrentScore(view: CounterTextView, score: Int) {
         view.setTarget(score.toLong())
-        view.measure(0, 0)
         if (score <= 0) {
-            view.animate().translationX(view.measuredWidth.toFloat() * 3)
-                    .setInterpolator(AccelerateDecelerateInterpolator())
-                    .setDuration(DEFAULT_ANIMATION_TIME).start()
+            view.doOnLayout {
+                view.animate().translationX(view.width.toFloat())
+                        .setInterpolator(AccelerateDecelerateInterpolator())
+                        .setDuration(DEFAULT_ANIMATION_TIME).start()
+            }
         } else {
             view.animate().translationX(0f).setInterpolator(AccelerateDecelerateInterpolator())
                     .setDuration(DEFAULT_ANIMATION_TIME).start()

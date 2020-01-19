@@ -2,12 +2,12 @@ package nl.entreco.dartsscorecard.play
 
 import android.content.Context
 import android.content.Intent
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
@@ -22,7 +22,6 @@ import nl.entreco.domain.setup.game.CreateGameResponse
 
 class Play01Activity : ViewModelActivity() {
 
-    private lateinit var binding: ActivityPlay01Binding
     private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
@@ -30,19 +29,18 @@ class Play01Activity : ViewModelActivity() {
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
     private val navigator: Play01Navigator by lazy { component.navigator() }
-    private val animator: Play01Animator by lazy { Play01Animator(binding) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_01)
+        val binding = DataBindingUtil.setContentView<ActivityPlay01Binding>(this, R.layout.activity_play_01)
         binding.viewModel = viewModel
         binding.inputViewModel = inputViewModel
         binding.statViewModel = statViewModel
         binding.scoreViewModel = scoreViewModel
         binding.finishUsecase = finishUsecase
-        binding.animator = animator
+        binding.animator = Play01Animator(binding)
         binding.navigator = navigator
 
         if (savedInstanceState == null) {
@@ -51,6 +49,16 @@ class Play01Activity : ViewModelActivity() {
 
         initToolbar(toolbar(binding))
         resumeGame()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.pause()
     }
 
     override fun onDestroy() {
@@ -68,8 +76,7 @@ class Play01Activity : ViewModelActivity() {
     }
 
     private fun resumeGame() {
-        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel,
-                inputViewModel)
+        viewModel.registerListeners(scoreViewModel, statViewModel, inputViewModel, scoreViewModel, inputViewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -84,14 +91,17 @@ class Play01Activity : ViewModelActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.menu_play_settings -> {
+            R.id.menu_play_settings  -> {
                 swapStyle()
                 viewModel.loading.set(true)
+            }
+            R.id.menu_music_settings -> {
+                viewModel.toggleBgMusic(item)
             }
             R.id.menu_sound_settings -> {
                 viewModel.toggleMasterCaller(item)
             }
-            R.id.menu_delete_match -> {
+            R.id.menu_delete_match   -> {
                 viewModel.askToDeleteMatch {
                     onBackPressed()
                 }

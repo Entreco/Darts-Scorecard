@@ -1,7 +1,10 @@
 package nl.entreco.domain.beta.donations
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.anyOrNull
 import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.beta.Donation
@@ -57,34 +60,38 @@ class FetchDonationsUsecaseTest{
     }
 
     private fun givenSubject(purchasedBefore: Boolean) {
-        whenever(mockBillingRepo.fetchPurchasedItems()).thenReturn(if(purchasedBefore) listOf("1", "2") else emptyList())
+        whenever(mockBillingRepo.fetchPurchasedItems()).doReturn(if(purchasedBefore) listOf("1", "2") else emptyList())
         subject = FetchDonationsUsecase(mockBillingRepo, bg, fg)
     }
 
     private fun whenFetchingDonationsInclSucceeds(vararg donations: Donation) {
-        whenever(mockBillingRepo.fetchDonationsInclAds()).thenReturn(listOf(*donations))
+        val doneCaptor = argumentCaptor<(List<Donation>)->Unit>()
         subject.exec(mockDone, mockFail)
+        verify(mockBillingRepo).fetchDonationsInclAds(doneCaptor.capture(), any())
+        doneCaptor.lastValue.invoke(listOf(*donations))
     }
 
     private fun whenFetchingDonationsExclSucceeds(vararg donations: Donation) {
-        whenever(mockBillingRepo.fetchDonationsExclAds()).thenReturn(listOf(*donations))
+        val doneCaptor = argumentCaptor<(List<Donation>)->Unit>()
         subject.exec(mockDone, mockFail)
+        verify(mockBillingRepo).fetchDonationsExclAds(doneCaptor.capture(), any())
+        doneCaptor.lastValue.invoke(listOf(*donations))
     }
 
     private fun whenFetchingDonationsInclThrows(err: Throwable) {
-        whenever(mockBillingRepo.fetchDonationsInclAds()).thenThrow(err)
+        whenever(mockBillingRepo.fetchDonationsInclAds(any(), any())).doThrow(err)
         subject.exec(mockDone, mockFail)
     }
 
     private fun whenFetchingDonationsExclThrows(err: Throwable) {
-        whenever(mockBillingRepo.fetchDonationsExclAds()).thenThrow(err)
+        whenever(mockBillingRepo.fetchDonationsExclAds(any(), any())).doThrow(err)
         subject.exec(mockDone, mockFail)
     }
 
     private fun thenSuccessIsReported(expected: Boolean) {
         val captor = argumentCaptor<FetchDonationsResponse>()
         verify(mockDone).invoke(captor.capture())
-        assertEquals(expected, captor.lastValue.needToBeConsumed)
+        assertEquals(expected, (captor.lastValue as FetchDonationsResponse.Ok).needToBeConsumed)
     }
 
     private fun thenErrorIsReported() {

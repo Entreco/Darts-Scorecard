@@ -1,13 +1,12 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerBinding
-import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
 import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 
@@ -16,9 +15,9 @@ import nl.entreco.dartsscorecard.setup.Setup01Navigator
  */
 class EditPlayerActivity : ViewModelActivity() {
 
-    private val component: EditPlayerComponent by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers())) }
-    private val viewModel: EditPlayerViewModel by viewModelProvider { component.viewModel() }
-    private val navigator: EditPlayerNavigator by lazy { EditPlayerNavigator(this) }
+    private val component by componentProvider { it.plus(EditPlayerModule(getSuggestedName(), otherPlayers(), otherBots())) }
+    private val viewModel by viewModelProvider { component.viewModel() }
+    private val navigator by lazy { EditPlayerNavigator(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +35,10 @@ class EditPlayerActivity : ViewModelActivity() {
         return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_PLAYERS)
     }
 
+    private fun otherBots(): LongArray {
+        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_BOTS)
+    }
+
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {
         return binding.includeToolbar.toolbar
     }
@@ -46,7 +49,7 @@ class EditPlayerActivity : ViewModelActivity() {
                 onBackPressed()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else              -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -1,24 +1,24 @@
 package nl.entreco.dartsscorecard.base.widget
 
 import android.content.Context
-import androidx.appcompat.widget.AppCompatTextView
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.round
 
 
 /**
  * Created by Entreco on 20/11/2017.
  */
-abstract class BaseCounterTextView : AppCompatTextView {
+abstract class BaseCounterTextView @JvmOverloads constructor(
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : AppCompatTextView(context, attrs, defStyleAttr) {
+
     private val step10 = 10
     private val speed: Long = 10
     private var mTarget: Long = 0
     private var mCurrent: Long = 0
-    @Volatile private var stopped = false
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    private val stopped = AtomicBoolean(false)
 
     private fun tick() {
         if (mCurrent != mTarget) {
@@ -30,7 +30,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
     }
 
     private fun stopTick() {
-        stopped = true
+        stopped.set(true)
         display(mTarget)
     }
 
@@ -66,7 +66,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
             }
         }
 
-        if (!stopped) {
+        if (!stopped.get()) {
             postDelayed({ tick() }, speed)
         }
     }
@@ -79,7 +79,7 @@ abstract class BaseCounterTextView : AppCompatTextView {
         if (mTarget != target) {
             mTarget = target
         }
-        stopped = false
+        stopped.set(false)
         tick()
     }
 }

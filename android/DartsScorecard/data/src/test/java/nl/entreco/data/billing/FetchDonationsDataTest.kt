@@ -40,11 +40,6 @@ class FetchDonationsDataTest {
     }
 
     @Test
-    fun `should have correct purchase token`() {
-        assertEquals("unused token", FetchPurchasesData().token())
-    }
-
-    @Test
     fun `should get correct votes`() {
         assertEquals(10, FetchDonationsData().getVotes("10_feature_votes"))
         assertEquals(50, FetchDonationsData().getVotes("50_feature_votes"))

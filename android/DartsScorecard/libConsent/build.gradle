@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: '../scripts/coverage_library.gradle'
+apply from: '../scripts/android_common.gradle'
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':shared')
+
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.android.ads.consent:consent-library:$consent"
+
+    testImplementation "junit:junit:$junit"
+}

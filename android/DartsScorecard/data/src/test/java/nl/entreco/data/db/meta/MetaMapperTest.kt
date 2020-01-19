@@ -24,10 +24,12 @@ class MetaMapperTest {
 
     private val givenPlayerId: Long = 33
     private val givenTurnNumber: Int = 11
+    private val givenSetNumber: Int = 5
+    private val givenLegNumber: Int = 4
     private val givenScore: Score = Score(102, 4, 5)
     private val givenBreakMade = true
 
-    private val givenMeta: TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenScore, givenBreakMade)
+    private val givenMeta: TurnMeta = TurnMeta(givenPlayerId, givenTurnNumber, givenSetNumber, givenLegNumber, givenScore, givenBreakMade)
     private val subject = MetaMapper()
 
     @Test

@@ -21,17 +21,16 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 12/03/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class EditPlayerNameViewModelTest {
 
-    @Mock private lateinit var mockView: TextView
-    @Mock private lateinit var mockNavigator: EditPlayerNameNavigator
-    @Mock private lateinit var mockAdapter: AdapterView<*>
-    @Mock private lateinit var mockEditable: Editable
-    @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockHandler: Handler
-    @Mock private lateinit var mockAnalytics: Analytics
-    @Mock private lateinit var mockFetchExistinPlayersUsecase: FetchExistingPlayersUsecase
+    private val mockView: TextView = mock()
+    private val mockNavigator: EditPlayerNameNavigator = mock()
+    private val mockAdapter: AdapterView<*> = mock()
+    private val mockEditable: Editable = mock()
+    private val mockContext: Context = mock()
+    private val mockHandler: Handler = mock()
+    private val mockAnalytics: Analytics = mock()
+    private val mockFetchExistinPlayersUsecase: FetchExistingPlayersUsecase = mock()
 
     private lateinit var subject: EditPlayerNameViewModel
     private var givenExistingPlayers = emptyList<Player>()

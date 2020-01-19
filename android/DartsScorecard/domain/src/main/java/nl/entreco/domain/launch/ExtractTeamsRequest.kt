@@ -31,11 +31,11 @@ data class ExtractTeamsRequest(private val teamString: String) {
         val teams = teamString
         if (teams.isEmpty()) throw illegalState
         teamSplit = teams.split(TeamSeperator)
-        teamSplit.forEach {
-            if (it.isEmpty()) throw illegalState
-            val split = it.split(PlayerSeperator)
-            split.forEach {
-                if (it.trim().isEmpty()) throw illegalState
+        teamSplit.forEach { s1 ->
+            if (s1.isEmpty()) throw illegalState
+            val split = s1.split(PlayerSeperator)
+            split.forEach { s2 ->
+                if (s2.trim().isEmpty()) throw illegalState
             }
             playerSplit.add(split)
         }

@@ -1,10 +1,10 @@
 package nl.entreco.domain.purchases.connect
 
-import nl.entreco.domain.BaseUsecase
 import nl.entreco.domain.beta.Feature
+import nl.entreco.domain.repository.FeatureRepository
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
-import nl.entreco.domain.repository.FeatureRepository
 import javax.inject.Inject
 
 /**

@@ -20,6 +20,6 @@ class GetFinishRequest(val score: Score, val turn: Turn, private val favDouble: 
     }
 
     fun double(): Int {
-        return favDouble
+        return if(favDouble == 21) 25 else favDouble
     }
 }

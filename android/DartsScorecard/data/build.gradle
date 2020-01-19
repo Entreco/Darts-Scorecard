@@ -7,11 +7,19 @@ apply from: '../scripts/android_common.gradle'
 
 android {
     defaultPublishConfig "debug"
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental": "true"]
+            }
+        }
+    }
 }
 
 dependencies {
     implementation project(":domain")
     implementation project(":shared")
+    implementation project(":libLog")
 
     // Annotation Processing
     kapt "androidx.room:room-compiler:$room"
@@ -22,6 +30,7 @@ dependencies {
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "androidx.room:room-runtime:$room"
+    implementation "com.android.billingclient:billing:$playBilling"
 
     implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "androidx.exifinterface:exifinterface:1.0.0"
@@ -33,5 +42,5 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
 
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation "androidx.test:runner:$xCoreTesting"
 }

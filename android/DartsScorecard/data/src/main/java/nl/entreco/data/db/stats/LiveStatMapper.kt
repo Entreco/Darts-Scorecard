@@ -33,7 +33,11 @@ class LiveStatMapper {
         val checkout = if (didFinish(t, meta)) 1 else 0
         val highCo = if (didFinish(t, meta)) listOf(t.total()) else emptyList()
         val breaks = if (meta.breakMade) 1 else 0
-        return LiveStat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, n60, n20, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo)
+        val setTotals = mapOf(Pair(meta.setNumber, t.total()))
+        val setDarts = mapOf(Pair(meta.setNumber, turn.numDarts))
+        val setOuts = mapOf(Pair(meta.setNumber, meta.atCheckout))
+        val setLegs = mapOf(Pair(meta.setNumber, checkout))
+        return LiveStat(turn.player, t.total(), t.dartsUsed(), n180, n140, n100, n60, n20, meta.atCheckout, checkout, breaks, listOf(t.total()), highCo, setTotals, setDarts, setOuts, setLegs)
     }
 
     private fun didFinish(t: Turn, meta: MetaTable) = t.total() == meta.score

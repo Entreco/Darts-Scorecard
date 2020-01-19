@@ -2,22 +2,24 @@ package nl.entreco.dartsscorecard.profile.view
 
 import android.app.Activity
 import android.content.Intent
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.core.app.ActivityOptionsCompat
 import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
-import nl.entreco.dartsscorecard.ad.AdViewModel
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.di.profile.ProfileComponent
 import nl.entreco.dartsscorecard.di.profile.ProfileModule
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
+import nl.entreco.domain.repository.BillingRepo
+import nl.entreco.libads.ui.AdViewModel
 
 
 /**
@@ -25,10 +27,15 @@ import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
  */
 class ProfileActivity : ViewModelActivity() {
 
-    private val component: ProfileComponent by componentProvider { it.plus(ProfileModule()) }
+    private val component: ProfileComponent by componentProvider {
+        it.plus(ProfileModule(this) { response ->
+            if (response is MakePurchaseResponse.Updated) adViewModel.onPurchasesRetrieved(response)
+        })
+    }
     private val viewModel: ProfileViewModel by viewModelProvider { component.viewModel() }
     private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
     private val navigator: ProfileNavigator by lazy { ProfileNavigator(this) }
+    private val billing: BillingRepo by lazy { component.billing() }
     private var madeChanges = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +45,19 @@ class ProfileActivity : ViewModelActivity() {
         binding.animator = ProfileAnimator(binding, TransitionInflater.from(this), window)
         binding.navigator = navigator
         binding.adViewModel = adViewModel
-
         viewModel.fetchProfile(idsFromIntent(intent))
-
+        billing.start()
         initToolbar(binding.mainToolbar, R.string.empty, true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        billing.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billing.stop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -63,7 +79,7 @@ class ProfileActivity : ViewModelActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            android.R.id.home -> {
+            android.R.id.home      -> {
                 onBackPressed()
                 true
             }
@@ -71,7 +87,7 @@ class ProfileActivity : ViewModelActivity() {
                 navigator.onEditProfile(viewModel.profile.get()!!)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else                   -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -88,12 +104,12 @@ class ProfileActivity : ViewModelActivity() {
         private const val REQUEST_CODE_CHANGE_NAME = 1223
 
         @JvmStatic
-        fun launch(activity: Activity, view: View, teams: LongArray) {
+        fun launch(activity: Activity, teams: LongArray, view: View? = null) {
             val intent = Intent(activity, ProfileActivity::class.java)
             intent.putExtra(EXTRA_TEAM_IDS, teams)
 
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName)
-            activity.startActivityForResult(intent, SelectProfileActivity.REQUEST_CODE_VIEW, options.toBundle())
+            val options = if (view != null) ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, view.transitionName) else null
+            activity.startActivityForResult(intent, SelectProfileActivity.REQUEST_CODE_VIEW, options?.toBundle())
         }
 
         @JvmStatic

@@ -1,11 +1,11 @@
 package nl.entreco.domain.play.start
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.stats.*
+import nl.entreco.liblog.Logger
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -118,7 +118,7 @@ class Play01UsecaseTest {
 
     private fun whenStoringTurn(turn: Turn, state: State = State.NORMAL) {
         expectedTurnRequest = StoreTurnRequest(0, gameId, turn, state)
-        expectedTurnMeta = TurnMeta(1, 2, Score())
+        expectedTurnMeta = TurnMeta(1, 2, 0, 0, Score())
         subject.storeTurnAndMeta(expectedTurnRequest, expectedTurnMeta, mockDone)
     }
 

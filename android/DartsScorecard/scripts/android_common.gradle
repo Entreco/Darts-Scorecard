@@ -9,7 +9,7 @@ android {
         versionCode config.versionCode
         versionName config.versionName
 
-        resConfigs "en", "nl"
+        resConfigs "en", "nl", "de", "es"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,11 +36,28 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
 
     configurations.all {
+        resolutionStrategy {
+            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+            force "androidx.annotation:annotation:$xAnnotation"
+            force "androidx.arch.core:core-common:$xCoreCommon"
+            force "androidx.arch.core:core-runtime:$xCoreRuntime"
+            force "androidx.core:core:$xCore"
+            force "com.google.code.gson:gson:$gson"
+        }
     }
 }
 

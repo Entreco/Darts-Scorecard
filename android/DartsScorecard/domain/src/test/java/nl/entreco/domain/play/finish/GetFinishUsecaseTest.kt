@@ -1,5 +1,6 @@
 package nl.entreco.domain.play.finish
 
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import nl.entreco.shared.threading.Background
 import nl.entreco.domain.common.executors.TestBackground
@@ -18,11 +19,10 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by Entreco on 24/11/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class GetFinishUsecaseTest {
 
+    private val mockResult: (GetFinishResponse) -> Unit = mock()
     private val mockBg: Background = TestBackground()
-    @Mock private lateinit var mockResult: (GetFinishResponse) -> Unit
     lateinit var subject: GetFinishUsecase
 
     @Before

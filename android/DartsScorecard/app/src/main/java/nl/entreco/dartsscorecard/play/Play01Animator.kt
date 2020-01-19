@@ -3,14 +3,21 @@ package nl.entreco.dartsscorecard.play
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_play_01.view.*
-import kotlinx.android.synthetic.main.play_01_score.view.*
+import kotlinx.android.synthetic.main.activity_play_01.view.includeScore
+import kotlinx.android.synthetic.main.activity_play_01.view.includeToolbar
+import kotlinx.android.synthetic.main.play_01_score.view.footer
+import kotlinx.android.synthetic.main.play_01_score.view.header
+import nl.entreco.dartsscorecard.base.PagerAnimator
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
+import android.R.attr.orientation
+import android.content.res.Configuration
+
 
 /**
  * Created by Entreco on 02/12/2017.
@@ -20,6 +27,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val pager = binding.includeMain.statPager
     private val inputSheet = binding.includeInput.inputSheet
     private val behaviour = BottomSheetBehavior.from(inputSheet)
+    private val pageAnimator = PagerAnimator(pager, binding.includeMain.statPrev, binding.includeMain.statNext)
     private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,
             binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
@@ -28,9 +36,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
     init {
         animator.calculateHeightForScoreView()
-        pager.addOnPageChangeListener(object :
-                androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener() {
+        pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
+                pageAnimator.onPageSelected(position)
                 animator.storePositionForAnimator(position)
             }
         })
@@ -58,20 +66,22 @@ class Play01Animator(binding: ActivityPlay01Binding) {
                                          private val fab: View, private val mainSheet: View,
                                          private val version: View,
                                          private val inputResume: View,
-                                         private val pager: androidx.viewpager.widget.ViewPager,
+                                         private val pager: ViewPager,
                                          private val teamSheet: MaxHeightRecyclerView,
                                          private val inputSheet: View,
                                          private val scoreHeader: View,
                                          private val scoreFooter: View, private val toolbar: View) {
 
         private var animatorPosition: Int = 0
-        internal var animator: LiveStatSlideAnimator? = null
         private val lock = Object()
 
         fun onSlide(slideOffset: Float) {
-            // Slide Out ScoreViewModel
-            scoreSheet.animate().alpha(slideOffset)
-                    .translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+
+//            val orientation = root.resources.configuration.orientation
+//            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                // In portrait Slide Out ScoreViewModel
+                scoreSheet.animate().alpha(slideOffset).translationY(-scoreSheet.height * (1 - slideOffset)).setDuration(0).start()
+//            }
 
             // Scale Fab Out Bottom/Top
             fab.animate().scaleY(slideOffset).scaleX(slideOffset).setDuration(0).start()
@@ -94,7 +104,6 @@ class Play01Animator(binding: ActivityPlay01Binding) {
         fun storePositionForAnimator(position: Int) {
             synchronized(lock) {
                 animatorPosition = position
-                animator = null
             }
         }
 
@@ -125,12 +134,14 @@ class Play01Animator(binding: ActivityPlay01Binding) {
 
         private fun getAnimatorForPosition(position: Int): LiveStatSlideAnimator? {
             synchronized(lock) {
-                if (animator == null) {
-                    animator = LiveStatSlideAnimator(pager.findViewWithTag(position),
+                val current = pager.findViewWithTag<View>(position)
+                return if (current != null) {
+                    LiveStatSlideAnimator(current,
                             pager.findViewWithTag(position - 1),
                             pager.findViewWithTag(position + 1))
+                } else {
+                    null
                 }
-                return animator
             }
         }
     }

@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
+import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.*
 import javax.inject.Inject
@@ -17,20 +18,30 @@ import javax.inject.Named
  */
 class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: CreatePlayerUsecase,
                                               @Named("otherPlayers") private val otherPlayers: LongArray,
+                                              @Named("otherBots") private val otherBots: LongArray,
                                               @Named("suggestion") suggestedName: String,
-                                              fetchExistingPlayersUsecase: FetchExistingPlayersUsecase)
+                                              fetchExistingPlayersUsecase: FetchExistingPlayersUsecase,
+                                              fetchBotsUsecase: FetchBotsUsecase)
     : BaseViewModel() {
 
     val filteredPlayers = ObservableArrayList<Player>()
-    val suggestedName = ObservableField<String>(suggestedName)
+    val availableBots = ObservableArrayList<Bot>()
+    val suggestedName = ObservableField(suggestedName)
     val errorMsg = ObservableInt()
     private val allPlayers = emptyList<Player>().toMutableList()
+    private val allBots = emptyList<Bot>().toMutableList()
 
     init {
         fetchExistingPlayersUsecase.exec(
                 { response -> onPlayersRetrieved(response.players) },
                 { onPlayersFailed() }
         )
+
+        if(suggestedName.startsWith("Player")) {
+            fetchBotsUsecase.exec(
+                    { response -> onBotsRetrieved(response.bots) },
+                    { onBotsFailed() })
+        }
     }
 
     private fun onPlayersFailed() {
@@ -44,6 +55,16 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         allPlayers.addAll(players)
         filteredPlayers.addAll(remainingPlayers)
         filter("")
+    }
+
+    private fun onBotsFailed(){
+        allBots.clear()
+    }
+
+    private fun onBotsRetrieved(bots: List<Bot>) {
+        val remainingPlayers = bots.filterNot { otherBots.contains(it.id) }
+        allBots.addAll(bots)
+        availableBots.addAll(remainingPlayers)
     }
 
     fun filter(text: CharSequence) {
@@ -104,9 +125,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase()
-
     private fun isNewPlayer(existing: Player?) = existing == null
-
     private fun donePressed(action: Int) = action == EditorInfo.IME_ACTION_DONE
 
     private fun onCreateSuccess(navigator: EditPlayerNavigator): (CreatePlayerResponse) -> Unit = { response ->

@@ -20,13 +20,17 @@
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_setup">Configure 01 Game</string>
     <string name="title_beta">Beta Features</string>
+    <string name="title_settings">Settings</string>
     <string name="title_wtf">@string/wtf</string>
+    <string name="title_hiscores">Hiscores</string>
 
     <!-- Launch -->
     <string name="resume_x01">@string/resume</string>
     <string name="play_x01">Start new 01</string>
     <string name="profiles">Manage Profiles</string>
-    <string name="beta">Beta</string>
+    <string name="hiscores">Hiscores</string>
+    <string name="beta">New Features</string>
+    <string name="settings">Settings</string>
     <string name="wtf">What the FAQ</string>
     <string name="stream_start">Start Stream</string>
     <string name="stream_stop">Stop Stream</string>
@@ -42,11 +46,15 @@
     <string name="donation_ok">THANKS</string>
     <string name="votes_explained">&lt;p>Once this feature has &lt;b>%1$s&lt;/b> votes, development will start.&lt;/p>&lt;p>All Donations &lt;b>include removing all ads&lt;/b> from the app&lt;/p></string>
     <string name="beta_video">&lt;b>Watch the video&lt;/b></string>
+    <string name="beta_tagline">Most popular features, will be developed first</string>
+    <string name="beta_explained">Let us know which feature you would like to see next. Select \'VOTE\' &amp; click the \u2764! We\'ll do our best</string>
 
     <!-- Setup -->
     <string name="select_players">Select Players</string>
     <string name="choose_player_name">Choose player name</string>
     <string name="choose_existing_player">Or choose existing players</string>
+    <string name="choose_available_bot">Play against a bot</string>
+    <string name="cannot_change_bot_name">It\'s not possible to change the bots name</string>
     <string name="team">Team</string>
     <string name="select_x01_score">Select x01 score</string>
     <string name="start_score">Start score</string>
@@ -56,9 +64,7 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="cont">Continue</string>
-    <string name="sponsored_by">Sponsored by</string>
     <string name="powered_by">Powered by</string>
-    <string name="tired_of_ads">Visit \'Beta\' to remove Ads</string>
 
     <!-- Dialogs -->
     <string name="rating_title">Enjoying Darts Scorecard?</string>
@@ -86,6 +92,7 @@
 
     <!-- Match Stats -->
     <string name="match_stats">Match Statistics</string>
+    <string name="set_stats">Set %1$s Statistics</string>
     <string name="live_breaks_made">Breaks Made</string>
     <string name="live_double_success">Double Success</string>
     <string name="live_double_ratio">Double %</string>
@@ -114,7 +121,7 @@
     <string name="streaming_notif_title">Streaming to Television</string>
 
     <!-- Profile -->
-    <string name="no_stats_available">No stats available yet</string>
+    <string name="no_stats_available">No Data available yet</string>
     <string name="no_stats_available_sub">Complete a game and come back here to see how you\'re doing</string>
     <string name="profile_games_played">Games Played</string>
     <string name="profile_overall_average">Overall average</string>
@@ -128,8 +135,52 @@
     <string name="profile_num_20">#20+</string>
     <string name="profile_num_0">#Bust/ Bounce/ NoScore</string>
 
+    <!--- HiScores -->
+    <string name="hiscore_title_games_ratio">Win Ratio</string>
+    <string name="hiscore_title_best_avg">Best Avg</string>
+    <string name="hiscore_title_best_co">Best Checkout %</string>
+    <string name="hiscore_title_highest_score">Highest Score</string>
+    <string name="hiscore_title_highest_co">Highest Checkout</string>
+    <string name="hiscore_title_overall_average">Overall average</string>
+    <string name="hiscore_title_first9_average">1st 9 average</string>
+    <string name="hiscore_title_win_percentage">Win %</string>
+    <string name="hiscore_title_checkout_percentage">Checkout %</string>
+    <string name="hiscore_title_num_180">#180\'s</string>
+    <string name="hiscore_title_num_140">#140+</string>
+    <string name="hiscore_title_num_100">#100+</string>
+    <string name="hiscore_title_num_60">#60+</string>
+    <string name="hiscore_title_num_20">#20+</string>
+    <string name="hiscore_title_num_0">#Bust/ Bounce/ NoScore</string>
+    <string name="hiscore_description_games_win_ratio">Won vs Played ratio</string>
+    <string name="hiscore_description_best_avg">Best average during a single match</string>
+    <string name="hiscore_description_best_co">Best checkout % during a single match</string>
+    <string name="hiscore_description_overall_average">Overall average</string>
+    <string name="hiscore_description_first9_average">Overall average of the 1st nine darts</string>
+    <string name="hiscore_description_win_percentage">Overall % of games won</string>
+    <string name="hiscore_description_checkout_percentage">Overall checkout %</string>
+    <string name="hiscore_description_num_180">Overall #180\'s scored</string>
+    <string name="hiscore_description_num_140">Overall #140+ scored</string>
+    <string name="hiscore_description_num_100">Overall #100+ scored</string>
+    <string name="hiscore_description_num_60">Overall #60+ scored</string>
+    <string name="hiscore_description_num_20">Overall #20+ scored</string>
+    <string name="hiscore_description_num_0">Overall #Bust/ Bounce/ NoScore\'s scored</string>
+
     <!-- What The FAQ -->
     <string name="search_wtf">Search in F.A.Q.</string>
+
+    <!-- Settings -->
+    <string name="settings_mastercaller_title">Sound Settings</string>
+    <string name="settings_mastercaller_desc_on">Read all scores aloud</string>
+    <string name="settings_mastercaller_desc_off">Don\'t user Mastercaller</string>
+    <string name="settings_sound_title">Sound</string>
+    <string name="settings_sound_desc_on">Play music in the background</string>
+    <string name="settings_sound_desc_off">No music in the background</string>
+    <string name="settings_theme_title">Theming</string>
+    <string name="settings_theme_desc">Swap the available themes</string>
+    <string name="settings_privacy_title">Privacy / Ads</string>
+    <string name="settings_privacy_desc">Change Ad Preference</string>
+    <string name="settings_privacy_thanks">Thanks for your Support!\nNo data is collected for the purpose of showing ads</string>
+    <string name="settings_ads_remove">Remove Ads</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Archive Stats Service</string>
@@ -144,6 +195,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">Cannot view profile of Players that have been deleted.</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
     <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>
@@ -172,5 +224,11 @@
     <string name="cd_decrease_legs">Minus 1 leg</string>
     <string name="cd_list_of_profiles">Player Profiles</string>
     <string name="cd_list_of_wtfs">FAQ items</string>
+    <string name="cd_next">Next</string>
+    <string name="cd_prev">Prev</string>
+    <string name="cd_wtf">Help</string>
+    <string name="cd_select_start_score">Select start score</string>
+    <string name="cd_number_of_sets">First to %1$s sets</string>
+    <string name="cd_number_of_legs">First to %1$s legs</string>
     <string name="cd_list_of_beta_features">Which features would you like to see added to the app</string>
 </resources>

@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class SettingsViewModel @Inject constructor(fetchPrefs: FetchPreferredSettingsUsecase, private val storePrefs: StorePreferredSettingsUsecase) : BaseViewModel() {
 
-    private val preferred = ObservableField<FetchSettingsResponse>(FetchSettingsResponse())
+    private val preferred = ObservableField(FetchSettingsResponse())
 
     init {
         fetchPrefs.exec { preferred.set(it) }

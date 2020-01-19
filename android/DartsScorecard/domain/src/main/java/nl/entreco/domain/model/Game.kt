@@ -3,6 +3,7 @@ package nl.entreco.domain.model
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
+import kotlin.math.max
 
 data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
@@ -11,7 +12,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
     private val starters = emptyList<Team>().toMutableList()
     private var newMatchSetOrLeg: Boolean = false
 
-    var scores = emptyArray<Score>()
+    val scores
         get() = arbiter.getScores()
 
     fun start(startIndex: Int, teams: Array<Team>): Game {
@@ -38,7 +39,7 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
                 starters.add(0, next.team)
                 true
             }
-            else -> {
+            else                              -> {
                 false
             }
         }
@@ -54,6 +55,16 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
 
     fun getTurnCount(): Int {
         return arbiter.getTurnCount()
+    }
+
+    fun getSetCount(): Int {
+        val score = arbiter.getScores().sumBy { it.set }
+        val isNew: Boolean = arbiter.getScores().count { it.score == it.settings.startScore && it.leg == 0 } == arbiter.getScores().size
+        return max(0, score - if (isNew) 1 else 0)
+    }
+
+    fun getLegCount(): Int {
+        return arbiter.getScores().sumBy { it.set * 100 + it.leg }
     }
 
     fun wasBreakMade(by: Player): Boolean {

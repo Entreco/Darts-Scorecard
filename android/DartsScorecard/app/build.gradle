@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply from: '../scripts/coverage.gradle'
 apply from: '../scripts/android_common.gradle'
 apply from: '../scripts/versioning.gradle'
@@ -16,6 +15,12 @@ android {
         resValue "string", "version", "${config.versionName}"
 
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental":"true"]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -30,11 +35,6 @@ android {
         jniLibs.srcDir 'libs'
         jni.srcDirs = [] //disable automatic ndk-build call
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -42,27 +42,32 @@ dependencies {
     implementation project(":shared")
     implementation project(':domain')
     implementation project(':data')
+    implementation project(':libLog')
+    implementation project(':libConsent')
+    implementation project(':libAds')
 
     // Annotation Processing
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
+    kapt "androidx.room:room-compiler:$room"
 
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.android.material:material:$material"
     implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "androidx.constraintlayout:constraintlayout:$xConstraint"
-    implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
+    implementation "com.google.firebase:firebase-ads:$fbAds"
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
     implementation "com.google.code.gson:gson:$gson"
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation "androidx.core:core-ktx:1.1.0"
 
     implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
         transitive = true
@@ -70,7 +75,6 @@ dependencies {
 
     // Leaks
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanary"
 
     // Test
     testImplementation "junit:junit:$junit"
@@ -79,8 +83,8 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$xCoreTesting"
 
     // AndroidTest
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation "androidx.test:runner:$xCoreTesting"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
 }
 
 apply plugin: 'com.google.gms.google-services'

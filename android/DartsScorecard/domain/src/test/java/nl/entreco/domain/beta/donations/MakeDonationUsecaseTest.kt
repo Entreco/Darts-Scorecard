@@ -1,6 +1,9 @@
 package nl.entreco.domain.beta.donations
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.doThrow
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -24,7 +27,7 @@ class MakeDonationUsecaseTest{
     private val fg = TestForeground()
 
     @Mock private lateinit var mockFail : (Throwable) -> Unit
-    @Mock private lateinit var mockDone : (MakeDonationResponse) -> Unit
+    @Mock private lateinit var mockDone : (MakePurchaseResponse) -> Unit
     @Mock private lateinit var mockBillingRepo : BillingRepository
     private lateinit var subject : MakeDonationUsecase
 
@@ -46,13 +49,15 @@ class MakeDonationUsecaseTest{
     }
 
     private fun whenMakingDonationSucceeds(payload: String) {
-        whenever(mockBillingRepo.donate(any())).thenReturn(MakeDonationResponse(mock(), payload))
+        val updateCaptor = argumentCaptor<(MakePurchaseResponse)->Unit>()
         subject.exec(MakeDonationRequest(mock()),mockDone, mockFail)
+        verify(mockBillingRepo).donate(any(), updateCaptor.capture())
+        updateCaptor.lastValue.invoke(MakePurchaseResponse.Consumed)
     }
 
     private fun whenMakingDonationFails(err: Throwable) {
-        whenever(mockBillingRepo.donate(any())).thenThrow(err)
-        subject.exec(MakeDonationRequest(Donation("ti", "de", "sk", "pr", 4, "EUR", "7990000")), mockDone, mockFail)
+        whenever(mockBillingRepo.donate(any(), any())).doThrow(err)
+        subject.exec(MakeDonationRequest(Donation("ti", "de", "sk", "pr", 4, "EUR", 7990000)), mockDone, mockFail)
     }
 
     private fun thenSuccessIsReported() {

@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/score_header"
             android:orientation="horizontal"
+            android:importantForAccessibility="no"
             android:padding="@dimen/xsmall"
             android:text="@string/select_x01_score" />
 
@@ -34,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="start"
+                android:importantForAccessibility="no"
                 android:text="@string/start_score" />
 
             <TextView
@@ -41,6 +43,7 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:importantForAccessibility="no"
                 android:text="@{@string/number(viewModel.startScore)}" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -49,6 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:entries="@array/x01"
+                android:importantForAccessibility="yes"
+                android:contentDescription="@string/cd_select_start_score"
                 android:onItemSelected="@{(adapter,i,index,l) -> viewModel.onStartScoreSelected(adapter,index)}"
                 android:selectedItemPosition="@={viewModel.startScoreIndex}" />
         </RelativeLayout>
@@ -65,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
+                android:importantForAccessibility="no"
                 android:padding="@dimen/xsmall"
                 android:text="@string/number_of_sets" />
 
@@ -73,6 +79,7 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:importantForAccessibility="no"
                 android:padding="@dimen/xsmall"
                 android:text="@string/first_to" />
         </LinearLayout>
@@ -115,6 +122,8 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:background="@drawable/score_pts"
+                android:importantForAccessibility="yes"
+                android:contentDescription="@{@string/cd_number_of_sets(viewModel.numSets + 1)}"
                 android:text="@{@string/number(viewModel.numSets + 1)}" />
         </LinearLayout>
 
@@ -130,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
+                android:importantForAccessibility="no"
                 android:padding="@dimen/xsmall"
                 android:text="@string/number_of_legs" />
 
@@ -137,6 +147,7 @@
                 style="@style/Setup.Hdr.End"
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
                 android:orientation="horizontal"
                 android:padding="@dimen/xsmall"
                 android:text="@string/first_to" />
@@ -180,6 +191,8 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:background="@drawable/score_pts"
+                android:importantForAccessibility="yes"
+                android:contentDescription="@{@string/cd_number_of_legs(viewModel.numSets + 1)}"
                 android:text="@{@string/number(viewModel.numLegs + 1)}" />
         </LinearLayout>
 

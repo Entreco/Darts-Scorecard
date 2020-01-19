@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewPropertyAnimator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.atLeastOnce
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
@@ -14,11 +15,10 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by entreco on 08/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class LaunchAnimatorTest {
 
-    @Mock private lateinit var mockView: View
-    @Mock private lateinit var mockAnimator: ViewPropertyAnimator
+    private val mockView: View = mock()
+    private val mockAnimator: ViewPropertyAnimator = mock()
     private lateinit var subject: LaunchAnimator.LaunchAnimatorHandler
 
     @Test
@@ -36,7 +36,7 @@ class LaunchAnimatorTest {
         whenever(mockAnimator.translationY(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
-        subject = LaunchAnimator.LaunchAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView)
+        subject = LaunchAnimator.LaunchAnimatorHandler(mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView, mockView)
     }
 
     private fun whenInitializing() {

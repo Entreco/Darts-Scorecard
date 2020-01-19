@@ -1,136 +1,54 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import android.content.Intent
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.LifecycleObserver
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
-import nl.entreco.domain.beta.donations.*
-import nl.entreco.domain.purchases.connect.ConnectToBillingUsecase
-import java.util.concurrent.atomic.AtomicBoolean
+import nl.entreco.domain.beta.donations.Purchase
+import nl.entreco.shared.LiveEvent
+import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
 
 /**
  * Created by entreco on 08/02/2018.
  */
-class DonateViewModel @Inject constructor(
-        private var donateCallback: DonateCallback?,
-        private val connectToBillingUsecase: ConnectToBillingUsecase,
-        private val fetchDonationsUsecase: FetchDonationsUsecase,
-        private val makeDonation: MakeDonationUsecase,
-        private val consumeDonation: ConsumeDonationUsecase,
-        private val analytics: Analytics) : BaseViewModel(), LifecycleObserver {
+class DonateViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), LifecycleObserver {
 
-    init {
-        donateCallback?.lifeCycle()?.addObserver(this)
-    }
-
-    internal var productId: String = ""
-    internal var requiresConsumption = AtomicBoolean(true)
     val donations = ObservableArrayList<Donation>()
-    val loading = ObservableBoolean(false)
+    val loading = ObservableBoolean(true)
+    val canRemoveAds = ObservableBoolean(false)
+
+    private val events = LiveEvent<DonationEvent>()
+    fun events(): LiveEvent<DonationEvent> = events
+
+    private val skuToPurchase = AtomicReference<String>()
 
     fun onDonate(donation: Donation) {
         loading.set(true)
-        productId = donation.sku
         analytics.trackPurchaseStart(donation)
-        makeDonation.exec(MakeDonationRequest(donation), onStartMakeDonation(), onStartMakeDonationFailed())
+        skuToPurchase.set(donation.sku)
+        events.postValue(DonationEvent.Purchase(donation))
     }
 
-    private fun onStartMakeDonation(): (MakeDonationResponse) -> Unit = { response ->
-        donateCallback?.makeDonation(response)
-    }
-
-    fun onMakeDonationSuccess(data: Intent?) {
-        val purchaseData = data!!.getStringExtra("INAPP_PURCHASE_DATA")
-        val dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE")
-        if (purchaseData == null || dataSignature == null) onConsumeDonationFailed().invoke(Throwable())
-        else {
-            analytics.trackAchievement("Donation $data")
-            consumeDonation.exec(ConsumeDonationRequest(purchaseData, dataSignature, requiresConsumption.get()),
-                    onConsumeDonationSuccess(),
-                    onConsumeDonationFailed())
-        }
-    }
-
-    private fun onStartMakeDonationFailed(): (Throwable) -> Unit = {
-        analytics.trackPurchaseFailed(productId, "GetBuyIntent failed")
+    fun showDonations(_donations: List<Donation>) {
         loading.set(false)
-        productId = ""
-        requiresConsumption.set(false)
-    }
-
-    private fun onConsumeDonationSuccess(): (ConsumeDonationResponse) -> Unit = { response ->
-        when (response.resultCode) {
-            ConsumeDonationResponse.CONSUME_OK -> donationDone(response)
-            else -> analytics.trackPurchaseFailed(response.productId, "Consume failed ${response.resultCode}")
-        }
-
-        loading.set(false)
-        productId = ""
-        requiresConsumption.set(false)
-        fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
-    }
-
-    private fun donationDone(response: ConsumeDonationResponse) {
-        donationWithId(response)?.let { donation ->
-            analytics.trackPurchase(donation, response.orderId)
-            donateCallback?.onDonationMade(donation)
-        }
-    }
-
-    private fun onConsumeDonationFailed(): (Throwable) -> Unit = {
-        analytics.trackPurchaseFailed(productId, "ConsumeDonation failed")
-        loading.set(false)
-        productId = ""
-        requiresConsumption.set(false)
-    }
-
-    private fun donationWithId(response: ConsumeDonationResponse) = donations.firstOrNull { it.sku == response.productId }
-
-    fun onMakeDonationFailed(cancelled: Boolean) {
-        analytics.trackPurchaseFailed(productId, if(cancelled) "Donation ActivityResult cancelled" else "Donation ActivityResult failed")
-        loading.set(false)
-        productId = ""
-        requiresConsumption.set(false)
-    }
-
-    private fun onFetchDonationsSuccess(): (FetchDonationsResponse) -> Unit = { result ->
-        requiresConsumption.set(result.needToBeConsumed)
         donations.clear()
-        donations.addAll(result.donations)
+        donations.addAll(_donations.sortedBy { it.priceMicros })
     }
 
-    private fun onFetchDonationsFailed(): (Throwable) -> Unit = {
-        requiresConsumption.set(false)
-        analytics.trackPurchaseFailed(productId, "FetchDonations failed")
+    fun onCancelled(step: String) {
+        loading.set(false)
+        analytics.trackPurchaseFailed(skuToPurchase.getAndSet(""), step)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun bind() {
-        connectToBillingUsecase.bind { connected ->
-            if (connected && donations.isEmpty()) {
-                fetchDonationsUsecase.exec(onFetchDonationsSuccess(), onFetchDonationsFailed())
-            }
-        }
+    fun onDonated(donation: Donation, orderId: String) {
+        loading.set(false)
+        analytics.trackPurchase(donation, orderId)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun unbind() {
-        connectToBillingUsecase.unbind()
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun destroy() {
-        donateCallback?.lifeCycle()?.removeObserver(this)
-    }
-
-    override fun onCleared() {
-        donateCallback = null
-        super.onCleared()
+    fun onUpdate(purchases: List<Purchase>) {
+        canRemoveAds.set(purchases.any { it.state == 1 })
     }
 }

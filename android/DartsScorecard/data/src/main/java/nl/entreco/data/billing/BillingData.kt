@@ -10,7 +10,6 @@ import java.util.*
 sealed class BillingData(val productId: String, val votes: Int)
 
 const val type = "inapp"
-internal val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/:".toCharArray()
 
 class Donate10Votes : BillingData("10_feature_votes", 10)
 class Donate20Votes : BillingData("20_feature_votes", 20)
@@ -29,16 +28,16 @@ class DonateAds500Votes : BillingData("500_remove_ads_votes", 500)
 class DonateAds1000Votes : BillingData("1000_remove_ads_votes", 1000)
 
 class DonateTestPurchased : BillingData("android.test.purchased", 10)
-class DonateTestCancelled : BillingData("android.test.canceled", 10)
-class DonateTestRefunded : BillingData("android.test.refunded", 10)
-class DonateTestUnavailable : BillingData("android.test.item_unavailable", 10)
+class DonateTestCancelled : BillingData("android.test.canceled", 20)
+class DonateTestRefunded : BillingData("android.test.refunded", 50)
+class DonateTestUnavailable : BillingData("android.test.item_unavailable", 100)
 
 sealed class InAppProducts(private val billingData: List<BillingData>) {
     private fun listOfDonations(): List<BillingData> {
         return billingData
     }
 
-    private fun listOfProducts(): List<String> {
+    fun listOfProducts(): List<String> {
         return listOfDonations().map { it.productId }
     }
 
@@ -66,28 +65,9 @@ class FetchDonationsData : InAppProducts(listOf(Donate10Votes(), Donate20Votes()
 class FetchDonationsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
 class FetchDonationsInclAdsTestData : InAppProducts(listOf(DonateTestPurchased(), DonateTestCancelled(), DonateTestRefunded(), DonateTestUnavailable()))
 
-class MakeDonationData(private val donation: Donation) {
-
-    fun sku(): String {
-        return donation.sku
-    }
-
-    fun type(): String {
-        return type
-    }
-
-    fun payload(): String {
-        return (0..100).joinToString { chars[Random().nextInt(chars.size - 1)].toString() }
-    }
-}
-
 class FetchPurchasesData {
     fun type(): String {
         return type
-    }
-
-    fun token(): String {
-        return "unused token"
     }
 }
 

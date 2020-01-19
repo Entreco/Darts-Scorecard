@@ -17,8 +17,8 @@ class MetaMapper : Mapper<TurnMeta, MetaTable> {
         table.turnId = turnId
         table.gameId = gameId
         table.playerId = turnMeta.playerId
-        table.legNumber = turnMeta.score.leg
-        table.setNumber = turnMeta.score.set
+        table.legNumber = turnMeta.legNumber
+        table.setNumber = turnMeta.setNumber
         table.turnInLeg = turnMeta.turnNumber
         table.score = turnMeta.score.score
         table.atCheckout = atDouble

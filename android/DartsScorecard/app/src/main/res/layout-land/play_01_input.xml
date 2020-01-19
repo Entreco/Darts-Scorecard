@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="View"
+            type="android.view.View" />
+
+        <import
+            alias="Dart"
+            type="nl.entreco.domain.model.Dart" />
+
+        <variable
+            name="viewModel"
+            type="nl.entreco.dartsscorecard.play.input.InputViewModel" />
+
+        <variable
+            name="animator"
+            type="nl.entreco.dartsscorecard.play.Play01Animator" />
+
+        <variable
+            name="listener"
+            type="nl.entreco.domain.play.listeners.InputListener" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/inputSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="@dimen/input_peek_height"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <!-- Turn Bar -->
+        <RelativeLayout
+            android:id="@+id/input_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/score_header">
+
+            <ImageView
+                android:id="@+id/input_arrow"
+                android:layout_width="@dimen/large"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/input_escape"
+                android:layout_alignBottom="@id/input_escape"
+                android:contentDescription="@null"
+                android:rotation="180"
+                android:src="@drawable/ic_current_team" />
+
+            <TextView
+                android:id="@+id/input_text"
+                style="@style/Input.Score.No"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/input_arrow"
+                android:layout_alignBottom="@id/input_arrow"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/input_score"
+                app:special="@{viewModel.special}" />
+
+            <ImageButton
+                android:id="@+id/input_escape"
+                style="@style/Input.Back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/cd_score_back"
+                android:onClick="@{() -> viewModel.back()}"
+                android:onLongClick="@{() -> viewModel.clear()}"
+                app:backAnimation="@{viewModel.scoredTxt}" />
+
+            <TextView
+                android:id="@+id/input_score"
+                style="@style/Input.Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/input_escape"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@id/input_escape"
+                android:importantForAccessibility="no"
+                app:scoreInput="@{viewModel.scoredTxt}" />
+
+            <TextView
+                android:id="@+id/input_next"
+                style="@style/Input.Next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/input_score"
+                android:text="@{viewModel.current.name}" />
+
+            <TextView
+                android:id="@+id/input_sub"
+                style="@style/Input.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/input_next"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/input_score"
+                android:text="@{viewModel.nextDescription}" />
+
+            <FrameLayout
+                android:id="@+id/input_resume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/input_arrow"
+                android:layout_alignBottom="@id/input_arrow"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/score_hint"
+                android:focusable="true"
+                android:onClick="@{() -> viewModel.onResume(animator, listener)}"
+                android:translationX="-5000dp">
+
+                <include
+                    layout="@layout/include_resume"
+                    app:message="@{viewModel.resumeDescription}" />
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <!-- Key Pad -->
+        <GridLayout
+            android:id="@+id/input_keys"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/input_top"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/fab"
+            android:background="@color/neutral_black"
+            android:columnCount="3"
+            android:rowCount="4">
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(1)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(1, listener)}"
+                app:hint="@{viewModel.hintProvider.hint1}"
+                app:num="1" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(2)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(2, listener)}"
+                app:hint="@{viewModel.hintProvider.hint2}"
+                app:num="2" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(3)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(3, listener)}"
+                app:hint="@{viewModel.hintProvider.hint3}"
+                app:num="3" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(4)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(4, listener)}"
+                app:hint="@{viewModel.hintProvider.hint4}"
+                app:num="4" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(5)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(5, listener)}"
+                app:hint="@{viewModel.hintProvider.hint5}"
+                app:num="5" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(6)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(6, listener)}"
+                app:hint="@{viewModel.hintProvider.hint6}"
+                app:num="6" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(7)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(7, listener)}"
+                app:hint="@{viewModel.hintProvider.hint7}"
+                app:num="7" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(8)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(8, listener)}"
+                app:hint="@{viewModel.hintProvider.hint8}"
+                app:num="8" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(9)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(9, listener)}"
+                app:hint="@{viewModel.hintProvider.hint9}"
+                app:num="9" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.onPressedKey(-1, listener)}"
+                app:accent="true"
+                app:hint="@string/bust" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.entered(0)}"
+                android:onLongClick="@{() -> viewModel.onPressedKey(0, listener)}"
+                app:hint="@{viewModel.hintProvider.hint0}"
+                app:num="0" />
+
+            <nl.entreco.dartsscorecard.play.input.InputWidget
+                style="@style/InputNumber"
+                android:onClick="@{() -> viewModel.onUndoPressed(listener)}"
+                app:accent="true"
+                app:hint="@string/undo" />
+
+        </GridLayout>
+
+        <!-- Options Pane -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/input_top"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/input_keys"
+            android:background="@drawable/panel"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/input_label"
+                style="@style/Input.Mini"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.toggle ? @string/single_mode : @string/all_mode}" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/input_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:checked="@={viewModel.toggle}"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/cd_throw"
+            android:onClick="@{() -> viewModel.onSubmitScore(inputScore, listener)}"
+            android:scaleType="fitXY"
+            android:src="@{viewModel.toggle ? @drawable/darts : @drawable/dart}"
+            app:numDarts="@{viewModel.dartsLeft}"
+            fab:fabSize="normal"
+            fab:useCompatPadding="true" />
+
+        <!-- Ask 4 Finish -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/panel"
+            android:elevation="120dp"
+            android:orientation="vertical"
+            android:padding="@dimen/def"
+            app:ask4finish="@{viewModel.finalTurn != null}"
+            fab:visibility="gone">
+
+            <TextView
+                style="@style/Input.Score"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/score_header"
+                android:gravity="center"
+                android:text="@string/darts_used"
+                android:textSize="18sp" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="@{viewModel.finalTurn.second() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.second() == Dart.ZERO}"
+                android:onClick="@{() -> viewModel.onFinishWith(1, listener)}"
+                android:text="@string/one" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:alpha="@{viewModel.finalTurn.third() == Dart.ZERO ? 1F : .2F}"
+                android:enabled="@{viewModel.finalTurn.third() == Dart.ZERO}"
+                android:onClick="@{() -> viewModel.onFinishWith(2, listener)}"
+                android:text="@string/two" />
+
+            <TextView
+                style="@style/InputAsk4Darts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onFinishWith(3, listener)}"
+                android:text="@string/three" />
+
+        </LinearLayout>
+
+        <!-- Bot's Turn -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/input_keys"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="48dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/score_name"
+            android:clickable="true"
+            android:elevation="120dp"
+            android:focusable="true"
+            app:listener="@{listener}"
+            app:next="@{viewModel.nextUp}"
+            app:vm="@{viewModel}">
+
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                android:id="@+id/bot_score_1"
+                style="@style/Score.Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_darts_3"
+                android:drawablePadding="@dimen/large"
+                android:drawableTint="?attr/nameText"
+                android:gravity="center"
+                android:textSize="28sp"
+                app:botText="@{viewModel.botScore1}"
+                app:layout_constraintBottom_toTopOf="@id/bot_score_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                fab:text="triple 1" />
+
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                android:id="@+id/bot_score_2"
+                style="@style/Score.Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_darts_2"
+                android:drawablePadding="@dimen/large"
+                android:drawableTint="?attr/nameText"
+                android:gravity="center"
+                android:textSize="28sp"
+                app:botText="@{viewModel.botScore2}"
+                app:layout_constraintBottom_toTopOf="@id/bot_score_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bot_score_1"
+                fab:text="triple 2" />
+
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                android:id="@+id/bot_score_3"
+                style="@style/Score.Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_darts_1"
+                android:drawablePadding="@dimen/large"
+                android:drawableTint="?attr/nameText"
+                android:gravity="center"
+                android:textSize="28sp"
+                app:botText="@{viewModel.botScore3}"
+                app:layout_constraintBottom_toTopOf="@id/bot_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bot_score_2"
+                fab:text="triple 3" />
+
+            <View
+                android:id="@+id/bot_divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?attr/nameText"
+                android:alpha="0.05"
+                android:layout_marginStart="@dimen/xxlarge"
+                android:layout_marginEnd="@dimen/xxlarge"
+                app:layout_constraintBottom_toTopOf="@id/bot_total"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bot_score_3" />
+
+            <nl.entreco.dartsscorecard.base.widget.CounterTextView
+                android:id="@+id/bot_total"
+                style="@style/Score.Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="48sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bot_score_3"
+                app:score="@{viewModel.botScore}"
+                fab:text="triple 100" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+</layout>

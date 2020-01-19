@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="number"
+            type="java.lang.Integer" />
+
+        <variable
+            name="team0"
+            type="nl.entreco.dartsscorecard.play.live.TeamSetStat" />
+
+        <variable
+            name="team1"
+            type="nl.entreco.dartsscorecard.play.live.TeamSetStat" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Set 1 -->
+        <TextView
+            style="@style/Main.Section"
+            android:background="@drawable/stats_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/set_stats(number)}"
+            tools:layout_marginTop="@dimen/large"
+            tools:background="@drawable/stats_section"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team0.avg}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_average" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.avg}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team0.checkOut}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_double_success" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.checkOut}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team0.checkOutPerc}" />
+
+            <TextView
+                style="@style/Main.Stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/live_double_ratio" />
+
+            <TextView
+                style="@style/Main.Value"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="@{team1.checkOutPerc}"
+                app:hideIfOneTeam="@{team1 == null}" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -2,7 +2,6 @@ package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
 import android.content.SharedPreferences
-import androidx.annotation.StyleRes
 import nl.entreco.dartsscorecard.R
 import javax.inject.Inject
 

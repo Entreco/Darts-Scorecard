@@ -1,10 +1,10 @@
 package nl.entreco.dartsscorecard.di.viewmodel
 
-import androidx.lifecycle.Lifecycle
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import com.nhaarman.mockito_kotlin.whenever
-import nl.entreco.data.billing.BillingServiceConnection
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -19,14 +19,15 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ViewModelModuleTest {
 
+    @Mock private lateinit var mockSharedPrefs: SharedPreferences
     @Mock private lateinit var mockLifeCycle: Lifecycle
     @Mock private lateinit var mockContext: Context
-    @Mock private lateinit var mockBillingConnection: BillingServiceConnection
-    @Mock private lateinit var mockActivity: androidx.fragment.app.FragmentActivity
+    @Mock private lateinit var mockActivity: FragmentActivity
     private lateinit var subject: ViewModelModule
 
     @Before
     fun setUp() {
+        whenever(mockActivity.getSharedPreferences("audio", Context.MODE_PRIVATE)).thenReturn(mockSharedPrefs)
         subject = ViewModelModule(mockActivity)
     }
 
@@ -49,13 +50,8 @@ class ViewModelModuleTest {
     }
 
     @Test
-    fun `it should provide service Connection`() {
-        assertNotNull(subject.provideServiceConnection())
-    }
-
-    @Test
-    fun `it should provide BillingRepository`() {
-        assertNotNull(subject.provideBillingRepository(mockContext, mockBillingConnection))
+    fun `it should provide audioPrefs`() {
+        assertNotNull(subject.provideAudioPreferences())
     }
 
 }

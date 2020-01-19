@@ -1,13 +1,13 @@
 package nl.entreco.dartsscorecard.setup
 
 import com.nhaarman.mockito_kotlin.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.launch.ExtractTeamsRequest
 import nl.entreco.domain.launch.ExtractTeamsResponse
 import nl.entreco.domain.launch.ExtractTeamsUsecase
 import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.domain.setup.game.CreateGameUsecase
+import nl.entreco.liblog.Logger
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

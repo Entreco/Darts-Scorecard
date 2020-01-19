@@ -4,8 +4,8 @@ import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.BuildConfig
-import nl.entreco.dartsscorecard.AppLogger
 import nl.entreco.data.analytics.FirebaseAnalytics
+import nl.entreco.liblog.Logger
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -40,7 +40,7 @@ class AppModuleTest {
 
     @Test
     fun provideLogger() {
-        assertTrue(subject.provideLogger() is AppLogger)
+        assertTrue(subject.provideLogger() is Logger)
     }
 
     @Test

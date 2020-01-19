@@ -5,7 +5,9 @@ import android.media.SoundPool
 import nl.entreco.domain.play.mastercaller.Sound
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.SoundRepository
-import java.util.*
+import java.util.ArrayDeque
+import java.util.Deque
+import java.util.HashMap
 
 /**
  * Created by entreco on 14/03/2018.
@@ -16,7 +18,7 @@ class LocalSoundRepository(private val context: Context,
                            private val mapper: SoundMapper) : SoundRepository {
 
     private val priorityNormal = 1
-    internal val queue: Deque<Int> = ArrayDeque<Int>()
+    internal val queue: Deque<Int> = ArrayDeque()
     internal val sounds: HashMap<Sound, Int> = hashMapOf()
     private val ready: HashMap<Sound, Int> = hashMapOf()
 
@@ -29,7 +31,7 @@ class LocalSoundRepository(private val context: Context,
     }
 
     override fun play(sound: Sound) {
-        if(!prefs.isMasterCallerEnabled()) return
+        if (!prefs.isMasterCallerEnabled()) return
 
         if (ready.containsKey(sound)) {
             ready[sound]?.let { soundID ->
@@ -49,9 +51,10 @@ class LocalSoundRepository(private val context: Context,
     }
 
     internal fun storeSound(soundId: Int) {
-        val sound: Sound = sounds.entries.find { it.value == soundId }!!.key
-        ready[sound] = soundId
-        playLastSound()
+        sounds.entries.find { it.value == soundId }?.key?.let { sound ->
+            ready[sound] = soundId
+            playLastSound()
+        }
     }
 
     private fun queueSoundWithId(soundID: Int, sound: Sound) {

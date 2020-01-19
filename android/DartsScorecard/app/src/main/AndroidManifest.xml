@@ -21,8 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Required per Admob v17.0.0 -->
-        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3793327349392749~1846337901"/>
+        <!-- Required for GMS icm targetting 28 (Pie) -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
             android:name=".splash.SplashActivity"
@@ -60,6 +60,9 @@
             android:name=".beta.BetaActivity"
             android:parentActivityName=".launch.LaunchActivity" />
         <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
+        <activity
             android:name=".faq.WtfActivity"
             android:parentActivityName=".launch.LaunchActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -82,6 +85,9 @@
         <activity
             android:name=".profile.edit.EditPlayerNameActivity"
             android:parentActivityName=".profile.view.ProfileActivity" />
+        <activity
+            android:name=".hiscores.HiScoreActivity"
+            android:parentActivityName=".launch.LaunchActivity" />
 
         <service
             android:name=".archive.ArchiveJobService"

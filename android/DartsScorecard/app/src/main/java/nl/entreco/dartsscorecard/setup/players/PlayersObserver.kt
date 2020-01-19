@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Created by Entreco on 31/12/2017.
  */
-class PlayersObserver(private val callback: Callback) : androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
+class PlayersObserver(private val callback: Callback) : RecyclerView.AdapterDataObserver() {
     interface Callback {
         fun onPlayersInserted(positionStart: Int, itemCount: Int)
     }

@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.CreatePlayerResponse
 import nl.entreco.domain.setup.players.CreatePlayerUsecase
+import nl.entreco.domain.setup.players.FetchBotsUsecase
 import nl.entreco.domain.setup.players.FetchExistingPlayersResponse
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
 import org.junit.Assert.assertEquals
@@ -18,14 +19,14 @@ import org.mockito.junit.MockitoJUnitRunner
 /**
  * Created by Entreco on 02/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class EditPlayerViewModelTest {
 
-    @Mock private lateinit var mockCreateUsecase: CreatePlayerUsecase
-    @Mock private lateinit var mockFetchUsecase: FetchExistingPlayersUsecase
-    @Mock private lateinit var mockView: TextView
-    @Mock private lateinit var mockNavigator: EditPlayerNavigator
-    @Mock private lateinit var mockPlayer: Player
+    private val mockBots: FetchBotsUsecase = mock()
+    private val mockCreateUsecase: CreatePlayerUsecase = mock()
+    private val mockFetchUsecase: FetchExistingPlayersUsecase = mock()
+    private val mockView: TextView = mock()
+    private val mockNavigator: EditPlayerNavigator = mock()
+    private val mockPlayer: Player = mock()
     private val doneCaptor = argumentCaptor<(FetchExistingPlayersResponse) -> Unit>()
     private val createDoneCaptor = argumentCaptor<(CreatePlayerResponse) -> Unit>()
     private val failCaptor = argumentCaptor<(Throwable) -> Unit>()
@@ -154,7 +155,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun givenSubject(suggestedName: String) {
-        subject = EditPlayerViewModel(mockCreateUsecase, LongArray(0), suggestedName, mockFetchUsecase)
+        subject = EditPlayerViewModel(mockCreateUsecase, LongArray(0), LongArray(0), suggestedName, mockFetchUsecase, mockBots)
         verify(mockFetchUsecase).exec(doneCaptor.capture(), failCaptor.capture())
     }
 

@@ -44,6 +44,7 @@
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:importantForAccessibility="no"
                 android:padding="@dimen/xsmall"
                 android:text="@string/team" />
         </LinearLayout>
@@ -61,6 +62,7 @@
         <TextView
             android:id="@+id/setup_players_footer"
             style="@style/Setup.Ftr"
+            android:importantForAccessibility="no"
             android:layout_below="@id/setup_players_list" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -69,7 +71,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/large"
-            android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount, viewModel.adapter.entries())}"
+            android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount, viewModel.adapter.players(), viewModel.adapter.bots())}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@color/white"
             android:contentDescription="@string/cd_add_player"

@@ -1,9 +1,9 @@
 package nl.entreco.data.api.beta
 
 import com.google.firebase.firestore.*
-import nl.entreco.shared.log.Logger
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.repository.FeatureRepository
+import nl.entreco.liblog.Logger
 
 /**
  * Created by entreco on 03/02/2018.
@@ -24,7 +24,7 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
 
         p0?.documents?.forEach { doc ->
             convertToFeature(doc)
-        }.also { onChange(ArrayList<Feature>(features.values)) }
+        }.also { onChange(ArrayList(features.values)) }
     }
 
     private fun convertToFeature(doc: DocumentSnapshot) {
@@ -38,7 +38,7 @@ class RemoteFeatureRepository(private val db: FirebaseFirestore, private val log
 
     override fun subscribe(onChange: (List<Feature>) -> Unit): List<Feature> {
         this.onChange = onChange
-        return ArrayList<Feature>(features.values)
+        return ArrayList(features.values)
     }
 
     override fun submitVote(featureId: String, amount: Int) {
