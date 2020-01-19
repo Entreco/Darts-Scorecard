@@ -24,7 +24,12 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         activity.finish()
     }
 
-    override fun onEditPlayer(position: Int, player: PlayerViewModel, otherPlayers: List<Long>, otherBots: List<Long>) {
+    override fun onEditPlayer(
+            position: Int,
+            player: PlayerViewModel,
+            otherPlayers: List<Long>,
+            otherBots: List<Long>
+    ) {
         if (player.isHuman.get()) {
             editPlayerRequest(activity, player.name.get()!!, player.teamIndex.get(), position, otherPlayers, otherBots)
         } else {
@@ -37,7 +42,14 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
         editPlayerRequest(activity, vm.name.get()!!, vm.teamIndex.get(), POSITION_NONE, otherPlayers, otherBots)
     }
 
-    private fun editPlayerRequest(activity: Activity, suggestion: CharSequence, teamIndex: Int, positionInList: Int, otherPlayers: List<Long>, otherBots: List<Long>) {
+    private fun editPlayerRequest(
+            activity: Activity,
+            suggestion: CharSequence,
+            teamIndex: Int,
+            positionInList: Int,
+            otherPlayers: List<Long>,
+            otherBots: List<Long>
+    ) {
         val request = Intent(activity, EditPlayerActivity::class.java)
         request.putExtra(EXTRA_SUGGESTION, suggestion)
         request.putExtra(EXTRA_TEAM_INDEX, teamIndex)

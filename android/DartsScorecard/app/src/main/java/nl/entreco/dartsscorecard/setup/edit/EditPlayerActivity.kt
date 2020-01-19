@@ -1,13 +1,12 @@
 package nl.entreco.dartsscorecard.setup.edit
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerBinding
-import nl.entreco.dartsscorecard.di.setup.EditPlayerComponent
 import nl.entreco.dartsscorecard.di.setup.EditPlayerModule
 import nl.entreco.dartsscorecard.setup.Setup01Navigator
 
@@ -50,7 +49,7 @@ class EditPlayerActivity : ViewModelActivity() {
                 onBackPressed()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else              -> super.onOptionsItemSelected(item)
         }
     }
 

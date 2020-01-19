@@ -40,7 +40,7 @@ class SettingsViewModel @Inject constructor(
         })
     }
 
-    val maxSpeed = 2500
+    val maxSpeed = 5000
     val speed = ObservableInt(botPrefRepository.getBotSpeed()).apply {
         addOnPropertyChangedCallback(object: Observable.OnPropertyChangedCallback(){
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {

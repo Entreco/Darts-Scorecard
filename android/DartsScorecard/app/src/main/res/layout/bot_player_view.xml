@@ -16,7 +16,6 @@
         style="@style/EditPlayer.Bot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_bot"
         android:drawablePadding="@dimen/def"
         android:onClick="@{(view) -> clicker.onSelected(bot)}"
         android:text="@{bot.displayName}" />

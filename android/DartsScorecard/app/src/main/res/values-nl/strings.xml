@@ -196,6 +196,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">Profielen van spelers die zijn verwijderd, kunnen niet worden bekeken</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">Kan match niet ophalen.</string>
     <string name="err_unable_to_revanche">Je kunt je momenteel niet revancheren.</string>
     <string name="err_unable_to_create_player">Speler niet aangemaakt.</string>

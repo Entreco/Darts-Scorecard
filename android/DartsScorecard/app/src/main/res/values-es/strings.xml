@@ -195,6 +195,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">No se puede ver el perfil de los jugadores que se han eliminado.</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">No se puede recuperar la partida.</string>
     <string name="err_unable_to_revanche">No te puedes vengar.</string>
     <string name="err_unable_to_create_player">No se puede crear el jugador.</string>

@@ -195,6 +195,7 @@
 
     <!-- Errors -->
     <string name="err_player_was_deleted">Cannot view profile of Players that have been deleted.</string>
+    <string name="err_profile_with_bot_not_supported">Profile for Teams with a Bot are not available</string>
     <string name="err_unable_to_retrieve_game">Unable to retrieve game.</string>
     <string name="err_unable_to_revanche">Unable to get revenge for ya.</string>
     <string name="err_unable_to_create_player">Unable to create player.</string>

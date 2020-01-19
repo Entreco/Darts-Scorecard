@@ -22,7 +22,7 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
                         .show()
             }
             team.players.any { it is Bot } -> {
-                Snackbar.make(view, "Profile for Teams with a Bot are not available", Snackbar.LENGTH_INDEFINITE)
+                Snackbar.make(view, R.string.err_profile_with_bot_not_supported, Snackbar.LENGTH_INDEFINITE)
                         .setAction(android.R.string.ok) { }
                         .show()
             }
