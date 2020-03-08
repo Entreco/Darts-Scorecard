@@ -59,7 +59,7 @@ ext {
             xCore = '1.0.1',
             xCoreCommon = '2.0.1',
             xCoreRuntime = '2.0.1',
-            material = '1.1.0-alpha02',
+            material = '1.1.0',
             architecture = '1.1.1',
             room = '2.1.0',
             consent = '1.0.7',
