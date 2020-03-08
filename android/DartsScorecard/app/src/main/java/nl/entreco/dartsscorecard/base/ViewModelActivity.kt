@@ -1,11 +1,12 @@
 package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -21,7 +22,7 @@ import nl.entreco.dartsscorecard.faq.WtfActivity
  */
 abstract class ViewModelActivity : AppCompatActivity() {
 
-    private val styler by lazy { Styler(PreferenceManager.getDefaultSharedPreferences(this), this) }
+    private val styler by lazy { Styler( this) }
 
     val Activity.app: App
         get() = application as App
@@ -31,7 +32,7 @@ abstract class ViewModelActivity : AppCompatActivity() {
     inline fun <reified VM : ViewModel> viewModelProvider(
             mode: LazyThreadSafetyMode = LazyThreadSafetyMode.NONE,
             crossinline provider: () -> VM) = lazy(mode) {
-        ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+        ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T1 : ViewModel> create(aClass: Class<T1>) =
                     provider() as T1
         }).get(VM::class.java)
@@ -58,8 +59,8 @@ abstract class ViewModelActivity : AppCompatActivity() {
         styler.switch()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.menu_faq -> {
                 WtfActivity.launch(this)
                 true

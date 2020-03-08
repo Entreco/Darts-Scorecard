@@ -89,8 +89,8 @@ class Play01Activity : ViewModelActivity() {
         return super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.menu_play_settings  -> {
                 swapStyle()
                 viewModel.loading.set(true)

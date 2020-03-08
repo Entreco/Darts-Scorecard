@@ -20,20 +20,10 @@ class CalculateBotScoreUsecaseTest {
     private val subject = CalculateBotScoreUsecase(mockLogger, mockGetFinsihUsecsae, mockBg, mockFg)
 
     @Test
-    fun `should return NONE`() {
-        assertEquals(Dart.NONE, subject.parseTest("60"))
-    }
-
-    @Test
-    fun `should return T20`() {
-        assertEquals(Dart.TRIPLE_20, subject.parseTest("T20"))
-    }
-
-    @Test
     fun `should work with gaussian`() {
         val yes = (0..99).map {
             val target = Dart.random()
-            val result = subject.generateSemiRandomDart(target.desc())
+            val result = subject.generateSemiRandomDart(target.desc(), 3f)
             println("Target: $target\tthrown: $result\t${target == result}")
             target == result
         }.filter { it }.count()
@@ -44,7 +34,7 @@ class CalculateBotScoreUsecaseTest {
     fun `check T20`() {
         val yes = (0..99).map {
             val target = Dart.TRIPLE_20
-            val result = subject.generateSemiRandomDart(target.desc())
+            val result = subject.generateSemiRandomDart(target.desc(), 3f)
             println("Target: $target\tthrown: $result\t${target == result}")
             target == result
         }.filter { it }.count()
@@ -55,7 +45,7 @@ class CalculateBotScoreUsecaseTest {
     fun `check 20`() {
         val yes = (0..99).map {
             val target = Dart.SINGLE_20
-            val result = subject.generateSemiRandomDart(target.desc())
+            val result = subject.generateSemiRandomDart(target.desc(), 3f)
             println("Target: $target\tthrown: $result\t${target == result}")
             target == result
         }.filter { it }.count()

@@ -60,6 +60,7 @@ ext {
             xCoreCommon = '2.0.1',
             xCoreRuntime = '2.0.1',
             xExif = '1.1.0',
+            xPreferences = '1.1.0',
             material = '1.1.0',
             architecture = '1.1.1',
             room = '2.2.4',
