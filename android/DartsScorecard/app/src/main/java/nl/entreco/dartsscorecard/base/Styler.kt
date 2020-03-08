@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import nl.entreco.dartsscorecard.R
 import javax.inject.Inject
@@ -8,11 +9,13 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 21/11/2017.
  */
-class Styler @Inject constructor(private val prefs: SharedPreferences, private val activity: Activity) {
+class Styler @Inject constructor(private val activity: Activity) {
 
     companion object {
         private const val CURRENT_STYLE = "currentStyle"
     }
+
+    private val prefs: SharedPreferences = activity.getSharedPreferences("StylePrefs", Context.MODE_PRIVATE)
 
     enum class Style(val style: String) {
         PDC_2018("Pdc_2018"),

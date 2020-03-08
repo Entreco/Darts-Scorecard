@@ -2,15 +2,11 @@ package nl.entreco.dartsscorecard.di.beta
 
 import android.app.Activity
 import com.nhaarman.mockito_kotlin.mock
-import nl.entreco.dartsscorecard.beta.donate.DonateCallback
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.liblog.Logger
 import org.junit.Assert
 import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by entreco on 07/02/2018.

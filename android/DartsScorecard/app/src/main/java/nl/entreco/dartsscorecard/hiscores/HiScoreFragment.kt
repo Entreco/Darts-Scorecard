@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +28,7 @@ class HiScoreFragment : Fragment() {
     }
 
     private val viewModel by lazy {
-        ViewModelProviders.of(activity!!).get(HiScoreViewModel::class.java)
+        ViewModelProvider(activity!!).get(HiScoreViewModel::class.java)
     }
 
     private val navigator by lazy { HiScoreNavigator(activity!!) }

@@ -36,7 +36,6 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 class Play01ViewModelRevancheTest {
 
-    private val mockCalc: CalculateBotScoreUsecase = mock()
     private val mockPlay01Usecamse: Play01Usecase = mock()
     private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
     private val mockMusicPlayer: MusicPlayer = mock()
@@ -73,7 +72,7 @@ class Play01ViewModelRevancheTest {
     private fun givenFullyLoadedSubject() {
         whenever(mockNext.state).thenReturn(State.START)
         whenever(mockGame.next).thenReturn(mockNext)
-        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalc, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecamse, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(Play01Request(1, "1|2", 501, 1, 1, 1), mockLoadNotifier)
         verify(mockPlay01Usecamse).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.lastValue.invoke(Play01Response(mockGame, mockScoreSettings, arrayOf(team1, team2), "1|2"))

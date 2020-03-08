@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play.bot
 
-import android.renderscript.ScriptIntrinsic3DLUT
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.State
@@ -113,15 +112,15 @@ class CalculateBotScoreUsecase @Inject constructor(
                 logger.i("Target score: ${next.requiredScore}")
                 val multiplier = (next.player as Bot).level
 
-                val (dart1, turn1) = doTurn(next.requiredScore.score, Turn(), multiplier)
+                val (_, turn1) = doTurn(next.requiredScore.score, Turn(), multiplier)
                 val turn = if (turn1.total() >= next.requiredScore.score) {
                     turn1
                 } else {
-                    val (dart2, turn2) = doTurn(next.requiredScore.score, turn1, multiplier)
+                    val (_, turn2) = doTurn(next.requiredScore.score, turn1, multiplier)
                     if (turn2.total() >= next.requiredScore.score) {
                         turn2
                     } else {
-                        val (dart3, turn3) = doTurn(next.requiredScore.score, turn2, multiplier)
+                        val (_, turn3) = doTurn(next.requiredScore.score, turn2, multiplier)
                         turn3
                     }
                 }

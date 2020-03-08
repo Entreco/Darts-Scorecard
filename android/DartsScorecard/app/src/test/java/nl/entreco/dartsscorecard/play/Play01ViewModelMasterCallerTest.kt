@@ -31,7 +31,6 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 class Play01ViewModelMasterCallerTest {
 
-    private val mockCalc: CalculateBotScoreUsecase = mock()
     private val mockMenu: Menu = mock()
     private val mockMenuItem: MenuItem = mock()
     private val mockPlayGameUsecase: Play01Usecase = mock()
@@ -97,7 +96,7 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalc, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 

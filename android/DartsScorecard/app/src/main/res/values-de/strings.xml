@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Darts Scorecard</string>
 
     <!-- General Darts -->
     <string name="first_to">Erster bei %1$s</string>

@@ -34,7 +34,6 @@ import org.mockito.junit.MockitoJUnitRunner
  */
 class Play01ViewModelUndoTest {
 
-    private val mockCalculateBotUsecase: CalculateBotScoreUsecase = mock()
     private val mockNext: Next = mock()
     private val mockGame: Game = mock()
     private val mockTeam: Team = mock()
@@ -94,7 +93,7 @@ class Play01ViewModelUndoTest {
         whenever(mockResponse.teamIds).thenReturn("")
         whenever(mockResponse.settings).thenReturn(mockSettings)
 
-        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockCalculateBotUsecase, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlay01Usecase, mockRevancheUsecase, mockGameListeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
         subject.load(mockRequest, mockLoad, mockLoaders)
         verify(mockPlay01Usecase).loadGameAndStart(eq(mockRequest), load.capture(), any())
         load.lastValue.invoke(mockResponse)

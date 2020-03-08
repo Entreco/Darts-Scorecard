@@ -32,8 +32,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room"
     implementation "com.android.billingclient:billing:$playBilling"
 
-    implementation "androidx.appcompat:appcompat:$xSupport"
-    implementation "androidx.exifinterface:exifinterface:1.0.0"
+    implementation "androidx.exifinterface:exifinterface:$xExif"
     implementation "androidx.lifecycle:lifecycle-livedata:$livedata"
     implementation "com.google.code.gson:gson:$gson"
 

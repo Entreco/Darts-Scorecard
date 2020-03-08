@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
-    <string name="app_name" translatable="false">Darts Scorecard</string>
-
     <!-- General Darts -->
     <string name="first_to">Primero a %1$s</string>
     <string name="single_mode">individual</string>

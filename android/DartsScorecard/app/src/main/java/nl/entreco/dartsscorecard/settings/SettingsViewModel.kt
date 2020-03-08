@@ -4,9 +4,7 @@ import android.widget.SeekBar
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableFloat
 import androidx.databinding.ObservableInt
-import androidx.databinding.ObservableLong
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import nl.entreco.dartsscorecard.base.BaseViewModel
@@ -49,7 +47,7 @@ class SettingsViewModel @Inject constructor(
         })
     }
 
-    val speedValue = ObservableField<String>("%.1f".format(speed.get() / 1000.0))
+    val speedValue = ObservableField("%.1f".format(speed.get() / 1000.0))
 
     private fun updateSpeed(sender: Observable?) {
         botPrefRepository.setBotSpeed((sender as ObservableInt).get())
@@ -71,7 +69,7 @@ class SettingsViewModel @Inject constructor(
     fun swapStyle() {
         style.postValue(true)
     }
-    fun stopStyler() = if(style.value == true) style.postValue(false) else {}
+    fun stopStyler() { if(style.value == true) style.postValue(false) }
 
     private val ask = MutableLiveData<Boolean>()
     fun ask(): LiveData<Boolean> = ask.toSingleEvent()

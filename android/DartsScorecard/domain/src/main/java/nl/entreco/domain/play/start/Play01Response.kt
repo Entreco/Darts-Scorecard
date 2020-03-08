@@ -3,7 +3,6 @@ package nl.entreco.domain.play.start
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.settings.ScoreSettings
-import java.util.*
 
 /**
  * Created by entreco on 06/01/2018.
@@ -17,7 +16,7 @@ data class Play01Response(val game: Game, val settings: ScoreSettings, val teams
 
         if (game != other.game) return false
         if (settings != other.settings) return false
-        if (!Arrays.equals(teams, other.teams)) return false
+        if (!teams.contentEquals(other.teams)) return false
         if (teamIds != other.teamIds) return false
 
         return true
@@ -26,7 +25,7 @@ data class Play01Response(val game: Game, val settings: ScoreSettings, val teams
     override fun hashCode(): Int {
         var result = game.hashCode()
         result = 31 * result + settings.hashCode()
-        result = 31 * result + Arrays.hashCode(teams)
+        result = 31 * result + teams.contentHashCode()
         result = 31 * result + teamIds.hashCode()
         return result
     }

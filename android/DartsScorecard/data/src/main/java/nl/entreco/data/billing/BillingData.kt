@@ -1,8 +1,7 @@
 package nl.entreco.data.billing
 
 import android.os.Bundle
-import nl.entreco.domain.beta.Donation
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Created by entreco on 08/02/2018.

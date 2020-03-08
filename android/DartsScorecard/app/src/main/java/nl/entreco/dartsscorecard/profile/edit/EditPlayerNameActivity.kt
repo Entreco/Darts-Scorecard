@@ -54,8 +54,8 @@ class EditPlayerNameActivity : ViewModelActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> navigator.onCancel()
             R.id.menu_edit_done -> viewModel.onDone(navigator)
             else -> super.onOptionsItemSelected(item)

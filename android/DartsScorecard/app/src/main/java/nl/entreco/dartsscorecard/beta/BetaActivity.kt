@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -35,18 +34,18 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
 
             Log.i("IAB", "BetaActivity: $response")
 
-            when(response){
-                is MakePurchaseResponse.Updated -> donateViewModel.onUpdate(response.purchases)
-                is MakePurchaseResponse.Purchased -> {
+            when (response) {
+                is MakePurchaseResponse.Updated     -> donateViewModel.onUpdate(response.purchases)
+                is MakePurchaseResponse.Purchased   -> {
                     donateViewModel.onDonated(response.donation, response.orderId)
-                    votesViewModel.submitDonation(response.donation){
+                    votesViewModel.submitDonation(response.donation) {
                         showTankYouToast()
                     }
                 }
-                is MakePurchaseResponse.Donations -> donateViewModel.showDonations(response.donations)
+                is MakePurchaseResponse.Donations   -> donateViewModel.showDonations(response.donations)
                 is MakePurchaseResponse.Unavailable -> donateViewModel.showDonations(emptyList())
-                is MakePurchaseResponse.Cancelled -> donateViewModel.onCancelled("User Cancelled")
-                is MakePurchaseResponse.Unknown -> donateViewModel.onCancelled("Unknown error: $response")
+                is MakePurchaseResponse.Cancelled   -> donateViewModel.onCancelled("User Cancelled")
+                is MakePurchaseResponse.Unknown     -> donateViewModel.onCancelled("Unknown error: $response")
             }
         })
     }
@@ -73,7 +72,7 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
 
         billingService.start()
         donateViewModel.events().observe(this, Observer { event ->
-            when(event){
+            when (event) {
                 is DonationEvent.Purchase -> billingService.purchase(event.donation.sku)
             }
         })
@@ -122,8 +121,8 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
         recyclerView.adapter = adapter
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 return true

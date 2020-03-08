@@ -30,7 +30,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
     init {
         appBar.addOnOffsetChangedListener(
                 AppBarLayout.OnOffsetChangedListener { appBarLayout, slideOffset -> animator.onOffsetChanged(appBarLayout, slideOffset) })
-        behaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        behaviour.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 animator.onSlide(slideOffset)
             }

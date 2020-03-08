@@ -1,12 +1,10 @@
 package nl.entreco.data.db.bot
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import nl.entreco.data.db.player.PlayerTable
 
 @Dao
 interface BotDao {

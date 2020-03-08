@@ -56,7 +56,7 @@ class VoteViewModel @Inject constructor(private val submitVoteUsecase: SubmitVot
     }
 
     fun submitVote(amount: Int) {
-        submitVote(amount, {})
+        submitVote(amount) {}
     }
 
     fun submitVote(amount: Int, done:()->Unit) {
