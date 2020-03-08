@@ -1,12 +1,9 @@
 package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar

@@ -26,10 +26,4 @@ class MusicPlayer @Inject constructor(private val logger: Logger,
     fun stop() {
         onBackground({ musicRepository.stop() }, {})
     }
-
-    private fun onEnqueueFailed(): (Throwable) -> Unit {
-        return {
-            logger.e("Error playing bacgkound music")
-        }
-    }
 }

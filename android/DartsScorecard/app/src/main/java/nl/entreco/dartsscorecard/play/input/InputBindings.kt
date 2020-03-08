@@ -1,10 +1,9 @@
 package nl.entreco.dartsscorecard.play.input
 
-import androidx.databinding.BindingAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
@@ -14,8 +13,6 @@ import nl.entreco.domain.play.listeners.events.ThrownEvent
 /**
  * Created by Entreco on 02/12/2017.
  */
-
-
 object InputBindings {
 
     private const val defaultAnimationDuration: Long = 150
@@ -81,8 +78,8 @@ object InputBindings {
         if (event != null) {
             when (event) {
                 is NoScoreEvent -> handleNoScore(view)
-                is ThrownEvent -> handleThrown(view, event.describe)
-                is BustEvent -> handleBust(view)
+                is ThrownEvent  -> handleThrown(view, event.describe)
+                is BustEvent    -> handleBust(view)
             }
         }
     }

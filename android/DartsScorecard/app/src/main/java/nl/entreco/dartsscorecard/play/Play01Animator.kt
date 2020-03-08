@@ -15,8 +15,6 @@ import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.play.live.LiveStatSlideAnimator
 import kotlin.math.max
 import kotlin.math.sqrt
-import android.R.attr.orientation
-import android.content.res.Configuration
 
 
 /**
@@ -43,7 +41,7 @@ class Play01Animator(binding: ActivityPlay01Binding) {
             }
         })
 
-        behaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        behaviour.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 animator.onSlide(slideOffset)
             }

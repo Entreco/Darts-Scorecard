@@ -13,8 +13,6 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
-import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView

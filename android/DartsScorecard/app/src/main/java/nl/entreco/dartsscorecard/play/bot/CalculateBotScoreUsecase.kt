@@ -1,6 +1,5 @@
 package nl.entreco.dartsscorecard.play.bot
 
-import android.renderscript.ScriptIntrinsic3DLUT
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.State
@@ -135,7 +134,8 @@ class CalculateBotScoreUsecase @Inject constructor(
     private fun doTurn(required: Int, start: Turn, multiplier: Float): Pair<Dart, Turn> {
         val finish = finishUsecase.calculateInBack(required, start.dartsLeft(), start.total(), 0)
         logger.i("Target finish: $finish")
-        val target = finish.split(" ").firstOrNull { it.isNotBlank() } ?: "T20" // TODO entreco - 2020-01-17: Estimate remainder
+        val target = finish.split(" ").firstOrNull { it.isNotBlank() }
+                ?: "T20" // TODO entreco - 2020-01-17: Estimate remainder
         logger.i("Target target: $target")
         val dart = generateSemiRandomDart(target, multiplier)
         logger.i("Target dart: $dart")

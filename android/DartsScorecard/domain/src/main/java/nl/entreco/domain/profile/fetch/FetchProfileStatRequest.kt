@@ -1,7 +1,5 @@
 package nl.entreco.domain.profile.fetch
 
-import java.util.*
-
 
 data class FetchProfileStatRequest(val playerIds: LongArray) {
     override fun equals(other: Any?): Boolean {
@@ -10,12 +8,12 @@ data class FetchProfileStatRequest(val playerIds: LongArray) {
 
         other as FetchProfileStatRequest
 
-        if (!Arrays.equals(playerIds, other.playerIds)) return false
+        if (!playerIds.contentEquals(other.playerIds)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return Arrays.hashCode(playerIds)
+        return playerIds.contentHashCode()
     }
 }
