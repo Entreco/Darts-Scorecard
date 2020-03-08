@@ -14,7 +14,6 @@ dependencies {
 
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "com.google.code.gson:gson:$gson"
     implementation "com.github.bumptech.glide:glide:$glide"
 

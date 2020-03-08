@@ -53,7 +53,6 @@ dependencies {
     // Implementation
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.android.material:material:$material"
-    implementation "androidx.appcompat:appcompat:$xSupport"
     implementation "androidx.constraintlayout:constraintlayout:$xConstraint"
     implementation "com.google.firebase:firebase-core:$fbCore"
     implementation "com.google.firebase:firebase-firestore:$fbStore"
@@ -67,11 +66,9 @@ dependencies {
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.core:core-ktx:$xCore"
 
-    implementation("com.crashlytics.sdk.android:crashlytics:$crash") {
-        transitive = true
-    }
+    implementation "com.crashlytics.sdk.android:crashlytics:$crash"
 
     // Leaks
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"
