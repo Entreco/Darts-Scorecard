@@ -39,7 +39,7 @@ ext {
     detektVersion = '1.0.0.RC7'
     jacocoCoverageVersion = '0.4.0'
     coverallsVersion = '2.8.2'
-    fabricVersion = '1.31.2'
+    firebaseCrashesVersion = '2.1.1'
 
     androidCompileSdkVersion = 29
     androidMinSdkVersion = 24
@@ -59,7 +59,7 @@ ext {
             xCore = '1.2.0',
             xCoreCommon = '2.0.1',
             xCoreRuntime = '2.0.1',
-            xExif = '1.1.0',
+            xExif = '1.2.0',
             xPreferences = '1.1.0',
             material = '1.1.0',
             architecture = '1.1.1',
@@ -69,6 +69,8 @@ ext {
             livedata = '2.2.0',
             fbAds = '19.0.0',
             fbCore = '17.2.3',
+            fbCrash = '17.0.1',
+            fbAnalytics = '17.4.3',
             fbStore = '21.4.1',
             fbConfig = '19.1.2',
             fbDatabase = '19.2.1',
@@ -76,9 +78,8 @@ ext {
             circleImageView = '3.0.1',
             jelly = 'v1.0',
             lottieVersion = '3.0.0',
-            crash = '2.10.1',
-            gson = '2.8.4',
-            leakCanary = '2.2',
+            gson = '2.8.6',
+            leakCanary = '2.3',
             junit = '4.12',
             mockito = '2.12.0',
             mockitoKotlin = '1.5.0',

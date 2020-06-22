@@ -2,7 +2,6 @@ package nl.entreco.data.analytics
 
 import android.content.Context
 import android.os.Bundle
-import com.google.firebase.analytics.FirebaseAnalytics
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.Feature
@@ -12,9 +11,9 @@ import nl.entreco.domain.wtf.WtfItem
 /**
  * Created by Entreco on 15/11/2017.
  */
-class FirebaseAnalytics(context: Context) : Analytics {
+class FirebaseAnalytics() : Analytics {
 
-    private val fb by lazy { FirebaseAnalytics.getInstance(context) }
+    private val fb by lazy { FirebaseCrashlytics.getInstance() }
 
     override fun trackScore(scored: String, total: Int) {
         fb.logEvent("scored", trackScoreBundle(scored, total))

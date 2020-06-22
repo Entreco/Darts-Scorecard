@@ -31,6 +31,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "androidx.room:room-runtime:$room"
     implementation "com.android.billingclient:billing:$playBilling"
+    implementation "com.google.firebase:firebase-crashlytics:$fbCrash"
+    implementation "com.google.firebase:firebase-analytics:$fbAnalytics"
 
     implementation "androidx.exifinterface:exifinterface:$xExif"
     implementation "androidx.lifecycle:lifecycle-livedata:$livedata"
