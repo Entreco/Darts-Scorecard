@@ -24,14 +24,10 @@ class HiScoreAdapter(private val navigator: HiScoreNavigator): ListAdapter<HiSco
 
 class HiScoreDif : DiffUtil.ItemCallback<HiScoreItemModel>() {
     override fun areItemsTheSame(oldItem: HiScoreItemModel,
-                                 newItem: HiScoreItemModel): Boolean {
-        return oldItem == newItem
-    }
+                                 newItem: HiScoreItemModel) = oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: HiScoreItemModel,
-                                    newItem: HiScoreItemModel): Boolean {
-        return oldItem == newItem
-    }
+                                    newItem: HiScoreItemModel) = oldItem == newItem
 }
 
 class HiScoreViewHolder(private val binding: HiscoreListItemBinding) :

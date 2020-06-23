@@ -28,10 +28,10 @@ class HiScoreFragment : Fragment() {
     }
 
     private val viewModel by lazy {
-        ViewModelProvider(activity!!).get(HiScoreViewModel::class.java)
+        ViewModelProvider(requireActivity()).get(HiScoreViewModel::class.java)
     }
 
-    private val navigator by lazy { HiScoreNavigator(activity!!) }
+    private val navigator by lazy { HiScoreNavigator(requireActivity()) }
     private val adapter by lazy { HiScoreAdapter(navigator) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +45,7 @@ class HiScoreFragment : Fragment() {
 
     private fun handlePagerPosition() {
         val position = arguments?.getInt(EXTRA_POS) ?: 0
-        viewModel.dataAtPosition(position).observe(this, Observer {
+        viewModel.dataAtPosition(position).observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }

@@ -69,9 +69,11 @@ class HiScoreViewModel @Inject constructor(
     }
 
     private val liveDatas = mutableMapOf<Int, MutableLiveData<List<HiScoreItemModel>>>()
+
     fun dataAtPosition(position: Int): LiveData<List<HiScoreItemModel>> {
         val liveData = liveDatas.getOrDefault(position, MutableLiveData())
-        val items = hiscores.value?.map { it to it.hiScore[position] }?.toMap() ?: throw IllegalStateException("No data at position $position")
+        val items = hiscores.value?.map { it to it.hiScore[position] }?.toMap() ?: emptyMap()
+
         // Sort in the background
         sortHiScoresUsecase.go(SortHiScoresRequest(items), { scores ->
             val mapped = scores.map { HiScoreItemModel(it.id, it.name, it.display, it.pos) }
