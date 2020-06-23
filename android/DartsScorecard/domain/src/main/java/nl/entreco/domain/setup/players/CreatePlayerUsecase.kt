@@ -6,6 +6,7 @@ import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.repository.PlayerRepository
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -25,7 +26,7 @@ class CreatePlayerUsecase @Inject constructor(private var playerRepository: Play
     }
 
     private fun getValidLowerCaseName(name: String): String {
-        val lowerCase = name.toLowerCase()
+        val lowerCase = name.toLowerCase(Locale.getDefault())
         if(lowerCase.isBlank()) throw InvalidPlayerNameException("$name is invalid")
         return lowerCase
     }

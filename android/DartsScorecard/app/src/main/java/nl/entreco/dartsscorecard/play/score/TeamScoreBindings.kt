@@ -35,8 +35,8 @@ object TeamScoreBindings {
     @BindingAdapter("botText")
     fun showBotText(view: CounterTextView, score: String) {
         view.visibility = if(score.isNotBlank()) View.VISIBLE else View.INVISIBLE
-        if(score.isNotBlank()) view.setText(score)
-        else view.setText("")
+        if(score.isNotBlank()) view.text = score
+        else view.text = ""
     }
 
     @JvmStatic
@@ -55,7 +55,7 @@ object TeamScoreBindings {
     }
 
     @JvmStatic
-    @BindingAdapter("special")
+    @BindingAdapter("specialScore")
     fun showSpecials(view: TextView, oldScore: Int, score: Int) {
         when (oldScore - score) {
             180 -> handle180(view)

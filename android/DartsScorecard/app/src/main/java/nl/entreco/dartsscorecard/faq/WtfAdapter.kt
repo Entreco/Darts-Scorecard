@@ -47,7 +47,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
 
     override fun search(text: CharSequence) {
         if (text.isNotEmpty() && text.length >= 3) {
-            searchText = text.toString().toLowerCase()
+            searchText = text.toString().toLowerCase(Locale.getDefault())
             onChanged(allItems.values.toList())
         } else {
             clearSearch()
@@ -101,13 +101,13 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
 
     private fun doFilter(item: WtfItem, searchText: String): Boolean {
         if(searchText.isBlank()) return true
-        return item.title.toLowerCase().contains(searchText) || item.description.toLowerCase().contains(searchText)
+        return item.title.toLowerCase(Locale.getDefault()).contains(searchText) || item.description.toLowerCase(Locale.getDefault()).contains(searchText)
     }
 
     private fun score(item: WtfItem, searchText: String): Int {
         if(searchText.isBlank()) return 0
-        return if(item.title.toLowerCase().contains(searchText)) 10 else 0 +
-                if(item.description.toLowerCase().contains(searchText)) 5 else 0
+        return if(item.title.toLowerCase(Locale.getDefault()).contains(searchText)) 10 else 0 +
+                if(item.description.toLowerCase(Locale.getDefault()).contains(searchText)) 5 else 0
     }
 
     private fun updateItems(features: List<WtfItem>, diff: DiffUtil.DiffResult) {
