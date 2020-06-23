@@ -2,11 +2,9 @@ package nl.entreco.dartsscorecard.di.play
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.SoundPool
-import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
-import nl.entreco.data.sound.SoundMapper
-import nl.entreco.domain.repository.AudioPrefRepository
+import nl.entreco.dartsscorecard.sounds.SoundMapper
+import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -21,8 +19,8 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ModuleTest {
 
     @Mock private lateinit var mockSharedPrefs: SharedPreferences
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockMapper: SoundMapper
+    @Mock private lateinit var mockAudioPrefs: nl.entreco.dartsscorecard.sounds.AudioPrefRepository
+    @Mock private lateinit var mockMapper: nl.entreco.dartsscorecard.sounds.SoundMapper
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockActivity: Play01Activity
 

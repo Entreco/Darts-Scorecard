@@ -2,23 +2,17 @@ package nl.entreco.dartsscorecard.di.play
 
 import android.content.ComponentName
 import android.content.Context
-import android.media.MediaPlayer
-import android.media.SoundPool
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides
-import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.archive.ArchiveJobService
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.description.RemoteMatchDescriptionRepository
-import nl.entreco.data.sound.LocalMusicRepository
-import nl.entreco.data.sound.LocalSoundRepository
-import nl.entreco.data.sound.SoundMapper
-import nl.entreco.domain.repository.AudioPrefRepository
+import nl.entreco.domain.mastercaller.MusicRepository
+import nl.entreco.domain.mastercaller.Sound
+import nl.entreco.domain.mastercaller.SoundRepository
 import nl.entreco.domain.repository.MatchDescriptionRepository
-import nl.entreco.domain.repository.MusicRepository
-import nl.entreco.domain.repository.SoundRepository
 import nl.entreco.shared.scopes.ActivityScope
 import nl.entreco.shared.scopes.ApplicationScope
 
@@ -36,23 +30,24 @@ class Play01Module(private val activity: Play01Activity) {
 
     @Provides
     @Play01Scope
-    fun provideSoundMapper(): SoundMapper {
-        return SoundMapper()
+    fun provideSoundRepository(): SoundRepository {
+        // TODO Provide original Repo if Dynamic Feature sounds is installed
+        return object : SoundRepository {
+            override fun play(sound: Sound) {}
+            override fun release() {}
+        }
     }
 
     @Provides
     @Play01Scope
-    fun provideSoundRepository(@ActivityScope context: Context, @Play01Scope mapper: SoundMapper, @Play01Scope prefs: AudioPrefRepository): SoundRepository {
-        val soundPool = SoundPool.Builder().setMaxStreams(2).build()
-        return LocalSoundRepository(context, soundPool, prefs, mapper)
-    }
-
-    @Provides
-    @Play01Scope
-    fun provideMusicRepository(@ActivityScope context: Context): MusicRepository {
-        val mediaPlayer = MediaPlayer.create(context, R.raw.pdc_tune)
-        mediaPlayer.isLooping = true
-        return LocalMusicRepository(mediaPlayer)
+    fun provideMusicRepository(): MusicRepository {
+        // TODO Provide original Repo if Dynamic Feature sounds is installed
+        return object : MusicRepository {
+            override fun play() {}
+            override fun pause() {}
+            override fun resume() {}
+            override fun stop() {}
+        }
     }
 
     @Provides

@@ -20,7 +20,7 @@ android {
             applicationIdSuffix ".dev"
         }
         release {
-            shrinkResources true
+            shrinkResources false // Resource shrinker cannot be used for multi-apk applications
         }
     }
 
@@ -28,6 +28,8 @@ android {
         jniLibs.srcDir 'libs'
         jni.srcDirs = [] //disable automatic ndk-build call
     }
+
+    dynamicFeatures = [':sounds']
 }
 
 dependencies {

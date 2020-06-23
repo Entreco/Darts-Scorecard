@@ -1,8 +1,7 @@
-package nl.entreco.data.sound
+package nl.entreco.dartsscorecard.sounds
 
 import androidx.annotation.RawRes
-import nl.entreco.data.R
-import nl.entreco.domain.play.mastercaller.*
+import nl.entreco.domain.mastercaller.*
 
 /**
  * Created by entreco on 14/03/2018.

@@ -7,29 +7,25 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
-import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.State
 import nl.entreco.domain.model.players.Team
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MusicPlayer
-import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.dartsscorecard.sounds.mastercaller.MasterCaller
+import nl.entreco.dartsscorecard.sounds.mastercaller.MusicPlayer
+import nl.entreco.dartsscorecard.sounds.mastercaller.ToggleMusicUsecase
+import nl.entreco.dartsscorecard.sounds.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.rating.AskForRatingUsecase
-import nl.entreco.domain.repository.AudioPrefRepository
+import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.liblog.Logger
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by entreco on 19/02/2018.
@@ -40,7 +36,7 @@ class Play01ViewModelRevancheTest {
     private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
     private val mockMusicPlayer: MusicPlayer = mock()
     private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
-    private val mockAudioPrefs: AudioPrefRepository = mock()
+    private val mockAudioPrefs: nl.entreco.dartsscorecard.sounds.AudioPrefRepository = mock()
     private val mockAdProvider: AdViewModel = mock()
     private val mockRevancheUsecase: RevancheUsecase = mock()
     private val mockGameListeners: Play01Listeners = mock()
