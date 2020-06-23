@@ -21,7 +21,7 @@ buildscript {
 apply from: 'scripts/dependencies.gradle'
 apply from: 'scripts/tasks.gradle'
 apply from: 'scripts/detekt.gradle'
-apply from: 'scripts/coveralls.gradle'
+//apply from: 'scripts/coveralls.gradle'
 
 allprojects {
     repositories {

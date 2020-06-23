@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply from: '../scripts/coverage_library.gradle'
+//apply from: '../scripts/coverage_library.gradle'
 apply from: '../scripts/android_common.gradle'
 
 android {

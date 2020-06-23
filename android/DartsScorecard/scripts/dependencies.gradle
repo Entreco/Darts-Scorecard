@@ -21,7 +21,7 @@ ext.gitCommit = { ->
 }
 
 ext.branchName = { ->
-    return "Ian"
+    return "Joyce"
 }
 
 ext.versionCode = { ->
@@ -33,8 +33,8 @@ ext.versionName = { ->
 }
 
 ext {
-    kotlinVersion = '1.3.70'
-    gradleVersion = '3.6.1'
+    kotlinVersion = '1.3.72'
+    gradleVersion = '4.0.0'
     gmsVersion = '4.3.3'
     detektVersion = '1.0.0.RC7'
     jacocoCoverageVersion = '0.4.0'
@@ -44,44 +44,42 @@ ext {
     androidCompileSdkVersion = 29
     androidMinSdkVersion = 24
     androidTargetSdkVersion = 29
-
-    buildToolsVersion = '29.0.3'
-
+    
     versionCode = versionCode()
     versionName = versionName()
 
     dependencies = [
-            daggerVersion = '2.26',
+            daggerVersion = '2.28',
             xConstraint = '2.0.0-beta4',
             xAnnotation = '1.1.0',
             playBilling = '2.1.0',
             xAppCompat = '1.1.0',
-            xCore = '1.2.0',
+            xCore = '1.3.0',
             xCoreCommon = '2.0.1',
             xCoreRuntime = '2.0.1',
             xExif = '1.2.0',
-            xPreferences = '1.1.0',
+            xPreferences = '1.1.1',
             material = '1.1.0',
             architecture = '1.1.1',
-            room = '2.2.4',
+            room = '2.2.5',
             consent = '1.0.8',
             lifecycle = '2.2.0',
             livedata = '2.2.0',
-            fbAds = '19.0.0',
-            fbCore = '17.2.3',
-            fbCrash = '17.0.1',
+            fbAds = '19.2.0',
+            fbCore = '17.4.3',
+            fbCrash = '17.1.0',
             fbAnalytics = '17.4.3',
-            fbStore = '21.4.1',
-            fbConfig = '19.1.2',
-            fbDatabase = '19.2.1',
+            fbStore = '21.4.3',
+            fbConfig = '19.1.4',
+            fbDatabase = '19.3.1',
             glide = '4.11.0',
             circleImageView = '3.0.1',
             jelly = 'v1.0',
-            lottieVersion = '3.0.0',
+            lottieVersion = '3.4.0',
             gson = '2.8.6',
             leakCanary = '2.3',
-            junit = '4.12',
-            mockito = '2.12.0',
+            junit = '4.13',
+            mockito = '3.3.3',
             mockitoKotlin = '1.5.0',
             xCoreTesting = '1.2.0',
             espressoCore = '3.1.1',
