@@ -52,8 +52,6 @@ before_install:
 - ./gradlew dependencies || true
 script:
 - ./gradlew clean :app:bundle -PdisablePreDex --stacktrace
-after_success:
-- ./gradlew jacocoFullReport coveralls
 before_deploy:
 - APP_NAME=$(./gradlew -q showBundleName | tail -n 1) 
 - cp $TRAVIS_BUILD_DIR/android/DartsScorecard/scripts/dsc_keystore $HOME

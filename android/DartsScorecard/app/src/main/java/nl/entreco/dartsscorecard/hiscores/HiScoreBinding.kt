@@ -9,7 +9,7 @@ object HiScoreBinding {
     @JvmStatic
     @BindingAdapter("medal")
     fun showMedalForPosition(view: ImageView, position: Int) {
-        val (width, medal) = when (position) {
+        val (_, medal) = when (position) {
             1 -> Pair(2, R.drawable.medal_1)
             2 -> Pair(2, R.drawable.medal_2)
             3 -> Pair(2, R.drawable.medal_3)

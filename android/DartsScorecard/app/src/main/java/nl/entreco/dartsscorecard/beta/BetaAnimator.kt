@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.beta
 
+import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import android.view.View
 import kotlinx.android.synthetic.main.include_beta_detail.view.voteFab
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
 import kotlin.math.abs
@@ -64,7 +64,12 @@ class BetaAnimator(binding: ActivityBetaBinding) {
         return null
     }
 
-    internal class BetaAnimatorHandler(private val appBar: AppBarLayout, private val toolbar: View, private val sheet: View, private val fab: View) {
+    internal class BetaAnimatorHandler(
+            private val appBar: AppBarLayout,
+            private val toolbar: View,
+            private val sheet: View,
+            private val fab: View
+    ) {
 
         private val fraction: Float = 0.85F
         private val rotationFactor: Int = 5
@@ -84,9 +89,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
         fun onStateChanged(newState: Int) {
             when (newState) {
-                BottomSheetBehavior.STATE_COLLAPSED -> {
-                    appBar.isEnabled = true
-                }
+                BottomSheetBehavior.STATE_COLLAPSED -> appBar.isEnabled = true
             }
         }
     }

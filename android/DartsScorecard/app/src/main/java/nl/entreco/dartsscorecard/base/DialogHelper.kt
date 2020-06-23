@@ -16,7 +16,9 @@ import javax.inject.Inject
  * Created by entreco on 20/02/2018.
  */
 class DialogHelper @Inject constructor(
-        private val builder: AlertDialog.Builder, @ActivityScope private val ratingPrefRepository: RatingPrefRepository) {
+        private val builder: AlertDialog.Builder,
+        @ActivityScope private val ratingPrefRepository: RatingPrefRepository
+) {
 
     fun revanche(previousIndex: Int, teams: Array<Team>, select: (Int) -> Unit) {
 

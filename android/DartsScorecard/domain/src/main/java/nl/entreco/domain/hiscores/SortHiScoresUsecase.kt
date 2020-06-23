@@ -10,7 +10,8 @@ class SortHiScoresUsecase @Inject constructor(
 ) :
         BaseUsecase(bg, fg) {
 
-    fun go(request: SortHiScoresRequest, done: (List<SortHiScoresResponse>) -> Unit,
+    fun go(request: SortHiScoresRequest,
+           done: (List<SortHiScoresResponse>) -> Unit,
            fail: (Throwable) -> Unit) {
         onBackground({
             val sorted = sortByHiScore(request.items)

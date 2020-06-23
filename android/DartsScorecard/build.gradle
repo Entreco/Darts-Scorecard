@@ -4,32 +4,28 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
-        maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.gms:google-services:$gmsVersion"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
-        classpath "com.palantir:jacoco-coverage:$jacocoCoverageVersion"
-        classpath "io.fabric.tools:gradle:$fabricVersion"
-        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:$coverallsVersion"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$firebaseCrashesVersion"
     }
 }
 
 apply from: 'scripts/dependencies.gradle'
 apply from: 'scripts/tasks.gradle'
 apply from: 'scripts/detekt.gradle'
-apply from: 'scripts/coveralls.gradle'
 
 allprojects {
     repositories {
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
         maven { url "https://dl.bintray.com/netguru/maven/" }
+        jcenter()
     }
 }
 

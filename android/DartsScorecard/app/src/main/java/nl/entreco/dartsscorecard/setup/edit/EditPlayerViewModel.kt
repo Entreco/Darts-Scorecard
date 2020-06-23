@@ -10,6 +10,7 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -74,7 +75,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameStartsWith(text: CharSequence): List<Player> {
-        val keep = allPlayers.filter { it.name.toLowerCase().startsWith(text.toString().toLowerCase()) && !otherPlayers.contains(it.id) }
+        val keep = allPlayers.filter { it.name.toLowerCase(Locale.getDefault()).startsWith(text.toString().toLowerCase(Locale.getDefault())) && !otherPlayers.contains(it.id) }
         keep.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(0, it)
@@ -87,7 +88,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameContains(text: CharSequence): List<Player> {
-        val typos = allPlayers.filter { it.name.toLowerCase().contains(text.toString().toLowerCase()) && !otherPlayers.contains(it.id) }
+        val typos = allPlayers.filter { it.name.toLowerCase(Locale.getDefault()).contains(text.toString().toLowerCase(Locale.getDefault())) && !otherPlayers.contains(it.id) }
         typos.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(it)
@@ -107,9 +108,9 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNavigator): Boolean {
         if (donePressed(action)) {
-            val desiredName = view.text.toString().toLowerCase()
+            val desiredName = view.text.toString().toLowerCase(Locale.getDefault())
             val existing = allPlayers.findLast {
-                it.name.toLowerCase() == desiredName
+                it.name.toLowerCase(Locale.getDefault()) == desiredName
             }
 
             when {
@@ -124,7 +125,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         return false
     }
 
-    private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase()
+    private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase(Locale.getDefault())
     private fun isNewPlayer(existing: Player?) = existing == null
     private fun donePressed(action: Int) = action == EditorInfo.IME_ACTION_DONE
 

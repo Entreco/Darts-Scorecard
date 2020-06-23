@@ -12,7 +12,7 @@ import javax.inject.Inject
 class HiScorePager @Inject constructor(
         @ActivityScope private val context: Context,
         @ActivityScope fm: FragmentManager
-) : FragmentPagerAdapter(fm) {
+) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val items = mutableListOf<HiScoreItem>()
 

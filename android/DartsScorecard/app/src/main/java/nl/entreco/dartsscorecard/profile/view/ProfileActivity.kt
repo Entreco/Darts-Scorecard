@@ -130,7 +130,7 @@ class ProfileActivity : ViewModelActivity() {
         }
 
         fun idsFromIntent(intent: Intent): LongArray {
-            return intent.getLongArrayExtra(EXTRA_TEAM_IDS)
+            return intent.getLongArrayExtra(EXTRA_TEAM_IDS) ?: longArrayOf()
         }
     }
 }

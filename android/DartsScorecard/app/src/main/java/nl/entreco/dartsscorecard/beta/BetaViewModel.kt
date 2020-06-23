@@ -11,7 +11,9 @@ import javax.inject.Inject
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaViewModel @Inject constructor(private val subscribeToFeaturesUsecase: SubscribeToFeaturesUsecase) : BaseViewModel() {
+class BetaViewModel @Inject constructor(
+        private val subscribeToFeaturesUsecase: SubscribeToFeaturesUsecase
+) : BaseViewModel() {
 
     private val features: MutableLiveData<List<Feature>> = MutableLiveData()
 

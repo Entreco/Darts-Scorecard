@@ -108,7 +108,7 @@
     <string name="streaming_service">Servicio de transmisión</string>
     <string name="receiving_service">Servicio de recepción</string>
     <string name="live_stream_start">Comienza a transmitir</string>
-    <string name="live_stream_connecting">Conectando...</string>
+    <string name="live_stream_connecting">Conectando…</string>
     <string name="live_stream_connect">Conectar</string>
     <string name="live_stream">Transmisión en vivo</string>
     <string name="enter_tv_code">Introduce el código</string>

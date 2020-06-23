@@ -14,15 +14,18 @@ import nl.entreco.dartsscorecard.databinding.ActivityHiscoreBinding
 import nl.entreco.dartsscorecard.di.hiscore.HiscoreComponent
 import nl.entreco.dartsscorecard.di.hiscore.HiscoreModule
 
-class HiScoreActivity : ViewModelActivity() {
+class HiScoreActivity : ViewModelActivity(), HiscoreComponentProvider {
 
     private lateinit var binding: ActivityHiscoreBinding
-    private val component: HiscoreComponent by componentProvider { it.plus(HiscoreModule()) }
+    private val component: HiscoreComponent by componentProvider { it.plus(HiscoreModule(this)) }
+    override fun provide() = component
+
     private val viewModel: HiScoreViewModel by viewModelProvider { component.viewModel() }
     private val pageAdapter: HiScorePager by lazy { component.pager() }
     private val animator: PagerAnimator by lazy {
         PagerAnimator(binding.hiscorePager, binding.hiscorePrev, binding.hiscoreNext)
     }
+    private val navigator by lazy { component.navigator() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,8 @@ class HiScoreActivity : ViewModelActivity() {
                 pageAdapter.show(hiscores[0].hiScore)
             }
         })
+
+        viewModel.events().observe(this, navigator)
     }
 
     private fun toolbar(binding: ActivityHiscoreBinding): Toolbar {

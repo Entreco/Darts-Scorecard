@@ -15,6 +15,7 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
+import java.util.Locale
 import javax.inject.Inject
 
 private const val ERR_EMPTY = 0
@@ -55,7 +56,7 @@ class EditPlayerNameViewModel @Inject constructor(
     }
 
     fun playerName(playerName: String, fav: String, context: Context) {
-        initialProfileName = playerName.toLowerCase()
+        initialProfileName = playerName.toLowerCase(Locale.getDefault())
         favDouble.set(fav)
         favDoubleIndex.set(toIndex(fav, context))
         name.set(playerName)
@@ -85,7 +86,7 @@ class EditPlayerNameViewModel @Inject constructor(
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNameNavigator): Boolean {
         if (donePressed(action)) {
-            name.set(view.text.toString().toLowerCase())
+            name.set(view.text.toString().toLowerCase(Locale.getDefault()))
             onDone(navigator)
             return true
         }
@@ -96,9 +97,9 @@ class EditPlayerNameViewModel @Inject constructor(
         isTyping.set(false)
 
         val desiredDouble = favDoubleIndex.get()
-        val desiredName = name.get()!!.toLowerCase()
+        val desiredName = name.get()!!.toLowerCase(Locale.getDefault())
         val existing = allPlayers.findLast {
-            it.name.toLowerCase() == desiredName
+            it.name.toLowerCase(Locale.getDefault()) == desiredName
         }
 
         return when (isValidName(existing, desiredName)) {

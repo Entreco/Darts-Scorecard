@@ -98,7 +98,7 @@
                     style="@style/Score.Hint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:special="@{viewModel.score.score}"
+                    app:specialScore="@{viewModel.score.score}"
                     tools:text="180" />
 
             </FrameLayout>

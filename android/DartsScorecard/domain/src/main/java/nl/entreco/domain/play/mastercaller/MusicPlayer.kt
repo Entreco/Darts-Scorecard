@@ -1,17 +1,19 @@
 package nl.entreco.domain.play.mastercaller
 
-import nl.entreco.shared.BaseUsecase
 import nl.entreco.domain.repository.MusicRepository
 import nl.entreco.liblog.Logger
+import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
 import javax.inject.Inject
 
-class MusicPlayer @Inject constructor(private val logger: Logger,
-                                      private val musicRepository: MusicRepository,
-                                      bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+class MusicPlayer @Inject constructor(
+        private val musicRepository: MusicRepository,
+        bg: Background,
+        fg: Foreground
+) : BaseUsecase(bg, fg) {
 
-    fun play(){
+    fun play() {
         onBackground({ musicRepository.play() }, {})
     }
 
@@ -19,7 +21,7 @@ class MusicPlayer @Inject constructor(private val logger: Logger,
         onBackground({ musicRepository.pause() }, {})
     }
 
-    fun resume(){
+    fun resume() {
         onBackground({ musicRepository.resume() }, {})
     }
 
