@@ -7,7 +7,8 @@ data class HiScoreItemModel(
         val id: Long,
         val name: String,
         val hiScore: String,
-        val pos: Int
+        val pos: Int,
+        val onClick: (HiScoreItemModel)->Unit
 ) {
     val score = ObservableField(hiScore)
     val position = ObservableField("$pos")

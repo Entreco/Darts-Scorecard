@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.hiscores.*
+import nl.entreco.shared.LiveEvent
 import javax.inject.Inject
 
 class HiScoreViewModel @Inject constructor(
@@ -16,6 +17,9 @@ class HiScoreViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val hiscores = MutableLiveData<List<HiScore>>()
+    private val events = LiveEvent<HiScoreItemModel>()
+    fun events() : LiveData<HiScoreItemModel> = events
+
     val description = ObservableInt(R.string.empty)
     val isNotEmpty = ObservableBoolean(false)
 
@@ -76,9 +80,13 @@ class HiScoreViewModel @Inject constructor(
 
         // Sort in the background
         sortHiScoresUsecase.go(SortHiScoresRequest(items), { scores ->
-            val mapped = scores.map { HiScoreItemModel(it.id, it.name, it.display, it.pos) }
+            val mapped = scores.map { HiScoreItemModel(it.id, it.name, it.display, it.pos, ::onProfileSelected) }
             liveData.postValue(mapped)
         }, {})
         return liveData
+    }
+
+    private fun onProfileSelected(item: HiScoreItemModel){
+        events.postValue(item)
     }
 }

@@ -27,19 +27,19 @@ class HiScoreFragment : Fragment() {
         }
     }
 
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity()).get(HiScoreViewModel::class.java)
-    }
-
+    private val viewModel by lazy { ViewModelProvider(requireActivity()).get(HiScoreViewModel::class.java) }
     private val navigator by lazy { HiScoreNavigator(requireActivity()) }
-    private val adapter by lazy { HiScoreAdapter(navigator) }
+    private val adapter by lazy { HiScoreAdapter() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val binding = DataBindingUtil.inflate<FragmentHiscoreBinding>(inflater,
-                R.layout.fragment_hiscore, container, false)
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        val binding = DataBindingUtil.inflate<FragmentHiscoreBinding>(inflater, R.layout.fragment_hiscore, container, false)
         initRecyclerView(binding.hiscoreRecycler)
         handlePagerPosition()
+        viewModel.events().observe(viewLifecycleOwner, navigator)
         return binding.root
     }
 

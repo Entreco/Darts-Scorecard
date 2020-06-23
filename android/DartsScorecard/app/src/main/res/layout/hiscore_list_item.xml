@@ -9,16 +9,13 @@
             name="item"
             type="nl.entreco.dartsscorecard.hiscores.HiScoreItemModel" />
 
-        <variable
-            name="navigator"
-            type="nl.entreco.dartsscorecard.hiscores.HiScoreNavigator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:onClick="@{() -> navigator.onProfileSelected(item)}"
+        android:onClick="@{() -> item.onClick.invoke(item)}"
         android:padding="@dimen/def">
 
         <de.hdodenhof.circleimageview.CircleImageView
