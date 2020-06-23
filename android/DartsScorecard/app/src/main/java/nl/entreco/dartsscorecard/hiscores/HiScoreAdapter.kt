@@ -10,7 +10,7 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.HiscoreListItemBinding
 import javax.inject.Inject
 
-class HiScoreAdapter : ListAdapter<HiScoreItemModel, HiScoreViewHolder>(HiScoreDif()) {
+class HiScoreAdapter @Inject constructor(): ListAdapter<HiScoreItemModel, HiScoreViewHolder>(HiScoreDif()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HiScoreViewHolder {
         val binding = DataBindingUtil.inflate<HiscoreListItemBinding>(

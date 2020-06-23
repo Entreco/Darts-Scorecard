@@ -37,8 +37,6 @@ ext {
     gradleVersion = '4.0.0'
     gmsVersion = '4.3.3'
     detektVersion = '1.0.0.RC7'
-    jacocoCoverageVersion = '0.4.0'
-    coverallsVersion = '2.8.2'
     firebaseCrashesVersion = '2.1.1'
 
     androidCompileSdkVersion = 29

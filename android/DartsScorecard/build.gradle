@@ -13,15 +13,12 @@ buildscript {
         classpath "com.google.gms:google-services:$gmsVersion"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$firebaseCrashesVersion"
-        classpath "com.palantir:jacoco-coverage:$jacocoCoverageVersion"
-        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:$coverallsVersion"
     }
 }
 
 apply from: 'scripts/dependencies.gradle'
 apply from: 'scripts/tasks.gradle'
 apply from: 'scripts/detekt.gradle'
-//apply from: 'scripts/coveralls.gradle'
 
 allprojects {
     repositories {

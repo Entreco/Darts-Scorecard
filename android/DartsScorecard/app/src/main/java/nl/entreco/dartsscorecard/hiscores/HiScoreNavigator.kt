@@ -1,11 +1,13 @@
 package nl.entreco.dartsscorecard.hiscores
 
-import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import nl.entreco.dartsscorecard.di.hiscore.HiScoreScope
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
+import javax.inject.Inject
 
-class HiScoreNavigator(
-        private val activity: Activity
+class HiScoreNavigator @Inject constructor(
+        @HiScoreScope private val activity: FragmentActivity
 ) : Observer<HiScoreItemModel> {
 
     override fun onChanged(item: HiScoreItemModel?) {
