@@ -1,11 +1,10 @@
-package nl.entreco.domain.play.mastercaller
+package nl.entreco.domain.mastercaller
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.repository.SoundRepository
 import nl.entreco.liblog.Logger
 import org.junit.Test
 import org.junit.runner.RunWith

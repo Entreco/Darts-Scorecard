@@ -1,13 +1,8 @@
 package nl.entreco.dartsscorecard.di.play
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.media.SoundPool
-import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
-import nl.entreco.data.sound.SoundMapper
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
-import nl.entreco.domain.repository.AudioPrefRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -22,9 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner
 class Play01ModuleTest {
 
     @Mock private lateinit var mockListener: (MakePurchaseResponse) -> Unit
-    @Mock private lateinit var mockSharedPrefs: SharedPreferences
-    @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
-    @Mock private lateinit var mockMapper: SoundMapper
     @Mock private lateinit var mockContext: Context
     @Mock private lateinit var mockActivity: Play01Activity
 
@@ -40,12 +32,7 @@ class Play01ModuleTest {
 
     @Test(expected = NullPointerException::class) // SoundPool.Builder
     fun `it should provide SoundRepository`() {
-        assertNotNull(subject().provideSoundRepository(mockContext, mockMapper, mockAudioPrefs))
-    }
-
-    @Test
-    fun `it should provide soundMapper`() {
-        assertNotNull(subject().provideSoundMapper())
+        assertNotNull(subject().provideSoundRepository())
     }
 
     @Test

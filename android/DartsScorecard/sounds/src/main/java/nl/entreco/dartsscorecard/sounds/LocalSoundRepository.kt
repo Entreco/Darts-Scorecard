@@ -1,10 +1,9 @@
-package nl.entreco.data.sound
+package nl.entreco.dartsscorecard.sounds
 
 import android.content.Context
 import android.media.SoundPool
-import nl.entreco.domain.play.mastercaller.Sound
+import nl.entreco.domain.mastercaller.SoundRepository
 import nl.entreco.domain.repository.AudioPrefRepository
-import nl.entreco.domain.repository.SoundRepository
 import java.util.ArrayDeque
 import java.util.Deque
 import java.util.HashMap
@@ -12,15 +11,17 @@ import java.util.HashMap
 /**
  * Created by entreco on 14/03/2018.
  */
-class LocalSoundRepository(private val context: Context,
-                           private val soundPool: SoundPool,
-                           private val prefs: AudioPrefRepository,
-                           private val mapper: SoundMapper) : SoundRepository {
+class LocalSoundRepository(
+        private val context: Context,
+        private val soundPool: SoundPool,
+        private val prefs: AudioPrefRepository,
+        private val mapper: SoundMapper
+) : SoundRepository {
 
     private val priorityNormal = 1
     internal val queue: Deque<Int> = ArrayDeque()
-    internal val sounds: HashMap<Sound, Int> = hashMapOf()
-    private val ready: HashMap<Sound, Int> = hashMapOf()
+    internal val sounds: HashMap<nl.entreco.domain.mastercaller.Sound, Int> = hashMapOf()
+    private val ready: HashMap<nl.entreco.domain.mastercaller.Sound, Int> = hashMapOf()
 
     init {
         soundPool.setOnLoadCompleteListener { _, sampleId, status ->
@@ -30,7 +31,7 @@ class LocalSoundRepository(private val context: Context,
         }
     }
 
-    override fun play(sound: Sound) {
+    override fun play(sound: nl.entreco.domain.mastercaller.Sound) {
         if (!prefs.isMasterCallerEnabled()) return
 
         if (ready.containsKey(sound)) {
@@ -47,7 +48,8 @@ class LocalSoundRepository(private val context: Context,
         try {
             soundPool.setOnLoadCompleteListener(null)
             soundPool.release()
-        } catch (ignore: Throwable) { }
+        } catch (ignore: Throwable) {
+        }
     }
 
     internal fun storeSound(soundId: Int) {
@@ -57,7 +59,7 @@ class LocalSoundRepository(private val context: Context,
         }
     }
 
-    private fun queueSoundWithId(soundID: Int, sound: Sound) {
+    private fun queueSoundWithId(soundID: Int, sound: nl.entreco.domain.mastercaller.Sound) {
         queue.addFirst(soundID)
         sounds[sound] = soundID
     }

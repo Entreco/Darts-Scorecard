@@ -11,6 +11,7 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.domain.mastercaller.*
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -24,11 +25,6 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.listeners.StatListener
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MasterCallerRequest
-import nl.entreco.domain.play.mastercaller.MusicPlayer
-import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase

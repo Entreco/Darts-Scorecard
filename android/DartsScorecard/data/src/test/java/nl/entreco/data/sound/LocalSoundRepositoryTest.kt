@@ -9,10 +9,10 @@ import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.data.R
-import nl.entreco.domain.play.mastercaller.Fx00
-import nl.entreco.domain.play.mastercaller.Fx01
-import nl.entreco.domain.play.mastercaller.Sound
-import nl.entreco.domain.repository.AudioPrefRepository
+import nl.entreco.dartsscorecard.sounds.mastercaller.Fx00
+import nl.entreco.dartsscorecard.sounds.mastercaller.Fx01
+import nl.entreco.dartsscorecard.sounds.mastercaller.Sound
+import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,10 +29,10 @@ class LocalSoundRepositoryTest {
     private val fx0 = Fx00
     private val fx1 = Fx01
 
-    @Mock private lateinit var mockAudioRepo: AudioPrefRepository
+    @Mock private lateinit var mockAudioRepo: nl.entreco.dartsscorecard.sounds.AudioPrefRepository
     @Mock private lateinit var mockSoundPool: SoundPool
     @Mock private lateinit var mockContext: Context
-    private lateinit var subject: LocalSoundRepository
+    private lateinit var subject: nl.entreco.dartsscorecard.sounds.LocalSoundRepository
     private var loadedSounds = emptyList<Sound>()
 
     @Test
@@ -96,7 +96,7 @@ class LocalSoundRepositoryTest {
 
     private fun givenSubject(enabled: Boolean = true) {
         whenever(mockAudioRepo.isMasterCallerEnabled()).doReturn(enabled)
-        subject = LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, SoundMapper())
+        subject = nl.entreco.dartsscorecard.sounds.LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, nl.entreco.dartsscorecard.sounds.SoundMapper())
     }
 
     private fun givenLoadedSounds(vararg sounds: Sound) {
@@ -104,7 +104,7 @@ class LocalSoundRepositoryTest {
     }
 
     private fun whenPlaying(sound: Sound) {
-        val res = SoundMapper().toRaw(sound)
+        val res = nl.entreco.dartsscorecard.sounds.SoundMapper().toRaw(sound)
         whenever(mockSoundPool.load(mockContext, res, normalPriority)).doReturn(sound.hashCode())
         subject.play(sound)
     }

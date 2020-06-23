@@ -1,7 +1,7 @@
-package nl.entreco.domain.repository
+package nl.entreco.domain.mastercaller
 
 import androidx.annotation.WorkerThread
-import nl.entreco.domain.play.mastercaller.Sound
+import nl.entreco.domain.mastercaller.Sound
 
 /**
  * Created by entreco on 14/03/2018.
