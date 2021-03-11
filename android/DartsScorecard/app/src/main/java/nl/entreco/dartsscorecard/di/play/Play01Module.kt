@@ -61,7 +61,7 @@ class Play01Module(
     @Provides
     @Play01Scope
     fun provideSplitInstallRequest(@ActivityScope context: Context) = SplitInstallRequest.newBuilder()
-            .addModule(context.getString(R.string.title_sounds))
+            .addModule(context.getString(R.string.module_sounds))
             .build()
 
     @Provides
@@ -73,7 +73,7 @@ class Play01Module(
             prefs: AudioPrefRepository,
             logger: Logger,
     ): SoundRepository {
-        return if (splitInstallManager.installedModules.contains(context.getString(R.string.title_sounds))) {
+        return if (splitInstallManager.installedModules.contains(context.getString(R.string.module_sounds))) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as SoundModuleProvider
             provider.provideSoundRepository(context, prefs)
         } else NoSoundRepository(logger, splitInstallRequest, splitInstallManager)
@@ -87,7 +87,7 @@ class Play01Module(
             splitInstallManager: SplitInstallManager,
             logger: Logger,
     ): MusicRepository {
-        return if (splitInstallManager.installedModules.contains(context.getString(R.string.title_sounds))) {
+        return if (splitInstallManager.installedModules.contains(context.getString(R.string.module_sounds))) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as SoundModuleProvider
             provider.provideMusicRepository(context)
         } else NoMusicRepository(logger, splitInstallRequest, splitInstallManager)

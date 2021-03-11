@@ -9,6 +9,11 @@ import nl.entreco.domain.mastercaller.MusicRepository
 import nl.entreco.domain.mastercaller.SoundRepository
 import nl.entreco.domain.repository.AudioPrefRepository
 
+/**
+ * Accessed dynamically through reflection,
+ * if the Dynamic Sound module is installed :nerd:
+ */
+@Deprecated("Not deprecated, but used through reflection")
 object DynamicSoundProvider : SoundModuleProvider {
 
     override fun provideSoundRepository(context: Context, @Play01Scope prefs: AudioPrefRepository): SoundRepository {

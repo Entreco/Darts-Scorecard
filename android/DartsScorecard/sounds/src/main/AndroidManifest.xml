@@ -5,7 +5,7 @@
 
     <dist:module
         dist:instant="false"
-        dist:title="@string/title_sounds">
+        dist:title="@string/module_sounds">
         <dist:delivery>
             <dist:on-demand />
         </dist:delivery>
