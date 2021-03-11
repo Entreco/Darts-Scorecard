@@ -229,11 +229,9 @@ class Play01ViewModel @Inject constructor(
     private fun showInterstitial(next: Next) {
         when (next.state) {
             State.START -> adViewModel.provideInterstitial()
-            State.LEG   -> adViewModel.provideInterstitial()
             State.SET   -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else        -> { /* ignore */
-            }
+            else        -> { /* ignore */ }
         }
     }
 

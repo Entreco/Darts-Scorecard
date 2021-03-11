@@ -82,15 +82,14 @@ class PlayBillingRepository(
                 listener(MakePurchaseResponse.Disconnected)
             }
 
-            override fun onBillingSetupFinished(billingResult: BillingResult?) {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
 
-                if (billingResult?.responseCode == BillingClient.BillingResponseCode.OK) {
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     serviceConnected.set(true)
                     executeOnSuccess()
                 }
 
-                billingClientResponseCode.set(billingResult?.responseCode
-                        ?: BILLING_MANAGER_NOT_INITIALIZED)
+                billingClientResponseCode.set(billingResult.responseCode)
             }
         })
     }

@@ -13,7 +13,7 @@ object AdBindings {
     @BindingAdapter("viewModel", "adDelay", requireAll = false)
     fun loadAd(view: AdView, viewModel: AdViewModel?, adDelay: Int?) {
         val delay = adDelay?.toLong() ?: 0L
-        Handler().postDelayed({
+        view.postDelayed({
             viewModel?.provideAdd(view)
         }, delay)
     }

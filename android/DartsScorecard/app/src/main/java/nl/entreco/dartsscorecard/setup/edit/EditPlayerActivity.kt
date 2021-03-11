@@ -28,15 +28,15 @@ class EditPlayerActivity : ViewModelActivity() {
     }
 
     private fun getSuggestedName(): String {
-        return intent.getStringExtra(Setup01Navigator.EXTRA_SUGGESTION)
+        return intent.getStringExtra(Setup01Navigator.EXTRA_SUGGESTION).orEmpty()
     }
 
     private fun otherPlayers(): LongArray {
-        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_PLAYERS)
+        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_PLAYERS) ?: longArrayOf()
     }
 
     private fun otherBots(): LongArray {
-        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_BOTS)
+        return intent.getLongArrayExtra(Setup01Navigator.EXTRA_OTHER_BOTS) ?: longArrayOf()
     }
 
     private fun toolbar(binding: ActivityEditPlayerBinding): Toolbar {

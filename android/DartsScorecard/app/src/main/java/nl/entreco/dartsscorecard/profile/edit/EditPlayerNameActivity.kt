@@ -2,13 +2,13 @@ package nl.entreco.dartsscorecard.profile.edit
 
 import android.app.Activity
 import android.content.Intent
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
 import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerNameBinding
@@ -33,7 +33,10 @@ class EditPlayerNameActivity : ViewModelActivity() {
         binding.navigator = navigator
         initToolbar(toolbar(binding), title())
 
-        viewModel.playerName(intent.getStringExtra(EXTRA_NAME), intent.getStringExtra(EXTRA_FAV), this)
+        viewModel.playerName(
+                intent.getStringExtra(EXTRA_NAME).orEmpty(),
+                intent.getStringExtra(EXTRA_FAV).orEmpty(),
+                this)
     }
 
     private fun toolbar(binding: ActivityEditPlayerNameBinding): Toolbar {
@@ -41,8 +44,8 @@ class EditPlayerNameActivity : ViewModelActivity() {
     }
 
     @StringRes
-    private fun title() : Int {
-        return if(intent.getBooleanExtra(EXTRA_CREATE, false)){
+    private fun title(): Int {
+        return if (intent.getBooleanExtra(EXTRA_CREATE, false)) {
             R.string.title_create_profile
         } else {
             R.string.title_edit_profile

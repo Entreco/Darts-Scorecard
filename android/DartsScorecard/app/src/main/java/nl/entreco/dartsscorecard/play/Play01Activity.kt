@@ -16,18 +16,27 @@ import nl.entreco.dartsscorecard.di.play.Play01Module
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.domain.play.start.Play01Request
+import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.setup.game.CreateGameResponse
+import nl.entreco.libads.ui.AdViewModel
 
 class Play01Activity : ViewModelActivity() {
 
-    private val component: Play01Component by componentProvider { it.plus(Play01Module(this)) }
+    private val component: Play01Component by componentProvider {
+        it.plus(Play01Module(this) { response ->
+            if (response is MakePurchaseResponse.Updated) adViewModel.onPurchasesRetrieved(response)
+        })
+    }
     private val viewModel: Play01ViewModel by viewModelProvider { component.viewModel() }
     private val scoreViewModel: ScoreViewModel by viewModelProvider { component.scoreViewModel() }
     private val inputViewModel: InputViewModel by viewModelProvider { component.inputViewModel() }
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
+    private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
+    private val billingRepo: BillingRepo by lazy { component.billing() }
     private val navigator: Play01Navigator by lazy { component.navigator() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +56,14 @@ class Play01Activity : ViewModelActivity() {
             initGame()
         }
 
+        billingRepo.start()
         initToolbar(toolbar(binding))
         resumeGame()
     }
 
     override fun onResume() {
         super.onResume()
+        billingRepo.resume()
         viewModel.resume()
     }
 
@@ -64,6 +75,7 @@ class Play01Activity : ViewModelActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stop()
+        billingRepo.stop()
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
@@ -119,7 +131,7 @@ class Play01Activity : ViewModelActivity() {
         @JvmStatic
         fun retrieveSetup(intent: Intent): Play01Request {
             return Play01Request(intent.getLongExtra("gameId", -1),
-                    intent.getStringExtra("teamIds"),
+                    intent.getStringExtra("teamIds").orEmpty(),
                     intent.getIntExtra("startScore", -1),
                     intent.getIntExtra("startIndex", -1),
                     intent.getIntExtra("legs", -1),

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="beta_cards_columns">2</integer>
+    <integer name="wtf_columns">1</integer>
+</resources>

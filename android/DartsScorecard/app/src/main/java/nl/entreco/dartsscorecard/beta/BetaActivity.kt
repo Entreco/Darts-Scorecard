@@ -116,7 +116,7 @@ class BetaActivity : ViewModelActivity(), BetaAnimator.Swapper {
         val recyclerView = binding.betaRecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.layoutManager = GridLayoutManager(binding.root.context, 2)
+        recyclerView.layoutManager = GridLayoutManager(binding.root.context, resources.getInteger(R.integer.beta_cards_columns))
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
     }

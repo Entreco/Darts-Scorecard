@@ -12,10 +12,11 @@ internal class AdMobAds(
         private val adLoader: AdLoader
 ) : Ads {
 
-
-    override fun init(appId: String) {
+    override fun init() {
         Thread {
-            MobileAds.initialize(context.applicationContext, appId)
+            MobileAds.initialize(context.applicationContext){ status ->
+
+            }
         }.start()
     }
 
