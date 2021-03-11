@@ -67,7 +67,7 @@ class LiveStatViewModel @Inject constructor(
         }
     }
 
-    private fun onStatsFailed(): (Throwable) -> Unit = { err -> logger.e(err.localizedMessage) }
+    private fun onStatsFailed(): (Throwable) -> Unit = { err -> logger.e(err.localizedMessage.orEmpty()) }
 
     override fun onStatsChange(turnId: Long, metaId: Long) {
         fetchLiveStatUsecase.exec(FetchLiveStatRequest(turnId, metaId), onStatUpdated(),

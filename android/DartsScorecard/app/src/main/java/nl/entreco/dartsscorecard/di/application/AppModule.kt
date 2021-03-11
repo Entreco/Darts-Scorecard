@@ -34,7 +34,7 @@ class AppModule(val app: App) {
     @Provides
     @AppContext
     @ApplicationScope
-    fun applicationContext() : Context = app.applicationContext
+    fun applicationContext(): Context = app.applicationContext
 
     @Provides
     @ApplicationScope

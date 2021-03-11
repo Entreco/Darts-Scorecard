@@ -62,8 +62,7 @@ class WtfActivity : ViewModelActivity() {
         val recyclerView = binding.wtfRecyclerView
         recyclerView.setHasFixedSize(true)
         recyclerView.setItemViewCacheSize(20)
-        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
-                binding.root.context, 1)
+        recyclerView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(binding.root.context, resources.getInteger(R.integer.wtf_columns))
         recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
         recyclerView.adapter = adapter
     }

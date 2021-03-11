@@ -26,6 +26,6 @@ class ThreadingModule {
 
     @Provides
     fun provideHandler(): Handler {
-        return Handler(Looper.myLooper())
+        return Handler(Looper.getMainLooper())
     }
 }

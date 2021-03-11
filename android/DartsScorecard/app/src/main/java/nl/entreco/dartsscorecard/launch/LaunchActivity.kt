@@ -48,7 +48,7 @@ class LaunchActivity : ViewModelActivity() {
                         viewModel.onSettingsPressed(this)
                     }
                 }
-                false -> ads.init(getString(R.string.app_id))
+                false -> ads.init()
             }
         })
     }

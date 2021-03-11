@@ -62,10 +62,10 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     override fun handleResult(requestCode: Int, resultCode: Int, data: Intent?, callback: PlayerEditor.Callback) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null) {
 
-            val suggestion = data.getStringExtra(EXTRA_SUGGESTION)
-            val playerName = data.getStringExtra(EXTRA_PLAYER_NAME)
+            val suggestion = data.getStringExtra(EXTRA_SUGGESTION).orEmpty()
+            val playerName = data.getStringExtra(EXTRA_PLAYER_NAME).orEmpty()
             val playerId = data.getLongExtra(EXTRA_PLAYER_ID, -1)
-            val botName = data.getStringExtra(EXTRA_BOT_NAME)
+            val botName = data.getStringExtra(EXTRA_BOT_NAME).orEmpty()
             val botId = data.getLongExtra(EXTRA_BOT_ID, -1)
             val teamIndex = data.getIntExtra(EXTRA_TEAM_INDEX, POSITION_NONE)
             val index = data.getIntExtra(EXTRA_POSITION_IN_LIST, POSITION_NONE)
@@ -73,9 +73,9 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
             if (isNew(index)) {
 
                 when {
-                    botName?.isNotEmpty() ?: false -> callback.onBotAdded(botName, botId)
-                    suggestion?.isEmpty() ?: false -> callback.onPlayerAdded(playerName, playerId)
-                    else                           -> callback.onPlayerAdded(suggestion, playerId)
+                    botName.isNotEmpty() -> callback.onBotAdded(botName, botId)
+                    suggestion.isEmpty() -> callback.onPlayerAdded(playerName, playerId)
+                    else -> callback.onPlayerAdded(suggestion, playerId)
                 }
 
             } else {

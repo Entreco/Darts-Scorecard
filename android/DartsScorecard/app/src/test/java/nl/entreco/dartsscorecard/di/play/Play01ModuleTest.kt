@@ -6,6 +6,7 @@ import android.media.SoundPool
 import com.nhaarman.mockito_kotlin.whenever
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.data.sound.SoundMapper
+import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.domain.repository.AudioPrefRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -20,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class Play01ModuleTest {
 
+    @Mock private lateinit var mockListener: (MakePurchaseResponse) -> Unit
     @Mock private lateinit var mockSharedPrefs: SharedPreferences
     @Mock private lateinit var mockAudioPrefs: AudioPrefRepository
     @Mock private lateinit var mockMapper: SoundMapper
@@ -52,6 +54,6 @@ class Play01ModuleTest {
     }
 
     private fun subject(): Play01Module {
-        return Play01Module(mockActivity)
+        return Play01Module(mockActivity, mockListener)
     }
 }

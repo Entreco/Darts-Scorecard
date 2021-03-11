@@ -20,17 +20,23 @@
             app:expandedTitleTextAppearance="@style/TitleExpanded"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/beta_header" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="182dp"
-                android:background="@drawable/beta_header"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:padding="@dimen/def"
                 android:shadowColor="@color/white"
-                android:shadowRadius="12.0"
                 android:shadowDx="0.5"
                 android:shadowDy="0.5"
+                android:shadowRadius="12.0"
                 android:text="@string/beta_header"
                 android:textAllCaps="true"
                 android:textColor="?attr/colorPrimaryDark"

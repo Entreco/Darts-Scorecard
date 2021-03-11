@@ -7,6 +7,8 @@ import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.domain.repository.BillingRepo
+import nl.entreco.libads.ui.AdViewModel
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -20,4 +22,6 @@ interface Play01Component {
     fun inputViewModel(): InputViewModel
     fun statViewModel(): LiveStatViewModel
     fun finishUsecase(): GetFinishUsecase
+    fun billing() : BillingRepo
+    fun ads(): AdViewModel
 }
