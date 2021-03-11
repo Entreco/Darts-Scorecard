@@ -24,8 +24,8 @@ class HiScoreMapper {
                 HiScoreItem.Num60(stats.sumBy { it.num60s }),
                 HiScoreItem.Num20(stats.sumBy { it.num20s }),
                 HiScoreItem.NumBust(stats.sumBy { it.num0s }),
-                HiScoreItem.BestMatchAvg(stats.map { avg(it.numDarts, it.totalScore) * 3}.max() ?: 0F),
-                HiScoreItem.BestMatchCheckout(stats.map { avg(it.numDartsAtFinish, it.numFinishes) * 100}.max() ?: 0F)
+                HiScoreItem.BestMatchAvg(stats.map { avg(it.numDarts, it.totalScore) * 3}.maxOrNull() ?: 0F),
+                HiScoreItem.BestMatchCheckout(stats.map { avg(it.numDartsAtFinish, it.numFinishes) * 100}.maxOrNull() ?: 0F)
         )
         return HiScore(player.id, player.name, scores)
     }

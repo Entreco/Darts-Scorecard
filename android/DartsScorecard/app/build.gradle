@@ -53,18 +53,22 @@ dependencies {
     implementation "com.google.firebase:firebase-config:$fbConfig"
     implementation "com.google.firebase:firebase-database:$fbDatabase"
     implementation "com.google.firebase:firebase-ads:$fbAds"
+    implementation "com.google.firebase:firebase-crashlytics:$fbCrash"
+    implementation "com.google.android.play:core:$playCore"
+    implementation "com.google.android.play:core-ktx:$playCoreKtx"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
     implementation "androidx.core:core-ktx:$xCore"
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
     implementation "androidx.constraintlayout:constraintlayout:$xConstraint"
     implementation "androidx.preference:preference-ktx:$xPreferences"
+
     implementation "com.github.bumptech.glide:glide:$glide"
     implementation "com.github.yalantis:jellytoolbar:$jelly"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation "com.google.code.gson:gson:$gson"
-
-    implementation "com.google.firebase:firebase-crashlytics:$fbCrash"
 
     // Leaks
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary"

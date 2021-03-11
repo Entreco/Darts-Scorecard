@@ -2,19 +2,14 @@ apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply from: '../scripts/android_common.gradle'
 
 android {
+    def config = rootProject.extensions.getByName("ext")
+    compileSdkVersion config.androidCompileSdkVersion
 
     defaultConfig {
-        applicationId "nl.entreco.dartsscorecard.sounds"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+        minSdkVersion config.androidMinSdkVersion
+        targetSdkVersion config.androidTargetSdkVersion
     }
 }
 

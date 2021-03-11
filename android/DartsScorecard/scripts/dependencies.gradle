@@ -33,7 +33,7 @@ ext.versionName = { ->
 }
 
 ext {
-    kotlinVersion = '1.3.72'
+    kotlinVersion = '1.4.31'
     gradleVersion = '4.1.2'
     gmsVersion = '4.3.3'
     detektVersion = '1.0.0.RC7'
@@ -47,12 +47,14 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            daggerVersion = '2.28',
-            xConstraint = '2.0.0-beta4',
+            daggerVersion = '2.33',
+            xConstraint = '2.0.0',
             xAnnotation = '1.1.0',
             playBilling = '3.0.3',
+            playCore = '1.10.0',
+            playCoreKtx = '1.8.1',
             xAppCompat = '1.1.0',
-            xCore = '1.3.0',
+            xCore = '1.3.2',
             xCoreCommon = '2.0.1',
             xCoreRuntime = '2.0.1',
             xExif = '1.3.2',
@@ -75,7 +77,7 @@ ext {
             jelly = 'v1.0',
             lottieVersion = '3.4.0',
             gson = '2.8.6',
-            leakCanary = '2.3',
+            leakCanary = '2.6',
             junit = '4.13.2',
             mockito = '3.3.3',
             mockitoKotlin = '1.5.0',
