@@ -65,6 +65,7 @@
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <include
+                android:id="@+id/include_beta_detail"
                 layout="@layout/include_beta_detail"
                 app:donateViewModel="@{donateViewModel}"
                 app:viewModel="@{voteViewModel}" />

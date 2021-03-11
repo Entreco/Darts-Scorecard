@@ -5,14 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
 import nl.entreco.dartsscorecard.di.play.Play01Component
 import nl.entreco.dartsscorecard.di.play.Play01Module
+import nl.entreco.dartsscorecard.dynamic.Installer
+import nl.entreco.dartsscorecard.dynamic.SoundInstalledCallback
 import nl.entreco.dartsscorecard.play.input.InputViewModel
 import nl.entreco.dartsscorecard.play.live.LiveStatViewModel
 import nl.entreco.dartsscorecard.play.score.ScoreViewModel
@@ -23,7 +30,8 @@ import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.setup.game.CreateGameResponse
 import nl.entreco.libads.ui.AdViewModel
 
-class Play01Activity : ViewModelActivity() {
+
+class Play01Activity : ViewModelActivity(), SoundInstalledCallback {
 
     private val component: Play01Component by componentProvider {
         it.plus(Play01Module(this) { response ->
@@ -36,6 +44,7 @@ class Play01Activity : ViewModelActivity() {
     private val statViewModel: LiveStatViewModel by viewModelProvider { component.statViewModel() }
     private val finishUsecase: GetFinishUsecase by componentProvider { component.finishUsecase() }
     private val adViewModel: AdViewModel by viewModelProvider { component.ads() }
+    private val installer: Installer by lazy { component.installer() }
     private val billingRepo: BillingRepo by lazy { component.billing() }
     private val navigator: Play01Navigator by lazy { component.navigator() }
 
@@ -103,17 +112,19 @@ class Play01Activity : ViewModelActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_play_settings  -> {
+            R.id.menu_play_settings -> {
                 swapStyle()
                 viewModel.loading.set(true)
             }
             R.id.menu_music_settings -> {
+                if (!item.isChecked) installer.install(this)
                 viewModel.toggleBgMusic(item)
             }
             R.id.menu_sound_settings -> {
+                if (!item.isChecked) installer.install(this)
                 viewModel.toggleMasterCaller(item)
             }
-            R.id.menu_delete_match   -> {
+            R.id.menu_delete_match -> {
                 viewModel.askToDeleteMatch {
                     onBackPressed()
                 }
@@ -129,14 +140,13 @@ class Play01Activity : ViewModelActivity() {
 
     companion object {
         @JvmStatic
-        fun retrieveSetup(intent: Intent): Play01Request {
-            return Play01Request(intent.getLongExtra("gameId", -1),
-                    intent.getStringExtra("teamIds").orEmpty(),
-                    intent.getIntExtra("startScore", -1),
-                    intent.getIntExtra("startIndex", -1),
-                    intent.getIntExtra("legs", -1),
-                    intent.getIntExtra("sets", -1))
-        }
+        fun retrieveSetup(intent: Intent) = Play01Request(
+                intent.getLongExtra("gameId", -1),
+                intent.getStringExtra("teamIds").orEmpty(),
+                intent.getIntExtra("startScore", -1),
+                intent.getIntExtra("startIndex", -1),
+                intent.getIntExtra("legs", -1),
+                intent.getIntExtra("sets", -1))
 
         @JvmStatic
         fun startGame(context: Context, create: CreateGameResponse) {
@@ -149,5 +159,21 @@ class Play01Activity : ViewModelActivity() {
             intent.putExtra("sets", create.numSets)
             context.startActivity(intent)
         }
+    }
+
+    override fun onComplete() {
+        navigator.doneSnackbar()
+    }
+
+    override fun onProgress(bytes: Long, totalBytes: Long) {
+        navigator.showSnackbar((bytes.toFloat() / totalBytes.toFloat() * 100).toInt())
+    }
+
+    override fun onError() {
+        Toast.makeText(this, "Unable to download Sounds", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDebug(status: Int) {
+        Toast.makeText(this, "Debug code: $status", Toast.LENGTH_SHORT).show()
     }
 }

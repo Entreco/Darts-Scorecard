@@ -8,9 +8,11 @@ import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.Module
 import dagger.Provides
-import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.archive.ArchiveJobService
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
+import nl.entreco.dartsscorecard.dynamic.DynamicInstaller
+import nl.entreco.dartsscorecard.dynamic.Installer
+import nl.entreco.dartsscorecard.dynamic.NoInstaller
 import nl.entreco.dartsscorecard.dynamic.NoMusicRepository
 import nl.entreco.dartsscorecard.dynamic.NoSoundRepository
 import nl.entreco.dartsscorecard.dynamic.SoundModuleProvider
@@ -40,7 +42,6 @@ class Play01Module(
         private val listener: (MakePurchaseResponse) -> Unit,
 ) {
 
-
     @Provides
     @Play01Scope
     fun provideBillingService(logger: Logger): BillingRepo {
@@ -61,7 +62,7 @@ class Play01Module(
 
     @Provides
     @Play01Scope
-    fun provideSplitInstallRequest(@ActivityScope context: Context) = SplitInstallRequest.newBuilder()
+    fun provideSplitInstallRequest() = SplitInstallRequest.newBuilder()
             .addModule(SOUNDS)
             .build()
 
@@ -69,29 +70,37 @@ class Play01Module(
     @Play01Scope
     fun provideSoundRepository(
             @ActivityScope context: Context,
-            splitInstallRequest: SplitInstallRequest,
             splitInstallManager: SplitInstallManager,
             prefs: AudioPrefRepository,
-            logger: Logger,
     ): SoundRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
-            val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as SoundModuleProvider
-            provider.provideSoundRepository(context, prefs)
-        } else NoSoundRepository(logger, splitInstallRequest, splitInstallManager)
+            val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider
+            val updatedContext = context.createPackageContext(context.packageName, 0)
+            provider?.provideSoundRepository(updatedContext.applicationContext, prefs) ?: NoSoundRepository()
+        } else NoSoundRepository()
     }
 
     @Provides
     @Play01Scope
     fun provideMusicRepository(
             @ActivityScope context: Context,
-            splitInstallRequest: SplitInstallRequest,
             splitInstallManager: SplitInstallManager,
-            logger: Logger,
     ): MusicRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
-            val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as SoundModuleProvider
-            provider.provideMusicRepository(context)
-        } else NoMusicRepository(logger, splitInstallRequest, splitInstallManager)
+            val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider
+            val updatedContext = context.createPackageContext(context.packageName, 0)
+            provider?.provideMusicRepository(updatedContext.applicationContext) ?: NoMusicRepository()
+        } else NoMusicRepository()
+    }
+
+    @Provides
+    @Play01Scope
+    fun provideDynamicInstaller(
+            splitInstallRequest: SplitInstallRequest,
+            splitInstallManager: SplitInstallManager,
+    ): Installer {
+        return if (splitInstallManager.installedModules.contains(SOUNDS)) NoInstaller()
+        else DynamicInstaller(splitInstallRequest, splitInstallManager)
     }
 
     @Provides

@@ -1,6 +1,8 @@
 package nl.entreco.dartsscorecard.di.play
 
 import dagger.Subcomponent
+import nl.entreco.dartsscorecard.dynamic.DynamicInstaller
+import nl.entreco.dartsscorecard.dynamic.Installer
 import nl.entreco.dartsscorecard.play.Play01Navigator
 import nl.entreco.dartsscorecard.play.Play01ViewModel
 import nl.entreco.dartsscorecard.play.input.InputViewModel
@@ -22,6 +24,7 @@ interface Play01Component {
     fun inputViewModel(): InputViewModel
     fun statViewModel(): LiveStatViewModel
     fun finishUsecase(): GetFinishUsecase
+    fun installer() : Installer
     fun billing() : BillingRepo
     fun ads(): AdViewModel
 }
