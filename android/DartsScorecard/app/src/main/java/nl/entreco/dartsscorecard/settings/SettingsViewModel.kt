@@ -8,8 +8,8 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import nl.entreco.dartsscorecard.base.BaseViewModel
-import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.mastercaller.ToggleMusicUsecase
+import nl.entreco.domain.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.BotPrefRepository
 import nl.entreco.shared.toSingleEvent

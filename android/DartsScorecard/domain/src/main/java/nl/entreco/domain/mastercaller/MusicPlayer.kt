@@ -1,7 +1,5 @@
-package nl.entreco.domain.play.mastercaller
+package nl.entreco.domain.mastercaller
 
-import nl.entreco.domain.repository.MusicRepository
-import nl.entreco.liblog.Logger
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground

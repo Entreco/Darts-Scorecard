@@ -1,7 +1,7 @@
 package nl.entreco.data.sound
 
 import nl.entreco.data.R
-import nl.entreco.domain.play.mastercaller.*
+import nl.entreco.dartsscorecard.sounds.mastercaller.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -10,7 +10,7 @@ import org.junit.Test
  */
 class SoundMapperTest {
 
-    private val subject = SoundMapper()
+    private val subject = nl.entreco.dartsscorecard.sounds.SoundMapper()
 
     @Test
     fun `it should map None`() {

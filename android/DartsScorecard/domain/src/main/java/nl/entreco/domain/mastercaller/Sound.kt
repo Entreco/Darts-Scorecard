@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.mastercaller
+package nl.entreco.domain.mastercaller
 
 /**
  * Created by entreco on 14/03/2018.

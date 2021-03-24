@@ -3,7 +3,6 @@ package nl.entreco.dartsscorecard.beta
 import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.include_beta_detail.view.voteFab
 import nl.entreco.dartsscorecard.databinding.ActivityBetaBinding
 import kotlin.math.abs
 import kotlin.math.max
@@ -15,7 +14,7 @@ class BetaAnimator(binding: ActivityBetaBinding) {
 
     private val behaviour: BottomSheetBehavior<View> = BottomSheetBehavior.from(binding.sheet)
     private val appBar = binding.includeToolbar.betaAppbar
-    private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar.toolbar, binding.sheet, binding.sheet.voteFab)
+    private val animator = BetaAnimatorHandler(appBar, binding.includeToolbar.toolbar, binding.sheet, binding.includeBetaDetail.voteFab)
     internal var toggler: Toggler? = null
     internal var swapper: Swapper? = null
 

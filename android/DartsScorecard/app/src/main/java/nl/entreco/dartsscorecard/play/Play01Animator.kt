@@ -5,10 +5,6 @@ import android.view.ViewPropertyAnimator
 import android.view.ViewTreeObserver
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_play_01.view.includeScore
-import kotlinx.android.synthetic.main.activity_play_01.view.includeToolbar
-import kotlinx.android.synthetic.main.play_01_score.view.footer
-import kotlinx.android.synthetic.main.play_01_score.view.header
 import nl.entreco.dartsscorecard.base.PagerAnimator
 import nl.entreco.dartsscorecard.base.widget.MaxHeightRecyclerView
 import nl.entreco.dartsscorecard.databinding.ActivityPlay01Binding
@@ -29,8 +25,9 @@ class Play01Animator(binding: ActivityPlay01Binding) {
     private val animator = Play01AnimatorHandler(binding.root, binding.includeScore.scoreSheet,
             binding.includeInput.fab, binding.includeMain.mainSheet, binding.includeMain.version,
             binding.includeInput.inputResume, pager, binding.includeScore.teamContainer, inputSheet,
-            binding.root.includeScore.header,
-            binding.root.includeScore.footer, binding.root.includeToolbar)
+            binding.includeScore.header,
+            binding.includeScore.footer,
+            binding.includeToolbar.toolbar)
 
     init {
         animator.calculateHeightForScoreView()

@@ -1,7 +1,7 @@
-package nl.entreco.data.sound
+package nl.entreco.dartsscorecard.sounds
 
 import android.media.MediaPlayer
-import nl.entreco.domain.repository.MusicRepository
+import nl.entreco.domain.mastercaller.MusicRepository
 
 class LocalMusicRepository(private val mediaPlayer: MediaPlayer): MusicRepository {
 

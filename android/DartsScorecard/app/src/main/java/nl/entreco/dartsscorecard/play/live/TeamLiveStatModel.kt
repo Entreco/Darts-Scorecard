@@ -8,8 +8,10 @@ import nl.entreco.domain.model.players.Team
 /**
  * Created by entreco on 11/01/2018.
  */
-class TeamLiveStatModel(val team: Team,
-                        private val liveStats: MutableList<LiveStat> = mutableListOf()) {
+class TeamLiveStatModel(
+        val team: Team,
+        private val liveStats: MutableList<LiveStat> = mutableListOf(),
+) {
 
     companion object {
         const val empty = "--"
@@ -81,7 +83,7 @@ class TeamLiveStatModel(val team: Team,
     private fun updateHighestScore() {
         when (val value = liveStats
                 .filter { it.highest.isNotEmpty() }
-                .maxBy { it.highest[0] }
+                .maxByOrNull { it.highest[0] }
                 ?.highest?.firstOrNull()) {
             null -> hScore.set(empty)
             else -> hScore.set("$value")
@@ -91,7 +93,7 @@ class TeamLiveStatModel(val team: Team,
     private fun updateHighestCheckout() {
         when (val value = liveStats
                 .filter { it.highestCo.isNotEmpty() }
-                .maxBy { it.highestCo[0] }
+                .maxByOrNull { it.highestCo[0] }
                 ?.highestCo?.firstOrNull()) {
             null -> hCo.set(empty)
             else -> hCo.set("$value")
@@ -144,7 +146,7 @@ class TeamLiveStatModel(val team: Team,
     private fun update(set: Int, darts: Int, total: Int, nAtCheckout: Int, checkouts: Int) {
         val avg = when (darts) {
             0 -> empty
-            else ->  "%.2f".format(total / darts.toDouble() * 3)
+            else -> "%.2f".format(total / darts.toDouble() * 3)
         }
         val co = "$checkouts/$nAtCheckout"
         val du = when (nAtCheckout) {

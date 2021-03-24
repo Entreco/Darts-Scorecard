@@ -1,4 +1,4 @@
-package nl.entreco.domain.play.mastercaller
+package nl.entreco.domain.mastercaller
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.verify

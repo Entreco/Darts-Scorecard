@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play
 
-import com.google.android.material.snackbar.Snackbar
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import nl.entreco.domain.model.players.Bot
@@ -11,12 +11,16 @@ import javax.inject.Inject
 /**
  * Created by entreco on 24/02/2018.
  */
-class Play01Navigator @Inject constructor(private val activity: Play01Activity) {
+class Play01Navigator @Inject constructor(
+        private val activity: Play01Activity,
+) {
+
+    private var snackbar: Snackbar? = null
 
     fun gotoTeamProfile(view: View, team: Team) {
         val teams = team.players.map { it.id }.filter { it > 0 }.toLongArray()
         when {
-            teams.isEmpty()                -> {
+            teams.isEmpty() -> {
                 Snackbar.make(view, R.string.err_player_was_deleted, Snackbar.LENGTH_INDEFINITE)
                         .setAction(android.R.string.ok) { }
                         .show()
@@ -26,9 +30,28 @@ class Play01Navigator @Inject constructor(private val activity: Play01Activity) 
                         .setAction(android.R.string.ok) { }
                         .show()
             }
-            else                           -> {
+            else -> {
                 ProfileActivity.launch(activity, teams, view)
             }
         }
+    }
+
+    fun showSnackbar(percentage: Int) {
+        if (snackbar == null) {
+            snackbar = Snackbar.make(activity.findViewById(R.id.play_root), "Downloading Soundpack", Snackbar.LENGTH_INDEFINITE)
+            snackbar?.show()
+        } else if(snackbar?.isShown == true){
+            snackbar?.setText("Downloading Soundpack\nProgress ($percentage%)")
+        }
+    }
+
+    fun doneSnackbar() {
+        snackbar?.setAction("Restart") {
+            activity.runOnUiThread {
+                activity.finish()
+                snackbar = null
+            }
+        }
+        snackbar?.show()
     }
 }

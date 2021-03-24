@@ -1,9 +1,9 @@
-package nl.entreco.domain.play.mastercaller
+package nl.entreco.domain.mastercaller
 
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.shared.BaseUsecase
 import nl.entreco.shared.threading.Background
 import nl.entreco.shared.threading.Foreground
-import nl.entreco.domain.repository.AudioPrefRepository
 import javax.inject.Inject
 
 /**
@@ -14,7 +14,7 @@ class ToggleSoundUsecase @Inject constructor(
         bg: Background, fg: Foreground
 ) : BaseUsecase(bg, fg) {
 
-    fun toggle(){
+    fun toggle() {
         onBackground({
             val toggled = !audioPrefRepository.isMasterCallerEnabled()
             audioPrefRepository.setMasterCallerEnabled(toggled)

@@ -1,4 +1,4 @@
-package nl.entreco.domain.repository
+package nl.entreco.domain.mastercaller
 
 interface MusicRepository {
     fun play()

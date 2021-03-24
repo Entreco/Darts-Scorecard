@@ -11,6 +11,11 @@ import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
 import nl.entreco.dartsscorecard.play.score.UiCallback
+import nl.entreco.domain.mastercaller.MasterCaller
+import nl.entreco.domain.mastercaller.MasterCallerRequest
+import nl.entreco.domain.mastercaller.MusicPlayer
+import nl.entreco.domain.mastercaller.ToggleMusicUsecase
+import nl.entreco.domain.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -24,11 +29,6 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.listeners.StatListener
-import nl.entreco.domain.play.mastercaller.MasterCaller
-import nl.entreco.domain.play.mastercaller.MasterCallerRequest
-import nl.entreco.domain.play.mastercaller.MusicPlayer
-import nl.entreco.domain.play.mastercaller.ToggleMusicUsecase
-import nl.entreco.domain.play.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheRequest
 import nl.entreco.domain.play.revanche.RevancheResponse
 import nl.entreco.domain.play.revanche.RevancheUsecase
@@ -64,7 +64,7 @@ class Play01ViewModel @Inject constructor(
         private val askForRatingUsecase: AskForRatingUsecase,
         private val audioPrefRepository: AudioPrefRepository,
         private val adViewModel: AdViewModel,
-        @ActivityScope private val logger: Logger
+        @ActivityScope private val logger: Logger,
 ) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)
@@ -78,8 +78,10 @@ class Play01ViewModel @Inject constructor(
     private var load: GameLoadedNotifier<ScoreSettings>? = null
     private var loaders: Array<GameLoadedNotifier<Play01Response>>? = null
 
-    fun load(request: Play01Request, load: GameLoadedNotifier<ScoreSettings>,
-             vararg loaders: GameLoadedNotifier<Play01Response>) {
+    fun load(
+            request: Play01Request, load: GameLoadedNotifier<ScoreSettings>,
+            vararg loaders: GameLoadedNotifier<Play01Response>,
+    ) {
         this.load = load
         this.loaders = arrayOf(*loaders)
         this.playGameUsecase.loadGameAndStart(request,
@@ -101,8 +103,10 @@ class Play01ViewModel @Inject constructor(
         }
     }
 
-    private fun onGameOk(request: Play01Request, response: Play01Response?,
-                         revancheResponse: RevancheResponse?) {
+    private fun onGameOk(
+            request: Play01Request, response: Play01Response?,
+            revancheResponse: RevancheResponse?,
+    ) {
         this.request = request
         this.game = response?.game ?: revancheResponse!!.game
         this.teams = response?.teams ?: revancheResponse!!.teams
@@ -128,9 +132,11 @@ class Play01ViewModel @Inject constructor(
         }
     }
 
-    fun registerListeners(scoreListener: ScoreListener, statListener: StatListener,
-                          specialEventListener: SpecialEventListener<*>,
-                          vararg playerListeners: PlayerListener) {
+    fun registerListeners(
+            scoreListener: ScoreListener, statListener: StatListener,
+            specialEventListener: SpecialEventListener<*>,
+            vararg playerListeners: PlayerListener,
+    ) {
         gameListeners.registerListeners(scoreListener, statListener, specialEventListener,
                 *playerListeners)
     }
@@ -217,21 +223,22 @@ class Play01ViewModel @Inject constructor(
 
     private fun notifyMasterCaller(next: Next, turn: Turn) {
         when (next.state) {
-            State.START    -> masterCaller.play(MasterCallerRequest(start = true))
-            State.LEG      -> masterCaller.play(MasterCallerRequest(leg = true))
-            State.SET      -> masterCaller.play(MasterCallerRequest(set = true))
-            State.MATCH    -> masterCaller.play(MasterCallerRequest(match = true))
+            State.START -> masterCaller.play(MasterCallerRequest(start = true))
+            State.LEG -> masterCaller.play(MasterCallerRequest(leg = true))
+            State.SET -> masterCaller.play(MasterCallerRequest(set = true))
+            State.MATCH -> masterCaller.play(MasterCallerRequest(match = true))
             State.ERR_BUST -> masterCaller.play(MasterCallerRequest(0))
-            else           -> masterCaller.play(MasterCallerRequest(turn.total()))
+            else -> masterCaller.play(MasterCallerRequest(turn.total()))
         }
     }
 
     private fun showInterstitial(next: Next) {
         when (next.state) {
             State.START -> adViewModel.provideInterstitial()
-            State.SET   -> adViewModel.provideInterstitial()
+            State.SET -> adViewModel.provideInterstitial()
             State.MATCH -> adViewModel.provideInterstitial()
-            else        -> { /* ignore */ }
+            else -> { /* ignore */
+            }
         }
     }
 
