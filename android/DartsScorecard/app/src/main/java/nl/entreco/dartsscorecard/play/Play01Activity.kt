@@ -5,14 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.splitcompat.SplitCompat
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.ViewModelActivity
@@ -162,8 +158,12 @@ class Play01Activity : ViewModelActivity(), SoundInstalledCallback {
         }
     }
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        SplitCompat.installActivity(this)
+    }
+
     override fun onComplete() {
-        SplitCompat.install(this)
         navigator.doneSnackbar()
     }
 

@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.sounds
 
 import android.content.Context
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.media.SoundPool
 import androidx.annotation.Keep
@@ -23,8 +24,13 @@ object DynamicSoundProvider : SoundModuleProvider {
         return LocalSoundRepository(context, soundPool, prefs, mapper)
     }
 
-    override fun provideMusicRepository(context: Context): MusicRepository {
-        val mediaPlayer = MediaPlayer.create(context, nl.entreco.dartsscorecard.sounds.R.raw.pdc_tune)
+    override fun provideMusicRepository(context: Context): MusicRepository? {
+        val mediaPlayer = try {
+            MediaPlayer.create(context, nl.entreco.dartsscorecard.sounds.R.raw.pdc_tune)
+        } catch (oops: Resources.NotFoundException) {
+            null
+        } ?: return null
+
         mediaPlayer.isLooping = true
         return LocalMusicRepository(mediaPlayer)
     }

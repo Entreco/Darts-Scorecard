@@ -8,7 +8,10 @@ import android.os.PersistableBundle
 import javax.inject.Inject
 
 
-class ArchiveServiceLauncher @Inject constructor(private val context: Context, private val componentName: ComponentName) {
+class ArchiveServiceLauncher @Inject constructor(
+        private val context: Context,
+        private val componentName: ComponentName,
+) {
 
     companion object {
         internal const val EXTRA_GAME_ID = "gameId"
