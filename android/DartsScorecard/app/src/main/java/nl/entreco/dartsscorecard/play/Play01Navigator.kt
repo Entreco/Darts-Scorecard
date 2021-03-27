@@ -38,7 +38,7 @@ class Play01Navigator @Inject constructor(
 
     fun showSnackbar(percentage: Int) {
         if (snackbar == null) {
-            snackbar = Snackbar.make(activity.findViewById(R.id.play_root), "Downloading Soundpack", Snackbar.LENGTH_INDEFINITE)
+            snackbar = Snackbar.make(activity.findViewById(R.id.play_root), "Downloading Soundpack\nInitializing", Snackbar.LENGTH_INDEFINITE)
             snackbar?.show()
         } else if (snackbar?.isShown == true) {
             snackbar?.setText("Downloading Soundpack\nProgress ($percentage%)")
