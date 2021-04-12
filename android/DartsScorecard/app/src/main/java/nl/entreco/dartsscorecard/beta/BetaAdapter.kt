@@ -47,16 +47,16 @@ class BetaAdapter @Inject constructor(private val bg: Background, private val fg
     }
 
     private fun calculateDiff(features: List<Feature>) {
-        bg.post(Runnable {
+        bg.post {
             val diff = DiffUtil.calculateDiff(BetaDiffCalculator(items, features), true)
-            fg.post(Runnable {
+            fg.post {
                 queue.remove()
                 updateItems(features, diff)
                 if (queue.size > 0) {
-                    calculateDiff(queue.peek())
+                    calculateDiff(queue.peek() ?: emptyList())
                 }
-            })
-        })
+            }
+        }
     }
 
     private fun updateItems(features: List<Feature>, diff: DiffUtil.DiffResult) {

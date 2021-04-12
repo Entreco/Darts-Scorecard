@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class PlayBillingRepository(
         private val reference: WeakReference<Activity>,
         private val logger: Logger,
-        private var listener: (MakePurchaseResponse) -> Unit
+        private var listener: (MakePurchaseResponse) -> Unit,
 ) : BillingRepo {
 
     companion object {
@@ -38,8 +38,8 @@ class PlayBillingRepository(
     private val tokensToBeConsumed: MutableSet<String> = mutableSetOf()
 
     private val purchaseListener = PurchasesUpdatedListener { billingResult, purchases ->
-        when (billingResult?.responseCode) {
-            BillingClient.BillingResponseCode.OK            -> {
+        when (billingResult.responseCode) {
+            BillingClient.BillingResponseCode.OK -> {
                 purchases?.forEach { purchase ->
                     handlePurchase(purchase)
                 }
@@ -51,14 +51,14 @@ class PlayBillingRepository(
                 logger.i("IAB", "onPurchasesUpdated() - user cancelled the purchase flow - skipping")
                 listener(MakePurchaseResponse.Cancelled)
             }
-            else                                            -> {
-                logger.w("IAB", "onPurchasesUpdated() got unknown resultCode: ${billingResult?.responseCode}")
+            else -> {
+                logger.w("IAB", "onPurchasesUpdated() got unknown resultCode: ${billingResult.responseCode}")
                 listener(MakePurchaseResponse.Unknown)
             }
         }
     }
 
-    private val client = BillingClient.newBuilder(reference.get()!!).setListener(purchaseListener).enablePendingPurchases().build()
+    private val client by lazy { BillingClient.newBuilder(reference.get()!!).setListener(purchaseListener).enablePendingPurchases().build() }
 
     override fun start() {
         startServiceConnection {
@@ -123,8 +123,8 @@ class PlayBillingRepository(
 
         logger.d("IAB", "Got a verified purchase: $purchase")
 
-        when {
-            purchase.purchaseState == Purchase.PurchaseState.PURCHASED ->
+        when (purchase.purchaseState) {
+            Purchase.PurchaseState.PURCHASED ->
                 // Grant entitlement to the user.
                 skuDetails.getOrDefault(purchase.sku, null)?.let { details ->
 
@@ -144,15 +144,14 @@ class PlayBillingRepository(
                         }
                     }
                 }
-            purchase.purchaseState == Purchase.PurchaseState.PENDING   ->
+            Purchase.PurchaseState.PENDING ->
                 // Here you can confirm to the user that they've started the pending
                 // purchase, and to complete it, they should follow instructions that
                 // are given to them. You can also choose to remind the user in the
                 // future to complete the purchase if you detect that it is still
                 // pending.
                 listener(MakePurchaseResponse.Pending(purchase.sku))
-            else                                                       ->
-                // State is Purchase.PurchaseState.UNSPECIFIED_STATE
+            else -> // State is Purchase.PurchaseState.UNSPECIFIED_STATE
                 // TODO: determine what to do here.
                 // For now -> handle as Pending -> votes will be added.
                 listener(MakePurchaseResponse.Unknown)
@@ -267,23 +266,7 @@ class PlayBillingRepository(
      * replace this method with "constant true" if they decompile/rebuild your app.
      *
      */
-    private fun verifyValidSignature(signedData: String, signature: String): Boolean {
-        // Some sanity checks to see if the developer (that's you!) really followed the
-        // instructions to run this sample (don't put these checks on your app!)
-//        if (BASE_64_ENCODED_PUBLIC_KEY.contains("CONSTRUCT_YOUR")) {
-//            throw RuntimeException("Please update your app's public key at: " + "BASE_64_ENCODED_PUBLIC_KEY")
-//        }
-//
-//        try {
-//            return Security.verifyPurchase(BASE_64_ENCODED_PUBLIC_KEY, signedData, signature)
-//        } catch (e: IOException) {
-//            logger.e(TAG, "Got an exception trying to validate a purchase: $e")
-//            return false
-//        }
-        return true
-
-    }
-
+    private fun verifyValidSignature(signedData: String, signature: String) = true
 
     override fun stop() {
         if (client.isReady) {
@@ -300,10 +283,10 @@ fun SkuDetails.getVotes(): Int {
     val exclAds = FetchDonationsData()
     val exclTest = FetchDonationsTestData()
     return when {
-        inclAds.contains(sku)  -> inclAds.getVotes(sku)
-        exclAds.contains(sku)  -> exclAds.getVotes(sku)
+        inclAds.contains(sku) -> inclAds.getVotes(sku)
+        exclAds.contains(sku) -> exclAds.getVotes(sku)
         inclTest.contains(sku) -> inclTest.getVotes(sku)
         exclTest.contains(sku) -> exclTest.getVotes(sku)
-        else                   -> 10
+        else -> 10
     }
 }

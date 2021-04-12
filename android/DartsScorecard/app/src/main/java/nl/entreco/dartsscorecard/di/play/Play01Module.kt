@@ -75,8 +75,7 @@ class Play01Module(
     ): SoundRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider
-            val updatedContext = context.createPackageContext(context.packageName, 0)
-            provider?.provideSoundRepository(updatedContext.applicationContext, prefs) ?: NoSoundRepository()
+            provider?.provideSoundRepository(context.applicationContext, prefs) ?: NoSoundRepository()
         } else NoSoundRepository()
     }
 
@@ -88,8 +87,7 @@ class Play01Module(
     ): MusicRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider
-            val updatedContext = context.createPackageContext(context.packageName, 0)
-            provider?.provideMusicRepository(updatedContext.applicationContext) ?: NoMusicRepository()
+            provider?.provideMusicRepository(context.applicationContext) ?: NoMusicRepository()
         } else NoMusicRepository()
     }
 

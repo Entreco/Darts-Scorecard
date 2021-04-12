@@ -23,6 +23,7 @@ dependencies {
     implementation project(':domain')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "com.google.android.play:core:$playCore"
     implementation "androidx.core:core-ktx:$xCore"
 
     // Dagger

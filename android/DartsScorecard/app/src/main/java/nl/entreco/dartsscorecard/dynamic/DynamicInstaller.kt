@@ -53,9 +53,7 @@ class InstallListener(
             SplitInstallSessionStatus.INSTALLING,
             SplitInstallSessionStatus.PENDING,
             SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION,
-            SplitInstallSessionStatus.UNKNOWN -> {
-                callback.onDebug(state.status())
-            }
+            SplitInstallSessionStatus.UNKNOWN -> { /* Ignore */ }
         }
     }
 }

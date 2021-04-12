@@ -1,6 +1,7 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import androidx.core.os.postDelayed
@@ -286,6 +287,6 @@ object Binding {
     @BindingAdapter("next", "vm", "listener")
     fun doBot(view: View, next: Next?, vm: InputViewModel, listener: InputListener) {
         view.visibility = if (next?.player is Bot) View.VISIBLE else View.GONE
-        if (next?.player is Bot) vm.goBotGo(Handler(), listener)
+        if (next?.player is Bot) vm.goBotGo(Handler(Looper.getMainLooper()), listener)
     }
 }

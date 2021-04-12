@@ -14,7 +14,7 @@ internal class AdMobAds(
 
     override fun init() {
         Thread {
-            MobileAds.initialize(context.applicationContext){ status ->
+            MobileAds.initialize(context.applicationContext){ _ ->
 
             }
         }.start()

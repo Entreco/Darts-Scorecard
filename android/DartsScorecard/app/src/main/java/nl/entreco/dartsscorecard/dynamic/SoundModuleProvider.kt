@@ -7,6 +7,6 @@ import nl.entreco.domain.mastercaller.SoundRepository
 import nl.entreco.domain.repository.AudioPrefRepository
 
 interface SoundModuleProvider {
-    fun provideSoundRepository(context: Context, @Play01Scope prefs: AudioPrefRepository): SoundRepository
-    fun provideMusicRepository(context: Context): MusicRepository
+    fun provideSoundRepository(context: Context, @Play01Scope prefs: AudioPrefRepository): SoundRepository?
+    fun provideMusicRepository(context: Context): MusicRepository?
 }
