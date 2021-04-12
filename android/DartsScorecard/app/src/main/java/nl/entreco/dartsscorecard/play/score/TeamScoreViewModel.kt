@@ -4,6 +4,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import android.os.Handler
+import android.os.Looper
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score
@@ -21,7 +22,7 @@ import java.util.concurrent.Future
  */
 class TeamScoreViewModel(val team: Team, startScore: Score,
                          private val getFinishUsecase: GetFinishUsecase,
-                         private val handler: Handler = Handler(),
+                         private val handler: Handler = Handler(Looper.getMainLooper()),
                          starter: Boolean) : BaseViewModel(), TeamScoreListener {
 
     val finish = ObservableField("")

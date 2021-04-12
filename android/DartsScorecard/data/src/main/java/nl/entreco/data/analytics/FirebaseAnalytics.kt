@@ -88,8 +88,7 @@ class FirebaseAnalytics(context: Context) : Analytics {
     override fun trackPurchaseFailed(productId: String, step: String) {}
 
     internal fun trackPurchaseFailedBundle(step: String, productId: String): Bundle {
-        return Bundle()
-                .apply {
+        return Bundle().apply {
                     putString(FaParam.ITEM_CATEGORY, "donations")
                     putString(FaParam.ITEM_ID, productId)
                 }

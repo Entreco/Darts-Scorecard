@@ -80,7 +80,7 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
     }
 
     private fun calculateDiff(features: List<WtfItem>) {
-        bg.post(Runnable {
+        bg.post {
 
             synchronized(lock) {
                 features.forEach { item ->
@@ -88,15 +88,15 @@ class WtfAdapter @Inject constructor(private val bg: Background, private val fg:
                 }
                 val filteredSorted = features.filter { doFilter(it, searchText) }.sortedByDescending { score(it, searchText) }
                 val diff = DiffUtil.calculateDiff(WtfDiffCalculator(visibleItems, filteredSorted), true)
-                fg.post(Runnable {
+                fg.post {
                     queue.remove()
                     updateItems(filteredSorted, diff)
                     if (queue.size > 0) {
-                        calculateDiff(queue.peek())
+                        calculateDiff(queue.peek() ?: emptyList())
                     }
-                })
+                }
             }
-        })
+        }
     }
 
     private fun doFilter(item: WtfItem, searchText: String): Boolean {

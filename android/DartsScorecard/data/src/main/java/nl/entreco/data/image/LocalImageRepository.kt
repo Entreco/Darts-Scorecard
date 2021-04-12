@@ -24,7 +24,7 @@ class LocalImageRepository(private val context: Context,
 
         return try {
             val originalUri = Uri.parse(imageUri)
-            val output = File(context.filesDir, originalUri.lastPathSegment)
+            val output = File(context.filesDir, originalUri.lastPathSegment.orEmpty())
             val rotation = getPhotoOrientation(originalUri)
 
             copyInput(originalUri, output)
