@@ -43,8 +43,8 @@
                 style="@style/Setup.Hdr.End"
                 android:layout_width="@dimen/setup_width"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:importantForAccessibility="no"
+                android:orientation="horizontal"
                 android:padding="@dimen/xsmall"
                 android:text="@string/team" />
         </LinearLayout>
@@ -62,20 +62,22 @@
         <TextView
             android:id="@+id/setup_players_footer"
             style="@style/Setup.Ftr"
-            android:importantForAccessibility="no"
-            android:layout_below="@id/setup_players_list" />
+            android:layout_below="@id/setup_players_list"
+            android:importantForAccessibility="no" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="@dimen/large"
-            android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount, viewModel.adapter.players(), viewModel.adapter.bots())}"
-            android:src="@android:drawable/ic_input_add"
-            android:tint="@color/white"
             android:contentDescription="@string/cd_add_player"
-            app:fabSize="mini" />
+            android:onClick="@{() -> editor.onAddNewPlayer(viewModel.adapter.itemCount, viewModel.adapter.players(), viewModel.adapter.bots())}"
+            android:text="@string/cd_add_player"
+            android:textColor="@color/white"
+            app:backgroundTint="?attr/colorAccent"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconTint="@color/white" />
     </RelativeLayout>
 
 </layout>
