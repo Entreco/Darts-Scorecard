@@ -1,16 +1,16 @@
 package nl.entreco.domain.hiscores
 
-import nl.entreco.shared.BaseUsecase
+import nl.entreco.libcore.BaseUsecase
 import nl.entreco.domain.repository.HiScoreRepository
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class FetchHiScoresUsecase @Inject constructor(
-        bg: Background, fg: Foreground,
-        private val service: HiScoreRepository
+    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground,
+    private val service: HiScoreRepository
 ) :
-        BaseUsecase(bg, fg) {
+        nl.entreco.libcore.BaseUsecase(bg, fg) {
 
     fun go(done: (FetchHiScoreResponse) -> Unit,
            fail: (Throwable) -> Unit) {

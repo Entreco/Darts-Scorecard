@@ -3,11 +3,11 @@ package nl.entreco.data.sound
 import android.content.Context
 import android.media.SoundPool
 import androidx.annotation.RawRes
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.doThrow
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.data.R
 import nl.entreco.dartsscorecard.sounds.mastercaller.Fx00
 import nl.entreco.dartsscorecard.sounds.mastercaller.Fx01

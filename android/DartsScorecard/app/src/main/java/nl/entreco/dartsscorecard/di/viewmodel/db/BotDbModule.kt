@@ -6,7 +6,7 @@ import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.bot.BotMapper
 import nl.entreco.data.db.bot.LocalBotRepository
 import nl.entreco.domain.repository.BotRepository
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 
 @Module
 class BotDbModule {

@@ -1,6 +1,6 @@
 package nl.entreco.domain.profile.archive
 
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.ArchiveRepository

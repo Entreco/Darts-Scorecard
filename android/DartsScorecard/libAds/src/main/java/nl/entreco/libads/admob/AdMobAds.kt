@@ -5,11 +5,11 @@ import android.view.View
 import com.google.android.gms.ads.MobileAds
 import nl.entreco.libads.Ads
 import nl.entreco.libads.ui.AdLoader
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 
 internal class AdMobAds(
-        @ActivityScope private val context: Context,
-        private val adLoader: AdLoader
+    @ActivityScope private val context: Context,
+    private val adLoader: AdLoader
 ) : Ads {
 
     override fun init() {

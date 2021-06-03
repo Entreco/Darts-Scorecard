@@ -2,10 +2,10 @@ package nl.entreco.dartsscorecard.setup.edit
 
 import android.app.Activity
 import android.content.Intent
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.model.players.Player
 import org.junit.Before
 import org.junit.Test

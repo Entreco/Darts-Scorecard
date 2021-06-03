@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.di.setup
 
 import android.content.SharedPreferences
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.setup.Setup01Activity
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

@@ -1,6 +1,6 @@
 package nl.entreco.domain.model
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.play.Arbiter
 import org.junit.Assert.assertEquals
 import org.junit.Test

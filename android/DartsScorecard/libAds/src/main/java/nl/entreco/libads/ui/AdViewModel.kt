@@ -13,8 +13,8 @@ import nl.entreco.libads.Ads
 import nl.entreco.libads.BuildConfig
 import nl.entreco.libads.Interstitials
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
-import nl.entreco.shared.scopes.ActivityScope
-import nl.entreco.shared.toSingleEvent
+import nl.entreco.libcore.scopes.ActivityScope
+import nl.entreco.libcore.toSingleEvent
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Named

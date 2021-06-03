@@ -15,8 +15,8 @@ import nl.entreco.data.analytics.FirebaseAnalytics
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.Analytics
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.scopes.AppContext
-import nl.entreco.shared.scopes.ApplicationScope
+import nl.entreco.libcore.scopes.AppContext
+import nl.entreco.libcore.scopes.ApplicationScope
 import java.util.UUID
 import javax.inject.Named
 

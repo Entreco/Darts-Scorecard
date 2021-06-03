@@ -32,7 +32,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.db.PlayerDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.StatDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.db.TurnDbModule
 import nl.entreco.dartsscorecard.di.viewmodel.threading.ThreadingModule
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 
 /**
  * Created by Entreco on 14/11/2017.

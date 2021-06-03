@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.WtfViewBinding
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import nl.entreco.domain.wtf.SubmitViewedItemRequest
 import nl.entreco.domain.wtf.SubmitViewedItemUsecase
 import nl.entreco.domain.wtf.WtfItem
 import java.util.*
 import javax.inject.Inject
 
-class WtfAdapter @Inject constructor(private val bg: Background, private val fg: Foreground,
+class WtfAdapter @Inject constructor(private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground,
                                      private val submitViewedItemUsecase: SubmitViewedItemUsecase) : TestableAdapter<WtfView>(), Observer<List<WtfItem>>, WtfToggler, WtfSearchable {
 
     private var searchText : String = ""

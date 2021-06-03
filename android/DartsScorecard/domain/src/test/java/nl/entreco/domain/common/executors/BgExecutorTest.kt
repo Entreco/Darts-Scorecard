@@ -1,7 +1,7 @@
 package nl.entreco.domain.common.executors
 
-import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.shared.threading.BgExecutor
+import org.mockito.kotlin.verify
+import nl.entreco.libcore.threading.BgExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -15,12 +15,12 @@ class BgExecutorTest {
 
     @Mock private lateinit var mockRunnable: Runnable
     @Mock private lateinit var mockExecutor: ExecutorService
-    private lateinit var subject: BgExecutor
+    private lateinit var subject: nl.entreco.libcore.threading.BgExecutor
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = BgExecutor(mockExecutor)
+        subject = nl.entreco.libcore.threading.BgExecutor(mockExecutor)
     }
 
     @Test

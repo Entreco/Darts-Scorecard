@@ -5,7 +5,7 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import nl.entreco.dartsscorecard.R
-import nl.entreco.shared.libs.GlideApp
+import nl.entreco.libcore.GlideApp
 
 /**
  * Created by entreco on 23/02/2018.

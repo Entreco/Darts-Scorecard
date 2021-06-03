@@ -33,10 +33,9 @@ ext.versionName = { ->
 }
 
 ext {
-    kotlinVersion = '1.4.32'
-    gradleVersion = '4.1.3'
+    kotlinVersion = '1.5.10'
+    gradleVersion = '4.2.1'
     gmsVersion = '4.3.5'
-    detektVersion = '1.0.0.RC7'
     firebaseCrashesVersion = '2.1.1'
 
     androidCompileSdkVersion = 30
@@ -47,7 +46,7 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            daggerVersion = '2.33',
+            daggerVersion = '2.35.1',
             xConstraint = '2.0.4',
             xAnnotation = '1.1.0',
             playBilling = '3.0.3',
@@ -79,8 +78,8 @@ ext {
             gson = '2.8.6',
             leakCanary = '2.6',
             junit = '4.13.2',
-            mockito = '3.3.3',
-            mockitoKotlin = '1.5.0',
+            mockito = '3.8.8',
+            mockitoKotlin = '3.2.0',
             xCoreTesting = '1.2.0',
             espressoCore = '3.1.1',
             espressoRunner = '1.0.1'

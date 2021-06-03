@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import android.view.View
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.beta.BetaModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation

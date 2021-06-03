@@ -1,15 +1,15 @@
 package nl.entreco.domain.mastercaller
 
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class MusicPlayer @Inject constructor(
-        private val musicRepository: MusicRepository,
-        bg: Background,
-        fg: Foreground
-) : BaseUsecase(bg, fg) {
+    private val musicRepository: MusicRepository,
+    bg: nl.entreco.libcore.threading.Background,
+    fg: nl.entreco.libcore.threading.Foreground
+) : nl.entreco.libcore.BaseUsecase(bg, fg) {
 
     fun play() {
         onBackground({ musicRepository.play() }, {})

@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.profile.select
 import android.app.Activity
 import androidx.core.app.ActivityOptionsCompat
 import android.view.View
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 import nl.entreco.dartsscorecard.profile.edit.EditPlayerNameActivity
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import javax.inject.Inject

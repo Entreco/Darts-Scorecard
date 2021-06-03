@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.setup.players
 
 import android.widget.AdapterView
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

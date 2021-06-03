@@ -9,15 +9,15 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.BetaViewBinding
 import nl.entreco.domain.beta.Feature
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaAdapter @Inject constructor(private val bg: Background, private val fg: Foreground) : TestableAdapter<BetaView>(), Observer<List<Feature>> {
+class BetaAdapter @Inject constructor(private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground) : TestableAdapter<BetaView>(), Observer<List<Feature>> {
 
     private val items: MutableList<Feature> = mutableListOf()
     private val queue: Queue<List<Feature>> = ArrayDeque()

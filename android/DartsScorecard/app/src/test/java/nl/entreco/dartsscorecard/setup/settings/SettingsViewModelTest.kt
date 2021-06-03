@@ -2,9 +2,9 @@ package nl.entreco.dartsscorecard.setup.settings
 
 import android.widget.AdapterView
 import android.widget.SeekBar
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.setup.settings.FetchPreferredSettingsUsecase
 import nl.entreco.domain.setup.settings.FetchSettingsResponse
 import nl.entreco.domain.setup.settings.StorePreferredSettingsUsecase

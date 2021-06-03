@@ -1,8 +1,8 @@
 package nl.entreco.domain.play.stats
 
-import com.nhaarman.mockito_kotlin.*
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import org.mockito.kotlin.*
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.Dart
@@ -21,8 +21,8 @@ import org.mockito.MockitoAnnotations
 class StoreTurnUsecaseTest {
 
     @Mock private lateinit var mockTurnRepository: TurnRepository
-    @Mock private lateinit var mockBg: Background
-    @Mock private lateinit var mockFg: Foreground
+    @Mock private lateinit var mockBg: nl.entreco.libcore.threading.Background
+    @Mock private lateinit var mockFg: nl.entreco.libcore.threading.Foreground
     @Mock private lateinit var done: (StoreTurnResponse)->Unit
     @Mock private lateinit var fail: (Throwable)->Unit
     private val bg = TestBackground()

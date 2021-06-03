@@ -1,10 +1,10 @@
 package nl.entreco.dartsscorecard.launch
 
 import android.content.Context
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.beta.BetaActivity
 import nl.entreco.dartsscorecard.play.Play01Activity
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity

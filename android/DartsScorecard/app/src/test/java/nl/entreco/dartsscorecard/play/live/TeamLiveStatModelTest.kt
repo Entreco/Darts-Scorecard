@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.live
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.model.players.Team
 import org.junit.Assert.assertEquals

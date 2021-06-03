@@ -1,6 +1,6 @@
 package nl.entreco.data.db.profile
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.domain.profile.ProfileStat
 import org.junit.Test

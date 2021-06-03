@@ -8,7 +8,7 @@ import nl.entreco.dartsscorecard.di.viewmodel.ViewModelComponent
 import nl.entreco.dartsscorecard.di.viewmodel.ViewModelModule
 import nl.entreco.libads.AdModule
 import nl.entreco.libconsent.di.ConsentModule
-import nl.entreco.shared.scopes.ApplicationScope
+import nl.entreco.libcore.scopes.ApplicationScope
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -18,6 +18,6 @@ import nl.entreco.shared.scopes.ApplicationScope
 interface AppComponent {
     fun inject(app: App)
 
-    fun plus(sub: ViewModelModule): ViewModelComponent
-    fun plus(sub: ServiceModule): ServiceComponent
+    fun plus(module: ViewModelModule): ViewModelComponent
+    fun plus(module: ServiceModule): ServiceComponent
 }

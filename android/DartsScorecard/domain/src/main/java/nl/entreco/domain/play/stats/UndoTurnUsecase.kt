@@ -1,8 +1,8 @@
 package nl.entreco.domain.play.stats
 
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.MetaRepository
 import nl.entreco.domain.repository.TurnRepository
@@ -14,7 +14,8 @@ import javax.inject.Inject
 class UndoTurnUsecase @Inject constructor(private val turnRepository: TurnRepository,
                                           private val metaRepository: MetaRepository,
                                           private val gameRepository: GameRepository,
-                                          bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+                                          bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
+) : nl.entreco.libcore.BaseUsecase(bg, fg) {
 
     fun exec(req: UndoTurnRequest, done: (UndoTurnResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

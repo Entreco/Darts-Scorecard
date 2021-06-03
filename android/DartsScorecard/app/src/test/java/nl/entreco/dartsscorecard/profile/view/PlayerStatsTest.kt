@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile.view
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.profile.ProfileStat
 import org.junit.Assert.*
 import org.junit.Test

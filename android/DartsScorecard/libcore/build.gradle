@@ -4,15 +4,19 @@ apply plugin: 'kotlin-kapt'
 apply from: '../scripts/android_common.gradle'
 
 android {
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+    defaultPublishConfig "debug"
 }
 
 dependencies {
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    // Annotation Processing
+    kapt "com.github.bumptech.glide:compiler:$glide"
+
+    // Implementation
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.code.gson:gson:$gson"
+    implementation "com.github.bumptech.glide:glide:$glide"
+
     testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
 }

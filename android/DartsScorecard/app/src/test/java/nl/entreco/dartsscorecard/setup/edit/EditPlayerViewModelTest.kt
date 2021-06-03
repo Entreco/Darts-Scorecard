@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.setup.edit
 
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.CreatePlayerResponse
 import nl.entreco.domain.setup.players.CreatePlayerUsecase

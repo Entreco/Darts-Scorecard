@@ -33,7 +33,7 @@ android {
 
 dependencies {
 
-    implementation project(":shared")
+    implementation project(":libCore")
     implementation project(':domain')
     implementation project(':data')
     implementation project(':libLog')
@@ -75,7 +75,7 @@ dependencies {
     // Test
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
     testImplementation "android.arch.core:core-testing:$xCoreTesting"
 
     // AndroidTest

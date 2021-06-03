@@ -1,6 +1,6 @@
 package nl.entreco.domain.setup.settings
 
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.verify
 import nl.entreco.domain.repository.SetupPrefRepository
 import org.junit.Test
 import org.junit.runner.RunWith

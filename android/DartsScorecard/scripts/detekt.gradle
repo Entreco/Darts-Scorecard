@@ -1,4 +1,11 @@
-apply plugin: "io.gitlab.arturbosch.detekt"
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.17.1")
+}
+
+repositories {
+    mavenCentral()
+}
+
 detekt {
     version = "$detektVersion"
     profile("main") {

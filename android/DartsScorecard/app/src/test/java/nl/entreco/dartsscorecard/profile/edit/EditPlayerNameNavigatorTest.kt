@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.profile.edit
 
 import android.app.Activity
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.verify
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks

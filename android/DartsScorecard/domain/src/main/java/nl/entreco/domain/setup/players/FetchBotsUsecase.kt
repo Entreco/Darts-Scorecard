@@ -2,14 +2,15 @@ package nl.entreco.domain.setup.players
 
 import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.repository.BotRepository
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class FetchBotsUsecase @Inject constructor(
-        private var botRepository: BotRepository,
-        bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+    private var botRepository: BotRepository,
+    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
+) : nl.entreco.libcore.BaseUsecase(bg, fg) {
 
     fun exec(done: (FetchBotsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

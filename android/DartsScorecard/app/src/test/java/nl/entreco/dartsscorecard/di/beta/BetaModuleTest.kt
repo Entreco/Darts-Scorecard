@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.di.beta
 
 import android.app.Activity
-import com.nhaarman.mockito_kotlin.mock
+import org.mockito.kotlin.mock
 import nl.entreco.domain.beta.donations.MakePurchaseResponse
 import nl.entreco.liblog.Logger
 import org.junit.Assert

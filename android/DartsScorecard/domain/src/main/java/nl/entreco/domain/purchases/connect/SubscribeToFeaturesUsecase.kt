@@ -2,15 +2,15 @@ package nl.entreco.domain.purchases.connect
 
 import nl.entreco.domain.beta.Feature
 import nl.entreco.domain.repository.FeatureRepository
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 /**
  * Created by entreco on 03/02/2018.
  */
-class SubscribeToFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+class SubscribeToFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground) : nl.entreco.libcore.BaseUsecase(bg, fg) {
 
     fun subscribe(done: (List<Feature>) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

@@ -2,7 +2,7 @@ package nl.entreco.dartsscorecard.play
 
 import android.view.Menu
 import android.view.MenuItem
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper

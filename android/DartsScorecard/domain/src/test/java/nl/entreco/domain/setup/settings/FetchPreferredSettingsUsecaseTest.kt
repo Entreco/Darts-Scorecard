@@ -1,9 +1,9 @@
 package nl.entreco.domain.setup.settings
 
 import android.database.sqlite.SQLiteDatabaseLockedException
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.repository.SetupPrefRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test

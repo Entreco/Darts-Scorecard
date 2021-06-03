@@ -15,9 +15,9 @@ android {
 }
 
 dependencies {
-    implementation project(":domain")
-    implementation project(":shared")
+    implementation project(":libCore")
     implementation project(":libLog")
+    implementation project(":domain")
 
     // Annotation Processing
     kapt "androidx.room:room-compiler:$room"
@@ -38,7 +38,7 @@ dependencies {
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
 
     // AndroidTest
     androidTestImplementation "androidx.test:runner:$xCoreTesting"

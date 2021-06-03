@@ -1,8 +1,8 @@
 package nl.entreco.dartsscorecard.play.score
 
 import android.view.View
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.databinding.TeamScoreViewBinding
 import org.junit.Before
 import org.junit.Test

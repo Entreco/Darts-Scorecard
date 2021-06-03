@@ -4,9 +4,9 @@ import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.databinding.ActivityEditPlayerNameBinding
 import org.junit.Before

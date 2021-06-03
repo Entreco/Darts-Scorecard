@@ -13,8 +13,8 @@ import nl.entreco.domain.hiscores.HiScore
 import nl.entreco.domain.hiscores.HiScoreItem
 import nl.entreco.domain.hiscores.SortHiScoresRequest
 import nl.entreco.domain.hiscores.SortHiScoresUsecase
-import nl.entreco.shared.LiveEvent
-import nl.entreco.shared.toSingleEvent
+import nl.entreco.libcore.LiveEvent
+import nl.entreco.libcore.toSingleEvent
 import javax.inject.Inject
 
 class HiScoreViewModel @Inject constructor(

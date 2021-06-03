@@ -14,7 +14,7 @@ import nl.entreco.data.prefs.SharedRatingPrefRepo
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.BotPrefRepository
 import nl.entreco.domain.repository.RatingPrefRepository
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 
 /**
  * Created by Entreco on 14/11/2017.

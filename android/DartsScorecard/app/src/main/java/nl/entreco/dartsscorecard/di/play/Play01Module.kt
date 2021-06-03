@@ -26,8 +26,8 @@ import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.repository.MatchDescriptionRepository
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.scopes.ActivityScope
-import nl.entreco.shared.scopes.ApplicationScope
+import nl.entreco.libcore.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ApplicationScope
 import java.lang.ref.WeakReference
 
 private const val DYNAMIC_PROVIDER = "nl.entreco.dartsscorecard.sounds.DynamicSoundProvider"
@@ -69,9 +69,9 @@ class Play01Module(
     @Provides
     @Play01Scope
     fun provideSoundRepository(
-            @ActivityScope context: Context,
-            splitInstallManager: SplitInstallManager,
-            prefs: AudioPrefRepository,
+        @ActivityScope context: Context,
+        splitInstallManager: SplitInstallManager,
+        prefs: AudioPrefRepository,
     ): SoundRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider
@@ -82,8 +82,8 @@ class Play01Module(
     @Provides
     @Play01Scope
     fun provideMusicRepository(
-            @ActivityScope context: Context,
-            splitInstallManager: SplitInstallManager,
+        @ActivityScope context: Context,
+        splitInstallManager: SplitInstallManager,
     ): MusicRepository {
         return if (splitInstallManager.installedModules.contains(SOUNDS)) {
             val provider = Class.forName(DYNAMIC_PROVIDER).kotlin.objectInstance as? SoundModuleProvider

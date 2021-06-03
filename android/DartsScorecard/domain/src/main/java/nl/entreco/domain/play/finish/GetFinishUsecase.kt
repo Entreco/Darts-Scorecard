@@ -2,7 +2,7 @@ package nl.entreco.domain.play.finish
 
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import nl.entreco.shared.threading.Background
+import nl.entreco.libcore.threading.Background
 import nl.entreco.domain.model.Dart
 import java.util.concurrent.Future
 import javax.inject.Inject
@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by Entreco on 24/11/2017.
  */
-class GetFinishUsecase @Inject constructor(private val bg: Background) {
+class GetFinishUsecase @Inject constructor(private val bg: nl.entreco.libcore.threading.Background) {
 
     fun calculate(request: GetFinishRequest, result: (GetFinishResponse) -> Unit): Future<*>? {
         return bg.post(Runnable {
