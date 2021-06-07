@@ -1,8 +1,8 @@
 package nl.entreco.data.prefs
 
 import android.content.SharedPreferences
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

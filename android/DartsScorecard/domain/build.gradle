@@ -4,11 +4,11 @@ apply plugin: 'kotlin-kapt'
 apply from: '../scripts/android_common.gradle'
 
 android {
-    defaultPublishConfig "debug"
+//    defaultPublishConfig "debug"
 }
 
 dependencies {
-    implementation project(":shared")
+    implementation project(":libcore")
     implementation project(":libLog")
 
     implementation "androidx.annotation:annotation:$xAnnotation"
@@ -17,5 +17,5 @@ dependencies {
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
 }

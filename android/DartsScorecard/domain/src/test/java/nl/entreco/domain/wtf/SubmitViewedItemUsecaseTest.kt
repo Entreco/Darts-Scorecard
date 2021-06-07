@@ -1,7 +1,7 @@
 package nl.entreco.domain.wtf
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground

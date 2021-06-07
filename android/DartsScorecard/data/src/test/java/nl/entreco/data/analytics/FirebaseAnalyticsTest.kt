@@ -1,7 +1,7 @@
 package nl.entreco.data.analytics
 
 import android.content.Context
-import com.nhaarman.mockito_kotlin.mock
+import org.mockito.kotlin.mock
 import nl.entreco.domain.beta.Donation
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

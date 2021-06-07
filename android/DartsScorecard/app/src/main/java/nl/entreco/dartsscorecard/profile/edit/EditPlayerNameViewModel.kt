@@ -15,7 +15,6 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
-import java.util.Locale
 import javax.inject.Inject
 
 private const val ERR_EMPTY = 0
@@ -26,9 +25,9 @@ private const val NAME_OK = 2
  * Created by entreco on 02/03/2018.
  */
 class EditPlayerNameViewModel @Inject constructor(
-        private val handler: Handler,
-        private val analytics: Analytics,
-        fetchExistingPlayersUsecase: FetchExistingPlayersUsecase
+    private val handler: Handler,
+    private val analytics: Analytics,
+    fetchExistingPlayersUsecase: FetchExistingPlayersUsecase,
 ) : BaseViewModel() {
 
     val isTyping = ObservableBoolean(false)
@@ -41,8 +40,8 @@ class EditPlayerNameViewModel @Inject constructor(
 
     init {
         fetchExistingPlayersUsecase.exec(
-                { response -> onPlayersRetrieved(response.players) },
-                { onPlayersFailed() }
+            { response -> onPlayersRetrieved(response.players) },
+            { onPlayersFailed() }
         )
     }
 
@@ -56,7 +55,7 @@ class EditPlayerNameViewModel @Inject constructor(
     }
 
     fun playerName(playerName: String, fav: String, context: Context) {
-        initialProfileName = playerName.toLowerCase(Locale.getDefault())
+        initialProfileName = playerName.lowercase()
         favDouble.set(fav)
         favDoubleIndex.set(toIndex(fav, context))
         name.set(playerName)
@@ -86,7 +85,7 @@ class EditPlayerNameViewModel @Inject constructor(
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNameNavigator): Boolean {
         if (donePressed(action)) {
-            name.set(view.text.toString().toLowerCase(Locale.getDefault()))
+            name.set(view.text.toString().lowercase())
             onDone(navigator)
             return true
         }
@@ -97,16 +96,16 @@ class EditPlayerNameViewModel @Inject constructor(
         isTyping.set(false)
 
         val desiredDouble = favDoubleIndex.get()
-        val desiredName = name.get()!!.toLowerCase(Locale.getDefault())
+        val desiredName = name.get()!!.lowercase()
         val existing = allPlayers.findLast {
-            it.name.toLowerCase(Locale.getDefault()) == desiredName
+            it.name.lowercase() == desiredName
         }
 
         return when (isValidName(existing, desiredName)) {
-            NAME_OK       -> navigator.onDoneEditing(desiredName, desiredDouble)
-            ERR_EMPTY     -> handleError(R.string.err_player_name_is_empty)
+            NAME_OK -> navigator.onDoneEditing(desiredName, desiredDouble)
+            ERR_EMPTY -> handleError(R.string.err_player_name_is_empty)
             ERR_DUPLICATE -> handleError(R.string.err_player_already_exists)
-            else          -> handleError(R.string.err_unable_to_create_player)
+            else -> handleError(R.string.err_unable_to_create_player)
         }
     }
 

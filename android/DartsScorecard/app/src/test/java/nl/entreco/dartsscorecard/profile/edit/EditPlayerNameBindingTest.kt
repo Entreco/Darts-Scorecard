@@ -5,8 +5,8 @@ import android.os.IBinder
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

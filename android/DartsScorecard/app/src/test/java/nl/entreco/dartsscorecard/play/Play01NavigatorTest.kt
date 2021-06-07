@@ -2,9 +2,9 @@ package nl.entreco.dartsscorecard.play
 
 import android.view.View
 import androidx.fragment.app.FragmentManager
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team

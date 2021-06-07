@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+      
+  <!-- General Darts -->
+  <string name="first_to">Pertama hingga %1$s</string>
+  <string name="single_mode">individu</string>
+  <string name="all_mode">jumlah</string>
+  <string name="set">Set</string>
+  <string name="leg">Kaki</string>
+  <string name="no_score">Tiada Skor</string>
+  <string name="bust">Dada</string>
+  <string name="undo">Buat asal</string>
+  <string name="tap_to_resume">Ketuk untuk Menyambung Semula</string>
+  <string name="resume">Sambung semula</string>
+      
+  <!-- Title -->
+  <string name="title_create_profile">Buat Profil</string>
+  <string name="title_select_profile">Pilih Profil</string>
+  <string name="title_select_player">Pilih Pemain</string>
+  <string name="title_edit_profile">Sunting profil</string>
+  <string name="title_setup">Konfigurasi 01 Permainan</string>
+  <string name="title_beta">Ciri Beta</string>
+  <string name="title_settings">Tetapan</string>
+  <string name="title_wtf">@string/wtf</string>
+  <string name="title_hiscores">Skor Tinggi</string>
+      
+  <!-- Launch -->
+  <string name="resume_x01">@string/resume</string>
+  <string name="play_x01">Mulakan baru 01</string>
+  <string name="profiles">Urus Profil</string>
+  <string name="hiscores">Skor Tinggi</string>
+  <string name="beta">Ciri Baharu</string>
+  <string name="settings">Tetapan</string>
+  <string name="wtf">Apa Soalan Lazim</string>
+  <string name="stream_start">Mula Strim</string>
+  <string name="stream_stop">Henti Strim</string>
+  <string name="msg_permissions">Akses kamera dan audio diperlukan untuk Strim</string>
+  <string name="error_permissions_couldnt_start_settings">Tidak dapat membuka tetapan aplikasi. Untuk memberikan kebenaran sila lawati tetapan aplikasi ini.</string>
+  <string name="action_settings">Tetapan</string>
+      
+  <!-- Beta -->
+  <string name="vote">UNDI</string>
+  <string name="number_votes">%1$s UNDIAN</string>
+  <string name="donation_button">%1$s %2$s</string>
+  <string name="donation_thanks">Anda HEBAT &amp; tidak akan lagi melihat iklan yang menjengkelkan itu;)</string>
+  <string name="donation_ok">TERIMA KASIH</string>
+  <string name="votes_explained">&lt;p&gt;Setelah ciri ini mendapat &lt;b&gt;%1$s&lt;/b&gt; undian, pengembangan akan dimulakan.&lt;/p&gt;&lt;p&gt;Semua Sumbangan &lt;b&gt;termasuk menyingkirkan semua iklan&lt;/b&gt; dari aplikasi&lt;/p&gt;</string>
+  <string name="beta_video">&lt;b&gt;Tonton videonya&lt;/b&gt;</string>
+  <string name="beta_tagline">Ciri paling popular, akan dibangunkan terlebih dahulu</string>
+  <string name="beta_explained">Beritahu kami ciri yang ingin anda lihat seterusnya. Pilih \'UNDI\' &amp; klik ❤! Kami akan lakukan yang terbaik</string>
+      
+  <!-- Setup -->
+  <string name="select_players">Pilih Pemain</string>
+  <string name="choose_player_name">Pilih nama pemain</string>
+  <string name="choose_existing_player">Atau pilih pemain yang sedia ada</string>
+  <string name="choose_available_bot">Main melawan bot</string>
+  <string name="cannot_change_bot_name">Tidak boleh menukar nama bot</string>
+  <string name="team">Pasukan</string>
+  <string name="select_x01_score">Pilih x01 skor </string>
+  <string name="start_score">Skor rmula</string>
+  <string name="number_of_sets">Bilangan set</string>
+  <string name="number_of_legs">Bilangan kaki</string>
+  <string name="cancel">Batal</string>
+  <string name="minus">-</string>
+  <string name="plus">+</string>
+  <string name="cont">Teruskan</string>
+  <string name="powered_by">Dikuasai oleh</string>
+
+  <!-- Dialogs -->
+  <string name="rating_title">Menikmati Kad skor Baling Damak?</string>
+  <string name="rating_message">Adakah anda mempunyai masa untuk menilai aplikasi kami?\nKami sangat menghargainya</string>
+  <string name="rating_never_ask_again">Tidak</string>
+  <string name="rating_not_now">Bukan sekarang</string>
+  <string name="confirm_delete_title">Padamkan Permainan ini?</string>
+  <string name="confirm_delete_message">Semua kemajuan dan statistik untuk Permainan ini akan dikeluarkan</string>
+
+  <!-- Game States -->
+  <string name="to_throw">untuk dibaling</string>
+  <string name="to_throw_first">untuk dibaling dahulu</string>
+  <string name="game_on">Permainan diteruskan</string>
+  <string name="game_shot_and_match">Ulangan?</string>
+  <string name="select_starting_team">Pilih Pasukan untuk membaling dahulu</string>
+
+  <!-- Profile -->
+  <string name="favourite_double">Beregu kegemaran: %1$s</string>
+  <string name="edit_player_name_hint">Nama pemain</string>
+  <string name="edit_player_double">Beregu kegemaran</string>
+  <string name="confirm_delete_profile">Profil dipadamkan</string>
+      
+  <!-- Input -->
+  <string name="darts_used">Berapa banyak damak yang anda gunakan?</string>
+
+  <!-- Match Stats -->
+  <string name="match_stats">Statistik Perlawanan</string>
+  <string name="set_stats">Tetapkan %1$s Statistik</string>
+  <string name="live_breaks_made">Pecahan</string>
+  <string name="live_double_success">Kejayaan Berganda</string>
+  <string name="live_double_ratio">% Berganda</string>
+  <string name="live_highest_score">Skor Tertinggi</string>
+  <string name="live_highest_out">Tertinggi</string>
+  <string name="live_180s">180-an</string>
+  <string name="live_140s">140+</string>
+  <string name="live_100s">100+</string>
+  <string name="live_60s">60+</string>
+  <string name="live_20s">20+</string>
+  <string name="live_average">purata</string>
+
+  <!-- Streaming -->
+  <string name="streaming_dialog_title">Masukkan kod</string>
+  <string name="streaming_service">Perkhidmatan Penstriman</string>
+  <string name="receiving_service">Menerima Perkhidmatan</string>
+  <string name="live_stream_start">Mulakan Penstriman</string>
+  <string name="live_stream_connecting">Menyambung…</string>
+  <string name="live_stream_connect">Sambung</string>
+  <string name="live_stream">Strim langsung</string>
+  <string name="enter_tv_code">Masukkan kod</string>
+
+  <!-- Streaming Service -->
+  <string name="streaming_channel_name">Penstriman</string>
+  <string name="streaming_channel_description">Output kamera anda sedang distrim ke TV</string>
+  <string name="streaming_notif_title">Menstrim ke Televisyen</string>
+
+  <!-- Profile -->
+  <string name="no_stats_available">Data belum tersedia</string>
+  <string name="no_stats_available_sub">Selesaikan permainan dan kembali ke sini untuk melihat keadaan anda</string>
+  <string name="profile_games_played">Permainan Dimainkan</string>
+  <string name="profile_overall_average">Purata keseluruhan</string>
+  <string name="profile_first9_average">Purata 9 yang pertama</string>
+  <string name="profile_win_percentage">Menang %</string>
+  <string name="profile_checkout_percentage">% Semak keluar</string>
+  <string name="profile_num_180">#180-an</string>
+  <string name="profile_num_140">#140+</string>
+  <string name="profile_num_100">#100+</string>
+  <string name="profile_num_60">#60+</string>
+  <string name="profile_num_20">#20+</string>
+  <string name="profile_num_0">#Dada/ Lantun/ Tiada skor</string>
+      
+  <!--- HiScores -->
+  <string name="hiscore_title_games_ratio">Nisbah Menang</string>
+  <string name="hiscore_title_best_avg">Purata Terbaik</string>
+  <string name="hiscore_title_best_co">% Semak keluar Terbaik</string>
+  <string name="hiscore_title_highest_score">Skor Tertinggi</string>
+  <string name="hiscore_title_highest_co">Semak keluar Tertinggi</string>
+  <string name="hiscore_title_overall_average">Purata keseluruhan</string>
+  <string name="hiscore_title_first9_average">Purata 9 yang pertama</string>
+  <string name="hiscore_title_win_percentage">Menang %</string>
+  <string name="hiscore_title_checkout_percentage">% Semak keluar</string>
+  <string name="hiscore_title_num_180">#180-an</string>
+  <string name="hiscore_title_num_140">#140+</string>
+  <string name="hiscore_title_num_100">#100+</string>
+  <string name="hiscore_title_num_60">#60+</string>
+  <string name="hiscore_title_num_20">#20+</string>
+  <string name="hiscore_title_num_0">#Dada/ Lantun/ Tiada skor</string>
+  <string name="hiscore_description_games_win_ratio">Nisbah Menang vs Dimainkan</string>
+  <string name="hiscore_description_best_avg">Purata terbaik dalam satu perlawanan</string>
+  <string name="hiscore_description_best_co">Semak keluar terbaik % d dalam satu perlawanan</string>
+  <string name="hiscore_description_overall_average">Purata keseluruhan</string>
+  <string name="hiscore_description_first9_average">Purata keseluruhan sembilan baling damak yang pertama</string>
+  <string name="hiscore_description_win_percentage">Keseluruhan % o permainan dimenangi</string>
+  <string name="hiscore_description_checkout_percentage">% Keseluruhan semak keluar</string>
+  <string name="hiscore_description_num_180">Keseluruhan skor #180</string>
+  <string name="hiscore_description_num_140">Keseluruhan skor  #140+</string>
+  <string name="hiscore_description_num_100">Keseluruhan skor #100+</string>
+  <string name="hiscore_description_num_60">Keseluruhan skor #60+</string>
+  <string name="hiscore_description_num_20">Keseluruhan skor #20+</string>
+  <string name="hiscore_description_num_0">Keseluruhan skor #Dada/ Lantun/ Tiada skor</string>
+
+  <!-- What The FAQ -->
+  <string name="search_wtf">Cari di Soalan Lazim</string>
+      
+  <!-- Settings -->
+  <string name="settings_mastercaller_title">Tetapan Bunyi</string>
+  <string name="settings_mastercaller_desc_on">Baca semua skor dengan kuat</string>
+  <string name="settings_mastercaller_desc_off">Jangan gunakan Mastercaller</string>
+  <string name="settings_sound_title">Bunyi</string>
+  <string name="settings_sound_desc_on">Mainkan muzik di latar</string>
+  <string name="settings_sound_desc_off">Tiada muzik di latar belakang</string>
+  <string name="settings_theme_title">Ada tema</string>
+  <string name="settings_theme_desc">Tukar tema yang ada</string>
+  <string name="settings_privacy_title">Privasi / Iklan</string>
+  <string name="settings_privacy_desc">Ubah Keutamaan Iklan</string>
+  <string name="settings_privacy_thanks">Terima kasih atas sokongan anda!\nTiada data yang dikumpulkan untuk tujuan menampilkan iklan</string>
+  <string name="settings_ads_remove">Singkir  Iklan</string>
+  <string name="settings_bot_delay">Bot delay</string>
+  <string name="settings_bot_delay_unit">Sec.</string>
+      
+  <!-- Archive Service -->
+  <string name="archive_service">Perkhidmatan Statistik Arkib</string>
+  <string name="archive_channel_name">Statistik arkib</string>
+  <string name="archive_channel_description">Mengira statistik &amp; purata</string>
+  <string name="archive_notif_title">Mengira statistik , purata &amp; skor tinggi baharu</string>
+      
+  <!-- Specific -->
+  <string name="pcf_match">Kejohanan Akhir Pemain</string>
+  <string name="bdo_match">Piala Dunia BDO - separuh akhir</string>
+  <string name="pdc_match">Piala Dunia PDC - separuh akhir</string>
+      
+  <!-- Errors -->
+  <string name="err_player_was_deleted">Tidak dapat melihat profil Pemain yang telah dipadamkan.</string>
+  <string name="err_profile_with_bot_not_supported">Profil untuk Pasukan dengan Bot tidak tersedia</string>
+  <string name="err_unable_to_retrieve_game">Tidak dapat mengambil semula permainan.</string>
+  <string name="err_unable_to_revanche">Tidak dapat membalas dendam untuk anda.</string>
+  <string name="err_unable_to_create_player">Tidak dapat membuat pemain.</string>
+  <string name="err_unable_to_donate">Tidak dapat menderma untuk ciri pada masa ini.</string>
+  <string name="err_unable_to_fetch_players">Tidak dapat mengambil pemain.</string>
+  <string name="err_unable_to_fetch_stats">Tidak dapat mengambil statistik untuk pemain</string>
+  <string name="err_player_already_exists">Nama pemain sudah ada. Sila pilih nama lain</string>
+  <string name="err_invalid_player_name">Nama pemain tidak sah</string>
+  <string name="err_player_name_is_empty">Sila taipkan nama pemain yang dikehendaki</string>
+  <string name="err_no_players_yet">Belum ada Profil. Mainkan Permainan, atau buat pemain menggunakan butang +</string>
+  <string name="err_player_already_in_match">Pemain sudah menyertai pertandingan ini</string>
+      
+  <!-- Content Descriptions -->
+  <string name="cd_score_back">padam</string>
+  <string name="cd_throw">Serahkan damak</string>
+  <string name="cd_add_player">Tambah pemain</string>
+  <string name="cd_player_name">Masukkan nama Pemain</string>
+  <string name="cd_existing_players">Pemain Sedia ada</string>
+  <string name="cd_add_profile_picture">Tambah gambar profil</string>
+  <string name="cd_vote">Undi ciri ini</string>
+  <string name="cd_choose_sets">@string/number_of_sets</string>
+  <string name="cd_choose_legs">@string/number_of_legs</string>
+  <string name="cd_increase_sets">Tambah 1 set</string>
+  <string name="cd_decrease_sets">Tolak 1 set</string>
+  <string name="cd_increase_legs">Tambah 1 kaki</string>
+  <string name="cd_decrease_legs">Tambah 1 kaki</string>
+  <string name="cd_list_of_profiles">Profil Pemain</string>
+  <string name="cd_list_of_wtfs">Item Soalan Lazim</string>
+  <string name="cd_next">Seterusnya</string>
+  <string name="cd_prev">Sebelumnya</string>
+  <string name="cd_wtf">Bantuan</string>
+  <string name="cd_select_start_score">Pilih skor permulaan</string>
+  <string name="cd_number_of_sets">Set pertama hingga %1$s</string>
+  <string name="cd_number_of_legs">Kaki Pertama hingga %1$s</string>
+  <string name="cd_list_of_beta_features">Ciri-manakah yang ingin anda lihat ditambahkan pada aplikasi</string>
+  
+</resources>

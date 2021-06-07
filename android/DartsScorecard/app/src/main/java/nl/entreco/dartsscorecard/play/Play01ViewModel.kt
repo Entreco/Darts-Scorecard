@@ -46,25 +46,25 @@ import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 11/11/2017.
  */
 class Play01ViewModel @Inject constructor(
-        private val playGameUsecase: Play01Usecase,
-        private val revancheUsecase: RevancheUsecase,
-        private val gameListeners: Play01Listeners,
-        private val masterCaller: MasterCaller,
-        private val musicPlayer: MusicPlayer,
-        @ActivityScope private val dialogHelper: DialogHelper,
-        private val toggleSoundUsecase: ToggleSoundUsecase,
-        private val toggleMusicUsecase: ToggleMusicUsecase,
-        private val askForRatingUsecase: AskForRatingUsecase,
-        private val audioPrefRepository: AudioPrefRepository,
-        private val adViewModel: AdViewModel,
-        @ActivityScope private val logger: Logger,
+    private val playGameUsecase: Play01Usecase,
+    private val revancheUsecase: RevancheUsecase,
+    private val gameListeners: Play01Listeners,
+    private val masterCaller: MasterCaller,
+    private val musicPlayer: MusicPlayer,
+    @ActivityScope private val dialogHelper: DialogHelper,
+    private val toggleSoundUsecase: ToggleSoundUsecase,
+    private val toggleMusicUsecase: ToggleMusicUsecase,
+    private val askForRatingUsecase: AskForRatingUsecase,
+    private val audioPrefRepository: AudioPrefRepository,
+    private val adViewModel: AdViewModel,
+    @ActivityScope private val logger: Logger,
 ) : BaseViewModel(), UiCallback, InputListener {
 
     val loading = ObservableBoolean(true)

@@ -6,7 +6,7 @@ import android.content.Intent
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.viewpager.widget.PagerAdapter.POSITION_NONE
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.model.players.Player

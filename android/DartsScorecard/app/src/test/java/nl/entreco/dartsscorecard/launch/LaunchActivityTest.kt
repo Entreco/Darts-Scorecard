@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.launch
 
 import android.content.Context
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.spy
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

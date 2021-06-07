@@ -7,7 +7,7 @@ import nl.entreco.libconsent.Consent
 import nl.entreco.libconsent.ConsentPrefs
 import nl.entreco.libconsent.ask.AskConsentUsecase
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
-import nl.entreco.shared.scopes.AppContext
+import nl.entreco.libcore.scopes.AppContext
 
 @Module
 object ConsentModule {

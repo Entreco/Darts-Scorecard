@@ -3,8 +3,8 @@ package nl.entreco.dartsscorecard.di.viewmodel.api
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 import nl.entreco.liblog.Logger
 import org.junit.Assert.assertNotNull
 import org.junit.Test

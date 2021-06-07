@@ -1,29 +1,35 @@
 package nl.entreco.dartsscorecard.setup.edit
 
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
-import nl.entreco.domain.setup.players.*
-import java.util.Locale
+import nl.entreco.domain.setup.players.CreatePlayerRequest
+import nl.entreco.domain.setup.players.CreatePlayerResponse
+import nl.entreco.domain.setup.players.CreatePlayerUsecase
+import nl.entreco.domain.setup.players.FetchBotsUsecase
+import nl.entreco.domain.setup.players.FetchExistingPlayersUsecase
+import nl.entreco.domain.setup.players.InvalidPlayerNameException
+import nl.entreco.domain.setup.players.PlayerAlreadyExistsException
 import javax.inject.Inject
 import javax.inject.Named
 
 /**
  * Created by Entreco on 02/01/2018.
  */
-class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: CreatePlayerUsecase,
-                                              @Named("otherPlayers") private val otherPlayers: LongArray,
-                                              @Named("otherBots") private val otherBots: LongArray,
-                                              @Named("suggestion") suggestedName: String,
-                                              fetchExistingPlayersUsecase: FetchExistingPlayersUsecase,
-                                              fetchBotsUsecase: FetchBotsUsecase)
-    : BaseViewModel() {
+class EditPlayerViewModel @Inject constructor(
+    private val createPlayerUsecase: CreatePlayerUsecase,
+    @Named("otherPlayers") private val otherPlayers: LongArray,
+    @Named("otherBots") private val otherBots: LongArray,
+    @Named("suggestion") suggestedName: String,
+    fetchExistingPlayersUsecase: FetchExistingPlayersUsecase,
+    fetchBotsUsecase: FetchBotsUsecase,
+) : BaseViewModel() {
 
     val filteredPlayers = ObservableArrayList<Player>()
     val availableBots = ObservableArrayList<Bot>()
@@ -34,14 +40,14 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
 
     init {
         fetchExistingPlayersUsecase.exec(
-                { response -> onPlayersRetrieved(response.players) },
-                { onPlayersFailed() }
+            { response -> onPlayersRetrieved(response.players) },
+            { onPlayersFailed() }
         )
 
-        if(suggestedName.startsWith("Player")) {
+        if (suggestedName.startsWith("Player")) {
             fetchBotsUsecase.exec(
-                    { response -> onBotsRetrieved(response.bots) },
-                    { onBotsFailed() })
+                { response -> onBotsRetrieved(response.bots) },
+                { onBotsFailed() })
         }
     }
 
@@ -58,7 +64,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         filter("")
     }
 
-    private fun onBotsFailed(){
+    private fun onBotsFailed() {
         allBots.clear()
     }
 
@@ -75,7 +81,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameStartsWith(text: CharSequence): List<Player> {
-        val keep = allPlayers.filter { it.name.toLowerCase(Locale.getDefault()).startsWith(text.toString().toLowerCase(Locale.getDefault())) && !otherPlayers.contains(it.id) }
+        val keep = allPlayers.filter { it.name.lowercase().startsWith(text.toString().lowercase()) && !otherPlayers.contains(it.id) }
         keep.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(0, it)
@@ -88,7 +94,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun addPlayersWhosNameContains(text: CharSequence): List<Player> {
-        val typos = allPlayers.filter { it.name.toLowerCase(Locale.getDefault()).contains(text.toString().toLowerCase(Locale.getDefault())) && !otherPlayers.contains(it.id) }
+        val typos = allPlayers.filter { it.name.lowercase().contains(text.toString().lowercase()) && !otherPlayers.contains(it.id) }
         typos.forEach {
             if (!filteredPlayers.contains(it)) {
                 filteredPlayers.add(it)
@@ -108,15 +114,15 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
 
     fun onActionDone(view: TextView, action: Int, navigator: EditPlayerNavigator): Boolean {
         if (donePressed(action)) {
-            val desiredName = view.text.toString().toLowerCase(Locale.getDefault())
+            val desiredName = view.text.toString().lowercase()
             val existing = allPlayers.findLast {
-                it.name.toLowerCase(Locale.getDefault()) == desiredName
+                it.name.lowercase() == desiredName
             }
 
             when {
                 isNewPlayer(existing) -> createPlayerUsecase.exec(CreatePlayerRequest(desiredName),
-                        onCreateSuccess(navigator),
-                        onCreateFailed())
+                    onCreateSuccess(navigator),
+                    onCreateFailed())
                 isAlreadyPlaying(existing!!, desiredName) -> errorMsg.set(R.string.err_player_already_in_match)
                 else -> navigator.onSelected(existing)
             }
@@ -125,7 +131,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
         return false
     }
 
-    private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.toLowerCase(Locale.getDefault())
+    private fun isAlreadyPlaying(existing: Player, desiredName: String) = otherPlayers.contains(existing.id) && suggestedName.get() != desiredName.lowercase()
     private fun isNewPlayer(existing: Player?) = existing == null
     private fun donePressed(action: Int) = action == EditorInfo.IME_ACTION_DONE
 
@@ -134,7 +140,7 @@ class EditPlayerViewModel @Inject constructor(private val createPlayerUsecase: C
     }
 
     private fun onCreateFailed(): (Throwable) -> Unit = {
-        when(it){
+        when (it) {
             is PlayerAlreadyExistsException -> errorMsg.set(R.string.err_player_already_exists)
             is InvalidPlayerNameException -> errorMsg.set(R.string.err_invalid_player_name)
             else -> errorMsg.set(R.string.err_unable_to_create_player)

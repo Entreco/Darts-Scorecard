@@ -1,8 +1,8 @@
 package nl.entreco.libads.ui
 
 import android.view.View
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test

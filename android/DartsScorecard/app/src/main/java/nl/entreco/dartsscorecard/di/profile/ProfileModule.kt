@@ -18,7 +18,7 @@ import nl.entreco.domain.repository.ImageRepository
 import nl.entreco.domain.repository.ProfileInfoRepository
 import nl.entreco.domain.repository.ProfileStatRepository
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 import java.lang.ref.WeakReference
 
 /**

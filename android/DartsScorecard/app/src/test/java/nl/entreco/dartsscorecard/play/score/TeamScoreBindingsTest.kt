@@ -5,7 +5,7 @@ import android.content.res.Resources
 import android.view.ViewPropertyAnimator
 import android.widget.ImageView
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.widget.CounterTextView
 import org.junit.Test

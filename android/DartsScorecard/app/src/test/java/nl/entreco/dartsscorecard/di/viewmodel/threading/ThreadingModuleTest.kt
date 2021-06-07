@@ -1,26 +1,24 @@
 package nl.entreco.dartsscorecard.di.viewmodel.threading
 
 import android.os.Handler
-import nl.entreco.shared.threading.BgExecutor
-import nl.entreco.shared.threading.FgExecutor
+import nl.entreco.libcore.threading.BgExecutor
+import nl.entreco.libcore.threading.FgExecutor
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
 
 /**
  * Created by Entreco on 17/12/2017.
  */
 class ThreadingModuleTest {
 
-    @Mock private lateinit var mockHandler: Handler
+    private val mockHandler: Handler = mock()
     private lateinit var subject: ThreadingModule
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
         subject = ThreadingModule()
     }
 

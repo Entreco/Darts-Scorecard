@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.di.application
 
 import android.content.Context
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.App
 import nl.entreco.dartsscorecard.BuildConfig
 import nl.entreco.data.analytics.FirebaseAnalytics

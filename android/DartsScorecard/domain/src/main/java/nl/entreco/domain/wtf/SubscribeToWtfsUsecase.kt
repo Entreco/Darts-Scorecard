@@ -1,9 +1,9 @@
 package nl.entreco.domain.wtf
 
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.WtfRepository
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class SubscribeToWtfsUsecase @Inject constructor(private val repo: WtfRepository, bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {

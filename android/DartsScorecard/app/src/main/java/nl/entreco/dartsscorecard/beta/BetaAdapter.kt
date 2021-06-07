@@ -9,8 +9,8 @@ import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.BetaViewBinding
 import nl.entreco.domain.beta.Feature
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import java.util.*
 import javax.inject.Inject
 

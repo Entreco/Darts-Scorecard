@@ -1,16 +1,16 @@
 package nl.entreco.domain.rating
 
-import nl.entreco.shared.BaseUsecase
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.RatingPrefRepository
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class AskForRatingUsecase @Inject constructor(
-        private val ratingPrefRepository: RatingPrefRepository,
-        private val gameRepository: GameRepository, bg: Background, fg: Foreground) :
-        BaseUsecase(bg, fg) {
+    private val ratingPrefRepository: RatingPrefRepository,
+    private val gameRepository: GameRepository, bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun go(done: (AskForRatingResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

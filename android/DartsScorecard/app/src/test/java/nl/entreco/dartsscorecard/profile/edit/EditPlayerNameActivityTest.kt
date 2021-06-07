@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.profile.edit
 
-import com.nhaarman.mockito_kotlin.spy
+import org.mockito.kotlin.spy
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith

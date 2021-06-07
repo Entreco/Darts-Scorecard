@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.input
 
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.play.Play01Animator
 import nl.entreco.domain.Analytics

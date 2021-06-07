@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AlertDialog
 import nl.entreco.dartsscorecard.R
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.RatingPrefRepository
 import javax.inject.Inject

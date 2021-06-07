@@ -1,7 +1,7 @@
 package nl.entreco.data.db.stats
 
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.meta.MetaDao
 import nl.entreco.data.db.turn.TurnDao

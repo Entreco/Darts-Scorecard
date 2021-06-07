@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.play.live
 
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.archive.ArchiveServiceLauncher
 import nl.entreco.domain.model.Game

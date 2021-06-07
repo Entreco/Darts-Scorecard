@@ -2,7 +2,7 @@ package nl.entreco.libads
 
 import android.content.Context
 import android.content.res.Resources
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

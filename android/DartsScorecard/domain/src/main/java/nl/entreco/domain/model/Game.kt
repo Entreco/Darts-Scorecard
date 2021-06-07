@@ -58,13 +58,13 @@ data class Game(val id: Long = 0, val arbiter: Arbiter) {
     }
 
     fun getSetCount(): Int {
-        val score = arbiter.getScores().sumBy { it.set }
+        val score = arbiter.getScores().sumOf { it.set }
         val isNew: Boolean = arbiter.getScores().count { it.score == it.settings.startScore && it.leg == 0 } == arbiter.getScores().size
         return max(0, score - if (isNew) 1 else 0)
     }
 
     fun getLegCount(): Int {
-        return arbiter.getScores().sumBy { it.set * 100 + it.leg }
+        return arbiter.getScores().sumOf { it.set * 100 + it.leg }
     }
 
     fun wasBreakMade(by: Player): Boolean {

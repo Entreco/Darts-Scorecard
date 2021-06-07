@@ -4,9 +4,9 @@ import com.google.android.material.appbar.AppBarLayout
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.Window
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.verify
 import nl.entreco.dartsscorecard.databinding.ActivityProfileBinding
 import nl.entreco.dartsscorecard.profile.view.ProfileAnimator
 import org.junit.Test

@@ -7,7 +7,7 @@ import nl.entreco.dartsscorecard.base.BaseViewModel
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import nl.entreco.domain.beta.donations.Purchase
-import nl.entreco.shared.LiveEvent
+import nl.entreco.libcore.LiveEvent
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
 

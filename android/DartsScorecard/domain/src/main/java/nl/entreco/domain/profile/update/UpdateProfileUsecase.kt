@@ -1,19 +1,20 @@
 package nl.entreco.domain.profile.update
 
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.repository.ImageRepository
 import nl.entreco.domain.repository.ProfileInfoRepository
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 /**
  * Created by entreco on 28/02/2018.
  */
 class UpdateProfileUsecase @Inject constructor(
-        private val imageRepository: ImageRepository,
-        private val profileInfoRepository: ProfileInfoRepository,
-        bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+    private val imageRepository: ImageRepository,
+    private val profileInfoRepository: ProfileInfoRepository,
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun exec(req: UpdateProfileRequest, done: (UpdateProfileResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

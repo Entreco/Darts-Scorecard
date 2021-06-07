@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyZeroInteractions
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

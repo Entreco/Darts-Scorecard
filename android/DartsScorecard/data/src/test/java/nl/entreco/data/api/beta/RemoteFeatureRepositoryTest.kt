@@ -2,7 +2,7 @@ package nl.entreco.data.api.beta
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.beta.Feature
 import nl.entreco.liblog.Logger
 import org.junit.Assert.*

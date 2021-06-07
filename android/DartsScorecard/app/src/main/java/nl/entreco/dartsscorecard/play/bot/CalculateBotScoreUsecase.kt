@@ -6,18 +6,18 @@ import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.play.finish.GetFinishUsecase
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
-import java.util.Random
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.ceil
 
 class CalculateBotScoreUsecase @Inject constructor(
-        private val logger: Logger,
-        private val finishUsecase: GetFinishUsecase,
-        bg: Background, fg: Foreground
+    private val logger: Logger,
+    private val finishUsecase: GetFinishUsecase,
+    bg: Background, fg: Foreground
 ) : BaseUsecase(bg, fg) {
 
     private val aiming = mapOf(

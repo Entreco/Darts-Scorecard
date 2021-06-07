@@ -1,6 +1,6 @@
 package nl.entreco.data.db.profile
 
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.game.GameDao
 import nl.entreco.data.db.game.GameTable

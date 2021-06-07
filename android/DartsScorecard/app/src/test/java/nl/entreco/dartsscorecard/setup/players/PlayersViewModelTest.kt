@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard.setup.players
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

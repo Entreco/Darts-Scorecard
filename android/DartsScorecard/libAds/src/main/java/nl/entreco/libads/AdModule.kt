@@ -7,7 +7,7 @@ import nl.entreco.libads.admob.AdMobAds
 import nl.entreco.libads.admob.AdMobInterstitials
 import nl.entreco.libads.ui.AdLoader
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
-import nl.entreco.shared.scopes.AppContext
+import nl.entreco.libcore.scopes.AppContext
 
 @Module
 object AdModule {

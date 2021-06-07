@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+      
+  <!-- General Darts -->
+  <string name="first_to">先到%1$s</string>
+  <string name="single_mode">个人</string>
+  <string name="all_mode">全部</string>
+  <string name="set">设置</string>
+  <string name="leg">线路</string>
+  <string name="no_score">没有分数</string>
+  <string name="bust">出局</string>
+  <string name="undo">撤消</string>
+  <string name="tap_to_resume">点按继续</string>
+  <string name="resume">恢复</string>
+
+  <!-- Title -->
+  <string name="title_create_profile">创建个人资料</string>
+  <string name="title_select_profile">选择个人资料</string>
+  <string name="title_select_player">选择玩家</string>
+  <string name="title_edit_profile">编辑个人资料</string>
+  <string name="title_setup">配置 01 游戏</string>
+  <string name="title_beta">测试版功能</string>
+  <string name="title_settings">设置</string>
+  <string name="title_wtf">@string/wtf</string>
+  <string name="title_hiscores">成绩</string>
+
+  <!-- Launch -->
+  <string name="resume_x01">@string/resume</string>
+  <string name="play_x01">开始新的 01</string>
+  <string name="profiles">管理个人资料</string>
+  <string name="hiscores">成绩</string>
+  <string name="beta">新的功能</string>
+  <string name="settings">设置</string>
+  <string name="wtf">常见问题解答</string>
+  <string name="stream_start">开始流式传输</string>
+  <string name="stream_stop">停止流式传输</string>
+  <string name="msg_permissions">流式传输需要摄像头和音频访问权限</string>
+  <string name="error_permissions_couldnt_start_settings">无法打开应用设置。要授予权限，请访问此应用程序的设置。</string>
+  <string name="action_settings">设置</string>
+
+  <!-- Beta -->
+  <string name="vote">投票</string>
+  <string name="number_votes">%1$s 票</string>
+  <string name="donation_button">%1$s %2$s</string>
+  <string name="donation_thanks">你太棒了，不会再看到那些烦人的广告了 ;)</string>
+  <string name="donation_ok">谢谢</string>
+  <string name="votes_explained">&lt;p&gt;一旦此功能获得 &lt;b&gt;%1$s&lt;/b&gt; 票，就会开始开发。&lt;/p&gt;&lt;p&gt;所有捐款&lt;b&gt;包括&lt;/b&gt;从应用中&lt;/p&gt;移除所有广告</string>
+  <string name="beta_video">&lt;b&gt;观看视频&lt;/b&gt;</string>
+  <string name="beta_tagline">最受欢迎的功能，将首先开发</string>
+  <string name="beta_explained">让我们知道您接下来希望看到哪个功能。选择“投票”并点击❤！我们会尽力</string>
+
+  <!-- Setup -->
+  <string name="select_players">选择玩家</string>
+  <string name="choose_player_name">选择玩家名称</string>
+  <string name="choose_existing_player">或选择现有玩家</string>
+  <string name="choose_available_bot">与机器人对战</string>
+  <string name="cannot_change_bot_name">无法更改机器人名称</string>
+  <string name="team">团队</string>
+  <string name="select_x01_score">选择 x01 分数</string>
+  <string name="start_score">开始得分</string>
+  <string name="number_of_sets">套数</string>
+  <string name="number_of_legs">线路数</string>
+  <string name="cancel">取消</string>
+  <string name="minus">-</string>
+  <string name="plus">+</string>
+  <string name="cont">继续</string>
+  <string name="powered_by">加能</string>
+
+  <!-- Dialogs -->
+  <string name="rating_title">喜欢飞镖记分卡？</string>
+  <string name="rating_message">你有时间来评价我们的应用程序吗？我们真的很感激</string>
+  <string name="rating_never_ask_again">不</string>
+  <string name="rating_not_now">现在不要</string>
+  <string name="confirm_delete_title">删除此游戏？</string>
+  <string name="confirm_delete_message">此游戏的所有进度和统计数据将被删除</string>
+
+  <!-- Game States -->
+  <string name="to_throw">投掷</string>
+  <string name="to_throw_first">首先投掷</string>
+  <string name="game_on">游戏开始</string>
+  <string name="game_shot_and_match">复仇？</string>
+  <string name="select_starting_team">选择先投掷</string>
+
+  <!-- Profile -->
+  <string name="favourite_double">最喜欢的双人：%1$s</string>
+  <string name="edit_player_name_hint">玩家姓名</string>
+  <string name="edit_player_double">最喜欢的双人</string>
+  <string name="confirm_delete_profile">个人资料已删除</string>
+      
+  <!-- Input -->
+  <string name="darts_used">你用了多少飞镖？</string>
+      
+  <!-- Match Stats -->
+  <string name="match_stats">比赛统计</string>
+  <string name="set_stats">设置 %1$s 统计信息</string>
+  <string name="live_breaks_made">休息时间</string>
+  <string name="live_double_success">双重成功</string>
+  <string name="live_double_ratio">双倍的 ％</string>
+  <string name="live_highest_score">最高分</string>
+  <string name="live_highest_out">最高出局</string>
+  <string name="live_180s">180</string>
+  <string name="live_140s">140+</string>
+  <string name="live_100s">100+</string>
+  <string name="live_60s">60+</string>
+  <string name="live_20s">20+</string>
+  <string name="live_average">平均数</string>
+      
+  <!-- Streaming -->
+  <string name="streaming_dialog_title">输入代码</string>
+  <string name="streaming_service">流媒体服务</string>
+  <string name="receiving_service">接收服务</string>
+  <string name="live_stream_start">开始串流</string>
+  <string name="live_stream_connecting">正在连接…</string>
+  <string name="live_stream_connect">连接</string>
+  <string name="live_stream">实时传送流</string>
+  <string name="enter_tv_code">输入代码</string>
+      
+  <!-- Streaming Service -->
+  <string name="streaming_channel_name">流媒体</string>
+  <string name="streaming_channel_description">您的相机输出正在流式传输到电视</string>
+  <string name="streaming_notif_title">流媒体电视</string>
+
+  <!-- Profile -->
+  <string name="no_stats_available">尚无可用数据</string>
+  <string name="no_stats_available_sub">完成一个游戏，然后回到这里看看你的表现</string>
+  <string name="profile_games_played">玩过的游戏</string>
+  <string name="profile_overall_average">总体平均</string>
+  <string name="profile_first9_average">平均9次第一</string>
+  <string name="profile_win_percentage">赢 ％</string>
+      
+  <string name="profile_checkout_percentage">查看 ％</string>
+  <string name="profile_num_180">#180</string>
+  <string name="profile_num_140">#140+</string>
+  <string name="profile_num_100">#100+</string>
+  <string name="profile_num_60">#60+</string>
+  <string name="profile_num_20">#20+</string>
+  <string name="profile_num_0">#出局/ 弹跳/ 没有得分</string>
+      
+  <!--- HiScores -->
+  <string name="hiscore_title_games_ratio">获胜率</string>
+  <string name="hiscore_title_best_avg">最佳平均</string>
+  <string name="hiscore_title_best_co">最佳签出百分比</string>
+  <string name="hiscore_title_highest_score">最高分</string>
+  <string name="hiscore_title_highest_co">最高签出</string>
+  <string name="hiscore_title_overall_average">总体平均</string>
+  <string name="hiscore_title_first9_average">平均9次第一</string>
+  <string name="hiscore_title_win_percentage">胜出 ％</string>
+  <string name="hiscore_title_checkout_percentage">查看 ％</string>
+  <string name="hiscore_title_num_180">#180</string>
+  <string name="hiscore_title_num_140">#140+</string>
+  <string name="hiscore_title_num_100">#100+</string>
+  <string name="hiscore_title_num_60">#60+</string>
+  <string name="hiscore_title_num_20">#20+</string>
+  <string name="hiscore_title_num_0">#出局/ 弹跳/ 没有得分</string>
+  <string name="hiscore_description_games_win_ratio">胜场比</string>
+  <string name="hiscore_description_best_avg">单场比赛的最佳平均成绩</string>
+  <string name="hiscore_description_best_co">单场比赛% d最佳签出</string>
+  <string name="hiscore_description_overall_average">总体平均</string>
+  <string name="hiscore_description_first9_average">一号九镖总平均分</string>
+  <string name="hiscore_description_win_percentage">总共赢了 % o场比赛</string>
+  <string name="hiscore_description_checkout_percentage">总签出百分比</string>
+  <string name="hiscore_description_num_180">总得分 180 分</string>
+  <string name="hiscore_description_num_140">总得分 #140+</string>
+  <string name="hiscore_description_num_100">总得分 #100+</string>
+  <string name="hiscore_description_num_60">总得分 #60+</string>
+  <string name="hiscore_description_num_20">总得分 #20+</string>
+  <string name="hiscore_description_num_0">总体#出局/ 弹跳/ 没有得分得分</string>
+      
+  <!-- What The FAQ -->
+  <string name="search_wtf">在常见问题中搜索</string>
+      
+  <!-- Settings -->
+  <string name="settings_mastercaller_title">声音设置</string>
+  <string name="settings_mastercaller_desc_on">大声朗读所有分数</string>
+  <string name="settings_mastercaller_desc_off">不要使用主呼叫者</string>
+  <string name="settings_sound_title">声音</string>
+  <string name="settings_sound_desc_on">在后台播放音乐</string>
+  <string name="settings_sound_desc_off">没有背景音乐</string>
+  <string name="settings_theme_title">主题化</string>
+  <string name="settings_theme_desc">交换可用的主题</string>
+  <string name="settings_privacy_title">隐私 / 广告</string>
+  <string name="settings_privacy_desc">更改广告偏好</string>
+  <string name="settings_privacy_thanks">谢谢你的支持！不会出于展示广告的目的收集数据</string>
+  <string name="settings_ads_remove">移除广告</string>
+  <string name="settings_bot_delay">Bot delay</string>
+  <string name="settings_bot_delay_unit">Sec.</string>
+      
+  <!-- Archive Service -->
+  <string name="archive_service">存档统计服务</string>
+  <string name="archive_channel_name">存档统计</string>
+  <string name="archive_channel_description">计算统计数据和平均值</string>
+  <string name="archive_notif_title">计算新的统计数据、平均值和分数</string>
+      
+  <!-- Specific -->
+  <string name="pcf_match">玩家锦标赛决赛</string>
+  <string name="bdo_match">BDO 世界杯-半决赛</string>
+  <string name="pdc_match">PDC 世界杯-半决赛</string>
+      
+  <!-- Errors -->
+  <string name="err_player_was_deleted">无法查看已删除玩家的个人资料。</string>
+  <string name="err_profile_with_bot_not_supported">带有 Bot 的团队的配置文件不可用</string>
+  <string name="err_unable_to_retrieve_game">无法检索游戏。</string>
+  <string name="err_unable_to_revanche">无法为你报仇。</string>
+  <string name="err_unable_to_create_player">无法创建播放器。</string>
+  <string name="err_unable_to_donate">目前无法捐赠功能。</string>
+  <string name="err_unable_to_fetch_players">无法获取玩家。</string>
+  <string name="err_unable_to_fetch_stats">无法获取玩家的统计数据</string>
+  <string name="err_player_already_exists">玩家名称已存在。请选择其他名称</string>
+  <string name="err_invalid_player_name">无效的玩家名称</string>
+  <string name="err_player_name_is_empty">请输入想要的玩家姓名</string>
+  <string name="err_no_players_yet">还没有个人资料。玩游戏，或使用 + 按钮创建玩家</string>
+  <string name="err_player_already_in_match">玩家已经参加了这场比赛</string>
+      
+  <!-- Content Descriptions -->
+  <string name="cd_score_back">删除</string>
+  <string name="cd_throw">提交飞镖</string>
+  <string name="cd_add_player">添加玩家</string>
+  <string name="cd_player_name">输入玩家姓名</string>
+  <string name="cd_existing_players">现有玩家</string>
+  <string name="cd_add_profile_picture">添加个人资料图片</string>
+  <string name="cd_vote">为这个功能投票</string>
+  <string name="cd_choose_sets">@string/number_of_sets</string>
+  <string name="cd_choose_legs">@string/number_of_legs</string>
+  <string name="cd_increase_sets">加 1 套</string>
+  <string name="cd_decrease_sets">减 1 套</string>
+  <string name="cd_increase_legs">加 1 条线路</string>
+  <string name="cd_decrease_legs">减 1 条线路</string>
+  <string name="cd_list_of_profiles">玩家简介</string>
+  <string name="cd_list_of_wtfs">常见问题项目</string>
+  <string name="cd_next">下一个</string>
+  <string name="cd_prev">上一页</string>
+  <string name="cd_wtf">帮助</string>
+  <string name="cd_select_start_score">选择起始分数</string>
+  <string name="cd_number_of_sets">先到 %1$s 套</string>
+  <string name="cd_number_of_legs">第一条到 %1$s 条线路</string>
+  <string name="cd_list_of_beta_features">您希望将哪些功能添加到应用程序中</string>
+  
+</resources>

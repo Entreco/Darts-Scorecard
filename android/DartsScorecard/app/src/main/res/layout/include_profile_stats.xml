@@ -22,7 +22,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:animateLayoutChanges="true">
 
         <LinearLayout
@@ -40,7 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="@integer/col_key_weight"
-                android:text="@string/profile_games_played" />
+                android:text="@string/profile_games_played"
+                tools:text="hahahshdf hasdfasdfasdfasdf ahahahahaha"/>
 
             <TextView
                 style="@style/ProfileStatValue"

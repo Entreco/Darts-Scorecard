@@ -3,8 +3,8 @@ package nl.entreco.dartsscorecard.di.profile
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.profile.ProfileMapper
 import nl.entreco.data.db.profile.ProfileStatMapper

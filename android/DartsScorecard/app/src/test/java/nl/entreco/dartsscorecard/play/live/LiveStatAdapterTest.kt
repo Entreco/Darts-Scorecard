@@ -2,8 +2,8 @@ package nl.entreco.dartsscorecard.play.live
 
 import android.view.View
 import android.view.ViewGroup
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import nl.entreco.dartsscorecard.play.Play01Navigator
 import org.junit.Assert.*
 import org.junit.Before

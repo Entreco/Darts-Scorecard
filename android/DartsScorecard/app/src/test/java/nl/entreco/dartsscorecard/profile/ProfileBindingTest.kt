@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.profile
 
 import android.widget.ImageView
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.view.ProfileBinding
 import org.junit.Ignore

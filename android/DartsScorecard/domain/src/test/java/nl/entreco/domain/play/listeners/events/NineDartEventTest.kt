@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.listeners.events
 
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import org.mockito.kotlin.verifyZeroInteractions
 import nl.entreco.domain.model.players.Player
 import org.junit.Assert.*
 import org.junit.Test

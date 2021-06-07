@@ -13,9 +13,9 @@ android {
 }
 
 dependencies {
+    implementation project(':libcore')
     implementation project(':libConsent')
     implementation project(':domain')
-    implementation project(':shared')
 
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
@@ -25,5 +25,5 @@ dependencies {
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
-    testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlin"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
 }

@@ -5,7 +5,6 @@ import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.Mapper
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
-import java.util.Locale
 
 /**
  * Created by Entreco on 16/12/2017.
@@ -17,7 +16,7 @@ class LocalPlayerRepository(db: DscDatabase, private val mapper: Mapper<PlayerTa
     @WorkerThread
     override fun create(name: String, double: Int): Long {
         val player = PlayerTable()
-        player.name = name.toLowerCase(Locale.getDefault())
+        player.name = name.lowercase()
         player.fav = double.toString()
         return playerDao.create(player)
     }

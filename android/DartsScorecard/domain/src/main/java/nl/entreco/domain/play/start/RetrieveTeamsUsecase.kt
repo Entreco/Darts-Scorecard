@@ -1,23 +1,23 @@
 package nl.entreco.domain.play.start
 
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
 import nl.entreco.domain.model.players.DeletedPlayer
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.repository.BotRepository
 import nl.entreco.domain.repository.PlayerRepository
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 17/12/2017.
  */
 class RetrieveTeamsUsecase @Inject constructor(
-        private val playerRepository: PlayerRepository,
-        private val botRepository: BotRepository,
-        bg: Background, fg: Foreground
-) : BaseUsecase(bg, fg){
+    private val playerRepository: PlayerRepository,
+    private val botRepository: BotRepository,
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun exec(request: RetrieveTeamsRequest, done: (RetrieveTeamsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
@@ -34,11 +34,11 @@ class RetrieveTeamsUsecase @Inject constructor(
 
             val playerSplit = it.split(",")
             playerSplit.forEach { s ->
-                val dbPlayer = when{
+                val dbPlayer = when {
                     s.startsWith("#") -> botRepository.fetchById(s.substring(1).toLong())
                     else -> playerRepository.fetchById(s.toLong())
                 }
-                if(dbPlayer == null){
+                if (dbPlayer == null) {
                     players.add(DeletedPlayer())
                 } else {
                     players.add(dbPlayer)

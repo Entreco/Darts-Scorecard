@@ -1,6 +1,6 @@
 package nl.entreco.dartsscorecard
 
-import nl.entreco.shared.threading.Background
+import nl.entreco.libcore.threading.Background
 import java.util.concurrent.Future
 import java.util.concurrent.FutureTask
 

@@ -6,7 +6,7 @@ import nl.entreco.data.db.DscDatabase
 import nl.entreco.data.db.player.LocalPlayerRepository
 import nl.entreco.data.db.player.PlayerMapper
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.shared.scopes.ActivityScope
+import nl.entreco.libcore.scopes.ActivityScope
 
 /**
  * Created by Entreco on 17/12/2017.

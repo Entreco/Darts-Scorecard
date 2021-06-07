@@ -1,10 +1,10 @@
 package nl.entreco.dartsscorecard.beta.donate
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.beta.Donation
 import org.junit.Assert.assertEquals

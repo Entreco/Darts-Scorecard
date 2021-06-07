@@ -4,25 +4,26 @@ import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.BotRepository
 import nl.entreco.domain.repository.PlayerRepository
-import nl.entreco.shared.BaseUsecase
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
+import nl.entreco.libcore.BaseUsecase
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 16/12/2017.
  */
 class ExtractTeamsUsecase @Inject constructor(
-        private val playerRepository: PlayerRepository,
-        private val botRepository: BotRepository,
-        bg: Background, fg: Foreground) : BaseUsecase(bg, fg) {
+    private val playerRepository: PlayerRepository,
+    private val botRepository: BotRepository,
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun exec(request: ExtractTeamsRequest, done: (ExtractTeamsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
             var teamIds = request.toString()
             request.toPlayerNames().forEach {
-                val participant : Player? = when (it.startsWith("#")) {
-                    true  -> botRepository.fetchByName(it.substring(1))
+                val participant: Player? = when (it.startsWith("#")) {
+                    true -> botRepository.fetchByName(it.substring(1))
                     false -> playerRepository.fetchByName(it)
                 }
                 teamIds = replaceNameWithId(participant, it, teamIds)
@@ -35,9 +36,9 @@ class ExtractTeamsUsecase @Inject constructor(
 
     private fun replaceNameWithId(participant: Any?, name: String, teamIds: String): String {
         return when (participant) {
-            is Bot    -> teamIds.replace(name, "#${participant.id}")
+            is Bot -> teamIds.replace(name, "#${participant.id}")
             is Player -> teamIds.replace(name, participant.id.toString())
-            else      -> {
+            else -> {
                 val id = playerRepository.create(name, 0)
                 teamIds.replace(name, id.toString())
             }

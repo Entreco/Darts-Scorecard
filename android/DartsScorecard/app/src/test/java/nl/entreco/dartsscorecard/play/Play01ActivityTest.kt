@@ -2,10 +2,10 @@ package nl.entreco.dartsscorecard.play
 
 import android.content.Context
 import android.content.Intent
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.spy
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.setup.game.CreateGameRequest
 import nl.entreco.domain.setup.game.CreateGameResponse
 import org.junit.Assert.assertNotNull

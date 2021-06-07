@@ -1,8 +1,8 @@
 package nl.entreco.libads.ui
 
 import com.google.android.gms.ads.AdView
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
 import org.junit.Before
 import org.junit.Test

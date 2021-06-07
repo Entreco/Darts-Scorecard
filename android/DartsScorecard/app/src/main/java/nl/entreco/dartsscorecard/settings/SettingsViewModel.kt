@@ -12,7 +12,7 @@ import nl.entreco.domain.mastercaller.ToggleMusicUsecase
 import nl.entreco.domain.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.repository.BotPrefRepository
-import nl.entreco.shared.toSingleEvent
+import nl.entreco.libcore.toSingleEvent
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(

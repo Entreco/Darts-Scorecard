@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.profile.select.SelectProfileActivity
 import org.junit.Assert

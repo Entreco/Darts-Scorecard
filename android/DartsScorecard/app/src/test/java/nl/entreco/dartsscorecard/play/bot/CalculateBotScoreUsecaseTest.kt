@@ -1,12 +1,11 @@
 package nl.entreco.dartsscorecard.play.bot
 
-import com.nhaarman.mockito_kotlin.mock
+import org.mockito.kotlin.mock
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.play.finish.GetFinishUsecase
 import nl.entreco.liblog.Logger
-import nl.entreco.shared.threading.Background
-import nl.entreco.shared.threading.Foreground
-import org.junit.Assert.assertEquals
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import org.junit.Test
 import java.util.Random
 

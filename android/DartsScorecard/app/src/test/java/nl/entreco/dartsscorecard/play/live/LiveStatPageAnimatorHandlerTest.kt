@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.play.live
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.atLeastOnce
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.atLeastOnce
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

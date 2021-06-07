@@ -24,10 +24,10 @@ class ArchiveStatMapper {
     }
 
     private fun countAverages(table: ProfileTable, playerTurnMetaPairs: List<Pair<TurnTable, MetaTable>>, scores: List<Int>) {
-        table.numDarts = playerTurnMetaPairs.sumBy { it.first.numDarts }
-        table.totalScore = scores.sumBy { it }
-        table.numDarts9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumBy { it.first.numDarts }
-        table.totalScore9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumBy { score(it.first) }
+        table.numDarts = playerTurnMetaPairs.sumOf { it.first.numDarts }
+        table.totalScore = scores.sumOf { it }
+        table.numDarts9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumOf { it.first.numDarts }
+        table.totalScore9 = playerTurnMetaPairs.filter { it.second.turnInLeg <= 3 }.sumOf { score(it.first) }
     }
 
     private fun countScoreFrequencies(table: ProfileTable, scores: List<Int>) {
@@ -40,7 +40,7 @@ class ArchiveStatMapper {
     }
 
     private fun countCheckOuts(table: ProfileTable, playerTurnMetaPairs: List<Pair<TurnTable, MetaTable>>) {
-        table.numDartsAtFinish = playerTurnMetaPairs.sumBy { it.second.atCheckout }
+        table.numDartsAtFinish = playerTurnMetaPairs.sumOf { it.second.atCheckout }
         table.numFinishes = playerTurnMetaPairs.count { it.second.score == score(it.first) }
     }
 

@@ -3,10 +3,10 @@ package nl.entreco.dartsscorecard.play
 import android.content.Context
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.any
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.R
 import org.junit.Test
 import org.junit.runner.RunWith

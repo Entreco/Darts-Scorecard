@@ -1,6 +1,5 @@
 package nl.entreco.domain.setup.players
 
-import com.nhaarman.mockito_kotlin.*
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.players.Player
@@ -10,6 +9,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 02/01/2018.
@@ -17,14 +21,17 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CreatePlayerUsecaseTest {
 
-    @Mock private lateinit var mockRepo : PlayerRepository
-    @Mock private lateinit var mockDone : (CreatePlayerResponse)->Unit
-    @Mock private lateinit var mockFail : (Throwable)->Unit
+    @Mock
+    private lateinit var mockRepo: PlayerRepository
+    @Mock
+    private lateinit var mockDone: (CreatePlayerResponse) -> Unit
+    @Mock
+    private lateinit var mockFail: (Throwable) -> Unit
     private val bg = TestBackground()
     private val fg = TestForeground()
-    private val givenId : Long = 10
-    private lateinit var subject : CreatePlayerUsecase
-    private lateinit var givenRequest : CreatePlayerRequest
+    private val givenId: Long = 10
+    private lateinit var subject: CreatePlayerUsecase
+    private lateinit var givenRequest: CreatePlayerRequest
     private val okCaptor = argumentCaptor<CreatePlayerResponse>()
 
     @Test
@@ -80,7 +87,7 @@ class CreatePlayerUsecaseTest {
     }
 
     private fun whenCreatingSucceeds(name: String, double: Int) {
-        whenever(mockRepo.create(eq(name.toLowerCase()), any())).thenReturn(givenId)
+        whenever(mockRepo.create(eq(name.lowercase()), any())).thenReturn(givenId)
         givenRequest = CreatePlayerRequest(name, double)
         subject.exec(givenRequest, mockDone, mockFail)
     }
@@ -91,14 +98,14 @@ class CreatePlayerUsecaseTest {
         subject.exec(givenRequest, mockDone, mockFail)
     }
 
-    private fun thenSuccessIsReported(){
+    private fun thenSuccessIsReported() {
         verify(mockDone).invoke(okCaptor.capture())
-        assertEquals(givenRequest.name.toLowerCase(), okCaptor.lastValue.player.name)
+        assertEquals(givenRequest.name.lowercase(), okCaptor.lastValue.player.name)
         assertEquals(givenRequest.double, okCaptor.lastValue.player.prefs.favoriteDouble)
         assertEquals(givenId, okCaptor.lastValue.player.id)
     }
 
-    private fun thenErrorIsReported(){
+    private fun thenErrorIsReported() {
         verify(mockFail).invoke(any())
     }
 

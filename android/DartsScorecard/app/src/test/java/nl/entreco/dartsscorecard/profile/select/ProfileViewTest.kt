@@ -1,9 +1,9 @@
 package nl.entreco.dartsscorecard.profile.select
 
 import android.view.View
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.databinding.ProfileViewBinding
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.profile.Profile

@@ -3,7 +3,7 @@ package nl.entreco.dartsscorecard.beta
 import com.google.android.material.appbar.AppBarLayout
 import android.view.View
 import android.view.ViewPropertyAnimator
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

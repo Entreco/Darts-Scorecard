@@ -1,7 +1,7 @@
 package nl.entreco.dartsscorecard.play.score
 
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyZeroInteractions
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team

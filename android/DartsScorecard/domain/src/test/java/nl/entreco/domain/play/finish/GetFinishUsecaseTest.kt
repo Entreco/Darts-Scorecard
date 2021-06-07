@@ -1,20 +1,17 @@
 package nl.entreco.domain.play.finish
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import nl.entreco.shared.threading.Background
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.play.ScoreEstimator
+import nl.entreco.libcore.threading.Background
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 /**
  * Created by Entreco on 24/11/2017.

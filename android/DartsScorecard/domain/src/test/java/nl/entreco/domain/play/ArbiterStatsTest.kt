@@ -1,6 +1,6 @@
 package nl.entreco.domain.play
 
-import com.nhaarman.mockito_kotlin.whenever
+import org.mockito.kotlin.whenever
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Next
 import nl.entreco.domain.model.Score

@@ -6,7 +6,7 @@ import android.text.Editable
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.TextView
-import com.nhaarman.mockito_kotlin.*
+import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.players.Player
