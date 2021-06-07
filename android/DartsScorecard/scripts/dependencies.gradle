@@ -48,7 +48,7 @@ ext {
     dependencies = [
             daggerVersion = '2.35.1',
             xConstraint = '2.0.4',
-            xAnnotation = '1.1.0',
+            xAnnotation = '1.2.0',
             playBilling = '3.0.3',
             playCore = '1.10.0',
             playCoreKtx = '1.8.1',
