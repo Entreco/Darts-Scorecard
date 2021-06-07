@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation project(":libCore")
+    implementation project(":libcore")
     implementation project(":libLog")
 
     implementation "androidx.annotation:annotation:$xAnnotation"
