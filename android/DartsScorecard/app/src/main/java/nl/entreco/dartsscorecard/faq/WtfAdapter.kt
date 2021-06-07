@@ -1,25 +1,25 @@
 package nl.entreco.dartsscorecard.faq
 
-import androidx.lifecycle.Observer
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.base.TestableAdapter
 import nl.entreco.dartsscorecard.databinding.WtfViewBinding
-import nl.entreco.libcore.threading.Background
-import nl.entreco.libcore.threading.Foreground
 import nl.entreco.domain.wtf.SubmitViewedItemRequest
 import nl.entreco.domain.wtf.SubmitViewedItemUsecase
 import nl.entreco.domain.wtf.WtfItem
 import java.util.*
 import javax.inject.Inject
 
-class WtfAdapter @Inject constructor(private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground,
-                                     private val submitViewedItemUsecase: SubmitViewedItemUsecase) : TestableAdapter<WtfView>(), Observer<List<WtfItem>>, WtfToggler, WtfSearchable {
+class WtfAdapter @Inject constructor(
+    private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground,
+    private val submitViewedItemUsecase: SubmitViewedItemUsecase,
+) : TestableAdapter<WtfView>(), Observer<List<WtfItem>>, WtfToggler, WtfSearchable {
 
-    private var searchText : String = ""
+    private var searchText: String = ""
     private var allItems: MutableMap<String, WtfItem> = mutableMapOf()
     private val visibleItems: MutableList<WtfItem> = mutableListOf()
     private val queue: Queue<List<WtfItem>> = ArrayDeque()
@@ -47,7 +47,7 @@ class WtfAdapter @Inject constructor(private val bg: nl.entreco.libcore.threadin
 
     override fun search(text: CharSequence) {
         if (text.isNotEmpty() && text.length >= 3) {
-            searchText = text.toString().toLowerCase(Locale.getDefault())
+            searchText = text.toString().lowercase()
             onChanged(allItems.values.toList())
         } else {
             clearSearch()
@@ -100,14 +100,14 @@ class WtfAdapter @Inject constructor(private val bg: nl.entreco.libcore.threadin
     }
 
     private fun doFilter(item: WtfItem, searchText: String): Boolean {
-        if(searchText.isBlank()) return true
-        return item.title.toLowerCase(Locale.getDefault()).contains(searchText) || item.description.toLowerCase(Locale.getDefault()).contains(searchText)
+        if (searchText.isBlank()) return true
+        return item.title.lowercase().contains(searchText) || item.description.lowercase().contains(searchText)
     }
 
     private fun score(item: WtfItem, searchText: String): Int {
-        if(searchText.isBlank()) return 0
-        return if(item.title.toLowerCase(Locale.getDefault()).contains(searchText)) 10 else 0 +
-                if(item.description.toLowerCase(Locale.getDefault()).contains(searchText)) 5 else 0
+        if (searchText.isBlank()) return 0
+        return if (item.title.lowercase().contains(searchText)) 10 else 0 +
+                if (item.description.lowercase().contains(searchText)) 5 else 0
     }
 
     private fun updateItems(features: List<WtfItem>, diff: DiffUtil.DiffResult) {
