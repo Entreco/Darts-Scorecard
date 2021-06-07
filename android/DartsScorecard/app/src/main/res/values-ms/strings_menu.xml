@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="menu_title_delete">Padam Permainan</string>
+      
+  <string name="menu_title_swap">Tukar Tema</string>
+      
+  <string name="menu_music_swap">Muzik latar</string>
+      
+  <string name="menu_sound_swap">Pemanggil Utama</string>
+      
+  <string name="menu_title_done">Selesai</string>
+      
+  <string name="menu_profile_edit">Sunting</string>
+  
+</resources>

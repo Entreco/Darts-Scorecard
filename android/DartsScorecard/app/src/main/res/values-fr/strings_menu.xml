@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="menu_title_delete">Supprimer le jeu</string>
+      
+  <string name="menu_title_swap">Changer de thème</string>
+      
+  <string name="menu_music_swap">Musique de fond</string>
+      
+  <string name="menu_sound_swap">Maître de l\'appelant</string>
+      
+  <string name="menu_title_done">Fait</string>
+      
+  <string name="menu_profile_edit">Éditer</string>
+  
+</resources>

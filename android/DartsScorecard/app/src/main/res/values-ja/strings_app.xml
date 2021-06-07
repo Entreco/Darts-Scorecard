@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="app_name" translatable="false">Darts Scorecard</string>
+      
+  <!-- General Darts -->
+      
+  <string name="first_to">最初に %1$s へ</string>
+      
+  <string name="single_mode">個人</string>
+      
+  <string name="all_mode">合計</string>
+      
+  <string name="set">セット</string>
+      
+  <string name="leg">レッグ</string>
+      
+  <string name="no_score">ノースコア</string>
+      
+  <string name="bust">バスト</string>
+      
+  <string name="undo">元に戻す</string>
+      
+  <string name="tap_to_resume">タップして再開</string>
+      
+  <string name="resume">再開</string>
+      
+  <!-- Title -->
+      
+  <string name="title_create_profile">プロフィールを作成</string>
+      
+  <string name="title_select_profile">プロフィールを選択</string>
+      
+  <string name="title_select_player">プレーヤーを選択</string>
+      
+  <string name="title_edit_profile">プロフィールを編集</string>
+      
+  <string name="title_setup">01 ゲームを構成</string>
+      
+  <string name="title_beta">ベータ版の機能</string>
+      
+  <string name="title_settings">設定</string>
+      
+  <string name="title_wtf">@string/wtf</string>
+      
+  <string name="title_hiscores">ヒスコア</string>
+      
+  <!-- Launch -->
+      
+  <string name="resume_x01">@string/resume</string>
+      
+  <string name="play_x01">新しいスタート 01</string>
+      
+  <string name="profiles">プロフィールを管理</string>
+      
+  <string name="hiscores">ヒスコア</string>
+      
+  <string name="beta">新機能</string>
+      
+  <string name="settings">設定</string>
+      
+  <string name="wtf">よくある質問</string>
+      
+  <string name="stream_start">ストリームを開始</string>
+      
+  <string name="stream_stop">ストリームを停止</string>
+      
+  <string name="msg_permissions">ストリーミングするにはカメラとオーディオへのアクセスが必要です</string>
+      
+  <string name="error_permissions_couldnt_start_settings">アプリの設定を開けませんでした。権限を付与するには、このアプリの設定にアクセスしてください。</string>
+      
+  <string name="action_settings">設定</string>
+      
+  <!-- Beta -->
+      
+  <string name="vote">投票</string>
+      
+  <string name="number_votes">%1$s 票</string>
+      
+  <string name="donation_button">%1$s %2$s</string>
+      
+  <string name="donation_thanks">素晴らしい。迷惑な広告はもう表示されません;)</string>
+      
+  <string name="donation_ok">ありがとう</string>
+      
+  <string name="votes_explained">&lt;p&gt;この機能に &lt;b&gt;%1$s&lt;/b&gt; 票が集まると、開発が開始されます。&lt;/p&gt;&lt;p&gt;すべての寄付には、アプリからの&lt;b&gt;すべての広告の削除が含まれます&lt;/b&gt;。&lt;/p&gt; }</string>
+      
+  <string name="beta_video">&lt;b&gt;動画を観る&lt;/b&gt;</string>
+      
+  <string name="beta_tagline">最も人気のある機能が最初に開発されます</string>
+      
+  <string name="beta_explained">次に欲しい機能を教えてください。「投票」を選択して❤をクリック！頑張ります</string>
+      
+  <!-- Setup -->
+      
+  <string name="select_players">プレーヤーを選択</string>
+      
+  <string name="choose_player_name">プレーヤー名を選択</string>
+      
+  <string name="choose_existing_player">または既存のプレーヤーを選択</string>
+      
+  <string name="choose_available_bot">ボットと対戦</string>
+      
+  <string name="cannot_change_bot_name">ボットの名前を変更することはできません</string>
+      
+  <string name="team">チーム</string>
+      
+  <string name="select_x01_score">x01 スコアを選択</string>
+      
+  <string name="start_score">スタートスコア</string>
+      
+  <string name="number_of_sets">セット数</string>
+      
+  <string name="number_of_legs">レッグの数</string>
+      
+  <string name="cancel">キャンセル</string>
+      
+  <string name="minus">-</string>
+      
+  <string name="plus">+</string>
+      
+  <string name="cont">継続</string>
+      
+  <string name="powered_by">搭載</string>
+      
+  <!-- Dialogs -->
+      
+  <string name="rating_title">ダーツ スコアカードを楽しんでいますか?</string>
+      
+  <string name="rating_message">アプリを評価していただけますか?&#13;\n心から感謝します</string>
+      
+  <string name="rating_never_ask_again">いいえ</string>
+      
+  <string name="rating_not_now">今はしない</string>
+      
+  <string name="confirm_delete_title">このゲームを削除しますか?</string>
+      
+  <string name="confirm_delete_message">このゲームのすべての進行状況と統計情報が削除されます</string>
+      
+  <!-- Game States -->
+      
+  <string name="to_throw">投げるために</string>
+      
+  <string name="to_throw_first">最初に投げる</string>
+      
+  <string name="game_on">ゲームスタート</string>
+      
+  <string name="game_shot_and_match">レヴァンシュ？</string>
+      
+  <string name="select_starting_team">最初に投げるチームを選択</string>
+      
+  <!-- Profile -->
+      
+  <string name="favourite_double">好きなダブル: %1$s</string>
+      
+  <string name="edit_player_name_hint">プレーヤの名前</string>
+      
+  <string name="edit_player_double">好きなダブル</string>
+      
+  <string name="confirm_delete_profile">プロフィールが削除されました</string>
+      
+  <!-- Input -->
+      
+  <string name="darts_used">ダーツは何本使いましたか？</string>
+      
+  <!-- Match Stats -->
+      
+  <string name="match_stats">試合統計</string>
+      
+  <string name="set_stats">%1$s 統計を設定</string>
+      
+  <string name="live_breaks_made">休憩</string>
+      
+  <string name="live_double_success">ダブルサクセス</string>
+      
+  <string name="live_double_ratio">ダブル %</string>
+      
+  <string name="live_highest_score">最高得点</string>
+      
+  <string name="live_highest_out">最高のアウト</string>
+      
+  <string name="live_180s">180 年代</string>
+      
+  <string name="live_140s">140 以上</string>
+      
+  <string name="live_100s">100 以上</string>
+      
+  <string name="live_60s">60 歳以上</string>
+      
+  <string name="live_20s">20 歳以上</string>
+      
+  <string name="live_average">平均</string>
+      
+  <!-- Streaming -->
+      
+  <string name="streaming_dialog_title">コードを入力</string>
+      
+  <string name="streaming_service">ストリーミングサービス</string>
+      
+  <string name="receiving_service">受け取りサービス</string>
+      
+  <string name="live_stream_start">ストリーミングを開始</string>
+      
+  <string name="live_stream_connecting">接続中…</string>
+      
+  <string name="live_stream_connect">つながる</string>
+      
+  <string name="live_stream">ライブストリーム</string>
+      
+  <string name="enter_tv_code">コードを入力</string>
+      
+  <!-- Streaming Service -->
+      
+  <string name="streaming_channel_name">ストリーミング</string>
+      
+  <string name="streaming_channel_description">カメラ出力がテレビにストリーミングされています</string>
+      
+  <string name="streaming_notif_title">テレビへのストリーミング</string>
+      
+  <!-- Profile -->
+      
+  <string name="no_stats_available">利用可能なデータはまだありません</string>
+      
+  <string name="no_stats_available_sub">ゲームを完了してここに戻ってきて、調子を確認してください</string>
+      
+  <string name="profile_games_played">プレイしたゲーム</string>
+      
+  <string name="profile_overall_average">全体平均</string>
+      
+  <string name="profile_first9_average">1 日 9 平均</string>
+      
+  <string name="profile_win_percentage">勝率</string>
+      
+  <string name="profile_checkout_percentage">チェックアウト ％</string>
+      
+  <string name="profile_num_180">#180 年代</string>
+      
+  <string name="profile_num_140">#140+</string>
+      
+  <string name="profile_num_100">#100+</string>
+      
+  <string name="profile_num_60">#60+</string>
+      
+  <string name="profile_num_20">#20+</string>
+      
+  <string name="profile_num_0">#バスト/ バウンス/ ノースコア</string>
+      
+  <!--- HiScores -->
+      
+  <string name="hiscore_title_games_ratio">勝率</string>
+      
+  <string name="hiscore_title_best_avg">最高の平均</string>
+      
+  <string name="hiscore_title_best_co">ベスト チェックアウト %</string>
+      
+  <string name="hiscore_title_highest_score">最高得点</string>
+      
+  <string name="hiscore_title_highest_co">最高のチェックアウト</string>
+      
+  <string name="hiscore_title_overall_average">全体平均</string>
+      
+  <string name="hiscore_title_first9_average">1 日 9 平均</string>
+      
+  <string name="hiscore_title_win_percentage">勝率</string>
+      
+  <string name="hiscore_title_checkout_percentage">チェックアウト ％</string>
+      
+  <string name="hiscore_title_num_180">#180 年代</string>
+      
+  <string name="hiscore_title_num_140">#140+</string>
+      
+  <string name="hiscore_title_num_100">#100+</string>
+      
+  <string name="hiscore_title_num_60">#60+</string>
+      
+  <string name="hiscore_title_num_20">#20+</string>
+      
+  <string name="hiscore_title_num_0">#バスト/ バウンス/ ノースコア</string>
+      
+  <string name="hiscore_description_games_win_ratio">勝率とプレイ済みの比率</string>
+      
+  <string name="hiscore_description_best_avg">単一の試合中の最高の平均</string>
+      
+  <string name="hiscore_description_best_co">1 回の試合で% d最高のチェックアウト</string>
+      
+  <string name="hiscore_description_overall_average">全体平均</string>
+      
+  <string name="hiscore_description_first9_average">1st ナインダーツの総合平均</string>
+      
+  <string name="hiscore_description_win_percentage">全体で % of ゲームに勝利</string>
+      
+  <string name="hiscore_description_checkout_percentage">全体的なチェックアウト率</string>
+      
+  <string name="hiscore_description_num_180">全体的に #180 を獲得</string>
+      
+  <string name="hiscore_description_num_140">全体で #140 以上のスコアを獲得</string>
+      
+  <string name="hiscore_description_num_100">全体で #100 以上のスコアを獲得</string>
+      
+  <string name="hiscore_description_num_60">全体で #60 以上のスコアを獲得</string>
+      
+  <string name="hiscore_description_num_20">全体で #20 以上のスコアを獲得</string>
+      
+  <string name="hiscore_description_num_0">全体的な #Bust/ Bounce/ NoScore の得点</string>
+      
+  <!-- What The FAQ -->
+      
+  <string name="search_wtf">よくある質問で検索</string>
+      
+  <!-- Settings -->
+      
+  <string name="settings_mastercaller_title">サウンド設定</string>
+      
+  <string name="settings_mastercaller_desc_on">すべてのスコアを読み上げる</string>
+      
+  <string name="settings_mastercaller_desc_off">Mastercaller を使用しないでください</string>
+      
+  <string name="settings_sound_title">音</string>
+      
+  <string name="settings_sound_desc_on">バックグラウンドで音楽を再生</string>
+      
+  <string name="settings_sound_desc_off">バックグラウンドに音楽はありません</string>
+      
+  <string name="settings_theme_title">テーマ</string>
+      
+  <string name="settings_theme_desc">利用可能なテーマを入れ替える</string>
+      
+  <string name="settings_privacy_title">プライバシー / 広告</string>
+      
+  <string name="settings_privacy_desc">広告設定を変更</string>
+      
+  <string name="settings_privacy_thanks">ご協力ありがとうございました！広告を表示する目的でデータは収集されません</string>
+      
+  <string name="settings_ads_remove">広告を削除</string>
+      
+  <!-- Archive Service -->
+      
+  <string name="archive_service">アーカイブ統計サービス</string>
+      
+  <string name="archive_channel_name">統計のアーカイブ</string>
+      
+  <string name="archive_channel_description">統計と平均の計算</string>
+      
+  <string name="archive_notif_title">新しい統計、平均、ヒススコアの計算</string>
+      
+  <!-- Specific -->
+      
+  <string name="pcf_match">プレーヤーズ・チャンピオンシップ・ファイナル</string>
+      
+  <string name="bdo_match">BDO ワールドカップ - 準決勝</string>
+      
+  <string name="pdc_match">PDC ワールドカップ - 準決勝</string>
+      
+  <!-- Errors -->
+      
+  <string name="err_player_was_deleted">削除されたプレーヤーのプロフィールを表示できません。</string>
+      
+  <string name="err_profile_with_bot_not_supported">ボットを使用するチームのプロフィールは利用できません</string>
+      
+  <string name="err_unable_to_retrieve_game">ゲームを取得できません。</string>
+      
+  <string name="err_unable_to_revanche">あなたに復讐することはできません。</string>
+      
+  <string name="err_unable_to_create_player">プレーヤーを作成できません。</string>
+      
+  <string name="err_unable_to_donate">現在、機能に寄付することはできません。</string>
+      
+  <string name="err_unable_to_fetch_players">プレーヤーを取得できません。</string>
+      
+  <string name="err_unable_to_fetch_stats">プレーヤーの統計を取得できません</string>
+      
+  <string name="err_player_already_exists">プレイヤー名はすでに存在します。別の名前を選択してください</string>
+      
+  <string name="err_invalid_player_name">プレーヤー名が無効です</string>
+      
+  <string name="err_player_name_is_empty">希望の選手名を入力してください</string>
+      
+  <string name="err_no_players_yet">プロフィールはまだありません。ゲームをプレイするか、+ ボタンを使用してプレーヤーを作成します</string>
+      
+  <string name="err_player_already_in_match">プレーヤーはすでにこの試合に参加しています</string>
+      
+  <!-- Content Descriptions -->
+      
+  <string name="cd_score_back">削除</string>
+      
+  <string name="cd_throw">ダーツを送信</string>
+      
+  <string name="cd_add_player">プレーヤーを追加</string>
+      
+  <string name="cd_player_name">プレーヤー名を入力</string>
+      
+  <string name="cd_existing_players">既存のプレーヤー</string>
+      
+  <string name="cd_add_profile_picture">プロフィール写真を追加</string>
+      
+  <string name="cd_vote">この機能に投票</string>
+      
+  <string name="cd_choose_sets">@string/number_of_sets</string>
+      
+  <string name="cd_choose_legs">@string/number_of_legs</string>
+      
+  <string name="cd_increase_sets">プラス 1 セット</string>
+      
+  <string name="cd_decrease_sets">マイナス 1 セット</string>
+      
+  <string name="cd_increase_legs">プラス 1 レッグ</string>
+      
+  <string name="cd_decrease_legs">マイナス 1 レッグ</string>
+      
+  <string name="cd_list_of_profiles">選手プロフィール</string>
+      
+  <string name="cd_list_of_wtfs">よくある質問項目</string>
+      
+  <string name="cd_next">次</string>
+      
+  <string name="cd_prev">前へ</string>
+      
+  <string name="cd_wtf">ヘルプ</string>
+      
+  <string name="cd_select_start_score">スタートスコアを選択</string>
+      
+  <string name="cd_number_of_sets">最初から %1$s セット</string>
+      
+  <string name="cd_number_of_legs">最初から %1$s レッグ</string>
+      
+  <string name="cd_list_of_beta_features">アプリに追加して欲しい機能はどれですか</string>
+  
+</resources>

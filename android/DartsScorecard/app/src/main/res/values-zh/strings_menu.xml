@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="menu_title_delete">删除游戏</string>
+      
+  <string name="menu_title_swap">交换主题</string>
+      
+  <string name="menu_music_swap">背景音乐</string>
+      
+  <string name="menu_sound_swap">主呼叫者</string>
+      
+  <string name="menu_title_done">完毕</string>
+      
+  <string name="menu_profile_edit">编辑</string>
+  
+</resources>
