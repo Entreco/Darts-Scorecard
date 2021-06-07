@@ -9,6 +9,7 @@ import org.mockito.kotlin.verifyZeroInteractions
 import org.mockito.kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.repository.BillingRepository
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +25,7 @@ class ConsumeDonationUsecaseTest {
     private val bg = TestBackground()
     private val fg = TestForeground()
 
-    private val mockBillingRepository: BillingRepository = mock()
+    private val mockBillingRepository: BillingRepo = mock()
     private val done: (ConsumeDonationResponse) -> Unit = mock()
     private val fail: (Throwable) -> Unit = mock()
     private lateinit var subject: ConsumeDonationUsecase

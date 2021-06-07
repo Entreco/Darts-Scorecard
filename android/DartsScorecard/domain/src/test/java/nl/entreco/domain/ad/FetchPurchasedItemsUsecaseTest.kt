@@ -5,7 +5,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import nl.entreco.domain.common.executors.TestBackground
 import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.repository.BillingRepository
+import nl.entreco.domain.repository.BillingRepo
 import nl.entreco.domain.repository.GameRepository
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +20,7 @@ class FetchPurchasedItemsUsecaseTest {
     @Mock private lateinit var mockDone: (FetchPurchasedItemsResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
     @Mock private lateinit var mockGameRepo: GameRepository
-    @Mock private lateinit var mockBillingRepo: BillingRepository
+    @Mock private lateinit var mockBillingRepo: BillingRepo
     private lateinit var subject: FetchPurchasedItemsUsecase
 
     private var givenPurchases = emptyList<String>()
@@ -71,7 +71,7 @@ class FetchPurchasedItemsUsecaseTest {
     }
 
     private fun givenSubject() {
-        subject = FetchPurchasedItemsUsecase(mockGameRepo, mockBillingRepo, bg, fg)
+        subject = FetchPurchasedItemsUsecase(mockGameRepo, bg, fg)
     }
 
     private fun givenCompletedGames(numberOfGames: Int){
@@ -84,12 +84,10 @@ class FetchPurchasedItemsUsecaseTest {
 
     private fun whenFetchingSucceeds() {
         whenever(mockGameRepo.countFinishedGames()).thenReturn(givenNumberOfGames)
-        whenever(mockBillingRepo.fetchPurchasedItems()).thenReturn(givenPurchases)
         subject.exec(mockDone, mockFail)
     }
 
     private fun whenFetchingFails() {
-        whenever(mockBillingRepo.fetchPurchasedItems()).thenThrow(RuntimeException("do'h"))
         subject.exec(mockDone, mockFail)
     }
 
