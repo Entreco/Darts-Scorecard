@@ -71,7 +71,7 @@ class TurnDaoTest {
     }
 
     private fun verifyTurn(expected: Int, turnTable: TurnTable) {
-        val actual = (0 until turnTable.numDarts).sumBy { score(turnTable, it) * multiplier(turnTable, it) }
+        val actual = (0 until turnTable.numDarts).sumOf { score(turnTable, it) * multiplier(turnTable, it) }
         assertEquals(expected, actual)
         assertTrue(turnTable.id >= 0)
     }

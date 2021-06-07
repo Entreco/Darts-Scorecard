@@ -23,9 +23,9 @@ import javax.inject.Inject
  * Created by entreco on 21/02/2018.
  */
 class ProfileViewModel @Inject constructor(
-        private val fetchProfileUsecase: FetchProfileUsecase,
-        private val updateProfileUsecase: UpdateProfileUsecase,
-        private val fetchProfileStatsUsecase: FetchProfileStatsUsecase
+    private val fetchProfileUsecase: FetchProfileUsecase,
+    private val updateProfileUsecase: UpdateProfileUsecase,
+    private val fetchProfileStatsUsecase: FetchProfileStatsUsecase,
 ) : BaseViewModel() {
 
     val numberOfProfiles = ObservableInt()
@@ -68,9 +68,9 @@ class ProfileViewModel @Inject constructor(
             response.profiles.firstOrNull()
         } else {
             Profile(response.profiles.joinToString("&") { it.name },
-                    0,
-                    "team${response.profiles.size}",
-                    PlayerPrefs(-1))
+                0,
+                "team${response.profiles.size}",
+                PlayerPrefs(-1))
         }
 
         this.numberOfProfiles.set(response.profiles.size)
@@ -88,20 +88,20 @@ class ProfileViewModel @Inject constructor(
             response.stats[0]
         } else {
             ProfileStat(
-                    response.stats.sumBy { it.numberOfGames },
-                    response.stats.sumBy { it.numberOfWins },
-                    response.stats.sumBy { it.numberOfDarts },
-                    response.stats.sumBy { it.numberOfPoints },
-                    response.stats.sumBy { it.numberOfDarts9 },
-                    response.stats.sumBy { it.numberOfPoints9 },
-                    response.stats.sumBy { it.numberOf180s },
-                    response.stats.sumBy { it.numberOf140s },
-                    response.stats.sumBy { it.numberOf100s },
-                    response.stats.sumBy { it.numberOf60s },
-                    response.stats.sumBy { it.numberOf20s },
-                    response.stats.sumBy { it.numberOf0s },
-                    response.stats.sumBy { it.numberOfDartsAtFinish },
-                    response.stats.sumBy { it.numberOfFinishes }
+                response.stats.sumOf { it.numberOfGames },
+                response.stats.sumOf { it.numberOfWins },
+                response.stats.sumOf { it.numberOfDarts },
+                response.stats.sumOf { it.numberOfPoints },
+                response.stats.sumOf { it.numberOfDarts9 },
+                response.stats.sumOf { it.numberOfPoints9 },
+                response.stats.sumOf { it.numberOf180s },
+                response.stats.sumOf { it.numberOf140s },
+                response.stats.sumOf { it.numberOf100s },
+                response.stats.sumOf { it.numberOf60s },
+                response.stats.sumOf { it.numberOf20s },
+                response.stats.sumOf { it.numberOf0s },
+                response.stats.sumOf { it.numberOfDartsAtFinish },
+                response.stats.sumOf { it.numberOfFinishes }
             )
         }
 

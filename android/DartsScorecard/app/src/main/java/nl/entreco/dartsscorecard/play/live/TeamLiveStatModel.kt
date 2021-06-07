@@ -65,13 +65,13 @@ class TeamLiveStatModel(
     }
 
     private fun updateBreaksMade() {
-        val value = liveStats.sumBy { it.nBreaks }
+        val value = liveStats.sumOf { it.nBreaks }
         breaks.set("$value")
     }
 
     private fun updateDoublePercentage() {
-        val aggregator = liveStats.sumBy { it.nCheckouts }
-        val denominator = liveStats.sumBy { it.nAtCheckout }
+        val aggregator = liveStats.sumOf { it.nCheckouts }
+        val denominator = liveStats.sumOf { it.nAtCheckout }
         co.set("%d/%d".format(aggregator, denominator))
 
         when (denominator) {
@@ -101,33 +101,33 @@ class TeamLiveStatModel(
     }
 
     private fun update20s() {
-        val value = liveStats.sumBy { it.n20 }
+        val value = liveStats.sumOf { it.n20 }
         n20.set("$value")
     }
 
     private fun update60s() {
-        val value = liveStats.sumBy { it.n60 }
+        val value = liveStats.sumOf { it.n60 }
         n60.set("$value")
     }
 
     private fun update100s() {
-        val value = liveStats.sumBy { it.n100 }
+        val value = liveStats.sumOf { it.n100 }
         n100.set("$value")
     }
 
     private fun update140s() {
-        val value = liveStats.sumBy { it.n140 }
+        val value = liveStats.sumOf { it.n140 }
         n140.set("$value")
     }
 
     private fun update180s() {
-        val value = liveStats.sumBy { it.n180 }
+        val value = liveStats.sumOf { it.n180 }
         n180.set("$value")
     }
 
     private fun updateAverage() {
-        val aggregator = liveStats.sumBy { it.totalScore }
-        val denominator = liveStats.sumBy { it.nDarts }
+        val aggregator = liveStats.sumOf { it.totalScore }
+        val denominator = liveStats.sumOf { it.nDarts }
 
         when (denominator) {
             0 -> avg.set(empty)
@@ -136,10 +136,10 @@ class TeamLiveStatModel(
     }
 
     private fun updateSetAverage(setIndex: Int) {
-        val total = liveStats.sumBy { it.setTotals.getOrDefault(setIndex, 0) }
-        val darts = liveStats.sumBy { it.setDarts.getOrDefault(setIndex, 0) }
-        val outs = liveStats.sumBy { it.setOuts.getOrDefault(setIndex, 0) }
-        val legs = liveStats.sumBy { it.setLegs.getOrDefault(setIndex, 0) }
+        val total = liveStats.sumOf { it.setTotals.getOrDefault(setIndex, 0) }
+        val darts = liveStats.sumOf { it.setDarts.getOrDefault(setIndex, 0) }
+        val outs = liveStats.sumOf { it.setOuts.getOrDefault(setIndex, 0) }
+        val legs = liveStats.sumOf { it.setLegs.getOrDefault(setIndex, 0) }
         update(setIndex, darts, total, outs, legs)
     }
 
