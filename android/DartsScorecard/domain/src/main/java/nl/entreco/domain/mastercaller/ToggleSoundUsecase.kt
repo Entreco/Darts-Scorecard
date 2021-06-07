@@ -11,8 +11,8 @@ import javax.inject.Inject
  */
 class ToggleSoundUsecase @Inject constructor(
     private val audioPrefRepository: AudioPrefRepository,
-    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun toggle() {
         onBackground({

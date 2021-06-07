@@ -21,8 +21,8 @@ import org.mockito.MockitoAnnotations
 class StoreTurnUsecaseTest {
 
     @Mock private lateinit var mockTurnRepository: TurnRepository
-    @Mock private lateinit var mockBg: nl.entreco.libcore.threading.Background
-    @Mock private lateinit var mockFg: nl.entreco.libcore.threading.Foreground
+    @Mock private lateinit var mockBg: Background
+    @Mock private lateinit var mockFg: Foreground
     @Mock private lateinit var done: (StoreTurnResponse)->Unit
     @Mock private lateinit var fail: (Throwable)->Unit
     private val bg = TestBackground()

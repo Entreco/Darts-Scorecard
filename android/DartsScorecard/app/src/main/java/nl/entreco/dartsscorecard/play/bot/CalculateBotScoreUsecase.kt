@@ -6,19 +6,19 @@ import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Bot
 import nl.entreco.domain.play.finish.GetFinishUsecase
-import nl.entreco.liblog.Logger
 import nl.entreco.libcore.BaseUsecase
 import nl.entreco.libcore.threading.Background
 import nl.entreco.libcore.threading.Foreground
-import java.util.Random
+import nl.entreco.liblog.Logger
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.ceil
 
 class CalculateBotScoreUsecase @Inject constructor(
     private val logger: Logger,
     private val finishUsecase: GetFinishUsecase,
-    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background, fg: Foreground
+) : BaseUsecase(bg, fg) {
 
     private val aiming = mapOf(
             Dart.BULL to listOf(Dart.BULL, Dart.SINGLE_BULL, Dart.SINGLE_3, Dart.SINGLE_9, Dart.SINGLE_12, Dart.SINGLE_15, Dart.SINGLE_18, Dart.SINGLE_1, Dart.SINGLE_BULL, Dart.random(), Dart.random(), Dart.SINGLE_1, Dart.SINGLE_2, Dart.SINGLE_3, Dart.SINGLE_4, Dart.SINGLE_5, Dart.SINGLE_6, Dart.SINGLE_7, Dart.SINGLE_8, Dart.SINGLE_9, Dart.SINGLE_10, Dart.SINGLE_11, Dart.SINGLE_12, Dart.SINGLE_13, Dart.SINGLE_14, Dart.SINGLE_15, Dart.SINGLE_16, Dart.SINGLE_17, Dart.SINGLE_18, Dart.SINGLE_19, Dart.SINGLE_20),

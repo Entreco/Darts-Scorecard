@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
 import java.util.concurrent.ExecutorService
 
 /**
@@ -13,14 +14,13 @@ import java.util.concurrent.ExecutorService
  */
 class BgExecutorTest {
 
-    @Mock private lateinit var mockRunnable: Runnable
-    @Mock private lateinit var mockExecutor: ExecutorService
-    private lateinit var subject: nl.entreco.libcore.threading.BgExecutor
+    private val mockRunnable: Runnable = mock()
+    private val mockExecutor: ExecutorService = mock()
+    private lateinit var subject: BgExecutor
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        subject = nl.entreco.libcore.threading.BgExecutor(mockExecutor)
+        subject = BgExecutor(mockExecutor)
     }
 
     @Test

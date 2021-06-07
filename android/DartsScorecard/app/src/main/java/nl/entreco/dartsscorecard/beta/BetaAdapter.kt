@@ -17,7 +17,7 @@ import javax.inject.Inject
 /**
  * Created by entreco on 30/01/2018.
  */
-class BetaAdapter @Inject constructor(private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground) : TestableAdapter<BetaView>(), Observer<List<Feature>> {
+class BetaAdapter @Inject constructor(private val bg: Background, private val fg: Foreground) : TestableAdapter<BetaView>(), Observer<List<Feature>> {
 
     private val items: MutableList<Feature> = mutableListOf()
     private val queue: Queue<List<Feature>> = ArrayDeque()

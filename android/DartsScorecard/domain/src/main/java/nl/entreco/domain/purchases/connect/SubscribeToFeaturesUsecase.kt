@@ -10,7 +10,9 @@ import javax.inject.Inject
 /**
  * Created by entreco on 03/02/2018.
  */
-class SubscribeToFeaturesUsecase @Inject constructor(private val repo: FeatureRepository, bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+class SubscribeToFeaturesUsecase @Inject constructor(
+    private val repo: FeatureRepository, bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun subscribe(done: (List<Feature>) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

@@ -15,13 +15,13 @@ import nl.entreco.libcore.threading.Foreground
 @Module
 class ThreadingModule {
     @Provides
-    fun provideBackground(): nl.entreco.libcore.threading.Background {
-        return nl.entreco.libcore.threading.BgExecutor()
+    fun provideBackground(): Background {
+        return BgExecutor()
     }
 
     @Provides
-    fun provideForeground(handler: Handler): nl.entreco.libcore.threading.Foreground {
-        return nl.entreco.libcore.threading.FgExecutor(handler)
+    fun provideForeground(handler: Handler): Foreground {
+        return FgExecutor(handler)
     }
 
     @Provides

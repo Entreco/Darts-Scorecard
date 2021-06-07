@@ -12,9 +12,9 @@ import javax.inject.Inject
 class MasterCaller @Inject constructor(
     private val logger: Logger,
     private val soundRepository: SoundRepository,
-    bg: nl.entreco.libcore.threading.Background,
-    fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background,
+    fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun play(request: MasterCallerRequest) {
         onBackground({

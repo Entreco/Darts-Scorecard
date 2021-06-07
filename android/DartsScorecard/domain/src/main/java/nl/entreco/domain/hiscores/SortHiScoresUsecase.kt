@@ -6,13 +6,14 @@ import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 class SortHiScoresUsecase @Inject constructor(
-    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) :
-        nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
-    fun go(request: SortHiScoresRequest,
-           done: (List<SortHiScoresResponse>) -> Unit,
-           fail: (Throwable) -> Unit) {
+    fun go(
+        request: SortHiScoresRequest,
+        done: (List<SortHiScoresResponse>) -> Unit,
+        fail: (Throwable) -> Unit,
+    ) {
         onBackground({
             val sorted = sortByHiScore(request.items)
             val rankings = standardRanking(sorted)

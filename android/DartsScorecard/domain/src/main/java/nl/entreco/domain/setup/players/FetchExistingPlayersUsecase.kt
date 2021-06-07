@@ -1,9 +1,9 @@
 package nl.entreco.domain.setup.players
 
+import nl.entreco.domain.repository.PlayerRepository
 import nl.entreco.libcore.BaseUsecase
 import nl.entreco.libcore.threading.Background
 import nl.entreco.libcore.threading.Foreground
-import nl.entreco.domain.repository.PlayerRepository
 import javax.inject.Inject
 
 /**
@@ -11,8 +11,8 @@ import javax.inject.Inject
  */
 class FetchExistingPlayersUsecase @Inject constructor(
     private var playerRepository: PlayerRepository,
-    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun exec(done: (FetchExistingPlayersResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

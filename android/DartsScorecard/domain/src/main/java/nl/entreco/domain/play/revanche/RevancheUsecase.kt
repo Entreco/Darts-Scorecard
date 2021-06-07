@@ -1,18 +1,18 @@
 package nl.entreco.domain.play.revanche
 
+import nl.entreco.domain.repository.GameRepository
+import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.libcore.BaseUsecase
 import nl.entreco.libcore.threading.Background
 import nl.entreco.libcore.threading.Foreground
-import nl.entreco.domain.repository.GameRepository
-import nl.entreco.domain.settings.ScoreSettings
 import javax.inject.Inject
 
 /**
  * Created by entreco on 19/02/2018.
  */
 class RevancheUsecase @Inject constructor(
-    private val gameRepository: GameRepository, bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    private val gameRepository: GameRepository, bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun recreateGameAndStart(request: RevancheRequest, done: (RevancheResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
@@ -26,7 +26,7 @@ class RevancheUsecase @Inject constructor(
             //
             game.start(index, request.teams)
 
-            onUi{ done(RevancheResponse(game, scoreSettings, request.teams, teams)) }
+            onUi { done(RevancheResponse(game, scoreSettings, request.teams, teams)) }
         }, fail)
     }
 }

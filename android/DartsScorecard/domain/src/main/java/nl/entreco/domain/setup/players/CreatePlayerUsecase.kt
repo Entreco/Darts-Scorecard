@@ -3,12 +3,14 @@ package nl.entreco.domain.setup.players
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.PlayerPrefs
 import nl.entreco.domain.repository.PlayerRepository
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 02/01/2018.
  */
-class CreatePlayerUsecase @Inject constructor(private var playerRepository: PlayerRepository, bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground) :
+class CreatePlayerUsecase @Inject constructor(private var playerRepository: PlayerRepository, bg: Background, fg: Foreground) :
     nl.entreco.libcore.BaseUsecase(bg, fg) {
     fun exec(req: CreatePlayerRequest, done: (CreatePlayerResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

@@ -2,21 +2,21 @@ package nl.entreco.domain.play.finish
 
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import nl.entreco.libcore.threading.Background
 import nl.entreco.domain.model.Dart
+import nl.entreco.libcore.threading.Background
 import java.util.concurrent.Future
 import javax.inject.Inject
 
 /**
  * Created by Entreco on 24/11/2017.
  */
-class GetFinishUsecase @Inject constructor(private val bg: nl.entreco.libcore.threading.Background) {
+class GetFinishUsecase @Inject constructor(private val bg: Background) {
 
     fun calculate(request: GetFinishRequest, result: (GetFinishResponse) -> Unit): Future<*>? {
-        return bg.post(Runnable {
+        return bg.post {
             val finish = calculateInBack(request.score(), request.dartsLeft(), request.total(), request.double())
             result(GetFinishResponse(finish))
-        })
+        }
     }
 
     private val impossible = arrayOf(169, 168, 166, 165, 163, 162, 159)
@@ -57,7 +57,7 @@ class GetFinishUsecase @Inject constructor(private val bg: nl.entreco.libcore.th
 
     private fun calculatePersonalOuts(target: Int, dartsLeft: Int, fav: Int): String {
         val favScore = 2 * fav
-        val favDouble = when(fav){
+        val favDouble = when (fav) {
             25 -> "BULL"
             else -> "D$fav"
         }
@@ -258,5 +258,5 @@ class GetFinishUsecase @Inject constructor(private val bg: nl.entreco.libcore.th
     }
 
     private fun require(score: Int, dartsLeft: Int, target: Int, darts: Int) =
-            score == target && dartsLeft >= darts
+        score == target && dartsLeft >= darts
 }

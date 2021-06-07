@@ -1,25 +1,26 @@
 package nl.entreco.domain.common.executors
 
 import android.os.Handler
-import org.mockito.kotlin.verify
 import nl.entreco.libcore.threading.FgExecutor
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 /**
  * Created by Entreco on 16/12/2017.
  */
 class FgExecutorTest {
-    @Mock private lateinit var mockRunnable: Runnable
-    @Mock private lateinit var mockHandler: Handler
-    private lateinit var subject: nl.entreco.libcore.threading.FgExecutor
+
+    private val mockRunnable: Runnable = mock()
+    private val mockHandler: Handler = mock()
+    private lateinit var subject: FgExecutor
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        subject = nl.entreco.libcore.threading.FgExecutor(mockHandler)
+        subject = FgExecutor(mockHandler)
     }
 
     @Test

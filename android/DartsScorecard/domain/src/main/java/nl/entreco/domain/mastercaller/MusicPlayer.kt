@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class MusicPlayer @Inject constructor(
     private val musicRepository: MusicRepository,
-    bg: nl.entreco.libcore.threading.Background,
-    fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background,
+    fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun play() {
         onBackground({ musicRepository.play() }, {})

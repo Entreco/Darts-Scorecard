@@ -11,8 +11,8 @@ import java.util.Random
 
 class CalculateBotScoreUsecaseTest {
 
-    private val mockFg: nl.entreco.libcore.threading.Foreground = mock()
-    private val mockBg: nl.entreco.libcore.threading.Background = mock()
+    private val mockFg: Foreground = mock()
+    private val mockBg: Background = mock()
     private val mockGetFinsihUsecsae: GetFinishUsecase = mock()
     private val mockLogger: Logger = mock()
 

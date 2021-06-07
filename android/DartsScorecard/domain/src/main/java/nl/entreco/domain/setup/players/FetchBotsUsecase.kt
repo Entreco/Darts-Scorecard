@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class FetchBotsUsecase @Inject constructor(
     private var botRepository: BotRepository,
-    bg: nl.entreco.libcore.threading.Background, fg: nl.entreco.libcore.threading.Foreground
-) : nl.entreco.libcore.BaseUsecase(bg, fg) {
+    bg: Background, fg: Foreground,
+) : BaseUsecase(bg, fg) {
 
     fun exec(done: (FetchBotsResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({

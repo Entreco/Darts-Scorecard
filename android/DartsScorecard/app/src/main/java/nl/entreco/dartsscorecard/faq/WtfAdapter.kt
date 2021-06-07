@@ -15,7 +15,7 @@ import java.util.*
 import javax.inject.Inject
 
 class WtfAdapter @Inject constructor(
-    private val bg: nl.entreco.libcore.threading.Background, private val fg: nl.entreco.libcore.threading.Foreground,
+    private val bg: Background, private val fg: Foreground,
     private val submitViewedItemUsecase: SubmitViewedItemUsecase,
 ) : TestableAdapter<WtfView>(), Observer<List<WtfItem>>, WtfToggler, WtfSearchable {
 
