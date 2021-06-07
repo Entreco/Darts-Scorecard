@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
   <string name="menu_title_delete">गेम हटाएँ</string>
-      
   <string name="menu_title_swap">विषय को स्वैप करें</string>
-      
   <string name="menu_music_swap">पार्श्व संगीत</string>
-      
   <string name="menu_sound_swap">मास्टर कॉलर</string>
-      
   <string name="menu_title_done">पूर्ण</string>
-      
   <string name="menu_profile_edit">संपादित करें</string>
-  
 </resources>

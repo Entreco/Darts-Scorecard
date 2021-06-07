@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
     <!-- General Darts -->
     <string name="first_to">Primero a %1$s</string>
     <string name="single_mode">individual</string>
@@ -179,6 +181,8 @@
     <string name="settings_privacy_desc">Cambiar preferencia de anuncio</string>
     <string name="settings_privacy_thanks">¡Gracias por tu apoyo!\nNo se recopilan datos con el fin de mostrar anuncios</string>
     <string name="settings_ads_remove">Eliminar anuncios</string>
+    <string name="settings_bot_delay">Bot delay</string>
+    <string name="settings_bot_delay_unit">Sec.</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Servicio de estadísticas de archivo</string>

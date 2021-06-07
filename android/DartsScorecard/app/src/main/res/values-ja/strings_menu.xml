@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
   <string name="menu_title_delete">ゲームを削除</string>
-      
   <string name="menu_title_swap">テーマを入れ替える</string>
-      
   <string name="menu_music_swap">バックグラウンドミュージック</string>
-      
   <string name="menu_sound_swap">マスターコーラー</string>
-      
   <string name="menu_title_done">完了</string>
-      
   <string name="menu_profile_edit">編集</string>
-  
 </resources>

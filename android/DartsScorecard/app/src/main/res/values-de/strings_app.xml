@@ -181,6 +181,8 @@
     <string name="settings_privacy_desc">Werbeeinstellungen ändern</string>
     <string name="settings_privacy_thanks">Danke für deine Unterstützung!\nEs werden keine Daten zum Zwecke der Schaltung von Werbeanzeigen gesammelt</string>
     <string name="settings_ads_remove">Werbeanzeigen entfernen</string>
+    <string name="settings_bot_delay">Bot delay</string>
+    <string name="settings_bot_delay_unit">Sec.</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Archiv-Statistiken-Service</string>

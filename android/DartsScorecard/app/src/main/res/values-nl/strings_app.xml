@@ -182,6 +182,8 @@
     <string name="settings_privacy_desc">Wijzig je advertentie voorkeuren</string>
     <string name="settings_privacy_thanks">Bedankt voor je steun!\nEr wordt GEEN data verzameld om advertenties te tonen</string>
     <string name="settings_ads_remove">Verwijder advertenties</string>
+    <string name="settings_bot_delay">Bot delay</string>
+    <string name="settings_bot_delay_unit">Sec.</string>
 
     <!-- Archive Service -->
     <string name="archive_service">Statistieken archiveer Service</string>

@@ -1,427 +1,237 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
-  <string name="app_name" translatable="false">Darts Scorecard</string>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
   <!-- General Darts -->
-      
   <string name="first_to">%1$s में सबसे पहले</string>
-      
   <string name="single_mode">व्यक्ति</string>
-      
   <string name="all_mode">कुल</string>
-      
   <string name="set">सेट</string>
-      
   <string name="leg">टाँग</string>
-      
   <string name="no_score">कोई अंक नहीं</string>
-      
   <string name="bust">बस्ट</string>
-      
   <string name="undo">पूर्ववत् करें</string>
-      
   <string name="tap_to_resume">फिर से शुरू करने के लिए टैप करें</string>
-      
   <string name="resume">फिर से शुरू करें</string>
       
   <!-- Title -->
-      
   <string name="title_create_profile">प्रोफ़ाइल बनाएँ</string>
-      
   <string name="title_select_profile">प्रोफ़ाइल चुनें</string>
-      
   <string name="title_select_player">खिलाड़ी चुनें</string>
-      
   <string name="title_edit_profile">प्रोफ़ाइल संपादित करें</string>
-      
   <string name="title_setup">01 गेम कॉन्फ़िगर करें</string>
-      
   <string name="title_beta">बीटा विशेषताएँ</string>
-      
   <string name="title_settings">सेटिंग्ज़</string>
-      
   <string name="title_wtf">@string/wtf</string>
-      
   <string name="title_hiscores">उच्चांक</string>
       
   <!-- Launch -->
-      
   <string name="resume_x01">@string/resume</string>
-      
   <string name="play_x01">नया 01 शुरू करें</string>
-      
   <string name="profiles">प्रोफ़इल प्रबंधित करें</string>
-      
   <string name="hiscores">उच्चांक</string>
-      
   <string name="beta">नई विशेषताएँ</string>
-      
   <string name="settings">सेटिंग्ज़</string>
-      
   <string name="wtf">अकसर पूछे गए सवाल क्या हैं</string>
-      
   <string name="stream_start">स्ट्रीम शुरू करें</string>
-      
   <string name="stream_stop">स्ट्रीम बंद करें</string>
-      
   <string name="msg_permissions">स्ट्रीम करने के लिए कैमरा और ऑडियो ऐक्सेस की आवश्यकता है</string>
-      
   <string name="error_permissions_couldnt_start_settings">ऐप सेटिंग्ज़ खोली नहीं जा सकीं। अनुमतियाँ देने के लिए कृपया इस ऐप की सेटिंग्ज़ पर जाएँ।</string>
-      
   <string name="action_settings">सेटिंग्ज़</string>
       
   <!-- Beta -->
-      
   <string name="vote">वोट</string>
-      
   <string name="number_votes">%1$s वोट</string>
-      
   <string name="donation_button">%1$s %2$s</string>
-      
   <string name="donation_thanks">आप अद्भुत हैं और अब आप उन परेशान करने वाले विज्ञापनों को नहीं देखेंगे ;)</string>
-      
   <string name="donation_ok">धन्यवाद</string>
-      
   <string name="votes_explained">&lt;p&gt;इस सुविधा के &lt;b&gt;%1$s&lt;/b&gt; वोट होने के बाद विकास शुरू हो जाएगा।&lt;/p&gt;&lt;p&gt;सभी दान &lt;b&gt;में ऐप से सभी विज्ञापनों को हटाना शामिल है&lt;/b&gt;&lt;/p&gt;</string>
-      
   <string name="beta_video">&lt;b&gt;वीडियो देखें&lt;/b&gt;</string>
-      
   <string name="beta_tagline">सबसे लोकप्रिय विशेषताएँ सबसे पहले विकसित की जाएँगी</string>
-      
   <string name="beta_explained">हमें बताएँ कि आप आगे कौन-सी विशेषता देखना चाहेंगे। \'वोट\' चुनें और ❤ पर क्लिक करें! हम भरसक प्रयास करेंगे</string>
-      
+
   <!-- Setup -->
-      
   <string name="select_players">खिलाड़ी चुनें</string>
-      
   <string name="choose_player_name">खिलाड़ी का नाम चुनें</string>
-      
   <string name="choose_existing_player">या मौजूदा खिलाड़ी चुनें</string>
-      
   <string name="choose_available_bot">एक बॉट के खिलाफ़ खेलें</string>
-      
   <string name="cannot_change_bot_name">बॉट का नाम बदलना संभव नहीं है</string>
-      
   <string name="team">टीम</string>
-      
   <string name="select_x01_score">x01 स्कोर चुनें</string>
-      
   <string name="start_score">स्कोर शुरू करें</string>
-      
   <string name="number_of_sets">सेट की संख्या</string>
-      
   <string name="number_of_legs">टाँगों की संख्या</string>
-      
   <string name="cancel">रद्द करें</string>
-      
   <string name="minus">-</string>
-      
   <string name="plus">+</string>
-      
   <string name="cont">जारी रखें</string>
-      
   <string name="powered_by">द्वारा संचालित</string>
       
   <!-- Dialogs -->
-      
   <string name="rating_title">डार्ट्स स्कोरकार्ड का आनंद ले रहे हैं?</string>
-      
   <string name="rating_message">क्या आपके पास हमारे ऐप को रेटिंग देने के लिए कुछ पल हैं?\nहम वास्तव में इसकी सराहना करेंगे</string>
-      
   <string name="rating_never_ask_again">नहीं</string>
-      
   <string name="rating_not_now">अभी नहीं</string>
-      
   <string name="confirm_delete_title">यह गेम हटाएँ?</string>
-      
   <string name="confirm_delete_message">इस गेम की सभी प्रगति और आंकड़े हटा दिए जाएँगे</string>
       
   <!-- Game States -->
-      
   <string name="to_throw">फेंकना</string>
-      
   <string name="to_throw_first">पहले फेंकना</string>
-      
   <string name="game_on">खेल शुरू</string>
-      
   <string name="game_shot_and_match">बदला लेना?</string>
-      
   <string name="select_starting_team">पहले फेंकने के लिए टीम चुनें</string>
       
   <!-- Profile -->
-      
   <string name="favourite_double">पसंदीदा डबल: %1$s</string>
-      
   <string name="edit_player_name_hint">खिलाड़ी का नाम</string>
-      
   <string name="edit_player_double">पसंदीदा डबल</string>
-      
   <string name="confirm_delete_profile">प्रोफ़ाइल हटा दिया गया है</string>
       
   <!-- Input -->
-      
   <string name="darts_used">आपने कितने डार्ट का इस्तेमाल किया?</string>
       
   <!-- Match Stats -->
-      
   <string name="match_stats">मैच के आँकड़े</string>
-      
   <string name="set_stats">%1$s आँकड़े सेट करें</string>
-      
   <string name="live_breaks_made">ब्रेक बनाए गए</string>
-      
   <string name="live_double_success">दोहरी सफलता</string>
-      
   <string name="live_double_ratio">डबल %</string>
-      
   <string name="live_highest_score">उच्चतम स्कोर</string>
-      
   <string name="live_highest_out">उच्चतम आउट</string>
-      
   <string name="live_180s">180\'s</string>
-      
   <string name="live_140s">140+</string>
-      
   <string name="live_100s">100+</string>
-      
   <string name="live_60s">60+</string>
-      
   <string name="live_20s">20+</string>
-      
   <string name="live_average">औसत</string>
       
   <!-- Streaming -->
-      
   <string name="streaming_dialog_title">कोड दर्ज करें</string>
-      
   <string name="streaming_service">स्ट्रीमिंग सेवा</string>
-      
   <string name="receiving_service">सेवा प्राप्त करना</string>
-      
   <string name="live_stream_start">स्ट्रीमिंग शुरू करें</string>
-      
   <string name="live_stream_connecting">कनेक्ट हो रहा है…</string>
-      
   <string name="live_stream_connect">कनेक्ट करें</string>
-      
   <string name="live_stream">लाइव स्ट्रीम</string>
-      
   <string name="enter_tv_code">कोड दर्ज करें</string>
       
   <!-- Streaming Service -->
-      
   <string name="streaming_channel_name">स्ट्रीमिंग</string>
-      
   <string name="streaming_channel_description">आपका कैमरा आउटपुट टीवी पर स्ट्रीम किया जा रहा है</string>
-      
   <string name="streaming_notif_title">टेलीविज़न पर स्ट्रीम किया जा रहा है</string>
       
   <!-- Profile -->
-      
   <string name="no_stats_available">अभी तक कोई डेटा उपलब्ध नहीं है</string>
-      
   <string name="no_stats_available_sub">एक गेम पूरा करें और यह देखने के लिए यहाँ वापस आएँ कि आप कैसे खेल रहे हैं</string>
-      
   <string name="profile_games_played">खेले गए खेल</string>
-      
   <string name="profile_overall_average">समग्र औसत</string>
-      
   <string name="profile_first9_average">पहले 9 औसत</string>
-      
   <string name="profile_win_percentage">जीत %</string>
-      
   <string name="profile_checkout_percentage">चेकआउट %</string>
-      
   <string name="profile_num_180">#180\'s</string>
-      
   <string name="profile_num_140">#140+</string>
-      
   <string name="profile_num_100">#100+</string>
-      
   <string name="profile_num_60">#60+</string>
-      
   <string name="profile_num_20">#20+</string>
-      
   <string name="profile_num_0">#बस्ट/ बाउंस/ नोस्कोर</string>
       
   <!--- HiScores -->
-      
   <string name="hiscore_title_games_ratio">जीतने की दर</string>
-      
   <string name="hiscore_title_best_avg">सर्वश्रेष्ठ औसत</string>
-      
   <string name="hiscore_title_best_co">सर्वश्रेष्ठ चेकआउट %</string>
-      
   <string name="hiscore_title_highest_score">उच्चतम स्कोर</string>
-      
   <string name="hiscore_title_highest_co">उच्चतम चेकआउट</string>
-      
   <string name="hiscore_title_overall_average">समग्र औसत</string>
-      
   <string name="hiscore_title_first9_average">पहले 9 औसत</string>
-      
   <string name="hiscore_title_win_percentage">जीत %</string>
-      
   <string name="hiscore_title_checkout_percentage">चेकआउट %</string>
-      
   <string name="hiscore_title_num_180">#180\'s</string>
-      
   <string name="hiscore_title_num_140">#140+</string>
-      
   <string name="hiscore_title_num_100">#100+</string>
-      
   <string name="hiscore_title_num_60">#60+</string>
-      
   <string name="hiscore_title_num_20">#20+</string>
-      
   <string name="hiscore_title_num_0">#बस्ट/ बाउंस/ नोस्कोर</string>
-      
   <string name="hiscore_description_games_win_ratio">जीते गए बनाम खेले गए गेम का अनुपात</string>
-      
   <string name="hiscore_description_best_avg">एकल मैच के दौरान सर्वश्रेष्ठ औसत</string>
-      
   <string name="hiscore_description_best_co">एकल मैच के दौरान सर्वश्रेष्ठ चेकआउट % d</string>
-      
   <string name="hiscore_description_overall_average">समग्र औसत</string>
-      
   <string name="hiscore_description_first9_average">1ले नौ डार्ट का समग्र औसत</string>
-      
   <string name="hiscore_description_win_percentage">समग्र % of जीते गए गेम</string>
-      
   <string name="hiscore_description_checkout_percentage">कुल चेकआउट %</string>
-      
   <string name="hiscore_description_num_180">समग्र #180 का स्कोर किया गया</string>
-      
   <string name="hiscore_description_num_140">कुल मिलाकर #140+ स्कोर किया गया</string>
-      
   <string name="hiscore_description_num_100">समग्र #100+ स्कोर किया गया</string>
-      
   <string name="hiscore_description_num_60">समग्र #60+ स्कोर किया गया</string>
-      
   <string name="hiscore_description_num_20">समग्र #20+ स्कोर किया गया</string>
-      
   <string name="hiscore_description_num_0">समग्र # बस्ट/ बाउंस/ नोस्कोर का स्कोर किया गया</string>
       
   <!-- What The FAQ -->
-      
   <string name="search_wtf">अक्सर पूछे जाने वाले प्रश्नों में खोजें</string>
       
   <!-- Settings -->
-      
   <string name="settings_mastercaller_title">ध्वनि सेटिंग्ज़</string>
-      
   <string name="settings_mastercaller_desc_on">सभी अंकों को ज़ोर से पढ़ें</string>
-      
   <string name="settings_mastercaller_desc_off">मास्टरकॉलर का उपयोग न करें</string>
-      
   <string name="settings_sound_title">ध्वनि</string>
-      
   <string name="settings_sound_desc_on">पृष्ठभूमि में संगीत चलाएँ</string>
-      
   <string name="settings_sound_desc_off">पृष्ठभूमि में कोई संगीत नहीं</string>
-      
   <string name="settings_theme_title">विषय</string>
-      
   <string name="settings_theme_desc">उपलब्ध विषयों को स्वैप करें</string>
-      
   <string name="settings_privacy_title">गोपनीयता / विज्ञापन</string>
-      
   <string name="settings_privacy_desc">विज्ञापन प्राथमिकता बदलें</string>
-      
   <string name="settings_privacy_thanks">आपके समर्थन के लिए धन्यवाद!\nविज्ञापन दिखाने के उद्देश्य से कोई डेटा एकत्रित नहीं किया जाता है</string>
-      
   <string name="settings_ads_remove">विज्ञापन हटाएँ</string>
+  <string name="settings_bot_delay">Bot delay</string>
+  <string name="settings_bot_delay_unit">Sec.</string>
       
   <!-- Archive Service -->
-      
   <string name="archive_service">पुरालेख आँकड़े सेवा</string>
-      
   <string name="archive_channel_name">पुरालेख आँकड़े</string>
-      
   <string name="archive_channel_description">आँकड़ों और औसत की गणना करना</string>
-      
   <string name="archive_notif_title">नए आँकड़ों की गणना, औसत और उच्चांकों का गणना</string>
       
   <!-- Specific -->
-      
   <string name="pcf_match">प्लेयर्स चैंपियनशिप फ़ाइनल्स</string>
-      
   <string name="bdo_match">बीडीओ विश्व चषक - सेमी फ़ाइनल्स</string>
-      
   <string name="pdc_match">पीडीसी विश्व चषक - सेमी फ़ाइनल्स</string>
       
   <!-- Errors -->
-      
   <string name="err_player_was_deleted">हटाए गए खिलाड़ियों के प्रोफ़ाइल नहीं देखे जा सकते।</string>
-      
   <string name="err_profile_with_bot_not_supported">बॉट वाली टीमों के लिए प्रोफ़ाइल उपलब्ध नहीं है</string>
-      
   <string name="err_unable_to_retrieve_game">खेल पुनर्प्राप्त करने में असमर्थ।</string>
-      
   <string name="err_unable_to_revanche">आपसे बदला लेने में असमर्थ।</string>
-      
   <string name="err_unable_to_create_player">प्लेयर बनाने में असमर्थ।</string>
-      
   <string name="err_unable_to_donate">सुविधाओं के लिए इस समय दान करने में असमर्थ।</string>
-      
   <string name="err_unable_to_fetch_players">खिलाड़ियों को लाने में असमर्थ।</string>
-      
   <string name="err_unable_to_fetch_stats">खिलाड़ी के लिए आंकड़े लाने में असमर्थ</string>
-      
   <string name="err_player_already_exists">खिलाड़ी का नाम पहले से मौजूद है। कृपया कोई दूसरा नाम चुनें</string>
-      
   <string name="err_invalid_player_name">अमान्य खिलाड़ी का नाम</string>
-      
   <string name="err_player_name_is_empty">कृपया वांछित खिलाड़ी का नाम टाइप करें</string>
-      
   <string name="err_no_players_yet">अभी तक कोई प्रोफ़ाइल नहीं। कोई गेम खेलें या + बटन का उपयोग करके खिलाड़ी बनाएँ</string>
-      
   <string name="err_player_already_in_match">खिलाड़ी पहले से ही इस मैच में भाग ले रहा है</string>
       
   <!-- Content Descriptions -->
-      
   <string name="cd_score_back">हटाएँ</string>
-      
   <string name="cd_throw">डार्ट जमा करें</string>
-      
   <string name="cd_add_player">खिलाड़ी जोड़ें</string>
-      
   <string name="cd_player_name">खिलाड़ी का नाम दर्ज करें</string>
-      
   <string name="cd_existing_players">मौजूदा खिलाड़ी</string>
-      
   <string name="cd_add_profile_picture">प्रोफ़ाइल चित्र जोड़ें</string>
-      
   <string name="cd_vote">इस सुविधा के लिए वोट करें</string>
-      
   <string name="cd_choose_sets">@string/number_of_sets</string>
-      
   <string name="cd_choose_legs">@string/number_of_legs</string>
-      
   <string name="cd_increase_sets">प्लस 1 सेट</string>
-      
   <string name="cd_decrease_sets">माइनस 1 सेट</string>
-      
   <string name="cd_increase_legs">प्लस 1 टाँग</string>
-      
   <string name="cd_decrease_legs">माइनस 1 टाँग</string>
-      
   <string name="cd_list_of_profiles">खिलाड़ी के प्रोफ़ाइल</string>
-      
   <string name="cd_list_of_wtfs">अक्सर पूछे जाने वाले प्रश्न</string>
-      
   <string name="cd_next">अगला</string>
-      
   <string name="cd_prev">पिछला</string>
-      
   <string name="cd_wtf">सहायता</string>
-      
   <string name="cd_select_start_score">प्रारंभ स्कोर चुनें</string>
-      
   <string name="cd_number_of_sets">%1$s सेट में सबसे पहले</string>
-      
   <string name="cd_number_of_legs">%1$s टाँगों में सबसे पहले</string>
-      
   <string name="cd_list_of_beta_features">आप ऐप में किन सुविधाओं को देखना चाहेंगे</string>
   
 </resources>

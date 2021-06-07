@@ -116,7 +116,7 @@
                         android:orientation="horizontal"
                         android:importantForAccessibility="no"
                         android:padding="@dimen/xsmall"
-                        android:text="Bot delay" />
+                        android:text="@string/settings_bot_delay" />
 
                     <TextView
                         style="@style/Setup.Hdr.End"
@@ -125,7 +125,7 @@
                         android:orientation="horizontal"
                         android:importantForAccessibility="no"
                         android:padding="@dimen/xsmall"
-                        android:text="Sec." />
+                        android:text="@string/settings_bot_delay_unit" />
                 </LinearLayout>
 
                 <LinearLayout

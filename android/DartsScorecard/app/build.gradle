@@ -33,9 +33,9 @@ android {
 
 dependencies {
 
-    implementation project(":libCore")
     implementation project(':domain')
     implementation project(':data')
+    implementation project(":libCore")
     implementation project(':libLog')
     implementation project(':libConsent')
     implementation project(':libAds')

@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
   <string name="sponsored_by">赞助方</string>
-      
   <string name="tired_of_ads">访问“设置”以删除广告</string>
-  
 </resources>
