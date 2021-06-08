@@ -2,8 +2,8 @@ package nl.entreco.domain.launch
 
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Before

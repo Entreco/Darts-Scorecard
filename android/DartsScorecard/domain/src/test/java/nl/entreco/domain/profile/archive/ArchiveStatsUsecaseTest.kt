@@ -1,8 +1,8 @@
 package nl.entreco.domain.profile.archive
 
 import org.mockito.kotlin.*
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.repository.ArchiveRepository
 import org.junit.Test
 import org.junit.runner.RunWith

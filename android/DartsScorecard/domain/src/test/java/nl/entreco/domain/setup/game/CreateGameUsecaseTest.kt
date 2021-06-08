@@ -4,8 +4,8 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.verify
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.repository.GameRepository
 import org.junit.Before
 import org.junit.Test

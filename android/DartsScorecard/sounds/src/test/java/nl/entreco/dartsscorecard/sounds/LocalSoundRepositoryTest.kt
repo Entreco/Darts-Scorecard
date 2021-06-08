@@ -1,38 +1,42 @@
-package nl.entreco.data.sound
+package nl.entreco.dartsscorecard.sounds
 
 import android.content.Context
 import android.media.SoundPool
 import androidx.annotation.RawRes
+import nl.entreco.domain.mastercaller.Fx00
+import nl.entreco.domain.mastercaller.Fx01
+import nl.entreco.domain.mastercaller.Sound
+import nl.entreco.domain.repository.AudioPrefRepository
+import org.junit.Assert
+import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.data.R
-import nl.entreco.dartsscorecard.sounds.mastercaller.Fx00
-import nl.entreco.dartsscorecard.sounds.mastercaller.Fx01
-import nl.entreco.dartsscorecard.sounds.mastercaller.Sound
-import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
-/**
- * Created by entreco on 14/03/2018.
+/*************************************************************************
+ *
+ * ONWARD CONFIDENTIAL
+ * __________________
+ *
+ * [2021] GTX medical
+ * All Rights Reserved.
+ *
  */
-@RunWith(MockitoJUnitRunner::class)
 class LocalSoundRepositoryTest {
 
     private val normalPriority = 1
     private val fx0 = Fx00
     private val fx1 = Fx01
 
-    @Mock private lateinit var mockAudioRepo: nl.entreco.dartsscorecard.sounds.AudioPrefRepository
-    @Mock private lateinit var mockSoundPool: SoundPool
-    @Mock private lateinit var mockContext: Context
-    private lateinit var subject: nl.entreco.dartsscorecard.sounds.LocalSoundRepository
+    private val mockAudioRepo: AudioPrefRepository = mock()
+    private val mockSoundPool: SoundPool = mock()
+    private val mockContext: Context = mock()
+
+    private lateinit var subject: LocalSoundRepository
+
     private var loadedSounds = emptyList<Sound>()
 
     @Test
@@ -96,7 +100,7 @@ class LocalSoundRepositoryTest {
 
     private fun givenSubject(enabled: Boolean = true) {
         whenever(mockAudioRepo.isMasterCallerEnabled()).doReturn(enabled)
-        subject = nl.entreco.dartsscorecard.sounds.LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, nl.entreco.dartsscorecard.sounds.SoundMapper())
+        subject = LocalSoundRepository(mockContext, mockSoundPool, mockAudioRepo, SoundMapper())
     }
 
     private fun givenLoadedSounds(vararg sounds: Sound) {
@@ -104,7 +108,7 @@ class LocalSoundRepositoryTest {
     }
 
     private fun whenPlaying(sound: Sound) {
-        val res = nl.entreco.dartsscorecard.sounds.SoundMapper().toRaw(sound)
+        val res = SoundMapper().toRaw(sound)
         whenever(mockSoundPool.load(mockContext, res, normalPriority)).doReturn(sound.hashCode())
         subject.play(sound)
     }
@@ -142,11 +146,11 @@ class LocalSoundRepositoryTest {
     }
 
     private fun thenSoundIsQueued(sound: Sound) {
-        assertTrue(subject.queue.contains(sound.hashCode()))
+        Assert.assertTrue(subject.queue.contains(sound.hashCode()))
     }
 
     private fun thenSoundIsStored(sound: Sound) {
-        assertTrue(subject.sounds.containsKey(sound))
+        Assert.assertTrue(subject.sounds.containsKey(sound))
     }
 
 }

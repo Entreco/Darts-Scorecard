@@ -3,8 +3,8 @@ package nl.entreco.domain.play.revanche
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.start.Play01Request

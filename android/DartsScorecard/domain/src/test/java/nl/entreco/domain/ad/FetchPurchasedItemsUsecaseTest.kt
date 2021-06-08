@@ -3,24 +3,20 @@ package nl.entreco.domain.ad
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
-import nl.entreco.domain.repository.BillingRepo
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.repository.GameRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.mock
 
-@RunWith(MockitoJUnitRunner::class)
 class FetchPurchasedItemsUsecaseTest {
 
     private var bg = TestBackground()
     private var fg = TestForeground()
-    @Mock private lateinit var mockDone: (FetchPurchasedItemsResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
-    @Mock private lateinit var mockGameRepo: GameRepository
-    @Mock private lateinit var mockBillingRepo: BillingRepo
+    private val mockDone: (FetchPurchasedItemsResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
+    private val mockGameRepo: GameRepository = mock()
+
     private lateinit var subject: FetchPurchasedItemsUsecase
 
     private var givenPurchases = emptyList<String>()

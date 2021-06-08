@@ -36,6 +36,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$livedata"
     implementation "com.google.code.gson:gson:$gson"
 
+    // Test
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"

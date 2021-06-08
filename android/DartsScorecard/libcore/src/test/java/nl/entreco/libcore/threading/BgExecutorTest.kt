@@ -1,4 +1,4 @@
-package nl.entreco.domain.common.executors
+package nl.entreco.libcore.threading
 
 import org.mockito.kotlin.verify
 import nl.entreco.libcore.threading.BgExecutor

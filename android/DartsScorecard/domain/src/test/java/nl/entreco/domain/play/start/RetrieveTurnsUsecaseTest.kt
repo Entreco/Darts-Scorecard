@@ -3,30 +3,31 @@ package nl.entreco.domain.play.start
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.mock
 
 /**
  * Created by Entreco on 30/12/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class RetrieveTurnsUsecaseTest {
 
-    @Mock private lateinit var mockTurnRepository: TurnRepository
+    private val mockTurnRepository: TurnRepository = mock()
+    private val mockOk: (RetrieveTurnsResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
     private val mockBg = TestBackground()
     private val mockFg = TestForeground()
+
     private lateinit var subject: RetrieveTurnsUsecase
 
     private var givenGameId: Long = -1
     private var givenTurns: List<Pair<Long, Turn>> = emptyList()
-    @Mock private lateinit var mockOk: (RetrieveTurnsResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
 
     @Test
     fun `it should retrieve turns from database`() {

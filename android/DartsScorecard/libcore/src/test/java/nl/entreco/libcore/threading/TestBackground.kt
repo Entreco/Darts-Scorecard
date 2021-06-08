@@ -1,4 +1,4 @@
-package nl.entreco.domain.common.executors
+package nl.entreco.libcore.threading
 
 import nl.entreco.libcore.threading.Background
 import java.util.concurrent.Future

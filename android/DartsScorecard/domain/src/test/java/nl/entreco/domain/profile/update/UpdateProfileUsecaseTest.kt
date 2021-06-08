@@ -3,8 +3,8 @@ package nl.entreco.domain.profile.update
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.profile.Profile
 import nl.entreco.domain.repository.ImageRepository
 import nl.entreco.domain.repository.ProfileInfoRepository

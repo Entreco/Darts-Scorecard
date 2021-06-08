@@ -13,10 +13,8 @@ class SubmitVoteUsecase @Inject constructor(private val featureRepository: Featu
 
     fun exec(req: SubmitVoteRequest, done: (SubmitVoteResponse) -> Unit, fail: (Throwable) -> Unit) {
         onBackground({
-
             featureRepository.submitVote(req.featureId, req.amount)
             onUi { done(SubmitVoteResponse(true)) }
-
         }, fail)
     }
 }

@@ -1,4 +1,4 @@
-package nl.entreco.domain.common.executors
+package nl.entreco.libcore.threading
 
 import android.os.Handler
 import nl.entreco.libcore.threading.FgExecutor
