@@ -34,9 +34,9 @@ ext.versionName = { ->
 
 ext {
     kotlinVersion = '1.5.10'
-    gradleVersion = '4.2.1'
+    gradleVersion = '7.0.2'
     gmsVersion = '4.3.5'
-    firebaseCrashesVersion = '2.1.1'
+    firebaseCrashesVersion = '2.5.2'
 
     androidCompileSdkVersion = 30
     androidMinSdkVersion = 24
