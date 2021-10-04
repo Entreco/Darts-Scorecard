@@ -8,7 +8,6 @@ android {
 
     defaultConfig {
         minSdkVersion config.androidMinSdkVersion
-        targetSdkVersion config.androidTargetSdkVersion
     }
 
     buildTypes {

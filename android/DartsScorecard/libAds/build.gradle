@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    implementation project(':libCore')
+    implementation project(':libcore')
     implementation project(':libConsent')
     implementation project(':domain')
 

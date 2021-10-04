@@ -15,7 +15,7 @@ android {
 }
 
 dependencies {
-    implementation project(":libCore")
+    implementation project(':libcore')
     implementation project(":libLog")
     implementation project(":domain")
 

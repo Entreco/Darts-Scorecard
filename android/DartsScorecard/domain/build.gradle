@@ -8,14 +8,14 @@ android {
 }
 
 dependencies {
-    implementation project(":libCore")
+    implementation project(':libcore')
     implementation project(":libLog")
 
     implementation "androidx.annotation:annotation:$xAnnotation"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.code.gson:gson:$gson"
 
-    testImplementation project(":libCore")
+    testImplementation project(':libcore')
     testImplementation "junit:junit:$junit"
     testImplementation "org.mockito:mockito-core:$mockito"
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlin"
