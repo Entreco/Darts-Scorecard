@@ -79,7 +79,7 @@ class FirebaseAnalytics(context: Context) : Analytics {
         val ecommerceBundle = toBundle(donation)
         ecommerceBundle.putString(FaParam.TRANSACTION_ID, orderId)
         ecommerceBundle.putString(FaParam.AFFILIATION, "Entreco - DartsApp")
-        ecommerceBundle.putDouble(FaParam.VALUE, formatMicros(donation.priceMicros))
+        ecommerceBundle.putDouble(FaParam.VALUE, formatMicros(donation.priceMicros, donation.votes.toLong()))
         ecommerceBundle.putString(FaParam.CURRENCY, donation.priceCurrencyCode)
 
         fb.logEvent(FaEvent.PURCHASE, ecommerceBundle)
@@ -101,23 +101,23 @@ class FirebaseAnalytics(context: Context) : Analytics {
             putString(FaParam.ITEM_CATEGORY, "Donations")
             putString(FaParam.ITEM_VARIANT, donation.price)
             putString(FaParam.ITEM_BRAND, "Entreco")
-            putDouble(FaParam.PRICE, formatMicros(donation.priceMicros))
+            putDouble(FaParam.PRICE, formatMicros(donation.priceMicros, donation.votes.toLong()))
             putString(FaParam.CURRENCY, donation.priceCurrencyCode) // Item-level currency unused today
             putLong(FaParam.QUANTITY, donation.votes.toLong())
         }
 
-        val items = ArrayList<Bundle>()
-        items.add(product)
-
+        val items = arrayListOf(product)
         val ecommerceBundle = Bundle()
         ecommerceBundle.putParcelableArrayList("items", items)
         return ecommerceBundle
     }
 
-    internal fun formatMicros(priceMicros: Long): Double {
+    internal fun formatMicros(priceMicros: Long, quantity: Long): Double {
         return try {
-            priceMicros.toDouble() / 1000000
+            priceMicros.toDouble() / quantity / 1000000
         } catch (invalidFormat: NumberFormatException) {
+            0.0
+        } catch (divisionByZero: ArithmeticException){
             0.0
         }
     }

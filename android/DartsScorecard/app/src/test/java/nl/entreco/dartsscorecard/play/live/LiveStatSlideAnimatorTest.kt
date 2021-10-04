@@ -42,6 +42,7 @@ class LiveStatSlideAnimatorTest {
         whenever(mockAnimator.alpha(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
+        whenever(mockViewGroup.animate()).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
         subject.slide(0F)
     }

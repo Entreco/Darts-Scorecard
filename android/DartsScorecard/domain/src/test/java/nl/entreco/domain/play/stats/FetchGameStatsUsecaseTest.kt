@@ -1,10 +1,10 @@
 package nl.entreco.domain.play.stats
 
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.LiveStatRepository
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,27 +1,24 @@
 package nl.entreco.domain.setup.players
 
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 02/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class FetchExistingPlayersUsecaseTest {
 
-    @Mock private lateinit var mockRepo: PlayerRepository
-    @Mock private lateinit var mockDone: (FetchExistingPlayersResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
+    private val mockRepo: PlayerRepository = mock()
+    private val mockDone: (FetchExistingPlayersResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
     private val bg = TestBackground()
     private val fg = TestForeground()
     private val playersCaptor = argumentCaptor<FetchExistingPlayersResponse>()

@@ -191,8 +191,6 @@ class TeamScoreBindingsTest {
     }
 
     private fun thenHideCurrentAnimationIsDone() {
-        verify(mockCounterTextView).animate()
-        verify(mockAnimator).start()
         verify(mockCounterTextView, never()).setTextColor(anyInt())
     }
 

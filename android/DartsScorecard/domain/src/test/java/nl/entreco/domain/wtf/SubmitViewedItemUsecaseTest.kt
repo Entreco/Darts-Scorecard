@@ -1,28 +1,22 @@
 package nl.entreco.domain.wtf
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.repository.WtfRepository
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Before
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.junit.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
-@RunWith(MockitoJUnitRunner::class)
 class SubmitViewedItemUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockRepo: WtfRepository
-    @Mock private lateinit var mockAnalytics: Analytics
-    private lateinit var subject : SubmitViewedItemUsecase
-
+    private val mockRepo: WtfRepository = mock()
+    private val mockAnalytics: Analytics = mock()
+    private lateinit var subject: SubmitViewedItemUsecase
 
     @Before
     fun setUp() {

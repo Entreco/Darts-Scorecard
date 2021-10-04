@@ -1,30 +1,27 @@
 package nl.entreco.domain.play.stats
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.TurnMeta
 import nl.entreco.domain.play.ScoreEstimator
 import nl.entreco.domain.repository.MetaRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by entreco on 22/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class StoreMetaUsecaseTest {
 
-    @Mock private lateinit var mockMetaRepo: MetaRepository
-    @Mock private lateinit var mockDone: (Long, Long)->Unit
-    @Mock private lateinit var mockFail: (Throwable)->Unit
+    private val mockMetaRepo: MetaRepository = mock()
+    private val mockDone: (Long, Long) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
     private val bg = TestBackground()
     private val fg = TestForeground()
     private val givenScoreEstimator = ScoreEstimator()
@@ -54,20 +51,20 @@ class StoreMetaUsecaseTest {
         subject = StoreMetaUsecase(mockMetaRepo, givenScoreEstimator, bg, fg)
     }
 
-    private fun givenMeta(){
+    private fun givenMeta() {
         givenTurnId = 5
         givenMetaId = 8
         givenMeta = TurnMeta(3, 4, 0, 0, Score(), false)
-        givenRequest = StoreMetaRequest(givenTurnId,2, Turn(), givenMeta)
+        givenRequest = StoreMetaRequest(givenTurnId, 2, Turn(), givenMeta)
     }
 
-    private fun whenExecutingSucceeds(){
+    private fun whenExecutingSucceeds() {
         whenever(mockMetaRepo.create(any(), any(), any(), any())).thenReturn(givenMetaId)
         subject.exec(givenRequest, mockDone, mockFail)
         verify(mockMetaRepo).create(eq(givenTurnId), eq(2), eq(givenMeta), any())
     }
 
-    private fun whenExecutingFails(){
+    private fun whenExecutingFails() {
         whenever(mockMetaRepo.create(any(), any(), any(), any())).thenThrow(RuntimeException("oh no, more lemmings"))
         subject.exec(givenRequest, mockDone, mockFail)
         verify(mockMetaRepo).create(eq(givenTurnId), eq(2), eq(givenMeta), any())

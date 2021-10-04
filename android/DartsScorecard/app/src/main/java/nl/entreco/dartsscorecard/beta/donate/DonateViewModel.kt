@@ -14,7 +14,9 @@ import javax.inject.Inject
 /**
  * Created by entreco on 08/02/2018.
  */
-class DonateViewModel @Inject constructor(private val analytics: Analytics) : BaseViewModel(), LifecycleObserver {
+class DonateViewModel @Inject constructor(
+    private val analytics: Analytics,
+) : BaseViewModel(), LifecycleObserver {
 
     val donations = ObservableArrayList<Donation>()
     val loading = ObservableBoolean(true)

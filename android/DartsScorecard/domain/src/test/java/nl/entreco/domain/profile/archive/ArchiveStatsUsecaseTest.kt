@@ -1,22 +1,21 @@
 package nl.entreco.domain.profile.archive
 
-import org.mockito.kotlin.*
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.repository.ArchiveRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
-@RunWith(MockitoJUnitRunner::class)
 class ArchiveStatsUsecaseTest {
 
-    @Mock private lateinit var mockDone: (ArchiveStatsResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
-    @Mock private lateinit var mockArchiveRepository: ArchiveRepository
+    private val mockDone: (ArchiveStatsResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
+    private val mockArchiveRepository: ArchiveRepository = mock()
     private lateinit var subject: ArchiveStatsUsecase
-    private val responseCaptor = argumentCaptor<ArchiveStatsResponse>()
 
     @Test
     fun `it should archive stats`() {
@@ -24,12 +23,14 @@ class ArchiveStatsUsecaseTest {
         whenArchivingStats(2)
         thenArchiveIsCalled(2)
     }
+
     @Test
     fun `it should report success when archiving succeeds`() {
         givenSubject()
         whenArchivingStatsSucceeds(1)
         thenSuccessIsReported(1)
     }
+
     @Test
     fun `it should report fail when archiving fails`() {
         givenSubject()
@@ -62,6 +63,7 @@ class ArchiveStatsUsecaseTest {
     private fun thenSuccessIsReported(expected: Int) {
         verify(mockDone).invoke(eq(ArchiveStatsResponse(expected)))
     }
+
     private fun thenFailureIsReported() {
         verify(mockFail).invoke(any())
     }

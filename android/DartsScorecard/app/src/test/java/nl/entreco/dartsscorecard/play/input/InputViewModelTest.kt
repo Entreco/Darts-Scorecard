@@ -4,6 +4,7 @@ import android.widget.TextView
 import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
 import nl.entreco.dartsscorecard.play.Play01Animator
+import nl.entreco.dartsscorecard.play.bot.CalculateBotScoreUsecase
 import nl.entreco.domain.Analytics
 import nl.entreco.domain.model.*
 import nl.entreco.domain.model.players.NoPlayer
@@ -13,31 +14,34 @@ import nl.entreco.domain.play.listeners.InputListener
 import nl.entreco.domain.play.listeners.events.BustEvent
 import nl.entreco.domain.play.listeners.events.NoScoreEvent
 import nl.entreco.domain.play.listeners.events.SpecialEvent
+import nl.entreco.domain.repository.BotPrefRepository
 import nl.entreco.liblog.Logger
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by Entreco on 09/12/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class InputViewModelTest {
 
-    @Mock private lateinit var logger: Logger
-    @Mock private lateinit var analytics: Analytics
-    @InjectMocks private lateinit var subject: InputViewModel
-
-    @Mock private lateinit var mockAnimator: Play01Animator
-    @Mock private lateinit var mockListener: InputListener
-    @Mock private lateinit var mockInput: TextView
+    private val mockBotPrefRepo: BotPrefRepository = mock()
+    private val mockCalculateBotUsecase: CalculateBotScoreUsecase = mock()
+    private val mockLogger: Logger = mock()
+    private val mockAnalytics: Analytics = mock()
+    private val mockAnimator: Play01Animator = mock()
+    private val mockListener: InputListener = mock()
+    private val mockInput: TextView = mock()
+    private lateinit var subject: InputViewModel
 
     private lateinit var givenEvent: SpecialEvent
     private lateinit var givenPlayer: Player
     private lateinit var givenRequiredScore: Score
+
+    @Before
+    fun setUp() {
+        subject = InputViewModel(mockAnalytics, mockLogger, mockCalculateBotUsecase, mockBotPrefRepo)
+    }
 
     @Test
     fun `it should put toggle in 'off' state initially`() {

@@ -1,34 +1,31 @@
 package nl.entreco.dartsscorecard.base
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.StyleRes
-import org.mockito.kotlin.any
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.R
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 10/12/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class StylerTest {
 
-    @Mock private lateinit var mockPrefs: SharedPreferences
-    @Mock private lateinit var mockEditor: SharedPreferences.Editor
-    @Mock private lateinit var mockActivity: Activity
-    @InjectMocks private lateinit var subject: Styler
-
-    @Captor private lateinit var styleCaptor: ArgumentCaptor<String>
+    private val mockPrefs: SharedPreferences = mock()
+    private val mockEditor: SharedPreferences.Editor = mock()
+    private val mockActivity: Activity = mock{
+        on { getSharedPreferences("StylePrefs", Context.MODE_PRIVATE) } doReturn mockPrefs
+    }
+    private val subject: Styler = Styler(mockActivity)
+    private val styleCaptor = argumentCaptor<String>()
 
     @Test
     fun `it should return 'PDC' style`() {
@@ -99,7 +96,7 @@ class StylerTest {
 
         subject.switch()
         verify(mockEditor).putString(eq("currentStyle"), styleCaptor.capture())
-        givenStyle(styleCaptor.value)
+        givenStyle(styleCaptor.lastValue)
 
         verify(mockActivity).recreate()
         return subject.get()

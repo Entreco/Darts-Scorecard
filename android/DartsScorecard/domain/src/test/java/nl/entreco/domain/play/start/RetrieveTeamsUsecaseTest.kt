@@ -1,10 +1,11 @@
 package nl.entreco.domain.play.start
 
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import org.mockito.kotlin.*
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.model.players.DeletedPlayer
 import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.repository.BotRepository
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,18 +23,18 @@ class RetrieveTeamsUsecaseTest {
     private val fg = TestForeground()
     private lateinit var teamIds: String
 
-    @Mock private lateinit var ok: (RetrieveTeamsResponse) -> Unit
-    @Mock private lateinit var fail: (Throwable) -> Unit
-    @Mock private lateinit var mockPlayerRepository: PlayerRepository
-    @Mock private lateinit var mockPlayer: Player
+    private val ok: (RetrieveTeamsResponse) -> Unit = mock()
+    private val fail: (Throwable) -> Unit = mock()
+    private val mockBotRepository: BotRepository = mock()
+    private val mockPlayerRepository: PlayerRepository = mock()
+    private val mockPlayer: Player = mock()
 
     private lateinit var subject: RetrieveTeamsUsecase
     private val retrieveCaptor = argumentCaptor<RetrieveTeamsResponse>()
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        subject = RetrieveTeamsUsecase(mockPlayerRepository, bg, fg)
+        subject = RetrieveTeamsUsecase(mockPlayerRepository, mockBotRepository, bg, fg)
     }
 
     @Test

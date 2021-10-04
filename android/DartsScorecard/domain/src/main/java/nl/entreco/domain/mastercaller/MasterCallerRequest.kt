@@ -1,14 +1,16 @@
 package nl.entreco.domain.mastercaller
 
+import androidx.annotation.VisibleForTesting
+
 /**
  * Created by entreco on 14/03/2018.
  */
 class MasterCallerRequest(
-        private val scored: Int = -1,
-        private val start: Boolean = false,
-        private val leg: Boolean = false,
-        private val set: Boolean = false,
-        private val match: Boolean = false
+    @VisibleForTesting val scored: Int = -1,
+    private val start: Boolean = false,
+    private val leg: Boolean = false,
+    private val set: Boolean = false,
+    private val match: Boolean = false
 ) {
     fun toSound(): Sound {
 

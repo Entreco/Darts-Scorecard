@@ -1,21 +1,23 @@
 package nl.entreco.domain.launch
 
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.players.Player
+import nl.entreco.domain.repository.BotRepository
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 17/12/2017.
  */
 class ExtractTeamsUsecaseTest {
 
+    @Mock private lateinit var mockBotRepository: BotRepository
     @Mock private lateinit var mockPlayerRepository: PlayerRepository
     @Mock private lateinit var mockOk: (ExtractTeamsResponse) -> Unit
     @Mock private lateinit var mockFail: (Throwable) -> Unit
@@ -28,7 +30,7 @@ class ExtractTeamsUsecaseTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        subject = ExtractTeamsUsecase(mockPlayerRepository, bg, fg)
+        subject = ExtractTeamsUsecase(mockPlayerRepository, mockBotRepository, bg, fg)
     }
 
     @Test

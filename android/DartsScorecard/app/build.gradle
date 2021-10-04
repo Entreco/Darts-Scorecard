@@ -10,8 +10,10 @@ android {
     def config = rootProject.extensions.getByName("ext")
     defaultConfig {
         applicationId "nl.entreco.dartsscorecard"
-        resValue "string", "version", "${config.versionName}"
+        versionCode config.versionCode
+        versionName config.versionName
 
+        resValue "string", "version", "${config.versionName}"
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
     }
     buildTypes {
@@ -23,11 +25,6 @@ android {
         }
     }
 
-    sourceSets.main {
-        jniLibs.srcDir 'libs'
-        jni.srcDirs = [] //disable automatic ndk-build call
-    }
-
     dynamicFeatures = [':sounds']
 }
 
@@ -35,7 +32,7 @@ dependencies {
 
     implementation project(':domain')
     implementation project(':data')
-    implementation project(":libcore")
+    implementation project(':libcore')
     implementation project(':libLog')
     implementation project(':libConsent')
     implementation project(':libAds')

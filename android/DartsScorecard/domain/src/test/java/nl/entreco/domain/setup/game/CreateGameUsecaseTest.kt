@@ -1,30 +1,25 @@
 package nl.entreco.domain.setup.game
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.verify
 import nl.entreco.domain.Analytics
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.repository.GameRepository
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 /**
  * Created by Entreco on 12/12/2017.
  */
-@RunWith(MockitoJUnitRunner::class)
 class CreateGameUsecaseTest {
 
-    @Mock private lateinit var mockAnalytics: Analytics
-    @Mock private lateinit var mockGameRepository: GameRepository
-    @Mock private lateinit var mockOk: (CreateGameResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
-
+    private val mockAnalytics: Analytics = mock()
+    private val mockGameRepository: GameRepository = mock()
+    private val mockOk: (CreateGameResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
 
     private lateinit var subject: CreateGameUsecase
 
@@ -35,7 +30,7 @@ class CreateGameUsecaseTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        subject = CreateGameUsecase(mockGameRepository, mockAnalytics, mockBg, mockFg)
     }
 
     @Test

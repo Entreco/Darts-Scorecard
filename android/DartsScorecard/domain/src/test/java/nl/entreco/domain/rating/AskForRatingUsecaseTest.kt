@@ -1,9 +1,9 @@
 package nl.entreco.domain.rating
 
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.domain.common.executors.TestBackground
-import nl.entreco.domain.common.executors.TestForeground
 import nl.entreco.domain.repository.GameRepository
 import nl.entreco.domain.repository.RatingPrefRepository
 import org.junit.Before

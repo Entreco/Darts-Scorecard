@@ -2,25 +2,40 @@ package nl.entreco.dartsscorecard.play
 
 import android.view.Menu
 import android.view.MenuItem
-import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.R
-import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
-import nl.entreco.domain.model.*
+import nl.entreco.domain.mastercaller.MasterCaller
+import nl.entreco.domain.mastercaller.MasterCallerRequest
+import nl.entreco.domain.mastercaller.MusicPlayer
+import nl.entreco.domain.mastercaller.ToggleMusicUsecase
+import nl.entreco.domain.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
-import nl.entreco.dartsscorecard.sounds.mastercaller.*
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.rating.AskForRatingUsecase
-import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.liblog.Logger
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.reset
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by entreco on 14/03/2018.
@@ -32,7 +47,7 @@ class Play01ViewModelMasterCallerTest {
     private val mockPlayGameUsecase: Play01Usecase = mock()
     private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
     private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
-    private val mockAudioPrefs: nl.entreco.dartsscorecard.sounds.AudioPrefRepository = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
     private val mockAdProvider: AdViewModel = mock()
     private val mockToggleMusicUsecase: ToggleMusicUsecase = mock()
     private val mockMusicPlayer: MusicPlayer = mock()
@@ -92,7 +107,18 @@ class Play01ViewModelMasterCallerTest {
     }
 
     private fun givenGameAndRequest(vararg loaders: GameLoadedNotifier<Play01Response>) {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase,
+            mockRevancheUsecase,
+            mock01Listeners,
+            mockMasterCaller,
+            mockMusicPlayer,
+            mockDialogHelper,
+            mockToggleSoundUsecase,
+            mockToggleMusicUsecase,
+            mockAskForRatingUsecase,
+            mockAudioPrefs,
+            mockAdProvider,
+            mockLogger)
         subject.load(mockRequest, mockGameLoaded, *loaders)
     }
 

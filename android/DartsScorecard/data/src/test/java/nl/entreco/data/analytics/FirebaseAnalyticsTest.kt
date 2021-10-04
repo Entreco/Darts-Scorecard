@@ -33,17 +33,17 @@ class FirebaseAnalyticsTest {
 
     @Test
     fun `it should parse price with ','`() {
-        assertEquals(7.99, subject.formatMicros(7990000), 0.01)
+        assertEquals(7.99, subject.formatMicros(7990000, 1), 0.01)
     }
 
     @Test
     fun `it should parse price from SKU ()`() {
-        assertEquals(0.0, subject.formatMicros(59), 0.01)
+        assertEquals(0.0, subject.formatMicros(59, 1), 0.01)
     }
 
     @Test
     fun `it should parse currency from SKU (€)`() {
-        assertEquals(0.0, subject.formatMicros(59), 0.01)
+        assertEquals(0.0, subject.formatMicros(59, 1), 0.01)
     }
 
     @Test

@@ -1,11 +1,18 @@
 package nl.entreco.dartsscorecard.play
 
-import org.mockito.kotlin.*
-import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.dartsscorecard.base.DialogHelper
 import nl.entreco.dartsscorecard.play.score.GameLoadedNotifier
 import nl.entreco.dartsscorecard.play.score.TeamScoreListener
-import nl.entreco.domain.model.*
+import nl.entreco.domain.mastercaller.MasterCaller
+import nl.entreco.domain.mastercaller.MusicPlayer
+import nl.entreco.domain.mastercaller.ToggleMusicUsecase
+import nl.entreco.domain.mastercaller.ToggleSoundUsecase
+import nl.entreco.domain.model.Dart
+import nl.entreco.domain.model.Game
+import nl.entreco.domain.model.Next
+import nl.entreco.domain.model.Score
+import nl.entreco.domain.model.State
+import nl.entreco.domain.model.Turn
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import nl.entreco.domain.play.Arbiter
@@ -13,24 +20,30 @@ import nl.entreco.domain.play.listeners.PlayerListener
 import nl.entreco.domain.play.listeners.ScoreListener
 import nl.entreco.domain.play.listeners.SpecialEventListener
 import nl.entreco.domain.play.listeners.StatListener
-import nl.entreco.dartsscorecard.sounds.mastercaller.MasterCaller
-import nl.entreco.dartsscorecard.sounds.mastercaller.MusicPlayer
-import nl.entreco.dartsscorecard.sounds.mastercaller.ToggleMusicUsecase
-import nl.entreco.dartsscorecard.sounds.mastercaller.ToggleSoundUsecase
 import nl.entreco.domain.play.revanche.RevancheUsecase
 import nl.entreco.domain.play.start.MarkGameAsFinishedRequest
 import nl.entreco.domain.play.start.Play01Request
 import nl.entreco.domain.play.start.Play01Response
 import nl.entreco.domain.play.start.Play01Usecase
 import nl.entreco.domain.rating.AskForRatingUsecase
-import nl.entreco.dartsscorecard.sounds.AudioPrefRepository
+import nl.entreco.domain.repository.AudioPrefRepository
 import nl.entreco.domain.settings.ScoreSettings
 import nl.entreco.domain.setup.game.CreateGameRequest
+import nl.entreco.libads.ui.AdViewModel
 import nl.entreco.liblog.Logger
 import org.junit.Assert.assertArrayEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.anyArray
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.isNull
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 14/11/2017.
@@ -51,7 +64,7 @@ class Play01ViewModelTest {
     private val mockToggleSoundUsecase: ToggleSoundUsecase = mock()
     private val mockAskForRatingUsecase: AskForRatingUsecase = mock()
     private val mockAdProvider: AdViewModel = mock()
-    private val mockAudioPrefs: nl.entreco.dartsscorecard.sounds.AudioPrefRepository = mock()
+    private val mockAudioPrefs: AudioPrefRepository = mock()
     private val mockPlayGameUsecase: Play01Usecase = mock()
     private val mockRevancheUsecase: RevancheUsecase = mock()
     private val mock01Listeners: Play01Listeners = mock()
@@ -88,7 +101,18 @@ class Play01ViewModelTest {
 
     @Test
     fun `it should stop mastercaller on stop`() {
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase,
+            mockRevancheUsecase,
+            mock01Listeners,
+            mockMasterCaller,
+            mockMusicPlayer,
+            mockDialogHelper,
+            mockToggleSoundUsecase,
+            mockToggleMusicUsecase,
+            mockAskForRatingUsecase,
+            mockAudioPrefs,
+            mockAdProvider,
+            mockLogger)
         subject.stop()
         verify(mockMasterCaller).stop()
     }
@@ -225,14 +249,36 @@ class Play01ViewModelTest {
         game = Game(101, givenArbiter).start(0, givenTeams)
         req = Play01Request(gameId, teamIds, createGameRequest.startScore, createGameRequest.startIndex, createGameRequest.numLegs, createGameRequest.numSets)
         givenTeamScoreListeners = listOf(mockTeamScoreListener, mockTeamScoreListener)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller,mockMusicPlayer,  mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase,
+            mockRevancheUsecase,
+            mock01Listeners,
+            mockMasterCaller,
+            mockMusicPlayer,
+            mockDialogHelper,
+            mockToggleSoundUsecase,
+            mockToggleMusicUsecase,
+            mockAskForRatingUsecase,
+            mockAudioPrefs,
+            mockAdProvider,
+            mockLogger)
         subject.load(req, mockCreatedNotifier, *loaders)
     }
 
     private fun givenFullyLoadedMockGame() {
         whenever(mockNext.state).thenReturn(State.START)
         whenever(mockGame.next).thenReturn(mockNext)
-        subject = Play01ViewModel(mockPlayGameUsecase, mockRevancheUsecase, mock01Listeners, mockMasterCaller, mockMusicPlayer, mockDialogHelper, mockToggleSoundUsecase, mockToggleMusicUsecase, mockAskForRatingUsecase, mockAudioPrefs, mockAdProvider, mockLogger)
+        subject = Play01ViewModel(mockPlayGameUsecase,
+            mockRevancheUsecase,
+            mock01Listeners,
+            mockMasterCaller,
+            mockMusicPlayer,
+            mockDialogHelper,
+            mockToggleSoundUsecase,
+            mockToggleMusicUsecase,
+            mockAskForRatingUsecase,
+            mockAudioPrefs,
+            mockAdProvider,
+            mockLogger)
         subject.load(mockRequest, mockCreatedNotifier)
         verify(mockPlayGameUsecase).loadGameAndStart(any(), doneCaptor.capture(), any())
         doneCaptor.firstValue.invoke(Play01Response(mockGame, mockScoreSettings, givenTeams, teamIds))
