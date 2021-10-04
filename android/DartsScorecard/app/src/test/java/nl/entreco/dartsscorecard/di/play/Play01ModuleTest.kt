@@ -34,7 +34,7 @@ class Play01ModuleTest {
         assertEquals(mockActivity, subject().provide01Activity())
     }
 
-    @Test(expected = NullPointerException::class) // SoundPool.Builder
+    @Test
     fun `it should provide SoundRepository`() {
         assertNotNull(subject().provideSoundRepository(mockContext, mockSplitInstallManager, mockPrefs))
     }

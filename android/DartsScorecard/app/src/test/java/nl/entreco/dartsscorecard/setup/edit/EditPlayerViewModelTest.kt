@@ -206,7 +206,7 @@ class EditPlayerViewModelTest {
     }
 
     private fun thenNavigateWithSelectedPlayer() {
-        verify(mockNavigator).onSelected(any())
+        verify(mockNavigator).onSelected(any<Player>())
     }
 
     private fun thenNotNavigateWithSelectedPlayer() {

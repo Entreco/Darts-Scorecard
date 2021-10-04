@@ -1,28 +1,22 @@
 package nl.entreco.dartsscorecard.play
 
 import android.view.View
-import androidx.fragment.app.FragmentManager
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 import nl.entreco.dartsscorecard.profile.view.ProfileActivity
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.model.players.Team
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.exceptions.misusing.NotAMockException
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 /**
  * Created by entreco on 20/03/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class Play01NavigatorTest {
 
-    @Mock private lateinit var mockView: View
-    @Mock private lateinit var mockActivity: Play01Activity
-    @Mock private lateinit var mockFragmentManager: FragmentManager
+    private val mockView: View = mock()
+    private val mockActivity: Play01Activity = mock()
     private lateinit var subject: Play01Navigator
 
     @Test(expected = NotAMockException::class)
@@ -40,7 +34,6 @@ class Play01NavigatorTest {
     }
 
     private fun givenSubject() {
-        whenever(mockActivity.supportFragmentManager).thenReturn(mockFragmentManager)
         subject = Play01Navigator(mockActivity)
     }
 

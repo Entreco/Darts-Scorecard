@@ -25,10 +25,10 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     override fun onEditPlayer(
-            position: Int,
-            player: PlayerViewModel,
-            otherPlayers: List<Long>,
-            otherBots: List<Long>
+        position: Int,
+        player: PlayerViewModel,
+        otherPlayers: List<Long>,
+        otherBots: List<Long>,
     ) {
         if (player.isHuman.get()) {
             editPlayerRequest(activity, player.name.get()!!, player.teamIndex.get(), position, otherPlayers, otherBots)
@@ -43,12 +43,12 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
     }
 
     private fun editPlayerRequest(
-            activity: Activity,
-            suggestion: CharSequence,
-            teamIndex: Int,
-            positionInList: Int,
-            otherPlayers: List<Long>,
-            otherBots: List<Long>
+        activity: Activity,
+        suggestion: CharSequence,
+        teamIndex: Int,
+        positionInList: Int,
+        otherPlayers: List<Long>,
+        otherBots: List<Long>,
     ) {
         val request = Intent(activity, EditPlayerActivity::class.java)
         request.putExtra(EXTRA_SUGGESTION, suggestion)
@@ -75,7 +75,7 @@ class Setup01Navigator(private val activity: Setup01Activity) : PlayerEditor {
                 when {
                     botName.isNotEmpty() -> callback.onBotAdded(botName, botId)
                     suggestion.isEmpty() -> callback.onPlayerAdded(playerName, playerId)
-                    else -> callback.onPlayerAdded(suggestion, playerId)
+                    suggestion.lowercase().startsWith("player") -> callback.onPlayerAdded(suggestion, playerId)
                 }
 
             } else {

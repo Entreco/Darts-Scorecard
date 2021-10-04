@@ -38,6 +38,7 @@ class LiveStatPageAnimatorHandlerTest {
     private fun whenTransforming() {
         whenever(mockAnimator.translationX(any())).thenReturn(mockAnimator)
         whenever(mockAnimator.setDuration(any())).thenReturn(mockAnimator)
+        whenever(mockViewGroup.animate()).thenReturn(mockAnimator)
         whenever(mockView.animate()).thenReturn(mockAnimator)
         subject.transform(mockView, 0F)
     }

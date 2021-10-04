@@ -3,33 +3,36 @@ package nl.entreco.dartsscorecard.setup
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.viewpager.widget.PagerAdapter.POSITION_NONE
-import org.mockito.kotlin.*
 import nl.entreco.dartsscorecard.setup.players.PlayerEditor
 import nl.entreco.dartsscorecard.setup.players.PlayerViewModel
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.setup.game.CreateGameResponse
 import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyZeroInteractions
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 02/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class Setup01NavigatorTest {
 
-    @Mock private lateinit var mockActivity: Setup01Activity
-    @Mock private lateinit var mockName: ObservableField<String>
-    @Mock private lateinit var mockTeamIndex: ObservableInt
-    @Mock private lateinit var mockPlayerViewModel: PlayerViewModel
-    @Mock private lateinit var mockIntent: Intent
-    @Mock private lateinit var mockPlayer: Player
-    @Mock private lateinit var mockCallback: PlayerEditor.Callback
+    private val mockActivity: Setup01Activity = mock()
+    private val mockName: ObservableField<String> = mock()
+    private val mockTeamIndex: ObservableInt = mock()
+    private val mockPlayerViewModel: PlayerViewModel = mock()
+    private val mockIntent: Intent = mock()
+    private val mockPlayer: Player = mock()
+    private val mockCallback: PlayerEditor.Callback = mock()
     private lateinit var subject: Setup01Navigator
 
     @Test
@@ -38,6 +41,14 @@ class Setup01NavigatorTest {
         givenSubject()
         subject.onEditPlayer(0, mockPlayerViewModel, emptyList(), emptyList())
         verify(mockActivity).startActivityForResult(any(), eq(1002))
+    }
+
+    @Test(expected = NullPointerException::class)
+    fun `it should NOT start EditPlayerActivity when editing bot player`() {
+        givenEditRequest(isHuman = false)
+        givenSubject()
+        subject.onEditPlayer(0, mockPlayerViewModel, emptyList(), emptyList())
+        verify(mockActivity, never()).startActivityForResult(any(), eq(1002))
     }
 
     @Test
@@ -49,31 +60,47 @@ class Setup01NavigatorTest {
 
     @Test
     fun `it should notify player added, when item position==POSITION_NONE && no suggestion is given`() {
-        givenIntentData("", "what's my name", POSITION_NONE, POSITION_NONE)
+        givenIntentData("", "what's my name", POSITION_NONE, "", 3, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerAdded("what's my name", 0)
     }
 
     @Test
-    fun `it should notify player added, when when item position==POSITION_NONE && no newName is given and 'Player 1'`() {
-        givenIntentData("Player 1", "", POSITION_NONE, POSITION_NONE)
+    fun `it should notify player added, when item position==POSITION_NONE && no newName is given and 'Player 1'`() {
+        givenIntentData("Player 1", "", POSITION_NONE, "", 2, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerAdded("Player 1", 0)
     }
 
     @Test
-    fun `it should NOT notify player added, when when item position==POSITION_NONE && no newName is given but not 'Player 1'`() {
-        givenIntentData("suggestion", "", POSITION_NONE, POSITION_NONE)
+    fun `it should NOT notify player added, when item position==POSITION_NONE && no newName is given but not 'Player 1'`() {
+        givenIntentData("suggestion", "", POSITION_NONE, "", -1, POSITION_NONE)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback, never()).onPlayerAdded(any(), any())
     }
 
     @Test
+    fun `it should notify bot added, when item position==POSITION_NONE`() {
+        givenIntentData("", "", POSITION_NONE, "Beginner",  11, POSITION_NONE)
+        givenSubject()
+        whenHandlingResult(1002, RESULT_OK)
+        verify(mockCallback).onBotAdded("Beginner", 11L)
+    }
+
+    @Test
+    fun `it should NOT notify bot added, when item position!=POSITION_NONE`() {
+        givenIntentData("", "", POSITION_NONE, "Beginner",  11, POSITION_NONE + 2)
+        givenSubject()
+        whenHandlingResult(1002, RESULT_OK)
+        verify(mockCallback, never()).onBotAdded("Beginner", 11L)
+    }
+
+    @Test
     fun `it should notify player edited, when item position!=POSITION_NONE`() {
-        givenIntentData("suggestion", "no hables names", POSITION_NONE, POSITION_NONE + 2)
+        givenIntentData("suggestion", "no hables names", POSITION_NONE, "", 0, POSITION_NONE + 2)
         givenSubject()
         whenHandlingResult(1002, RESULT_OK)
         verify(mockCallback).onPlayerEdited(POSITION_NONE + 2, POSITION_NONE, "no hables names", 0)
@@ -81,7 +108,7 @@ class Setup01NavigatorTest {
 
     @Test
     fun `it should NOT notify callback, when RESULT_CANCELLED`() {
-        givenIntentData("suggestion", "no hablez names", POSITION_NONE, POSITION_NONE + 8)
+        givenIntentData("suggestion", "no hablez names", POSITION_NONE, "", 1, POSITION_NONE + 8)
         givenSubject()
         whenHandlingResult(1002, RESULT_CANCELED)
         verifyZeroInteractions(mockCallback)
@@ -118,17 +145,20 @@ class Setup01NavigatorTest {
         subject = Setup01Navigator(mockActivity)
     }
 
-    private fun givenIntentData(suggestion: String, name: String, teamIndex: Int, position: Int) {
+    private fun givenIntentData(suggestion: String, name: String, teamIndex: Int, botName: String, botId: Long, position: Int) {
         whenever(mockIntent.getStringExtra("suggestion")).thenReturn(suggestion)
         whenever(mockIntent.getStringExtra("playerName")).thenReturn(name)
         whenever(mockIntent.getIntExtra(eq("teamIndex"), any())).thenReturn(teamIndex)
+        whenever(mockIntent.getStringExtra(eq("botName"))).thenReturn(botName)
+        whenever(mockIntent.getLongExtra(eq("botId"), eq(-1))).thenReturn(botId)
         whenever(mockIntent.getIntExtra(eq("positionInList"), any())).thenReturn(position)
     }
 
-    private fun givenEditRequest() {
+    private fun givenEditRequest(isHuman: Boolean = true) {
         whenever(mockPlayerViewModel.name).thenReturn(mockName)
         whenever(mockName.get()).thenReturn("another name")
         whenever(mockPlayerViewModel.teamIndex).thenReturn(mockTeamIndex)
+        whenever(mockPlayerViewModel.isHuman).thenReturn(ObservableBoolean(isHuman))
         whenever(mockTeamIndex.get()).thenReturn(4)
     }
 
