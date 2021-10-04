@@ -10,8 +10,10 @@ android {
     def config = rootProject.extensions.getByName("ext")
     defaultConfig {
         applicationId "nl.entreco.dartsscorecard"
-        resValue "string", "version", "${config.versionName}"
+        versionCode config.versionCode
+        versionName config.versionName
 
+        resValue "string", "version", "${config.versionName}"
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
     }
     buildTypes {
