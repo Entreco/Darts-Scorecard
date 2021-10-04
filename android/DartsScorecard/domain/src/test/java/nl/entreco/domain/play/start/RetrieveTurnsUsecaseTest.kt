@@ -1,16 +1,13 @@
 package nl.entreco.domain.play.start
 
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.mock
 
 /**

@@ -46,7 +46,7 @@ ext {
     versionName = versionName()
 
     dependencies = [
-            daggerVersion = '2.35.1',
+            daggerVersion = '2.38.1',
             xConstraint = '2.0.4',
             xAnnotation = '1.2.0',
             playBilling = '3.0.3',
@@ -78,7 +78,7 @@ ext {
             gson = '2.8.6',
             leakCanary = '2.6',
             junit = '4.13.2',
-            mockito = '3.8.8',
+            mockito = '3.11.2',
             mockitoKotlin = '3.2.0',
             xCoreTesting = '1.2.0',
             espressoCore = '3.1.1',

@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    implementation project(':libcore')
+    implementation project(':libCore')
 
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 

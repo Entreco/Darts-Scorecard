@@ -1,10 +1,7 @@
 package nl.entreco.domain.play.start
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.Game
 import nl.entreco.domain.play.Arbiter
 import nl.entreco.domain.repository.GameRepository
@@ -14,6 +11,9 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 14/11/2017.

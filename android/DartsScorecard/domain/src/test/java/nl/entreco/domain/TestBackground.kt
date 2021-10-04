@@ -1,5 +1,6 @@
-package nl.entreco.libcore.threading
+package nl.entreco.domain
 
+import nl.entreco.libcore.threading.Background
 import java.util.concurrent.Future
 import java.util.concurrent.FutureTask
 

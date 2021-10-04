@@ -1,11 +1,8 @@
 package nl.entreco.libcore.threading
 
 import android.os.Handler
-import nl.entreco.libcore.threading.FgExecutor
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 

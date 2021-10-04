@@ -1,7 +1,7 @@
 package nl.entreco.domain.setup.players
 
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.players.Player
 import nl.entreco.domain.repository.PlayerRepository
 import org.junit.Assert.assertEquals

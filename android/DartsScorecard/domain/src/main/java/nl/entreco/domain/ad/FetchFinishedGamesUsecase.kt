@@ -6,7 +6,7 @@ import nl.entreco.libcore.threading.Background
 import nl.entreco.libcore.threading.Foreground
 import javax.inject.Inject
 
-class FetchPurchasedItemsUsecase @Inject constructor(
+class FetchFinishedGamesUsecase @Inject constructor(
     private val gameRepository: GameRepository,
     bg: Background, fg: Foreground,
 ) : BaseUsecase(bg, fg) {

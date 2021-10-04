@@ -1,27 +1,24 @@
 package nl.entreco.domain.play.stats
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.LiveStat
 import nl.entreco.domain.repository.LiveStatRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by entreco on 24/01/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class FetchLiveStatUsecaseTest {
 
-    @Mock private lateinit var mockLiveStatRepository: LiveStatRepository
-    @Mock private lateinit var done: (FetchLiveStatResponse) -> Unit
-    @Mock private lateinit var fail: (Throwable) -> Unit
-    @Mock private lateinit var mockLiveStat: LiveStat
+    private val mockLiveStatRepository: LiveStatRepository = mock()
+    private val done: (FetchLiveStatResponse) -> Unit = mock()
+    private val fail: (Throwable) -> Unit = mock()
+    private val mockLiveStat: LiveStat = mock()
     private val bg = TestBackground()
     private val fg = TestForeground()
     private lateinit var subject: FetchLiveStatUsecase

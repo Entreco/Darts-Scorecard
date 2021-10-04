@@ -1,50 +1,53 @@
 package nl.entreco.domain.play.stats
 
-import org.mockito.kotlin.*
-import nl.entreco.libcore.threading.Background
-import nl.entreco.libcore.threading.Foreground
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.State
 import nl.entreco.domain.model.Turn
 import nl.entreco.domain.repository.TurnRepository
+import nl.entreco.libcore.threading.Background
+import nl.entreco.libcore.threading.Foreground
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by Entreco on 30/12/2017.
  */
 class StoreTurnUsecaseTest {
 
-    @Mock private lateinit var mockTurnRepository: TurnRepository
-    @Mock private lateinit var mockBg: Background
-    @Mock private lateinit var mockFg: Foreground
-    @Mock private lateinit var done: (StoreTurnResponse)->Unit
-    @Mock private lateinit var fail: (Throwable)->Unit
+    private val mockTurnRepository: TurnRepository = mock()
+    private val mockBg: Background = mock()
+    private val mockFg: Foreground = mock()
+    private val done: (StoreTurnResponse) -> Unit = mock()
+    private val fail: (Throwable) -> Unit = mock()
     private val bg = TestBackground()
     private val fg = TestForeground()
     private lateinit var subject: StoreTurnUsecase
 
-    private var givenPlayerId : Long = -1
-    private var givenGameId : Long = -1
-    private lateinit var givenTurn : Turn
-    private lateinit var givenStoreRequest : StoreTurnRequest
+    private var givenPlayerId: Long = -1
+    private var givenGameId: Long = -1
+    private lateinit var givenTurn: Turn
+    private lateinit var givenStoreRequest: StoreTurnRequest
 
     private val turnCaptor = argumentCaptor<Turn>()
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        subject = StoreTurnUsecase(mockTurnRepository, mockBg, mockFg)
     }
 
     @Test
     fun `it should store turns using Repository`() {
         givenViewModel(true)
-        givenGameIdAndTurn(66,22, Turn())
+        givenGameIdAndTurn(66, 22, Turn())
         whenStoringTurn()
         thenTurnIsStored()
     }
@@ -53,7 +56,7 @@ class StoreTurnUsecaseTest {
     @Test
     fun `it should store turns even when throwing`() {
         givenViewModel(true)
-        givenGameIdAndTurn(44,22, Turn())
+        givenGameIdAndTurn(44, 22, Turn())
         whenStoringTurnThrows(RuntimeException("oops"))
         thenExceptionIsHandled()
     }
@@ -75,7 +78,7 @@ class StoreTurnUsecaseTest {
     }
 
     private fun givenViewModel(realExecutors: Boolean) {
-        subject = if(realExecutors) {
+        subject = if (realExecutors) {
             StoreTurnUsecase(mockTurnRepository, bg, fg)
         } else {
             StoreTurnUsecase(mockTurnRepository, mockBg, mockFg)
@@ -109,7 +112,7 @@ class StoreTurnUsecaseTest {
         assertEquals(Dart.ZERO, turnCaptor.lastValue.d3)
     }
 
-    private fun thenExceptionIsHandled(){
+    private fun thenExceptionIsHandled() {
         // It's not crashing -> handled
     }
 

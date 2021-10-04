@@ -1,11 +1,8 @@
 package nl.entreco.libcore.threading
 
 import org.mockito.kotlin.verify
-import nl.entreco.libcore.threading.BgExecutor
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.mock
 import java.util.concurrent.ExecutorService
 

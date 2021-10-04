@@ -1,27 +1,24 @@
 package nl.entreco.domain.profile.fetch
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.repository.ProfileInfoRepository
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by entreco on 26/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class FetchProfileUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockProfileInfoRepo: ProfileInfoRepository
-    @Mock private lateinit var mockDone: (FetchProfileResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
+    private val mockProfileInfoRepo: ProfileInfoRepository = mock()
+    private val mockDone: (FetchProfileResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
 
     private lateinit var subject: FetchProfileUsecase
 

@@ -1,24 +1,14 @@
 package nl.entreco.libads.ui
 
-import androidx.lifecycle.Lifecycle
-import com.google.android.gms.ads.AdView
-import org.mockito.kotlin.any
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyZeroInteractions
-import nl.entreco.domain.ad.FetchPurchasedItemsResponse
-import nl.entreco.domain.ad.FetchPurchasedItemsUsecase
+import nl.entreco.domain.ad.FetchFinishedGamesUsecase
 import nl.entreco.libads.Ads
 import nl.entreco.libads.Interstitials
 import nl.entreco.libconsent.fetch.FetchConsentUsecase
-import org.junit.Assert.*
-import org.junit.Test
 
 class AdViewModelTest {
 
-    private val mockFetchItemsUsecase: FetchPurchasedItemsUsecase = mock()
+    private val mMockFetchItemsUsecase: FetchFinishedGamesUsecase = mock()
     private val mockFetchConsent: FetchConsentUsecase = mock()
     private val mockAdLoader: Ads = mock()
     private val mockInterstitialLoader: Interstitials = mock()

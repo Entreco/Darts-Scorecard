@@ -1,4 +1,6 @@
-package nl.entreco.libcore.threading
+package nl.entreco.domain
+
+import nl.entreco.libcore.threading.Foreground
 
 /**
  * Created by Entreco on 12/12/2017.

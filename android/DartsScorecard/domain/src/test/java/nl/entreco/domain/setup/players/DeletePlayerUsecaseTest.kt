@@ -1,30 +1,26 @@
 package nl.entreco.domain.setup.players
 
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
+import nl.entreco.domain.repository.PlayerRepository
+import org.junit.Test
 import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
-import nl.entreco.domain.repository.PlayerRepository
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Created by entreco on 17/03/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class DeletePlayerUsecaseTest {
 
     private val bg = TestBackground()
     private val fg = TestForeground()
-    @Mock private lateinit var mockDone: (DeletePlayerResponse) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
-    @Mock private lateinit var mockPlayerRepo: PlayerRepository
+    private val mockDone: (DeletePlayerResponse) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
+    private val mockPlayerRepo: PlayerRepository = mock()
     private lateinit var subject: DeletePlayerUsecase
-
 
     @Test
     fun `it should delete player using repo`() {

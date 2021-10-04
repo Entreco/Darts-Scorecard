@@ -1,29 +1,26 @@
 package nl.entreco.domain.purchases
 
-import org.mockito.kotlin.any
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import nl.entreco.domain.TestBackground
+import nl.entreco.domain.TestForeground
 import nl.entreco.domain.beta.Feature
-import nl.entreco.libcore.threading.TestBackground
-import nl.entreco.libcore.threading.TestForeground
 import nl.entreco.domain.purchases.connect.SubscribeToFeaturesUsecase
 import nl.entreco.domain.repository.FeatureRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Created by entreco on 06/02/2018.
  */
-@RunWith(MockitoJUnitRunner::class)
 class SubscribeToFeaturesUsecaseTest {
 
-    @Mock private lateinit var mockDone: (List<Feature>) -> Unit
-    @Mock private lateinit var mockFail: (Throwable) -> Unit
-    @Mock private lateinit var mockFeatureRepo: FeatureRepository
+    private val mockDone: (List<Feature>) -> Unit = mock()
+    private val mockFail: (Throwable) -> Unit = mock()
+    private val mockFeatureRepo: FeatureRepository = mock()
 
     private lateinit var subject: SubscribeToFeaturesUsecase
 
@@ -63,7 +60,7 @@ class SubscribeToFeaturesUsecaseTest {
     fun `it should sort features ascending before reporting results`() {
         givenSubject()
         whenSubscribingSucceeds(f("feature 1", 0, 0), f("feature 2", 500, -1), f("feature 3", 1, 500), f("feature 4", -1, -5))
-        theOrderOfTitlesIs("feature 3",  "feature 4", "feature 1", "feature 2")
+        theOrderOfTitlesIs("feature 3", "feature 4", "feature 1", "feature 2")
     }
 
     @Test
@@ -119,6 +116,6 @@ class SubscribeToFeaturesUsecaseTest {
     }
 
     private fun f(title: String, required: Int, votes: Int): Feature {
-        return Feature("reference", title, "desc", "image", "",required, votes, "")
+        return Feature("reference", title, "desc", "image", "", required, votes, "")
     }
 }

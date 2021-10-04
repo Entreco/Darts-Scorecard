@@ -1,6 +1,6 @@
 package nl.entreco.domain.play.finish
 
-import nl.entreco.libcore.threading.TestBackground
+import nl.entreco.domain.TestBackground
 import nl.entreco.domain.model.Dart
 import nl.entreco.domain.model.Score
 import nl.entreco.domain.model.Turn

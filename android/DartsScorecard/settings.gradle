@@ -1,1 +1,1 @@
-include ':app', ':domain', ':data', ':libLog', ':libcore', ':libConsent', ':libAds', ':sounds'
+include ':app', ':domain', ':data', ':libLog', ':libCore', ':libConsent', ':libAds', ':sounds'
