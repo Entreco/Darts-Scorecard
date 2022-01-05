@@ -72,4 +72,4 @@ deploy:
   on:
     repo: Entreco/Darts-Scorecard
     tags: true
-    jdk: oraclejdk8
+    jdk: oraclejdk11
