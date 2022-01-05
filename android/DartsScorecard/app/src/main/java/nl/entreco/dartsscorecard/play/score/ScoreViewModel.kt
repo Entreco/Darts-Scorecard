@@ -20,8 +20,9 @@ import javax.inject.Inject
  * Created by Entreco on 18/11/2017.
  */
 class ScoreViewModel @Inject constructor(
-        val adapter: ScoreAdapter,
-        private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
+    val adapter: ScoreAdapter,
+    private val fetchMatchDescriptionUsecase: FetchMatchDescriptionUsecase,
+) : BaseViewModel(), GameLoadedNotifier<ScoreSettings>, ScoreListener, PlayerListener {
 
     val description = ObservableField("")
     val firstTo = ObservableInt(0)
@@ -42,8 +43,8 @@ class ScoreViewModel @Inject constructor(
         this.teams.addAll(teams)
         this.numSets.set(info.numSets)
         this.showSets.set(info.numSets > 1)
-        this.firstTo.set(if(info.numSets > 1) info.numSets else info.numLegs)
-        this.fetchMatchDescriptionUsecase.go({ response -> description.set(response.description.description) }, { /* TODO: Set default value */})
+        this.firstTo.set(if (info.numSets > 1) info.numSets else info.numLegs)
+        this.fetchMatchDescriptionUsecase.go({ response -> description.set(response.description.description) }, { /* TODO: Set default value */ })
     }
 
     override fun onScoreChange(scores: Array<Score>, by: Player) {
