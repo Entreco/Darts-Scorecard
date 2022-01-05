@@ -34,7 +34,7 @@ android:
   - google-gdk-license-.+
   - android-googletv-license-.+
 before_install:
-- pushd $ANDROID_HOMEcmdline-tools/latest/bin
+- pushd ${ANDROID_HOME}cmdline-tools/latest/bin
 - yes | sdkmanager "platform-tools" "platforms;android-30"
 - popd
 - openssl aes-256-cbc -K $encrypted_c5c67234e863_key -iv $encrypted_c5c67234e863_iv
